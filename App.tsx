@@ -1,15 +1,21 @@
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
+import { atom, useAtom, useAtomValue } from 'jotai'
+import { StyleSheet, Text, View, TextInput } from 'react-native'
+
+const textAtom = atom('hello')
+const uppercaseAtom = atom(get => get(textAtom).toUpperCase())
 
 export default function App() {
+  const [text, setText] = useAtom(textAtom)
+  const upperCaseText = useAtomValue(uppercaseAtom)
   return (
     <View style={styles.container}>
-      <Text
-        accessibilityActions={[]}
-        accessibilityElementsHidden={false}
-      >
-        Open up App.tsx to start working on your app!
-      </Text>
+      <TextInput
+        value={text}
+        onChangeText={setText}
+      />
+      <Text>{text}</Text>
+      <Text>{upperCaseText}</Text>
       <StatusBar style="auto" />
     </View>
   )
