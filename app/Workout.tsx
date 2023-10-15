@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-const Trade = () => {
+const Workout = () => {
   return (
     <View>
       <Text>Workout</Text>
@@ -9,4 +9,4 @@ const Trade = () => {
   )
 }
 
-export default Trade
+export default Workout
