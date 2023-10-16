@@ -10,7 +10,8 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "strict": true
   },
   "exclude": [
     "node_modules",

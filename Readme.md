@@ -1,0 +1,1 @@
+Uses Exercises from git@github.com:wrkout/exercises.json.git
