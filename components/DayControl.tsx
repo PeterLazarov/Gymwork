@@ -18,12 +18,12 @@ const DayControl = () => {
   return (
     <View style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
       <Button
-        title="-"
+        title=" - "
         onPress={() => setDate(date.minus({ days: 1 }))}
         />
         <Text style={{flexGrow:1, textAlign:'center'}}>{label}</Text>
       <Button
-        title="+"
+        title=" + "
         onPress={() => setDate(date.plus({ days: 1 }))}
       />
     </View>
