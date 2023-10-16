@@ -17,13 +17,14 @@ const endWorkoutButtonText = `
 End workout
 `
 
+// TODO refactor data flow
 export default function WorkoutPage() {
   const [workoutHistory, setWorkoutHistory] = useAtom(workoutHistoryAtom)
 
   const [exercises, setExercises] = useState<Exercise[]>([])
   const [showExercisePicker, setShowExercisePicker] = useState(false)
 
-  const work: Workout['work'] = []
+  let work: Workout['work'] = []
 
   function addExercise() {
     setShowExercisePicker(true)
@@ -51,6 +52,9 @@ export default function WorkoutPage() {
         work,
       })
     )
+
+    work = []
+    setExercises([])
   }
 
   return (
