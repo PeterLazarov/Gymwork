@@ -36,7 +36,7 @@ function WorkoutExerciseEntrySet(props: {
             props.onChange({ ...props.set, reps: isNaN(+text) ? 0 : +text })
           }}
         >
-          {props.set.reps}
+          {props.set.reps} {props.set.reps === 1 ? 'rep' : 'reps'}
         </TextInput>
         <Button
           onPress={() =>
@@ -65,7 +65,13 @@ export default function WorkoutExerciseEntry(props: { exercise: Exercise }) {
   const [sets, setSets] = useState<ExerciseSet[]>([defaultSet])
 
   return (
-    <View>
+    <View
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       <Text>{props.exercise.name}</Text>
 
       {sets.map((set, i) => (
