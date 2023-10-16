@@ -6,7 +6,7 @@ import DayControl from '../components/DayControl'
 const Workout = () => {
   return (
     <View>
-      <Text>Workout</Text>
+      <Text style={{textAlign:'center'}}>Workout</Text>
       <DayControl />
     </View>
   )

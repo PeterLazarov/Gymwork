@@ -16,12 +16,12 @@ const DayControl = () => {
       : date.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
   return (
-    <View>
-      <Text>{label}</Text>
+    <View style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
       <Button
         title="-"
         onPress={() => setDate(date.minus({ days: 1 }))}
-      />
+        />
+        <Text style={{flexGrow:1, textAlign:'center'}}>{label}</Text>
       <Button
         title="+"
         onPress={() => setDate(date.plus({ days: 1 }))}
