@@ -1,14 +1,14 @@
 import { DateTime } from 'luxon'
-import { Workout } from '../types/Workout'
+import { Workout, WorkoutSerializable } from '../types/Workout'
 import { exercises } from './exercises.json'
 
-export const workoutHistory: Array<Workout> = [
+export const workoutHistory: Array<WorkoutSerializable> = [
   {
     date: DateTime.fromObject({
       year: 2023,
       month: 10,
       day: 3,
-    }),
+    }).toISODate()!,
     work: [
       {
         exercise: exercises[0].name,
@@ -34,7 +34,7 @@ export const workoutHistory: Array<Workout> = [
       year: 2023,
       month: 10,
       day: 5,
-    }),
+    }).toISODate()!,
     work: [
       {
         exercise: exercises[2].name,
@@ -60,7 +60,7 @@ export const workoutHistory: Array<Workout> = [
       year: 2023,
       month: 10,
       day: 12,
-    }),
+    }).toISODate()!,
     work: [
       {
         exercise: exercises[4].name,

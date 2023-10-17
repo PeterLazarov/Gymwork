@@ -1,27 +1,12 @@
 import { View, Text, Button, TextInput } from 'react-native'
-import { Exercise } from './ExercisePicker'
-import React, { useEffect, useState } from 'react'
-import { DateTime } from 'luxon'
+import React from 'react'
 import IncrementDecrementButtons from './IncrementDecrementButtons'
 import { useAtomValue } from 'jotai'
 import { weightUnitAtom } from '../atoms'
 import { Workout } from '../types/Workout'
-import {
-  H3,
-  Table,
-  TR,
-  TH,
-  TD,
-  THead,
-  TBody,
-  Caption,
-} from '@expo/html-elements'
-
-type ExerciseSet = {
-  weight: number
-  reps: number
-  completedAt?: DateTime
-}
+import { Table, TR, TH, TD, THead, TBody, Caption } from '@expo/html-elements'
+import { ExerciseSet } from '../types/ExerciseSet'
+import { Exercise } from '../types/Exercise'
 
 function WorkoutExerciseEntrySet(props: {
   set: ExerciseSet
@@ -91,29 +76,16 @@ function WorkoutExerciseEntrySet(props: {
   )
 }
 
-const defaultSet: ExerciseSet = { reps: 8, weight: 20 }
+const defaultSet: ExerciseSet = { reps: 8, weight: 20, weightUnit: 'kg' }
 
 export default function WorkoutExerciseEntry(props: {
   exercise: Exercise
-  onChangeWork(work: Workout['work'][number]): void
+  sets: Workout['work'][number]['sets']
+  onChangeSets(work: Workout['work'][number]['sets']): void
 }) {
-  const [sets, setSets] = useState<ExerciseSet[]>([defaultSet])
-  const weightUnit = useAtomValue(weightUnitAtom)
-  useEffect(() => {
-    const work: Workout['work'][number] = {
-      exercise: props.exercise.name,
-      sets: sets.map(({ reps, weight }) => ({ reps, weight, weightUnit })),
-    }
-
-    props.onChangeWork(work)
-  })
-
   return (
     <View
       style={{
-        // display: 'flex',
-        // alignItems: 'center',
-        // justifyContent: 'center',
         backgroundColor: '#f4f4f4',
         padding: 16,
         margin: 16,
@@ -123,7 +95,7 @@ export default function WorkoutExerciseEntry(props: {
     >
       <Table>
         <Caption style={{ marginBottom: 16, fontWeight: 'bold' }}>
-          {props.exercise.name}
+          {props.exercise.name} {typeof props.exercise}
         </Caption>
 
         <THead>
@@ -141,15 +113,17 @@ export default function WorkoutExerciseEntry(props: {
         </THead>
 
         <TBody>
-          {sets.map((set, i) => (
+          {props.sets.map((set, i) => (
             <WorkoutExerciseEntrySet
               key={i}
               set={set}
               onChange={set => {
-                setSets(sets.map((_s, _i) => (i === _i ? set : _s)))
+                props.onChangeSets(
+                  props.sets.map((_s, _i) => (i === _i ? set : _s))
+                )
               }}
               onRemove={() => {
-                setSets(sets.filter(_s => _s !== set))
+                props.onChangeSets(props.sets.filter((_, _i) => _i !== i))
               }}
             />
           ))}
@@ -159,7 +133,7 @@ export default function WorkoutExerciseEntry(props: {
       <Button
         title="Add set"
         onPress={() => {
-          setSets(sets.concat({ ...(sets.at(-1) ?? defaultSet) }))
+          props.onChangeSets(props.sets.concat(defaultSet))
         }}
       />
     </View>

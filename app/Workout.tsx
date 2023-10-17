@@ -1,27 +1,18 @@
-import React, { useMemo, useState } from 'react'
-import { View, Text, Button, ScrollView } from 'react-native'
+import React, { useMemo } from 'react'
 
-import DayControl from '../components/DayControl'
-import Nav from '../components/Nav'
-import ExercisePicker, { Exercise } from '../components/ExercisePicker'
-import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
-import type { Workout } from '../types/Workout'
-import { DateTime } from 'luxon'
 import { useAtom, useAtomValue } from 'jotai'
 import { workoutHistoryAtom, dateAtom } from '../atoms'
 import Layout from '../components/Layout'
-
-const addExerciseButtonText = `
-Add exercise
-`
-const endWorkoutButtonText = `
-End workout
-`
+import WorkoutEntry from '../components/WorkoutEntry'
+import { Button, ScrollView } from 'react-native'
+import DayControl from '../components/DayControl'
+import { Workout } from '../types/Workout'
+import { DateTime } from 'luxon'
 
 // TODO show all workouts for the day
 export default function WorkoutPage() {
   const [workoutHistory, setWorkoutHistory] = useAtom(workoutHistoryAtom)
-  const globalDate = useAtomValue(dateAtom)
+  const [globalDate, setGlobalDate] = useAtom(dateAtom)
 
   const currentDayWorkouts = useMemo(() => {
     return workoutHistory.filter(
@@ -29,83 +20,43 @@ export default function WorkoutPage() {
     )
   }, [workoutHistory, dateAtom])
 
-  const [exercises, setExercises] = useState<Exercise[]>([])
-  const [showExercisePicker, setShowExercisePicker] = useState(false)
-
-  let work: Workout['work'] = []
-
-  function addExercise() {
-    setShowExercisePicker(true)
-  }
-  function handlePickExercise(exercise: Exercise) {
-    setExercises(exercises.concat(exercise))
-    setShowExercisePicker(false)
-  }
-  // TODO
-  function handleChangeWork(
-    exercise: Exercise,
-    index: number,
-    sets: Workout['work'][number]['sets']
-  ) {
-    work[index] = {
-      exercise: exercise.name,
-      sets,
-    }
-  }
-
-  function endWorkout() {
+  function newWorkout() {
+    const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
+    setGlobalDate(today)
     setWorkoutHistory(
-      workoutHistory.concat({
-        date: DateTime.now().set({ hour: 0, minute: 0, second: 0 }),
-        work,
-      })
+      workoutHistory.concat([
+        {
+          date: today,
+          work: [],
+        },
+      ])
     )
-
-    work = []
-    setExercises([])
   }
 
   return (
     <Layout>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          flexGrow: 1,
-        }}
-      >
-        <Text style={{ textAlign: 'center' }}>Workout</Text>
-        <DayControl />
+      <DayControl />
 
-        {showExercisePicker && <ExercisePicker onChange={handlePickExercise} />}
-
-        <ScrollView style={{ flexGrow: 1 }}>
-          {exercises.map((exercise, i) => (
-            <WorkoutExerciseEntry
-              key={`${exercise.name}_${i}`}
-              exercise={exercise}
-              onChangeWork={({ sets }) => {
-                handleChangeWork(exercise, i, sets)
-              }}
-            ></WorkoutExerciseEntry>
-          ))}
-        </ScrollView>
-
-        <View
-          style={{ display: 'flex', flexDirection: 'row', gap: 8, padding: 8 }}
-        >
-          <View style={{ flexGrow: 1 }}>
-            <Button
-              title={addExerciseButtonText}
-              onPress={addExercise}
-            />
-          </View>
-          <Button
-            title={endWorkoutButtonText}
-            onPress={endWorkout}
+      <ScrollView>
+        {currentDayWorkouts.map((workout, i) => (
+          <WorkoutEntry
+            key={`${workout.date.toISO}-${i}`}
+            workout={workout}
+            onChange={w => {
+              setWorkoutHistory(
+                workoutHistory.map((_w, _i) => (_i === i ? _w : w))
+              )
+            }}
+            // onEndWorkout={}
+            dayIndex={0}
           />
-        </View>
-      </View>
+        ))}
+      </ScrollView>
+
+      <Button
+        onPress={newWorkout}
+        title="New workout"
+      ></Button>
     </Layout>
   )
 }

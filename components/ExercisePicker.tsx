@@ -11,8 +11,8 @@ import {
   ScrollView,
 } from 'react-native'
 import { H1, H2 } from '@expo/html-elements'
+import { Exercise } from '../types/Exercise'
 
-export type Exercise = (typeof exercises)[number]
 const muscleOptions = Array.from(
   new Set(exercises.flatMap(({ primaryMuscles }) => primaryMuscles))
 )
