@@ -8,9 +8,12 @@ export default function IncrementDecrementButtons(props: {
   return (
     <View
       style={{
+        // overflow: 'hidden',
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
+        // alignItems: 'center',
+        justifyContent: 'center',
+        // backgroundColor: 'blue',
       }}
     >
       <Button

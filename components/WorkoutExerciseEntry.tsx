@@ -7,6 +7,7 @@ import { Workout } from '../types/Workout'
 import { Table, TR, TH, TD, THead, TBody, Caption } from '@expo/html-elements'
 import { ExerciseSet } from '../types/ExerciseSet'
 import { Exercise } from '../types/Exercise'
+import WorkoutExerciseEntryHeader from './WorkoutExerciseEntryHeader'
 
 function WorkoutExerciseEntrySet(props: {
   set: ExerciseSet
@@ -20,17 +21,26 @@ function WorkoutExerciseEntrySet(props: {
       style={{
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
+        gap: 16,
+        // alignItems: 'center',
+        // justifyContent: 'center',
       }}
     >
-      <TD>
+      <View
+        style={{
+          width: '30%',
+          // backgroundColor: '#00ff0088',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
         <IncrementDecrementButtons
           value={props.set.reps}
           onChange={n => props.onChange({ ...props.set, reps: Math.max(n, 0) })}
         >
           <TextInput
-            style={{ padding: 8 }}
+            style={{ flexGrow: 1, textAlign: 'center' }}
             inputMode="numeric"
             multiline={false}
             keyboardType="number-pad"
@@ -45,33 +55,32 @@ function WorkoutExerciseEntrySet(props: {
             {props.set.reps}
           </TextInput>
         </IncrementDecrementButtons>
-      </TD>
+      </View>
 
-      <TD style={{ display: 'flex', textAlign: 'center' }}>
-        <TextInput
-          inputMode="numeric"
-          multiline={false}
-          keyboardType="number-pad"
-          // style={{ marginLeft: 4 }}
-          maxLength={3}
-          onChangeText={text => {
-            props.onChange({
-              ...props.set,
-              weight: isNaN(+text) ? 0 : Math.max(+text, 0),
-            })
-          }}
-        >
-          {props.set.weight ?? 0}
-        </TextInput>
-        <Text>{weightUnit}</Text>
-      </TD>
+      <TextInput
+        inputMode="numeric"
+        style={{ height: '100%', flexGrow: 1 }}
+        // multiline={false}
+        keyboardType="number-pad"
+        // style={{ marginLeft: 4 }}
+        maxLength={3}
+        onChangeText={text => {
+          props.onChange({
+            ...props.set,
+            weight: isNaN(+text) ? 0 : Math.max(+text, 0),
+          })
+        }}
+        textAlign="center"
+      >
+        {props.set.weight ?? 0}
+      </TextInput>
 
-      <TD>
+      <View style={{ width: '30%' }}>
         <Button
           title="Remove set"
           onPress={props.onRemove}
         />
-      </TD>
+      </View>
     </TR>
   )
 }
@@ -93,47 +102,40 @@ export default function WorkoutExerciseEntry(props: {
         gap: 24,
       }}
     >
-      <Table>
-        <Caption style={{ marginBottom: 16, fontWeight: 'bold' }}>
-          {props.exercise.name} {typeof props.exercise}
-        </Caption>
+      {/* <Caption style={{ marginBottom: 16, fontWeight: 'bold' }}> */}
+      <Text
+        style={{
+          width: '100%',
+          textAlign: 'center',
+          fontSize: 16,
+          fontWeight: 'bold',
+        }}
+      >
+        {props.exercise.name}
+      </Text>
+      {/* </Caption> */}
 
-        <THead>
-          <TR>
-            <TH>
-              <Text style={{ fontWeight: 'normal' }}>Reps</Text>
-            </TH>
-            <TH>
-              <Text style={{ fontWeight: 'normal' }}>Weight</Text>
-            </TH>
-            <TH>
-              <Text style={{ fontWeight: 'normal' }}></Text>
-            </TH>
-          </TR>
-        </THead>
+      <WorkoutExerciseEntryHeader />
 
-        <TBody>
-          {props.sets.map((set, i) => (
-            <WorkoutExerciseEntrySet
-              key={i}
-              set={set}
-              onChange={set => {
-                props.onChangeSets(
-                  props.sets.map((_s, _i) => (i === _i ? set : _s))
-                )
-              }}
-              onRemove={() => {
-                props.onChangeSets(props.sets.filter((_, _i) => _i !== i))
-              }}
-            />
-          ))}
-        </TBody>
-      </Table>
+      {props.sets.map((set, i) => (
+        <WorkoutExerciseEntrySet
+          key={i}
+          set={set}
+          onChange={set => {
+            props.onChangeSets(
+              props.sets.map((_s, _i) => (i === _i ? set : _s))
+            )
+          }}
+          onRemove={() => {
+            props.onChangeSets(props.sets.filter((_, _i) => _i !== i))
+          }}
+        />
+      ))}
 
       <Button
         title="Add set"
         onPress={() => {
-          props.onChangeSets(props.sets.concat(defaultSet))
+          props.onChangeSets(props.sets.concat(props.sets.at(-1) ?? defaultSet))
         }}
       />
     </View>

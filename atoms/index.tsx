@@ -15,8 +15,24 @@ export const weightUnitAtom = atom('kg')
 
 const _workoutHistoryAtom = atom(workoutHistory)
 export const workoutHistoryAtom = atom(
-  get => get(_workoutHistoryAtom).map(workoutFromSerializable),
-  (get, set, args: Workout[]) => {
-    set(_workoutHistoryAtom, args.map(workoutToSerializable))
+  get => {
+    const x = get(_workoutHistoryAtom)
+    const y = Object.entries(x)
+    const z = y.map(
+      ([isoDate, workouts]) =>
+        [isoDate, workouts.map(workoutFromSerializable)] as const
+    )
+    const history = Object.fromEntries(z)
+    console.log(history)
+    return history
+  },
+  (get, set, args: Record<string, Workout[]>) => {
+    const next = Object.fromEntries(
+      Object.entries(args).map(([date, workouts]) => [
+        date,
+        workouts.map(workoutToSerializable),
+      ])
+    )
+    set(_workoutHistoryAtom, next)
   }
 )

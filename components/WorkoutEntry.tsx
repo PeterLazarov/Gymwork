@@ -73,7 +73,9 @@ export default function WorkoutEntry(props: {
         flexGrow: 1,
       }}
     >
-      <Text style={{ textAlign: 'center' }}>Workout {props.dayIndex}</Text>
+      <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
+        Workout {props.dayIndex + 1}
+      </Text>
 
       {showExercisePicker && <ExercisePicker onChange={handleAddExercise} />}
 

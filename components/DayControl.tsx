@@ -4,6 +4,7 @@ import React from 'react'
 import { View, Text, Button } from 'react-native'
 
 import { dateAtom } from '../atoms'
+import { Link } from 'expo-router'
 
 const DayControl = () => {
   const [date, setDate] = useAtom(dateAtom)
@@ -16,12 +17,20 @@ const DayControl = () => {
       : date.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
   return (
-    <View style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+    <View
+      style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+    >
       <Button
         title=" - "
         onPress={() => setDate(date.minus({ days: 1 }))}
-        />
-        <Text style={{flexGrow:1, textAlign:'center'}}>{label}</Text>
+      />
+
+      <Link
+        href="/Calendar"
+        style={{ flexGrow: 1, textAlign: 'center' }}
+      >
+        {label}
+      </Link>
       <Button
         title=" + "
         onPress={() => setDate(date.plus({ days: 1 }))}

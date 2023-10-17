@@ -8,29 +8,38 @@ import { Button, ScrollView } from 'react-native'
 import DayControl from '../components/DayControl'
 import { Workout } from '../types/Workout'
 import { DateTime } from 'luxon'
+import { Text } from 'react-native'
 
 // TODO show all workouts for the day
 export default function WorkoutPage() {
   const [workoutHistory, setWorkoutHistory] = useAtom(workoutHistoryAtom)
   const [globalDate, setGlobalDate] = useAtom(dateAtom)
 
-  const currentDayWorkouts = useMemo(() => {
-    return workoutHistory.filter(
-      workout => workout.date.toISODate() === globalDate.toISODate()
-    )
+  const globalDateISO = useMemo(() => globalDate.toISODate()!, [globalDate])
+
+  const selectedDayWorkouts = useMemo(() => {
+    const data = workoutHistory[globalDateISO]
+
+    console.log('currentDayWorkouts', data, workoutHistory)
+
+    return data ?? []
   }, [workoutHistory, dateAtom])
 
   function newWorkout() {
     const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
     setGlobalDate(today)
-    setWorkoutHistory(
-      workoutHistory.concat([
+
+    setWorkoutHistory({
+      ...workoutHistory,
+      [globalDate.toISODate()!]: (
+        workoutHistory[globalDate.toISODate()!] ?? []
+      ).concat([
         {
           date: today,
           work: [],
         },
-      ])
-    )
+      ]),
+    })
   }
 
   return (
@@ -38,17 +47,26 @@ export default function WorkoutPage() {
       <DayControl />
 
       <ScrollView>
-        {currentDayWorkouts.map((workout, i) => (
+        {selectedDayWorkouts.map((workout, i) => (
           <WorkoutEntry
             key={`${workout.date.toISO}-${i}`}
             workout={workout}
-            onChange={w => {
+            onChange={updatedWorkout => {
+              console.log('in workout', JSON.stringify(updatedWorkout))
               setWorkoutHistory(
-                workoutHistory.map((_w, _i) => (_i === i ? _w : w))
+                {
+                  ...workoutHistory,
+                  [globalDateISO]: workoutHistory[globalDateISO].map(
+                    (storedWorkout, _i) =>
+                      i === _i ? updatedWorkout : storedWorkout
+                  ),
+                }
+
+                // .map((_w, _i) => (_i === i ? _w : w))
               )
             }}
-            // onEndWorkout={}
-            dayIndex={0}
+            // TODO onEndWorkout={}
+            dayIndex={i}
           />
         ))}
       </ScrollView>

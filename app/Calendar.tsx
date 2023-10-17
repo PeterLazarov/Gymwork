@@ -15,10 +15,7 @@ const CalendarPage = () => {
 
   const markedDates = useMemo((): MarkedDates => {
     return Object.fromEntries(
-      workoutHistory.map(workout => [
-        workout.date.toISODate()!,
-        { marked: true },
-      ])
+      Object.entries(workoutHistory).map(([date]) => [date, { marked: true }])
     )
   }, [workoutHistory])
 
