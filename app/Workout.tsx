@@ -17,7 +17,7 @@ const endWorkoutButtonText = `
 End workout
 `
 
-// TODO refactor data flow
+// TODO show all workouts for the day
 export default function WorkoutPage() {
   const [workoutHistory, setWorkoutHistory] = useAtom(workoutHistoryAtom)
 
