@@ -1,11 +1,10 @@
 import { Text, View } from 'react-native'
-import Nav from '../components/Nav'
+import Layout from '../components/Layout'
 
 export default function Log() {
   return (
-    <View>
-      <Nav />
+    <Layout>
       <Text>Log Page</Text>
-    </View>
+    </Layout>
   )
 }

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, Text, Button, ScrollView, SafeAreaView } from 'react-native'
+import React, { useMemo, useState } from 'react'
+import { View, Text, Button, ScrollView } from 'react-native'
 
 import DayControl from '../components/DayControl'
 import Nav from '../components/Nav'
@@ -7,8 +7,9 @@ import ExercisePicker, { Exercise } from '../components/ExercisePicker'
 import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
 import type { Workout } from '../types/Workout'
 import { DateTime } from 'luxon'
-import { useAtom } from 'jotai'
-import { workoutHistoryAtom } from '../atoms'
+import { useAtom, useAtomValue } from 'jotai'
+import { workoutHistoryAtom, dateAtom } from '../atoms'
+import Layout from '../components/Layout'
 
 const addExerciseButtonText = `
 Add exercise
@@ -20,6 +21,13 @@ End workout
 // TODO show all workouts for the day
 export default function WorkoutPage() {
   const [workoutHistory, setWorkoutHistory] = useAtom(workoutHistoryAtom)
+  const globalDate = useAtomValue(dateAtom)
+
+  const currentDayWorkouts = useMemo(() => {
+    return workoutHistory.filter(
+      workout => workout.date.toISODate() === globalDate.toISODate()
+    )
+  }, [workoutHistory, dateAtom])
 
   const [exercises, setExercises] = useState<Exercise[]>([])
   const [showExercisePicker, setShowExercisePicker] = useState(false)
@@ -58,15 +66,14 @@ export default function WorkoutPage() {
   }
 
   return (
-    <SafeAreaView>
+    <Layout>
       <View
         style={{
           display: 'flex',
           flexDirection: 'column',
-          height: '100%',
+          flexGrow: 1,
         }}
       >
-        <Nav />
         <Text style={{ textAlign: 'center' }}>Workout</Text>
         <DayControl />
 
@@ -99,6 +106,6 @@ export default function WorkoutPage() {
           />
         </View>
       </View>
-    </SafeAreaView>
+    </Layout>
   )
 }
