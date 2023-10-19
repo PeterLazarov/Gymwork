@@ -1,45 +1,58 @@
-import React, { useMemo } from 'react'
+import { useAtom } from 'jotai'
+import React, { useEffect, useMemo, useState } from 'react'
+import { ScrollView, Text } from 'react-native'
 
-import { useAtom, useAtomValue } from 'jotai'
-import { workoutHistoryAtom, dateAtom } from '../atoms'
-import Layout from '../components/Layout'
-import WorkoutEntry from '../components/WorkoutEntry'
-import { Button, ScrollView } from 'react-native'
+import { dateAtom } from '../atoms'
 import DayControl from '../components/DayControl'
-import { Workout } from '../types/Workout'
-import { DateTime } from 'luxon'
-import { Text } from 'react-native'
+import Layout from '../components/Layout'
+import WorkoutControlButtons from '../components/WorkoutControlButtons'
+import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
+import { Exercise, Workout } from '../db/models'
+import { useDatabaseConnection } from '../db/setup'
 
-// TODO show all workouts for the day
 export default function WorkoutPage() {
-  const [workoutHistory, setWorkoutHistory] = useAtom(workoutHistoryAtom)
-  const [globalDate, setGlobalDate] = useAtom(dateAtom)
+  const [globalDate] = useAtom(dateAtom)
 
   const globalDateISO = useMemo(() => globalDate.toISODate()!, [globalDate])
 
-  const selectedDayWorkouts = useMemo(() => {
-    const data = workoutHistory[globalDateISO]
+  const { workoutRepository, workoutExerciseRepository } =
+    useDatabaseConnection()
+  const [workout, setWorkout] = useState<Workout>()
 
-    console.log('currentDayWorkouts', data, workoutHistory)
-
-    return data ?? []
-  }, [workoutHistory, dateAtom])
+  useEffect(() => {
+    workoutRepository
+      .getAll({
+        filter: {
+          date: globalDateISO,
+        },
+        relations: {
+          exercises: true,
+        },
+      })
+      .then(([workout]) => setWorkout(workout))
+  }, [globalDateISO])
+  console.log({ workout })
 
   function newWorkout() {
-    const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
-    setGlobalDate(today)
+    workoutRepository
+      .create({
+        date: globalDateISO,
+        notes: '',
+      })
+      .then(setWorkout)
+  }
 
-    setWorkoutHistory({
-      ...workoutHistory,
-      [globalDate.toISODate()!]: (
-        workoutHistory[globalDate.toISODate()!] ?? []
-      ).concat([
-        {
-          date: today,
-          work: [],
-        },
-      ]),
+  async function addExercise(exercise: Exercise) {
+    console.log('adding exercise')
+    const workoutExercise = await workoutExerciseRepository.create({
+      exercise,
+      workout,
     })
+
+    workout!.exercises.push(workoutExercise)
+    workoutRepository.update(workout!.id, workout!).then()
+
+    setWorkout(workout)
   }
 
   return (
@@ -47,34 +60,23 @@ export default function WorkoutPage() {
       <DayControl />
 
       <ScrollView>
-        {selectedDayWorkouts.map((workout, i) => (
-          <WorkoutEntry
-            key={`${workout.date.toISO}-${i}`}
-            workout={workout}
-            onChange={updatedWorkout => {
-              console.log('in workout', JSON.stringify(updatedWorkout))
-              setWorkoutHistory(
-                {
-                  ...workoutHistory,
-                  [globalDateISO]: workoutHistory[globalDateISO].map(
-                    (storedWorkout, _i) =>
-                      i === _i ? updatedWorkout : storedWorkout
-                  ),
-                }
-
-                // .map((_w, _i) => (_i === i ? _w : w))
-              )
-            }}
-            // TODO onEndWorkout={}
-            dayIndex={i}
+        <Text>
+          {typeof workout}
+          {workout?.date}
+        </Text>
+        {workout?.exercises?.map((exercise, i) => (
+          <WorkoutExerciseEntry
+            key={`${workout.date}_${i}`}
+            exercise={exercise}
           />
         ))}
       </ScrollView>
 
-      <Button
-        onPress={newWorkout}
-        title="New workout"
-      ></Button>
+      <WorkoutControlButtons
+        workout={workout}
+        createWorkout={newWorkout}
+        addExercise={addExercise}
+      />
     </Layout>
   )
 }

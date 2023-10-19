@@ -1,13 +1,25 @@
 import React, { createContext, useContext } from 'react'
 import { DataSource, DataSourceOptions } from 'typeorm'
 
-import { Workout, Exercise } from './models'
-import { WorkoutRepository, ExerciseRepository } from './repositories'
+import {
+  Workout,
+  Exercise,
+  WorkoutExercise,
+  WorkoutExerciseSet,
+} from './models'
+import {
+  WorkoutRepository,
+  ExerciseRepository,
+  WorkoutExerciseRepository,
+  WorkoutExerciseSetRepository,
+} from './repositories'
 import { runSeeds } from './seeds'
 
 interface DatabaseConnectionContextData {
   workoutRepository: WorkoutRepository
   exerciseRepository: ExerciseRepository
+  workoutExerciseRepository: WorkoutExerciseRepository
+  workoutExerciseSetRepository: WorkoutExerciseSetRepository
 }
 
 const DatabaseConnectionContext = createContext<DatabaseConnectionContextData>(
@@ -23,7 +35,7 @@ export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
     type: 'expo',
     database: 'gymwork.db',
     driver: require('expo-sqlite'),
-    entities: [Exercise, Workout],
+    entities: [Exercise, Workout, WorkoutExercise, WorkoutExerciseSet],
 
     //   migrations: [CreateTodosTable1608217149351],
     //   migrationsRun: true,
@@ -48,6 +60,10 @@ export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
       value={{
         workoutRepository: new WorkoutRepository(datasource),
         exerciseRepository: new ExerciseRepository(datasource),
+        workoutExerciseRepository: new WorkoutExerciseRepository(datasource),
+        workoutExerciseSetRepository: new WorkoutExerciseSetRepository(
+          datasource
+        ),
       }}
     >
       {children}

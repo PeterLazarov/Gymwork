@@ -1,12 +1,6 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 
-import { Exercise } from './exercise'
+import { WorkoutExercise } from './workoutExercise'
 
 @Entity('workouts')
 export class Workout {
@@ -19,7 +13,6 @@ export class Workout {
   @Column()
   notes?: string
 
-  @ManyToMany(() => Exercise)
-  @JoinTable()
-  exercises: Exercise[]
+  @OneToMany(() => WorkoutExercise, workoutExercise => workoutExercise.workout)
+  exercises: WorkoutExercise[]
 }

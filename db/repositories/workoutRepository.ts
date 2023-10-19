@@ -6,8 +6,10 @@ type Relations = {
   exercises: boolean
 }
 
+type Filter = Partial<Pick<Workout, 'date'>>
+
 type GetAllOptions = {
-  filter?: Partial<Workout>
+  filter?: Filter
   relations?: Relations
 }
 

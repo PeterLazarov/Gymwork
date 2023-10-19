@@ -1,54 +1,58 @@
-import { exercises } from '../data/exercises.json'
-
-import React, { useMemo, useState } from 'react'
+import { H2 } from '@expo/html-elements'
 import { Picker } from '@react-native-picker/picker'
-import {
-  View,
-  TextInput,
-  Modal,
-  Text,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native'
-import { H1, H2 } from '@expo/html-elements'
-import { Exercise } from '../types/Exercise'
+import React, { useEffect, useState } from 'react'
+import { TextInput, Modal, SafeAreaView, ScrollView } from 'react-native'
 
-const muscleOptions = Array.from(
-  new Set(exercises.flatMap(({ primaryMuscles }) => primaryMuscles))
-)
+import { Exercise } from '../db/models'
+import { useDatabaseConnection } from '../db/setup'
 
-const ExercisePicker = (props: {
+type Props = {
   onChange: (exercise: Exercise) => unknown
-}) => {
+}
+
+const ExercisePicker: React.FC<Props> = ({ onChange }) => {
   const [selectedExercise, setSelectedExercise] = useState<
     Exercise | undefined
   >(undefined)
 
-  const [filterString, setFilterString] = useState('')
-  const [filterMuscle, setFilterMuscle] = useState('')
+  const { exerciseRepository } = useDatabaseConnection()
 
-  const filteredExercises = useMemo(() => {
-    let filtered = exercises
-    if (filterString) {
-      filtered = filtered.filter(({ name }) =>
-        name.toLowerCase().includes(filterString.toLowerCase())
-      )
-    }
-    if (filterMuscle) {
-      filtered = filtered.filter(({ primaryMuscles }) =>
-        primaryMuscles.includes(filterMuscle)
-      )
-    }
-    return filtered
-  }, [filterString, filterMuscle])
+  const [filteredExercises, setFilteredExercises] = useState<Exercise[]>([])
+  const [filterString, setFilterString] = useState('')
+  // const [filterMuscle, setFilterMuscle] = useState('')
+
+  useEffect(() => {
+    exerciseRepository
+      .getAll({
+        filter: {
+          // name: filterString,
+        },
+      })
+      .then(setFilteredExercises)
+  }, [filterString])
+  console.log({ filteredExercises })
+  // const filteredExercises = useMemo(() => {
+  //   let filtered = exercises
+  //   if (filterString) {
+  //     filtered = filtered.filter(({ name }) =>
+  //       name.toLowerCase().includes(filterString.toLowerCase())
+  //     )
+  //   }
+  //   if (filterMuscle) {
+  //     filtered = filtered.filter(({ primaryMuscles }) =>
+  //       primaryMuscles.includes(filterMuscle)
+  //     )
+  //   }
+  //   return filtered
+  // }, [filterString, filterMuscle])
 
   function handleSelectExercise(exercise: Exercise) {
     setSelectedExercise(exercise)
-    props.onChange(exercise)
+    onChange(exercise)
   }
 
   return (
-    <Modal visible={true}>
+    <Modal visible>
       <SafeAreaView>
         <ScrollView style={{ display: 'flex', flexDirection: 'column' }}>
           <H2>Pick Exercise</H2>
@@ -59,24 +63,22 @@ const ExercisePicker = (props: {
             value={filterString}
             onChangeText={setFilterString}
             placeholder="Search..."
-          ></TextInput>
+          />
 
           {/* Filter by muscle */}
-          <Picker
+          {/* <Picker
             selectedValue={filterMuscle}
             onValueChange={itemValue => {
               setFilterMuscle(itemValue)
             }}
             // mode="dropdown"
           >
-            {
-              <Picker.Item
-                key={'none'}
-                label={'Targeted Muscle'}
-                value={''}
-                enabled={false}
-              />
-            }
+            <Picker.Item
+              key="none"
+              label="Targeted Muscle"
+              value=""
+              enabled={false}
+            />
             {muscleOptions.map(muscle => (
               <Picker.Item
                 key={muscle}
@@ -84,7 +86,7 @@ const ExercisePicker = (props: {
                 value={muscle}
               />
             ))}
-          </Picker>
+          </Picker> */}
 
           {/* Show exercises */}
           <Picker
@@ -97,14 +99,12 @@ const ExercisePicker = (props: {
             }}
             // mode="dropdown"
           >
-            {
-              <Picker.Item
-                key={'none'}
-                label={'Exercise'}
-                value={''}
-                enabled={false}
-              />
-            }
+            <Picker.Item
+              key="none"
+              label="Exercise"
+              value=""
+              enabled={false}
+            />
             {filteredExercises.map(exercise => (
               <Picker.Item
                 key={exercise.name}

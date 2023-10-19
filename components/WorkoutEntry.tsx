@@ -1,12 +1,14 @@
-import { View, ScrollView, Button, Text } from 'react-native'
-import { Workout } from '../types/Workout'
-import ExercisePicker from './ExercisePicker'
-import WorkoutExerciseEntry from './WorkoutExerciseEntry'
+import { useAtomValue } from 'jotai'
 import { DateTime } from 'luxon'
 import { useState } from 'react'
+import { View, ScrollView, Button, Text } from 'react-native'
+
+import ExercisePicker from './ExercisePicker'
+import WorkoutExerciseEntry from './WorkoutExerciseEntry'
 import { weightUnitAtom } from '../atoms'
-import { useAtomValue } from 'jotai'
+import { WorkoutExercise } from '../db/models'
 import { Exercise } from '../types/Exercise'
+import { Workout } from '../types/Workout'
 
 const addExerciseButtonText = `
 Add exercise
@@ -22,32 +24,15 @@ type ExerciseSet = {
 const defaultSet: ExerciseSet = { reps: 8, weight: 20 }
 
 export default function WorkoutEntry(props: {
-  workout: Workout
+  exercise: WorkoutExercise
   dayIndex: number
   onChange?: (workout: Workout) => void
   onEndWorkout?: () => void
 }) {
   const weightUnit = useAtomValue(weightUnitAtom)
 
-  const [showExercisePicker, setShowExercisePicker] = useState(false)
-
   // let work: Workout['work'] = []
 
-  function openExercisePicker() {
-    setShowExercisePicker(true)
-  }
-  function handleAddExercise(exercise: Exercise) {
-    props.onChange?.({
-      ...props.workout,
-      work: props.workout.work.concat({
-        exercise: exercise,
-        sets: [
-          { reps: defaultSet.reps, weight: defaultSet.weight, weightUnit },
-        ],
-      }),
-    })
-    setShowExercisePicker(false)
-  }
   function handleChangeSets(
     exercise: Exercise,
     index: number,
@@ -74,10 +59,8 @@ export default function WorkoutEntry(props: {
       }}
     >
       <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
-        Workout {props.dayIndex + 1}
+        Exercise {props.dayIndex + 1}
       </Text>
-
-      {showExercisePicker && <ExercisePicker onChange={handleAddExercise} />}
 
       <ScrollView style={{ flexGrow: 1 }}>
         {props.workout.work.map(({ exercise, sets }, i) => (
@@ -88,7 +71,7 @@ export default function WorkoutEntry(props: {
             onChangeSets={sets => {
               handleChangeSets(exercise, i, sets)
             }}
-          ></WorkoutExerciseEntry>
+          />
         ))}
       </ScrollView>
 

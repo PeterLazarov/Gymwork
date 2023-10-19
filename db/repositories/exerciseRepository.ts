@@ -2,8 +2,10 @@ import { DataSource, Repository } from 'typeorm'
 
 import { Exercise } from '../models'
 
+type Filter = Partial<Pick<Exercise, 'name'>>
+
 type GetAllOptions = {
-  filter?: Partial<Exercise>
+  filter?: Filter
 }
 
 export class ExerciseRepository {
