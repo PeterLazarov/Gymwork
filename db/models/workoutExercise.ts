@@ -41,4 +41,13 @@ export class WorkoutExercise {
   generateVirtualFields(): void {
     this.name = this.exercise?.name
   }
+
+  @AfterLoad()
+  @AfterInsert()
+  @AfterUpdate()
+  async nullChecks() {
+    if (!this.sets) {
+      this.sets = []
+    }
+  }
 }

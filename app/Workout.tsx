@@ -48,15 +48,14 @@ export default function WorkoutPage() {
       workout,
     })
 
-    // todo: research why exercises is defautled to undefined
     const updated = {
       ...workout!,
-      exercises: [...(workout!.exercises || []), workoutExercise],
+      exercises: [...workout!.exercises, workoutExercise],
     }
 
-    workoutRepository.update(workout!.id, updated).then()
-
+    // TODO: fuck this
     setWorkout(updated)
+    workoutRepository.update(workout!.id, updated).then()
   }
 
   return (

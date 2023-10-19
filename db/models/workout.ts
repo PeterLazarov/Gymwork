@@ -1,4 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  AfterInsert,
+  AfterLoad,
+  AfterUpdate,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'
 
 import { WorkoutExercise } from './workoutExercise'
 
@@ -15,4 +23,13 @@ export class Workout {
 
   @OneToMany(() => WorkoutExercise, workoutExercise => workoutExercise.workout)
   exercises: WorkoutExercise[]
+
+  @AfterLoad()
+  @AfterInsert()
+  @AfterUpdate()
+  nullChecks(): void {
+    if (!this.exercises) {
+      this.exercises = []
+    }
+  }
 }

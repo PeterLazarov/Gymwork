@@ -38,7 +38,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
 
       <WorkoutExerciseEntryHeader />
 
-      {/* {exercise.sets.map((set, i) => (
+      {exercise.sets.map((set, i) => (
         <WorkoutExerciseEntrySet
           key={i}
           set={set}
@@ -51,7 +51,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
             // props.onChangeSets(props.sets.filter((_, _i) => _i !== i))
           }}
         />
-      ))} */}
+      ))}
 
       <Button
         title="Add set"
