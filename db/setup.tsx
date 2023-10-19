@@ -1,8 +1,9 @@
 import React, { createContext, useContext } from 'react'
-import { DataSource } from 'typeorm'
+import { DataSource, DataSourceOptions } from 'typeorm'
 
 import { Workout, Exercise } from './models'
 import { WorkoutRepository, ExerciseRepository } from './repositories'
+import { runSeeds } from './seeds'
 
 interface DatabaseConnectionContextData {
   workoutRepository: WorkoutRepository
@@ -18,7 +19,7 @@ type Props = {
 }
 
 export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
-  const datasource = new DataSource({
+  const options: DataSourceOptions = {
     type: 'expo',
     database: 'gymwork.db',
     driver: require('expo-sqlite'),
@@ -28,12 +29,15 @@ export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
     //   migrationsRun: true,
 
     synchronize: true,
-  })
+  }
+
+  const datasource = new DataSource(options)
 
   datasource
     .initialize()
     .then(() => {
       console.log('Data Source has been initialized!')
+      runSeeds(datasource)
     })
     .catch(err => {
       console.error('Error during Data Source initialization', err)

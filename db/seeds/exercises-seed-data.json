@@ -1,0 +1,4367 @@
+[
+  {
+    "name": "3/4 Sit-Up",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "90/90 Hamstring",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Ab Crunch Machine",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Ab Roller",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Adductor",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Adductor/Groin",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Advanced Kettlebell Windmill",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Air Bike",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "All Fours Quad Stretch",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Alternate Hammer Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Alternate Heel Touchers",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Alternate Incline Dumbbell Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Alternate Leg Diagonal Bound",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Alternating Cable Shoulder Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Alternating Deltoid Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Alternating Floor Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Alternating Hang Clean",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Alternating Kettlebell Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Alternating Kettlebell Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Alternating Renegade Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Ankle Circles",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Ankle On The Knee",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Anterior Tibialis-SMR",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Anti-Gravity Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Arm Circles",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Arnold Dumbbell Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Around The Worlds",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Atlas Stone Trainer",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Atlas Stones",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Axle Deadlift",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Back Flyes - With Bands",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Backward Drag",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Backward Medicine Ball Throw",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Balance Board",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Ball Leg Curl",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Band Assisted Pull-Up",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Band Good Morning",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Band Good Morning (Pull Through)",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Band Hip Adductions",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Band Pull Apart",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Band Skull Crusher",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Ab Rollout",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Ab Rollout - On Knees",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Bench Press - Medium Grip",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Curls Lying Against An Incline",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Deadlift",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Full Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Glute Bridge",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Guillotine Bench Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Hack Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Hip Thrust",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Incline Bench Press - Medium Grip",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Incline Shoulder Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Lunge",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Rear Delt Row",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Rollout from Bench",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Seated Calf Raise",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Shoulder Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Shrug",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Shrug Behind The Back",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Side Bend",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Side Split Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Squat To A Bench",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Step Ups",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Barbell Walking Lunge",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Battling Ropes",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Bear Crawl Sled Drags",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Behind Head Chest Stretch",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Bench Dips",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Bench Jump",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Bench Press - Powerlifting",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Bench Press - With Bands",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Bench Press with Chains",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Bench Sprint",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Bent-Arm Barbell Pullover",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Bent-Arm Dumbbell Pullover",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Bent-Knee Hip Raise",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Bent Over Barbell Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Bent Over Dumbbell Rear Delt Raise With Head On Bench",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Bent Over Low-Pulley Side Lateral",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Bent Over One-Arm Long Bar Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Bent Over Two-Arm Long Bar Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Bent Over Two-Dumbbell Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Bent Over Two-Dumbbell Row With Palms In",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Bent Press",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Bicycling",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Bicycling, Stationary",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Board Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Body-Up",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Body Tricep Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Bodyweight Flyes",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Bodyweight Mid Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Bodyweight Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Bodyweight Walking Lunge",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Bosu Ball Cable Crunch With Side Bends",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Bottoms-Up Clean From The Hang Position",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Bottoms Up",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Box Jump (Multiple Response)",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Box Skip",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Box Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Box Squat with Bands",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Box Squat with Chains",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Brachialis-SMR",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Bradford/Rocky Presses",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Butt-Ups",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Butt Lift (Bridge)",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Butterfly",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Chest Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Crossover",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Deadlifts",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Hammer Curls - Rope Attachment",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Hip Adduction",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Incline Pushdown",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Incline Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Internal Rotation",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Iron Cross",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Judo Flip",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Lying Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Cable One Arm Tricep Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Preacher Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Rear Delt Fly",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Reverse Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Rope Overhead Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Rope Rear-Delt Rows",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Russian Twists",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Seated Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Seated Lateral Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Shoulder Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Shrugs",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Cable Wrist Curl",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Calf-Machine Shoulder Shrug",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Calf Press",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Calf Press On The Leg Press Machine",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Calf Raise On A Dumbbell",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Calf Raises - With Bands",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Calf Stretch Elbows Against Wall",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Calf Stretch Hands Against Wall",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Calves-SMR",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Car Deadlift",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Car Drivers",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Carioca Quick Step",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Cat Stretch",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Catch and Overhead Throw",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Chain Handle Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Chain Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Chair Leg Extended Stretch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Chair Lower Back Stretch",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Chair Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Chair Upper Body Stretch",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Chest And Front Of Shoulder Stretch",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Chest Push (multiple response)",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Chest Push (single response)",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Chest Push from 3 point stance",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Chest Push with Run Release",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Chest Stretch on Stability Ball",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Child's Pose",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Chin-Up",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Chin To Chest Stretch",
+    "category": "neck",
+    "type": "weight"
+  },
+  {
+    "name": "Circus Bell",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Clean",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Clean Deadlift",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Clean Pull",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Clean Shrug",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Clean and Jerk",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Clean and Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Clean from Blocks",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Clock Push-Up",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Close-Grip Barbell Bench Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Close-Grip Dumbbell Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Close-Grip EZ-Bar Curl with Band",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Close-Grip EZ-Bar Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Close-Grip EZ Bar Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Close-Grip Front Lat Pulldown",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Close-Grip Push-Up off of a Dumbbell",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Close-Grip Standing Barbell Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Cocoons",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Conan's Wheel",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Concentration Curls",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Cross-Body Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Cross Body Hammer Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Cross Over - With Bands",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Crossover Reverse Lunge",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Crucifix",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Crunch - Hands Overhead",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Crunch - Legs On Exercise Ball",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Crunches",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Cuban Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Dancer's Stretch",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Dead Bug",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Deadlift with Bands",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Deadlift with Chains",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Decline Barbell Bench Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Decline Close-Grip Bench To Skull Crusher",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Decline Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Decline Dumbbell Bench Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Decline Dumbbell Flyes",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Decline Dumbbell Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Decline EZ Bar Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Decline Oblique Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Decline Push-Up",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Decline Reverse Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Decline Smith Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Deficit Deadlift",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Depth Jump Leap",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dip Machine",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dips - Chest Version",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Dips - Triceps Version",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Donkey Calf Raises",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Double Kettlebell Alternating Hang Clean",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Double Kettlebell Jerk",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Double Kettlebell Push Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Double Kettlebell Snatch",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Double Kettlebell Windmill",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Double Leg Butt Kick",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Downward Facing Balance",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Drag Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Drop Push",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Alternate Bicep Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Bench Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Bench Press with Neutral Grip",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Bicep Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Clean",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Floor Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Flyes",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Incline Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Incline Shoulder Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Lunges",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Lying One-Arm Rear Lateral Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Lying Pronation",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Lying Rear Lateral Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Lying Supination",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell One-Arm Shoulder Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell One-Arm Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell One-Arm Upright Row",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Prone Incline Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Rear Lunge",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Scaption",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Seated Box Jump",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Seated One-Leg Calf Raise",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Shoulder Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Shrug",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Side Bend",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Squat To A Bench",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Step Ups",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dumbbell Tricep Extension -Pronated Grip",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Dynamic Back Stretch",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Dynamic Chest Stretch",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "EZ-Bar Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "EZ-Bar Skullcrusher",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Elbow Circles",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Elbow to Knee",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Elbows Back",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Elevated Back Lunge",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Elevated Cable Rows",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Elliptical Trainer",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Exercise Ball Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Exercise Ball Pull-In",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Extended Range One-Arm Kettlebell Floor Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "External Rotation",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "External Rotation with Band",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "External Rotation with Cable",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Face Pull",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Farmer's Walk",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Fast Skipping",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Finger Curls",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Flat Bench Cable Flyes",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Flat Bench Leg Pull-In",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Flat Bench Lying Leg Raise",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Flexor Incline Dumbbell Curls",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Floor Glute-Ham Raise",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Floor Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Floor Press with Chains",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Flutter Kicks",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Foot-SMR",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Forward Drag with Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Frankenstein Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Freehand Jump Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Frog Hops",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Frog Sit-Ups",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Front Barbell Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Front Barbell Squat To A Bench",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Front Box Jump",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Front Cable Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Front Cone Hops (or hurdle hops)",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Front Dumbbell Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Front Incline Dumbbell Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Front Leg Raises",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Front Plate Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Front Raise And Pullover",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Front Squat (Clean Grip)",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Front Squats With Two Kettlebells",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Front Two-Dumbbell Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Full Range-Of-Motion Lat Pulldown",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Gironda Sternum Chins",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Glute Ham Raise",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Glute Kickback",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Goblet Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Good Morning",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Good Morning off Pins",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Gorilla Chin/Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Groin and Back Stretch",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Groiners",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Hack Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Hammer Curls",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Hammer Grip Incline DB Bench Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Hamstring-SMR",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Hamstring Stretch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Handstand Push-Ups",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Hang Clean",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Hang Clean - Below the Knees",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Hang Snatch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Hang Snatch - Below Knees",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Hanging Bar Good Morning",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Hanging Leg Raise",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Hanging Pike",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Heaving Snatch Balance",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Heavy Bag Thrust",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "High Cable Curls",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Hip Circles (prone)",
+    "category": "abductors",
+    "type": "weight"
+  },
+  {
+    "name": "Hip Extension with Bands",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Hip Flexion with Band",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Hip Lift with Band",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Hug A Ball",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Hug Knees To Chest",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Hurdle Hops",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Hyperextensions (Back Extensions)",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Hyperextensions With No Hyperextension Bench",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "IT Band and Glute Stretch",
+    "category": "abductors",
+    "type": "weight"
+  },
+  {
+    "name": "Iliotibial Tract-SMR",
+    "category": "abductors",
+    "type": "weight"
+  },
+  {
+    "name": "Inchworm",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Barbell Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Bench Pull",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Cable Chest Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Cable Flye",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Dumbbell Bench With Palms Facing In",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Dumbbell Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Dumbbell Flyes",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Dumbbell Flyes - With A Twist",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Dumbbell Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Hammer Curls",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Inner Biceps Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Push-Up",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Push-Up Close-Grip",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Push-Up Depth Jump",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Push-Up Medium",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Push-Up Reverse Grip",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Incline Push-Up Wide",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Intermediate Groin Stretch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Intermediate Hip Flexor and Quad Stretch",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Internal Rotation with Band",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Inverted Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Inverted Row with Straps",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Iron Cross",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Iron Crosses (stretch)",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Isometric Chest Squeezes",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Isometric Neck Exercise - Front And Back",
+    "category": "neck",
+    "type": "weight"
+  },
+  {
+    "name": "Isometric Neck Exercise - Sides",
+    "category": "neck",
+    "type": "weight"
+  },
+  {
+    "name": "Isometric Wipers",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "JM Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Jackknife Sit-Up",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Janda Sit-Up",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Jefferson Squats",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Jerk Balance",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Jerk Dip Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Jogging, Treadmill",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Keg Load",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Arnold Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Dead Clean",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Figure 8",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Hang Clean",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell One-Legged Deadlift",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Pass Between The Legs",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Pirate Ships",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Pistol Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Seated Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Seesaw Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Sumo High Pull",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Thruster",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Turkish Get-Up (Lunge style)",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Turkish Get-Up (Squat style)",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Kettlebell Windmill",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Kipping Muscle Up",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Knee Across The Body",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Knee Circles",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Knee/Hip Raise On Parallel Bars",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Knee Tuck Jump",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Kneeling Arm Drill",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Kneeling Cable Crunch With Alternating Oblique Twists",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Kneeling Cable Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Kneeling Forearm Stretch",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Kneeling High Pulley Row",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Kneeling Hip Flexor",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Kneeling Jump Squat",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Kneeling Single-Arm High Pulley Row",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Kneeling Squat",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Landmine 180's",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Landmine Linear Jammer",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Lateral Bound",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Lateral Box Jump",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Lateral Cone Hops",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Lateral Raise - With Bands",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Latissimus Dorsi-SMR",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Leg-Over Floor Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Leg-Up Hamstring Stretch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Leg Extensions",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Leg Lift",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Leg Press",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Leg Pull-In",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Leverage Chest Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Leverage Deadlift",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Leverage Decline Chest Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Leverage High Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Leverage Incline Chest Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Leverage Iso Row",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Leverage Shoulder Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Leverage Shrug",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Linear 3-Part Start Technique",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Linear Acceleration Wall Drill",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Linear Depth Jump",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Log Lift",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "London Bridges",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Looking At Ceiling",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Low Cable Crossover",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Low Cable Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Low Pulley Row To Neck",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Lower Back-SMR",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Lower Back Curl",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Lunge Pass Through",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Lunge Sprint",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Bent Leg Groin",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Cable Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Cambered Barbell Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Close-Grip Bar Curl On High Pulley",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Close-Grip Barbell Triceps Extension Behind The Head",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Close-Grip Barbell Triceps Press To Chin",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Crossover",
+    "category": "abductors",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Dumbbell Tricep Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Face Down Plate Neck Resistance",
+    "category": "neck",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Face Up Plate Neck Resistance",
+    "category": "neck",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Glute",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Hamstring",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Lying High Bench Barbell Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Leg Curls",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Machine Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Lying One-Arm Lateral Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Prone Quadriceps",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Rear Delt Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Supine Dumbbell Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Lying T-Bar Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Lying Triceps Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Machine Bench Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Machine Bicep Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Machine Preacher Curls",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Machine Shoulder (Military) Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Machine Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Medicine Ball Chest Pass",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Medicine Ball Full Twist",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Medicine Ball Scoop Throw",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Middle Back Shrug",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Middle Back Stretch",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Mixed Grip Chin",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Monster Walk",
+    "category": "abductors",
+    "type": "weight"
+  },
+  {
+    "name": "Mountain Climbers",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Moving Claw Series",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Muscle Snatch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Muscle Up",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Narrow Stance Hack Squats",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Narrow Stance Leg Press",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Narrow Stance Squats",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Natural Glute Ham Raise",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Neck-SMR",
+    "category": "neck",
+    "type": "weight"
+  },
+  {
+    "name": "Neck Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Oblique Crunches",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Oblique Crunches - On The Floor",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Olympic Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "On-Your-Back Quad Stretch",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "On Your Side Quad Stretch",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Dumbbell Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Flat Bench Dumbbell Flye",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm High-Pulley Cable Side Bends",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Incline Lateral Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Clean",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Clean and Jerk",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Floor Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Jerk",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Military Press To The Side",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Para Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Push Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Snatch",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Split Jerk",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Split Snatch",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Kettlebell Swings",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Long Bar Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Medicine Ball Slam",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Open Palm Kettlebell Clean",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Overhead Kettlebell Squats",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Side Deadlift",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "One-Arm Side Laterals",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "One-Legged Cable Kickback",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "One Arm Against Wall",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "One Arm Chin-Up",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "One Arm Dumbbell Bench Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "One Arm Dumbbell Preacher Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "One Arm Floor Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "One Arm Lat Pulldown",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "One Arm Pronated Dumbbell Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "One Arm Supinated Dumbbell Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "One Half Locust",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "One Handed Hang",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "One Knee To Chest",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "One Leg Barbell Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Open Palm Kettlebell Clean",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Otis-Up",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Overhead Cable Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Overhead Lat",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Overhead Slam",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Overhead Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Overhead Stretch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Overhead Triceps",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Pallof Press",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Pallof Press With Rotation",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Palms-Down Dumbbell Wrist Curl Over A Bench",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Palms-Down Wrist Curl Over A Bench",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Palms-Up Barbell Wrist Curl Over A Bench",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Palms-Up Dumbbell Wrist Curl Over A Bench",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Parallel Bar Dip",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Pelvic Tilt Into Bridge",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Peroneals-SMR",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Peroneals Stretch",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Physioball Hip Bridge",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Pin Presses",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Piriformis-SMR",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Plank",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Plate Pinch",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Plate Twist",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Platform Hamstring Slides",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Plie Dumbbell Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Plyo Kettlebell Pushups",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Plyo Push-up",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Posterior Tibialis Stretch",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Power Clean",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Power Clean from Blocks",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Power Jerk",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Power Partials",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Power Snatch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Power Snatch from Blocks",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Power Stairs",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Preacher Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Preacher Hammer Dumbbell Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Press Sit-Up",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Prone Manual Hamstring",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Prowler Sprint",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Pull Through",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Pullups",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Push-Up Wide",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Push-Ups - Close Triceps Position",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Push-Ups With Feet Elevated",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Push-Ups With Feet On An Exercise Ball",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Push Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Push Press - Behind the Neck",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Push Up to Side Plank",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Pushups",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Pushups (Close and Wide Hand Positions)",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Pyramid",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Quad Stretch",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Quadriceps-SMR",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Quick Leap",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Rack Delivery",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Rack Pull with Bands",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Rack Pulls",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Rear Leg Raises",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Recumbent Bike",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Return Push from Stance",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Band Bench Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Band Box Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Band Deadlift",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Band Power Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Band Sumo Deadlift",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Barbell Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Barbell Preacher Curls",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Cable Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Flyes",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Flyes With External Rotation",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Grip Bent-Over Rows",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Grip Triceps Pushdown",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Hyperextension",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Machine Flyes",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Plate Curls",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Reverse Triceps Bench Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Rhomboids-SMR",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Rickshaw Carry",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Rickshaw Deadlift",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Ring Dips",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Rocket Jump",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Rocking Standing Calf Raise",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Rocky Pull-Ups/Pulldowns",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Romanian Deadlift",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Romanian Deadlift from Deficit",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Rope Climb",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Rope Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Rope Jumping",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Rope Straight-Arm Pulldown",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Round The World Shoulder Stretch",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Rowing, Stationary",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Runner's Stretch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Running, Treadmill",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Russian Twist",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Sandbag Load",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Scapular Pull-Up",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Scissor Kick",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Scissors Jump",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Band Hamstring Curl",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Barbell Military Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Barbell Twist",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Bent-Over One-Arm Dumbbell Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Bent-Over Rear Delt Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Bent-Over Two-Arm Dumbbell Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Biceps",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Cable Rows",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Cable Shoulder Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Calf Raise",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Calf Stretch",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Close-Grip Concentration Barbell Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Dumbbell Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Dumbbell Inner Biceps Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Dumbbell Palms-Down Wrist Curl",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Dumbbell Palms-Up Wrist Curl",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Dumbbell Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Flat Bench Leg Pull-In",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Floor Hamstring Stretch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Front Deltoid",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Glute",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Good Mornings",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Hamstring",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Hamstring and Calf Stretch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Head Harness Neck Resistance",
+    "category": "neck",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Leg Curl",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Leg Tucks",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Seated One-Arm Dumbbell Palms-Down Wrist Curl",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Seated One-Arm Dumbbell Palms-Up Wrist Curl",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Seated One-arm Cable Pulley Rows",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Overhead Stretch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Palm-Up Barbell Wrist Curl",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Palms-Down Barbell Wrist Curl",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Side Lateral Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Triceps Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Seated Two-Arm Palms-Up Low-Pulley Wrist Curl",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "See-Saw Press (Alternating Side Press)",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Shotgun Row",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Shoulder Circles",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Shoulder Press - With Bands",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Shoulder Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Shoulder Stretch",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Side-Lying Floor Stretch",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Side Bridge",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Side Hop-Sprint",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Side Jackknife",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Side Lateral Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Side Laterals to Front Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Side Leg Raises",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Side Lying Groin Stretch",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Side Neck Stretch",
+    "category": "neck",
+    "type": "weight"
+  },
+  {
+    "name": "Side Standing Long Jump",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Side To Side Chins",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Side Wrist Pull",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Side to Side Box Shuffle",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Single-Arm Cable Crossover",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Single-Arm Linear Jammer",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Single-Arm Push-Up",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Single-Cone Sprint Drill",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Single-Leg High Box Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Single-Leg Hop Progression",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Single-Leg Lateral Hop",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Single-Leg Leg Extension",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Single-Leg Stride Jump",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Single Dumbbell Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Single Leg Butt Kick",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Single Leg Glute Bridge",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Single Leg Push-off",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Sit-Up",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Sit Squats",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Skating",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Sled Drag - Harness",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Sled Overhead Backward Walk",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Sled Overhead Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Sled Push",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Sled Reverse Flye",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Sled Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Sledgehammer Swings",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Incline Shoulder Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Behind the Back Shrug",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Bench Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Bent Over Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Calf Raise",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Close-Grip Bench Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Decline Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Hang Power Clean",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Hip Raise",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Incline Bench Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Leg Press",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine One-Arm Upright Row",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Overhead Shoulder Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Pistol Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Reverse Calf Raises",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Stiff-Legged Deadlift",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Machine Upright Row",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Smith Single-Leg Split Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Snatch",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Snatch Balance",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Snatch Deadlift",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Snatch Pull",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Snatch Shrug",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Snatch from Blocks",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Speed Band Overhead Triceps",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Speed Box Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Speed Squats",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Spell Caster",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Spider Crawl",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Spider Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Spinal Stretch",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Split Clean",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Split Jerk",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Split Jump",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Split Snatch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Split Squat with Dumbbells",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Split Squats",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Squat Jerk",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Squat with Bands",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Squat with Chains",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Squat with Plate Movers",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Squats - With Bands",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Stairmaster",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Alternating Dumbbell Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Barbell Calf Raise",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Barbell Press Behind Neck",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Bent-Over One-Arm Dumbbell Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Bent-Over Two-Arm Dumbbell Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Biceps Cable Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Biceps Stretch",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Bradford Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Cable Chest Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Cable Lift",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Cable Wood Chop",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Calf Raises",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Concentration Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Dumbbell Calf Raise",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Dumbbell Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Dumbbell Reverse Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Dumbbell Straight-Arm Front Delt Raise Above Head",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Dumbbell Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Dumbbell Upright Row",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Elevated Quad Stretch",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Front Barbell Raise Over Head",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Gastrocnemius Calf Stretch",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Hamstring and Calf Stretch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Hip Circles",
+    "category": "abductors",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Hip Flexors",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Inner-Biceps Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Lateral Stretch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Leg Curl",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Long Jump",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Low-Pulley Deltoid Raise",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Low-Pulley One-Arm Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Military Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Olympic Plate Hand Squeeze",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Standing One-Arm Cable Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing One-Arm Dumbbell Curl Over Incline Bench",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing One-Arm Dumbbell Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Overhead Barbell Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Palm-In One-Arm Dumbbell Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Palms-In Dumbbell Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Palms-Up Barbell Behind The Back Wrist Curl",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Pelvic Tilt",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Rope Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Soleus And Achilles Stretch",
+    "category": "calves",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Toe Touches",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Towel Triceps Extension",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Standing Two-Arm Overhead Throw",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Star Jump",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Step-up with Knee Raise",
+    "category": "glutes",
+    "type": "weight"
+  },
+  {
+    "name": "Step Mill",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Stiff-Legged Barbell Deadlift",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Stiff-Legged Dumbbell Deadlift",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Stiff Leg Barbell Good Morning",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Stomach Vacuum",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Straight-Arm Dumbbell Pullover",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Straight-Arm Pulldown",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Straight Bar Bench Mid Rows",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Straight Raises on Incline Bench",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Stride Jump Crossover",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Sumo Deadlift",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Sumo Deadlift with Bands",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Sumo Deadlift with Chains",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Superman",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Supine Chest Throw",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Supine One-Arm Overhead Throw",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Supine Two-Arm Overhead Throw",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Suspended Fallout",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Suspended Push-Up",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Suspended Reverse Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Suspended Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Suspended Split Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Svend Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "T-Bar Row with Handle",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Tate Press",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "The Straddle",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Thigh Abductor",
+    "category": "abductors",
+    "type": "weight"
+  },
+  {
+    "name": "Thigh Adductor",
+    "category": "adductors",
+    "type": "weight"
+  },
+  {
+    "name": "Tire Flip",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Toe Touchers",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Torso Rotation",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Trail Running/Walking",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Trap Bar Deadlift",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Tricep Dumbbell Kickback",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Tricep Side Stretch",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Triceps Overhead Extension with Rope",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Triceps Pushdown",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Triceps Pushdown - Rope Attachment",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Triceps Pushdown - V-Bar Attachment",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Triceps Stretch",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Tuck Crunch",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Two-Arm Dumbbell Preacher Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Two-Arm Kettlebell Clean",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Two-Arm Kettlebell Jerk",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Two-Arm Kettlebell Military Press",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Two-Arm Kettlebell Row",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Underhand Cable Pulldowns",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Upper Back-Leg Grab",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Upper Back Stretch",
+    "category": "middle back",
+    "type": "weight"
+  },
+  {
+    "name": "Upright Barbell Row",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "Upright Cable Row",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Upright Row - With Bands",
+    "category": "traps",
+    "type": "weight"
+  },
+  {
+    "name": "Upward Stretch",
+    "category": "shoulders",
+    "type": "weight"
+  },
+  {
+    "name": "V-Bar Pulldown",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "V-Bar Pullup",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Vertical Swing",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Walking, Treadmill",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Weighted Ball Hyperextension",
+    "category": "lower back",
+    "type": "weight"
+  },
+  {
+    "name": "Weighted Ball Side Bend",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Weighted Bench Dip",
+    "category": "triceps",
+    "type": "weight"
+  },
+  {
+    "name": "Weighted Crunches",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Weighted Jump Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Weighted Pull Ups",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Weighted Sissy Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Weighted Sit-Ups - With Bands",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Weighted Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Wide-Grip Barbell Bench Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Wide-Grip Decline Barbell Bench Press",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Wide-Grip Decline Barbell Pullover",
+    "category": "chest",
+    "type": "weight"
+  },
+  {
+    "name": "Wide-Grip Lat Pulldown",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Wide-Grip Pulldown Behind The Neck",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Wide-Grip Rear Pull-Up",
+    "category": "lats",
+    "type": "weight"
+  },
+  {
+    "name": "Wide-Grip Standing Barbell Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Wide Stance Barbell Squat",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Wide Stance Stiff Legs",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Wind Sprints",
+    "category": "abdominals",
+    "type": "weight"
+  },
+  {
+    "name": "Windmills",
+    "category": "abductors",
+    "type": "weight"
+  },
+  {
+    "name": "World's Greatest Stretch",
+    "category": "hamstrings",
+    "type": "weight"
+  },
+  {
+    "name": "Wrist Circles",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Wrist Roller",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Wrist Rotations with Straight Bar",
+    "category": "forearms",
+    "type": "weight"
+  },
+  {
+    "name": "Yoke Walk",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Zercher Squats",
+    "category": "quadriceps",
+    "type": "weight"
+  },
+  {
+    "name": "Zottman Curl",
+    "category": "biceps",
+    "type": "weight"
+  },
+  {
+    "name": "Zottman Preacher Curl",
+    "category": "biceps",
+    "type": "weight"
+  }
+]
