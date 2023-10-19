@@ -7,13 +7,13 @@ export class WorkoutExerciseSet {
   @PrimaryGeneratedColumn('increment')
   id: number
 
-  @Column()
+  @Column({ nullable: true })
   weight?: number
 
-  @Column()
+  @Column({ nullable: true })
   reps?: number
 
-  @Column()
+  @Column({ nullable: true })
   time?: number
 
   @ManyToOne(() => WorkoutExercise)

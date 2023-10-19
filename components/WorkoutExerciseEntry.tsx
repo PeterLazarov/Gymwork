@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, Button } from 'react-native'
 
 import WorkoutExerciseEntryHeader from './WorkoutExerciseEntryHeader'
 import { WorkoutExerciseEntrySet } from './WorkoutExerciseEntrySet'
 import { WorkoutExercise } from '../db/models'
+import { useDatabaseConnection } from '../db/setup'
 import { ExerciseSet } from '../types/ExerciseSet'
 
 const defaultSet: ExerciseSet = { reps: 8, weight: 20, weightUnit: 'kg' }
@@ -13,6 +14,24 @@ type Props = {
 }
 
 const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
+  const [workoutExercise, setWorkoutExercise] =
+    useState<WorkoutExercise>(exercise)
+  const { workoutExerciseRepository, workoutExerciseSetRepository } =
+    useDatabaseConnection()
+
+  async function addSet() {
+    const newSet = await workoutExerciseSetRepository.create({
+      workoutExercise,
+    })
+
+    const updated = {
+      ...workoutExercise,
+      sets: [...workoutExercise.sets, newSet],
+    }
+    workoutExerciseRepository.update(exercise.id, updated)
+    setWorkoutExercise(updated)
+  }
+
   return (
     <View
       style={{
@@ -32,13 +51,13 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
           fontWeight: 'bold',
         }}
       >
-        {exercise.name}
+        {workoutExercise.name}
       </Text>
       {/* </Caption> */}
 
       <WorkoutExerciseEntryHeader />
 
-      {exercise.sets.map((set, i) => (
+      {workoutExercise.sets.map((set, i) => (
         <WorkoutExerciseEntrySet
           key={i}
           set={set}
@@ -55,9 +74,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
 
       <Button
         title="Add set"
-        onPress={() => {
-          // props.onChangeSets(props.sets.concat(props.sets.at(-1) ?? defaultSet))
-        }}
+        onPress={addSet}
       />
     </View>
   )
