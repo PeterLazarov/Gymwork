@@ -1,8 +1,10 @@
-import { DataSource, Repository } from 'typeorm'
+import { DataSource, FindOperator, Repository } from 'typeorm'
 
 import { Exercise } from '../models'
 
-type Filter = Partial<Pick<Exercise, 'name'>>
+type Filter = {
+  name: string | FindOperator<string>
+}
 
 type GetAllOptions = {
   filter?: Filter

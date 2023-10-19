@@ -2,6 +2,7 @@ import { H2 } from '@expo/html-elements'
 import { Picker } from '@react-native-picker/picker'
 import React, { useEffect, useState } from 'react'
 import { TextInput, Modal, SafeAreaView, ScrollView } from 'react-native'
+import { Like } from 'typeorm'
 
 import { Exercise } from '../db/models'
 import { useDatabaseConnection } from '../db/setup'
@@ -25,7 +26,7 @@ const ExercisePicker: React.FC<Props> = ({ onChange }) => {
     exerciseRepository
       .getAll({
         filter: {
-          // name: filterString,
+          name: Like(`%${filterString}%`),
         },
       })
       .then(setFilteredExercises)
