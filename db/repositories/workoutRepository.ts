@@ -2,6 +2,15 @@ import { Connection, Repository } from 'typeorm'
 
 import { Workout } from '../models/workout'
 
+type Relations = {
+  exercises: boolean
+}
+
+type GetAllOptions = {
+  filter?: Partial<Workout>
+  relations?: Relations
+}
+
 export class WorkoutRepository {
   private ormRepository: Repository<Workout>
 
@@ -9,8 +18,11 @@ export class WorkoutRepository {
     this.ormRepository = connection.getRepository(Workout)
   }
 
-  public async getAll(): Promise<Workout[]> {
-    return await this.ormRepository.find()
+  public async getAll(options: GetAllOptions): Promise<Workout[]> {
+    return await this.ormRepository.find({
+      where: options.filter,
+      relations: options.relations,
+    })
   }
 
   public async create(data: Partial<Workout>): Promise<Workout> {

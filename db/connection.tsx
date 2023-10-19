@@ -6,9 +6,9 @@ import React, {
   useState,
 } from 'react'
 import { ActivityIndicator } from 'react-native'
-import { Connection, createConnection } from 'typeorm'
+import { Connection, createConnection, DataSource } from 'typeorm'
 
-import { Workout } from './models'
+import { Workout, Exercise } from './models'
 import { WorkoutRepository } from './repositories'
 
 interface DatabaseConnectionContextData {
@@ -31,7 +31,7 @@ export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
       type: 'expo',
       database: 'gymwork.db',
       driver: require('expo-sqlite'),
-      entities: [Workout],
+      entities: [Workout, Exercise],
 
       //   migrations: [CreateTodosTable1608217149351],
       //   migrationsRun: true,
