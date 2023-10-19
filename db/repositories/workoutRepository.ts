@@ -1,6 +1,6 @@
-import { Connection, Repository } from 'typeorm'
+import { DataSource, Repository } from 'typeorm'
 
-import { Workout } from '../models/workout'
+import { Workout } from '../models'
 
 type Relations = {
   exercises: boolean
@@ -14,8 +14,8 @@ type GetAllOptions = {
 export class WorkoutRepository {
   private ormRepository: Repository<Workout>
 
-  constructor(connection: Connection) {
-    this.ormRepository = connection.getRepository(Workout)
+  constructor(datasource: DataSource) {
+    this.ormRepository = datasource.getRepository(Workout)
   }
 
   public async getAll(options: GetAllOptions): Promise<Workout[]> {
