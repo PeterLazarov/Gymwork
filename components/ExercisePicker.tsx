@@ -30,7 +30,7 @@ const ExercisePicker: React.FC<Props> = ({ onChange }) => {
       })
       .then(setFilteredExercises)
   }, [filterString])
-  console.log({ filteredExercises })
+  // console.log({ filkteredExercises })
   // const filteredExercises = useMemo(() => {
   //   let filtered = exercises
   //   if (filterString) {

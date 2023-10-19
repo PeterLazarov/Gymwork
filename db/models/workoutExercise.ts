@@ -18,8 +18,8 @@ export class WorkoutExercise {
   @PrimaryGeneratedColumn('increment')
   id: number
 
-  @Column()
-  notes?: string
+  @Column({ default: '' })
+  notes: string
 
   @ManyToOne(() => Exercise)
   exercise: Exercise
@@ -27,11 +27,11 @@ export class WorkoutExercise {
   @ManyToOne(() => Workout)
   workout: Workout
 
-  // @OneToMany(
-  //   () => WorkoutExerciseSet,
-  //   workoutExerciseSet => workoutExerciseSet.workoutExercise
-  // )
-  // sets: WorkoutExerciseSet[]
+  @OneToMany(
+    () => WorkoutExerciseSet,
+    workoutExerciseSet => workoutExerciseSet.workoutExercise
+  )
+  sets: WorkoutExerciseSet[]
 
   name: string
 

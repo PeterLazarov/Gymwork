@@ -43,16 +43,20 @@ export default function WorkoutPage() {
   }
 
   async function addExercise(exercise: Exercise) {
-    console.log('adding exercise')
     const workoutExercise = await workoutExerciseRepository.create({
       exercise,
       workout,
     })
 
-    workout!.exercises.push(workoutExercise)
-    workoutRepository.update(workout!.id, workout!).then()
+    // todo: research why exercises is defautled to undefined
+    const updated = {
+      ...workout!,
+      exercises: [...(workout!.exercises || []), workoutExercise],
+    }
 
-    setWorkout(workout)
+    workoutRepository.update(workout!.id, updated).then()
+
+    setWorkout(updated)
   }
 
   return (

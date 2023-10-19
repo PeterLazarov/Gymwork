@@ -10,8 +10,8 @@ export class Workout {
   @Column()
   date: string
 
-  @Column()
-  notes?: string
+  @Column({ default: '' })
+  notes: string
 
   @OneToMany(() => WorkoutExercise, workoutExercise => workoutExercise.workout)
   exercises: WorkoutExercise[]
