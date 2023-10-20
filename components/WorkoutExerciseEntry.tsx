@@ -40,6 +40,18 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
     setWorkoutExercise(updated)
   }
 
+  function updateSet(updatedSet: WorkoutExerciseSet) {
+    workoutExerciseSetRepository.update(updatedSet.id, updatedSet)
+
+    const updatedExercise = {
+      ...workoutExercise,
+      sets: workoutExercise.sets.map(set =>
+        set.id === updatedSet.id ? updateSet : set
+      ),
+    }
+    setWorkoutExercise(updatedExercise)
+  }
+
   return (
     <View
       style={{
@@ -60,6 +72,8 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
         }}
       >
         {workoutExercise.name}
+        {/* {JSON.stringify(workoutExercise.exercise)} */}
+        {/* {exercise.name} */}
       </Text>
       {/* </Caption> */}
 
@@ -70,6 +84,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
           key={i}
           set={set}
           onRemove={removeSet}
+          onUpdate={updateSet}
         />
       ))}
 

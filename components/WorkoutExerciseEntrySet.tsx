@@ -4,16 +4,19 @@ import { View, Button, TextInput } from 'react-native'
 
 import IncrementDecrementButtons from './IncrementDecrementButtons'
 import { WorkoutExerciseSet } from '../db/models'
-import { useDatabaseConnection } from '../db/setup'
 
 type Props = {
   set: WorkoutExerciseSet
   onRemove: (setToRemove: WorkoutExerciseSet) => void
+  onUpdate: (updatedSet: WorkoutExerciseSet) => void
 }
 
-export const WorkoutExerciseEntrySet: React.FC<Props> = ({ set, onRemove }) => {
+export const WorkoutExerciseEntrySet: React.FC<Props> = ({
+  set,
+  onRemove,
+  onUpdate,
+}) => {
   const [exerciseSet, setExerciseSet] = useState<WorkoutExerciseSet>(set)
-  const { workoutExerciseSetRepository } = useDatabaseConnection()
 
   function updateSet(changeObj: Partial<WorkoutExerciseSet>) {
     const updatedSet = {
@@ -21,7 +24,8 @@ export const WorkoutExerciseEntrySet: React.FC<Props> = ({ set, onRemove }) => {
       ...changeObj,
     }
 
-    workoutExerciseSetRepository.update(updatedSet.id, updatedSet)
+    onUpdate(updatedSet)
+
     setExerciseSet(updatedSet)
   }
 
