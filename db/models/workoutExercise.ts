@@ -29,7 +29,10 @@ export class WorkoutExercise {
 
   @OneToMany(
     () => WorkoutExerciseSet,
-    workoutExerciseSet => workoutExerciseSet.workoutExercise
+    workoutExerciseSet => workoutExerciseSet.workoutExercise,
+    {
+      orphanedRowAction: 'delete',
+    }
   )
   sets: WorkoutExerciseSet[]
 

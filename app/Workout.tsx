@@ -26,12 +26,13 @@ export default function WorkoutPage() {
           date: globalDateISO,
         },
         relations: {
-          exercises: true,
+          exercises: {
+            sets: true,
+          },
         },
       })
       .then(([workout]) => setWorkout(workout))
   }, [globalDateISO])
-  console.log({ workout })
 
   function newWorkout() {
     workoutRepository

@@ -1,24 +1,29 @@
 import { TR } from '@expo/html-elements'
-import { useAtomValue } from 'jotai'
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Button, TextInput } from 'react-native'
 
 import IncrementDecrementButtons from './IncrementDecrementButtons'
-import { weightUnitAtom } from '../atoms'
 import { WorkoutExerciseSet } from '../db/models'
+import { useDatabaseConnection } from '../db/setup'
 
 type Props = {
   set: WorkoutExerciseSet
-  onChange: (set: WorkoutExerciseSet) => void
-  onRemove: () => void
+  onRemove: (setToRemove: WorkoutExerciseSet) => void
 }
 
-export const WorkoutExerciseEntrySet: React.FC<Props> = ({
-  set,
-  onChange,
-  onRemove,
-}) => {
-  const weightUnit = useAtomValue(weightUnitAtom)
+export const WorkoutExerciseEntrySet: React.FC<Props> = ({ set, onRemove }) => {
+  const [exerciseSet, setExerciseSet] = useState<WorkoutExerciseSet>(set)
+  const { workoutExerciseSetRepository } = useDatabaseConnection()
+
+  function updateSet(changeObj: Partial<WorkoutExerciseSet>) {
+    const updatedSet = {
+      ...exerciseSet,
+      ...changeObj,
+    }
+
+    workoutExerciseSetRepository.update(updatedSet.id, updatedSet)
+    setExerciseSet(updatedSet)
+  }
 
   return (
     <TR
@@ -40,8 +45,8 @@ export const WorkoutExerciseEntrySet: React.FC<Props> = ({
         }}
       >
         <IncrementDecrementButtons
-          value={set.reps!}
-          onChange={n => onChange({ ...set, reps: Math.max(n, 0) })}
+          value={exerciseSet.reps!}
+          onChange={n => updateSet({ reps: Math.max(n, 0) })}
         >
           <TextInput
             style={{ flexGrow: 1, textAlign: 'center' }}
@@ -49,14 +54,13 @@ export const WorkoutExerciseEntrySet: React.FC<Props> = ({
             multiline={false}
             keyboardType="number-pad"
             onChangeText={text => {
-              onChange({
-                ...set,
+              updateSet({
                 reps: isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0),
               })
             }}
             maxLength={3}
           >
-            {set.reps}
+            {exerciseSet.reps}
           </TextInput>
         </IncrementDecrementButtons>
       </View>
@@ -69,20 +73,19 @@ export const WorkoutExerciseEntrySet: React.FC<Props> = ({
         // style={{ marginLeft: 4 }}
         maxLength={3}
         onChangeText={text => {
-          onChange({
-            ...set,
+          updateSet({
             weight: isNaN(+text) ? 0 : Math.max(+text, 0),
           })
         }}
         textAlign="center"
       >
-        {set.weight ?? 0}
+        {exerciseSet.weight ?? 0}
       </TextInput>
 
       <View style={{ width: '30%' }}>
         <Button
           title="Remove set"
-          onPress={onRemove}
+          onPress={() => onRemove(exerciseSet)}
         />
       </View>
     </TR>

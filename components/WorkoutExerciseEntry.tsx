@@ -3,11 +3,8 @@ import { View, Text, Button } from 'react-native'
 
 import WorkoutExerciseEntryHeader from './WorkoutExerciseEntryHeader'
 import { WorkoutExerciseEntrySet } from './WorkoutExerciseEntrySet'
-import { WorkoutExercise } from '../db/models'
+import { WorkoutExercise, WorkoutExerciseSet } from '../db/models'
 import { useDatabaseConnection } from '../db/setup'
-import { ExerciseSet } from '../types/ExerciseSet'
-
-const defaultSet: ExerciseSet = { reps: 8, weight: 20, weightUnit: 'kg' }
 
 type Props = {
   exercise: WorkoutExercise
@@ -29,6 +26,17 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
       sets: [...workoutExercise.sets, newSet],
     }
     workoutExerciseRepository.update(exercise.id, updated)
+    setWorkoutExercise(updated)
+  }
+
+  function removeSet(setToRemove: WorkoutExerciseSet) {
+    const updated = {
+      ...workoutExercise,
+      sets: workoutExercise.sets.filter(({ id }) => id !== setToRemove.id),
+    }
+    workoutExerciseRepository.update(exercise.id, updated)
+
+    workoutExerciseSetRepository.delete(setToRemove.id)
     setWorkoutExercise(updated)
   }
 
@@ -61,14 +69,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
         <WorkoutExerciseEntrySet
           key={i}
           set={set}
-          onChange={set => {
-            // props.onChangeSets(
-            //   props.sets.map((_s, _i) => (i === _i ? set : _s))
-            // )
-          }}
-          onRemove={() => {
-            // props.onChangeSets(props.sets.filter((_, _i) => _i !== i))
-          }}
+          onRemove={removeSet}
         />
       ))}
 

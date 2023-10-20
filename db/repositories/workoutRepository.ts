@@ -1,16 +1,12 @@
-import { DataSource, Repository } from 'typeorm'
+import { DataSource, FindOptionsRelations, Repository } from 'typeorm'
 
 import { Workout } from '../models'
-
-type Relations = {
-  exercises: boolean
-}
 
 type Filter = Partial<Pick<Workout, 'date'>>
 
 type GetAllOptions = {
   filter?: Filter
-  relations?: Relations
+  relations?: FindOptionsRelations<Workout>
 }
 
 export class WorkoutRepository {
