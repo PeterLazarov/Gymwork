@@ -28,6 +28,7 @@ export default function WorkoutPage() {
         relations: {
           exercises: {
             sets: true,
+            exercise: true,
           },
         },
       })
