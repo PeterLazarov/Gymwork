@@ -6,6 +6,7 @@ const iconSizes = {
   large: 100,
 }
 
+// todo: get typing of all ant design icons
 type Props = {
   icon: 'left' | 'right' | 'plus' | 'minus' | 'close'
   size?: keyof typeof iconSizes
