@@ -4,6 +4,7 @@ import { View, Button, TextInput } from 'react-native'
 
 import IncrementDecrementButtons from './IncrementDecrementButtons'
 import { WorkoutExerciseSet } from '../db/models'
+import { Icon, IconButtonContainer } from '../designSystem'
 
 type Props = {
   set: WorkoutExerciseSet
@@ -87,10 +88,12 @@ export const WorkoutExerciseEntrySet: React.FC<Props> = ({
       </TextInput>
 
       <View style={{ width: '30%' }}>
-        <Button
-          title="Remove set"
-          onPress={() => onRemove(exerciseSet)}
-        />
+        <IconButtonContainer onPress={() => onRemove(exerciseSet)}>
+          <Icon
+            icon="close"
+            color="red"
+          />
+        </IconButtonContainer>
       </View>
     </TR>
   )

@@ -65,10 +65,6 @@ export default function WorkoutPage() {
       <DayControl />
 
       <ScrollView>
-        <Text>
-          {typeof workout}
-          {workout?.date}
-        </Text>
         {workout?.exercises?.map((exercise, i) => (
           <WorkoutExerciseEntry
             key={`${workout.date}_${i}`}

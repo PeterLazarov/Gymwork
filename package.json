@@ -31,7 +31,9 @@
     "react-native-screens": "~3.22.0",
     "react-native-web": "~0.19.6",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.17"
+    "styled-components": "^6.1.0",
+    "typeorm": "^0.3.17",
+    "@expo/vector-icons": "^13.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
