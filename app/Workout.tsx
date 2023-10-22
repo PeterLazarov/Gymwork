@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai'
 import React, { useEffect, useMemo, useState } from 'react'
-import { ScrollView, Text } from 'react-native'
+import { ScrollView } from 'react-native'
 
 import { dateAtom } from '../atoms'
 import DayControl from '../components/DayControl'
@@ -36,12 +36,11 @@ export default function WorkoutPage() {
   }, [globalDateISO])
 
   function newWorkout() {
-    workoutRepository
-      .create({
-        date: globalDateISO,
-        notes: '',
-      })
-      .then(setWorkout)
+    const res = workoutRepository.create({
+      date: globalDateISO,
+      notes: '',
+    })
+    setWorkout(res)
   }
 
   async function addExercise(exercise: Exercise) {

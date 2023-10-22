@@ -1,8 +1,11 @@
+import { useRouter } from 'expo-router'
+import { useAtom } from 'jotai'
 import React, { useState } from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 
 import WorkoutExerciseEntryHeader from './WorkoutExerciseEntryHeader'
 import { WorkoutExerciseEntrySet } from './WorkoutExerciseEntrySet'
+import { openedWorkoutExerciseAtom } from '../atoms'
 import { WorkoutExercise, WorkoutExerciseSet } from '../db/models'
 import { useDatabaseConnection } from '../db/setup'
 import { ButtonContainer, ButtonText } from '../designSystem'
@@ -13,6 +16,10 @@ type Props = {
 }
 
 const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
+  const router = useRouter()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setOpenedWorkoutExercise] = useAtom(openedWorkoutExerciseAtom)
+
   const [workoutExercise, setWorkoutExercise] =
     useState<WorkoutExercise>(exercise)
   const { workoutExerciseRepository, workoutExerciseSetRepository } =
@@ -62,48 +69,54 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
     setWorkoutExercise(updatedExercise)
   }
 
+  function onLinkPress() {
+    setOpenedWorkoutExercise(workoutExercise)
+    router.replace('/WorkoutExercise')
+  }
   return (
-    <View
+    <TouchableOpacity
+      // href="/WorkoutExercise"
+      onPress={onLinkPress}
       style={{
+        flex: 1,
         backgroundColor: '#f4f4f4',
         padding: 16,
         margin: 16,
         borderRadius: 8,
         gap: 24,
+        flexDirection: 'row',
       }}
     >
-      {/* <Caption style={{ marginBottom: 16, fontWeight: 'bold' }}> */}
-      <Text
-        style={{
-          width: '100%',
-          textAlign: 'center',
-          fontSize: 16,
-          fontWeight: 'bold',
-        }}
-      >
-        {workoutExercise.name}
-        {/* {JSON.stringify(workoutExercise.exercise)} */}
-        {/* {exercise.name} */}
-      </Text>
-      {/* </Caption> */}
+      <View style={{ flex: 1 }}>
+        <Text
+          style={{
+            width: '100%',
+            textAlign: 'center',
+            fontSize: 16,
+            fontWeight: 'bold',
+          }}
+        >
+          {workoutExercise.name}
+        </Text>
 
-      <WorkoutExerciseEntryHeader />
+        <WorkoutExerciseEntryHeader />
 
-      {workoutExercise.sets
-        .sort((a, b) => a.id - b.id)
-        .map((set, i) => (
-          <WorkoutExerciseEntrySet
-            key={i}
-            set={set}
-            onRemove={removeSet}
-            onUpdate={updateSet}
-          />
-        ))}
+        {workoutExercise.sets
+          .sort((a, b) => a.id - b.id)
+          .map((set, i) => (
+            <WorkoutExerciseEntrySet
+              key={i}
+              set={set}
+              onRemove={removeSet}
+              onUpdate={updateSet}
+            />
+          ))}
 
-      <ButtonContainer onPress={addSet}>
-        <ButtonText>{texts.addSet}</ButtonText>
-      </ButtonContainer>
-    </View>
+        <ButtonContainer onPress={addSet}>
+          <ButtonText>{texts.addSet}</ButtonText>
+        </ButtonContainer>
+      </View>
+    </TouchableOpacity>
   )
 }
 
