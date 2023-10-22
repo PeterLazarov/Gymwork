@@ -81,7 +81,6 @@ const ExercisePicker: React.FC<Props> = ({ onChange, onBack }) => {
                 textAlign: 'center',
                 fontSize: 26,
                 flex: 1,
-                backgroundColor: 'red',
               }}
             >
               {texts.addExercise}
