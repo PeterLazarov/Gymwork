@@ -7,9 +7,8 @@ export default function WorkoutExerciseEntryHeader() {
 
   return (
     <View style={{ display: 'flex', flexDirection: 'row', gap: 16 }}>
-      <Text style={{ width: '30%', textAlign: 'center' }}>Reps</Text>
-      <Text style={{ width: '30%', textAlign: 'center' }}>Weight ({unit})</Text>
-      <View></View>
+      <Text style={{ width: '40%', textAlign: 'center' }}>Reps</Text>
+      <Text style={{ width: '40%', textAlign: 'center' }}>Weight ({unit})</Text>
     </View>
   )
 }

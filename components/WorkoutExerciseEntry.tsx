@@ -5,6 +5,8 @@ import WorkoutExerciseEntryHeader from './WorkoutExerciseEntryHeader'
 import { WorkoutExerciseEntrySet } from './WorkoutExerciseEntrySet'
 import { WorkoutExercise, WorkoutExerciseSet } from '../db/models'
 import { useDatabaseConnection } from '../db/setup'
+import { ButtonContainer, ButtonText } from '../designSystem'
+import texts from '../texts'
 
 type Props = {
   exercise: WorkoutExercise
@@ -88,10 +90,9 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
         />
       ))}
 
-      <Button
-        title="Add set"
-        onPress={addSet}
-      />
+      <ButtonContainer onPress={addSet}>
+        <ButtonText>{texts.addSet}</ButtonText>
+      </ButtonContainer>
     </View>
   )
 }

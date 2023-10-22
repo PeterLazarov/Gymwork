@@ -42,7 +42,8 @@ export const WorkoutExerciseEntrySet: React.FC<Props> = ({
     >
       <View
         style={{
-          width: '30%',
+          // width: '30%',
+          flex: 1,
           // backgroundColor: '#00ff0088',
           display: 'flex',
           alignItems: 'center',
@@ -87,14 +88,12 @@ export const WorkoutExerciseEntrySet: React.FC<Props> = ({
         {exerciseSet.weight ?? 0}
       </TextInput>
 
-      <View style={{ width: '30%' }}>
-        <IconButtonContainer onPress={() => onRemove(exerciseSet)}>
-          <Icon
-            icon="close"
-            color="red"
-          />
-        </IconButtonContainer>
-      </View>
+      <IconButtonContainer onPress={() => onRemove(exerciseSet)}>
+        <Icon
+          icon="close"
+          color="red"
+        />
+      </IconButtonContainer>
     </TR>
   )
 }
