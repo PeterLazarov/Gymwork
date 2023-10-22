@@ -3,4 +3,5 @@ export default {
   addExercise: 'Add exercise',
   copyPreviousWorkout: 'Copy previous workout',
   addSet: 'Add set',
+  search: 'Search',
 }

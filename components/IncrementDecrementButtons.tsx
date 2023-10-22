@@ -19,11 +19,11 @@ export default function IncrementDecrementButtons(props: {
       }}
     >
       <IconButtonContainer onPress={() => props.onChange(props.value - 1)}>
-        <Icon icon="minus" />
+        <Icon icon="remove" />
       </IconButtonContainer>
       {props.children}
       <IconButtonContainer onPress={() => props.onChange(props.value + 1)}>
-        <Icon icon="plus" />
+        <Icon icon="add" />
       </IconButtonContainer>
     </View>
   )

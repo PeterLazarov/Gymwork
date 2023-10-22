@@ -28,12 +28,20 @@ const WorkoutControlButtons: React.FC<Props> = ({
     setShowExercisePicker(false)
   }
 
+  function onBack() {
+    setShowExercisePicker(false)
+  }
   function copyPrevWorkout() {
     // TODO
   }
   return (
     <>
-      {showExercisePicker && <ExercisePicker onChange={handleAddExercise} />}
+      {showExercisePicker && (
+        <ExercisePicker
+          onChange={handleAddExercise}
+          onBack={onBack}
+        />
+      )}
 
       <View
         style={{ display: 'flex', flexDirection: 'row', gap: 8, padding: 8 }}

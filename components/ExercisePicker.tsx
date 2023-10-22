@@ -1,17 +1,26 @@
-import { H2 } from '@expo/html-elements'
 import { Picker } from '@react-native-picker/picker'
 import React, { useEffect, useState } from 'react'
-import { TextInput, Modal, SafeAreaView, ScrollView } from 'react-native'
+import {
+  TextInput,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+} from 'react-native'
 import { Like } from 'typeorm'
 
 import { Exercise } from '../db/models'
 import { useDatabaseConnection } from '../db/setup'
+import { Icon, IconButtonContainer } from '../designSystem'
+import texts from '../texts'
 
 type Props = {
   onChange: (exercise: Exercise) => unknown
+  onBack: () => void
 }
 
-const ExercisePicker: React.FC<Props> = ({ onChange }) => {
+const ExercisePicker: React.FC<Props> = ({ onChange, onBack }) => {
   const [selectedExercise, setSelectedExercise] = useState<
     Exercise | undefined
   >(undefined)
@@ -56,14 +65,37 @@ const ExercisePicker: React.FC<Props> = ({ onChange }) => {
     <Modal visible>
       <SafeAreaView>
         <ScrollView style={{ display: 'flex', flexDirection: 'column' }}>
-          <H2>Pick Exercise</H2>
-
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              // justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <IconButtonContainer onPress={onBack}>
+              <Icon icon="chevron-back" />
+            </IconButtonContainer>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 26,
+                flex: 1,
+                backgroundColor: 'red',
+              }}
+            >
+              {texts.addExercise}
+            </Text>
+            <IconButtonContainer onPress={onBack}>
+              <Icon icon="ellipsis-vertical" />
+            </IconButtonContainer>
+          </View>
           {/* Filter by name */}
           <TextInput
             style={{ padding: 16 }}
             value={filterString}
             onChangeText={setFilterString}
-            placeholder="Search..."
+            placeholder={texts.search}
           />
 
           {/* Filter by muscle */}

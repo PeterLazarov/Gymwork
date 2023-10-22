@@ -22,7 +22,7 @@ const DayControl = () => {
       style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
     >
       <IconButtonContainer onPress={() => setDate(date.minus({ days: 1 }))}>
-        <Icon icon="left" />
+        <Icon icon="chevron-back" />
       </IconButtonContainer>
       <Link
         href="/Calendar"
@@ -31,7 +31,7 @@ const DayControl = () => {
         {label}
       </Link>
       <IconButtonContainer onPress={() => setDate(date.plus({ days: 1 }))}>
-        <Icon icon="right" />
+        <Icon icon="chevron-forward" />
       </IconButtonContainer>
     </View>
   )

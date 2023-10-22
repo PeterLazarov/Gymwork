@@ -1,4 +1,4 @@
-import { AntDesign } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 
 const iconSizes = {
   small: 1,
@@ -8,7 +8,13 @@ const iconSizes = {
 
 // todo: get typing of all ant design icons
 type Props = {
-  icon: 'left' | 'right' | 'plus' | 'minus' | 'close'
+  icon:
+    | 'chevron-back'
+    | 'chevron-forward'
+    | 'add'
+    | 'remove'
+    | 'close'
+    | 'ellipsis-vertical'
   size?: keyof typeof iconSizes
   color?: string
 }
@@ -19,7 +25,7 @@ export const Icon: React.FC<Props> = ({
   color = 'black',
 }) => {
   return (
-    <AntDesign
+    <Ionicons
       name={icon}
       size={iconSizes[size]}
       color={color}
