@@ -1,12 +1,12 @@
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text } from 'react-native'
 
 import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
 import { openedWorkoutExerciseAtom } from '../atoms'
 import { WorkoutExercise } from '../db/models'
-import { Divider } from '../designSystem'
+import { ButtonContainer, Divider } from '../designSystem'
 
 type Props = {
   exercise: WorkoutExercise
@@ -22,18 +22,13 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
     router.push('/WorkoutExercise')
   }
   return (
-    <TouchableOpacity
+    <ButtonContainer
       onPress={onLinkPress}
       style={{
-        flex: 1,
-        backgroundColor: '#f4f4f4',
-        padding: 16,
         margin: 16,
-        borderRadius: 8,
-        gap: 24,
       }}
     >
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, gap: 4 }}>
         <Text
           style={{
             width: '100%',
@@ -54,7 +49,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
             />
           ))}
       </View>
-    </TouchableOpacity>
+    </ButtonContainer>
   )
 }
 

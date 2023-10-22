@@ -111,8 +111,11 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
             />
           ))}
 
-        <ButtonContainer onPress={addSet}>
-          <ButtonText>{texts.addSet}</ButtonText>
+        <ButtonContainer
+          primary
+          onPress={addSet}
+        >
+          <ButtonText primary>{texts.addSet}</ButtonText>
         </ButtonContainer>
       </View>
     </TouchableOpacity>

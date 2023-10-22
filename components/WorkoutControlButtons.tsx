@@ -48,17 +48,26 @@ const WorkoutControlButtons: React.FC<Props> = ({
       >
         {!workout && (
           <>
-            <ButtonContainer onPress={createWorkout}>
-              <ButtonText>{texts.newWorkout}</ButtonText>
+            <ButtonContainer
+              primary
+              onPress={createWorkout}
+            >
+              <ButtonText primary>{texts.newWorkout}</ButtonText>
             </ButtonContainer>
-            <ButtonContainer onPress={copyPrevWorkout}>
-              <ButtonText>{texts.copyPreviousWorkout}</ButtonText>
+            <ButtonContainer
+              primary
+              onPress={copyPrevWorkout}
+            >
+              <ButtonText primary>{texts.copyPreviousWorkout}</ButtonText>
             </ButtonContainer>
           </>
         )}
         {workout && (
-          <ButtonContainer onPress={openExercisePicker}>
-            <ButtonText>{texts.addExercise}</ButtonText>
+          <ButtonContainer
+            primary
+            onPress={openExercisePicker}
+          >
+            <ButtonText primary>{texts.addExercise}</ButtonText>
           </ButtonContainer>
         )}
       </View>
