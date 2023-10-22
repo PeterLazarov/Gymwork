@@ -1,5 +1,5 @@
 import { TR } from '@expo/html-elements'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Button, TextInput } from 'react-native'
 
 import IncrementDecrementButtons from './IncrementDecrementButtons'
@@ -18,6 +18,10 @@ export const WorkoutExerciseEntrySet: React.FC<Props> = ({
   onUpdate,
 }) => {
   const [exerciseSet, setExerciseSet] = useState<WorkoutExerciseSet>(set)
+
+  useEffect(() => {
+    setExerciseSet(set)
+  }, [set])
 
   function updateSet(changeObj: Partial<WorkoutExerciseSet>) {
     const updatedSet = {

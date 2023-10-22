@@ -21,8 +21,8 @@ export default function WorkoutPage() {
 
   useEffect(() => {
     workoutRepository
-      .getAll({
-        filter: {
+      .find({
+        where: {
           date: globalDateISO,
         },
         relations: {
@@ -65,12 +65,14 @@ export default function WorkoutPage() {
       <DayControl />
 
       <ScrollView>
-        {workout?.exercises?.map((exercise, i) => (
-          <WorkoutExerciseEntry
-            key={`${workout.date}_${i}`}
-            exercise={exercise}
-          />
-        ))}
+        {workout?.exercises
+          ?.sort((a, b) => a.id - b.id)
+          .map((exercise, i) => (
+            <WorkoutExerciseEntry
+              key={`${workout.date}_${i}`}
+              exercise={exercise}
+            />
+          ))}
       </ScrollView>
 
       <WorkoutControlButtons

@@ -1,11 +1,16 @@
-import { DataSource, FindOptionsRelations, Repository } from 'typeorm'
+import {
+  DataSource,
+  FindOptionsRelations,
+  FindOptionsWhere,
+  Repository,
+} from 'typeorm'
 
 import { Workout } from '../models'
 
 type Filter = Partial<Pick<Workout, 'date'>>
 
 type GetAllOptions = {
-  filter?: Filter
+  filter?: FindOptionsWhere<Workout>
   relations?: FindOptionsRelations<Workout>
 }
 

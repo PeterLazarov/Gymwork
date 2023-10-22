@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react'
-import { DataSource, DataSourceOptions } from 'typeorm'
+import { DataSource, DataSourceOptions, Repository } from 'typeorm'
 
 import {
   Workout,
@@ -7,19 +7,13 @@ import {
   WorkoutExercise,
   WorkoutExerciseSet,
 } from './models'
-import {
-  WorkoutRepository,
-  ExerciseRepository,
-  WorkoutExerciseRepository,
-  WorkoutExerciseSetRepository,
-} from './repositories'
 import { runSeeds } from './seeds'
 
 interface DatabaseConnectionContextData {
-  workoutRepository: WorkoutRepository
-  exerciseRepository: ExerciseRepository
-  workoutExerciseRepository: WorkoutExerciseRepository
-  workoutExerciseSetRepository: WorkoutExerciseSetRepository
+  workoutRepository: Repository<Workout>
+  exerciseRepository: Repository<Exercise>
+  workoutExerciseRepository: Repository<WorkoutExercise>
+  workoutExerciseSetRepository: Repository<WorkoutExerciseSet>
 }
 
 const DatabaseConnectionContext = createContext<DatabaseConnectionContextData>(
@@ -58,12 +52,11 @@ export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
   return (
     <DatabaseConnectionContext.Provider
       value={{
-        workoutRepository: new WorkoutRepository(datasource),
-        exerciseRepository: new ExerciseRepository(datasource),
-        workoutExerciseRepository: new WorkoutExerciseRepository(datasource),
-        workoutExerciseSetRepository: new WorkoutExerciseSetRepository(
-          datasource
-        ),
+        workoutRepository: datasource.getRepository(Workout),
+        exerciseRepository: datasource.getRepository(Exercise),
+        workoutExerciseRepository: datasource.getRepository(WorkoutExercise),
+        workoutExerciseSetRepository:
+          datasource.getRepository(WorkoutExerciseSet),
       }}
     >
       {children}

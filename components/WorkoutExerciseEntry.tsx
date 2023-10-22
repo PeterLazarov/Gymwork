@@ -21,6 +21,8 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   async function addSet() {
     const newSet = await workoutExerciseSetRepository.create({
       workoutExercise,
+      reps: 0,
+      weight: 0,
     })
 
     const updated = {
@@ -32,6 +34,12 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   }
 
   function removeSet(setToRemove: WorkoutExerciseSet) {
+    console.log('removed')
+    console.log(setToRemove)
+    console.log('intial')
+    console.log(workoutExercise.sets)
+    console.log('result')
+    console.log(workoutExercise.sets.filter(({ id }) => id !== setToRemove.id))
     const updated = {
       ...workoutExercise,
       sets: workoutExercise.sets.filter(({ id }) => id !== setToRemove.id),
@@ -81,14 +89,16 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
 
       <WorkoutExerciseEntryHeader />
 
-      {workoutExercise.sets.map((set, i) => (
-        <WorkoutExerciseEntrySet
-          key={i}
-          set={set}
-          onRemove={removeSet}
-          onUpdate={updateSet}
-        />
-      ))}
+      {workoutExercise.sets
+        .sort((a, b) => a.id - b.id)
+        .map((set, i) => (
+          <WorkoutExerciseEntrySet
+            key={i}
+            set={set}
+            onRemove={removeSet}
+            onUpdate={updateSet}
+          />
+        ))}
 
       <ButtonContainer onPress={addSet}>
         <ButtonText>{texts.addSet}</ButtonText>

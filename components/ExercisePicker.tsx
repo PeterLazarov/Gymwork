@@ -33,8 +33,8 @@ const ExercisePicker: React.FC<Props> = ({ onChange, onBack }) => {
 
   useEffect(() => {
     exerciseRepository
-      .getAll({
-        filter: {
+      .find({
+        where: {
           name: Like(`%${filterString}%`),
         },
       })
