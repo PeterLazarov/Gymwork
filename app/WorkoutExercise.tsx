@@ -39,7 +39,7 @@ export default function WorkoutPage() {
         <Text
           style={{
             textAlign: 'center',
-            fontSize: 26,
+            fontSize: 20,
             flex: 1,
           }}
         >

@@ -6,6 +6,7 @@ import { View } from 'react-native'
 
 import { dateAtom } from '../atoms'
 import { Icon, IconButtonContainer } from '../designSystem'
+import { HeadingLabel } from '../designSystem/Label'
 
 const DayControl = () => {
   const [date, setDate] = useAtom(dateAtom)
@@ -26,9 +27,9 @@ const DayControl = () => {
       </IconButtonContainer>
       <Link
         href="/Calendar"
-        style={{ flexGrow: 1, textAlign: 'center' }}
+        style={{ flex: 1 }}
       >
-        {label}
+        <HeadingLabel>{label}</HeadingLabel>
       </Link>
       <IconButtonContainer onPress={() => setDate(date.plus({ days: 1 }))}>
         <Icon icon="chevron-forward" />

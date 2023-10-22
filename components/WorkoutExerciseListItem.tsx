@@ -1,12 +1,13 @@
 import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
 import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
 import { openedWorkoutExerciseAtom } from '../atoms'
 import { WorkoutExercise } from '../db/models'
 import { ButtonContainer, Divider } from '../designSystem'
+import { SectionLabel } from '../designSystem/Label'
 
 type Props = {
   exercise: WorkoutExercise
@@ -29,16 +30,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
       }}
     >
       <View style={{ flex: 1, gap: 4 }}>
-        <Text
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            fontSize: 16,
-            fontWeight: 'bold',
-          }}
-        >
-          {exercise.name}
-        </Text>
+        <SectionLabel>{exercise.name}</SectionLabel>
         <Divider />
         {exercise.sets
           .sort((a, b) => a.id - b.id)
