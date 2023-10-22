@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 
 import WorkoutExerciseEntryHeader from './WorkoutExerciseEntryHeader'
-import { WorkoutExerciseEntrySet } from './WorkoutExerciseEntrySet'
+import WorkoutExerciseEntrySet from './WorkoutExerciseEntrySet'
 import { openedWorkoutExerciseAtom } from '../atoms'
 import { WorkoutExercise, WorkoutExerciseSet } from '../db/models'
 import { useDatabaseConnection } from '../db/setup'
@@ -71,7 +71,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
 
   function onLinkPress() {
     setOpenedWorkoutExercise(workoutExercise)
-    router.replace('/WorkoutExercise')
+    router.push('/WorkoutExercise')
   }
   return (
     <TouchableOpacity
@@ -84,7 +84,6 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
         margin: 16,
         borderRadius: 8,
         gap: 24,
-        flexDirection: 'row',
       }}
     >
       <View style={{ flex: 1 }}>

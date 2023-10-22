@@ -1,17 +1,26 @@
-import { Link } from 'expo-router'
+import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React from 'react'
 import { ScrollView, Text, View } from 'react-native'
 
 import { openedWorkoutExerciseAtom } from '../atoms'
 import Layout from '../components/Layout'
+import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
 import { Icon, IconButtonContainer } from '../designSystem'
 
 export default function WorkoutPage() {
-  const [openedWorkoutExercise] = useAtom(openedWorkoutExerciseAtom)
+  const router = useRouter()
+  const [openedWorkoutExercise, setOpenedWorkoutExercise] = useAtom(
+    openedWorkoutExerciseAtom
+  )
 
-  function onOptionsClick() {
+  function onOptionsPress() {
     throw new Error('Function not implemented.')
+  }
+
+  function onBackPress() {
+    router.push('/')
+    setOpenedWorkoutExercise(null)
   }
 
   return (
@@ -24,9 +33,9 @@ export default function WorkoutPage() {
           alignItems: 'center',
         }}
       >
-        <Link href="/">
+        <IconButtonContainer onPress={onBackPress}>
           <Icon icon="chevron-back" />
-        </Link>
+        </IconButtonContainer>
         <Text
           style={{
             textAlign: 'center',
@@ -36,10 +45,12 @@ export default function WorkoutPage() {
         >
           {openedWorkoutExercise?.name}
         </Text>
-        <IconButtonContainer onPress={onOptionsClick}>
+
+        <IconButtonContainer onPress={onOptionsPress}>
           <Icon icon="ellipsis-vertical" />
         </IconButtonContainer>
       </View>
+      <WorkoutExerciseEntry exercise={openedWorkoutExercise!} />
     </Layout>
   )
 }

@@ -1,6 +1,6 @@
 import { TR } from '@expo/html-elements'
 import React, { useEffect, useState } from 'react'
-import { View, Button, TextInput } from 'react-native'
+import { View, TextInput } from 'react-native'
 
 import IncrementDecrementButtons from './IncrementDecrementButtons'
 import { WorkoutExerciseSet } from '../db/models'
@@ -12,7 +12,7 @@ type Props = {
   onUpdate: (updatedSet: WorkoutExerciseSet) => void
 }
 
-export const WorkoutExerciseEntrySet: React.FC<Props> = ({
+const WorkoutExerciseEntrySet: React.FC<Props> = ({
   set,
   onRemove,
   onUpdate,
@@ -101,3 +101,5 @@ export const WorkoutExerciseEntrySet: React.FC<Props> = ({
     </TR>
   )
 }
+
+export default WorkoutExerciseEntrySet

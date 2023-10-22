@@ -6,7 +6,7 @@ import { dateAtom } from '../atoms'
 import DayControl from '../components/DayControl'
 import Layout from '../components/Layout'
 import WorkoutControlButtons from '../components/WorkoutControlButtons'
-import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
+import WorkoutExerciseListItem from '../components/WorkoutExerciseListItem'
 import { Exercise, Workout } from '../db/models'
 import { useDatabaseConnection } from '../db/setup'
 
@@ -67,7 +67,7 @@ export default function WorkoutPage() {
         {workout?.exercises
           ?.sort((a, b) => a.id - b.id)
           .map((exercise, i) => (
-            <WorkoutExerciseEntry
+            <WorkoutExerciseListItem
               key={`${workout.date}_${i}`}
               exercise={exercise}
             />

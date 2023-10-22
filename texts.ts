@@ -4,4 +4,5 @@ export default {
   copyPreviousWorkout: 'Copy previous workout',
   addSet: 'Add set',
   search: 'Search',
+  reps: 'reps',
 }
