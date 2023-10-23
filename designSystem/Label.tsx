@@ -13,5 +13,5 @@ export const SectionLabel = styled.Text`
 `
 
 export const SubSectionLabel = styled.Text`
-  font-size: 14px;
+  font-size: 13px;
 `

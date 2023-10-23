@@ -44,9 +44,13 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   }
 
   return (
-    <View>
-      <SubSectionLabel>{texts.weight}</SubSectionLabel>
-      <Divider />
+    <View style={{ gap: 16 }}>
+      <View>
+        <SubSectionLabel style={{ textTransform: 'uppercase' }}>
+          {texts.reps}
+        </SubSectionLabel>
+        <Divider />
+      </View>
       <IncrementDecrementButtons
         value={reps}
         onChange={n => setReps(Math.max(n, 0))}
@@ -65,8 +69,12 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
         </TextInput>
       </IncrementDecrementButtons>
 
-      <SubSectionLabel>{texts.weight}</SubSectionLabel>
-      <Divider />
+      <View>
+        <SubSectionLabel style={{ textTransform: 'uppercase' }}>
+          {texts.weight}
+        </SubSectionLabel>
+        <Divider />
+      </View>
       <IncrementDecrementButtons
         value={weight}
         onChange={n => setReps(Math.max(n, 0))}

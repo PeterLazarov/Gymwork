@@ -1,6 +1,7 @@
 import { View } from 'react-native'
 
 import { Icon, IconButtonContainer } from '../designSystem'
+import colors from '../designSystem/colors'
 
 export default function IncrementDecrementButtons(props: {
   value: number
@@ -18,12 +19,24 @@ export default function IncrementDecrementButtons(props: {
         // backgroundColor: 'blue',
       }}
     >
-      <IconButtonContainer onPress={() => props.onChange(props.value - 1)}>
-        <Icon icon="remove" />
+      <IconButtonContainer
+        variant="full"
+        onPress={() => props.onChange(props.value - 1)}
+      >
+        <Icon
+          icon="remove"
+          color={colors.iconText}
+        />
       </IconButtonContainer>
       {props.children}
-      <IconButtonContainer onPress={() => props.onChange(props.value + 1)}>
-        <Icon icon="add" />
+      <IconButtonContainer
+        variant="full"
+        onPress={() => props.onChange(props.value + 1)}
+      >
+        <Icon
+          icon="add"
+          color={colors.iconText}
+        />
       </IconButtonContainer>
     </View>
   )

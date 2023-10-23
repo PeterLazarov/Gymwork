@@ -5,7 +5,7 @@ import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel
 import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
 import { WorkoutExercise, WorkoutExerciseSet } from '../db/models'
 import { useDatabaseConnection } from '../db/setup'
-import { ButtonContainer } from '../designSystem'
+import { ButtonContainer, Divider } from '../designSystem'
 import colors from '../designSystem/colors'
 
 type Props = {
@@ -73,9 +73,9 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: colors.secondary,
+        // backgroundColor: colors.secondary,
         padding: 16,
-        margin: 16,
+        // margin: 16,
         borderRadius: 8,
         gap: 24,
         flexDirection: 'column',
@@ -88,20 +88,29 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
         removeSet={() => removeSet}
       />
 
-      <ScrollView>
+      <ScrollView
+        style={{
+          backgroundColor: colors.secondary,
+          padding: 12,
+          borderRadius: 6,
+        }}
+      >
         {workoutExercise.sets
           .sort((a, b) => a.id - b.id)
           .map((set, i) => (
-            <ButtonContainer
-              key={i}
-              variant="tertiary"
-              onPress={() => toggleSelectedSet(set)}
-            >
-              <WorkoutExerciseSetListItem
-                set={set}
-                isFocused={selectedSet?.id === set.id}
-              />
-            </ButtonContainer>
+            <>
+              {i !== 0 && <Divider />}
+              <ButtonContainer
+                key={i}
+                variant="tertiary"
+                onPress={() => toggleSelectedSet(set)}
+              >
+                <WorkoutExerciseSetListItem
+                  set={set}
+                  isFocused={selectedSet?.id === set.id}
+                />
+              </ButtonContainer>
+            </>
           ))}
       </ScrollView>
     </View>

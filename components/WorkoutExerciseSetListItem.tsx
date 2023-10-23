@@ -1,10 +1,9 @@
-import { TR } from '@expo/html-elements'
 import React from 'react'
 import { Text, View } from 'react-native'
 
 import { WorkoutExerciseSet } from '../db/models'
-import texts from '../texts'
 import colors from '../designSystem/colors'
+import texts from '../texts'
 
 type Props = {
   set: WorkoutExerciseSet
