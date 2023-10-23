@@ -11,3 +11,7 @@ export const SectionLabel = styled.Text`
   font-size: 18;
   flex: 1;
 `
+
+export const SubSectionLabel = styled.Text`
+  font-size: 14;
+`

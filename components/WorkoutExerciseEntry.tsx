@@ -1,22 +1,22 @@
-import { useRouter } from 'expo-router'
 import { useAtom } from 'jotai'
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 
 import WorkoutExerciseEntryHeader from './WorkoutExerciseEntryHeader'
 import WorkoutExerciseEntrySet from './WorkoutExerciseEntrySet'
 import { openedWorkoutExerciseAtom } from '../atoms'
 import { WorkoutExercise, WorkoutExerciseSet } from '../db/models'
 import { useDatabaseConnection } from '../db/setup'
-import { ButtonContainer, ButtonText } from '../designSystem'
+import { ButtonContainer, ButtonText, Divider } from '../designSystem'
 import texts from '../texts'
+import { SubSectionLabel } from '../designSystem/Label'
+import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
 
 type Props = {
   exercise: WorkoutExercise
 }
 
 const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
-  const router = useRouter()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setOpenedWorkoutExercise] = useAtom(openedWorkoutExerciseAtom)
 
@@ -25,11 +25,10 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   const { workoutExerciseRepository, workoutExerciseSetRepository } =
     useDatabaseConnection()
 
-  async function addSet() {
+  async function addSet(setToAdd: Partial<WorkoutExerciseSet>) {
     const newSet = await workoutExerciseSetRepository.create({
       workoutExercise,
-      reps: 0,
-      weight: 0,
+      ...setToAdd,
     })
 
     const updated = {
@@ -69,14 +68,8 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
     setWorkoutExercise(updatedExercise)
   }
 
-  function onLinkPress() {
-    setOpenedWorkoutExercise(workoutExercise)
-    router.push('/WorkoutExercise')
-  }
   return (
-    <TouchableOpacity
-      // href="/WorkoutExercise"
-      onPress={onLinkPress}
+    <View
       style={{
         flex: 1,
         backgroundColor: '#f4f4f4',
@@ -84,22 +77,17 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
         margin: 16,
         borderRadius: 8,
         gap: 24,
+        flexDirection: 'column',
       }}
     >
-      <View style={{ flex: 1 }}>
-        <Text
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            fontSize: 16,
-            fontWeight: 'bold',
-          }}
-        >
-          {workoutExercise.name}
-        </Text>
+      <WorkoutExerciseEntrySetEditPanel
+        editedSet={workoutExercise.sets?.[0]}
+        addSet={addSet}
+        updateSet={updateSet}
+        removeSet={() => removeSet}
+      />
 
-        <WorkoutExerciseEntryHeader />
-
+      {/* <ScrollView>
         {workoutExercise.sets
           .sort((a, b) => a.id - b.id)
           .map((set, i) => (
@@ -110,15 +98,14 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
               onUpdate={updateSet}
             />
           ))}
-
-        <ButtonContainer
-          primary
-          onPress={addSet}
-        >
-          <ButtonText primary>{texts.addSet}</ButtonText>
-        </ButtonContainer>
-      </View>
-    </TouchableOpacity>
+      </ScrollView> */}
+      {/* <ButtonContainer
+        variant="primary"
+        onPress={addSet}
+      >
+        <ButtonText variant="primary">{texts.addSet}</ButtonText>
+      </ButtonContainer> */}
+    </View>
   )
 }
 

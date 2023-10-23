@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons'
 
 const iconSizes = {
-  small: 1,
+  small: 1, //12
   default: 24,
-  large: 100,
+  large: 100, //36
 }
 
 // todo: get typing of all ant design icons

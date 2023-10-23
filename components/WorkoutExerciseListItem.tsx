@@ -24,6 +24,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   }
   return (
     <ButtonContainer
+      variant="secondary"
       onPress={onLinkPress}
       style={{
         margin: 16,
@@ -32,6 +33,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
       <View style={{ flex: 1, gap: 4 }}>
         <SectionLabel>{exercise.name}</SectionLabel>
         <Divider />
+        {/* TODO: replace sorted with toSorted */}
         {exercise.sets
           .sort((a, b) => a.id - b.id)
           .map((set, i) => (

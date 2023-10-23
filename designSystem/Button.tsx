@@ -3,7 +3,9 @@ import styled from 'styled-components/native'
 import colors from './colors'
 
 type ButtonProps = {
+  variant: 'primary' | 'secondary' | 'critical'
   primary?: boolean
+  critical?: boolean
 }
 
 export const IconButtonContainer = styled.TouchableOpacity``
@@ -13,12 +15,21 @@ export const ButtonContainer = styled.TouchableOpacity<ButtonProps>`
   padding: 12px;
   border-radius: 10px;
   justify-content: center;
-  background: ${props => (props.primary ? colors.primary : colors.secondary)};
+  background: ${props =>
+    ({
+      primary: colors.primary,
+      secondary: colors.secondary,
+      critical: colors.critical,
+    })[props.variant]};
 `
 
 export const ButtonText = styled.Text<ButtonProps>`
   font-size: 16px;
   text-align: center;
   color: ${props =>
-    props.primary ? colors.primaryText : colors.secondaryText};
+    ({
+      primary: colors.primaryText,
+      secondary: colors.secondaryText,
+      critical: colors.criticalText,
+    })[props.variant]};
 `

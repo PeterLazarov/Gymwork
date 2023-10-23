@@ -64,6 +64,7 @@ export default function WorkoutPage() {
       <DayControl />
 
       <ScrollView>
+        {/* TODO: replace sorted with toSorted */}
         {workout?.exercises
           ?.sort((a, b) => a.id - b.id)
           .map((exercise, i) => (
