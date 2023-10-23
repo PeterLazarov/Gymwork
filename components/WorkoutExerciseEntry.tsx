@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Text } from 'react-native'
 
 import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
 import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
@@ -65,6 +65,10 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
     setWorkoutExercise(updatedExercise)
   }
 
+  function toggleSelectedSet(set: WorkoutExerciseSet) {
+    setSelectedSet(set.id === selectedSet?.id ? null : set)
+  }
+
   return (
     <View
       style={{
@@ -91,11 +95,11 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
             <ButtonContainer
               key={i}
               variant="tertiary"
-              onPress={() => setSelectedSet(set)}
+              onPress={() => toggleSelectedSet(set)}
             >
               <WorkoutExerciseSetListItem
                 set={set}
-                style={{ color: colors.primary }}
+                isFocused={selectedSet?.id === set.id}
               />
             </ButtonContainer>
           ))}

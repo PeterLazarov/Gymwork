@@ -90,7 +90,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
           onPress={saveChanges}
         >
           <ButtonText variant="primary">
-            {selectedSet ? texts.addSet : texts.updateSet}
+            {selectedSet ? texts.updateSet : texts.addSet}
           </ButtonText>
         </ButtonContainer>
         {selectedSet && (
