@@ -4,15 +4,18 @@ import {
   AfterUpdate,
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
 
-import { Exercise } from './exercise'
-import { Workout } from './workout'
-import { WorkoutExerciseSet } from './workoutExerciseSet'
+import type { Exercise } from './exercise'
+import type { Workout } from './workout'
+import type { WorkoutExerciseSet } from './workoutExerciseSet'
 
+// Don't think we really need this Entity.
 @Entity('workout_exercises')
 export class WorkoutExercise {
   @PrimaryGeneratedColumn('increment')
@@ -21,15 +24,16 @@ export class WorkoutExercise {
   @Column({ default: '' })
   notes: string
 
-  @ManyToOne(() => Exercise)
+  @ManyToMany('exercises')
+  @JoinTable()
   exercise: Exercise
 
-  @ManyToOne(() => Workout)
+  @ManyToOne('workouts', (w: Workout) => w.exercises)
   workout: Workout
 
   @OneToMany(
-    () => WorkoutExerciseSet,
-    workoutExerciseSet => workoutExerciseSet.workoutExercise,
+    'workout_exercise_sets',
+    ({ workoutExercise }: WorkoutExerciseSet) => workoutExercise,
     {
       orphanedRowAction: 'delete',
     }

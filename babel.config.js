@@ -6,6 +6,7 @@ module.exports = function (api) {
       'expo-router/babel',
       'jotai/babel/plugin-react-refresh',
       'babel-plugin-transform-typescript-metadata',
+      'react-native-reanimated/plugin',
     ],
   }
 }

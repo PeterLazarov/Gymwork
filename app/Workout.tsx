@@ -1,14 +1,13 @@
 import { useAtom } from 'jotai'
 import React, { useEffect, useMemo, useState } from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, View } from 'react-native'
 
 import { dateAtom } from '../atoms'
 import DayControl from '../components/DayControl'
-import Layout from '../components/Layout'
 import WorkoutControlButtons from '../components/WorkoutControlButtons'
 import WorkoutExerciseListItem from '../components/WorkoutExerciseListItem'
 import { Exercise, Workout } from '../db/models'
-import { useDatabaseConnection } from '../db/setup'
+import { useDatabaseConnection } from '../db/DBProvider'
 
 export default function WorkoutPage() {
   const [globalDate] = useAtom(dateAtom)
@@ -60,7 +59,7 @@ export default function WorkoutPage() {
   }
 
   return (
-    <Layout>
+    <View>
       <DayControl />
 
       <ScrollView>
@@ -80,6 +79,6 @@ export default function WorkoutPage() {
         createWorkout={newWorkout}
         addExercise={addExercise}
       />
-    </Layout>
+    </View>
   )
 }

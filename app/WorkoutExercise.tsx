@@ -4,7 +4,6 @@ import React from 'react'
 import { ScrollView, Text, View } from 'react-native'
 
 import { openedWorkoutExerciseAtom } from '../atoms'
-import Layout from '../components/Layout'
 import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
 import { Icon, IconButtonContainer } from '../designSystem'
 
@@ -24,7 +23,7 @@ export default function WorkoutPage() {
   }
 
   return (
-    <Layout>
+    <View>
       <View
         style={{
           display: 'flex',
@@ -51,6 +50,6 @@ export default function WorkoutPage() {
         </IconButtonContainer>
       </View>
       <WorkoutExerciseEntry exercise={openedWorkoutExercise!} />
-    </Layout>
+    </View>
   )
 }

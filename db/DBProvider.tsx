@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { DataSource, DataSourceOptions, Repository } from 'typeorm'
 
 import {
@@ -24,13 +24,17 @@ type Props = {
   children: React.ReactNode
 }
 
+const entities = [Exercise, Workout, WorkoutExercise, WorkoutExerciseSet]
+
 export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
   const options: DataSourceOptions = {
     type: 'expo',
     database: 'gymwork.db',
+    // database: '1.db',
     driver: require('expo-sqlite'),
-    entities: [Exercise, Workout, WorkoutExercise, WorkoutExerciseSet],
+    entities,
 
+    // logging: true,
     //   migrations: [CreateTodosTable1608217149351],
     //   migrationsRun: true,
 
@@ -39,15 +43,28 @@ export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
 
   const datasource = new DataSource(options)
 
-  datasource
-    .initialize()
-    .then(() => {
+  // datasource
+
+  const [showChildren, setShowChildren] = useState(false)
+
+  ;(async () => {
+    try {
+      await datasource.initialize()
       console.log('Data Source has been initialized!')
-      runSeeds(datasource)
-    })
-    .catch(err => {
+
+      await Promise.all(
+        entities.map(entity => datasource.getRepository(entity).clear())
+      )
+      console.log('Data Source has been cleared!')
+
+      await runSeeds(datasource)
+      console.log('Data Source has been seeded!')
+
+      setShowChildren(true)
+    } catch (err) {
       console.error('Error during Data Source initialization', err)
-    })
+    }
+  })()
 
   return (
     <DatabaseConnectionContext.Provider
@@ -59,7 +76,7 @@ export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
           datasource.getRepository(WorkoutExerciseSet),
       }}
     >
-      {children}
+      {showChildren && children}
     </DatabaseConnectionContext.Provider>
   )
 }

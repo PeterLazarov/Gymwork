@@ -1,10 +1,13 @@
 import { Text, View } from 'react-native'
-import Layout from '../components/Layout'
+import { exercises } from '../data/exercises.json'
+import ExerciseHistory from '../components/ExerciseHistory'
 
 export default function Log() {
   return (
-    <Layout>
+    <View>
       <Text>Log Page</Text>
-    </Layout>
+
+      <ExerciseHistory exercise={exercises[43]} />
+    </View>
   )
 }

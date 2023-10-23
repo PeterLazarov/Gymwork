@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
 import Nav from '../components/Nav'
 import { Calendar } from 'react-native-calendars'
 import { useAtom, useAtomValue } from 'jotai'
@@ -7,7 +7,6 @@ import { dateAtom, workoutHistoryAtom } from '../atoms'
 import { MarkedDates } from 'react-native-calendars/src/types'
 import { DateTime } from 'luxon'
 import { useRouter } from 'expo-router'
-import Layout from '../components/Layout'
 
 const CalendarPage = () => {
   const workoutHistory = useAtomValue(workoutHistoryAtom)
@@ -28,7 +27,7 @@ const CalendarPage = () => {
   }
 
   return (
-    <Layout>
+    <View>
       <Text>Calendar Page</Text>
 
       <Calendar
@@ -37,7 +36,7 @@ const CalendarPage = () => {
         }}
         markedDates={markedDates}
       />
-    </Layout>
+    </View>
   )
 }
 

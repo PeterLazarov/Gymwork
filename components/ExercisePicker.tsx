@@ -11,7 +11,7 @@ import {
 import { Like } from 'typeorm'
 
 import { Exercise } from '../db/models'
-import { useDatabaseConnection } from '../db/setup'
+import { useDatabaseConnection } from '../db/DBProvider'
 import { Icon, IconButtonContainer } from '../designSystem'
 import texts from '../texts'
 
