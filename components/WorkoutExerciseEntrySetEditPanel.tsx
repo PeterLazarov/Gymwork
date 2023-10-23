@@ -11,7 +11,7 @@ type Props = {
   selectedSet: WorkoutExerciseSet | null
   addSet: (set: Partial<WorkoutExerciseSet>) => void
   updateSet: (set: WorkoutExerciseSet) => void
-  removeSet: () => void
+  removeSet: (set: WorkoutExerciseSet) => void
 }
 
 const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
@@ -104,7 +104,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
         {selectedSet && (
           <ButtonContainer
             variant="critical"
-            onPress={removeSet}
+            onPress={() => removeSet(selectedSet)}
           >
             <ButtonText variant="critical">{texts.remove}</ButtonText>
           </ButtonContainer>

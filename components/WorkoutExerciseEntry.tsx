@@ -37,12 +37,6 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   }
 
   function removeSet(setToRemove: WorkoutExerciseSet) {
-    console.log('removed')
-    console.log(setToRemove)
-    console.log('intial')
-    console.log(workoutExercise.sets)
-    console.log('result')
-    console.log(workoutExercise.sets.filter(({ id }) => id !== setToRemove.id))
     const updated = {
       ...workoutExercise,
       sets: workoutExercise.sets.filter(({ id }) => id !== setToRemove.id),
@@ -85,7 +79,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
         selectedSet={selectedSet}
         addSet={addSet}
         updateSet={updateSet}
-        removeSet={() => removeSet}
+        removeSet={removeSet}
       />
 
       <ScrollView
