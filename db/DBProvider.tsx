@@ -52,13 +52,16 @@ export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
       await datasource.initialize()
       console.log('Data Source has been initialized!')
 
-      await Promise.all(
-        entities.map(entity => datasource.getRepository(entity).clear())
-      )
-      console.log('Data Source has been cleared!')
+      const reloadDB = (await datasource.getRepository(Workout).count()) === 0
+      if (reloadDB) {
+        await Promise.all(
+          entities.map(entity => datasource.getRepository(entity).clear())
+        )
+        console.log('Data Source has been cleared!')
 
-      await runSeeds(datasource)
-      console.log('Data Source has been seeded!')
+        await runSeeds(datasource)
+        console.log('Data Source has been seeded!')
+      }
 
       setShowChildren(true)
     } catch (err) {
