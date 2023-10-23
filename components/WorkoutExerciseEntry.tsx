@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, ScrollView, Text } from 'react-native'
 
 import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
@@ -59,7 +59,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
     const updatedExercise = {
       ...workoutExercise,
       sets: workoutExercise.sets.map(set =>
-        set.id === updatedSet.id ? updateSet : set
+        set.id === updatedSet.id ? updatedSet : set
       ),
     }
     setWorkoutExercise(updatedExercise)

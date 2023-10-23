@@ -77,7 +77,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
       </View>
       <IncrementDecrementButtons
         value={weight}
-        onChange={n => setReps(Math.max(n, 0))}
+        onChange={n => setWeight(Math.max(n, 0))}
       >
         <TextInput
           style={{ flexGrow: 1, textAlign: 'center' }}
