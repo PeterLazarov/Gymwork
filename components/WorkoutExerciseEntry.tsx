@@ -1,16 +1,12 @@
-import { useAtom } from 'jotai'
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { View, ScrollView } from 'react-native'
 
-import WorkoutExerciseEntryHeader from './WorkoutExerciseEntryHeader'
-import WorkoutExerciseEntrySet from './WorkoutExerciseEntrySet'
-import { openedWorkoutExerciseAtom } from '../atoms'
+import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
+import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
 import { WorkoutExercise, WorkoutExerciseSet } from '../db/models'
 import { useDatabaseConnection } from '../db/setup'
-import { ButtonContainer, ButtonText, Divider } from '../designSystem'
-import texts from '../texts'
-import { SubSectionLabel } from '../designSystem/Label'
-import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
+import { ButtonContainer } from '../designSystem'
+import colors from '../designSystem/colors'
 
 type Props = {
   exercise: WorkoutExercise
@@ -18,10 +14,11 @@ type Props = {
 
 const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setOpenedWorkoutExercise] = useAtom(openedWorkoutExerciseAtom)
-
   const [workoutExercise, setWorkoutExercise] =
     useState<WorkoutExercise>(exercise)
+  const [selectedSet, setSelectedSet] = useState<WorkoutExerciseSet | null>(
+    null
+  )
   const { workoutExerciseRepository, workoutExerciseSetRepository } =
     useDatabaseConnection()
 
@@ -72,7 +69,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#f4f4f4',
+        backgroundColor: colors.secondary,
         padding: 16,
         margin: 16,
         borderRadius: 8,
@@ -81,30 +78,28 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
       }}
     >
       <WorkoutExerciseEntrySetEditPanel
-        editedSet={workoutExercise.sets?.[0]}
+        selectedSet={selectedSet}
         addSet={addSet}
         updateSet={updateSet}
         removeSet={() => removeSet}
       />
 
-      {/* <ScrollView>
+      <ScrollView>
         {workoutExercise.sets
           .sort((a, b) => a.id - b.id)
           .map((set, i) => (
-            <WorkoutExerciseEntrySet
+            <ButtonContainer
               key={i}
-              set={set}
-              onRemove={removeSet}
-              onUpdate={updateSet}
-            />
+              variant="tertiary"
+              onPress={() => setSelectedSet(set)}
+            >
+              <WorkoutExerciseSetListItem
+                set={set}
+                style={{ color: colors.primary }}
+              />
+            </ButtonContainer>
           ))}
-      </ScrollView> */}
-      {/* <ButtonContainer
-        variant="primary"
-        onPress={addSet}
-      >
-        <ButtonText variant="primary">{texts.addSet}</ButtonText>
-      </ButtonContainer> */}
+      </ScrollView>
     </View>
   )
 }

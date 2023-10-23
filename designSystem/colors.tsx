@@ -1,8 +1,10 @@
 export default {
-  primary: '#764abc;',
-  secondary: '#f4f4f4;',
+  primary: '#764abc',
+  secondary: '#f4f4f4',
   critical: 'red',
-  primaryText: 'white;',
-  secondaryText: 'black;',
-  criticalText: 'white;',
+  tertiary: 'white',
+  primaryText: 'white',
+  secondaryText: 'black',
+  criticalText: 'white',
+  tertiaryText: 'black',
 }

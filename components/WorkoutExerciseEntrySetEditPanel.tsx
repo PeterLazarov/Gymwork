@@ -1,11 +1,5 @@
-import React, { useState } from 'react'
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  TextInput,
-} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, TextInput } from 'react-native'
 
 import IncrementDecrementButtons from './IncrementDecrementButtons'
 import { WorkoutExerciseSet } from '../db/models'
@@ -14,25 +8,30 @@ import { SubSectionLabel } from '../designSystem/Label'
 import texts from '../texts'
 
 type Props = {
-  editedSet?: WorkoutExerciseSet
+  selectedSet: WorkoutExerciseSet | null
   addSet: (set: Partial<WorkoutExerciseSet>) => void
   updateSet: (set: WorkoutExerciseSet) => void
   removeSet: () => void
 }
 
 const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
-  editedSet,
+  selectedSet,
   addSet,
   updateSet,
   removeSet,
 }) => {
-  const [reps, setReps] = useState(editedSet?.reps || 0)
-  const [weight, setWeight] = useState(editedSet?.weight || 0)
+  const [reps, setReps] = useState(selectedSet?.reps || 0)
+  const [weight, setWeight] = useState(selectedSet?.weight || 0)
+
+  useEffect(() => {
+    setReps(selectedSet?.reps || 0)
+    setWeight(selectedSet?.weight || 0)
+  }, [selectedSet])
 
   function saveChanges() {
-    if (editedSet) {
+    if (selectedSet) {
       updateSet({
-        ...editedSet,
+        ...selectedSet,
         reps,
         weight,
       })
@@ -45,7 +44,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   }
 
   return (
-    <>
+    <View>
       <SubSectionLabel>{texts.weight}</SubSectionLabel>
       <Divider />
       <IncrementDecrementButtons
@@ -91,10 +90,10 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
           onPress={saveChanges}
         >
           <ButtonText variant="primary">
-            {editedSet ? texts.addSet : texts.updateSet}
+            {selectedSet ? texts.addSet : texts.updateSet}
           </ButtonText>
         </ButtonContainer>
-        {editedSet && (
+        {selectedSet && (
           <ButtonContainer
             variant="critical"
             onPress={removeSet}
@@ -103,7 +102,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
           </ButtonContainer>
         )}
       </View>
-    </>
+    </View>
   )
 }
 

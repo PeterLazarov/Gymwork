@@ -2,16 +2,16 @@ import styled from 'styled-components/native'
 
 export const HeadingLabel = styled.Text`
   text-align: center;
-  font-size: 20;
+  font-size: 20px;
   flex: 1;
 `
 
 export const SectionLabel = styled.Text`
   text-align: center;
-  font-size: 18;
+  font-size: 18px;
   flex: 1;
 `
 
 export const SubSectionLabel = styled.Text`
-  font-size: 14;
+  font-size: 14px;
 `

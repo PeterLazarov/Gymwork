@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import colors from './colors'
 
 type ButtonProps = {
-  variant: 'primary' | 'secondary' | 'critical'
+  variant: 'primary' | 'secondary' | 'critical' | 'tertiary'
   primary?: boolean
   critical?: boolean
 }
@@ -20,6 +20,7 @@ export const ButtonContainer = styled.TouchableOpacity<ButtonProps>`
       primary: colors.primary,
       secondary: colors.secondary,
       critical: colors.critical,
+      tertiary: colors.tertiary,
     })[props.variant]};
 `
 
@@ -31,5 +32,6 @@ export const ButtonText = styled.Text<ButtonProps>`
       primary: colors.primaryText,
       secondary: colors.secondaryText,
       critical: colors.criticalText,
+      tertiary: colors.tertiaryText,
     })[props.variant]};
 `

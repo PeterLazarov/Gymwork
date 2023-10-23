@@ -1,6 +1,6 @@
 import { TR } from '@expo/html-elements'
-import React, { useEffect, useState } from 'react'
-import { Text, TextInput, View } from 'react-native'
+import React from 'react'
+import { Text, View } from 'react-native'
 
 import { WorkoutExerciseSet } from '../db/models'
 import texts from '../texts'
