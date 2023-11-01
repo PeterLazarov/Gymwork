@@ -8,11 +8,10 @@ import {
   View,
   Text,
 } from 'react-native'
-import { Like } from 'typeorm'
 
-import { Exercise } from '../db/models'
-import { useDatabaseConnection } from '../db/DBProvider'
 import { Icon, IconButtonContainer } from '../designSystem'
+import { Exercise } from '../models/Exercise'
+import { useStores } from '../models/helpers/useStores'
 import texts from '../texts'
 
 type Props = {
@@ -21,43 +20,31 @@ type Props = {
 }
 
 const ExercisePicker: React.FC<Props> = ({ onChange, onBack }) => {
-  const [selectedExercise, setSelectedExercise] = useState<
-    Exercise | undefined
-  >(undefined)
+  const { exerciseStore } = useStores()
+  const [selectedGuid, setSelectedGuid] = useState<string | undefined>(
+    undefined
+  )
 
-  const { exerciseRepository } = useDatabaseConnection()
+  const [filteredExercises, setFilteredExercises] = useState<Exercise[]>(
+    exerciseStore.exercises
+  )
 
-  const [filteredExercises, setFilteredExercises] = useState<Exercise[]>([])
   const [filterString, setFilterString] = useState('')
   // const [filterMuscle, setFilterMuscle] = useState('')
 
-  useEffect(() => {
-    exerciseRepository
-      .find({
-        where: {
-          name: Like(`%${filterString}%`),
-        },
-      })
-      .then(setFilteredExercises)
-  }, [filterString])
-  // console.log({ filkteredExercises })
-  // const filteredExercises = useMemo(() => {
-  //   let filtered = exercises
-  //   if (filterString) {
-  //     filtered = filtered.filter(({ name }) =>
-  //       name.toLowerCase().includes(filterString.toLowerCase())
-  //     )
-  //   }
-  //   if (filterMuscle) {
-  //     filtered = filtered.filter(({ primaryMuscles }) =>
-  //       primaryMuscles.includes(filterMuscle)
-  //     )
-  //   }
-  //   return filtered
-  // }, [filterString, filterMuscle])
+  // useEffect(() => {
+  //   exerciseRepository
+  //     .find({
+  //       where: {
+  //         name: Like(`%${filterString}%`),
+  //       },
+  //     })
+  //     .then(setFilteredExercises)
+  // }, [filterString])
 
-  function handleSelectExercise(exercise: Exercise) {
-    setSelectedExercise(exercise)
+  function handleSelectExercise(guid: string) {
+    const [exercise] = filteredExercises.filter(e => e.guid === guid)
+    setSelectedGuid(guid)
     onChange(exercise)
   }
 
@@ -121,8 +108,9 @@ const ExercisePicker: React.FC<Props> = ({ onChange, onBack }) => {
           </Picker> */}
 
           {/* Show exercises */}
+
           <Picker
-            selectedValue={selectedExercise}
+            selectedValue={selectedGuid}
             onValueChange={handleSelectExercise}
             // style={{ height: 300, display: 'flex', flexGrow: 1 }}
             itemStyle={{
@@ -137,11 +125,13 @@ const ExercisePicker: React.FC<Props> = ({ onChange, onBack }) => {
               value=""
               enabled={false}
             />
+
+            {/* TODO: research immutable state error when using `value={exercise}` */}
             {filteredExercises.map(exercise => (
               <Picker.Item
                 key={exercise.name}
                 label={exercise.name}
-                value={exercise}
+                value={exercise.guid}
               />
             ))}
           </Picker>

@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 
-import type { WorkoutExercise } from './workoutExercise'
+import { WorkoutExercise } from './workoutExercise'
 
 @Entity('workout_exercise_sets')
 export class WorkoutExerciseSet {
@@ -16,6 +16,6 @@ export class WorkoutExerciseSet {
   @Column({ nullable: true })
   time?: number
 
-  @ManyToOne('workout_exercises', ({ sets }: WorkoutExercise) => sets)
+  @ManyToOne(() => WorkoutExercise)
   workoutExercise: WorkoutExercise
 }

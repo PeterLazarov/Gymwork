@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, TextInput } from 'react-native'
 
 import IncrementDecrementButtons from './IncrementDecrementButtons'
-import { WorkoutExerciseSet } from '../db/models'
+import { WorkoutExerciseSet } from '../dbold/models'
 import { ButtonContainer, ButtonText, Divider } from '../designSystem'
 import { SubSectionLabel } from '../designSystem/Label'
 import texts from '../texts'

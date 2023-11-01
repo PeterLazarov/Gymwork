@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext } from 'react'
 import { DataSource, DataSourceOptions, Repository } from 'typeorm'
 
 import {
@@ -24,17 +24,13 @@ type Props = {
   children: React.ReactNode
 }
 
-const entities = [Exercise, Workout, WorkoutExercise, WorkoutExerciseSet]
-
 export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
   const options: DataSourceOptions = {
     type: 'expo',
     database: 'gymwork.db',
-    // database: '1.db',
     driver: require('expo-sqlite'),
-    entities,
+    entities: [Exercise, Workout, WorkoutExercise, WorkoutExerciseSet],
 
-    // logging: true,
     //   migrations: [CreateTodosTable1608217149351],
     //   migrationsRun: true,
 
@@ -43,31 +39,15 @@ export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
 
   const datasource = new DataSource(options)
 
-  // datasource
-
-  const [showChildren, setShowChildren] = useState(false)
-
-  ;(async () => {
-    try {
-      await datasource.initialize()
+  datasource
+    .initialize()
+    .then(() => {
       console.log('Data Source has been initialized!')
-
-      const reloadDB = (await datasource.getRepository(Workout).count()) === 0
-      if (reloadDB) {
-        await Promise.all(
-          entities.map(entity => datasource.getRepository(entity).clear())
-        )
-        console.log('Data Source has been cleared!')
-
-        await runSeeds(datasource)
-        console.log('Data Source has been seeded!')
-      }
-
-      setShowChildren(true)
-    } catch (err) {
+      runSeeds(datasource)
+    })
+    .catch(err => {
       console.error('Error during Data Source initialization', err)
-    }
-  })()
+    })
 
   return (
     <DatabaseConnectionContext.Provider
@@ -79,7 +59,7 @@ export const DatabaseConnectionProvider: React.FC<Props> = ({ children }) => {
           datasource.getRepository(WorkoutExerciseSet),
       }}
     >
-      {showChildren && children}
+      {children}
     </DatabaseConnectionContext.Provider>
   )
 }

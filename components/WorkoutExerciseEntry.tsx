@@ -3,9 +3,9 @@ import { View, ScrollView, Text } from 'react-native'
 
 import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
 import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
-import { WorkoutExercise, WorkoutExerciseSet } from '../db/models'
-import { useDatabaseConnection } from '../db/DBProvider'
-import { ButtonContainer } from '../designSystem'
+import { WorkoutExercise, WorkoutExerciseSet } from '../dbold/models'
+import { useDatabaseConnection } from '../dbold/DBProvider'
+import { ButtonContainer, Divider } from '../designSystem'
 import colors from '../designSystem/colors'
 
 type Props = {

@@ -1,25 +1,30 @@
 import { Slot } from 'expo-router'
-import { SafeAreaView, LogBox } from 'react-native'
+import { SafeAreaView } from 'react-native'
 
 import 'reflect-metadata'
 
-import { DatabaseConnectionProvider } from '../db/DBProvider'
+import '../utils/ignoreWarnings'
+import { DatabaseConnectionProvider } from '../dbold/DBProvider'
 import Nav from '../components/Nav'
+import DbShit from '../models/DbShit'
+import { useInitialRootStore } from '../models/helpers/useStores'
 
 export default function Layout() {
-  LogBox.ignoreLogs(['Require cycle:'])
+  useInitialRootStore(() => {})
 
   return (
-    <DatabaseConnectionProvider>
-      <SafeAreaView
-        style={{
-          display: 'flex',
-          height: '100%',
-        }}
-      >
-        <Nav />
-        <Slot />
-      </SafeAreaView>
-    </DatabaseConnectionProvider>
+    <DbShit>
+      <DatabaseConnectionProvider>
+        <SafeAreaView
+          style={{
+            display: 'flex',
+            height: '100%',
+          }}
+        >
+          <Nav />
+          <Slot />
+        </SafeAreaView>
+      </DatabaseConnectionProvider>
+    </DbShit>
   )
 }

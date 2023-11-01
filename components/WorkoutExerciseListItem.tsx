@@ -5,7 +5,7 @@ import { View } from 'react-native'
 
 import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
 import { openedWorkoutExerciseAtom } from '../atoms'
-import { WorkoutExercise } from '../db/models'
+import { WorkoutExercise } from '../dbold/models'
 import { ButtonContainer, Divider } from '../designSystem'
 import { SectionLabel } from '../designSystem/Label'
 

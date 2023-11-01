@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-import { WorkoutExerciseSet } from '../db/models'
+import { WorkoutExerciseSet } from '../dbold/models'
 import colors from '../designSystem/colors'
 import texts from '../texts'
 

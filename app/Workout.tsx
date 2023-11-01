@@ -6,8 +6,8 @@ import { dateAtom } from '../atoms'
 import DayControl from '../components/DayControl'
 import WorkoutControlButtons from '../components/WorkoutControlButtons'
 import WorkoutExerciseListItem from '../components/WorkoutExerciseListItem'
-import { Exercise, Workout } from '../db/models'
-import { useDatabaseConnection } from '../db/DBProvider'
+import { Exercise, Workout } from '../dbold/models'
+import { useDatabaseConnection } from '../dbold/DBProvider'
 
 export default function WorkoutPage() {
   const [globalDate] = useAtom(dateAtom)

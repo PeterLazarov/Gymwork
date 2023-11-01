@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 
 import ExercisePicker from './ExercisePicker'
-import { Workout, Exercise } from '../db/models'
+import { Workout, Exercise } from '../dbold/models'
 import { ButtonContainer, ButtonText } from '../designSystem/Button'
 import texts from '../texts'
 
