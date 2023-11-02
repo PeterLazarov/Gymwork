@@ -2,18 +2,18 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 
 import ExercisePicker from './ExercisePicker'
-import { Workout, Exercise } from '../dbold/models'
 import { ButtonContainer, ButtonText } from '../designSystem/Button'
+import { Exercise } from '../models/Exercise'
 import texts from '../texts'
 
 type Props = {
-  workout?: Workout
+  isWorkoutStarted: boolean
   createWorkout: () => void
   addExercise: (exercise: Exercise) => void
 }
 
 const WorkoutControlButtons: React.FC<Props> = ({
-  workout,
+  isWorkoutStarted,
   createWorkout,
   addExercise,
 }) => {
@@ -46,7 +46,7 @@ const WorkoutControlButtons: React.FC<Props> = ({
       <View
         style={{ display: 'flex', flexDirection: 'row', gap: 8, padding: 8 }}
       >
-        {!workout && (
+        {!isWorkoutStarted && (
           <>
             <ButtonContainer
               variant="primary"
@@ -62,7 +62,7 @@ const WorkoutControlButtons: React.FC<Props> = ({
             </ButtonContainer>
           </>
         )}
-        {workout && (
+        {isWorkoutStarted && (
           <ButtonContainer
             variant="primary"
             onPress={openExercisePicker}

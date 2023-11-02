@@ -1,56 +1,24 @@
-import {
-  AfterInsert,
-  AfterLoad,
-  AfterUpdate,
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm'
+import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
+import 'react-native-get-random-values'
+import { v4 as uuidv4 } from 'uuid'
 
-import { Exercise } from './_exercise'
-import { Workout } from './_workout'
-import { WorkoutExerciseSet } from './workoutExerciseSet'
+import { ExerciseModel } from './Exercise'
+import { WorkoutSetModel } from './WorkoutSet'
+import { withSetPropAction } from './helpers/withSetPropAction'
 
-@Entity('workout_exercises')
-export class WorkoutExercise {
-  @PrimaryGeneratedColumn('increment')
-  id: number
+export const WorkoutExerciseModel = types
+  .model('WorkoutExercise')
+  .props({
+    guid: types.optional(types.identifier, () => uuidv4()),
+    notes: '',
+    exercise: types.safeReference(ExerciseModel),
+    sets: types.array(WorkoutSetModel),
+  })
+  .actions(withSetPropAction)
 
-  @Column({ default: '' })
-  notes: string
-
-  @ManyToOne(() => Exercise)
-  exercise: Exercise
-
-  @ManyToOne(() => Workout)
-  workout: Workout
-
-  @OneToMany(
-    () => WorkoutExerciseSet,
-    workoutExerciseSet => workoutExerciseSet.workoutExercise,
-    {
-      orphanedRowAction: 'delete',
-    }
-  )
-  sets: WorkoutExerciseSet[]
-
-  name: string
-
-  @AfterLoad()
-  @AfterInsert()
-  @AfterUpdate()
-  generateVirtualFields(): void {
-    this.name = this.exercise?.name
-  }
-
-  @AfterLoad()
-  @AfterInsert()
-  @AfterUpdate()
-  async nullChecks() {
-    if (!this.sets) {
-      this.sets = []
-    }
-  }
-}
+export interface WorkoutExercise
+  extends Instance<typeof WorkoutExerciseModel> {}
+export interface WorkoutExerciseSnapshotOut
+  extends SnapshotOut<typeof WorkoutExerciseModel> {}
+export interface WorkoutExerciseSnapshotIn
+  extends SnapshotIn<typeof WorkoutExerciseModel> {}

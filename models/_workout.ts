@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm'
 
-import { WorkoutExercise } from './workoutExercise'
+import { WorkoutExercise } from './_workoutExercise'
 
 @Entity('workouts')
 export class Workout {

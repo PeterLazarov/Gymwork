@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 
-import { WorkoutExercise } from './workoutExercise'
+import { WorkoutExercise } from './_workoutExercise'
 
 @Entity('workout_exercise_sets')
 export class WorkoutExerciseSet {

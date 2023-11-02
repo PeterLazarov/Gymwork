@@ -1,4 +1,4 @@
 export * from './_workout'
 export * from './_exercise'
-export * from './workoutExercise'
+export * from './_workoutExercise'
 export * from './workoutExerciseSet'

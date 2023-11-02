@@ -2,8 +2,10 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import workoutSeedData from '../../dbold/seeds/workout-seed-data.json'
 import * as storage from '../../utils/storage'
-import { Workout, WorkoutModel, WorkoutSnapshotIn } from '../Workout'
+import { WorkoutModel, WorkoutSnapshotIn } from '../Workout'
 import { withSetPropAction } from '../helpers/withSetPropAction'
+import { Exercise } from '../Exercise'
+import { WorkoutExerciseModel } from '../WorkoutExercise'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -33,8 +35,17 @@ export const WorkoutStoreModel = types
       const created = WorkoutModel.create({
         date,
       })
-      store.setProp('workouts', [...store.workouts, created])
+      store.workouts.push(created)
       return created
+    },
+    addWorkoutExercise(date: string, exercise: Exercise) {
+      const index = store.workouts.findIndex(w => w.date === date)
+      const created = WorkoutExerciseModel.create({
+        exercise: exercise.guid,
+      })
+      store.workouts[index].exercises.push(created)
+
+      return store.workouts[index]
     },
   }))
 

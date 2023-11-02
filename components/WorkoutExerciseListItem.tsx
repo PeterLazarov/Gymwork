@@ -5,9 +5,9 @@ import { View } from 'react-native'
 
 import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
 import { openedWorkoutExerciseAtom } from '../atoms'
-import { WorkoutExercise } from '../dbold/models'
 import { ButtonContainer, Divider } from '../designSystem'
 import { SectionLabel } from '../designSystem/Label'
+import { WorkoutExercise } from '../models/WorkoutExercise'
 
 type Props = {
   exercise: WorkoutExercise
@@ -31,17 +31,17 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
       }}
     >
       <View style={{ flex: 1, gap: 4 }}>
-        <SectionLabel>{exercise.name}</SectionLabel>
+        <SectionLabel>{exercise.exercise?.name}</SectionLabel>
         <Divider />
         {/* TODO: replace sorted with toSorted */}
-        {exercise.sets
+        {/* {exercise.sets
           .sort((a, b) => a.id - b.id)
           .map((set, i) => (
             <WorkoutExerciseSetListItem
               key={i}
               set={set}
             />
-          ))}
+          ))} */}
       </View>
     </ButtonContainer>
   )

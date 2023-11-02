@@ -15,7 +15,7 @@ import { useStores } from '../models/helpers/useStores'
 import texts from '../texts'
 
 type Props = {
-  onChange: (exercise: Exercise) => unknown
+  onChange: (exercise: Exercise) => void
   onBack: () => void
 }
 

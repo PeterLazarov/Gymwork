@@ -1,6 +1,5 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
 
-import { ExerciseModel } from './Exercise'
 import { withSetPropAction } from './helpers/withSetPropAction'
 
 export const WorkoutSetModel = types
@@ -9,7 +8,6 @@ export const WorkoutSetModel = types
     guid: types.identifier,
     weight: 0,
     reps: 0,
-    exercise: types.safeReference(ExerciseModel),
   })
   .actions(withSetPropAction)
 
