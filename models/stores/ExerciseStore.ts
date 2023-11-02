@@ -28,15 +28,6 @@ export const ExerciseStoreModel = types
       console.log('seeding')
 
       store.setProp('exercises', exerciseSeedData)
-      console.log('-=-=-=-=-=-=-=')
-      console.log('-=-=-=-=-=-=-=')
-      console.log('-=-=-=-=-=-=-=')
-      console.log('-=-=-=-=-=-=-=')
-      // console.log(store.exercises)
-      console.log('-=-=-=-=-=-=-=')
-      console.log('-=-=-=-=-=-=-=')
-      console.log('-=-=-=-=-=-=-=')
-      console.log('-=-=-=-=-=-=-=')
     },
   }))
 

@@ -10,7 +10,7 @@ const DbShit: React.FC<Props> = props => {
 
   useEffect(() => {
     exerciseStore.fetch()
-    // workoutStore.fetch()
+    workoutStore.fetch()
   }, [])
 
   useEffect(console.log, exerciseStore.exercises)

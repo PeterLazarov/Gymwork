@@ -6,40 +6,30 @@ import { dateAtom } from '../atoms'
 import DayControl from '../components/DayControl'
 import WorkoutControlButtons from '../components/WorkoutControlButtons'
 import WorkoutExerciseListItem from '../components/WorkoutExerciseListItem'
-import { Exercise, Workout } from '../dbold/models'
 import { useDatabaseConnection } from '../dbold/DBProvider'
+import { Workout, WorkoutModel } from '../models/Workout'
+import { useStores } from '../models/helpers/useStores'
 
 export default function WorkoutPage() {
   const [globalDate] = useAtom(dateAtom)
 
   const globalDateISO = useMemo(() => globalDate.toISODate()!, [globalDate])
 
+  const { workoutStore } = useStores()
   const { workoutRepository, workoutExerciseRepository } =
     useDatabaseConnection()
   const [workout, setWorkout] = useState<Workout>()
 
   useEffect(() => {
-    workoutRepository
-      .find({
-        where: {
-          date: globalDateISO,
-        },
-        relations: {
-          exercises: {
-            sets: true,
-            exercise: true,
-          },
-        },
-      })
-      .then(([workout]) => setWorkout(workout))
-  }, [globalDateISO])
+    const [workout] = workoutStore.workouts.filter(
+      w => w.date === globalDateISO
+    )
+    setWorkout(workout)
+  }, [globalDateISO, workoutStore])
 
   function newWorkout() {
-    const res = workoutRepository.create({
-      date: globalDateISO,
-      notes: '',
-    })
-    setWorkout(res)
+    const workout = workoutStore.createWorkout(globalDateISO)
+    setWorkout(workout)
   }
 
   async function addExercise(exercise: Exercise) {
