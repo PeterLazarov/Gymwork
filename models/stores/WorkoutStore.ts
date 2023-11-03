@@ -1,16 +1,21 @@
+import { DateTime } from 'luxon'
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import workoutSeedData from '../../dbold/seeds/workout-seed-data.json'
 import * as storage from '../../utils/storage'
-import { WorkoutModel, WorkoutSnapshotIn } from '../Workout'
-import { withSetPropAction } from '../helpers/withSetPropAction'
 import { Exercise } from '../Exercise'
+import { WorkoutModel, WorkoutSnapshotIn } from '../Workout'
 import { WorkoutExerciseModel } from '../WorkoutExercise'
+import { withSetPropAction } from '../helpers/withSetPropAction'
+
+const now = DateTime.now()
+const today = now.set({ hour: 0, minute: 0, second: 0 })
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
   .props({
     workouts: types.array(WorkoutModel),
+    currentWorkoutDate: types.optional(types.string, today.toISODate()!),
   })
   .actions(withSetPropAction)
   .actions(store => ({
@@ -31,21 +36,31 @@ export const WorkoutStoreModel = types
 
       store.setProp('workouts', workoutSeedData)
     },
-    createWorkout(date: string) {
+    createWorkout() {
       const created = WorkoutModel.create({
-        date,
+        date: store.currentWorkoutDate,
       })
       store.workouts.push(created)
       return created
     },
-    addWorkoutExercise(date: string, exercise: Exercise) {
-      const index = store.workouts.findIndex(w => w.date === date)
+    addWorkoutExercise(exercise: Exercise) {
+      const index = store.workouts.findIndex(
+        w => w.date === store.currentWorkoutDate
+      )
       const created = WorkoutExerciseModel.create({
         exercise: exercise.guid,
       })
       store.workouts[index].exercises.push(created)
 
       return store.workouts[index]
+    },
+    incrementCurrentDate() {
+      const luxonDate = DateTime.fromISO(store.currentWorkoutDate)
+      store.currentWorkoutDate = luxonDate.plus({ days: 1 }).toISODate()!
+    },
+    decrementCurrentDate() {
+      const luxonDate = DateTime.fromISO(store.currentWorkoutDate)
+      store.currentWorkoutDate = luxonDate.minus({ days: 1 }).toISODate()!
     },
   }))
 

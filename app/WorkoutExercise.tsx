@@ -42,7 +42,7 @@ export default function WorkoutPage() {
             flex: 1,
           }}
         >
-          {openedWorkoutExercise?.name}
+          {openedWorkoutExercise?.exercise.name}
         </Text>
 
         <IconButtonContainer onPress={onOptionsPress}>

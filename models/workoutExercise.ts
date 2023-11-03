@@ -11,7 +11,7 @@ export const WorkoutExerciseModel = types
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
     notes: '',
-    exercise: types.safeReference(ExerciseModel),
+    exercise: types.reference(ExerciseModel),
     sets: types.array(WorkoutSetModel),
   })
   .actions(withSetPropAction)

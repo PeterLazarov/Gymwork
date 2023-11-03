@@ -1,8 +1,7 @@
-import { useAtom } from 'jotai'
-import React, { useEffect, useMemo, useState } from 'react'
+import { onPatch } from 'mobx-state-tree'
+import React, { useState } from 'react'
 import { ScrollView, View } from 'react-native'
 
-import { dateAtom } from '../atoms'
 import DayControl from '../components/DayControl'
 import WorkoutControlButtons from '../components/WorkoutControlButtons'
 import WorkoutExerciseListItem from '../components/WorkoutExerciseListItem'
@@ -11,30 +10,28 @@ import { Workout } from '../models/Workout'
 import { useStores } from '../models/helpers/useStores'
 
 export default function WorkoutPage() {
-  const [globalDate] = useAtom(dateAtom)
-
-  const globalDateISO = useMemo(() => globalDate.toISODate()!, [globalDate])
-
   const { workoutStore } = useStores()
   const [workout, setWorkout] = useState<Workout>()
 
-  useEffect(() => {
-    const [workout] = workoutStore.workouts.filter(
-      w => w.date === globalDateISO
-    )
-    setWorkout(workout)
-  }, [globalDateISO, workoutStore])
+  onPatch(workoutStore, patch => {
+    if (
+      patch.path === '/currentWorkoutDate' ||
+      patch.path.includes('/exercises')
+    ) {
+      const [updatedWorkout] = workoutStore.workouts.filter(
+        w => w.date === workoutStore.currentWorkoutDate
+      )
+      setWorkout(updatedWorkout)
+    }
+  })
 
   function newWorkout() {
-    const workout = workoutStore.createWorkout(globalDateISO)
+    const workout = workoutStore.createWorkout()
     setWorkout(workout)
   }
 
   async function addExercise(exercise: Exercise) {
-    const updatedWorkout = workoutStore.addWorkoutExercise(
-      globalDateISO,
-      exercise
-    )
+    const updatedWorkout = workoutStore.addWorkoutExercise(exercise)
 
     // TODO: newly added exercise not displayed after setWorkout
     setWorkout(updatedWorkout)

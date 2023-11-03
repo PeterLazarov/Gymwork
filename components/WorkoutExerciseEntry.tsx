@@ -3,10 +3,11 @@ import { View, ScrollView, Text } from 'react-native'
 
 import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
 import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
-import { WorkoutExercise, WorkoutExerciseSet } from '../dbold/models'
 import { useDatabaseConnection } from '../dbold/DBProvider'
 import { ButtonContainer, Divider } from '../designSystem'
 import colors from '../designSystem/colors'
+import { WorkoutExercise } from '../models/WorkoutExercise'
+import { WorkoutExerciseSet } from '../models/workoutExerciseSet'
 
 type Props = {
   exercise: WorkoutExercise
@@ -89,23 +90,21 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
           borderRadius: 6,
         }}
       >
-        {workoutExercise.sets
-          .sort((a, b) => a.id - b.id)
-          .map((set, i) => (
-            <>
-              {i !== 0 && <Divider />}
-              <ButtonContainer
-                key={i}
-                variant="tertiary"
-                onPress={() => toggleSelectedSet(set)}
-              >
-                <WorkoutExerciseSetListItem
-                  set={set}
-                  isFocused={selectedSet?.id === set.id}
-                />
-              </ButtonContainer>
-            </>
-          ))}
+        {workoutExercise.sets.map((set, i) => (
+          <>
+            {i !== 0 && <Divider />}
+            <ButtonContainer
+              key={i}
+              variant="tertiary"
+              onPress={() => toggleSelectedSet(set)}
+            >
+              <WorkoutExerciseSetListItem
+                set={set}
+                isFocused={selectedSet?.id === set.id}
+              />
+            </ButtonContainer>
+          </>
+        ))}
       </ScrollView>
     </View>
   )
