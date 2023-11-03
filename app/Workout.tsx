@@ -20,10 +20,10 @@ const WorkoutPage: React.FC = () => {
   }
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <DayControl />
 
-      <ScrollView>
+      <ScrollView style={{ flex: 1 }}>
         {workoutStore.currentWorkout?.exercises.map((exercise, i) => (
           <WorkoutExerciseListItem
             key={`${workoutStore.currentWorkout.date}_${i}`}
@@ -31,7 +31,6 @@ const WorkoutPage: React.FC = () => {
           />
         ))}
       </ScrollView>
-
       <WorkoutControlButtons
         isWorkoutStarted={!!workoutStore.currentWorkout}
         createWorkout={newWorkout}
