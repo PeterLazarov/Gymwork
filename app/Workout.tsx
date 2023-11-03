@@ -1,41 +1,22 @@
-import { onPatch } from 'mobx-state-tree'
-import React, { useState } from 'react'
+import { observer } from 'mobx-react-lite'
+import React from 'react'
 import { ScrollView, View } from 'react-native'
 
 import DayControl from '../components/DayControl'
 import WorkoutControlButtons from '../components/WorkoutControlButtons'
 import WorkoutExerciseListItem from '../components/WorkoutExerciseListItem'
 import { Exercise } from '../models/Exercise'
-import { Workout } from '../models/Workout'
 import { useStores } from '../models/helpers/useStores'
 
-export default function WorkoutPage() {
+const WorkoutPage: React.FC = () => {
   const { workoutStore } = useStores()
-  const [workout, setWorkout] = useState<Workout>()
-
-  onPatch(workoutStore, patch => {
-    if (
-      patch.path === '/currentWorkoutDate' ||
-      patch.path.includes('/exercises')
-    ) {
-      // TODO: workoutStore.currentWorkout view doesn't work. Why?
-      const [updatedWorkout] = workoutStore.workouts.filter(
-        w => w.date === workoutStore.currentWorkoutDate
-      )
-      setWorkout(updatedWorkout)
-    }
-  })
 
   function newWorkout() {
-    const workout = workoutStore.createWorkout()
-    setWorkout(workout)
+    workoutStore.createWorkout()
   }
 
   async function addExercise(exercise: Exercise) {
-    const updatedWorkout = workoutStore.addWorkoutExercise(exercise)
-
-    // TODO: newly added exercise not displayed after setWorkout
-    setWorkout(updatedWorkout)
+    workoutStore.addWorkoutExercise(exercise)
   }
 
   return (
@@ -43,19 +24,20 @@ export default function WorkoutPage() {
       <DayControl />
 
       <ScrollView>
-        {workout?.exercises.map((exercise, i) => (
+        {workoutStore.currentWorkout?.exercises.map((exercise, i) => (
           <WorkoutExerciseListItem
-            key={`${workout.date}_${i}`}
+            key={`${workoutStore.currentWorkout.date}_${i}`}
             exercise={exercise}
           />
         ))}
       </ScrollView>
 
       <WorkoutControlButtons
-        isWorkoutStarted={!!workout}
+        isWorkoutStarted={!!workoutStore.currentWorkout}
         createWorkout={newWorkout}
         addExercise={addExercise}
       />
     </View>
   )
 }
+export default observer(WorkoutPage)

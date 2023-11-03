@@ -61,15 +61,12 @@ export const WorkoutStoreModel = types
         date: store.currentWorkoutDate,
       })
       store.workouts.push(created)
-      return created
     },
     addWorkoutExercise(exercise: Exercise) {
       const created = WorkoutExerciseModel.create({
         exercise: exercise.guid,
       })
       store.currentWorkout.exercises.push(created)
-
-      return store.currentWorkout
     },
     setOpenedExercise(exercise: WorkoutExercise | null) {
       store.openedExerciseGuid = exercise?.guid || ''
@@ -78,8 +75,6 @@ export const WorkoutStoreModel = types
       const created = WorkoutSetModel.create(newSet)
 
       store.openedExercise.sets.push(created)
-
-      return store.openedExercise
     },
     removeWorkoutExerciseSet(setGuid: string) {
       // TODO: fix typescript hackery
@@ -87,10 +82,9 @@ export const WorkoutStoreModel = types
       store.openedExercise.sets = filtered as unknown as IMSTArray<
         typeof WorkoutSetModel
       >
-
-      return store.openedExercise
     },
     updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
+      // TODO: update action not observed properly. Why?
       // TODO: fix typescript hackery
       const updated = store.openedExercise.sets.map(set =>
         set.guid === updatedSet.guid ? updatedSet : set
@@ -98,8 +92,6 @@ export const WorkoutStoreModel = types
       store.openedExercise.sets = updated as unknown as IMSTArray<
         typeof WorkoutSetModel
       >
-
-      return store.openedExercise
     },
     incrementCurrentDate() {
       const luxonDate = DateTime.fromISO(store.currentWorkoutDate)

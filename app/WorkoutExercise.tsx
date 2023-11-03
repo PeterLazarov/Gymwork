@@ -1,4 +1,5 @@
 import { useRouter } from 'expo-router'
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Text, View } from 'react-native'
 
@@ -6,7 +7,7 @@ import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
 import { Icon, IconButtonContainer } from '../designSystem'
 import { useStores } from '../models/helpers/useStores'
 
-export default function WorkoutPage() {
+const WorkoutExercisePage: React.FC = () => {
   const { workoutStore } = useStores()
   const router = useRouter()
 
@@ -50,3 +51,4 @@ export default function WorkoutPage() {
     </View>
   )
 }
+export default observer(WorkoutExercisePage)

@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View, ScrollView } from 'react-native'
 
@@ -16,31 +17,24 @@ type Props = {
 const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   const { workoutStore } = useStores()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [workoutExercise, setWorkoutExercise] =
-    useState<WorkoutExercise>(exercise)
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
   async function addSet(setToAdd: Partial<WorkoutSet>) {
-    const updatedExercise = workoutStore.addWorkoutExerciseSet(setToAdd)
-    setWorkoutExercise(updatedExercise)
+    workoutStore.addWorkoutExerciseSet(setToAdd)
   }
 
   function removeSet(setToRemove: WorkoutSet) {
-    const updatedExercise = workoutStore.removeWorkoutExerciseSet(
-      setToRemove.guid
-    )
-    setWorkoutExercise(updatedExercise)
+    workoutStore.removeWorkoutExerciseSet(setToRemove.guid)
   }
 
   function updateSet(updatedSet: WorkoutSet) {
-    const updatedExercise = workoutStore.updateWorkoutExerciseSet(updatedSet)
-    setWorkoutExercise(updatedExercise)
+    workoutStore.updateWorkoutExerciseSet(updatedSet)
   }
 
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
   }
-
+  console.log('rerender')
   return (
     <View
       style={{
@@ -65,7 +59,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
           borderRadius: 6,
         }}
       >
-        {workoutExercise.sets.map((set, i) => (
+        {workoutStore.openedExercise.sets.map((set, i) => (
           <>
             {i !== 0 && <Divider />}
             <ButtonContainer
@@ -85,4 +79,4 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   )
 }
 
-export default WorkoutExerciseEntry
+export default observer(WorkoutExerciseEntry)

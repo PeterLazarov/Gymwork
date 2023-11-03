@@ -1,7 +1,7 @@
 import { Link } from 'expo-router'
 import { DateTime } from 'luxon'
-import { onPatch } from 'mobx-state-tree'
-import React, { useState } from 'react'
+import { observer } from 'mobx-react-lite'
+import React from 'react'
 import { View } from 'react-native'
 
 import { Icon, IconButtonContainer } from '../designSystem'
@@ -10,17 +10,8 @@ import { useStores } from '../models/helpers/useStores'
 
 const DayControl = () => {
   const { workoutStore } = useStores()
-  const [currentDate, setCurrentDate] = useState(
-    workoutStore.currentWorkoutDate
-  )
 
-  onPatch(workoutStore, patch => {
-    if (patch.path === '/currentWorkoutDate') {
-      setCurrentDate(workoutStore.currentWorkoutDate)
-    }
-  })
-
-  const luxonDate = DateTime.fromISO(currentDate)
+  const luxonDate = DateTime.fromISO(workoutStore.currentWorkoutDate)
   const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
   const todayDiff = Math.round(luxonDate.diff(today, 'days').days)
   const label =
@@ -48,4 +39,4 @@ const DayControl = () => {
   )
 }
 
-export default DayControl
+export default observer(DayControl)
