@@ -1,13 +1,12 @@
 import { useRouter } from 'expo-router'
-import { useAtom } from 'jotai'
 import React from 'react'
 import { View } from 'react-native'
 
 import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
-import { openedWorkoutExerciseAtom } from '../atoms'
 import { ButtonContainer, Divider } from '../designSystem'
 import { SectionLabel } from '../designSystem/Label'
 import { WorkoutExercise } from '../models/WorkoutExercise'
+import { useStores } from '../models/helpers/useStores'
 
 type Props = {
   exercise: WorkoutExercise
@@ -15,11 +14,10 @@ type Props = {
 
 const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   const router = useRouter()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setOpenedWorkoutExercise] = useAtom(openedWorkoutExerciseAtom)
+  const { workoutStore } = useStores()
 
   function onLinkPress() {
-    setOpenedWorkoutExercise(exercise)
+    workoutStore.setOpenedExercise(exercise)
     router.push('/WorkoutExercise')
   }
   return (
@@ -34,14 +32,12 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
         <SectionLabel>{exercise.exercise?.name}</SectionLabel>
         <Divider />
         {/* TODO: replace sorted with toSorted */}
-        {/* {exercise.sets
-          .sort((a, b) => a.id - b.id)
-          .map((set, i) => (
-            <WorkoutExerciseSetListItem
-              key={i}
-              set={set}
-            />
-          ))} */}
+        {exercise.sets.map((set, i) => (
+          <WorkoutExerciseSetListItem
+            key={i}
+            set={set}
+          />
+        ))}
       </View>
     </ButtonContainer>
   )

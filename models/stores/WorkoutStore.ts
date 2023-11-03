@@ -5,7 +5,8 @@ import workoutSeedData from '../../dbold/seeds/workout-seed-data.json'
 import * as storage from '../../utils/storage'
 import { Exercise } from '../Exercise'
 import { WorkoutModel, WorkoutSnapshotIn } from '../Workout'
-import { WorkoutExerciseModel } from '../WorkoutExercise'
+import { WorkoutExercise, WorkoutExerciseModel } from '../WorkoutExercise'
+import { WorkoutSet, WorkoutSetModel } from '../WorkoutSet'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
 const now = DateTime.now()
@@ -16,7 +17,26 @@ export const WorkoutStoreModel = types
   .props({
     workouts: types.array(WorkoutModel),
     currentWorkoutDate: types.optional(types.string, today.toISODate()!),
+    openedExerciseGuid: '',
   })
+  .views(store => ({
+    get currentWorkout() {
+      const [workout] = store.workouts.filter(
+        w => w.date === store.currentWorkoutDate
+      )
+      return workout
+    },
+    get openedExercise() {
+      const [currentWorkout] = store.workouts.filter(
+        w => w.date === store.currentWorkoutDate
+      )
+
+      const [opened] = currentWorkout.exercises.filter(
+        e => e.guid === store.openedExerciseGuid
+      )
+      return opened
+    },
+  }))
   .actions(withSetPropAction)
   .actions(store => ({
     async fetch() {
@@ -44,15 +64,27 @@ export const WorkoutStoreModel = types
       return created
     },
     addWorkoutExercise(exercise: Exercise) {
-      const index = store.workouts.findIndex(
-        w => w.date === store.currentWorkoutDate
-      )
       const created = WorkoutExerciseModel.create({
         exercise: exercise.guid,
       })
-      store.workouts[index].exercises.push(created)
+      store.currentWorkout.exercises.push(created)
 
-      return store.workouts[index]
+      return store.currentWorkout
+    },
+    setOpenedExercise(exercise: WorkoutExercise | null) {
+      store.openedExerciseGuid = exercise?.guid || ''
+    },
+    addWorkoutExerciseSet(exerciseGuid: string, newSet: Partial<WorkoutSet>) {
+      const created = WorkoutSetModel.create(newSet)
+
+      store.openedExercise.sets.push(created)
+
+      return store.openedExercise
+    },
+    removeWorkoutExerciseSet(exerciseGuid: string, setGuid: string) {
+      // TODO: implement
+
+      return store.openedExercise
     },
     incrementCurrentDate() {
       const luxonDate = DateTime.fromISO(store.currentWorkoutDate)

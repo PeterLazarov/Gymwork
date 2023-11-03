@@ -18,6 +18,7 @@ export default function WorkoutPage() {
       patch.path === '/currentWorkoutDate' ||
       patch.path.includes('/exercises')
     ) {
+      // TODO: workoutStore.currentWorkout view doesn't work. Why?
       const [updatedWorkout] = workoutStore.workouts.filter(
         w => w.date === workoutStore.currentWorkoutDate
       )

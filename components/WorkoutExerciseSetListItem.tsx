@@ -1,12 +1,12 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-import { WorkoutExerciseSet } from '../dbold/models'
 import colors from '../designSystem/colors'
+import { WorkoutSet } from '../models/WorkoutSet'
 import texts from '../texts'
 
 type Props = {
-  set: WorkoutExerciseSet
+  set: WorkoutSet
   isFocused?: boolean
 }
 

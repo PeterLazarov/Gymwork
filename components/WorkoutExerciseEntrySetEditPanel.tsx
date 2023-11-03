@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { View, TextInput } from 'react-native'
 
 import IncrementDecrementButtons from './IncrementDecrementButtons'
-import { WorkoutExerciseSet } from '../dbold/models'
 import { ButtonContainer, ButtonText, Divider } from '../designSystem'
 import { SubSectionLabel } from '../designSystem/Label'
+import { WorkoutSet } from '../models/WorkoutSet'
 import texts from '../texts'
 
 type Props = {
-  selectedSet: WorkoutExerciseSet | null
-  addSet: (set: Partial<WorkoutExerciseSet>) => void
-  updateSet: (set: WorkoutExerciseSet) => void
-  removeSet: (set: WorkoutExerciseSet) => void
+  selectedSet: WorkoutSet | null
+  addSet: (set: Partial<WorkoutSet>) => void
+  updateSet: (set: WorkoutSet) => void
+  removeSet: (set: WorkoutSet) => void
 }
 
 const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
