@@ -32,15 +32,12 @@ const ExercisePicker: React.FC<Props> = ({ onChange, onBack }) => {
   const [filterString, setFilterString] = useState('')
   // const [filterMuscle, setFilterMuscle] = useState('')
 
-  // useEffect(() => {
-  //   exerciseRepository
-  //     .find({
-  //       where: {
-  //         name: Like(`%${filterString}%`),
-  //       },
-  //     })
-  //     .then(setFilteredExercises)
-  // }, [filterString])
+  useEffect(() => {
+    const result = exerciseStore.exercises.filter(
+      e => e.name.indexOf(filterString) !== -1
+    )
+    setFilteredExercises(result)
+  }, [filterString])
 
   function handleSelectExercise(guid: string) {
     const [exercise] = filteredExercises.filter(e => e.guid === guid)
