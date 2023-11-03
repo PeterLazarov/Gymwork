@@ -3,7 +3,6 @@ import { View, ScrollView } from 'react-native'
 
 import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
 import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
-import { useDatabaseConnection } from '../dbold/DBProvider'
 import { ButtonContainer, Divider } from '../designSystem'
 import colors from '../designSystem/colors'
 import { WorkoutExercise } from '../models/WorkoutExercise'
@@ -20,33 +19,21 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   const [workoutExercise, setWorkoutExercise] =
     useState<WorkoutExercise>(exercise)
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
-  const { workoutExerciseSetRepository } = useDatabaseConnection()
 
   async function addSet(setToAdd: Partial<WorkoutSet>) {
-    const updatedExercise = workoutStore.addWorkoutExerciseSet(
-      exercise.guid,
-      setToAdd
-    )
+    const updatedExercise = workoutStore.addWorkoutExerciseSet(setToAdd)
     setWorkoutExercise(updatedExercise)
   }
 
   function removeSet(setToRemove: WorkoutSet) {
     const updatedExercise = workoutStore.removeWorkoutExerciseSet(
-      exercise.guid,
       setToRemove.guid
     )
     setWorkoutExercise(updatedExercise)
   }
 
   function updateSet(updatedSet: WorkoutSet) {
-    workoutExerciseSetRepository.update(updatedSet.id, updatedSet)
-
-    const updatedExercise = {
-      ...workoutExercise,
-      sets: workoutExercise.sets.map(set =>
-        set.id === updatedSet.id ? updatedSet : set
-      ),
-    }
+    const updatedExercise = workoutStore.updateWorkoutExerciseSet(updatedSet)
     setWorkoutExercise(updatedExercise)
   }
 

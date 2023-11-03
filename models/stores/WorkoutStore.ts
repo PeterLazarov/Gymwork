@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { Instance, SnapshotOut, types } from 'mobx-state-tree'
+import { IMSTArray, Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import workoutSeedData from '../../dbold/seeds/workout-seed-data.json'
 import * as storage from '../../utils/storage'
@@ -74,15 +74,30 @@ export const WorkoutStoreModel = types
     setOpenedExercise(exercise: WorkoutExercise | null) {
       store.openedExerciseGuid = exercise?.guid || ''
     },
-    addWorkoutExerciseSet(exerciseGuid: string, newSet: Partial<WorkoutSet>) {
+    addWorkoutExerciseSet(newSet: Partial<WorkoutSet>) {
       const created = WorkoutSetModel.create(newSet)
 
       store.openedExercise.sets.push(created)
 
       return store.openedExercise
     },
-    removeWorkoutExerciseSet(exerciseGuid: string, setGuid: string) {
-      // TODO: implement
+    removeWorkoutExerciseSet(setGuid: string) {
+      // TODO: fix typescript hackery
+      const filtered = store.openedExercise.sets.filter(s => s.guid !== setGuid)
+      store.openedExercise.sets = filtered as unknown as IMSTArray<
+        typeof WorkoutSetModel
+      >
+
+      return store.openedExercise
+    },
+    updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
+      // TODO: fix typescript hackery
+      const updated = store.openedExercise.sets.map(set =>
+        set.guid === updatedSet.guid ? updatedSet : set
+      )
+      store.openedExercise.sets = updated as unknown as IMSTArray<
+        typeof WorkoutSetModel
+      >
 
       return store.openedExercise
     },
