@@ -44,8 +44,6 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   return (
     <View
       style={{
-        flex: 1,
-        // backgroundColor: colors.secondary,
         padding: 16,
         // margin: 16,
         borderRadius: 8,
