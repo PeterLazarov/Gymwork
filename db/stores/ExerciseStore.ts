@@ -2,7 +2,7 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import exerciseSeedData from '../../dbold/seeds/exercises-seed-data.json'
 import * as storage from '../../utils/storage'
-import { ExerciseModel, ExerciseSnapshotIn } from '../Exercise'
+import { ExerciseModel, ExerciseSnapshotIn } from '../models/Exercise'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
 export const ExerciseStoreModel = types

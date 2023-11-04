@@ -2,8 +2,8 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Text, View } from 'react-native'
 
+import { WorkoutSet } from '../db/models'
 import colors from '../designSystem/colors'
-import { WorkoutSet } from '../models/WorkoutSet'
 import texts from '../texts'
 
 type Props = {

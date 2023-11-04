@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { ExerciseModel } from './Exercise'
 import { WorkoutSetModel } from './WorkoutSet'
-import { withSetPropAction } from './helpers/withSetPropAction'
+import { withSetPropAction } from '../helpers/withSetPropAction'
 
 export const WorkoutExerciseModel = types
   .model('WorkoutExercise')

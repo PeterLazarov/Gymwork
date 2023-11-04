@@ -13,8 +13,6 @@ const DbShit: React.FC<Props> = props => {
     workoutStore.fetch()
   }, [])
 
-  useEffect(console.log, exerciseStore.exercises)
-
   return props.children
 }
 

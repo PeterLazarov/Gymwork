@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 import { DateTime } from 'luxon'
 
-import { WorkoutExercise } from '../models/WorkoutExercise'
+import { WorkoutExercise } from '../db/models/WorkoutExercise'
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })

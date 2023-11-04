@@ -3,10 +3,13 @@ import { IMSTArray, Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import workoutSeedData from '../../dbold/seeds/workout-seed-data.json'
 import * as storage from '../../utils/storage'
-import { Exercise } from '../Exercise'
-import { WorkoutModel, WorkoutSnapshotIn } from '../Workout'
-import { WorkoutExercise, WorkoutExerciseModel } from '../WorkoutExercise'
-import { WorkoutSet, WorkoutSetModel } from '../WorkoutSet'
+import { Exercise } from '../models/Exercise'
+import { WorkoutModel, WorkoutSnapshotIn } from '../models/Workout'
+import {
+  WorkoutExercise,
+  WorkoutExerciseModel,
+} from '../models/WorkoutExercise'
+import { WorkoutSet, WorkoutSetModel } from '../models/WorkoutSet'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
 const now = DateTime.now()

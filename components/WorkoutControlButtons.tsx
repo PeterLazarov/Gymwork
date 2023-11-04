@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 
 import ExercisePicker from './ExercisePicker'
+import { Exercise } from '../db/models'
 import { ButtonContainer, ButtonText } from '../designSystem/Button'
-import { Exercise } from '../models/Exercise'
 import texts from '../texts'
 
 type Props = {

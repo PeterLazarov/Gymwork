@@ -9,9 +9,9 @@ import {
   Text,
 } from 'react-native'
 
+import { useStores } from '../db/helpers/useStores'
+import { Exercise } from '../db/models'
 import { Icon, IconButtonContainer } from '../designSystem'
-import { Exercise } from '../models/Exercise'
-import { useStores } from '../models/helpers/useStores'
 import texts from '../texts'
 
 type Props = {

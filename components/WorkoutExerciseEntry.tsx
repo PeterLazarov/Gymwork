@@ -4,11 +4,10 @@ import { View, ScrollView } from 'react-native'
 
 import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
+import { useStores } from '../db/helpers/useStores'
+import { WorkoutSet, WorkoutExercise } from '../db/models'
 import { ButtonContainer, Divider } from '../designSystem'
 import colors from '../designSystem/colors'
-import { WorkoutExercise } from '../models/WorkoutExercise'
-import { WorkoutSet } from '../models/WorkoutSet'
-import { useStores } from '../models/helpers/useStores'
 
 type Props = {
   exercise: WorkoutExercise

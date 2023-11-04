@@ -3,10 +3,10 @@ import React from 'react'
 import { View } from 'react-native'
 
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
+import { useStores } from '../db/helpers/useStores'
+import { WorkoutExercise } from '../db/models'
 import { ButtonContainer, Divider } from '../designSystem'
 import { SectionLabel } from '../designSystem/Label'
-import { WorkoutExercise } from '../models/WorkoutExercise'
-import { useStores } from '../models/helpers/useStores'
 
 type Props = {
   exercise: WorkoutExercise

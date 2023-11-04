@@ -5,8 +5,8 @@ import { ScrollView, View } from 'react-native'
 import DayControl from '../components/DayControl'
 import WorkoutControlButtons from '../components/WorkoutControlButtons'
 import WorkoutExerciseListItem from '../components/WorkoutExerciseListItem'
-import { Exercise } from '../models/Exercise'
-import { useStores } from '../models/helpers/useStores'
+import { useStores } from '../db/helpers/useStores'
+import { Exercise } from '../db/models'
 
 const WorkoutPage: React.FC = () => {
   const { workoutStore } = useStores()

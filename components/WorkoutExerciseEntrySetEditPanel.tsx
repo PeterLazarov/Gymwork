@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { View, TextInput } from 'react-native'
 
 import IncrementDecrementButtons from './IncrementDecrementButtons'
+import { WorkoutSet } from '../db/models'
 import { ButtonContainer, ButtonText, Divider } from '../designSystem'
 import { SubSectionLabel } from '../designSystem/Label'
-import { WorkoutSet } from '../models/WorkoutSet'
 import texts from '../texts'
 
 type Props = {

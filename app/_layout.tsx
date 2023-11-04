@@ -4,16 +4,16 @@ import { SafeAreaView } from 'react-native'
 import 'reflect-metadata'
 
 import '../utils/ignoreWarnings'
-import { DatabaseConnectionProvider } from '../dbold/DBProvider'
 import Nav from '../components/Nav'
-import DbShit from '../models/DbShit'
-import { useInitialRootStore } from '../models/helpers/useStores'
+import DBStoreInitializer from '../db/DBStoreInitializer'
+import { useInitialRootStore } from '../db/helpers/useStores'
+import { DatabaseConnectionProvider } from '../dbold/DBProvider'
 
 export default function Layout() {
   useInitialRootStore(() => {})
 
   return (
-    <DbShit>
+    <DBStoreInitializer>
       <DatabaseConnectionProvider>
         <SafeAreaView
           style={{
@@ -25,6 +25,6 @@ export default function Layout() {
           <Slot />
         </SafeAreaView>
       </DatabaseConnectionProvider>
-    </DbShit>
+    </DBStoreInitializer>
   )
 }

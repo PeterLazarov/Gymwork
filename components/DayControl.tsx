@@ -4,9 +4,9 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 
+import { useStores } from '../db/helpers/useStores'
 import { Icon, IconButtonContainer } from '../designSystem'
 import { HeadingLabel } from '../designSystem/Label'
-import { useStores } from '../models/helpers/useStores'
 
 const DayControl = () => {
   const { workoutStore } = useStores()

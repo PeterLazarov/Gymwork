@@ -4,8 +4,8 @@ import React from 'react'
 import { Text, View } from 'react-native'
 
 import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
+import { useStores } from '../db/helpers/useStores'
 import { Icon, IconButtonContainer } from '../designSystem'
-import { useStores } from '../models/helpers/useStores'
 
 const WorkoutExercisePage: React.FC = () => {
   const { workoutStore } = useStores()

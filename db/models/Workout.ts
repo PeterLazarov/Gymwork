@@ -3,7 +3,7 @@ import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import { WorkoutExerciseModel } from './WorkoutExercise'
-import { withSetPropAction } from './helpers/withSetPropAction'
+import { withSetPropAction } from '../helpers/withSetPropAction'
 
 export const WorkoutModel = types
   .model('Workout')
