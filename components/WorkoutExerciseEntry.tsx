@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { View, ScrollView } from 'react-native'
 
 import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
-import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
+import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
 import { ButtonContainer, Divider } from '../designSystem'
 import colors from '../designSystem/colors'
 import { WorkoutExercise } from '../models/WorkoutExercise'

@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Text, View } from 'react-native'
 
@@ -10,10 +11,7 @@ type Props = {
   isFocused?: boolean
 }
 
-export const WorkoutExerciseSetListItem: React.FC<Props> = ({
-  set,
-  isFocused,
-}) => {
+const WorkoutExerciseSetListItem: React.FC<Props> = ({ set, isFocused }) => {
   return (
     <View
       style={{
@@ -61,3 +59,5 @@ export const WorkoutExerciseSetListItem: React.FC<Props> = ({
     </View>
   )
 }
+
+export default observer(WorkoutExerciseSetListItem)

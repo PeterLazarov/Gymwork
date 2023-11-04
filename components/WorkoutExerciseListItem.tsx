@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router'
 import React from 'react'
 import { View } from 'react-native'
 
-import { WorkoutExerciseSetListItem } from './WorkoutExerciseSetListItem'
+import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
 import { ButtonContainer, Divider } from '../designSystem'
 import { SectionLabel } from '../designSystem/Label'
 import { WorkoutExercise } from '../models/WorkoutExercise'
@@ -31,7 +31,6 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
       <View style={{ flex: 1, gap: 4 }}>
         <SectionLabel>{exercise.exercise?.name}</SectionLabel>
         <Divider />
-        {/* TODO: replace sorted with toSorted */}
         {exercise.sets.map((set, i) => (
           <WorkoutExerciseSetListItem
             key={i}
