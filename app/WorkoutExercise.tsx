@@ -1,9 +1,18 @@
+import {
+  Tabs,
+  TabsTabList,
+  TabsTab,
+  TabsTabTitle,
+  TabsTabPanels,
+  TabsTabPanel,
+} from '@gluestack-ui/themed'
 import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Text, View } from 'react-native'
 
 import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
+import WorkoutExerciseHistory from '../components/WorkoutExerciseHistory'
 import { useStores } from '../db/helpers/useStores'
 import { Icon, IconButtonContainer } from '../designSystem'
 
@@ -47,7 +56,24 @@ const WorkoutExercisePage: React.FC = () => {
           <Icon icon="ellipsis-vertical" />
         </IconButtonContainer>
       </View>
-      <WorkoutExerciseEntry exercise={workoutStore.openedExercise!} />
+      <Tabs value="track">
+        <TabsTabList>
+          <TabsTab value="track">
+            <TabsTabTitle>Track</TabsTabTitle>
+          </TabsTab>
+          <TabsTab value="history">
+            <TabsTabTitle>History</TabsTabTitle>
+          </TabsTab>
+        </TabsTabList>
+        <TabsTabPanels>
+          <TabsTabPanel value="track">
+            <WorkoutExerciseEntry exercise={workoutStore.openedExercise!} />
+          </TabsTabPanel>
+          <TabsTabPanel value="history">
+            <WorkoutExerciseHistory exercise={workoutStore.openedExercise!} />
+          </TabsTabPanel>
+        </TabsTabPanels>
+      </Tabs>
     </View>
   )
 }

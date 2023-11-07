@@ -1,3 +1,5 @@
+import { config } from '@gluestack-ui/config'
+import { GluestackUIProvider } from '@gluestack-ui/themed'
 import { Slot } from 'expo-router'
 import { SafeAreaView } from 'react-native'
 
@@ -7,14 +9,13 @@ import '../utils/ignoreWarnings'
 import Nav from '../components/Nav'
 import DBStoreInitializer from '../db/DBStoreInitializer'
 import { useInitialRootStore } from '../db/helpers/useStores'
-import { DatabaseConnectionProvider } from '../dbold/DBProvider'
 
 export default function Layout() {
   useInitialRootStore(() => {})
 
   return (
     <DBStoreInitializer>
-      <DatabaseConnectionProvider>
+      <GluestackUIProvider config={config}>
         <SafeAreaView
           style={{
             display: 'flex',
@@ -24,7 +25,7 @@ export default function Layout() {
           <Nav />
           <Slot />
         </SafeAreaView>
-      </DatabaseConnectionProvider>
+      </GluestackUIProvider>
     </DBStoreInitializer>
   )
 }

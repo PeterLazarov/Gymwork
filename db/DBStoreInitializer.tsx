@@ -5,7 +5,7 @@ import { useStores } from './helpers/useStores'
 type Props = {
   children: React.ReactNode
 }
-const DbShit: React.FC<Props> = props => {
+const DBStoreInitializer: React.FC<Props> = props => {
   const { exerciseStore, workoutStore } = useStores()
 
   useEffect(() => {
@@ -16,4 +16,4 @@ const DbShit: React.FC<Props> = props => {
   return props.children
 }
 
-export default DbShit
+export default DBStoreInitializer
