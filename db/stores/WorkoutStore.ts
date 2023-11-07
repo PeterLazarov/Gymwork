@@ -42,6 +42,25 @@ export const WorkoutStoreModel = types
       )
       return opened
     },
+    get openedExerciseHistory() {
+      const includedWorkouts = store.workouts.filter(
+        w =>
+          w.exercises.filter(
+            e => e.exercise.guid === this.openedExercise.exercise.guid
+          ).length > 0
+      )
+      const setsHistory = includedWorkouts.map(w => ({
+        date: w.date,
+        sets: w.exercises
+          .filter(e => e.exercise.guid === this.openedExercise.exercise.guid)
+          .flatMap(flat => flat.sets),
+      }))
+
+      return setsHistory as {
+        date: string
+        sets: WorkoutSet[]
+      }[]
+    },
   }))
   .actions(withSetPropAction)
   .actions(store => ({
