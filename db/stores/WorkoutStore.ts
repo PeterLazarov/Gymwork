@@ -3,14 +3,16 @@ import { IMSTArray, Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import workoutSeedData from '../../dbold/seeds/workout-seed-data.json'
 import * as storage from '../../utils/storage'
-import { Exercise } from '../models/Exercise'
-import { WorkoutModel, WorkoutSnapshotIn } from '../models/Workout'
+import { withSetPropAction } from '../helpers/withSetPropAction'
 import {
   WorkoutExercise,
   WorkoutExerciseModel,
-} from '../models/WorkoutExercise'
-import { WorkoutSet, WorkoutSetModel } from '../models/WorkoutSet'
-import { withSetPropAction } from '../helpers/withSetPropAction'
+  WorkoutSet,
+  WorkoutSetModel,
+  WorkoutModel,
+  WorkoutSnapshotIn,
+  Exercise,
+} from '../models'
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -30,6 +32,7 @@ export const WorkoutStoreModel = types
       return workout
     },
     get openedExercise() {
+      // TODO: use currentWorkout view instead?
       const [currentWorkout] = store.workouts.filter(
         w => w.date === store.currentWorkoutDate
       )
@@ -87,7 +90,6 @@ export const WorkoutStoreModel = types
       >
     },
     updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
-      // TODO: update action not observed properly. Why?
       // TODO: fix typescript hackery
       const updated = store.openedExercise.sets.map(set =>
         set.guid === updatedSet.guid ? updatedSet : set

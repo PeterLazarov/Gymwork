@@ -1,12 +1,13 @@
+import { useRouter } from 'expo-router'
+import { useAtom, useAtomValue } from 'jotai'
+import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'
 import { Text, View } from 'react-native'
-import Nav from '../components/Nav'
 import { Calendar } from 'react-native-calendars'
-import { useAtom, useAtomValue } from 'jotai'
-import { dateAtom, workoutHistoryAtom } from '../atoms'
 import { MarkedDates } from 'react-native-calendars/src/types'
-import { DateTime } from 'luxon'
-import { useRouter } from 'expo-router'
+
+import { dateAtom, workoutHistoryAtom } from '../atoms'
+import Nav from '../components/Nav'
 
 const CalendarPage = () => {
   const workoutHistory = useAtomValue(workoutHistoryAtom)
