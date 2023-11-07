@@ -1,32 +1,30 @@
 import { useRouter } from 'expo-router'
-import { useAtom, useAtomValue } from 'jotai'
-import { DateTime } from 'luxon'
-import React, { useMemo } from 'react'
+import { observer } from 'mobx-react-lite'
+import React from 'react'
 import { Text, View } from 'react-native'
 import { Calendar } from 'react-native-calendars'
 import { MarkedDates } from 'react-native-calendars/src/types'
 
-import { dateAtom, workoutHistoryAtom } from '../atoms'
-import Nav from '../components/Nav'
+import { useStores } from '../db/helpers/useStores'
 
-const CalendarPage = () => {
-  const workoutHistory = useAtomValue(workoutHistoryAtom)
-  const [globalDay, setGlobalDay] = useAtom(dateAtom)
+const CalendarPage: React.FC = () => {
+  const { workoutStore } = useStores()
 
-  const markedDates = useMemo((): MarkedDates => {
-    return Object.fromEntries(
-      Object.entries(workoutHistory).map(([date]) => [date, { marked: true }])
-    )
-  }, [workoutHistory])
+  const markedDates = Object.fromEntries(
+    Object.entries(workoutStore.workouts).map(([_, { date }]) => [
+      date,
+      { marked: true },
+    ])
+  )
 
   const router = useRouter()
 
   function handleCalendarDayPress(dateString: string) {
     // Set global day, navigate to workout screen
-    setGlobalDay(DateTime.fromISO(dateString))
+    workoutStore.setProp('currentWorkoutDate', dateString)
     router.push('/')
   }
-
+  console.log(markedDates)
   return (
     <View>
       <Text>Calendar Page</Text>
@@ -41,4 +39,4 @@ const CalendarPage = () => {
   )
 }
 
-export default CalendarPage
+export default observer(CalendarPage)
