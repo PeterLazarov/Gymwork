@@ -6,17 +6,12 @@ import DayControl from '../components/DayControl'
 import WorkoutControlButtons from '../components/WorkoutControlButtons'
 import WorkoutExerciseListItem from '../components/WorkoutExerciseListItem'
 import { useStores } from '../db/helpers/useStores'
-import { Exercise } from '../db/models'
 
 const WorkoutPage: React.FC = () => {
   const { workoutStore } = useStores()
 
   function newWorkout() {
     workoutStore.createWorkout()
-  }
-
-  async function addExercise(exercise: Exercise) {
-    workoutStore.addWorkoutExercise(exercise)
   }
 
   return (
@@ -34,7 +29,6 @@ const WorkoutPage: React.FC = () => {
       <WorkoutControlButtons
         isWorkoutStarted={!!workoutStore.currentWorkout}
         createWorkout={newWorkout}
-        addExercise={addExercise}
       />
     </View>
   )
