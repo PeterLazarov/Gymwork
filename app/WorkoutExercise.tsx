@@ -13,6 +13,7 @@ import { Text, View } from 'react-native'
 
 import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
 import WorkoutExerciseHistory from '../components/WorkoutExerciseHistory'
+import WorkoutExerciseRecords from '../components/WorkoutExerciseRecords'
 import { useStores } from '../db/helpers/useStores'
 import { Icon, IconButtonContainer } from '../designSystem'
 
@@ -64,13 +65,19 @@ const WorkoutExercisePage: React.FC = () => {
           <TabsTab value="history">
             <TabsTabTitle>History</TabsTabTitle>
           </TabsTab>
+          <TabsTab value="records">
+            <TabsTabTitle>Records</TabsTabTitle>
+          </TabsTab>
         </TabsTabList>
         <TabsTabPanels>
           <TabsTabPanel value="track">
-            <WorkoutExerciseEntry exercise={workoutStore.openedExercise!} />
+            <WorkoutExerciseEntry />
           </TabsTabPanel>
           <TabsTabPanel value="history">
-            <WorkoutExerciseHistory exercise={workoutStore.openedExercise!} />
+            <WorkoutExerciseHistory />
+          </TabsTabPanel>
+          <TabsTabPanel value="records">
+            <WorkoutExerciseRecords />
           </TabsTabPanel>
         </TabsTabPanels>
       </Tabs>

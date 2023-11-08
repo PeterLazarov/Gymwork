@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { IMSTArray, Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import workoutSeedData from '../../dbold/seeds/workout-seed-data.json'
+import { groupBy } from '../../utils/array'
 import * as storage from '../../utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import {
@@ -32,12 +33,7 @@ export const WorkoutStoreModel = types
       return workout
     },
     get openedExercise() {
-      // TODO: use currentWorkout view instead?
-      const [currentWorkout] = store.workouts.filter(
-        w => w.date === store.currentWorkoutDate
-      )
-
-      const [opened] = currentWorkout.exercises.filter(
+      const [opened] = this.currentWorkout.exercises.filter(
         e => e.guid === store.openedExerciseGuid
       )
       return opened
@@ -60,6 +56,22 @@ export const WorkoutStoreModel = types
         date: string
         sets: WorkoutSet[]
       }[]
+    },
+    get openedExerciseActualRecords() {
+      const allSets = this.openedExerciseHistory.flatMap(h => h.sets)
+      const setsByReps = groupBy<WorkoutSet>(allSets, 'reps')
+      const recordsByReps = Object.entries(setsByReps).reduce(
+        (acc, [repsKey, repSets]) => {
+          acc.push({
+            reps: Number(repsKey),
+            weight: Math.max(...repSets.map(set => set.weight)),
+          })
+          return acc
+        },
+        [] as Partial<WorkoutSet>[]
+      )
+
+      return recordsByReps
     },
   }))
   .actions(withSetPropAction)

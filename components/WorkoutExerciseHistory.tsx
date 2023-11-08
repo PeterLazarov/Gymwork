@@ -5,15 +5,10 @@ import { View, ScrollView } from 'react-native'
 
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
 import { useStores } from '../db/helpers/useStores'
-import { WorkoutExercise } from '../db/models'
 import { Divider } from '../designSystem'
 import { SectionLabel } from '../designSystem/Label'
 
-type Props = {
-  exercise: WorkoutExercise
-}
-
-const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
+const WorkoutExerciseHistory: React.FC = () => {
   const { workoutStore } = useStores()
 
   return (
@@ -50,4 +45,4 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   )
 }
 
-export default observer(WorkoutExerciseEntry)
+export default observer(WorkoutExerciseHistory)

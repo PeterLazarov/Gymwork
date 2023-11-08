@@ -5,15 +5,11 @@ import { View, ScrollView } from 'react-native'
 import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
 import { useStores } from '../db/helpers/useStores'
-import { WorkoutSet, WorkoutExercise } from '../db/models'
+import { WorkoutSet } from '../db/models'
 import { ButtonContainer, Divider } from '../designSystem'
 import colors from '../designSystem/colors'
 
-type Props = {
-  exercise: WorkoutExercise
-}
-
-const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
+const WorkoutExerciseEntry: React.FC = () => {
   const { workoutStore } = useStores()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
@@ -33,7 +29,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
   }
-  console.log('rerender')
+
   return (
     <View
       style={{

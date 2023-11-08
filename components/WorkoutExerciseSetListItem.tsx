@@ -7,7 +7,7 @@ import colors from '../designSystem/colors'
 import texts from '../texts'
 
 type Props = {
-  set: WorkoutSet
+  set: Partial<WorkoutSet>
   isFocused?: boolean
 }
 
