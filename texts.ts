@@ -9,4 +9,5 @@ export default {
   updateSet: 'Update set',
   remove: 'Remove',
   calendar: 'Calendar',
+  goToWorkout: 'Go to workout',
 }

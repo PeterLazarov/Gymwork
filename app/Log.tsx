@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router'
 import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
-import ExerciseHistory from '../components/ExerciseHistory'
+import ExerciseHistoryChart from '../components/ExerciseHistory'
 import { exercises } from '../data/exercises.json'
 import { Icon } from '../designSystem'
 
@@ -26,7 +26,7 @@ export default function Log() {
         />
       </Appbar.Header>
 
-      <ExerciseHistory exercise={exercise} />
+      <ExerciseHistoryChart exercise={exercise} />
     </View>
   )
 }

@@ -1,7 +1,7 @@
 // Choose your preferred renderer
 import { SvgChart, SVGRenderer, SkiaChart } from '@wuba/react-native-echarts'
 import * as echarts from 'echarts/core'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { LineChart } from 'echarts/charts'
 import {
   TitleComponent,
@@ -13,6 +13,11 @@ import { Dimensions, View } from 'react-native'
 import { DateTime } from 'luxon'
 import { useStores } from '../db/helpers/useStores'
 import { observer } from 'mobx-react-lite'
+import { getSnapshot } from 'mobx-state-tree'
+import { calculate1RM } from 'onerepmax.js'
+import { Button } from 'react-native-paper'
+import texts from '../texts'
+import { useRouter } from 'expo-router'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -28,34 +33,6 @@ echarts.use([
   LineChart,
 ])
 
-const style = {
-  // focus: 'series1',
-  label: {
-    show: true,
-    // formatter: function (param) {
-    //   // return param.data[3];
-    //   return 'idk'
-    // },
-    position: 'top',
-  },
-
-  shadowBlur: 10,
-  shadowColor: 'rgba(0, 0, 255, 0.5)',
-  shadowOffsetY: 5,
-  color: {
-    type: 'radial',
-    x: 0.4,
-    y: 0.3,
-    r: 1,
-    colorStops: [
-      {
-        offset: 0,
-        color: 'rgb(255, 0, 0)',
-      },
-    ],
-  },
-}
-
 function getPastDays(n: number) {
   return Array.from({ length: n }).map((_, i) => {
     return DateTime.now()
@@ -69,6 +46,7 @@ export const CHART_VIEWS = {
 }
 export type CHART_VIEW = (typeof CHART_VIEWS)[keyof typeof CHART_VIEWS]
 
+// TODO?
 export interface Datapoint {
   day: DateTime
   value: number
@@ -76,102 +54,139 @@ export interface Datapoint {
 }
 
 // Component usage
-const ExerciseHistory = observer(
+const ExerciseHistoryChart = observer(
   <T extends Datapoint>(props: {
     view: CHART_VIEW
     datapoints: Array<T>
     onFocus(datapoint: T): void
   }) => {
+    const router = useRouter()
     const screenWidth = Dimensions.get('window').width
 
     const chartRef = useRef<any>(null)
 
-    const xAxis7d = getPastDays(7).map(d => d.weekdayShort)
+    const xAxis7d = getPastDays(7).map(d => d.weekdayShort!)
     const xAxis30d = getPastDays(30).map(d => d.day)
 
-    const { workoutStore, exerciseStore } = useStores()
+    const { workoutStore } = useStores()
 
+    // TODO this would be odd with multiple workouts+lines per day
+    const [selectedDate, setSelectedDate] = useState<string>()
+
+    let chart = useRef<echarts.ECharts>()
     useEffect(() => {
-      console.log('exercises', exerciseStore.exercises)
-      console.log('workouts', workoutStore.workouts)
-    })
-    // workoutStore.openedExerciseHistory
-
-    useEffect(() => {
-      let chart: echarts.ECharts
-
       if (chartRef.current) {
-        chart = echarts.init(chartRef.current, 'light', {
+        chart.current = echarts.init(chartRef.current, 'light', {
           renderer: 'svg',
           width: screenWidth,
           height: 400,
         })
 
-        chart.setOption({
+        // Set default options
+        chart.current.setOption({
           animation: true,
-          title: {
-            text: 'title text',
-          },
-          tooltip: {
-            // allows you to point at random and mark dots
-            // text: console.log,
-            trigger: 'axis',
-          },
+          tooltip: { trigger: 'axis' }, // allows you to point at random and mark dots
           legend: {
-            data: ['series1', 'series2'], // the .name of series[number]
+            data: ['Weight', 'Predicted 1RM'], // the .name of series[number]
             selected: {
               series1: true,
               series2: false,
             },
           },
+          yAxis: {
+            type: 'value',
+          },
+
           // options:[{}],
           // timeline:[{}],
           xAxis: {
             type: 'category',
-            // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            data: xAxis7d,
-          },
-          yAxis: {
-            type: 'value',
+            data: xAxis7d, // TODO add options
           },
           series: [
             {
-              name: 'series1',
-              data: [120, 200, 150, 80, undefined, 110, 130],
+              name: 'Weight',
               type: 'line',
-              symbolSize: function (data) {
-                // return Math.sqrt(data[2]) / 5e2;
-                return 10
-              },
-              emphasis: {
-                focus: 'series1',
-                ...style,
-              },
-
-              itemStyle: style,
+              symbolSize: data => 20,
+              showAllSymbol: true,
             },
             {
-              name: 'series2',
-              data: [12, 20, 15, 8, 7, 11, undefined],
+              name: 'Predicted 1RM',
               type: 'line',
+              symbolSize: data => 20,
+
+              showAllSymbol: true,
             },
           ],
         })
 
-        chart.on('click', console.log)
-        // chart.on('mousemove',console.log)
+        // highlight and downplay catch both exact dot-clicks and non-exact ones
+        chart.current?.on('highlight', data => {
+          // @ts-ignore
+          const dateIndex = data.batch[0].dataIndex as number
+          const date = getPastDays(7)[dateIndex]
+          setSelectedDate(date.toISODate()!)
+        })
       }
 
-      return () => chart?.dispose()
+      return () => chart.current?.dispose()
     }, [])
+
+    // Feed chart with data
+    useEffect(() => {
+      const setsPerDay = getPastDays(7).map(date => {
+        return workoutStore.workouts
+          .find(workout => workout.date === date.toISODate())
+          ?.exercises.find(
+            e => e.exercise.guid === '43' // TODO prop
+          )
+          ?.sets.map(set => getSnapshot(set)) // getSnapshot useless save for less bad TS types
+      })
+
+      chart.current?.setOption({
+        series: [
+          {
+            // TODO refactor out getPastDays
+            data: setsPerDay.map(sets =>
+              sets
+                ? sets.reduce((max, set) => Math.max(max, set.weight), 0)
+                : null
+            ),
+          },
+          {
+            data: setsPerDay.map(sets =>
+              sets
+                ? sets.reduce(
+                    (max, set) =>
+                      Number(
+                        Math.max(
+                          max,
+                          calculate1RM.adams(set.weight!, set.reps!)
+                        ).toFixed(2)
+                      ),
+                    0
+                  )
+                : null
+            ),
+          },
+        ],
+      })
+    }, [workoutStore.workouts])
+
+    // TODO
+    function handleBtnPress() {
+      workoutStore.setProp('currentWorkoutDate', selectedDate)
+      router.push('/')
+    }
 
     // Choose your preferred chart component
     return (
       <View>
         <SkiaChart ref={chartRef} />
+        <Button onPress={handleBtnPress}>{texts.goToWorkout}</Button>
       </View>
     )
   }
 )
 
-export default ExerciseHistory
+export default ExerciseHistoryChart
