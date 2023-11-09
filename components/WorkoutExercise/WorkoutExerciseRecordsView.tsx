@@ -5,7 +5,7 @@ import { View, ScrollView } from 'react-native'
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
 import { useStores } from '../../db/helpers/useStores'
 
-const WorkoutExerciseRecords: React.FC = () => {
+const WorkoutExerciseRecordsView: React.FC = () => {
   const { workoutStore } = useStores()
 
   return (
@@ -19,12 +19,11 @@ const WorkoutExerciseRecords: React.FC = () => {
       }}
     >
       <ScrollView>
-        {workoutStore.openedExerciseActualRecords.map(record => {
+        {workoutStore.openedExerciseActualRecords.map((record, i) => {
           return (
-            <WorkoutExerciseSetListItem
-              set={record}
-              key={record.guid}
-            />
+            <View key={i}>
+              <WorkoutExerciseSetListItem set={record} />
+            </View>
           )
         })}
       </ScrollView>
@@ -32,4 +31,4 @@ const WorkoutExerciseRecords: React.FC = () => {
   )
 }
 
-export default observer(WorkoutExerciseRecords)
+export default observer(WorkoutExerciseRecordsView)
