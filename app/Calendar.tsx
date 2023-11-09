@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View } from 'react-native'
 import { Calendar } from 'react-native-calendars'
 import { MarkedDates } from 'react-native-calendars/src/types'
@@ -13,12 +13,30 @@ import texts from '../texts'
 const CalendarPage: React.FC = () => {
   const { workoutStore } = useStores()
 
-  const markedDates = Object.fromEntries(
-    Object.entries(workoutStore.workouts).map(([_, { date }]) => [
-      date,
-      { marked: true },
-    ])
+  const markedDates = useMemo(
+    () =>
+      workoutStore.workouts.reduce(
+        (acc, curr) => {
+          if (!(curr.date in acc)) {
+            acc[curr.date] = {}
+          }
+          acc[curr.date].marked = true
+          return acc
+        },
+        {
+          [workoutStore.currentWorkoutDate]: {
+            selected: true,
+          },
+        } as MarkedDates
+      ),
+    [
+      workoutStore.workouts,
+      workoutStore.currentWorkoutDate,
+      workoutStore.currentWorkout,
+    ]
   )
+
+  console.log({ markedDates })
 
   const router = useRouter()
 

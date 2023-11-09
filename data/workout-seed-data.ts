@@ -1,18 +1,4 @@
-import {
-  Instance,
-  SnapshotIn,
-  SnapshotOut,
-  resolveIdentifier,
-} from 'mobx-state-tree'
-import {
-  ExerciseModel,
-  Workout,
-  WorkoutExerciseModel,
-  WorkoutModel,
-  WorkoutSnapshotIn,
-} from '../db/models'
-import { v4 } from 'uuid'
-import { ExerciseStoreModel } from '../db/stores/ExerciseStore'
+import { WorkoutSnapshotIn } from '../db/models'
 import { DateTime } from 'luxon'
 
 const numberOfWorkouts = 100
@@ -23,8 +9,8 @@ const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
 }).map((_, i): WorkoutSnapshotIn => {
   return {
     date: today
-      .minus({ days: i * Math.ceil(Math.random() * 3) })
-      // .minus({ days: i + 1 })
+      // .minus({ days: i * Math.ceil(Math.random() * 3) })
+      .minus({ days: i + 1 })
       .toISODate()!,
     exercises: [
       // Only bench
