@@ -1,15 +1,8 @@
-import {
-  Tabs,
-  TabsTabList,
-  TabsTab,
-  TabsTabTitle,
-  TabsTabPanels,
-  TabsTabPanel,
-} from '@gluestack-ui/themed'
 import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useState } from 'react'
 import { Text, View } from 'react-native'
+import { SegmentedButtons } from 'react-native-paper'
 
 import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
 import WorkoutExerciseHistory from '../components/WorkoutExerciseHistory'
@@ -21,6 +14,7 @@ const WorkoutExercisePage: React.FC = () => {
   const { workoutStore } = useStores()
   const router = useRouter()
 
+  const [view, setView] = useState('track')
   function onOptionsPress() {
     throw new Error('Function not implemented.')
   }
@@ -57,30 +51,24 @@ const WorkoutExercisePage: React.FC = () => {
           <Icon icon="ellipsis-vertical" />
         </IconButtonContainer>
       </View>
-      <Tabs value="track">
-        <TabsTabList>
-          <TabsTab value="track">
-            <TabsTabTitle>Track</TabsTabTitle>
-          </TabsTab>
-          <TabsTab value="history">
-            <TabsTabTitle>History</TabsTabTitle>
-          </TabsTab>
-          <TabsTab value="records">
-            <TabsTabTitle>Records</TabsTabTitle>
-          </TabsTab>
-        </TabsTabList>
-        <TabsTabPanels>
-          <TabsTabPanel value="track">
-            <WorkoutExerciseEntry />
-          </TabsTabPanel>
-          <TabsTabPanel value="history">
-            <WorkoutExerciseHistory />
-          </TabsTabPanel>
-          <TabsTabPanel value="records">
-            <WorkoutExerciseRecords />
-          </TabsTabPanel>
-        </TabsTabPanels>
-      </Tabs>
+      <SegmentedButtons
+        value={view}
+        onValueChange={setView}
+        buttons={[
+          {
+            value: 'track',
+            label: 'Track',
+          },
+          {
+            value: 'history',
+            label: 'History',
+          },
+          { value: 'records', label: 'Records' },
+        ]}
+      />
+      {view === 'track' && <WorkoutExerciseEntry />}
+      {view === 'history' && <WorkoutExerciseHistory />}
+      {view === 'records' && <WorkoutExerciseRecords />}
     </View>
   )
 }

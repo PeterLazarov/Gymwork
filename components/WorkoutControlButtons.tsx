@@ -17,7 +17,7 @@ const WorkoutControlButtons: React.FC<Props> = ({
   const router = useRouter()
 
   function onAddExercisePress() {
-    router.push('/ExerciseList')
+    router.push('/ExerciseSelect')
   }
 
   function copyPrevWorkout() {

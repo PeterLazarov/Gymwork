@@ -7,6 +7,7 @@ module.exports = function (api) {
       'jotai/babel/plugin-react-refresh',
       'babel-plugin-transform-typescript-metadata',
       'react-native-reanimated/plugin',
+      'react-native-paper/babel',
     ],
   }
 }

@@ -1,15 +1,15 @@
-import { Link } from 'expo-router'
+import { useRouter } from 'expo-router'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View } from 'react-native'
+import { Appbar } from 'react-native-paper'
 
 import { useStores } from '../db/helpers/useStores'
-import { Icon, IconButtonContainer } from '../designSystem'
-import { HeadingLabel } from '../designSystem/Label'
+import { Icon } from '../designSystem'
 
 const DayControl = () => {
   const { workoutStore } = useStores()
+  const router = useRouter()
 
   const luxonDate = DateTime.fromISO(workoutStore.currentWorkoutDate)
   const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
@@ -19,23 +19,25 @@ const DayControl = () => {
       ? luxonDate.toRelativeCalendar()
       : luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
+  function openCalendar() {
+    router.push('/Calendar')
+  }
+
   return (
-    <View
-      style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-    >
-      <IconButtonContainer onPress={workoutStore.decrementCurrentDate}>
-        <Icon icon="chevron-back" />
-      </IconButtonContainer>
-      <Link
-        href="/Calendar"
-        style={{ flex: 1 }}
-      >
-        <HeadingLabel>{label}</HeadingLabel>
-      </Link>
-      <IconButtonContainer onPress={workoutStore.incrementCurrentDate}>
-        <Icon icon="chevron-forward" />
-      </IconButtonContainer>
-    </View>
+    <Appbar.Header>
+      <Appbar.Action
+        icon={() => <Icon icon="chevron-back" />}
+        onPress={workoutStore.incrementCurrentDate}
+      />
+      <Appbar.Content
+        title={label}
+        onPress={openCalendar}
+      />
+      <Appbar.Action
+        icon={() => <Icon icon="chevron-forward" />}
+        onPress={workoutStore.incrementCurrentDate}
+      />
+    </Appbar.Header>
   )
 }
 

@@ -1,7 +1,6 @@
-import { config } from '@gluestack-ui/config'
-import { GluestackUIProvider } from '@gluestack-ui/themed'
 import { Slot } from 'expo-router'
 import { SafeAreaView } from 'react-native'
+import { PaperProvider } from 'react-native-paper'
 
 import 'reflect-metadata'
 
@@ -15,7 +14,7 @@ export default function Layout() {
 
   return (
     <DBStoreInitializer>
-      <GluestackUIProvider config={config}>
+      <PaperProvider>
         <SafeAreaView
           style={{
             display: 'flex',
@@ -25,7 +24,7 @@ export default function Layout() {
           <Nav />
           <Slot />
         </SafeAreaView>
-      </GluestackUIProvider>
+      </PaperProvider>
     </DBStoreInitializer>
   )
 }
