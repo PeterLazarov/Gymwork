@@ -36,8 +36,6 @@ const CalendarPage: React.FC = () => {
     ]
   )
 
-  console.log({ markedDates })
-
   const router = useRouter()
 
   function onBackPress() {
