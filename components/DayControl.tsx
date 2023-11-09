@@ -28,6 +28,7 @@ const DayControl = () => {
       <Appbar.Action
         icon={() => <Icon icon="chevron-back" />}
         onPress={workoutStore.incrementCurrentDate}
+        animated={false}
       />
       <Appbar.Content
         title={label}
@@ -36,6 +37,7 @@ const DayControl = () => {
       <Appbar.Action
         icon={() => <Icon icon="chevron-forward" />}
         onPress={workoutStore.incrementCurrentDate}
+        animated={false}
       />
     </Appbar.Header>
   )

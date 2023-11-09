@@ -51,6 +51,7 @@ const ExerciseListPage: React.FC = () => {
         <Appbar.Action
           icon={() => <Icon icon="ellipsis-vertical" />}
           onPress={onBackPress}
+          animated={false}
         />
       </Appbar.Header>
 
