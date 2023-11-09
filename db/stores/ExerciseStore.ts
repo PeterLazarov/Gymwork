@@ -1,6 +1,6 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
-import exerciseSeedData from '../../dbold/seeds/exercises-seed-data.json'
+import exerciseSeedData from '../../data/exercises-seed-data.json'
 import * as storage from '../../utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { ExerciseModel, ExerciseSnapshotIn } from '../models'
@@ -27,7 +27,15 @@ export const ExerciseStoreModel = types
     async seed() {
       console.log('seeding')
 
-      store.setProp('exercises', exerciseSeedData)
+      store.setProp(
+        'exercises',
+        exerciseSeedData.map(
+          (exercise, i): ExerciseSnapshotIn => ({
+            ...exercise,
+            guid: String(i),
+          })
+        )
+      )
     },
   }))
 

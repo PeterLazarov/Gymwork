@@ -55,10 +55,9 @@ const WorkoutExerciseEntry: React.FC = () => {
         }}
       >
         {workoutStore.openedExercise.sets.map((set, i) => (
-          <>
+          <View key={i}>
             {i !== 0 && <Divider />}
             <ButtonContainer
-              key={i}
               variant="tertiary"
               onPress={() => toggleSelectedSet(set)}
             >
@@ -67,7 +66,7 @@ const WorkoutExerciseEntry: React.FC = () => {
                 isFocused={selectedSet?.guid === set.guid}
               />
             </ButtonContainer>
-          </>
+          </View>
         ))}
       </ScrollView>
     </View>
