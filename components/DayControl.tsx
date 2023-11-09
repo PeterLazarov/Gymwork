@@ -6,6 +6,7 @@ import { Appbar } from 'react-native-paper'
 
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
+import { capitalize } from '../utils/string'
 
 const DayControl = () => {
   const { workoutStore } = useStores()
@@ -16,7 +17,7 @@ const DayControl = () => {
   const todayDiff = Math.round(luxonDate.diff(today, 'days').days)
   const label =
     Math.abs(todayDiff) < 2
-      ? luxonDate.toRelativeCalendar()
+      ? luxonDate.toRelativeCalendar()!
       : luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
   function openCalendar() {
@@ -27,11 +28,11 @@ const DayControl = () => {
     <Appbar.Header>
       <Appbar.Action
         icon={() => <Icon icon="chevron-back" />}
-        onPress={workoutStore.incrementCurrentDate}
+        onPress={workoutStore.decrementCurrentDate}
         animated={false}
       />
       <Appbar.Content
-        title={label}
+        title={capitalize(label)}
         onPress={openCalendar}
       />
       <Appbar.Action

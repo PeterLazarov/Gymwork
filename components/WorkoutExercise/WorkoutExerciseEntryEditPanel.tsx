@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { View, TextInput } from 'react-native'
+import { Button } from 'react-native-paper'
 
-import IncrementDecrementButtons from './IncrementDecrementButtons'
-import { WorkoutSet } from '../db/models'
-import { ButtonContainer, ButtonText, Divider } from '../designSystem'
-import { SubSectionLabel } from '../designSystem/Label'
-import texts from '../texts'
+import { WorkoutSet } from '../../db/models'
+import { Divider } from '../../designSystem'
+import { SubSectionLabel } from '../../designSystem/Label'
+import colors from '../../designSystem/colors'
+import texts from '../../texts'
+import IncrementDecrementButtons from '../IncrementDecrementButtons'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -93,21 +95,22 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
         </TextInput>
       </IncrementDecrementButtons>
       <View style={{ flexDirection: 'row', gap: 8 }}>
-        <ButtonContainer
-          variant="primary"
+        <Button
+          mode="contained"
           onPress={saveChanges}
+          style={{ flex: 1 }}
         >
-          <ButtonText variant="primary">
-            {selectedSet ? texts.updateSet : texts.addSet}
-          </ButtonText>
-        </ButtonContainer>
+          {selectedSet ? texts.updateSet : texts.addSet}
+        </Button>
         {selectedSet && (
-          <ButtonContainer
-            variant="critical"
+          <Button
+            mode="contained"
             onPress={() => removeSet(selectedSet)}
+            style={{ flex: 1 }}
+            buttonColor={colors.critical}
           >
-            <ButtonText variant="critical">{texts.remove}</ButtonText>
-          </ButtonContainer>
+            {texts.remove}
+          </Button>
         )}
       </View>
     </View>

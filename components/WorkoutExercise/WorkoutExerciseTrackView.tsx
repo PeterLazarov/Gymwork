@@ -2,12 +2,13 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View, ScrollView } from 'react-native'
 
-import WorkoutExerciseEntrySetEditPanel from './WorkoutExerciseEntrySetEditPanel'
+import WorkoutExerciseEntryEditPanel from './WorkoutExerciseEntryEditPanel'
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
-import { useStores } from '../db/helpers/useStores'
-import { WorkoutSet } from '../db/models'
-import { ButtonContainer, Divider } from '../designSystem'
-import colors from '../designSystem/colors'
+import { useStores } from '../../db/helpers/useStores'
+import { WorkoutSet } from '../../db/models'
+import { ButtonContainer, Divider } from '../../designSystem'
+import { SectionLabel } from '../../designSystem/Label'
+import colors from '../../designSystem/colors'
 
 const WorkoutExerciseEntry: React.FC = () => {
   const { workoutStore } = useStores()
@@ -40,7 +41,7 @@ const WorkoutExerciseEntry: React.FC = () => {
         flexDirection: 'column',
       }}
     >
-      <WorkoutExerciseEntrySetEditPanel
+      <WorkoutExerciseEntryEditPanel
         selectedSet={selectedSet}
         addSet={addSet}
         updateSet={updateSet}
@@ -55,10 +56,9 @@ const WorkoutExerciseEntry: React.FC = () => {
         }}
       >
         {workoutStore.openedExercise.sets.map((set, i) => (
-          <>
+          <View key={set.guid}>
             {i !== 0 && <Divider />}
             <ButtonContainer
-              key={i}
               variant="tertiary"
               onPress={() => toggleSelectedSet(set)}
             >
@@ -67,8 +67,11 @@ const WorkoutExerciseEntry: React.FC = () => {
                 isFocused={selectedSet?.guid === set.guid}
               />
             </ButtonContainer>
-          </>
+          </View>
         ))}
+        {workoutStore.openedExercise.sets.length === 0 && (
+          <SectionLabel> No sets entered </SectionLabel>
+        )}
       </ScrollView>
     </View>
   )

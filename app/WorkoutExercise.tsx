@@ -1,14 +1,14 @@
 import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { Text, View } from 'react-native'
-import { SegmentedButtons } from 'react-native-paper'
+import { View } from 'react-native'
+import { Appbar, SegmentedButtons } from 'react-native-paper'
 
-import WorkoutExerciseEntry from '../components/WorkoutExerciseEntry'
-import WorkoutExerciseHistory from '../components/WorkoutExerciseHistory'
-import WorkoutExerciseRecords from '../components/WorkoutExerciseRecords'
+import WorkoutExerciseHistoryView from '../components/WorkoutExercise/WorkoutExerciseHistoryView'
+import WorkoutExerciseRecordsView from '../components/WorkoutExercise/WorkoutExerciseRecordsView'
+import WorkoutExerciseTrackView from '../components/WorkoutExercise/WorkoutExerciseTrackView'
 import { useStores } from '../db/helpers/useStores'
-import { Icon, IconButtonContainer } from '../designSystem'
+import { Icon } from '../designSystem'
 
 const WorkoutExercisePage: React.FC = () => {
   const { workoutStore } = useStores()
@@ -26,34 +26,19 @@ const WorkoutExercisePage: React.FC = () => {
 
   return (
     <View>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          // justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <IconButtonContainer onPress={onBackPress}>
-          <Icon icon="chevron-back" />
-        </IconButtonContainer>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 20,
-            flex: 1,
-          }}
-        >
-          {workoutStore.openedExercise?.exercise.name}
-        </Text>
-
-        <IconButtonContainer onPress={onOptionsPress}>
-          <Icon icon="ellipsis-vertical" />
-        </IconButtonContainer>
-      </View>
+      <Appbar.Header>
+        <Appbar.BackAction onPress={onBackPress} />
+        <Appbar.Content title={workoutStore.openedExercise?.exercise.name} />
+        <Appbar.Action
+          icon={() => <Icon icon="ellipsis-vertical" />}
+          onPress={onOptionsPress}
+          animated={false}
+        />
+      </Appbar.Header>
       <SegmentedButtons
         value={view}
         onValueChange={setView}
+        style={{ marginHorizontal: 16 }}
         buttons={[
           {
             value: 'track',
@@ -66,9 +51,9 @@ const WorkoutExercisePage: React.FC = () => {
           { value: 'records', label: 'Records' },
         ]}
       />
-      {view === 'track' && <WorkoutExerciseEntry />}
-      {view === 'history' && <WorkoutExerciseHistory />}
-      {view === 'records' && <WorkoutExerciseRecords />}
+      {view === 'track' && <WorkoutExerciseTrackView />}
+      {view === 'history' && <WorkoutExerciseHistoryView />}
+      {view === 'records' && <WorkoutExerciseRecordsView />}
     </View>
   )
 }

@@ -1,12 +1,10 @@
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { View } from 'react-native'
+import { Card } from 'react-native-paper'
 
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
-import { useStores } from '../db/helpers/useStores'
-import { WorkoutExercise } from '../db/models'
-import { ButtonContainer, Divider } from '../designSystem'
-import { SectionLabel } from '../designSystem/Label'
+import { useStores } from '../../db/helpers/useStores'
+import { WorkoutExercise } from '../../db/models'
 
 type Props = {
   exercise: WorkoutExercise
@@ -21,24 +19,25 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
     router.push('/WorkoutExercise')
   }
   return (
-    <ButtonContainer
-      variant="secondary"
+    <Card
       onPress={onLinkPress}
       style={{
         margin: 16,
       }}
     >
-      <View style={{ flex: 1, gap: 4 }}>
-        <SectionLabel>{exercise.exercise?.name}</SectionLabel>
-        <Divider />
-        {exercise.sets.map((set, i) => (
+      <Card.Title
+        title={exercise.exercise?.name}
+        titleVariant="titleMedium"
+      />
+      <Card.Content>
+        {exercise.sets.map(set => (
           <WorkoutExerciseSetListItem
-            key={i}
+            key={set.guid}
             set={set}
           />
         ))}
-      </View>
-    </ButtonContainer>
+      </Card.Content>
+    </Card>
   )
 }
 

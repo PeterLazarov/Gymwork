@@ -4,7 +4,7 @@ import { ScrollView, View } from 'react-native'
 
 import DayControl from '../components/DayControl'
 import WorkoutControlButtons from '../components/WorkoutControlButtons'
-import WorkoutExerciseListItem from '../components/WorkoutExerciseListItem'
+import WorkoutExerciseCard from '../components/WorkoutExercise/WorkoutExerciseCard'
 import { useStores } from '../db/helpers/useStores'
 
 const WorkoutPage: React.FC = () => {
@@ -19,9 +19,9 @@ const WorkoutPage: React.FC = () => {
       <DayControl />
 
       <ScrollView style={{ flex: 1 }}>
-        {workoutStore.currentWorkout?.exercises.map((exercise, i) => (
-          <WorkoutExerciseListItem
-            key={`${workoutStore.currentWorkout.date}_${i}`}
+        {workoutStore.currentWorkout?.exercises.map(exercise => (
+          <WorkoutExerciseCard
+            key={`${workoutStore.currentWorkout.date}_${exercise.guid}`}
             exercise={exercise}
           />
         ))}

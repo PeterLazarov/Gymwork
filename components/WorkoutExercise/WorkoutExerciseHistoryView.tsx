@@ -4,9 +4,9 @@ import React from 'react'
 import { View, ScrollView } from 'react-native'
 
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
-import { useStores } from '../db/helpers/useStores'
-import { Divider } from '../designSystem'
-import { SectionLabel } from '../designSystem/Label'
+import { useStores } from '../../db/helpers/useStores'
+import { Divider } from '../../designSystem'
+import { SectionLabel } from '../../designSystem/Label'
 
 const WorkoutExerciseHistory: React.FC = () => {
   const { workoutStore } = useStores()

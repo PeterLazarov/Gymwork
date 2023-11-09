@@ -2,9 +2,9 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Text, View } from 'react-native'
 
-import { WorkoutSet } from '../db/models'
-import colors from '../designSystem/colors'
-import texts from '../texts'
+import { WorkoutSet } from '../../db/models'
+import colors from '../../designSystem/colors'
+import texts from '../../texts'
 
 type Props = {
   set: Partial<WorkoutSet>

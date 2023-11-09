@@ -1,8 +1,8 @@
 import { useRouter } from 'expo-router'
 import React from 'react'
 import { View } from 'react-native'
+import { Button } from 'react-native-paper'
 
-import { ButtonContainer, ButtonText } from '../designSystem/Button'
 import texts from '../texts'
 
 type Props = {
@@ -24,30 +24,42 @@ const WorkoutControlButtons: React.FC<Props> = ({
     // TODO
   }
   return (
-    <View style={{ display: 'flex', flexDirection: 'row', gap: 8, padding: 8 }}>
+    <View
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 8,
+        padding: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
       {!isWorkoutStarted && (
         <>
-          <ButtonContainer
-            variant="primary"
+          <Button
+            mode="contained"
             onPress={createWorkout}
+            style={{ flex: 1 }}
           >
-            <ButtonText variant="primary">{texts.newWorkout}</ButtonText>
-          </ButtonContainer>
-          <ButtonContainer
-            variant="primary"
+            {texts.newWorkout}
+          </Button>
+          <Button
+            mode="contained"
             onPress={copyPrevWorkout}
+            style={{ flex: 1 }}
           >
-            <ButtonText variant="primary">{texts.copyWorkout}</ButtonText>
-          </ButtonContainer>
+            {texts.copyWorkout}
+          </Button>
         </>
       )}
       {isWorkoutStarted && (
-        <ButtonContainer
-          variant="primary"
+        <Button
+          mode="contained"
           onPress={onAddExercisePress}
+          style={{ flex: 1 }}
         >
-          <ButtonText variant="primary">{texts.addExercise}</ButtonText>
-        </ButtonContainer>
+          {texts.addExercise}
+        </Button>
       )}
     </View>
   )

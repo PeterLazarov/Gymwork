@@ -3,7 +3,7 @@ import React from 'react'
 import { View, ScrollView } from 'react-native'
 
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
-import { useStores } from '../db/helpers/useStores'
+import { useStores } from '../../db/helpers/useStores'
 
 const WorkoutExerciseRecords: React.FC = () => {
   const { workoutStore } = useStores()
