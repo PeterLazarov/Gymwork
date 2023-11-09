@@ -21,9 +21,10 @@ const WorkoutExerciseRecordsView: React.FC = () => {
       <ScrollView>
         {workoutStore.openedExerciseActualRecords.map((record, i) => {
           return (
-            <View key={i}>
-              <WorkoutExerciseSetListItem set={record} />
-            </View>
+            <WorkoutExerciseSetListItem
+              key={i}
+              set={record}
+            />
           )
         })}
       </ScrollView>
