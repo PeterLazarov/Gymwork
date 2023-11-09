@@ -14,17 +14,21 @@ const WorkoutExerciseRecordsView: React.FC = () => {
         padding: 16,
         // margin: 16,
         borderRadius: 8,
-        gap: 24,
-        flexDirection: 'column',
       }}
     >
       <ScrollView>
         {workoutStore.openedExerciseActualRecords.map((record, i) => {
           return (
-            <WorkoutExerciseSetListItem
-              key={i}
-              set={record}
-            />
+            <View
+              style={{
+                marginVertical: 4,
+              }}
+            >
+              <WorkoutExerciseSetListItem
+                key={i}
+                set={record}
+              />
+            </View>
           )
         })}
       </ScrollView>
