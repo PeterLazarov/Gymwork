@@ -8,4 +8,5 @@ export default {
   weight: 'weight',
   updateSet: 'Update set',
   remove: 'Remove',
+  calendar: 'Calendar',
 }

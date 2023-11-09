@@ -5,8 +5,9 @@ import React from 'react'
 import { Appbar } from 'react-native-paper'
 
 import { useStores } from '../db/helpers/useStores'
-import { Icon } from '../designSystem'
+import { Divider, Icon } from '../designSystem'
 import { capitalize } from '../utils/string'
+import { View } from 'react-native'
 
 const DayControl = () => {
   const { workoutStore } = useStores()
@@ -25,22 +26,31 @@ const DayControl = () => {
   }
 
   return (
-    <Appbar.Header>
-      <Appbar.Action
-        icon={() => <Icon icon="chevron-back" />}
-        onPress={workoutStore.decrementCurrentDate}
-        animated={false}
-      />
-      <Appbar.Content
-        title={capitalize(label)}
-        onPress={openCalendar}
-      />
-      <Appbar.Action
-        icon={() => <Icon icon="chevron-forward" />}
-        onPress={workoutStore.incrementCurrentDate}
-        animated={false}
-      />
-    </Appbar.Header>
+    <>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Appbar.Action
+          icon={() => <Icon icon="chevron-back" />}
+          onPress={workoutStore.decrementCurrentDate}
+          animated={false}
+        />
+        <Appbar.Content
+          title={capitalize(label)}
+          onPress={openCalendar}
+        />
+        <Appbar.Action
+          icon={() => <Icon icon="chevron-forward" />}
+          onPress={workoutStore.incrementCurrentDate}
+          animated={false}
+        />
+      </View>
+      <Divider />
+    </>
   )
 }
 

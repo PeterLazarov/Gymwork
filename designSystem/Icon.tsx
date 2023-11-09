@@ -9,12 +9,15 @@ const iconSizes = {
 // todo: get typing of all ant design icons
 type Props = {
   icon:
+    | 'analytics'
     | 'chevron-back'
     | 'chevron-forward'
     | 'add'
     | 'remove'
     | 'close'
     | 'ellipsis-vertical'
+    | 'md-calendar-sharp'
+    | 'logo-react'
   size?: keyof typeof iconSizes
   color?: string
 }
