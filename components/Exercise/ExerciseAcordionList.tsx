@@ -15,10 +15,12 @@ const ExerciseAcordionList: React.FC<Props> = ({ exercises, onSelect }) => {
     <>
       {Object.keys(exercises).map(group => (
         <List.Accordion
+          key={group}
           title={`${capitalize(group)} (${exercises[group].length})`}
         >
           {exercises[group].map(exercise => (
             <ExerciseListItem
+              key={exercise.guid}
               exercise={exercise}
               onSelect={onSelect}
             />

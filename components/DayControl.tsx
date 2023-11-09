@@ -2,12 +2,12 @@ import { useRouter } from 'expo-router'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
+import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
 import { useStores } from '../db/helpers/useStores'
 import { Divider, Icon } from '../designSystem'
 import { capitalize } from '../utils/string'
-import { View } from 'react-native'
 
 const DayControl = () => {
   const { workoutStore } = useStores()

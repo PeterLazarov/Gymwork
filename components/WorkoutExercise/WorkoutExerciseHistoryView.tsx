@@ -24,7 +24,10 @@ const WorkoutExerciseHistory: React.FC = () => {
       <ScrollView>
         {workoutStore.openedExerciseHistory.map(training => {
           return (
-            <View style={{ gap: 8 }}>
+            <View
+              style={{ gap: 8 }}
+              key={training.date}
+            >
               <SectionLabel>
                 {DateTime.fromISO(training.date).toLocaleString(
                   DateTime.DATE_MED

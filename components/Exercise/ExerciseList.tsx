@@ -13,6 +13,7 @@ const ExerciseAcordionList: React.FC<Props> = ({ exercises, onSelect }) => {
     <>
       {exercises.map(exercise => (
         <ExerciseListItem
+          key={exercise.guid}
           exercise={exercise}
           onSelect={onSelect}
         />
