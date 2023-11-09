@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { IMSTArray, Instance, SnapshotOut, types } from 'mobx-state-tree'
 
-import workoutSeedData from '../../dbold/seeds/workout-seed-data.json'
+import workoutSeedData from '../../data/workout-seed-data'
 import { groupBy } from '../../utils/array'
 import * as storage from '../../utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
