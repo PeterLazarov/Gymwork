@@ -14,7 +14,6 @@ import { Dimensions, View } from 'react-native'
 import { DateTime } from 'luxon'
 import { useStores } from '../db/helpers/useStores'
 import { observer } from 'mobx-react-lite'
-import { getSnapshot } from 'mobx-state-tree'
 import { calculate1RM } from 'onerepmax.js'
 import { Button } from 'react-native-paper'
 import texts from '../texts'
@@ -178,9 +177,22 @@ const ExerciseHistoryChart = observer(
           const dateIndex = data.batch?.[0]?.dataIndex as number
           const date = viewDays[dateIndex]
 
-          if (dateIndex && date) {
-            setSelectedDate(date.toISODate()!)
+          if (!date || !dateIndex) {
+            setSelectedDate(undefined)
+            return
           }
+
+          const workout = workoutStore.workouts.find(
+            w => w.date === date.toISODate()
+          )
+
+          if (!workout) {
+            setSelectedDate(undefined)
+            return
+          }
+
+          // TODO set only if there's a workout there
+          setSelectedDate(dateIndex && date ? date.toISODate()! : undefined)
         })
       }
 
@@ -233,7 +245,12 @@ const ExerciseHistoryChart = observer(
     return (
       <View>
         <SkiaChart ref={chartElRef} />
-        <Button onPress={handleBtnPress}>{texts.goToWorkout}</Button>
+        <Button
+          disabled={!selectedDate}
+          onPress={handleBtnPress}
+        >
+          {texts.goToWorkout}
+        </Button>
       </View>
     )
   }
