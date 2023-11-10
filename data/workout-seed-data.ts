@@ -10,7 +10,8 @@ const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
   return {
     date: today
       // .minus({ days: i * Math.ceil(Math.random() * 3) })
-      .minus({ days: i + 1 })
+      // .minus({ days: i + 1 })
+      .minus({ days: i * 2 })
       .toISODate()!,
     exercises: [
       // Only bench

@@ -3,13 +3,16 @@ import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
 import ExerciseHistoryChart from '../components/ExerciseHistory'
-import { exercises } from '../data/exercises.json'
 import { Icon } from '../designSystem'
+import { useStores } from '../db/helpers/useStores'
+import { observer } from 'mobx-react-lite'
 
-export default function Log() {
+const Log = observer(() => {
   const router = useRouter()
+  const { exerciseStore } = useStores()
 
-  const exercise = exercises[43]
+  // TODO
+  const exercise = exerciseStore.exercises[43]
 
   function onBackPress() {
     router.push('/')
@@ -18,7 +21,7 @@ export default function Log() {
     <View>
       <Appbar.Header>
         <Appbar.BackAction onPress={onBackPress} />
-        <Appbar.Content title={exercise.name} />
+        {exercise && <Appbar.Content title={exercise.name} />}
         <Appbar.Action
           icon={() => <Icon icon="ellipsis-vertical" />}
           onPress={() => {}}
@@ -26,7 +29,14 @@ export default function Log() {
         />
       </Appbar.Header>
 
-      <ExerciseHistoryChart exercise={exercise} />
+      {exercise && (
+        <ExerciseHistoryChart
+          exerciseID={exercise.guid}
+          view="7D"
+        />
+      )}
     </View>
   )
-}
+})
+
+export default Log
