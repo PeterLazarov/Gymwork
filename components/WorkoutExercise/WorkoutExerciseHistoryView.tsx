@@ -1,12 +1,15 @@
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, Dimensions } from 'react-native'
 
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
 import { useStores } from '../../db/helpers/useStores'
 import { Divider } from '../../designSystem'
 import { SectionLabel } from '../../designSystem/Label'
+import ExerciseHistoryChart from '../ExerciseHistory'
+
+const padding = 16
 
 const WorkoutExerciseHistory: React.FC = () => {
   const { workoutStore } = useStores()
@@ -14,14 +17,20 @@ const WorkoutExerciseHistory: React.FC = () => {
   return (
     <View
       style={{
-        padding: 16,
+        padding,
         // margin: 16,
         borderRadius: 8,
         gap: 24,
         flexDirection: 'column',
       }}
     >
-      <ScrollView>
+      <ExerciseHistoryChart
+        view="ALL"
+        exerciseID={workoutStore.openedExercise.exercise.guid}
+        height={250}
+        width={Dimensions.get('window').width - padding * 2}
+      />
+      <ScrollView style={{ marginTop: -32 }}>
         {workoutStore.openedExerciseHistory.map(training => {
           return (
             <View

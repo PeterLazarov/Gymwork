@@ -56,10 +56,14 @@ const series = {
 
 // Component usage
 const ExerciseHistoryChart = observer(
-  (props: { view: CHART_VIEW; exerciseID: string }) => {
+  (props: {
+    view: CHART_VIEW
+    exerciseID: string
+    height?: number
+    width?: number
+  }) => {
     const router = useRouter()
     const { workoutStore } = useStores()
-    const screenWidth = Dimensions.get('window').width
 
     const chartElRef = useRef<any>(null)
     const eChartRef = useRef<ECharts>()
@@ -117,8 +121,8 @@ const ExerciseHistoryChart = observer(
       if (chartElRef.current) {
         eChartRef.current = init(chartElRef.current, 'light', {
           renderer: 'svg',
-          width: screenWidth,
-          height: 400,
+          width: props.width ?? Dimensions.get('window').width,
+          height: props.height ?? 400,
         })
 
         // Set default options
@@ -244,13 +248,15 @@ const ExerciseHistoryChart = observer(
 
     return (
       <View>
+        {/* Select exercise */}
+        {/* Select view */}
         <SkiaChart ref={chartElRef} />
-        <Button
+        {/* <Button
           disabled={!selectedDate}
           onPress={handleBtnPress}
         >
           {texts.goToWorkout}
-        </Button>
+        </Button> */}
       </View>
     )
   }
