@@ -32,7 +32,7 @@ const Log = observer(() => {
       {exercise && (
         <ExerciseHistoryChart
           exerciseID={exercise.guid}
-          view="ALL"
+          view="30D"
         />
       )}
     </View>

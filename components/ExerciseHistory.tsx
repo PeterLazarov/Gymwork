@@ -65,7 +65,6 @@ const ExerciseHistoryChart = observer(
     const chartElRef = useRef<any>(null)
     const eChartRef = useRef<ECharts>()
 
-    // TODO not reactive!
     const viewDays = useMemo(
       () =>
         getPastDays(
@@ -150,7 +149,7 @@ const ExerciseHistoryChart = observer(
           // timeline: [{}],
           xAxis: {
             type: 'category',
-            data: xAxis, // TODO add options
+            data: xAxis,
             boundaryGap: false,
           },
           series: [
@@ -160,6 +159,7 @@ const ExerciseHistoryChart = observer(
               symbol: props.view === 'ALL' ? 'none' : 'circle', // has a large performance impact
               symbolSize,
               showAllSymbol: true,
+              connectNulls: true,
             },
             {
               name: series['Predicted 1RM'],
@@ -167,6 +167,7 @@ const ExerciseHistoryChart = observer(
               symbol: props.view === 'ALL' ? 'none' : 'circle', // has a large performance impact
               symbolSize,
               showAllSymbol: true,
+              connectNulls: true,
             },
           ],
         })
@@ -191,31 +192,22 @@ const ExerciseHistoryChart = observer(
       const setsPerDay = viewDays.map(date => {
         return workoutStore.workouts
           .find(workout => workout.date === date.toISODate())
-          ?.exercises.find(
-            e => e.exercise.guid === props.exerciseID // TODO prop
-          )
-          ?.sets.map(set => getSnapshot(set)) // getSnapshot useless save for less bad TS types
+          ?.exercises.find(e => e.exercise.guid === props.exerciseID)?.sets
       })
 
-      // Uses this technique to connect disconnected points
-      // https://echarts.apache.org/handbook/en/how-to/chart-types/line/basic-line/#line-chart-in-cartesian-coordinate-system
       eChartRef.current?.setOption({
         series: [
           // Weight series
           {
-            data: setsPerDay
-              .map((sets, i) => [
-                xAxis[i],
-                sets?.reduce((max, set) => Math.max(max, set.weight), 0),
-              ])
-              .filter(([, pt]) => pt),
+            data: setsPerDay.map(
+              sets => sets?.reduce((max, set) => Math.max(max, set.weight), 0)
+            ),
           },
 
           // 1RM series
           {
-            data: setsPerDay
-              .map((sets, i) => [
-                xAxis[i],
+            data: setsPerDay.map(
+              sets =>
                 sets?.reduce(
                   (max, set) =>
                     Number(
@@ -225,9 +217,8 @@ const ExerciseHistoryChart = observer(
                       ).toFixed(2)
                     ),
                   0
-                ),
-              ])
-              .filter(([, pt]) => pt),
+                )
+            ),
           },
         ],
       })
