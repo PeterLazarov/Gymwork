@@ -46,6 +46,7 @@ function getPastDays(n: number) {
 export const CHART_VIEWS = {
   '7D': '7D',
   '30D': '30D',
+  ALL: 'ALL', // (Linear)
 } as const
 export type CHART_VIEW = (typeof CHART_VIEWS)[keyof typeof CHART_VIEWS]
 
@@ -64,8 +65,36 @@ const ExerciseHistoryChart = observer(
     const chartRef = useRef<any>(null)
 
     // TODO not reactive!
-    const viewDays = getPastDays(props.view === '7D' ? 7 : 30)
-    const symbolSize = props.view === '7D' ? 15 : 10
+    const viewDays = getPastDays(
+      (
+        {
+          '7D': 7,
+          '30D': 30,
+          ALL: Math.ceil(
+            Math.abs(
+              DateTime.fromISO(
+                workoutStore.workouts.findLast(w =>
+                  w.exercises.find(
+                    ({ exercise }) => exercise.guid === props.exerciseID
+                  )
+                )?.date!
+              )
+                .diffNow()
+                .as('days')
+            )
+          ),
+        } satisfies Record<CHART_VIEW, number>
+      )[props.view]
+    )
+    console.log()
+
+    const symbolSize: number = (
+      {
+        '30D': 10,
+        '7D': 15,
+        ALL: 3,
+      } satisfies Record<CHART_VIEW, number>
+    )[props.view]
     const xAxis =
       props.view === '7D'
         ? viewDays.map(d => d.weekdayShort!)
