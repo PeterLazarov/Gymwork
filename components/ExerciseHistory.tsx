@@ -114,6 +114,12 @@ const ExerciseHistoryChart = observer(
       [props.view]
     )
 
+    const height = useMemo(() => props.height ?? 400, [props.height])
+    const width = useMemo(
+      () => props.width ?? Dimensions.get('window').width,
+      [props.width]
+    )
+
     // TODO this would be odd with multiple workouts+lines per day
     const [selectedDate, setSelectedDate] = useState<string>()
 
@@ -121,8 +127,8 @@ const ExerciseHistoryChart = observer(
       if (chartElRef.current) {
         eChartRef.current = init(chartElRef.current, 'light', {
           renderer: 'svg',
-          width: props.width ?? Dimensions.get('window').width,
-          height: props.height ?? 400,
+          width,
+          height,
         })
 
         // Set default options
@@ -247,7 +253,12 @@ const ExerciseHistoryChart = observer(
     }
 
     return (
-      <View>
+      <View
+        style={{
+          height,
+          width,
+        }}
+      >
         {/* Select exercise */}
         {/* Select view */}
         <SkiaChart ref={chartElRef} />
