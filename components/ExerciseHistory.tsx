@@ -1,7 +1,7 @@
 // Choose your preferred renderer
-import { SvgChart, SVGRenderer, SkiaChart } from '@wuba/react-native-echarts'
-import * as echarts from 'echarts/core'
-import { useRef, useEffect, useState } from 'react'
+import { SVGRenderer, SkiaChart } from '@wuba/react-native-echarts'
+import { use, ECharts, init } from 'echarts/core'
+import { useRef, useEffect, useState, useMemo } from 'react'
 import { LineChart } from 'echarts/charts'
 import {
   TitleComponent,
@@ -24,7 +24,7 @@ import { useRouter } from 'expo-router'
 // https://echarts.apache.org/en/option.html#title
 
 // Register extensions
-echarts.use([
+use([
   TitleComponent,
   TooltipComponent,
   GridComponent,
@@ -62,58 +62,69 @@ const ExerciseHistoryChart = observer(
     const { workoutStore } = useStores()
     const screenWidth = Dimensions.get('window').width
 
-    const chartRef = useRef<any>(null)
+    const chartElRef = useRef<any>(null)
+    const eChartRef = useRef<ECharts>()
 
     // TODO not reactive!
-    const viewDays = getPastDays(
-      (
-        {
-          '7D': 7,
-          '30D': 30,
-          ALL: Math.ceil(
-            Math.abs(
-              DateTime.fromISO(
-                workoutStore.workouts.findLast(w =>
-                  w.exercises.find(
-                    ({ exercise }) => exercise.guid === props.exerciseID
+    const viewDays = useMemo(
+      () =>
+        getPastDays(
+          (
+            {
+              '7D': 7,
+              '30D': 30,
+              ALL: Math.ceil(
+                Math.abs(
+                  DateTime.fromISO(
+                    workoutStore.workouts.findLast(w =>
+                      w.exercises.find(
+                        ({ exercise }) => exercise.guid === props.exerciseID
+                      )
+                    )?.date!
                   )
-                )?.date!
-              )
-                .diffNow()
-                .as('days')
-            )
-          ),
-        } satisfies Record<CHART_VIEW, number>
-      )[props.view]
+                    .diffNow()
+                    .as('days')
+                )
+              ),
+            } satisfies Record<CHART_VIEW, number>
+          )[props.view]
+        ),
+      [props.view]
     )
-    console.log()
 
-    const symbolSize: number = (
-      {
-        '30D': 10,
-        '7D': 15,
-        ALL: 3,
-      } satisfies Record<CHART_VIEW, number>
-    )[props.view]
-    const xAxis =
-      props.view === '7D'
-        ? viewDays.map(d => d.weekdayShort!)
-        : viewDays.map(d => d.toISODate())
+    const symbolSize: number = useMemo(
+      () =>
+        (
+          ({
+            '30D': 10,
+            '7D': 15,
+            ALL: 0, // not shown for performance reasons
+          }) satisfies Record<CHART_VIEW, number>
+        )[props.view],
+      [props.view]
+    )
+
+    const xAxis = useMemo(
+      () =>
+        props.view === '7D'
+          ? viewDays.map(d => d.weekdayShort!)
+          : viewDays.map(d => d.toISODate()),
+      [props.view]
+    )
 
     // TODO this would be odd with multiple workouts+lines per day
     const [selectedDate, setSelectedDate] = useState<string>()
 
-    let chart = useRef<echarts.ECharts>()
     useEffect(() => {
-      if (chartRef.current) {
-        chart.current = echarts.init(chartRef.current, 'light', {
+      if (chartElRef.current) {
+        eChartRef.current = init(chartElRef.current, 'light', {
           renderer: 'svg',
           width: screenWidth,
           height: 400,
         })
 
         // Set default options
-        chart.current.setOption({
+        eChartRef.current.setOption({
           animation: true,
           tooltip: {
             // allows you to point at random and mark dots
@@ -146,20 +157,22 @@ const ExerciseHistoryChart = observer(
             {
               name: series.Weight,
               type: 'line',
-              symbolSize: data => symbolSize,
+              symbol: props.view === 'ALL' ? 'none' : 'circle', // has a large performance impact
+              symbolSize,
               showAllSymbol: true,
             },
             {
               name: series['Predicted 1RM'],
               type: 'line',
-              symbolSize: data => symbolSize,
+              symbol: props.view === 'ALL' ? 'none' : 'circle', // has a large performance impact
+              symbolSize,
               showAllSymbol: true,
             },
           ],
         })
 
         // highlight and downplay catch both exact dot-clicks and non-exact ones
-        chart.current?.on('highlight', data => {
+        eChartRef.current?.on('highlight', data => {
           // @ts-ignore
           const dateIndex = data.batch?.[0]?.dataIndex as number
           const date = viewDays[dateIndex]
@@ -170,8 +183,8 @@ const ExerciseHistoryChart = observer(
         })
       }
 
-      return () => chart.current?.dispose()
-    }, [])
+      return () => eChartRef.current?.dispose()
+    }, [props.view])
 
     // Feed chart with data
     useEffect(() => {
@@ -186,7 +199,7 @@ const ExerciseHistoryChart = observer(
 
       // Uses this technique to connect disconnected points
       // https://echarts.apache.org/handbook/en/how-to/chart-types/line/basic-line/#line-chart-in-cartesian-coordinate-system
-      chart.current?.setOption({
+      eChartRef.current?.setOption({
         series: [
           // Weight series
           {
@@ -226,10 +239,9 @@ const ExerciseHistoryChart = observer(
       router.push('/')
     }
 
-    // Choose your preferred chart component
     return (
       <View>
-        <SkiaChart ref={chartRef} />
+        <SkiaChart ref={chartElRef} />
         <Button onPress={handleBtnPress}>{texts.goToWorkout}</Button>
       </View>
     )
