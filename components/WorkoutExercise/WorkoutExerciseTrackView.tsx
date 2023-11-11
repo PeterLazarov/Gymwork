@@ -39,6 +39,8 @@ const WorkoutExerciseEntry: React.FC = () => {
         borderRadius: 8,
         gap: 24,
         flexDirection: 'column',
+        flexGrow: 1,
+        display: 'flex',
       }}
     >
       <WorkoutExerciseEntryEditPanel
@@ -51,8 +53,8 @@ const WorkoutExerciseEntry: React.FC = () => {
       <ScrollView
         style={{
           backgroundColor: colors.secondary,
-          padding: 12,
           borderRadius: 6,
+          flexBasis: 0,
         }}
       >
         {workoutStore.openedExercise.sets.map((set, i) => (

@@ -14,9 +14,15 @@ const WorkoutExerciseRecordsView: React.FC = () => {
         padding: 16,
         // margin: 16,
         borderRadius: 8,
+        display: 'flex',
+        flexGrow: 1,
       }}
     >
-      <ScrollView>
+      <ScrollView
+        style={{
+          flexBasis: 0,
+        }}
+      >
         {workoutStore.openedExerciseActualRecords.map((record, i) => {
           return (
             <View

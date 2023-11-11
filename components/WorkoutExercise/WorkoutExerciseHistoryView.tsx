@@ -17,11 +17,13 @@ const WorkoutExerciseHistory: React.FC = () => {
   return (
     <View
       style={{
-        padding,
-        // margin: 16,
+        // padding,
+        margin: 16,
         borderRadius: 8,
         gap: 24,
         flexDirection: 'column',
+        display: 'flex',
+        flexGrow: 1,
       }}
     >
       <ExerciseHistoryChart
@@ -30,7 +32,7 @@ const WorkoutExerciseHistory: React.FC = () => {
         height={250}
         width={Dimensions.get('window').width - padding * 2}
       />
-      <ScrollView style={{ marginTop: -24 }}>
+      <ScrollView style={{ marginTop: -24, flexBasis: 0 }}>
         {workoutStore.openedExerciseHistory.map(training => {
           return (
             <View

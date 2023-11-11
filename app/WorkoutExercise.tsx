@@ -25,7 +25,14 @@ const WorkoutExercisePage: React.FC = () => {
   }
 
   return (
-    <View>
+    <View
+      style={{
+        // display: 'flex',
+        overflow: 'hidden',
+        height: '100%',
+        display: 'flex',
+      }}
+    >
       <Appbar.Header>
         <Appbar.BackAction onPress={onBackPress} />
         <Appbar.Content title={workoutStore.openedExercise?.exercise.name} />
@@ -51,9 +58,15 @@ const WorkoutExercisePage: React.FC = () => {
           { value: 'records', label: 'Records' },
         ]}
       />
-      {view === 'track' && <WorkoutExerciseTrackView />}
-      {view === 'history' && <WorkoutExerciseHistoryView />}
-      {view === 'records' && <WorkoutExerciseRecordsView />}
+      <View
+        style={{
+          flexGrow: 1,
+        }}
+      >
+        {view === 'track' && <WorkoutExerciseTrackView />}
+        {view === 'history' && <WorkoutExerciseHistoryView />}
+        {view === 'records' && <WorkoutExerciseRecordsView />}
+      </View>
     </View>
   )
 }
