@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import { getParentOfType } from 'mobx-state-tree'
 import React from 'react'
-import { View, ScrollView } from 'react-native'
+import { View, ScrollView, TouchableOpacity } from 'react-native'
 
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
 import { useStores } from '../../db/helpers/useStores'
@@ -36,18 +36,18 @@ const WorkoutExerciseRecordsView: React.FC = () => {
       >
         {Object.values(workoutStore.openedExerciseRecords).map((set, i) => {
           return (
-            <View
+            <TouchableOpacity
               key={set.guid}
               style={{
                 marginVertical: 4,
               }}
-              onTouchEnd={() => goToDate(set)}
+              onPress={() => goToDate(set)}
             >
               <WorkoutExerciseSetListItem
                 set={set}
                 hideRecords
               />
-            </View>
+            </TouchableOpacity>
           )
         })}
       </ScrollView>
