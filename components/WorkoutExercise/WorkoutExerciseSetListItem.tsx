@@ -27,7 +27,7 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
   const exerciseActualRecords =
     workoutStore.workoutExercisesActualRecords[exerciseToUse.exercise.guid]
 
-  const isRecord = exerciseActualRecords.some(
+  const isRecord = Object.values(exerciseActualRecords).some(
     record => record.guid === set.guid
   )
 
@@ -41,7 +41,7 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
       }}
     >
       {!hideRecords && (
-        <View>
+        <View style={{ flex: 1, alignItems: 'center' }}>
           {isRecord && (
             <Icon
               icon="trophy"
@@ -50,7 +50,7 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
           )}
         </View>
       )}
-      <View style={{ flexDirection: 'row', gap: 4 }}>
+      <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
         <Text
           style={{
             fontWeight: 'bold',
@@ -67,7 +67,7 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
           {texts.reps}
         </Text>
       </View>
-      <View style={{ flexDirection: 'row', gap: 4 }}>
+      <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
         <Text
           style={{
             fontWeight: 'bold',
