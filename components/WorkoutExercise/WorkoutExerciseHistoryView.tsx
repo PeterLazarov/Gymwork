@@ -4,8 +4,7 @@ import { View, ScrollView, Dimensions } from 'react-native'
 
 import WorkoutExerciseHistoryDayItem from './WorkoutExerciseHistoryDayItem'
 import { useStores } from '../../db/helpers/useStores'
-import { WorkoutSet } from '../../db/models'
-import ExerciseHistoryChart from '../ExerciseHistory'
+import ExerciseHistoryChart from '../ExerciseHistoryChart'
 
 const padding = 16
 

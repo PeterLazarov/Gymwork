@@ -5,7 +5,7 @@ import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
 import ExerciseSelect from '../components/Exercise/ExerciseSelect'
-import ExerciseHistoryChart from '../components/ExerciseHistory'
+import ExerciseHistoryChart from '../components/ExerciseHistoryChart'
 import { Exercise } from '../db/models'
 import { Icon } from '../designSystem'
 import texts from '../texts'
