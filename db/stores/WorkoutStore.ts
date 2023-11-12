@@ -68,7 +68,7 @@ export const WorkoutStoreModel = types
 
       return exerciseHistory
     },
-    get workoutExercisesActualRecords() {
+    get exerciseRecords() {
       type ExerciseHistory = Record<number, WorkoutSet>
       const result: Record<string, ExerciseHistory> = {}
 
@@ -106,9 +106,7 @@ export const WorkoutStoreModel = types
       return this.exerciseHistory[this.openedExercise.exercise.guid]
     },
     get openedExerciseRecords() {
-      return this.workoutExercisesActualRecords[
-        this.openedExercise.exercise.guid
-      ]
+      return this.exerciseRecords[this.openedExercise.exercise.guid]
     },
   }))
   .actions(withSetPropAction)
