@@ -12,7 +12,7 @@ const ModalsPortal = () => {
 
   const hideModal = () => workoutStore.setProp('notesDialogOpen', false)
   const saveChanges = () => {
-    workoutStore.setWorkoutNotes(notes.trim())
+    workoutStore.setWorkoutNotes(notes?.trim() ?? '')
     hideModal()
   }
   const containerStyle = { backgroundColor: 'white', padding: 20 }

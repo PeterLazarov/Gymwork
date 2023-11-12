@@ -3,7 +3,7 @@ import React from 'react'
 import { Text, View } from 'react-native'
 
 import { useStores } from '../../db/helpers/useStores'
-import { WorkoutExercise, WorkoutSet } from '../../db/models'
+import { Exercise, WorkoutSet } from '../../db/models'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
 import texts from '../../texts'
@@ -11,7 +11,7 @@ import texts from '../../texts'
 type Props = {
   set: WorkoutSet
   number?: number
-  exercise?: WorkoutExercise
+  exercise?: Exercise
   isFocused?: boolean
   hideRecords?: boolean
 }
@@ -25,10 +25,10 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
 }) => {
   const { workoutStore } = useStores()
 
-  const exerciseToUse = exercise || workoutStore.openedWorkoutExercise
-  const exerciseActualRecords = workoutStore.getExerciseRecords(
-    exerciseToUse.exercise.guid
-  )
+  const exerciseToUse = exercise || workoutStore.openedExercise
+  const exerciseActualRecords = exerciseToUse
+    ? workoutStore.getExerciseRecords(exerciseToUse.guid)
+    : {}
 
   const isRecord = Object.values(exerciseActualRecords).some(
     record => record.guid === set.guid

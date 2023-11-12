@@ -17,6 +17,7 @@ import { useRef, useEffect, useState, useMemo } from 'react'
 import { Dimensions, View } from 'react-native'
 
 import { useStores } from '../db/helpers/useStores'
+import { WorkoutSet } from '../db/models'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -224,9 +225,13 @@ const ExerciseHistoryChart = observer(
     // Feed chart with data
     useEffect(() => {
       const setsPerDay = viewDays.map(date => {
-        return workoutStore.workouts
-          .find(workout => workout.date === date.toISODate())
-          ?.exercises.find(e => e.exercise.guid === props.exerciseID)?.sets
+        const dayExerciseSets = workoutStore.workouts
+          .filter(workout => workout.date === date.toISODate())
+          .flatMap(({ sets }) => sets) as WorkoutSet[]
+
+        return dayExerciseSets.filter(
+          set => set.exercise.guid === props.exerciseID
+        )
       })
 
       eChartRef.current?.setOption({

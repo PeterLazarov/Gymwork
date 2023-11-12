@@ -1,19 +1,31 @@
 import { DateTime } from 'luxon'
-import { IMSTArray, Instance, SnapshotOut, types } from 'mobx-state-tree'
+import {
+  IMSTArray,
+  Instance,
+  SnapshotOut,
+  types,
+  destroy,
+} from 'mobx-state-tree'
 
 import workoutSeedData from '../../data/workout-seed-data'
 import * as storage from '../../utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import {
-  WorkoutExercise,
-  WorkoutExerciseModel,
   WorkoutSet,
   WorkoutSetModel,
   WorkoutModel,
   WorkoutSnapshotIn,
   Exercise,
   Workout,
+  WorkoutSetSnapshotIn,
 } from '../models'
+
+function getWorkoutExercises(workout: Workout) {
+  return workout.sets.reduce(
+    (acc, set) => acc.add(set.exercise),
+    new Set<Exercise>()
+  )
+}
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -23,27 +35,42 @@ export const WorkoutStoreModel = types
   .props({
     workouts: types.array(WorkoutModel),
     currentWorkoutDate: types.optional(types.string, today.toISODate()!),
-    openedWorkoutExerciseGuid: '',
+    openedExerciseGuid: '',
     notesDialogOpen: false,
   })
   .views(store => ({
-    get currentWorkout() {
+    // TODO to allow for multiple workouts per date?
+    get currentWorkout(): Workout | undefined {
       const [workout] = store.workouts.filter(
         w => w.date === store.currentWorkoutDate
       )
       return workout
     },
-    get openedWorkoutExercise() {
-      const [opened] = this.currentWorkout.exercises.filter(
-        e => e.guid === store.openedWorkoutExerciseGuid
+
+    get currentWorkoutExercises() {
+      return this.currentWorkout
+        ? [...getWorkoutExercises(this.currentWorkout)]
+        : []
+    },
+
+    get currentWorkoutOpenedExerciseSets(): WorkoutSet[] {
+      return (
+        this.currentWorkout?.sets.filter(
+          e => e.exercise === this.openedExercise
+        ) ?? []
       )
-      return opened
+    },
+
+    get openedExercise() {
+      return this.currentWorkoutExercises.find(
+        e => e.guid === store.openedExerciseGuid
+      )
     },
 
     get exerciseWorkouts(): Record<Exercise['guid'], Workout[]> {
       return store.workouts.reduce(
         (acc, workout) => {
-          workout.exercises.forEach(({ exercise }) => {
+          getWorkoutExercises(workout).forEach(exercise => {
             if (!acc[exercise.guid]) {
               acc[exercise.guid] = []
             }
@@ -56,19 +83,13 @@ export const WorkoutStoreModel = types
       )
     },
 
+    /** @returns all sets performed ever */
     get exerciseHistory(): Record<Exercise['guid'], WorkoutSet[]> {
       return Object.fromEntries(
         Object.entries(this.exerciseWorkouts).map(([exerciseID, workouts]) => {
-          const sets: WorkoutSet[] = workouts
-            .map(w =>
-              w.exercises
-                .filter(({ exercise }) => exercise.guid === exerciseID)
-                .flatMap(
-                  workoutExercise => workoutExercise.sets as any as WorkoutSet
-                )
-            )
-            .filter(Boolean)
-            .flat()
+          const sets: WorkoutSet[] = workouts.flatMap(w =>
+            w.sets.filter(({ exercise }) => exercise.guid === exerciseID)
+          )
 
           return [exerciseID, sets]
         })
@@ -96,10 +117,10 @@ export const WorkoutStoreModel = types
     },
 
     get openedExerciseHistory() {
-      return this.exerciseHistory[this.openedWorkoutExercise.exercise.guid]
+      return this.exerciseHistory[store.openedExerciseGuid]
     },
     get openedExerciseRecords() {
-      return this.getExerciseRecords(this.openedWorkoutExercise.exercise.guid)
+      return this.getExerciseRecords(store.openedExerciseGuid)
     },
   }))
   .actions(withSetPropAction)
@@ -114,7 +135,7 @@ export const WorkoutStoreModel = types
         } else {
           await this.seed()
         }
-      }, 1000)
+      }, 1000) // TODO
     },
     async seed() {
       console.log('seeding')
@@ -127,37 +148,30 @@ export const WorkoutStoreModel = types
       })
       store.workouts.push(created)
     },
-    addWorkoutExercise(exercise: Exercise) {
-      const created = WorkoutExerciseModel.create({
-        exercise: exercise.guid,
-      })
-      store.currentWorkout.exercises.push(created)
+    setOpenedExercise(exercise: Exercise | null) {
+      store.openedExerciseGuid = exercise?.guid || ''
     },
-    setOpenedWorkoutExercise(exercise: WorkoutExercise | null) {
-      store.openedWorkoutExerciseGuid = exercise?.guid || ''
-    },
-    addWorkoutExerciseSet(newSet: Partial<WorkoutSet>) {
+    addSet(newSet: WorkoutSetSnapshotIn) {
       const created = WorkoutSetModel.create(newSet)
 
-      store.openedWorkoutExercise.sets.push(created)
+      store.currentWorkout?.sets.push(created)
     },
-    removeWorkoutExerciseSet(setGuid: string) {
-      // TODO: fix typescript hackery
-      const filtered = store.openedWorkoutExercise.sets.filter(
-        s => s.guid !== setGuid
-      )
-      store.openedWorkoutExercise.sets = filtered as unknown as IMSTArray<
-        typeof WorkoutSetModel
-      >
+    removeSet(setGuid: WorkoutSet['guid']) {
+      const set = store.currentWorkout?.sets.find(s => s.guid === setGuid)
+      if (set) {
+        destroy(set)
+      }
     },
     updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
       // TODO: fix typescript hackery
-      const updated = store.openedWorkoutExercise.sets.map(set =>
+      const updated = store.currentWorkout?.sets.map(set =>
         set.guid === updatedSet.guid ? updatedSet : set
       )
-      store.openedWorkoutExercise.sets = updated as unknown as IMSTArray<
-        typeof WorkoutSetModel
-      >
+      if (store.currentWorkout) {
+        store.currentWorkout.sets = updated as unknown as IMSTArray<
+          typeof WorkoutSetModel
+        >
+      }
     },
     incrementCurrentDate() {
       const luxonDate = DateTime.fromISO(store.currentWorkoutDate)
@@ -168,7 +182,9 @@ export const WorkoutStoreModel = types
       store.currentWorkoutDate = luxonDate.minus({ days: 1 }).toISODate()!
     },
     setWorkoutNotes(notes: string) {
-      store.currentWorkout.notes = notes
+      if (store.currentWorkout) {
+        store.currentWorkout.notes = notes
+      }
     },
   }))
 

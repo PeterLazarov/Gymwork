@@ -26,28 +26,22 @@ const WorkoutExerciseHistoryView: React.FC = () => {
     >
       <ExerciseHistoryChart
         view="ALL"
-        exerciseID={workoutStore.openedWorkoutExercise.exercise.guid}
+        exerciseID={workoutStore.openedExerciseGuid}
         height={250}
         width={Dimensions.get('window').width - padding * 2}
       />
       <ScrollView style={{ marginTop: -24, flexBasis: 0 }}>
-        {workoutStore.exerciseWorkouts[
-          workoutStore.openedWorkoutExercise.exercise.guid
-        ]?.map((workout, i) => (
-          <WorkoutExerciseHistoryDayItem
-            key={`${workout.date}_${i}`}
-            date={workout.date}
-            sets={
-              workout.exercises
-                .filter(
-                  e =>
-                    e.exercise.guid ===
-                    workoutStore.openedWorkoutExercise.exercise.guid
-                )
-                .flatMap(e => e.sets) as WorkoutSet[]
-            }
-          />
-        ))}
+        {workoutStore.exerciseWorkouts[workoutStore.openedExerciseGuid]?.map(
+          (workout, i) => (
+            <WorkoutExerciseHistoryDayItem
+              key={`${workout.date}_${i}`}
+              date={workout.date}
+              sets={workout.sets.filter(
+                e => e.exercise.guid === workoutStore.openedExerciseGuid
+              )}
+            />
+          )
+        )}
       </ScrollView>
     </View>
   )

@@ -1,10 +1,14 @@
 import { DateTime } from 'luxon'
 
-import { WorkoutSnapshotIn } from '../db/models'
+import { WorkoutSetSnapshotIn, WorkoutSnapshotIn } from '../db/models'
 
 const numberOfWorkouts = 100
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
 const weightIncrement = 2.5
+
+function between(min: number, max: number) {
+  return Math.round(Math.random() * (max - min) + min)
+}
 
 const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
   length: numberOfWorkouts,
@@ -13,27 +17,28 @@ const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
     date: today
       .minus({ days: i + i * Math.ceil(Math.random() * 2) })
       .toISODate()!,
-    exercises: Array.from({ length: 5 })
-      .map((_, i) => ({
-        exercise: String(Math.ceil(Math.random() * 20)),
-        sets: Array.from({
-          length: Math.ceil(Math.random() * 5),
-        }).map((val, i) => ({
-          reps: Math.ceil(Math.random() * 12),
-          weight: Math.ceil(Math.random() * 40) * weightIncrement,
+    sets: Array.from({
+      length: between(3, 8),
+    })
+      .flatMap((_, i): WorkoutSetSnapshotIn[] => {
+        const exercise = String(between(0, 100))
+        return Array.from({ length: between(2, 5) }).map((_, i) => ({
+          exercise,
           isWarmup: i === 0,
-        })),
-      }))
-      .concat({
-        exercise: '43',
-        sets: Array.from({
-          length: Math.ceil(Math.random() * 5),
-        }).map((val, i) => ({
-          reps: Math.ceil(Math.random() * 12),
-          weight: Math.ceil(Math.random() * 40) * weightIncrement,
-          isWarmup: i === 0,
-        })),
+          reps: between(3, 12),
+          weight: between(8, 40) * weightIncrement,
+        }))
       })
+      .concat(
+        Array.from({ length: between(3, 5) }).map((_, i) => {
+          return {
+            exercise: '43',
+            reps: between(3, 12),
+            weight: between(8, 40) * weightIncrement,
+            isWarmup: i === 0,
+          }
+        })
+      )
       .reverse(),
   }
 })

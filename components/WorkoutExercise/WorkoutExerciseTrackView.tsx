@@ -5,7 +5,7 @@ import { View, ScrollView } from 'react-native'
 import WorkoutExerciseEntryEditPanel from './WorkoutExerciseEntryEditPanel'
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from '../../db/helpers/useStores'
-import { WorkoutSet } from '../../db/models'
+import { WorkoutSet, WorkoutSetSnapshotIn } from '../../db/models'
 import { ButtonContainer, Divider } from '../../designSystem'
 import { SectionLabel } from '../../designSystem/Label'
 import colors from '../../designSystem/colors'
@@ -15,12 +15,15 @@ const WorkoutExerciseTrackView: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
-  async function addSet(setToAdd: Partial<WorkoutSet>) {
-    workoutStore.addWorkoutExerciseSet(setToAdd)
+  async function addSet(setToAdd: Pick<WorkoutSet, 'reps' | 'weight'>) {
+    workoutStore.addSet({
+      ...setToAdd,
+      exercise: workoutStore.openedExerciseGuid,
+    })
   }
 
   function removeSet(setToRemove: WorkoutSet) {
-    workoutStore.removeWorkoutExerciseSet(setToRemove.guid)
+    workoutStore.removeSet(setToRemove.guid)
   }
 
   function updateSet(updatedSet: WorkoutSet) {
@@ -56,7 +59,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
           flexBasis: 0,
         }}
       >
-        {workoutStore.openedWorkoutExercise.sets.map((set, i) => (
+        {workoutStore.currentWorkoutOpenedExerciseSets.map((set, i) => (
           <View key={set.guid}>
             {i !== 0 && <Divider />}
             <ButtonContainer
@@ -70,7 +73,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
             </ButtonContainer>
           </View>
         ))}
-        {workoutStore.openedWorkoutExercise.sets.length === 0 && (
+        {workoutStore.currentWorkoutOpenedExerciseSets.length === 0 && (
           <SectionLabel> No sets entered </SectionLabel>
         )}
       </ScrollView>

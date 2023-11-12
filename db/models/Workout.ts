@@ -2,7 +2,7 @@ import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import { WorkoutExerciseModel } from './WorkoutExercise'
+import { WorkoutSetModel } from './WorkoutSet'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
 export const WorkoutModel = types
@@ -11,7 +11,7 @@ export const WorkoutModel = types
     guid: types.optional(types.identifier, () => uuidv4()),
     date: '',
     notes: '',
-    exercises: types.array(WorkoutExerciseModel),
+    sets: types.array(WorkoutSetModel),
   })
   .actions(withSetPropAction)
 

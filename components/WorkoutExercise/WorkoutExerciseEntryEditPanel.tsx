@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, TextInput } from 'react-native'
 import { Button } from 'react-native-paper'
 
-import { WorkoutSet } from '../../db/models'
+import { WorkoutSet, WorkoutSetSnapshotIn } from '../../db/models'
 import { Divider } from '../../designSystem'
 import { SubSectionLabel } from '../../designSystem/Label'
 import colors from '../../designSystem/colors'
@@ -11,7 +11,7 @@ import IncrementDecrementButtons from '../IncrementDecrementButtons'
 
 type Props = {
   selectedSet: WorkoutSet | null
-  addSet: (set: Partial<WorkoutSet>) => void
+  addSet: (set: Pick<WorkoutSet, 'weight' | 'reps'>) => void
   updateSet: (set: WorkoutSet) => void
   removeSet: (set: WorkoutSet) => void
 }

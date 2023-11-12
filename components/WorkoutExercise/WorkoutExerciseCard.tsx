@@ -4,27 +4,26 @@ import { Card } from 'react-native-paper'
 
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
 import { useStores } from '../../db/helpers/useStores'
-import { WorkoutExercise } from '../../db/models'
+import { Exercise, Workout } from '../../db/models'
 
 type Props = {
-  exercise: WorkoutExercise
+  workout: Workout
+  exercise: Exercise
 }
 
-const WorkoutExerciseCard: React.FC<Props> = ({ exercise }) => {
+const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
   const router = useRouter()
   const { workoutStore } = useStores()
 
-  const warmupSets = useMemo(
-    () => exercise.sets.filter(e => e.isWarmup),
-    [exercise.sets]
-  )
-  const actualSets = useMemo(
-    () => exercise.sets.filter(e => !e.isWarmup),
-    [exercise.sets]
-  )
+  const sets = useMemo(() => {
+    return workout.sets.filter(set => set.exercise === exercise)
+  }, [workout, exercise])
+
+  const warmupSets = useMemo(() => sets.filter(e => e.isWarmup), [sets])
+  const actualSets = useMemo(() => sets.filter(e => !e.isWarmup), [sets])
 
   function onLinkPress() {
-    workoutStore.setOpenedWorkoutExercise(exercise)
+    workoutStore.setOpenedExercise(exercise)
     router.push('/WorkoutExercise')
   }
   return (
@@ -35,7 +34,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ exercise }) => {
       }}
     >
       <Card.Title
-        title={exercise.exercise?.name}
+        title={exercise?.name}
         titleVariant="titleMedium"
       />
       <Card.Content>

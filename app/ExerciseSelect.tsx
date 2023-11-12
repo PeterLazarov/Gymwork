@@ -15,7 +15,7 @@ const ExerciseListPage: React.FC = () => {
   const router = useRouter()
 
   function handleSelectExercise(exercise: Exercise) {
-    workoutStore.addWorkoutExercise(exercise)
+    workoutStore.setOpenedExercise(exercise)
     router.push('/')
   }
 

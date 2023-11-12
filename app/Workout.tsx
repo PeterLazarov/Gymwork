@@ -56,15 +56,17 @@ const WorkoutPage: React.FC = () => {
       <DayControl />
 
       <ScrollView style={{ flex: 1 }}>
-        {workoutStore.currentWorkout?.exercises.map(exercise => (
-          <WorkoutExerciseCard
-            key={`${workoutStore.currentWorkout.date}_${exercise.guid}`}
-            exercise={exercise}
-          />
-        ))}
+        {workoutStore.currentWorkout &&
+          workoutStore.currentWorkoutExercises.map(exercise => (
+            <WorkoutExerciseCard
+              key={`${workoutStore.currentWorkout!.date}_${exercise.guid}`}
+              workout={workoutStore.currentWorkout!}
+              exercise={exercise}
+            />
+          ))}
       </ScrollView>
       <WorkoutControlButtons
-        isWorkoutStarted={!!workoutStore.currentWorkout}
+        // isWorkoutStarted={!!workoutStore.currentWorkout}
         createWorkout={newWorkout}
       />
     </View>
