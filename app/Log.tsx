@@ -20,7 +20,11 @@ const Log = observer(() => {
     router.push('/')
   }
   return (
-    <View>
+    <View
+      style={{
+        height: '100%',
+      }}
+    >
       <Appbar.Header>
         <Appbar.BackAction onPress={onBackPress} />
         <Appbar.Content title={exercise?.name ?? texts.addExercise} />

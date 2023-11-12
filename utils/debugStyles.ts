@@ -14,7 +14,7 @@ const colorGen = (function* getColor() {
  * Can be spread into style objects. Provides clear border of element
  * @returns Border styles with rotating colors
  */
-export const getDebugStyles = (): StyleProp<ViewStyle> => ({
+export const getDebugStyles = (): StyleProp<ViewStyle> & object => ({
   borderColor: colorGen.next().value!,
   borderWidth: 8,
   borderStyle: 'dotted',
