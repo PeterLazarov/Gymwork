@@ -78,10 +78,11 @@ const ExerciseHistoryChart = observer(
               ALL: Math.ceil(
                 Math.abs(
                   DateTime.fromISO(
-                    workoutStore.workouts.findLast(w =>
-                      w.exercises.find(
-                        ({ exercise }) => exercise.guid === props.exerciseID
-                      )
+                    workoutStore.workouts.findLast(
+                      w =>
+                        w?.exercises.find(
+                          ({ exercise }) => exercise.guid === props.exerciseID
+                        )
                     )?.date!
                   )
                     .diffNow()

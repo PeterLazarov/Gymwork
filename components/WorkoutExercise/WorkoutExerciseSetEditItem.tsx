@@ -15,7 +15,7 @@ type Props = {
 
 const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
   const { workoutStore } = useStores()
-  const isRecord = workoutStore.openedExerciseActualRecords.some(
+  const isRecord = Object.values(workoutStore.openedExerciseRecords).some(
     record => record.guid === set.guid
   )
 

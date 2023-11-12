@@ -8,7 +8,7 @@ import ExerciseHistoryChart from '../ExerciseHistory'
 
 const padding = 16
 
-const WorkoutExerciseHistory: React.FC = () => {
+const WorkoutExerciseHistoryView: React.FC = () => {
   const { workoutStore } = useStores()
 
   return (
@@ -30,8 +30,9 @@ const WorkoutExerciseHistory: React.FC = () => {
         width={Dimensions.get('window').width - padding * 2}
       />
       <ScrollView style={{ marginTop: -24, flexBasis: 0 }}>
-        {workoutStore.openedExerciseHistory.map(({ date, sets }) => (
+        {workoutStore.openedExerciseHistory.map(({ date, sets }, i) => (
           <WorkoutExerciseHistoryDayItem
+            key={`${date}_${i}`}
             date={date}
             sets={sets}
           />
@@ -41,4 +42,4 @@ const WorkoutExerciseHistory: React.FC = () => {
   )
 }
 
-export default observer(WorkoutExerciseHistory)
+export default observer(WorkoutExerciseHistoryView)

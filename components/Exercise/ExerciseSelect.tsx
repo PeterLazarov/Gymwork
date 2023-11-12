@@ -28,10 +28,10 @@ const ExerciseSelect = observer(
         return exerciseStore.exercises
       }
 
-      return exerciseStore.exercises.filter(
-        e => e.name.indexOf(filterString) !== -1
+      return exerciseStore.exercises.filter(e =>
+        e.name.toLowerCase().includes(filterString.toLowerCase())
       )
-    }, [])
+    }, [filterString, exerciseStore.exercises])
 
     return (
       <>
