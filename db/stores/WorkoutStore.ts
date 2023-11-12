@@ -38,37 +38,77 @@ export const WorkoutStoreModel = types
       )
       return opened
     },
-    get openedExerciseHistory() {
-      const includedWorkouts = store.workouts.filter(
-        w =>
-          w.exercises.filter(
-            e => e.exercise.guid === this.openedExercise.exercise.guid
-          ).length > 0
-      )
-      const setsHistory = includedWorkouts.map(w => ({
-        date: w.date,
-        sets: w.exercises
-          .filter(e => e.exercise.guid === this.openedExercise.exercise.guid)
-          .flatMap(flat => flat.sets),
+    get workoutHistory() {
+      const keyedWorkouts = store.workouts.map(workout => ({
+        ...workout,
+        exerciseGuids: workout.exercises.map(
+          exercise => exercise.exercise.guid
+        ),
       }))
+      const exerciseGroupedWorkouts = groupBy(keyedWorkouts, 'exerciseGuids')
 
-      return setsHistory as {
+      type SetHistory = {
         date: string
         sets: WorkoutSet[]
-      }[]
+      }
+      const exerciseHistory: Record<string, SetHistory[]> = {}
+      Object.keys(exerciseGroupedWorkouts).forEach(exerciseGuid => {
+        const setsHistory = exerciseGroupedWorkouts[exerciseGuid].map(w => ({
+          date: w.date,
+          sets: w.exercises
+            .filter(e => e.exercise.guid === exerciseGuid)
+            .flatMap(flat => flat.sets),
+        }))
+        // TODO: Fix TS
+        exerciseHistory[exerciseGuid] = setsHistory
+      })
+
+      return exerciseHistory
+    },
+    get workoutExercisesActualRecords() {
+      const result: Record<string, WorkoutSet[]> = {}
+
+      Object.keys(this.workoutHistory).forEach(exerciseGuid => {
+        const exerciseHistory = this.workoutHistory[exerciseGuid]
+        const allSets = exerciseHistory.flatMap(h => h.sets)
+        const setsByReps = groupBy<WorkoutSet>(allSets, 'reps')
+        const recordsByReps = Object.entries(setsByReps).reduce(
+          (acc, [repsKey, repSets]) => {
+            const set = repSets.reduce((prev, current) => {
+              return prev.weight > current.weight ? prev : current
+            })
+
+            acc.push(set)
+            return acc
+          },
+          [] as WorkoutSet[]
+        )
+        result[exerciseGuid] = recordsByReps
+      })
+
+      return result
+    },
+    get openedExerciseHistory() {
+      return this.workoutHistory[this.openedExercise.exercise.guid]
     },
     get openedExerciseActualRecords() {
+      return this.workoutExercisesActualRecords[
+        this.openedExercise.exercise.guid
+      ]
+    },
+    get currentWorkoutExercisesActualRecords() {
       const allSets = this.openedExerciseHistory.flatMap(h => h.sets)
       const setsByReps = groupBy<WorkoutSet>(allSets, 'reps')
       const recordsByReps = Object.entries(setsByReps).reduce(
         (acc, [repsKey, repSets]) => {
-          acc.push({
-            reps: Number(repsKey),
-            weight: Math.max(...repSets.map(set => set.weight)),
+          const set = repSets.reduce((prev, current) => {
+            return prev.weight > current.weight ? prev : current
           })
+
+          acc.push(set)
           return acc
         },
-        [] as Partial<WorkoutSet>[]
+        [] as WorkoutSet[]
       )
 
       return recordsByReps

@@ -18,6 +18,7 @@ type Props = {
     | 'ellipsis-vertical'
     | 'md-calendar-sharp'
     | 'logo-react'
+    | 'trophy'
   size?: keyof typeof iconSizes
   color?: string
 }

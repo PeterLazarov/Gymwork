@@ -3,31 +3,19 @@ import React from 'react'
 import { Text, View } from 'react-native'
 
 import { useStores } from '../../db/helpers/useStores'
-import { WorkoutExercise, WorkoutSet } from '../../db/models'
+import { WorkoutSet } from '../../db/models'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
 import texts from '../../texts'
 
 type Props = {
   set: WorkoutSet
-  exercise?: WorkoutExercise
   isFocused?: boolean
-  hideRecords?: boolean
 }
 
-const WorkoutExerciseSetListItem: React.FC<Props> = ({
-  set,
-  exercise,
-  isFocused,
-  hideRecords = false,
-}) => {
+const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
   const { workoutStore } = useStores()
-
-  const exerciseToUse = exercise || workoutStore.openedExercise
-  const exerciseActualRecords =
-    workoutStore.workoutExercisesActualRecords[exerciseToUse.exercise.guid]
-
-  const isRecord = exerciseActualRecords.some(
+  const isRecord = workoutStore.openedExerciseActualRecords.some(
     record => record.guid === set.guid
   )
 
@@ -37,19 +25,18 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
         display: 'flex',
         flexDirection: 'row',
         gap: 16,
+        // alignItems: 'center',
         justifyContent: 'space-around',
       }}
     >
-      {!hideRecords && (
-        <View>
-          {isRecord && (
-            <Icon
-              icon="trophy"
-              color={colors.primary}
-            />
-          )}
-        </View>
-      )}
+      <View>
+        {isRecord && (
+          <Icon
+            icon="trophy"
+            color={colors.primary}
+          />
+        )}
+      </View>
       <View style={{ flexDirection: 'row', gap: 4 }}>
         <Text
           style={{
@@ -88,4 +75,4 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
   )
 }
 
-export default observer(WorkoutExerciseSetListItem)
+export default observer(WorkoutExerciseSetEditItem)

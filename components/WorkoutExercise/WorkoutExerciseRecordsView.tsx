@@ -26,13 +26,14 @@ const WorkoutExerciseRecordsView: React.FC = () => {
         {workoutStore.openedExerciseActualRecords.map((record, i) => {
           return (
             <View
+              key={record.guid}
               style={{
                 marginVertical: 4,
               }}
             >
               <WorkoutExerciseSetListItem
-                key={i}
                 set={record}
+                hideRecords
               />
             </View>
           )

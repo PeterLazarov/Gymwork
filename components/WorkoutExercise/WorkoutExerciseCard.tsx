@@ -34,6 +34,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
           <WorkoutExerciseSetListItem
             key={set.guid}
             set={set}
+            exercise={exercise}
           />
         ))}
       </Card.Content>

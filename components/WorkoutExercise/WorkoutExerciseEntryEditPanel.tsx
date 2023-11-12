@@ -94,6 +94,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
           {weight}
         </TextInput>
       </IncrementDecrementButtons>
+
       <View style={{ flexDirection: 'row', gap: 8 }}>
         <Button
           mode="contained"

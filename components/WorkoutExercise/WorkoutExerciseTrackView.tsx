@@ -3,14 +3,14 @@ import React, { useState } from 'react'
 import { View, ScrollView } from 'react-native'
 
 import WorkoutExerciseEntryEditPanel from './WorkoutExerciseEntryEditPanel'
-import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
+import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from '../../db/helpers/useStores'
 import { WorkoutSet } from '../../db/models'
 import { ButtonContainer, Divider } from '../../designSystem'
 import { SectionLabel } from '../../designSystem/Label'
 import colors from '../../designSystem/colors'
 
-const WorkoutExerciseEntry: React.FC = () => {
+const WorkoutExerciseTrackView: React.FC = () => {
   const { workoutStore } = useStores()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
@@ -35,7 +35,6 @@ const WorkoutExerciseEntry: React.FC = () => {
     <View
       style={{
         padding: 16,
-        // margin: 16,
         borderRadius: 8,
         gap: 24,
         flexDirection: 'column',
@@ -64,7 +63,7 @@ const WorkoutExerciseEntry: React.FC = () => {
               variant="tertiary"
               onPress={() => toggleSelectedSet(set)}
             >
-              <WorkoutExerciseSetListItem
+              <WorkoutExerciseSetEditItem
                 set={set}
                 isFocused={selectedSet?.guid === set.guid}
               />
@@ -79,4 +78,4 @@ const WorkoutExerciseEntry: React.FC = () => {
   )
 }
 
-export default observer(WorkoutExerciseEntry)
+export default observer(WorkoutExerciseTrackView)
