@@ -19,6 +19,7 @@ type Props = {
     | 'md-calendar-sharp'
     | 'logo-react'
     | 'trophy'
+    | 'chatbox-ellipses'
   size?: keyof typeof iconSizes
   color?: string
 }

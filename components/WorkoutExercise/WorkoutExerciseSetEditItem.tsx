@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Text, View } from 'react-native'
+import { IconButton } from 'react-native-paper'
 
 import { useStores } from '../../db/helpers/useStores'
 import { WorkoutSet } from '../../db/models'
-import { Icon } from '../../designSystem'
+import { Icon, IconButtonContainer } from '../../designSystem'
 import colors from '../../designSystem/colors'
 import texts from '../../texts'
 
@@ -25,11 +26,19 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
         display: 'flex',
         flexDirection: 'row',
         gap: 16,
-        // alignItems: 'center',
+        alignItems: 'center',
         justifyContent: 'space-around',
+        height: 24,
       }}
     >
-      <View>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}
+      >
         {isRecord && (
           <Icon
             icon="trophy"
@@ -37,7 +46,7 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
           />
         )}
       </View>
-      <View style={{ flexDirection: 'row', gap: 4 }}>
+      <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
         <Text
           style={{
             fontWeight: 'bold',
@@ -54,7 +63,7 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
           {texts.reps}
         </Text>
       </View>
-      <View style={{ flexDirection: 'row', gap: 4 }}>
+      <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
         <Text
           style={{
             fontWeight: 'bold',

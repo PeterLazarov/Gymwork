@@ -38,6 +38,8 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
         flexDirection: 'row',
         gap: 16,
         justifyContent: 'space-around',
+        alignItems: 'center',
+        height: 24,
       }}
     >
       {!hideRecords && (
