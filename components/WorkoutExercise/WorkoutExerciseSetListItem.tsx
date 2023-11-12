@@ -10,6 +10,7 @@ import texts from '../../texts'
 
 type Props = {
   set: WorkoutSet
+  number?: number
   exercise?: WorkoutExercise
   isFocused?: boolean
   hideRecords?: boolean
@@ -19,6 +20,7 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
   set,
   exercise,
   isFocused,
+  number,
   hideRecords = false,
 }) => {
   const { workoutStore } = useStores()
@@ -30,7 +32,7 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
   const isRecord = Object.values(exerciseActualRecords).some(
     record => record.guid === set.guid
   )
-
+  const color = isFocused ? colors.primary : colors.secondaryText
   return (
     <View
       style={{
@@ -43,7 +45,15 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
       }}
     >
       {!hideRecords && (
-        <View style={{ flex: 1, alignItems: 'center' }}>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+          {!set.isWarmup && (
+            <Text
+              style={{ color, fontWeight: 'bold', fontSize: 15, marginLeft: 8 }}
+            >
+              {number}.{' '}
+            </Text>
+          )}
+          {set.isWarmup && <Icon icon="yoga" />}
           {isRecord && (
             <Icon
               icon="trophy"
@@ -56,14 +66,14 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
         <Text
           style={{
             fontWeight: 'bold',
-            color: isFocused ? colors.primary : colors.secondaryText,
+            color,
           }}
         >
           {set.reps}
         </Text>
         <Text
           style={{
-            color: isFocused ? colors.primary : colors.secondaryText,
+            color,
           }}
         >
           {texts.reps}
@@ -73,14 +83,14 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
         <Text
           style={{
             fontWeight: 'bold',
-            color: isFocused ? colors.primary : colors.secondaryText,
+            color,
           }}
         >
           {set.weight}
         </Text>
         <Text
           style={{
-            color: isFocused ? colors.primary : colors.secondaryText,
+            color,
           }}
         >
           kgs

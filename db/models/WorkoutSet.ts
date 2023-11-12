@@ -10,6 +10,7 @@ export const WorkoutSetModel = types
     guid: types.optional(types.identifier, () => uuidv4()),
     weight: 0,
     reps: 0,
+    isWarmup: false,
   })
   .actions(withSetPropAction)
 

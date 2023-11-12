@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Card } from 'react-native-paper'
 
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
@@ -10,9 +10,18 @@ type Props = {
   exercise: WorkoutExercise
 }
 
-const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
+const WorkoutExerciseCard: React.FC<Props> = ({ exercise }) => {
   const router = useRouter()
   const { workoutStore } = useStores()
+
+  const warmupSets = useMemo(
+    () => exercise.sets.filter(e => e.isWarmup),
+    [exercise.sets]
+  )
+  const actualSets = useMemo(
+    () => exercise.sets.filter(e => !e.isWarmup),
+    [exercise.sets]
+  )
 
   function onLinkPress() {
     workoutStore.setOpenedExercise(exercise)
@@ -30,11 +39,19 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
         titleVariant="titleMedium"
       />
       <Card.Content>
-        {exercise.sets.map(set => (
+        {warmupSets.map(set => (
           <WorkoutExerciseSetListItem
             key={set.guid}
             set={set}
             exercise={exercise}
+          />
+        ))}
+        {actualSets.map((set, i) => (
+          <WorkoutExerciseSetListItem
+            key={set.guid}
+            set={set}
+            exercise={exercise}
+            number={i + 1}
           />
         ))}
       </Card.Content>
@@ -42,4 +59,4 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   )
 }
 
-export default WorkoutExerciseEntry
+export default WorkoutExerciseCard

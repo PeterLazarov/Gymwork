@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 const iconSizes = {
   small: 1, //12
@@ -22,6 +22,7 @@ type Props = {
     | 'chatbox-ellipses'
     | 'copy-outline'
     | 'pencil'
+    | 'yoga'
   size?: keyof typeof iconSizes
   color?: string
 }
@@ -32,10 +33,21 @@ export const Icon: React.FC<Props> = ({
   color = 'black',
 }) => {
   return (
-    <Ionicons
-      name={icon}
-      size={iconSizes[size]}
-      color={color}
-    />
+    <>
+      {icon !== 'yoga' && (
+        <Ionicons
+          name={icon}
+          size={iconSizes[size]}
+          color={color}
+        />
+      )}
+      {icon === 'yoga' && (
+        <MaterialCommunityIcons
+          name={icon}
+          size={iconSizes[size]}
+          color={color}
+        />
+      )}
+    </>
   )
 }
