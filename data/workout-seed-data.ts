@@ -4,7 +4,7 @@ import { WorkoutSetSnapshotIn, WorkoutSnapshotIn } from '../db/models'
 
 const numberOfWorkouts = 100
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
-const weightIncrement = 2.5
+export const weightIncrement = 2.5
 
 function between(min: number, max: number) {
   return Math.round(Math.random() * (max - min) + min)

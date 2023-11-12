@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, TextInput } from 'react-native'
 import { Button } from 'react-native-paper'
 
+import { useStores } from '../../db/helpers/useStores'
 import { WorkoutSet } from '../../db/models'
 import { Divider } from '../../designSystem'
 import { SubSectionLabel } from '../../designSystem/Label'
@@ -22,6 +23,8 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   updateSet,
   removeSet,
 }) => {
+  const { weightIncrement } = useStores()
+
   const [reps, setReps] = useState(selectedSet?.reps || 0)
   const [weight, setWeight] = useState(selectedSet?.weight || 0)
 
@@ -80,6 +83,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
       <IncrementDecrementButtons
         value={weight}
         onChange={n => setWeight(Math.max(n, 0))}
+        step={weightIncrement}
       >
         <TextInput
           style={{ flexGrow: 1, textAlign: 'center' }}
@@ -100,6 +104,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
           mode="contained"
           onPress={saveChanges}
           style={{ flex: 1 }}
+          disabled={reps < 1}
         >
           {selectedSet ? texts.updateSet : texts.addSet}
         </Button>

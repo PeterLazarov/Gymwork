@@ -2,6 +2,7 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import { ExerciseStoreModel } from './ExerciseStore'
 import { WorkoutStoreModel } from './WorkoutStore'
+import { weightIncrement } from '../../data/workout-seed-data'
 import { Exercise } from '../models'
 
 /**
@@ -12,6 +13,7 @@ export const RootStoreModel = types
   .props({
     exerciseStore: types.optional(ExerciseStoreModel, {}),
     workoutStore: types.optional(WorkoutStoreModel, {}),
+    weightIncrement: types.optional(types.number, weightIncrement),
   })
   .views(self => ({
     openedExercise(): Exercise | undefined {
