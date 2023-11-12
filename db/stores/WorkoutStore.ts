@@ -38,13 +38,14 @@ export const WorkoutStoreModel = types
       )
       return opened
     },
-    get workoutHistory() {
+    get exerciseHistory() {
       const keyedWorkouts = store.workouts.map(workout => ({
         ...workout,
         exerciseGuids: workout.exercises.map(
           exercise => exercise.exercise.guid
         ),
       }))
+      // Grouped workouts by exercise
       const exerciseGroupedWorkouts = groupBy(keyedWorkouts, 'exerciseGuids')
 
       type SetHistory = {
@@ -71,8 +72,8 @@ export const WorkoutStoreModel = types
       type ExerciseHistory = Record<number, WorkoutSet>
       const result: Record<string, ExerciseHistory> = {}
 
-      Object.keys(this.workoutHistory).forEach(exerciseGuid => {
-        const exerciseHistory = this.workoutHistory[exerciseGuid]
+      Object.keys(this.exerciseHistory).forEach(exerciseGuid => {
+        const exerciseHistory = this.exerciseHistory[exerciseGuid]
         const records = exerciseHistory
           .flatMap(h => h.sets)
           .reduce(
@@ -85,16 +86,24 @@ export const WorkoutStoreModel = types
             },
             {} as Record<number, WorkoutSet>
           )
-        const sortedRecords = Object.values(records).sort(
-          (a, b) => a.reps - b.reps
-        )
+
+        const sortedRecords = Object.values(records)
+          .sort((a, b) => a.reps - b.reps)
+          .filter(({ weight }, i, arr) => {
+            // Weight is more than the higher-rep sets
+            return (
+              i === arr.length - 1 ||
+              !arr.slice(i + 1).some(set => set.weight >= weight) // !TODO optimize
+            )
+          })
+
         result[exerciseGuid] = sortedRecords
       })
 
       return result
     },
     get openedExerciseHistory() {
-      return this.workoutHistory[this.openedExercise.exercise.guid]
+      return this.exerciseHistory[this.openedExercise.exercise.guid]
     },
     get openedExerciseRecords() {
       return this.workoutExercisesActualRecords[
