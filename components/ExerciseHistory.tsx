@@ -114,7 +114,7 @@ const ExerciseHistoryChart = observer(
           ({
             '30D': 10,
             '7D': 15,
-            ALL: 0, // not shown for performance reasons
+            ALL: 5,
           }) satisfies Record<CHART_VIEW, number>
         )[props.view],
       [props.view]
@@ -179,7 +179,6 @@ const ExerciseHistoryChart = observer(
             {
               name: series.Weight,
               type: 'line',
-              symbol: props.view === 'ALL' ? 'none' : 'circle', // has a large performance impact
               symbolSize,
               showAllSymbol: true,
               connectNulls: true,
@@ -187,7 +186,6 @@ const ExerciseHistoryChart = observer(
             {
               name: series['Predicted 1RM'],
               type: 'line',
-              symbol: props.view === 'ALL' ? 'none' : 'circle', // has a large performance impact
               symbolSize,
               showAllSymbol: true,
               connectNulls: true,
@@ -225,7 +223,7 @@ const ExerciseHistoryChart = observer(
 
     // Feed chart with data
     useEffect(() => {
-      const setsPerDay = viewDays.map(date => {
+      const setsByDay = viewDays.map(date => {
         const dayExerciseSets = workoutStore.workouts
           .filter(workout => workout.date === date.toISODate())
           .flatMap(({ sets }) => sets) as WorkoutSet[]
@@ -235,27 +233,24 @@ const ExerciseHistoryChart = observer(
         )
       })
 
-      console.log({
-        setsPerDay,
-        weight: setsPerDay.map(
-          sets =>
-            sets?.reduce((max, set) => Math.max(max, set.weight), 0) ?? null
-        ),
-      })
+      const numberOfPoints = setsByDay
+        .filter(d => d.filter(Boolean))
+        .flat().length
 
       eChartRef.current?.setOption({
         series: [
           // Weight series
           {
-            data: setsPerDay.map(
+            data: setsByDay.map(
               sets =>
                 sets?.reduce((max, set) => Math.max(max, set.weight), 0) || null
             ),
+            symbol: numberOfPoints > 50 ? 'none' : 'circle', // has a large performance impact
           },
 
           // 1RM series
           {
-            data: setsPerDay.map(
+            data: setsByDay.map(
               sets =>
                 sets?.reduce(
                   (max, set) =>
@@ -268,6 +263,7 @@ const ExerciseHistoryChart = observer(
                   0
                 ) || null
             ),
+            symbol: numberOfPoints > 50 ? 'none' : 'circle', // has a large performance impact
           },
         ],
       })
