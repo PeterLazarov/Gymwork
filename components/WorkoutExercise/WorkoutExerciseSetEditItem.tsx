@@ -1,11 +1,10 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Text, View } from 'react-native'
-import { IconButton } from 'react-native-paper'
 
 import { useStores } from '../../db/helpers/useStores'
 import { WorkoutSet } from '../../db/models'
-import { Icon, IconButtonContainer } from '../../designSystem'
+import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
 import texts from '../../texts'
 

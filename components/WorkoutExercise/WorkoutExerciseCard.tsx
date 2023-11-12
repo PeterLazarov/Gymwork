@@ -15,7 +15,7 @@ const WorkoutExerciseEntry: React.FC<Props> = ({ exercise }) => {
   const { workoutStore } = useStores()
 
   function onLinkPress() {
-    workoutStore.setOpenedExercise(exercise)
+    workoutStore.setOpenedWorkoutExercise(exercise)
     router.push('/WorkoutExercise')
   }
   return (

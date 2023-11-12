@@ -2,7 +2,6 @@ import { DateTime } from 'luxon'
 import { IMSTArray, Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import workoutSeedData from '../../data/workout-seed-data'
-import { groupBy } from '../../utils/array'
 import * as storage from '../../utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import {
@@ -13,6 +12,7 @@ import {
   WorkoutModel,
   WorkoutSnapshotIn,
   Exercise,
+  Workout,
 } from '../models'
 
 const now = DateTime.now()
@@ -23,7 +23,7 @@ export const WorkoutStoreModel = types
   .props({
     workouts: types.array(WorkoutModel),
     currentWorkoutDate: types.optional(types.string, today.toISODate()!),
-    openedExerciseGuid: '',
+    openedWorkoutExerciseGuid: '',
   })
   .views(store => ({
     get currentWorkout() {
@@ -32,81 +32,73 @@ export const WorkoutStoreModel = types
       )
       return workout
     },
-    get openedExercise() {
+    get openedWorkoutExercise() {
       const [opened] = this.currentWorkout.exercises.filter(
-        e => e.guid === store.openedExerciseGuid
+        e => e.guid === store.openedWorkoutExerciseGuid
       )
       return opened
     },
-    get exerciseHistory() {
-      const keyedWorkouts = store.workouts.map(workout => ({
-        ...workout,
-        exerciseGuids: workout.exercises.map(
-          exercise => exercise.exercise.guid
-        ),
-      }))
-      // Grouped workouts by exercise
-      const exerciseGroupedWorkouts = groupBy(keyedWorkouts, 'exerciseGuids')
 
-      type SetHistory = {
-        date: string
-        sets: WorkoutSet[]
-      }
-
-      const exerciseHistory: Record<Exercise['guid'], SetHistory[]> = {}
-
-      Object.keys(exerciseGroupedWorkouts).forEach(exerciseGuid => {
-        const setsHistory = exerciseGroupedWorkouts[exerciseGuid].map(w => ({
-          date: w.date,
-          sets: w?.exercises
-            .filter(e => e.exercise.guid === exerciseGuid)
-            .flatMap(flat => flat.sets),
-        }))
-        // TODO: Fix TS
-        exerciseHistory[exerciseGuid] = setsHistory
-      })
-
-      return exerciseHistory
-    },
-    get exerciseRecords() {
-      type ExerciseHistory = Record<number, WorkoutSet>
-      const result: Record<string, ExerciseHistory> = {}
-
-      Object.keys(this.exerciseHistory).forEach(exerciseGuid => {
-        const exerciseHistory = this.exerciseHistory[exerciseGuid]
-        const records = exerciseHistory
-          .flatMap(h => h.sets)
-          .reduce(
-            (acc, set) => {
-              if (set.weight > (acc[set.reps]?.weight ?? -Infinity)) {
-                acc[set.reps] = set
-              }
-
-              return acc
-            },
-            {} as Record<number, WorkoutSet>
-          )
-
-        const sortedRecords = Object.values(records)
-          .sort((a, b) => a.reps - b.reps)
-          .filter(({ weight }, i, arr) => {
-            // Weight is more than the higher-rep sets
-            return (
-              i === arr.length - 1 ||
-              !arr.slice(i + 1).some(set => set.weight >= weight) // !TODO optimize
-            )
+    get exerciseWorkouts(): Record<Exercise['guid'], Workout[]> {
+      return store.workouts.reduce(
+        (acc, workout) => {
+          workout.exercises.forEach(({ exercise }) => {
+            if (!acc[exercise.guid]) {
+              acc[exercise.guid] = []
+            }
+            acc[exercise.guid].push(workout)
           })
 
-        result[exerciseGuid] = sortedRecords
-      })
-
-      return result
+          return acc
+        },
+        {} as Record<Exercise['guid'], Workout[]>
+      )
     },
+
+    get exerciseHistory(): Record<Exercise['guid'], WorkoutSet[]> {
+      return Object.fromEntries(
+        Object.entries(this.exerciseWorkouts).map(([exerciseID, workouts]) => {
+          const sets: WorkoutSet[] = workouts
+            .map(w =>
+              w.exercises
+                .filter(({ exercise }) => exercise.guid === exerciseID)
+                .flatMap(
+                  workoutExercise => workoutExercise.sets as any as WorkoutSet
+                )
+            )
+            .filter(Boolean)
+            .flat()
+
+          return [exerciseID, sets]
+        })
+      )
+    },
+
+    getExerciseRecords(
+      exerciseID: Exercise['guid']
+    ): Record<WorkoutSet['reps'], WorkoutSet> {
+      const records = [...this.exerciseHistory[exerciseID]]
+        .sort((a, b) => a.weight - b.weight)
+        .filter(
+          ({ reps }, i, arr) =>
+            i === arr.length - 1 ||
+            !arr.slice(i + 1).some(set => set.reps > reps)
+        )
+
+      return records.reduce(
+        (acc, set) => {
+          acc[set.reps] = set
+          return acc
+        },
+        {} as Record<WorkoutSet['reps'], WorkoutSet>
+      )
+    },
+
     get openedExerciseHistory() {
-      return this.exerciseHistory[this.openedExercise.exercise.guid]
+      return this.exerciseHistory[this.openedWorkoutExercise.exercise.guid]
     },
     get openedExerciseRecords() {
-      return this.exerciseRecords[this.openedExercise.exercise.guid]
+      return this.getExerciseRecords(this.openedWorkoutExercise.exercise.guid)
     },
   }))
   .actions(withSetPropAction)
@@ -140,27 +132,29 @@ export const WorkoutStoreModel = types
       })
       store.currentWorkout.exercises.push(created)
     },
-    setOpenedExercise(exercise: WorkoutExercise | null) {
-      store.openedExerciseGuid = exercise?.guid || ''
+    setOpenedWorkoutExercise(exercise: WorkoutExercise | null) {
+      store.openedWorkoutExerciseGuid = exercise?.guid || ''
     },
     addWorkoutExerciseSet(newSet: Partial<WorkoutSet>) {
       const created = WorkoutSetModel.create(newSet)
 
-      store.openedExercise.sets.push(created)
+      store.openedWorkoutExercise.sets.push(created)
     },
     removeWorkoutExerciseSet(setGuid: string) {
       // TODO: fix typescript hackery
-      const filtered = store.openedExercise.sets.filter(s => s.guid !== setGuid)
-      store.openedExercise.sets = filtered as unknown as IMSTArray<
+      const filtered = store.openedWorkoutExercise.sets.filter(
+        s => s.guid !== setGuid
+      )
+      store.openedWorkoutExercise.sets = filtered as unknown as IMSTArray<
         typeof WorkoutSetModel
       >
     },
     updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
       // TODO: fix typescript hackery
-      const updated = store.openedExercise.sets.map(set =>
+      const updated = store.openedWorkoutExercise.sets.map(set =>
         set.guid === updatedSet.guid ? updatedSet : set
       )
-      store.openedExercise.sets = updated as unknown as IMSTArray<
+      store.openedWorkoutExercise.sets = updated as unknown as IMSTArray<
         typeof WorkoutSetModel
       >
     },

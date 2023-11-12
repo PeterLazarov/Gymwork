@@ -4,6 +4,7 @@ import { View, ScrollView, Dimensions } from 'react-native'
 
 import WorkoutExerciseHistoryDayItem from './WorkoutExerciseHistoryDayItem'
 import { useStores } from '../../db/helpers/useStores'
+import { WorkoutSet } from '../../db/models'
 import ExerciseHistoryChart from '../ExerciseHistory'
 
 const padding = 16
@@ -25,16 +26,26 @@ const WorkoutExerciseHistoryView: React.FC = () => {
     >
       <ExerciseHistoryChart
         view="ALL"
-        exerciseID={workoutStore.openedExercise.exercise.guid}
+        exerciseID={workoutStore.openedWorkoutExercise.exercise.guid}
         height={250}
         width={Dimensions.get('window').width - padding * 2}
       />
       <ScrollView style={{ marginTop: -24, flexBasis: 0 }}>
-        {workoutStore.openedExerciseHistory.map(({ date, sets }, i) => (
+        {workoutStore.exerciseWorkouts[
+          workoutStore.openedWorkoutExercise.exercise.guid
+        ]?.map((workout, i) => (
           <WorkoutExerciseHistoryDayItem
-            key={`${date}_${i}`}
-            date={date}
-            sets={sets}
+            key={`${workout.date}_${i}`}
+            date={workout.date}
+            sets={
+              workout.exercises
+                .filter(
+                  e =>
+                    e.exercise.guid ===
+                    workoutStore.openedWorkoutExercise.exercise.guid
+                )
+                .flatMap(e => e.sets) as WorkoutSet[]
+            }
           />
         ))}
       </ScrollView>

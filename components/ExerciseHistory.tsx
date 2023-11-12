@@ -1,7 +1,5 @@
 // Choose your preferred renderer
 import { SVGRenderer, SkiaChart } from '@wuba/react-native-echarts'
-import { use, ECharts, init } from 'echarts/core'
-import { useRef, useEffect, useState, useMemo } from 'react'
 import { LineChart } from 'echarts/charts'
 import {
   TitleComponent,
@@ -10,14 +8,15 @@ import {
   LegendComponent,
   // TimelineComponent,
 } from 'echarts/components'
-import { Dimensions, View } from 'react-native'
-import { DateTime } from 'luxon'
-import { useStores } from '../db/helpers/useStores'
+import { use, ECharts, init } from 'echarts/core'
+import { useRouter } from 'expo-router'
+import { DateInput, DateTime, Interval } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import { calculate1RM } from 'onerepmax.js'
-import { Button } from 'react-native-paper'
-import texts from '../texts'
-import { useRouter } from 'expo-router'
+import { useRef, useEffect, useState, useMemo } from 'react'
+import { Dimensions, View } from 'react-native'
+
+import { useStores } from '../db/helpers/useStores'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -68,32 +67,44 @@ const ExerciseHistoryChart = observer(
     const chartElRef = useRef<any>(null)
     const eChartRef = useRef<ECharts>()
 
-    const viewDays = useMemo(
-      () =>
-        getPastDays(
-          (
-            {
-              '7D': 7,
-              '30D': 30,
-              ALL: Math.ceil(
-                Math.abs(
-                  DateTime.fromISO(
-                    workoutStore.workouts.findLast(
-                      w =>
-                        w?.exercises.find(
-                          ({ exercise }) => exercise.guid === props.exerciseID
-                        )
-                    )?.date!
-                  )
-                    .diffNow()
-                    .as('days')
-                )
-              ),
-            } satisfies Record<CHART_VIEW, number>
-          )[props.view]
-        ),
-      [props.view]
-    )
+    const viewDays: DateTime[] = useMemo(() => {
+      const fallback = getPastDays(1)
+
+      switch (props.view) {
+        case '7D':
+          return getPastDays(7)
+        case '30D':
+          return getPastDays(30)
+        case 'ALL': {
+          const range = [
+            workoutStore.exerciseWorkouts[props.exerciseID].at(-1)?.date!,
+            workoutStore.exerciseWorkouts[props.exerciseID][0]?.date,
+          ] as const
+
+          if (range.some(x => x === undefined)) {
+            console.warn('exercise was never performed?')
+            break
+          }
+
+          const interval = Interval.fromDateTimes(
+            ...(range.map(iso => DateTime.fromISO(iso)) as [
+              DateInput,
+              DateInput,
+            ])
+          )
+
+          return interval
+            .splitBy({ days: 1 })
+            .map(d => d.start)
+            .filter(Boolean)
+        }
+
+        default:
+          return fallback
+      }
+
+      return fallback
+    }, [props.view])
 
     const symbolSize: number = useMemo(
       () =>

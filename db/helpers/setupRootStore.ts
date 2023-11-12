@@ -34,7 +34,7 @@ export async function setupRootStore(rootStore: RootStore) {
   } catch (e) {
     // if there's any problems loading, then inform the dev what happened
     if (__DEV__) {
-      console.error(e.message, null)
+      console.error(e instanceof Error ? e.message : e, null)
     }
   }
 
@@ -42,12 +42,13 @@ export async function setupRootStore(rootStore: RootStore) {
   if (_disposer) _disposer()
 
   // track changes & save to AsyncStorage
-  _disposer = onSnapshot(rootStore, snapshot =>
-    storage.save(ROOT_STATE_STORAGE_KEY, snapshot)
-  )
+  _disposer = onSnapshot(rootStore, snapshot => {
+    return storage.save(ROOT_STATE_STORAGE_KEY, snapshot)
+  })
 
   const unsubscribe = () => {
     _disposer()
+    // @ts-ignore
     _disposer = undefined
   }
 

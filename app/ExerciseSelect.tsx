@@ -4,14 +4,14 @@ import React from 'react'
 import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
+import ExerciseSelect from '../components/Exercise/ExerciseSelect'
 import { useStores } from '../db/helpers/useStores'
 import { Exercise } from '../db/models'
 import { Icon } from '../designSystem'
 import texts from '../texts'
-import ExerciseSelect from '../components/Exercise/ExerciseSelect'
 
 const ExerciseListPage: React.FC = () => {
-  const { exerciseStore, workoutStore } = useStores()
+  const { workoutStore } = useStores()
   const router = useRouter()
 
   function handleSelectExercise(exercise: Exercise) {

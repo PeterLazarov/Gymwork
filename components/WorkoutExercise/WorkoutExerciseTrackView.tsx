@@ -56,7 +56,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
           flexBasis: 0,
         }}
       >
-        {workoutStore.openedExercise.sets.map((set, i) => (
+        {workoutStore.openedWorkoutExercise.sets.map((set, i) => (
           <View key={set.guid}>
             {i !== 0 && <Divider />}
             <ButtonContainer
@@ -70,7 +70,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
             </ButtonContainer>
           </View>
         ))}
-        {workoutStore.openedExercise.sets.length === 0 && (
+        {workoutStore.openedWorkoutExercise.sets.length === 0 && (
           <SectionLabel> No sets entered </SectionLabel>
         )}
       </ScrollView>

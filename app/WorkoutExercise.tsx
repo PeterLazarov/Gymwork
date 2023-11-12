@@ -21,7 +21,7 @@ const WorkoutExercisePage: React.FC = () => {
 
   function onBackPress() {
     router.push('/')
-    workoutStore.setOpenedExercise(null)
+    workoutStore.setOpenedWorkoutExercise(null)
   }
 
   return (
@@ -35,7 +35,9 @@ const WorkoutExercisePage: React.FC = () => {
     >
       <Appbar.Header>
         <Appbar.BackAction onPress={onBackPress} />
-        <Appbar.Content title={workoutStore.openedExercise?.exercise.name} />
+        <Appbar.Content
+          title={workoutStore.openedWorkoutExercise?.exercise.name}
+        />
         <Appbar.Action
           icon={() => <Icon icon="ellipsis-vertical" />}
           onPress={onOptionsPress}

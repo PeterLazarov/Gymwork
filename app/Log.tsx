@@ -1,13 +1,13 @@
 import { useRouter } from 'expo-router'
+import { observer } from 'mobx-react-lite'
+import { useState } from 'react'
 import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
-import ExerciseHistoryChart from '../components/ExerciseHistory'
-import { Icon } from '../designSystem'
-import { observer } from 'mobx-react-lite'
 import ExerciseSelect from '../components/Exercise/ExerciseSelect'
-import { useState } from 'react'
+import ExerciseHistoryChart from '../components/ExerciseHistory'
 import { Exercise } from '../db/models'
+import { Icon } from '../designSystem'
 import texts from '../texts'
 
 const Log = observer(() => {

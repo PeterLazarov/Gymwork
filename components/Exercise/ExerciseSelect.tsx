@@ -1,19 +1,20 @@
 import { observer } from 'mobx-react-lite'
+import { useMemo, useState } from 'react'
 import { ScrollView } from 'react-native'
 import { Searchbar } from 'react-native-paper'
-import texts from '../../texts'
+
 import ExerciseAcordionList from './ExerciseAcordionList'
 import ExerciseList from './ExerciseList'
-import { useMemo, useState } from 'react'
-import { Exercise } from '../../db/models'
 import { useStores } from '../../db/helpers/useStores'
+import { Exercise } from '../../db/models'
+import texts from '../../texts'
 import { groupBy } from '../../utils/array'
 
 const noop = () => {}
 
 const ExerciseSelect = observer(
   (props: { onSelect?: (exercise: Exercise) => void }) => {
-    const { exerciseStore, workoutStore } = useStores()
+    const { exerciseStore } = useStores()
 
     const [filterString, setFilterString] = useState('')
     // const [filterMuscle, setFilterMuscle] = useState('')

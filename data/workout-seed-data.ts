@@ -1,5 +1,6 @@
-import { WorkoutSnapshotIn } from '../db/models'
 import { DateTime } from 'luxon'
+
+import { WorkoutSnapshotIn } from '../db/models'
 
 const numberOfWorkouts = 100
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
