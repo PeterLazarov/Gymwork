@@ -11,7 +11,7 @@ import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
 
 const WorkoutExercisePage: React.FC = () => {
-  const { workoutStore } = useStores()
+  const { workoutStore, exerciseStore, openedExercise } = useStores()
   const router = useRouter()
 
   const [view, setView] = useState('track')
@@ -35,7 +35,7 @@ const WorkoutExercisePage: React.FC = () => {
     >
       <Appbar.Header>
         <Appbar.BackAction onPress={onBackPress} />
-        <Appbar.Content title={workoutStore.openedExercise?.name} />
+        <Appbar.Content title={openedExercise()?.name} />
         <Appbar.Action
           icon={() => <Icon icon="ellipsis-vertical" />}
           onPress={onOptionsPress}

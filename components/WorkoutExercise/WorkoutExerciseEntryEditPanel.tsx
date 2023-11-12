@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { View, TextInput } from 'react-native'
 import { Button } from 'react-native-paper'
 
-import { WorkoutSet, WorkoutSetSnapshotIn } from '../../db/models'
+import { WorkoutSet } from '../../db/models'
 import { Divider } from '../../designSystem'
 import { SubSectionLabel } from '../../designSystem/Label'
 import colors from '../../designSystem/colors'
@@ -63,7 +63,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
           multiline={false}
           keyboardType="number-pad"
           onChangeText={text => {
-            setWeight(isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0))
+            setReps(isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0))
           }}
           maxLength={3}
         >

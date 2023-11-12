@@ -34,16 +34,14 @@ export const WorkoutStoreModel = types
   .model('WorkoutStore')
   .props({
     workouts: types.array(WorkoutModel),
-    currentWorkoutDate: types.optional(types.string, today.toISODate()!),
-    openedExerciseGuid: '',
-    notesDialogOpen: false,
+    openedDate: types.optional(types.string, today.toISODate()!), // TODO move out?
+    openedExerciseGuid: '', // TODO move out?
+    notesDialogOpen: false, // TODO move out?
   })
   .views(store => ({
     // TODO to allow for multiple workouts per date?
     get currentWorkout(): Workout | undefined {
-      const [workout] = store.workouts.filter(
-        w => w.date === store.currentWorkoutDate
-      )
+      const [workout] = store.workouts.filter(w => w.date === store.openedDate)
       return workout
     },
 
@@ -56,14 +54,8 @@ export const WorkoutStoreModel = types
     get currentWorkoutOpenedExerciseSets(): WorkoutSet[] {
       return (
         this.currentWorkout?.sets.filter(
-          e => e.exercise === this.openedExercise
+          e => e.exercise.guid === store.openedExerciseGuid
         ) ?? []
-      )
-    },
-
-    get openedExercise() {
-      return this.currentWorkoutExercises.find(
-        e => e.guid === store.openedExerciseGuid
       )
     },
 
@@ -144,7 +136,7 @@ export const WorkoutStoreModel = types
     },
     createWorkout() {
       const created = WorkoutModel.create({
-        date: store.currentWorkoutDate,
+        date: store.openedDate,
       })
       store.workouts.push(created)
     },
@@ -174,12 +166,12 @@ export const WorkoutStoreModel = types
       }
     },
     incrementCurrentDate() {
-      const luxonDate = DateTime.fromISO(store.currentWorkoutDate)
-      store.currentWorkoutDate = luxonDate.plus({ days: 1 }).toISODate()!
+      const luxonDate = DateTime.fromISO(store.openedDate)
+      store.openedDate = luxonDate.plus({ days: 1 }).toISODate()!
     },
     decrementCurrentDate() {
-      const luxonDate = DateTime.fromISO(store.currentWorkoutDate)
-      store.currentWorkoutDate = luxonDate.minus({ days: 1 }).toISODate()!
+      const luxonDate = DateTime.fromISO(store.openedDate)
+      store.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
     },
     setWorkoutNotes(notes: string) {
       if (store.currentWorkout) {

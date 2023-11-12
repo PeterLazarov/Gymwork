@@ -23,9 +23,9 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
   number,
   hideRecords = false,
 }) => {
-  const { workoutStore } = useStores()
+  const { workoutStore, openedExercise } = useStores()
 
-  const exerciseToUse = exercise || workoutStore.openedExercise
+  const exerciseToUse = exercise || openedExercise()
   const exerciseActualRecords = exerciseToUse
     ? workoutStore.getExerciseRecords(exerciseToUse.guid)
     : {}

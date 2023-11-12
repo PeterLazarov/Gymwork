@@ -16,7 +16,7 @@ const ExerciseListPage: React.FC = () => {
 
   function handleSelectExercise(exercise: Exercise) {
     workoutStore.setOpenedExercise(exercise)
-    router.push('/')
+    router.push('/WorkoutExercise')
   }
 
   function onBackPress() {

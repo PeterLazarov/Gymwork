@@ -234,12 +234,21 @@ const ExerciseHistoryChart = observer(
         )
       })
 
+      console.log({
+        setsPerDay,
+        weight: setsPerDay.map(
+          sets =>
+            sets?.reduce((max, set) => Math.max(max, set.weight), 0) ?? null
+        ),
+      })
+
       eChartRef.current?.setOption({
         series: [
           // Weight series
           {
             data: setsPerDay.map(
-              sets => sets?.reduce((max, set) => Math.max(max, set.weight), 0)
+              sets =>
+                sets?.reduce((max, set) => Math.max(max, set.weight), 0) || null
             ),
           },
 
@@ -256,7 +265,7 @@ const ExerciseHistoryChart = observer(
                       ).toFixed(2)
                     ),
                   0
-                )
+                ) || null
             ),
           },
         ],
@@ -265,7 +274,7 @@ const ExerciseHistoryChart = observer(
 
     // TODO does not highlight set in question
     function handleBtnPress() {
-      workoutStore.setProp('currentWorkoutDate', selectedDate)
+      workoutStore.setProp('openedDate', selectedDate)
       router.push('/')
     }
 

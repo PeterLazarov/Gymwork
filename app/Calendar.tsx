@@ -24,14 +24,14 @@ const CalendarPage: React.FC = () => {
           return acc
         },
         {
-          [workoutStore.currentWorkoutDate]: {
+          [workoutStore.openedDate]: {
             selected: true,
           },
         } as MarkedDates
       ),
     [
       workoutStore.workouts,
-      workoutStore.currentWorkoutDate,
+      workoutStore.openedDate,
       workoutStore.currentWorkout,
     ]
   )

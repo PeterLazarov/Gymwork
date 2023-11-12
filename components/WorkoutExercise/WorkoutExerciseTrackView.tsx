@@ -23,6 +23,11 @@ const WorkoutExerciseTrackView: React.FC = () => {
   }
 
   function removeSet(setToRemove: WorkoutSet) {
+    const sets = workoutStore.currentWorkoutOpenedExerciseSets
+    const i = sets.indexOf(setToRemove)
+    const nextSet = sets[i + 1]
+    const prevSet = sets[i - 1]
+    setSelectedSet(nextSet ?? prevSet ?? null)
     workoutStore.removeSet(setToRemove.guid)
   }
 
@@ -60,7 +65,10 @@ const WorkoutExerciseTrackView: React.FC = () => {
         }}
       >
         {workoutStore.currentWorkoutOpenedExerciseSets.map((set, i) => (
-          <View key={set.guid}>
+          <View
+            key={set.guid}
+            style={{ height: 40 }}
+          >
             {i !== 0 && <Divider />}
             <ButtonContainer
               variant="tertiary"
@@ -73,6 +81,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
             </ButtonContainer>
           </View>
         ))}
+
         {workoutStore.currentWorkoutOpenedExerciseSets.length === 0 && (
           <SectionLabel> No sets entered </SectionLabel>
         )}

@@ -13,7 +13,7 @@ const DayControl = () => {
   const { workoutStore } = useStores()
   const router = useRouter()
 
-  const luxonDate = DateTime.fromISO(workoutStore.currentWorkoutDate)
+  const luxonDate = DateTime.fromISO(workoutStore.openedDate)
   const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
   const todayDiff = Math.round(luxonDate.diff(today, 'days').days)
   const label =

@@ -76,7 +76,7 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
             color: isFocused ? colors.primary : colors.secondaryText,
           }}
         >
-          kgs
+          kg
         </Text>
       </View>
     </View>
