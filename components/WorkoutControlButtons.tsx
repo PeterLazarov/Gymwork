@@ -1,21 +1,24 @@
 import { useRouter } from 'expo-router'
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 import { Button } from 'react-native-paper'
 
+import { useStores } from '../db/helpers/useStores'
+import { Icon } from '../designSystem'
+import colors from '../designSystem/colors'
 import texts from '../texts'
 
 type Props = {
-  isWorkoutStarted: boolean
   createWorkout: () => void
 }
 
-const WorkoutControlButtons: React.FC<Props> = ({
-  isWorkoutStarted,
-  createWorkout,
-}) => {
+const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
   const router = useRouter()
+  const { workoutStore } = useStores()
 
+  const isWorkoutStarted = !!workoutStore.currentWorkout
+  const hasNotes = workoutStore.currentWorkout?.notes !== ''
   function onAddExercisePress() {
     router.push('/ExerciseSelect')
   }
@@ -23,6 +26,11 @@ const WorkoutControlButtons: React.FC<Props> = ({
   function copyPrevWorkout() {
     // TODO
   }
+
+  function onCommentPress() {
+    workoutStore.setProp('notesDialogOpen', true)
+  }
+
   return (
     <View
       style={{
@@ -40,6 +48,12 @@ const WorkoutControlButtons: React.FC<Props> = ({
             mode="contained"
             onPress={createWorkout}
             style={{ flex: 1 }}
+            icon={() => (
+              <Icon
+                color={colors.primaryText}
+                icon="add"
+              />
+            )}
           >
             {texts.newWorkout}
           </Button>
@@ -47,22 +61,49 @@ const WorkoutControlButtons: React.FC<Props> = ({
             mode="contained"
             onPress={copyPrevWorkout}
             style={{ flex: 1 }}
+            icon={() => (
+              <Icon
+                color={colors.primaryText}
+                icon="copy-outline"
+              />
+            )}
           >
             {texts.copyWorkout}
           </Button>
         </>
       )}
       {isWorkoutStarted && (
-        <Button
-          mode="contained"
-          onPress={onAddExercisePress}
-          style={{ flex: 1 }}
-        >
-          {texts.addExercise}
-        </Button>
+        <View style={{ flexDirection: 'row', gap: 8 }}>
+          <Button
+            mode="contained"
+            onPress={onAddExercisePress}
+            style={{ flex: 1 }}
+            icon={() => (
+              <Icon
+                color={colors.primaryText}
+                icon="add"
+              />
+            )}
+          >
+            {texts.addExercise}
+          </Button>
+          <Button
+            mode="contained"
+            onPress={onCommentPress}
+            style={{ flex: 1 }}
+            icon={() => (
+              <Icon
+                color={colors.primaryText}
+                icon="chatbox-ellipses"
+              />
+            )}
+          >
+            {hasNotes ? 'View comment' : 'Add comment'}
+          </Button>
+        </View>
       )}
     </View>
   )
 }
 
-export default WorkoutControlButtons
+export default observer(WorkoutControlButtons)

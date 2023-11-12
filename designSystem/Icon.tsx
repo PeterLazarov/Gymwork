@@ -20,6 +20,8 @@ type Props = {
     | 'logo-react'
     | 'trophy'
     | 'chatbox-ellipses'
+    | 'copy-outline'
+    | 'pencil'
   size?: keyof typeof iconSizes
   color?: string
 }

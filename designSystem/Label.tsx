@@ -3,7 +3,6 @@ import styled from 'styled-components/native'
 export const HeadingLabel = styled.Text`
   text-align: center;
   font-size: 20px;
-  flex: 1;
 `
 
 export const SectionLabel = styled.Text`

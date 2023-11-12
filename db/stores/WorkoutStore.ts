@@ -24,6 +24,7 @@ export const WorkoutStoreModel = types
     workouts: types.array(WorkoutModel),
     currentWorkoutDate: types.optional(types.string, today.toISODate()!),
     openedExerciseGuid: '',
+    notesDialogOpen: false,
   })
   .views(store => ({
     get currentWorkout() {
@@ -173,6 +174,9 @@ export const WorkoutStoreModel = types
     decrementCurrentDate() {
       const luxonDate = DateTime.fromISO(store.currentWorkoutDate)
       store.currentWorkoutDate = luxonDate.minus({ days: 1 }).toISODate()!
+    },
+    setWorkoutNotes(notes: string) {
+      store.currentWorkout.notes = notes
     },
   }))
 
