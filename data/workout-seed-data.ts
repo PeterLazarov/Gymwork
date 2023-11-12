@@ -28,7 +28,7 @@ const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
           length: Math.ceil(Math.random() * 5),
         }).map(() => ({
           reps: Math.ceil(Math.random() * 12),
-          weight: Math.ceil(Math.random() * 100) * weightIncrement,
+          weight: Math.ceil(Math.random() * 40) * weightIncrement,
         })),
       })
       .reverse(),

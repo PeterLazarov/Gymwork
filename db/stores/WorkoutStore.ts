@@ -41,13 +41,13 @@ export const WorkoutStoreModel = types
     get openedExerciseHistory() {
       const includedWorkouts = store.workouts.filter(
         w =>
-          w.exercises.filter(
+          w?.exercises.filter(
             e => e.exercise.guid === this.openedExercise.exercise.guid
           ).length > 0
       )
       const setsHistory = includedWorkouts.map(w => ({
         date: w.date,
-        sets: w.exercises
+        sets: w?.exercises
           .filter(e => e.exercise.guid === this.openedExercise.exercise.guid)
           .flatMap(flat => flat.sets),
       }))
@@ -57,21 +57,22 @@ export const WorkoutStoreModel = types
         sets: WorkoutSet[]
       }[]
     },
-    get openedExerciseActualRecords() {
-      const allSets = this.openedExerciseHistory.flatMap(h => h.sets)
-      const setsByReps = groupBy<WorkoutSet>(allSets, 'reps')
-      const recordsByReps = Object.entries(setsByReps).reduce(
-        (acc, [repsKey, repSets]) => {
-          acc.push({
-            reps: Number(repsKey),
-            weight: Math.max(...repSets.map(set => set.weight)),
-          })
-          return acc
-        },
-        [] as Partial<WorkoutSet>[]
-      )
 
-      return recordsByReps
+    get openedExerciseRecords() {
+      const records = this.openedExerciseHistory
+        .flatMap(h => h.sets)
+        .reduce(
+          (acc, set) => {
+            if (set.weight > (acc[set.reps]?.weight ?? -Infinity)) {
+              acc[set.reps] = set
+            }
+
+            return acc
+          },
+          {} as Record<number, WorkoutSet>
+        )
+
+      return Object.values(records).sort((a, b) => a.reps - b.reps)
     },
   }))
   .actions(withSetPropAction)
