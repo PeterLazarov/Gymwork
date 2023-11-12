@@ -1,12 +1,12 @@
+import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
+import { getParentOfType } from 'mobx-state-tree'
 import React from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import { View, ScrollView } from 'react-native'
 
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
 import { useStores } from '../../db/helpers/useStores'
 import { WorkoutModel, WorkoutSet } from '../../db/models'
-import { getParentOfType } from 'mobx-state-tree'
-import { useRouter } from 'expo-router'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
   const { workoutStore } = useStores()
