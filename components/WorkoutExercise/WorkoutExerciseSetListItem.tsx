@@ -25,7 +25,7 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
 
   const exerciseToUse = exercise || workoutStore.openedExercise
   const exerciseActualRecords =
-    workoutStore.workoutExercisesActualRecords[exerciseToUse.exercise.guid]
+    workoutStore.exerciseRecords[exerciseToUse.exercise.guid]
 
   const isRecord = Object.values(exerciseActualRecords).some(
     record => record.guid === set.guid
