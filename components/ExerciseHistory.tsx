@@ -97,6 +97,7 @@ const ExerciseHistoryChart = observer(
           return interval
             .splitBy({ days: 1 })
             .map(d => d.start)
+            .concat(DateTime.fromISO(range[1]))
             .filter(Boolean)
         }
 
