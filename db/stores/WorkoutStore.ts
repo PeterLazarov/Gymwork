@@ -51,7 +51,9 @@ export const WorkoutStoreModel = types
         date: string
         sets: WorkoutSet[]
       }
-      const exerciseHistory: Record<string, SetHistory[]> = {}
+
+      const exerciseHistory: Record<Exercise['guid'], SetHistory[]> = {}
+
       Object.keys(exerciseGroupedWorkouts).forEach(exerciseGuid => {
         const setsHistory = exerciseGroupedWorkouts[exerciseGuid].map(w => ({
           date: w.date,
