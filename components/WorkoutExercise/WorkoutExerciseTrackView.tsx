@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
-import { View, ScrollView } from 'react-native'
+import React, { useCallback, useMemo, useState } from 'react'
+import { View, ScrollView, FlatList } from 'react-native'
 
 import WorkoutExerciseEntryEditPanel from './WorkoutExerciseEntryEditPanel'
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
@@ -22,6 +22,13 @@ const WorkoutExerciseTrackView: React.FC = () => {
     })
   }
 
+  const warmupSetsCount = useMemo(
+    () =>
+      workoutStore.currentWorkoutOpenedExerciseSets.filter(e => e.isWarmup)
+        .length,
+    [workoutStore.currentWorkoutOpenedExerciseSets]
+  )
+
   function removeSet(setToRemove: WorkoutSet) {
     const sets = workoutStore.currentWorkoutOpenedExerciseSets
     const i = sets.indexOf(setToRemove)
@@ -38,7 +45,27 @@ const WorkoutExerciseTrackView: React.FC = () => {
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
   }
-
+  const renderItem = useCallback(
+    ({ item, index }: { item: WorkoutSet; index: number }) => {
+      return (
+        <WorkoutExerciseSetEditItem
+          set={item}
+          isFocused={selectedSet?.guid === item.guid}
+          onPress={() => toggleSelectedSet(item)}
+          number={item.isWarmup ? undefined : index + 1 - warmupSetsCount}
+        />
+      )
+    },
+    []
+  )
+  const ITEM_HEIGHT = 20
+  const getItemLayout = (data, index) => {
+    return {
+      length: ITEM_HEIGHT,
+      offset: ITEM_HEIGHT * index,
+      index,
+    }
+  }
   return (
     <View
       style={{
@@ -57,35 +84,26 @@ const WorkoutExerciseTrackView: React.FC = () => {
         removeSet={removeSet}
       />
 
-      <ScrollView
+      <View
         style={{
           backgroundColor: colors.secondary,
           borderRadius: 6,
           flexBasis: 0,
+          flex: 1,
         }}
       >
-        {workoutStore.currentWorkoutOpenedExerciseSets.map((set, i) => (
-          <View
-            key={set.guid}
-            style={{ height: 40 }}
-          >
-            {i !== 0 && <Divider />}
-            <ButtonContainer
-              variant="tertiary"
-              onPress={() => toggleSelectedSet(set)}
-            >
-              <WorkoutExerciseSetEditItem
-                set={set}
-                isFocused={selectedSet?.guid === set.guid}
-              />
-            </ButtonContainer>
-          </View>
-        ))}
+        <FlatList
+          data={workoutStore.currentWorkoutOpenedExerciseSets}
+          renderItem={renderItem}
+          keyExtractor={set => set.guid}
+          getItemLayout={getItemLayout}
+          ItemSeparatorComponent={Divider}
+        />
 
         {workoutStore.currentWorkoutOpenedExerciseSets.length === 0 && (
           <SectionLabel> No sets entered </SectionLabel>
         )}
-      </ScrollView>
+      </View>
     </View>
   )
 }
