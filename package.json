@@ -26,7 +26,6 @@
     "expo-router": "^2.0.0",
     "expo-sqlite": "~11.3.3",
     "expo-status-bar": "~1.6.0",
-    "jotai": "^2.4.3",
     "luxon": "^3.4.3",
     "mobx": "^6.10.2",
     "mobx-react-lite": "^4.0.5",
