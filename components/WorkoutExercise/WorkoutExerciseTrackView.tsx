@@ -62,6 +62,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
           backgroundColor: colors.secondary,
           borderRadius: 6,
           flexBasis: 0,
+          padding: 6,
         }}
       >
         {workoutStore.currentWorkoutOpenedExerciseSets.map((set, i) => (
