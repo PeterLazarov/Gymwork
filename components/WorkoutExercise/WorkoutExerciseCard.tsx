@@ -26,6 +26,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
     workoutStore.setOpenedExercise(exercise)
     router.push('/WorkoutExercise')
   }
+
   return (
     <Card
       onPress={onLinkPress}
