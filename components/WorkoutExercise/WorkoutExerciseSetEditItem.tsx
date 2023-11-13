@@ -1,7 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Text, View } from 'react-native'
+import { IconButton } from 'react-native-paper'
 
+import WorkoutExerciseSetWarmupButton from './WorkoutExerciseSetWarmupButton'
 import { useStores } from '../../db/helpers/useStores'
 import { WorkoutSet } from '../../db/models'
 import { ButtonContainer, Icon } from '../../designSystem'
@@ -27,6 +29,10 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
   )
   const color = isFocused ? colors.primary : colors.secondaryText
 
+  function toggleSetWarmup() {
+    workoutStore.setWorkoutSetWarmup(set, !set.isWarmup)
+  }
+
   return (
     <ButtonContainer
       variant="tertiary"
@@ -49,14 +55,24 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
             flexDirection: 'row',
           }}
         >
-          {!set.isWarmup && (
-            <Text
-              style={{ color, fontWeight: 'bold', fontSize: 15, marginLeft: 8 }}
-            >
-              {number}.{' '}
-            </Text>
-          )}
-          {set.isWarmup && <Icon icon="yoga" />}
+          <IconButton
+            mode="outlined"
+            style={{
+              borderTopRightRadius: 4,
+              borderTopLeftRadius: 4,
+              borderBottomRightRadius: 4,
+              borderBottomLeftRadius: 4,
+            }}
+            containerColor={colors.secondary}
+            onPress={toggleSetWarmup}
+            icon={() => (
+              <WorkoutExerciseSetWarmupButton
+                set={set}
+                number={number}
+                color={color}
+              />
+            )}
+          />
           {isRecord && (
             <Icon
               icon="trophy"

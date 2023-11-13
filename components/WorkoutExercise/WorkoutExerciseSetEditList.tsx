@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { View, FlatList } from 'react-native'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
@@ -7,7 +7,6 @@ import { useStores } from '../../db/helpers/useStores'
 import { WorkoutSet } from '../../db/models'
 import { Divider } from '../../designSystem'
 import { SectionLabel } from '../../designSystem/Label'
-import colors from '../../designSystem/colors'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -30,6 +29,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
   }
+
   const renderItem = useCallback(
     ({ item, index }: { item: WorkoutSet; index: number }) => {
       return (
@@ -57,7 +57,6 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   return (
     <View
       style={{
-        backgroundColor: colors.secondary,
         borderRadius: 6,
         flexBasis: 0,
         flex: 1,

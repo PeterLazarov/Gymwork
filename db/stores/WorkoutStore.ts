@@ -57,9 +57,7 @@ export const WorkoutStoreModel = types
           e => e.exercise.guid === store.openedExerciseGuid
         ) ?? []
 
-      return exerciseSets.sort((s1, s2) => {
-        return s1.isWarmup === s2.isWarmup ? 0 : s1.isWarmup ? -1 : 1
-      })
+      return exerciseSets
     },
 
     get exerciseWorkouts(): Record<Exercise['guid'], Workout[]> {
@@ -211,6 +209,9 @@ export const WorkoutStoreModel = types
       if (store.currentWorkout) {
         store.currentWorkout.notes = notes
       }
+    },
+    setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {
+      set.isWarmup = value
     },
   }))
 
