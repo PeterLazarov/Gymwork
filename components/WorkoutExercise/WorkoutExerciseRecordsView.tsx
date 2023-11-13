@@ -9,7 +9,7 @@ import { useStores } from '../../db/helpers/useStores'
 import { WorkoutModel, WorkoutSet } from '../../db/models'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
-  const { workoutStore } = useStores()
+  const { workoutStore, openedExercise } = useStores()
   const router = useRouter()
 
   // TODO extract out to action?
@@ -46,6 +46,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
               <WorkoutExerciseSetListItem
                 set={set}
                 hideRecords
+                exercise={openedExercise!}
               />
             </TouchableOpacity>
           )
