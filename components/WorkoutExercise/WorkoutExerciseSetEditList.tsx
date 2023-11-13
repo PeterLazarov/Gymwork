@@ -37,7 +37,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
           set={item}
           isFocused={selectedSet?.guid === item.guid}
           onPress={() => toggleSelectedSet(item)}
-          number={item.isWarmup ? undefined : index + 1 - warmupSetsCount}
+          number={item.isWarmup ? undefined : index + 2 - warmupSetsCount}
         />
       )
     },

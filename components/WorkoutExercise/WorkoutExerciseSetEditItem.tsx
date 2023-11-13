@@ -55,23 +55,11 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
             flexDirection: 'row',
           }}
         >
-          <IconButton
-            mode="outlined"
-            style={{
-              borderTopRightRadius: 4,
-              borderTopLeftRadius: 4,
-              borderBottomRightRadius: 4,
-              borderBottomLeftRadius: 4,
-            }}
-            containerColor={colors.secondary}
-            onPress={toggleSetWarmup}
-            icon={() => (
-              <WorkoutExerciseSetWarmupButton
-                set={set}
-                number={number}
-                color={color}
-              />
-            )}
+          <WorkoutExerciseSetWarmupButton
+            isWarmup={set.isWarmup}
+            toggleSetWarmup={toggleSetWarmup}
+            number={number}
+            color={color}
           />
           {isRecord && (
             <Icon

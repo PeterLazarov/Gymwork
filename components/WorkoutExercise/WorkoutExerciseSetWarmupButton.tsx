@@ -1,38 +1,55 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Text } from 'react-native'
+import { IconButton } from 'react-native-paper'
 
 import { WorkoutSet } from '../../db/models'
 import { Icon } from '../../designSystem'
+import colors from '../../designSystem/colors'
 
 type Props = {
-  set: WorkoutSet
+  isWarmup: boolean
   number?: number
   color: string
+  toggleSetWarmup: () => void
 }
 const WorkoutExerciseSetWarmupButton: React.FC<Props> = ({
-  set,
+  isWarmup,
   number,
   color,
+  toggleSetWarmup,
 }) => (
-  <>
-    {!set.isWarmup && (
-      <Text
-        style={{
-          color,
-          fontWeight: 'bold',
-          fontSize: 15,
-        }}
-      >
-        {number}.
-      </Text>
+  <IconButton
+    mode="outlined"
+    style={{
+      borderTopRightRadius: 4,
+      borderTopLeftRadius: 4,
+      borderBottomRightRadius: 4,
+      borderBottomLeftRadius: 4,
+    }}
+    containerColor={colors.secondary}
+    onPress={toggleSetWarmup}
+    icon={() => (
+      <>
+        {!isWarmup && (
+          <Text
+            style={{
+              color,
+              fontWeight: 'bold',
+              fontSize: 15,
+            }}
+          >
+            {number}.
+          </Text>
+        )}
+        {isWarmup && (
+          <Icon
+            icon="yoga"
+            color={color}
+          />
+        )}
+      </>
     )}
-    {set.isWarmup && (
-      <Icon
-        icon="yoga"
-        color={color}
-      />
-    )}
-  </>
+  />
 )
 export default observer(WorkoutExerciseSetWarmupButton)
