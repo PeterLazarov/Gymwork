@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router'
 import React, { useMemo } from 'react'
 import { Card } from 'react-native-paper'
 
-import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
+import WorkoutExerciseSetReadOnlyList from './WorkoutExerciseSetReadOnlyList'
 import { useStores } from '../../db/helpers/useStores'
 import { Exercise, Workout } from '../../db/models'
 
@@ -19,13 +19,11 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
     return workout.sets.filter(set => set.exercise === exercise)
   }, [workout, exercise])
 
-  const warmupSets = useMemo(() => sets.filter(e => e.isWarmup), [sets])
-  const actualSets = useMemo(() => sets.filter(e => !e.isWarmup), [sets])
-
   function onLinkPress() {
     workoutStore.setOpenedExercise(exercise)
     router.push('/WorkoutExercise')
   }
+
   return (
     <Card
       onPress={onLinkPress}
@@ -38,21 +36,10 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
         titleVariant="titleMedium"
       />
       <Card.Content>
-        {warmupSets.map(set => (
-          <WorkoutExerciseSetListItem
-            key={set.guid}
-            set={set}
-            exercise={exercise}
-          />
-        ))}
-        {actualSets.map((set, i) => (
-          <WorkoutExerciseSetListItem
-            key={set.guid}
-            set={set}
-            exercise={exercise}
-            number={i + 1}
-          />
-        ))}
+        <WorkoutExerciseSetReadOnlyList
+          sets={sets}
+          exercise={exercise}
+        />
       </Card.Content>
     </Card>
   )

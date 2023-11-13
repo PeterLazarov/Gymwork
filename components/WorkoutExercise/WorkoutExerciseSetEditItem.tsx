@@ -4,82 +4,102 @@ import { Text, View } from 'react-native'
 
 import { useStores } from '../../db/helpers/useStores'
 import { WorkoutSet } from '../../db/models'
-import { Icon } from '../../designSystem'
+import { ButtonContainer, Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
 import texts from '../../texts'
 
 type Props = {
   set: WorkoutSet
   isFocused?: boolean
+  number?: number
+  onPress: () => void
 }
 
-const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
+const WorkoutExerciseSetEditItem: React.FC<Props> = ({
+  set,
+  isFocused,
+  number,
+  onPress,
+}) => {
   const { workoutStore } = useStores()
   const isRecord = Object.values(workoutStore.openedExerciseRecords).some(
     record => record.guid === set.guid
   )
+  const color = isFocused ? colors.primary : colors.secondaryText
 
   return (
-    <View
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 16,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        height: 24,
-      }}
+    <ButtonContainer
+      variant="tertiary"
+      onPress={onPress}
     >
       <View
         style={{
-          flex: 1,
-          alignItems: 'center',
+          display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'center',
+          gap: 16,
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          height: 24,
         }}
       >
-        {isRecord && (
-          <Icon
-            icon="trophy"
-            color={colors.primary}
-          />
-        )}
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}
+        >
+          {!set.isWarmup && (
+            <Text
+              style={{ color, fontWeight: 'bold', fontSize: 15, marginLeft: 8 }}
+            >
+              {number}.{' '}
+            </Text>
+          )}
+          {set.isWarmup && <Icon icon="yoga" />}
+          {isRecord && (
+            <Icon
+              icon="trophy"
+              color={colors.primary}
+            />
+          )}
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color,
+            }}
+          >
+            {set.reps}
+          </Text>
+          <Text
+            style={{
+              color,
+            }}
+          >
+            {texts.reps}
+          </Text>
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color,
+            }}
+          >
+            {set.weight}
+          </Text>
+          <Text
+            style={{
+              color,
+            }}
+          >
+            kg
+          </Text>
+        </View>
       </View>
-      <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color: isFocused ? colors.primary : colors.secondaryText,
-          }}
-        >
-          {set.reps}
-        </Text>
-        <Text
-          style={{
-            color: isFocused ? colors.primary : colors.secondaryText,
-          }}
-        >
-          {texts.reps}
-        </Text>
-      </View>
-      <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color: isFocused ? colors.primary : colors.secondaryText,
-          }}
-        >
-          {set.weight}
-        </Text>
-        <Text
-          style={{
-            color: isFocused ? colors.primary : colors.secondaryText,
-          }}
-        >
-          kg
-        </Text>
-      </View>
-    </View>
+    </ButtonContainer>
   )
 }
 

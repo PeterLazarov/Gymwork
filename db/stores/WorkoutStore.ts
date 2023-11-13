@@ -52,11 +52,14 @@ export const WorkoutStoreModel = types
     },
 
     get currentWorkoutOpenedExerciseSets(): WorkoutSet[] {
-      return (
+      const exerciseSets =
         this.currentWorkout?.sets.filter(
           e => e.exercise.guid === store.openedExerciseGuid
         ) ?? []
-      )
+
+      return exerciseSets.sort((s1, s2) => {
+        return s1.isWarmup === s2.isWarmup ? 0 : s1.isWarmup ? -1 : 1
+      })
     },
 
     get exerciseWorkouts(): Record<Exercise['guid'], Workout[]> {

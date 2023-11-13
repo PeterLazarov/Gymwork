@@ -1,14 +1,11 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { View, ScrollView } from 'react-native'
+import { View } from 'react-native'
 
-import WorkoutExerciseEntryEditPanel from './WorkoutExerciseEntryEditPanel'
-import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
+import WorkoutExerciseSetEditList from './WorkoutExerciseSetEditList'
+import WorkoutExerciseSetEditPanel from './WorkoutExerciseSetEditPanel'
 import { useStores } from '../../db/helpers/useStores'
-import { WorkoutSet, WorkoutSetSnapshotIn } from '../../db/models'
-import { ButtonContainer, Divider } from '../../designSystem'
-import { SectionLabel } from '../../designSystem/Label'
-import colors from '../../designSystem/colors'
+import { WorkoutSet } from '../../db/models'
 
 const WorkoutExerciseTrackView: React.FC = () => {
   const { workoutStore } = useStores()
@@ -35,10 +32,6 @@ const WorkoutExerciseTrackView: React.FC = () => {
     workoutStore.updateWorkoutExerciseSet(updatedSet)
   }
 
-  function toggleSelectedSet(set: WorkoutSet) {
-    setSelectedSet(set.guid === selectedSet?.guid ? null : set)
-  }
-
   return (
     <View
       style={{
@@ -50,43 +43,17 @@ const WorkoutExerciseTrackView: React.FC = () => {
         display: 'flex',
       }}
     >
-      <WorkoutExerciseEntryEditPanel
+      <WorkoutExerciseSetEditPanel
         selectedSet={selectedSet}
         addSet={addSet}
         updateSet={updateSet}
         removeSet={removeSet}
       />
 
-      <ScrollView
-        style={{
-          backgroundColor: colors.secondary,
-          borderRadius: 6,
-          flexBasis: 0,
-          padding: 6,
-        }}
-      >
-        {workoutStore.currentWorkoutOpenedExerciseSets.map((set, i) => (
-          <View
-            key={set.guid}
-            style={{ height: 40 }}
-          >
-            {i !== 0 && <Divider />}
-            <ButtonContainer
-              variant="tertiary"
-              onPress={() => toggleSelectedSet(set)}
-            >
-              <WorkoutExerciseSetEditItem
-                set={set}
-                isFocused={selectedSet?.guid === set.guid}
-              />
-            </ButtonContainer>
-          </View>
-        ))}
-
-        {workoutStore.currentWorkoutOpenedExerciseSets.length === 0 && (
-          <SectionLabel> No sets entered </SectionLabel>
-        )}
-      </ScrollView>
+      <WorkoutExerciseSetEditList
+        selectedSet={selectedSet}
+        setSelectedSet={setSelectedSet}
+      />
     </View>
   )
 }
