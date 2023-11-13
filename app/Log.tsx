@@ -1,17 +1,19 @@
 import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
-import { View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
-import ExerciseSelect from '../components/Exercise/ExerciseSelect'
+import ExerciseList from '../components/Exercise/ExerciseList'
 import ExerciseHistoryChart from '../components/ExerciseHistoryChart'
+import { useStores } from '../db/helpers/useStores'
 import { Exercise } from '../db/models'
 import { Icon } from '../designSystem'
 import texts from '../texts'
 
 const Log = observer(() => {
   const router = useRouter()
+  const { exercisesPerformed } = useStores()
 
   // TODO remove default
   const [exercise, setExercise] = useState<Exercise>()
@@ -41,7 +43,13 @@ const Log = observer(() => {
           view="30D"
         />
       ) : (
-        <ExerciseSelect onSelect={setExercise} />
+        <ScrollView>
+          {/* TODO add a number at the end for dates performed? */}
+          <ExerciseList
+            exercises={exercisesPerformed}
+            onSelect={setExercise}
+          />
+        </ScrollView>
       )}
     </View>
   )

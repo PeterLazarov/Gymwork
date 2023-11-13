@@ -8,7 +8,7 @@ type Props = {
   exercises: Exercise[]
   onSelect: (exercise: Exercise) => void
 }
-const ExerciseAcordionList: React.FC<Props> = ({ exercises, onSelect }) => {
+const ExerciseList: React.FC<Props> = ({ exercises, onSelect }) => {
   return (
     <>
       {exercises.map(exercise => (
@@ -22,4 +22,4 @@ const ExerciseAcordionList: React.FC<Props> = ({ exercises, onSelect }) => {
   )
 }
 
-export default observer(ExerciseAcordionList)
+export default observer(ExerciseList)

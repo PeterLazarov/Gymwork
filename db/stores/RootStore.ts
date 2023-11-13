@@ -16,10 +16,15 @@ export const RootStoreModel = types
     weightIncrement: types.optional(types.number, weightIncrement),
   })
   .views(self => ({
-    openedExercise(): Exercise | undefined {
+    get openedExercise(): Exercise | undefined {
       return self.exerciseStore.exercises.find(
         e => e.guid === self.workoutStore.openedExerciseGuid
       )
+    },
+    get exercisesPerformed(): Exercise[] {
+      return Object.keys(self.workoutStore.exerciseWorkouts)
+        .map(id => self.exerciseStore.exercises.find(e => e.guid === id))
+        .filter(Boolean)
     },
   }))
 
