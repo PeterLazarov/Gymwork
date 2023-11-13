@@ -4,7 +4,7 @@ import { getParentOfType } from 'mobx-state-tree'
 import React from 'react'
 import { View, ScrollView, TouchableOpacity } from 'react-native'
 
-import WorkoutExerciseSetListItem from './WorkoutExerciseSetListItem'
+import WorkoutExerciseSetListItem from './WorkoutExerciseSetReadOnlyListItem'
 import { useStores } from '../../db/helpers/useStores'
 import { WorkoutModel, WorkoutSet } from '../../db/models'
 
@@ -15,7 +15,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
   // TODO extract out to action?
   function goToDate(set: WorkoutSet) {
     const workout = getParentOfType(set, WorkoutModel)
-    workoutStore.setProp('currentWorkoutDate', workout.date)
+    workoutStore.setProp('openedDate', workout.date)
     router.push('/')
   }
 

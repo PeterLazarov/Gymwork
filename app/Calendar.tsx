@@ -44,7 +44,7 @@ const CalendarPage: React.FC = () => {
 
   function handleCalendarDayPress(dateString: string) {
     // Set global day, navigate to workout screen
-    workoutStore.setProp('currentWorkoutDate', dateString)
+    workoutStore.setProp('openedDate', dateString)
     router.push('/')
   }
 

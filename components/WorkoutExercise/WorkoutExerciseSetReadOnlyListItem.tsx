@@ -10,8 +10,8 @@ import texts from '../../texts'
 
 type Props = {
   set: WorkoutSet
+  exercise: Exercise
   number?: number
-  exercise?: Exercise
   isFocused?: boolean
   hideRecords?: boolean
 }
@@ -23,11 +23,10 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
   number,
   hideRecords = false,
 }) => {
-  const { workoutStore, openedExercise } = useStores()
+  const { workoutStore } = useStores()
 
-  const exerciseToUse = exercise || openedExercise
-  const exerciseActualRecords = exerciseToUse
-    ? workoutStore.getExerciseRecords(exerciseToUse.guid)
+  const exerciseActualRecords = exercise
+    ? workoutStore.getExerciseRecords(exercise.guid)
     : {}
 
   const isRecord = Object.values(exerciseActualRecords).some(
