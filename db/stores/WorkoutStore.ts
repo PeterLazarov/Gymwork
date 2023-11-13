@@ -88,24 +88,55 @@ export const WorkoutStoreModel = types
       )
     },
 
+    get allExerciseRecords(): Record<
+      Exercise['guid'],
+      Record<WorkoutSet['reps'], WorkoutSet>
+    > {
+      const records: Record<
+        Exercise['guid'],
+        Record<WorkoutSet['reps'], WorkoutSet>
+      > = {}
+
+      for (let i = 0; i < store.workouts.length; i++) {
+        const workout = store.workouts[i]
+        for (let j = 0; j < workout.sets.length; j++) {
+          const set = workout.sets[j]
+
+          if (!records[set.exercise.guid]) {
+            records[set.exercise.guid] = {}
+          }
+          if (
+            !records[set.exercise.guid][set.reps] ||
+            records[set.exercise.guid][set.reps].weight < set.weight
+          ) {
+            records[set.exercise.guid][set.reps] = set
+          }
+        }
+      }
+
+      // Remove weak-ass records
+      for (const exerciseID in records) {
+        const exerciseRecords = records[exerciseID]
+        const repRangeDescending = Object.keys(exerciseRecords).reverse()
+        let lastRecord = exerciseRecords[repRangeDescending[0] as any as number]
+
+        for (const reps of repRangeDescending) {
+          const record = exerciseRecords[reps as any as number]
+          if (lastRecord.weight >= record.weight) {
+            delete exerciseRecords[reps as any as number]
+          } else {
+            lastRecord = record
+          }
+        }
+      }
+
+      return records
+    },
+
     getExerciseRecords(
       exerciseID: Exercise['guid']
     ): Record<WorkoutSet['reps'], WorkoutSet> {
-      const records = [...this.exerciseHistory[exerciseID]]
-        .sort((a, b) => a.weight - b.weight)
-        .filter(
-          ({ reps }, i, arr) =>
-            i === arr.length - 1 ||
-            !arr.slice(i + 1).some(set => set.reps > reps)
-        )
-
-      return records.reduce(
-        (acc, set) => {
-          acc[set.reps] = set
-          return acc
-        },
-        {} as Record<WorkoutSet['reps'], WorkoutSet>
-      )
+      return this.allExerciseRecords[exerciseID]
     },
 
     get openedExerciseHistory() {
