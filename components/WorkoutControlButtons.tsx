@@ -28,7 +28,7 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
   }
 
   function onCommentPress() {
-    workoutStore.setProp('notesDialogOpen', true)
+    router.push('/WorkoutFeedback')
   }
 
   return (

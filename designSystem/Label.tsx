@@ -8,7 +8,6 @@ export const HeadingLabel = styled.Text`
 export const SectionLabel = styled.Text`
   text-align: center;
   font-size: 18px;
-  flex: 1;
 `
 
 export const SubSectionLabel = styled.Text`

@@ -3,7 +3,6 @@ import React from 'react'
 import { Text } from 'react-native'
 import { IconButton } from 'react-native-paper'
 
-import { WorkoutSet } from '../../db/models'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
 

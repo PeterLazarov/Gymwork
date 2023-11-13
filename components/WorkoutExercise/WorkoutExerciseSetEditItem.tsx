@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Text, View } from 'react-native'
-import { IconButton } from 'react-native-paper'
 
 import WorkoutExerciseSetWarmupButton from './WorkoutExerciseSetWarmupButton'
 import { useStores } from '../../db/helpers/useStores'

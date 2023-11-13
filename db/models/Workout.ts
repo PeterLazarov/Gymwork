@@ -12,6 +12,7 @@ export const WorkoutModel = types
     date: '',
     notes: '',
     sets: types.array(WorkoutSetModel),
+    feeling: 'neutral',
   })
   .actions(withSetPropAction)
 

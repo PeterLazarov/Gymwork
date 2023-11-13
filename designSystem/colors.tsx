@@ -9,4 +9,8 @@ export default {
   iconText: 'white',
   criticalText: 'white',
   tertiaryText: 'black',
+  red: '#d91a1a',
+  green: '#15a015',
+  yellow: '#FFBF00',
+  gray: '#626262',
 }
