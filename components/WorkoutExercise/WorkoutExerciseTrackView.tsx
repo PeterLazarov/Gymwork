@@ -59,7 +59,10 @@ const WorkoutExerciseTrackView: React.FC = () => {
     []
   )
   const ITEM_HEIGHT = 20
-  const getItemLayout = (data, index) => {
+  const getItemLayout = (
+    data: ArrayLike<WorkoutSet> | null | undefined,
+    index: number
+  ) => {
     return {
       length: ITEM_HEIGHT,
       offset: ITEM_HEIGHT * index,
