@@ -23,7 +23,7 @@ const FeedbackPicker: React.FC<Props> = ({ onChange }) => {
     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <IconButton
-          size={iconSizes.large}
+          size={iconSizes.xLarge}
           onPress={() => onPress('sad')}
           style={{ opacity: selectedEmoji === 'sad' ? 1 : unselectedOpacity }}
           icon={() => (
@@ -45,7 +45,7 @@ const FeedbackPicker: React.FC<Props> = ({ onChange }) => {
       </View>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <IconButton
-          size={iconSizes.large}
+          size={iconSizes.xLarge}
           onPress={() => onPress('neutral')}
           style={{
             opacity: selectedEmoji === 'neutral' ? 1 : unselectedOpacity,
@@ -69,7 +69,7 @@ const FeedbackPicker: React.FC<Props> = ({ onChange }) => {
       </View>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <IconButton
-          size={iconSizes.large}
+          size={iconSizes.xLarge}
           onPress={() => onPress('happy')}
           style={{ opacity: selectedEmoji === 'happy' ? 1 : unselectedOpacity }}
           icon={() => (

@@ -31,9 +31,14 @@ const ExerciseSelectPage: React.FC = () => {
     <View>
       <Appbar.Header>
         <Appbar.BackAction onPress={onBackPress} />
-        <Appbar.Content title={texts.addExercise} />
+        <Appbar.Content title={texts.selectExercise} />
         <Appbar.Action
-          icon={() => <Icon icon="add" />}
+          icon={() => (
+            <Icon
+              icon="add"
+              size="large"
+            />
+          )}
           onPress={onAddExercisePress}
           animated={false}
         />
