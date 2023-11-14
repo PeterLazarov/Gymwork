@@ -12,10 +12,10 @@ type Props = {
   date: string
   sets: WorkoutSet[]
 }
-const WorkoutExerciseHistoryDayItem: React.FC<Props> = ({ date, sets }) => {
+const WorkoutExerciseHistoryListItem: React.FC<Props> = ({ date, sets }) => {
   return (
     <View
-      style={{ gap: 8 }}
+      style={{ gap: 8, marginBottom: 12 }}
       key={date}
     >
       <SectionLabel>
@@ -27,4 +27,4 @@ const WorkoutExerciseHistoryDayItem: React.FC<Props> = ({ date, sets }) => {
   )
 }
 
-export default observer(WorkoutExerciseHistoryDayItem)
+export default observer(WorkoutExerciseHistoryListItem)
