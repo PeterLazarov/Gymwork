@@ -44,6 +44,9 @@ export const ExerciseStoreModel = types
       )
       store.setProp('exercises', mappedArray)
     },
+    createExercise(created: Exercise) {
+      store.exercises.push(created)
+    },
   }))
   .views(store => ({
     get muscleOptions() {

@@ -24,9 +24,9 @@ const ExerciseSelectPage: React.FC = () => {
   }
 
   function onAddExercisePress() {
-    // TODO: Implement exercise create
-    router.push('/')
+    router.push('/ExerciseCreate')
   }
+
   return (
     <View>
       <Appbar.Header>
