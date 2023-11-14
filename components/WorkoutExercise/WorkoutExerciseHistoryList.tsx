@@ -54,6 +54,7 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
   }
   return (
     <FlatList
+      style={{ flex: 1 }}
       data={exerciseFilteredWorkouts}
       renderItem={renderItem}
       keyExtractor={(w, i) => `${w.date}_${i}`}
