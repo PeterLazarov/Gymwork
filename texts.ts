@@ -1,5 +1,6 @@
 export default {
   newWorkout: 'New workout',
+  addExercise: 'Add exercise',
   selectExercise: 'Select exercise',
   copyWorkout: 'Copy workout',
   addSet: 'Add set',
