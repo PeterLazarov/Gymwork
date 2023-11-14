@@ -5,7 +5,7 @@ import { TextInput, IconButton } from 'react-native-paper'
 
 import { useStores } from '../../db/helpers/useStores'
 import { Icon } from '../../designSystem'
-import MultiselectWrapper from '../../designSystem/Multiselect'
+import Multiselect from '../../designSystem/Multiselect'
 
 const ExerciseEditForm: React.FC = () => {
   const { openedExercise, exerciseStore } = useStores()
@@ -44,7 +44,7 @@ const ExerciseEditForm: React.FC = () => {
         label="Weight Increment"
       />
       <View style={{ flexDirection: 'row' }}>
-        <MultiselectWrapper
+        <Multiselect
           options={exerciseStore.muscleOptions}
           selectedOptions={openedExercise!.muscles}
           onSelect={onMusclesChange}
