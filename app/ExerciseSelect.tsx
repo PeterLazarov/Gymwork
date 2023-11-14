@@ -10,7 +10,7 @@ import { Exercise } from '../db/models'
 import { Icon } from '../designSystem'
 import texts from '../texts'
 
-const ExerciseListPage: React.FC = () => {
+const ExerciseSelectPage: React.FC = () => {
   const { workoutStore } = useStores()
   const router = useRouter()
 
@@ -23,14 +23,18 @@ const ExerciseListPage: React.FC = () => {
     router.push('/')
   }
 
+  function onAddExercisePress() {
+    // TODO: Implement exercise create
+    router.push('/')
+  }
   return (
     <View>
       <Appbar.Header>
         <Appbar.BackAction onPress={onBackPress} />
         <Appbar.Content title={texts.addExercise} />
         <Appbar.Action
-          icon={() => <Icon icon="ellipsis-vertical" />}
-          onPress={onBackPress}
+          icon={() => <Icon icon="add" />}
+          onPress={onAddExercisePress}
           animated={false}
         />
       </Appbar.Header>
@@ -39,4 +43,4 @@ const ExerciseListPage: React.FC = () => {
     </View>
   )
 }
-export default observer(ExerciseListPage)
+export default observer(ExerciseSelectPage)

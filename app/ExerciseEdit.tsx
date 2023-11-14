@@ -7,7 +7,7 @@ import { Appbar, Button } from 'react-native-paper'
 import ExerciseEditForm from '../components/Exercise/ExerciseEditForm'
 import { Icon } from '../designSystem'
 
-const ExerciseListPage: React.FC = () => {
+const ExerciseEditPage: React.FC = () => {
   const router = useRouter()
 
   function onBackPress() {
@@ -37,4 +37,4 @@ const ExerciseListPage: React.FC = () => {
     </View>
   )
 }
-export default observer(ExerciseListPage)
+export default observer(ExerciseEditPage)
