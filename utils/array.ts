@@ -18,3 +18,7 @@ export const groupBy = <T extends object>(array: T[], field: keyof T) => {
     {} as Record<string, T[]>
   )
 }
+
+export const uniqueValues = (arr: any[]) => {
+  return [...new Set(arr)]
+}

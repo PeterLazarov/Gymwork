@@ -1,6 +1,7 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import exerciseSeedData from '../../data/exercises-seed-data.json'
+import { uniqueValues } from '../../utils/array'
 import * as storage from '../../utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { ExerciseModel, ExerciseSnapshotIn } from '../models'
@@ -36,6 +37,11 @@ export const ExerciseStoreModel = types
           })
         )
       )
+    },
+  }))
+  .views(store => ({
+    get muscleOptions() {
+      return uniqueValues(store.exercises.flatMap(e => e.muscles))
     },
   }))
 

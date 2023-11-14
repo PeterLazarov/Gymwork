@@ -15,13 +15,11 @@ export const RootStoreModel = types
   })
   .views(self => ({
     get openedExercise(): Exercise | undefined {
-      console.log('1 -=-=-=-=-=-=-=-')
       return self.exerciseStore.exercises.find(
         e => e.guid === self.workoutStore.openedExerciseGuid
       )
     },
     get exercisesPerformed(): Exercise[] {
-      console.log('2 -=-=-=-=-=-=-=-')
       return Object.keys(self.workoutStore.exerciseWorkouts)
         .map(id => self.exerciseStore.exercises.find(e => e.guid === id))
         .filter(Boolean)

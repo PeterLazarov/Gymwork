@@ -20,6 +20,7 @@ const IoniconsIcons = [
   'chatbox-ellipses',
   'copy-outline',
   'pencil',
+  'close',
 ] as const
 type IonicIcon = (typeof IoniconsIcons)[number]
 

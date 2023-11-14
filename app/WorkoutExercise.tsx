@@ -23,6 +23,10 @@ const WorkoutExercisePage: React.FC = () => {
     workoutStore.setOpenedExercise(null)
   }
 
+  function onEditExercisePress() {
+    router.push('/ExerciseEdit')
+  }
+
   function onToggleGraphPress() {
     setGraphHidden(!graphHidden)
     setMenuOpen(false)
@@ -53,8 +57,8 @@ const WorkoutExercisePage: React.FC = () => {
           }
         >
           <Menu.Item
-            onPress={() => {}}
-            title="Some shit"
+            onPress={onEditExercisePress}
+            title="Edit exercise"
           />
           {view === 'history' && (
             <Menu.Item
