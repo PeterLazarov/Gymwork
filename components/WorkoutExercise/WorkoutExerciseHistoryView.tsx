@@ -1,14 +1,17 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View, ScrollView, Dimensions } from 'react-native'
+import { View, Dimensions } from 'react-native'
 
-import WorkoutExerciseHistoryDayItem from './WorkoutExerciseHistoryDayItem'
+import WorkoutExerciseHistoryList from './WorkoutExerciseHistoryList'
 import { useStores } from '../../db/helpers/useStores'
 import ExerciseHistoryChart from '../ExerciseHistoryChart'
 
 const padding = 16
 
-const WorkoutExerciseHistoryView: React.FC = () => {
+type Props = {
+  graphHidden: boolean
+}
+const WorkoutExerciseHistoryView: React.FC<Props> = ({ graphHidden }) => {
   const { workoutStore } = useStores()
 
   return (
@@ -23,25 +26,19 @@ const WorkoutExerciseHistoryView: React.FC = () => {
         flexGrow: 1,
       }}
     >
-      <ExerciseHistoryChart
-        view="ALL"
-        exerciseID={workoutStore.openedExerciseGuid}
-        height={250}
-        width={Dimensions.get('window').width - padding * 2}
+      {!graphHidden && (
+        <ExerciseHistoryChart
+          view="ALL"
+          exerciseID={workoutStore.openedExerciseGuid}
+          height={250}
+          width={Dimensions.get('window').width - padding * 2}
+        />
+      )}
+      <WorkoutExerciseHistoryList
+        workouts={
+          workoutStore.exerciseWorkouts[workoutStore.openedExerciseGuid]
+        }
       />
-      <ScrollView style={{ marginTop: -24, flexBasis: 0 }}>
-        {workoutStore.exerciseWorkouts[workoutStore.openedExerciseGuid]?.map(
-          (workout, i) => (
-            <WorkoutExerciseHistoryDayItem
-              key={`${workout.date}_${i}`}
-              date={workout.date}
-              sets={workout.sets.filter(
-                e => e.exercise.guid === workoutStore.openedExerciseGuid
-              )}
-            />
-          )
-        )}
-      </ScrollView>
     </View>
   )
 }

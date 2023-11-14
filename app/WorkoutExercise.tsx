@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { Appbar, SegmentedButtons } from 'react-native-paper'
+import { Appbar, Menu, SegmentedButtons } from 'react-native-paper'
 
 import WorkoutExerciseHistoryView from '../components/WorkoutExercise/WorkoutExerciseHistoryView'
 import WorkoutExerciseRecordsView from '../components/WorkoutExercise/WorkoutExerciseRecordsView'
@@ -15,19 +15,22 @@ const WorkoutExercisePage: React.FC = () => {
   const router = useRouter()
 
   const [view, setView] = useState('track')
-  function onOptionsPress() {
-    throw new Error('Function not implemented.')
-  }
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [graphHidden, setGraphHidden] = useState(false)
 
   function onBackPress() {
     router.push('/')
     workoutStore.setOpenedExercise(null)
   }
 
+  function onToggleGraphPress() {
+    setGraphHidden(!graphHidden)
+    setMenuOpen(false)
+  }
+
   return (
     <View
       style={{
-        // display: 'flex',
         overflow: 'hidden',
         height: '100%',
         display: 'flex',
@@ -36,11 +39,30 @@ const WorkoutExercisePage: React.FC = () => {
       <Appbar.Header>
         <Appbar.BackAction onPress={onBackPress} />
         <Appbar.Content title={openedExercise?.name} />
-        <Appbar.Action
-          icon={() => <Icon icon="ellipsis-vertical" />}
-          onPress={onOptionsPress}
-          animated={false}
-        />
+
+        <Menu
+          visible={menuOpen}
+          onDismiss={() => setMenuOpen(false)}
+          anchorPosition="bottom"
+          anchor={
+            <Appbar.Action
+              icon={() => <Icon icon="ellipsis-vertical" />}
+              onPress={() => setMenuOpen(true)}
+              animated={false}
+            />
+          }
+        >
+          <Menu.Item
+            onPress={() => {}}
+            title="Some shit"
+          />
+          {view === 'history' && (
+            <Menu.Item
+              onPress={onToggleGraphPress}
+              title={graphHidden ? 'Show graph' : 'Hide graph'}
+            />
+          )}
+        </Menu>
       </Appbar.Header>
       <SegmentedButtons
         value={view}
@@ -64,7 +86,9 @@ const WorkoutExercisePage: React.FC = () => {
         }}
       >
         {view === 'track' && <WorkoutExerciseTrackView />}
-        {view === 'history' && <WorkoutExerciseHistoryView />}
+        {view === 'history' && (
+          <WorkoutExerciseHistoryView graphHidden={graphHidden} />
+        )}
         {view === 'records' && <WorkoutExerciseRecordsView />}
       </View>
     </View>

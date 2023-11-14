@@ -65,10 +65,7 @@ const WorkoutPage: React.FC = () => {
             />
           ))}
       </ScrollView>
-      <WorkoutControlButtons
-        // isWorkoutStarted={!!workoutStore.currentWorkout}
-        createWorkout={newWorkout}
-      />
+      <WorkoutControlButtons createWorkout={newWorkout} />
     </View>
   )
 }
