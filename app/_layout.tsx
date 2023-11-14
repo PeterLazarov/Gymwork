@@ -1,6 +1,6 @@
 import { Slot } from 'expo-router'
 import { SafeAreaView } from 'react-native'
-import { PaperProvider } from 'react-native-paper'
+import { PaperProvider, Portal } from 'react-native-paper'
 
 import 'reflect-metadata'
 
@@ -20,7 +20,9 @@ export default function Layout() {
             height: '100%',
           }}
         >
-          <Slot />
+          <Portal.Host>
+            <Slot />
+          </Portal.Host>
         </SafeAreaView>
       </PaperProvider>
     </DBStoreInitializer>
