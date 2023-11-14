@@ -23,7 +23,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   updateSet,
   removeSet,
 }) => {
-  const { weightIncrement } = useStores()
+  const { openedExercise } = useStores()
 
   const [reps, setReps] = useState(selectedSet?.reps || 0)
   const [weight, setWeight] = useState(selectedSet?.weight || 0)
@@ -83,7 +83,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
       <IncrementDecrementButtons
         value={weight}
         onChange={n => setWeight(Math.max(n, 0))}
-        step={weightIncrement}
+        step={openedExercise!.weightIncrement}
       >
         <TextInput
           style={{ flexGrow: 1, textAlign: 'center' }}

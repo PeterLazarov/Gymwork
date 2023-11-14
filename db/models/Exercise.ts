@@ -11,6 +11,7 @@ export const ExerciseModel = types
     name: '',
     muscles: types.array(types.string),
     measurementType: '',
+    weightIncrement: 2.5,
   })
   .actions(withSetPropAction)
 

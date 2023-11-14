@@ -2,4366 +2,5239 @@
   {
     "name": "3/4 Sit-Up",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "90/90 Hamstring",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Ab Crunch Machine",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Ab Roller",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Adductor",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Adductor/Groin",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Advanced Kettlebell Windmill",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Air Bike",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "All Fours Quad Stretch",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Alternate Hammer Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Alternate Heel Touchers",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Alternate Incline Dumbbell Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Alternate Leg Diagonal Bound",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Alternating Cable Shoulder Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Alternating Deltoid Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Alternating Floor Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Alternating Hang Clean",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Alternating Kettlebell Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Alternating Kettlebell Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Alternating Renegade Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Ankle Circles",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Ankle On The Knee",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Anterior Tibialis-SMR",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Anti-Gravity Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Arm Circles",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Arnold Dumbbell Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Around The Worlds",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Atlas Stone Trainer",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Atlas Stones",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Axle Deadlift",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Back Flyes - With Bands",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Backward Drag",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Backward Medicine Ball Throw",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Balance Board",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Ball Leg Curl",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Band Assisted Pull-Up",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Band Good Morning",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Band Good Morning (Pull Through)",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Band Hip Adductions",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Band Pull Apart",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Band Skull Crusher",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Ab Rollout",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Ab Rollout - On Knees",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Bench Press - Medium Grip",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Curls Lying Against An Incline",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Deadlift",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Full Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Glute Bridge",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Guillotine Bench Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Hack Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Hip Thrust",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Incline Bench Press - Medium Grip",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Incline Shoulder Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Lunge",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Rear Delt Row",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Rollout from Bench",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Seated Calf Raise",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Shoulder Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Shrug",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Shrug Behind The Back",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Side Bend",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Side Split Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Squat To A Bench",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Step Ups",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Walking Lunge",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Battling Ropes",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bear Crawl Sled Drags",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Behind Head Chest Stretch",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bench Dips",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bench Jump",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bench Press - Powerlifting",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bench Press - With Bands",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bench Press with Chains",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bench Sprint",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bent-Arm Barbell Pullover",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bent-Arm Dumbbell Pullover",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bent-Knee Hip Raise",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bent Over Barbell Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bent Over Dumbbell Rear Delt Raise With Head On Bench",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bent Over Low-Pulley Side Lateral",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bent Over One-Arm Long Bar Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bent Over Two-Arm Long Bar Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bent Over Two-Dumbbell Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bent Over Two-Dumbbell Row With Palms In",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bent Press",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bicycling",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bicycling, Stationary",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Board Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Body-Up",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Body Tricep Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bodyweight Flyes",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bodyweight Mid Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bodyweight Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bodyweight Walking Lunge",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bosu Ball Cable Crunch With Side Bends",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bottoms-Up Clean From The Hang Position",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bottoms Up",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Box Jump (Multiple Response)",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Box Skip",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Box Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Box Squat with Bands",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Box Squat with Chains",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Brachialis-SMR",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Bradford/Rocky Presses",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Butt-Ups",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Butt Lift (Bridge)",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Butterfly",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Chest Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Crossover",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Deadlifts",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Hammer Curls - Rope Attachment",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Hip Adduction",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Incline Pushdown",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Incline Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Internal Rotation",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Iron Cross",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Judo Flip",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Lying Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable One Arm Tricep Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Preacher Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Rear Delt Fly",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Reverse Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Rope Overhead Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Rope Rear-Delt Rows",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Russian Twists",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Seated Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Seated Lateral Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Shoulder Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Shrugs",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cable Wrist Curl",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Calf-Machine Shoulder Shrug",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Calf Press",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Calf Press On The Leg Press Machine",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Calf Raise On A Dumbbell",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Calf Raises - With Bands",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Calf Stretch Elbows Against Wall",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Calf Stretch Hands Against Wall",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Calves-SMR",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Car Deadlift",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Car Drivers",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Carioca Quick Step",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cat Stretch",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Catch and Overhead Throw",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chain Handle Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chain Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chair Leg Extended Stretch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chair Lower Back Stretch",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chair Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chair Upper Body Stretch",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chest And Front Of Shoulder Stretch",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chest Push (multiple response)",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chest Push (single response)",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chest Push from 3 point stance",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chest Push with Run Release",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chest Stretch on Stability Ball",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Child's Pose",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chin-Up",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Chin To Chest Stretch",
     "muscles": ["neck"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Circus Bell",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Clean",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Clean Deadlift",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Clean Pull",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Clean Shrug",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Clean and Jerk",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Clean and Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Clean from Blocks",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Clock Push-Up",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Close-Grip Barbell Bench Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Close-Grip Dumbbell Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Close-Grip EZ-Bar Curl with Band",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Close-Grip EZ-Bar Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Close-Grip EZ Bar Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Close-Grip Front Lat Pulldown",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Close-Grip Push-Up off of a Dumbbell",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Close-Grip Standing Barbell Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cocoons",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Conan's Wheel",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Concentration Curls",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cross-Body Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cross Body Hammer Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cross Over - With Bands",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Crossover Reverse Lunge",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Crucifix",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Crunch - Hands Overhead",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Crunch - Legs On Exercise Ball",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Crunches",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Cuban Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dancer's Stretch",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dead Bug",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Deadlift with Bands",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Deadlift with Chains",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Decline Barbell Bench Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Decline Close-Grip Bench To Skull Crusher",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Decline Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Decline Dumbbell Bench Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Decline Dumbbell Flyes",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Decline Dumbbell Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Decline EZ Bar Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Decline Oblique Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Decline Push-Up",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Decline Reverse Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Decline Smith Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Deficit Deadlift",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Depth Jump Leap",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dip Machine",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dips - Chest Version",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dips - Triceps Version",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Donkey Calf Raises",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Double Kettlebell Alternating Hang Clean",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Double Kettlebell Jerk",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Double Kettlebell Push Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Double Kettlebell Snatch",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Double Kettlebell Windmill",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Double Leg Butt Kick",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Downward Facing Balance",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Drag Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Drop Push",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Alternate Bicep Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Bench Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Bench Press with Neutral Grip",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Bicep Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Clean",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Floor Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Flyes",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Incline Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Incline Shoulder Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Lunges",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Lying One-Arm Rear Lateral Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Lying Pronation",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Lying Rear Lateral Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Lying Supination",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell One-Arm Shoulder Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell One-Arm Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell One-Arm Upright Row",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Prone Incline Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Rear Lunge",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Scaption",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Seated Box Jump",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Seated One-Leg Calf Raise",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Shoulder Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Shrug",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Side Bend",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Squat To A Bench",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Step Ups",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dumbbell Tricep Extension -Pronated Grip",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dynamic Back Stretch",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Dynamic Chest Stretch",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "EZ-Bar Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "EZ-Bar Skullcrusher",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Elbow Circles",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Elbow to Knee",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Elbows Back",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Elevated Back Lunge",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Elevated Cable Rows",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Elliptical Trainer",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Exercise Ball Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Exercise Ball Pull-In",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Extended Range One-Arm Kettlebell Floor Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "External Rotation",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "External Rotation with Band",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "External Rotation with Cable",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Face Pull",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Farmer's Walk",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Fast Skipping",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Finger Curls",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Flat Bench Cable Flyes",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Flat Bench Leg Pull-In",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Flat Bench Lying Leg Raise",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Flexor Incline Dumbbell Curls",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Floor Glute-Ham Raise",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Floor Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Floor Press with Chains",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Flutter Kicks",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Foot-SMR",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Forward Drag with Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Frankenstein Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Freehand Jump Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Frog Hops",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Frog Sit-Ups",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Barbell Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Barbell Squat To A Bench",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Box Jump",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Cable Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Cone Hops (or hurdle hops)",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Dumbbell Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Incline Dumbbell Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Leg Raises",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Plate Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Raise And Pullover",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Squat (Clean Grip)",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Squats With Two Kettlebells",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Front Two-Dumbbell Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Full Range-Of-Motion Lat Pulldown",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Gironda Sternum Chins",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Glute Ham Raise",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Glute Kickback",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Goblet Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Good Morning",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Good Morning off Pins",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Gorilla Chin/Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Groin and Back Stretch",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Groiners",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hack Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hammer Curls",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hammer Grip Incline DB Bench Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hamstring-SMR",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hamstring Stretch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Handstand Push-Ups",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hang Clean",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hang Clean - Below the Knees",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hang Snatch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hang Snatch - Below Knees",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hanging Bar Good Morning",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hanging Leg Raise",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hanging Pike",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Heaving Snatch Balance",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Heavy Bag Thrust",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "High Cable Curls",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hip Circles (prone)",
     "muscles": ["abductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hip Extension with Bands",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hip Flexion with Band",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hip Lift with Band",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hug A Ball",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hug Knees To Chest",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hurdle Hops",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hyperextensions (Back Extensions)",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Hyperextensions With No Hyperextension Bench",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "IT Band and Glute Stretch",
     "muscles": ["abductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Iliotibial Tract-SMR",
     "muscles": ["abductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Inchworm",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Barbell Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Bench Pull",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Cable Chest Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Cable Flye",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Dumbbell Bench With Palms Facing In",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Dumbbell Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Dumbbell Flyes",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Dumbbell Flyes - With A Twist",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Dumbbell Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Hammer Curls",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Inner Biceps Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Push-Up",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Push-Up Close-Grip",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Push-Up Depth Jump",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Push-Up Medium",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Push-Up Reverse Grip",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Incline Push-Up Wide",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Intermediate Groin Stretch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Intermediate Hip Flexor and Quad Stretch",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Internal Rotation with Band",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Inverted Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Inverted Row with Straps",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Iron Cross",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Iron Crosses (stretch)",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Isometric Chest Squeezes",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Isometric Neck Exercise - Front And Back",
     "muscles": ["neck"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Isometric Neck Exercise - Sides",
     "muscles": ["neck"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Isometric Wipers",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "JM Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Jackknife Sit-Up",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Janda Sit-Up",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Jefferson Squats",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Jerk Balance",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Jerk Dip Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Jogging, Treadmill",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Keg Load",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Arnold Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Dead Clean",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Figure 8",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Hang Clean",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell One-Legged Deadlift",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Pass Between The Legs",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Pirate Ships",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Pistol Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Seated Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Seesaw Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Sumo High Pull",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Thruster",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Turkish Get-Up (Lunge style)",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Turkish Get-Up (Squat style)",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kettlebell Windmill",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kipping Muscle Up",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Knee Across The Body",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Knee Circles",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Knee/Hip Raise On Parallel Bars",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Knee Tuck Jump",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kneeling Arm Drill",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kneeling Cable Crunch With Alternating Oblique Twists",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kneeling Cable Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kneeling Forearm Stretch",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kneeling High Pulley Row",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kneeling Hip Flexor",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kneeling Jump Squat",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kneeling Single-Arm High Pulley Row",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Kneeling Squat",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Landmine 180's",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Landmine Linear Jammer",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lateral Bound",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lateral Box Jump",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lateral Cone Hops",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lateral Raise - With Bands",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Latissimus Dorsi-SMR",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leg-Over Floor Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leg-Up Hamstring Stretch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leg Extensions",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leg Lift",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leg Press",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leg Pull-In",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leverage Chest Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leverage Deadlift",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leverage Decline Chest Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leverage High Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leverage Incline Chest Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leverage Iso Row",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leverage Shoulder Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Leverage Shrug",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Linear 3-Part Start Technique",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Linear Acceleration Wall Drill",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Linear Depth Jump",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Log Lift",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "London Bridges",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Looking At Ceiling",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Low Cable Crossover",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Low Cable Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Low Pulley Row To Neck",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lower Back-SMR",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lower Back Curl",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lunge Pass Through",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lunge Sprint",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Bent Leg Groin",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Cable Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Cambered Barbell Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Close-Grip Bar Curl On High Pulley",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Close-Grip Barbell Triceps Extension Behind The Head",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Close-Grip Barbell Triceps Press To Chin",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Crossover",
     "muscles": ["abductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Dumbbell Tricep Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Face Down Plate Neck Resistance",
     "muscles": ["neck"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Face Up Plate Neck Resistance",
     "muscles": ["neck"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Glute",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Hamstring",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying High Bench Barbell Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Leg Curls",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Machine Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying One-Arm Lateral Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Prone Quadriceps",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Rear Delt Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Supine Dumbbell Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying T-Bar Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Lying Triceps Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Machine Bench Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Machine Bicep Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Machine Preacher Curls",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Machine Shoulder (Military) Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Machine Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Medicine Ball Chest Pass",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Medicine Ball Full Twist",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Medicine Ball Scoop Throw",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Middle Back Shrug",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Middle Back Stretch",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Mixed Grip Chin",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Monster Walk",
     "muscles": ["abductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Mountain Climbers",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Moving Claw Series",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Muscle Snatch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Muscle Up",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Narrow Stance Hack Squats",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Narrow Stance Leg Press",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Narrow Stance Squats",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Natural Glute Ham Raise",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Neck-SMR",
     "muscles": ["neck"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Neck Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Oblique Crunches",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Oblique Crunches - On The Floor",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Olympic Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "On-Your-Back Quad Stretch",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "On Your Side Quad Stretch",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Dumbbell Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Flat Bench Dumbbell Flye",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm High-Pulley Cable Side Bends",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Incline Lateral Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Clean",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Clean and Jerk",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Floor Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Jerk",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Military Press To The Side",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Para Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Push Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Snatch",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Split Jerk",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Split Snatch",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Kettlebell Swings",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Long Bar Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Medicine Ball Slam",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Open Palm Kettlebell Clean",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Overhead Kettlebell Squats",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Side Deadlift",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Arm Side Laterals",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One-Legged Cable Kickback",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Arm Against Wall",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Arm Chin-Up",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Arm Dumbbell Bench Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Arm Dumbbell Preacher Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Arm Floor Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Arm Lat Pulldown",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Arm Pronated Dumbbell Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Arm Supinated Dumbbell Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Half Locust",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Handed Hang",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Knee To Chest",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "One Leg Barbell Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Open Palm Kettlebell Clean",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Otis-Up",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Overhead Cable Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Overhead Lat",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Overhead Slam",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Overhead Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Overhead Stretch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Overhead Triceps",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Pallof Press",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Pallof Press With Rotation",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Palms-Down Dumbbell Wrist Curl Over A Bench",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Palms-Down Wrist Curl Over A Bench",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Palms-Up Barbell Wrist Curl Over A Bench",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Palms-Up Dumbbell Wrist Curl Over A Bench",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Parallel Bar Dip",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Pelvic Tilt Into Bridge",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Peroneals-SMR",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Peroneals Stretch",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Physioball Hip Bridge",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Pin Presses",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Piriformis-SMR",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Plank",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Plate Pinch",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Plate Twist",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Platform Hamstring Slides",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Plie Dumbbell Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Plyo Kettlebell Pushups",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Plyo Push-up",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Posterior Tibialis Stretch",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Power Clean",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Power Clean from Blocks",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Power Jerk",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Power Partials",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Power Snatch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Power Snatch from Blocks",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Power Stairs",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Preacher Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Preacher Hammer Dumbbell Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Press Sit-Up",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Prone Manual Hamstring",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Prowler Sprint",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Pull Through",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Pullups",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Push-Up Wide",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Push-Ups - Close Triceps Position",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Push-Ups With Feet Elevated",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Push-Ups With Feet On An Exercise Ball",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Push Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Push Press - Behind the Neck",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Push Up to Side Plank",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Pushups",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Pushups (Close and Wide Hand Positions)",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Pyramid",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Quad Stretch",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Quadriceps-SMR",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Quick Leap",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rack Delivery",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rack Pull with Bands",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rack Pulls",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rear Leg Raises",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Recumbent Bike",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Return Push from Stance",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Band Bench Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Band Box Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Band Deadlift",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Band Power Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Band Sumo Deadlift",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Barbell Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Barbell Preacher Curls",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Cable Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Flyes",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Flyes With External Rotation",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Grip Bent-Over Rows",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Grip Triceps Pushdown",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Hyperextension",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Machine Flyes",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Plate Curls",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Reverse Triceps Bench Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rhomboids-SMR",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rickshaw Carry",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rickshaw Deadlift",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Ring Dips",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rocket Jump",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rocking Standing Calf Raise",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rocky Pull-Ups/Pulldowns",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Romanian Deadlift",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Romanian Deadlift from Deficit",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rope Climb",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rope Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rope Jumping",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rope Straight-Arm Pulldown",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Round The World Shoulder Stretch",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Rowing, Stationary",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Runner's Stretch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Running, Treadmill",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Russian Twist",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sandbag Load",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Scapular Pull-Up",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Scissor Kick",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Scissors Jump",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Band Hamstring Curl",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Barbell Military Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Barbell Twist",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Bent-Over One-Arm Dumbbell Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Bent-Over Rear Delt Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Bent-Over Two-Arm Dumbbell Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Biceps",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Cable Rows",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Cable Shoulder Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Calf Raise",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Calf Stretch",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Close-Grip Concentration Barbell Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Dumbbell Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Dumbbell Inner Biceps Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Dumbbell Palms-Down Wrist Curl",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Dumbbell Palms-Up Wrist Curl",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Dumbbell Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Flat Bench Leg Pull-In",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Floor Hamstring Stretch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Front Deltoid",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Glute",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Good Mornings",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Hamstring",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Hamstring and Calf Stretch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Head Harness Neck Resistance",
     "muscles": ["neck"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Leg Curl",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Leg Tucks",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated One-Arm Dumbbell Palms-Down Wrist Curl",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated One-Arm Dumbbell Palms-Up Wrist Curl",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated One-arm Cable Pulley Rows",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Overhead Stretch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Palm-Up Barbell Wrist Curl",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Palms-Down Barbell Wrist Curl",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Side Lateral Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Triceps Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Seated Two-Arm Palms-Up Low-Pulley Wrist Curl",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "See-Saw Press (Alternating Side Press)",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Shotgun Row",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Shoulder Circles",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Shoulder Press - With Bands",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Shoulder Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Shoulder Stretch",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side-Lying Floor Stretch",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side Bridge",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side Hop-Sprint",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side Jackknife",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side Lateral Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side Laterals to Front Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side Leg Raises",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side Lying Groin Stretch",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side Neck Stretch",
     "muscles": ["neck"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side Standing Long Jump",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side To Side Chins",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side Wrist Pull",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Side to Side Box Shuffle",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single-Arm Cable Crossover",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single-Arm Linear Jammer",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single-Arm Push-Up",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single-Cone Sprint Drill",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single-Leg High Box Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single-Leg Hop Progression",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single-Leg Lateral Hop",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single-Leg Leg Extension",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single-Leg Stride Jump",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single Dumbbell Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single Leg Butt Kick",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single Leg Glute Bridge",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Single Leg Push-off",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sit-Up",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sit Squats",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Skating",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sled Drag - Harness",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sled Overhead Backward Walk",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sled Overhead Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sled Push",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sled Reverse Flye",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sled Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sledgehammer Swings",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Incline Shoulder Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Behind the Back Shrug",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Bench Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Bent Over Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Calf Raise",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Close-Grip Bench Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Decline Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Hang Power Clean",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Hip Raise",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Incline Bench Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Leg Press",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine One-Arm Upright Row",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Overhead Shoulder Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Pistol Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Reverse Calf Raises",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Stiff-Legged Deadlift",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Machine Upright Row",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Smith Single-Leg Split Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Snatch",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Snatch Balance",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Snatch Deadlift",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Snatch Pull",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Snatch Shrug",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Snatch from Blocks",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Speed Band Overhead Triceps",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Speed Box Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Speed Squats",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Spell Caster",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Spider Crawl",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Spider Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Spinal Stretch",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Split Clean",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Split Jerk",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Split Jump",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Split Snatch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Split Squat with Dumbbells",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Split Squats",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Squat Jerk",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Squat with Bands",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Squat with Chains",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Squat with Plate Movers",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Squats - With Bands",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Stairmaster",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Alternating Dumbbell Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Barbell Calf Raise",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Barbell Press Behind Neck",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Bent-Over One-Arm Dumbbell Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Bent-Over Two-Arm Dumbbell Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Biceps Cable Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Biceps Stretch",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Bradford Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Cable Chest Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Cable Lift",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Cable Wood Chop",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Calf Raises",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Concentration Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Dumbbell Calf Raise",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Dumbbell Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Dumbbell Reverse Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Dumbbell Straight-Arm Front Delt Raise Above Head",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Dumbbell Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Dumbbell Upright Row",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Elevated Quad Stretch",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Front Barbell Raise Over Head",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Gastrocnemius Calf Stretch",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Hamstring and Calf Stretch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Hip Circles",
     "muscles": ["abductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Hip Flexors",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Inner-Biceps Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Lateral Stretch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Leg Curl",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Long Jump",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Low-Pulley Deltoid Raise",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Low-Pulley One-Arm Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Military Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Olympic Plate Hand Squeeze",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing One-Arm Cable Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing One-Arm Dumbbell Curl Over Incline Bench",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing One-Arm Dumbbell Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Overhead Barbell Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Palm-In One-Arm Dumbbell Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Palms-In Dumbbell Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Palms-Up Barbell Behind The Back Wrist Curl",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Pelvic Tilt",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Rope Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Soleus And Achilles Stretch",
     "muscles": ["calves"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Toe Touches",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Towel Triceps Extension",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Standing Two-Arm Overhead Throw",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Star Jump",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Step-up with Knee Raise",
     "muscles": ["glutes"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Step Mill",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Stiff-Legged Barbell Deadlift",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Stiff-Legged Dumbbell Deadlift",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Stiff Leg Barbell Good Morning",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Stomach Vacuum",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Straight-Arm Dumbbell Pullover",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Straight-Arm Pulldown",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Straight Bar Bench Mid Rows",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Straight Raises on Incline Bench",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Stride Jump Crossover",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sumo Deadlift",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sumo Deadlift with Bands",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Sumo Deadlift with Chains",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Superman",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Supine Chest Throw",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Supine One-Arm Overhead Throw",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Supine Two-Arm Overhead Throw",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Suspended Fallout",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Suspended Push-Up",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Suspended Reverse Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Suspended Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Suspended Split Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Svend Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "T-Bar Row with Handle",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Tate Press",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "The Straddle",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Thigh Abductor",
     "muscles": ["abductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Thigh Adductor",
     "muscles": ["adductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Tire Flip",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Toe Touchers",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Torso Rotation",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Trail Running/Walking",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Trap Bar Deadlift",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Tricep Dumbbell Kickback",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Tricep Side Stretch",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Triceps Overhead Extension with Rope",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Triceps Pushdown",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Triceps Pushdown - Rope Attachment",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Triceps Pushdown - V-Bar Attachment",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Triceps Stretch",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Tuck Crunch",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Two-Arm Dumbbell Preacher Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Two-Arm Kettlebell Clean",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Two-Arm Kettlebell Jerk",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Two-Arm Kettlebell Military Press",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Two-Arm Kettlebell Row",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Underhand Cable Pulldowns",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Upper Back-Leg Grab",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Upper Back Stretch",
     "muscles": ["middle back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Upright Barbell Row",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Upright Cable Row",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Upright Row - With Bands",
     "muscles": ["traps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Upward Stretch",
     "muscles": ["shoulders"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "V-Bar Pulldown",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "V-Bar Pullup",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Vertical Swing",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Walking, Treadmill",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Weighted Ball Hyperextension",
     "muscles": ["lower back"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Weighted Ball Side Bend",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Weighted Bench Dip",
     "muscles": ["triceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Weighted Crunches",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Weighted Jump Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Weighted Pull Ups",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Weighted Sissy Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Weighted Sit-Ups - With Bands",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Weighted Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wide-Grip Barbell Bench Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wide-Grip Decline Barbell Bench Press",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wide-Grip Decline Barbell Pullover",
     "muscles": ["chest"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wide-Grip Lat Pulldown",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wide-Grip Pulldown Behind The Neck",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wide-Grip Rear Pull-Up",
     "muscles": ["lats"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wide-Grip Standing Barbell Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wide Stance Barbell Squat",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wide Stance Stiff Legs",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wind Sprints",
     "muscles": ["abdominals"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Windmills",
     "muscles": ["abductors"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "World's Greatest Stretch",
     "muscles": ["hamstrings"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wrist Circles",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wrist Roller",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Wrist Rotations with Straight Bar",
     "muscles": ["forearms"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Yoke Walk",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Zercher Squats",
     "muscles": ["quadriceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Zottman Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   },
   {
     "name": "Zottman Preacher Curl",
     "muscles": ["biceps"],
-    "type": "weight"
+    "type": "weight",
+    "weightIncrement": 2.5
   }
 ]
