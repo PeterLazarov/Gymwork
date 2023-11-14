@@ -2,7 +2,6 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import { ExerciseStoreModel } from './ExerciseStore'
 import { WorkoutStoreModel } from './WorkoutStore'
-import { weightIncrement } from '../../data/workout-seed-data'
 import { Exercise } from '../models'
 
 /**
@@ -13,15 +12,16 @@ export const RootStoreModel = types
   .props({
     exerciseStore: types.optional(ExerciseStoreModel, {}),
     workoutStore: types.optional(WorkoutStoreModel, {}),
-    weightIncrement: types.optional(types.number, weightIncrement),
   })
   .views(self => ({
     get openedExercise(): Exercise | undefined {
+      console.log('1 -=-=-=-=-=-=-=-')
       return self.exerciseStore.exercises.find(
         e => e.guid === self.workoutStore.openedExerciseGuid
       )
     },
     get exercisesPerformed(): Exercise[] {
+      console.log('2 -=-=-=-=-=-=-=-')
       return Object.keys(self.workoutStore.exerciseWorkouts)
         .map(id => self.exerciseStore.exercises.find(e => e.guid === id))
         .filter(Boolean)
