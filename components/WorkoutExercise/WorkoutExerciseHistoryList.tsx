@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { ScrollView } from 'react-native'
 
 import WorkoutExerciseHistoryDayItem from './WorkoutExerciseHistoryDayItem'
@@ -12,15 +12,24 @@ type Props = {
 const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
   const { workoutStore } = useStores()
 
+  const exerciseFilteredWorkouts = useMemo(
+    () =>
+      workouts.map(workout => ({
+        ...workout,
+        sets: workout.sets.filter(
+          e => e.exercise.guid === workoutStore.openedExerciseGuid
+        ),
+      })),
+    [workouts]
+  )
+
   return (
     <ScrollView style={{ marginTop: -24, flexBasis: 0 }}>
-      {workouts?.map((workout, i) => (
+      {exerciseFilteredWorkouts.map((workout, i) => (
         <WorkoutExerciseHistoryDayItem
           key={`${workout.date}_${i}`}
           date={workout.date}
-          sets={workout.sets.filter(
-            e => e.exercise.guid === workoutStore.openedExerciseGuid
-          )}
+          sets={workout.sets}
         />
       ))}
     </ScrollView>
