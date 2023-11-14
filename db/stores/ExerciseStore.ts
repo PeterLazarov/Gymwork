@@ -4,7 +4,7 @@ import exerciseSeedData from '../../data/exercises-seed-data.json'
 import { uniqueValues } from '../../utils/array'
 import * as storage from '../../utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import { ExerciseModel, ExerciseSnapshotIn } from '../models'
+import { Exercise, ExerciseModel, ExerciseSnapshotIn } from '../models'
 
 export const ExerciseStoreModel = types
   .model('ExerciseStore')
@@ -37,6 +37,12 @@ export const ExerciseStoreModel = types
           })
         )
       )
+    },
+    editExercise(updated: Exercise) {
+      const mappedArray = store.exercises.map(e =>
+        e.guid === updated.guid ? updated : e
+      )
+      store.setProp('exercises', mappedArray)
     },
   }))
   .views(store => ({

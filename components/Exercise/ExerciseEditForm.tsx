@@ -4,25 +4,35 @@ import { Text, View } from 'react-native'
 import { TextInput, IconButton } from 'react-native-paper'
 
 import { useStores } from '../../db/helpers/useStores'
+import { Exercise } from '../../db/models'
 import { Icon } from '../../designSystem'
 import Multiselect from '../../designSystem/Multiselect'
 
-const ExerciseEditForm: React.FC = () => {
-  const { openedExercise, exerciseStore } = useStores()
-
+type Props = {
+  exercise: Exercise
+  setExercise: (updated: Exercise) => void
+}
+const ExerciseEditForm: React.FC<Props> = ({ exercise, setExercise }) => {
+  const { exerciseStore } = useStores()
   const [weightIncrement, setWeightIncrement] = useState(
-    `${openedExercise!.weightIncrement}`
+    `${exercise.weightIncrement}`
   )
   function handleNumericChange(text: string) {
     // Remove non-numeric characters using a regular expression
     const sanitizedValue = text.replace(/[^0-9.]/g, '')
     setWeightIncrement(sanitizedValue)
-    openedExercise!.setProp('weightIncrement', Number(sanitizedValue))
+    setExercise({
+      ...exercise,
+      weightIncrement: Number(sanitizedValue),
+    })
   }
 
   function onMusclesChange(selected: string[]) {
     if (selected.length > 0) {
-      openedExercise!.setProp('muscles', selected)
+      setExercise({
+        ...exercise,
+        muscles: selected as Exercise['muscles'],
+      })
     }
   }
 
@@ -33,9 +43,14 @@ const ExerciseEditForm: React.FC = () => {
   return (
     <View style={{ flex: 1, gap: 8 }}>
       <TextInput
-        value={openedExercise!.name}
-        onChangeText={text => openedExercise!.setProp('name', text)}
         label="Name"
+        value={exercise.name}
+        onChangeText={text =>
+          setExercise({
+            ...exercise,
+            name: text,
+          })
+        }
       />
       <TextInput
         value={weightIncrement}
@@ -46,7 +61,7 @@ const ExerciseEditForm: React.FC = () => {
       <View style={{ flexDirection: 'row' }}>
         <Multiselect
           options={exerciseStore.muscleOptions}
-          selectedOptions={openedExercise!.muscles}
+          selectedOptions={exercise.muscles}
           onSelect={onMusclesChange}
           containerStyle={{ flex: 1 }}
           selectText="Muscle areas"
