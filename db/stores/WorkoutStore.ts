@@ -20,13 +20,6 @@ import {
   WorkoutSetSnapshotIn,
 } from '../models'
 
-function getWorkoutExercises(workout: Workout) {
-  return workout.sets.reduce(
-    (acc, set) => acc.add(set.exercise),
-    new Set<Exercise>()
-  )
-}
-
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
 
@@ -36,18 +29,26 @@ export const WorkoutStoreModel = types
     workouts: types.array(WorkoutModel),
     openedDate: types.optional(types.string, today.toISODate()!), // TODO move out?
     openedExerciseGuid: '', // TODO move out?
-    notesDialogOpen: false, // TODO move out?
   })
   .views(store => ({
-    // TODO to allow for multiple workouts per date?
-    get currentWorkout(): Workout | undefined {
-      const [workout] = store.workouts.filter(w => w.date === store.openedDate)
+    getWorkoutForDate(date: string): Workout | undefined {
+      const [workout] = store.workouts.filter(w => w.date === date)
       return workout
     },
-
+    // TODO to allow for multiple workouts per date?
+    get currentWorkout(): Workout | undefined {
+      return this.getWorkoutForDate(store.openedDate)
+    },
+    getWorkoutExercises(workout: Workout) {
+      const set = workout.sets.reduce(
+        (acc, set) => acc.add(set.exercise),
+        new Set<Exercise>()
+      )
+      return [...set]
+    },
     get currentWorkoutExercises() {
       return this.currentWorkout
-        ? [...getWorkoutExercises(this.currentWorkout)]
+        ? this.getWorkoutExercises(this.currentWorkout)
         : []
     },
 
@@ -63,7 +64,7 @@ export const WorkoutStoreModel = types
     get exerciseWorkouts(): Record<Exercise['guid'], Workout[]> {
       return store.workouts.reduce(
         (acc, workout) => {
-          getWorkoutExercises(workout).forEach(exercise => {
+          this.getWorkoutExercises(workout).forEach(exercise => {
             if (!acc[exercise.guid]) {
               acc[exercise.guid] = []
             }
