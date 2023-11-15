@@ -3,8 +3,8 @@ import React from 'react'
 import { Text } from 'react-native'
 import { IconButton } from 'react-native-paper'
 
-import { Icon } from '../../designSystem'
-import colors from '../../designSystem/colors'
+import { Icon } from '../../../designSystem'
+import colors from '../../../designSystem/colors'
 
 type Props = {
   isWarmup: boolean

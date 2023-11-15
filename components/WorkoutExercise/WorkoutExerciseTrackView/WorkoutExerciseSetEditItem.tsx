@@ -3,11 +3,11 @@ import React from 'react'
 import { Text, View } from 'react-native'
 
 import WorkoutExerciseSetWarmupButton from './WorkoutExerciseSetWarmupButton'
-import { useStores } from '../../db/helpers/useStores'
-import { WorkoutSet } from '../../db/models'
-import { ButtonContainer, Icon } from '../../designSystem'
-import colors from '../../designSystem/colors'
-import texts from '../../texts'
+import { useStores } from '../../../db/helpers/useStores'
+import { WorkoutSet } from '../../../db/models'
+import { ButtonContainer, Icon } from '../../../designSystem'
+import colors from '../../../designSystem/colors'
+import texts from '../../../texts'
 
 type Props = {
   set: WorkoutSet

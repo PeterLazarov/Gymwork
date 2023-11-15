@@ -4,8 +4,8 @@ import { View } from 'react-native'
 
 import WorkoutExerciseSetEditList from './WorkoutExerciseSetEditList'
 import WorkoutExerciseSetEditPanel from './WorkoutExerciseSetEditPanel'
-import { useStores } from '../../db/helpers/useStores'
-import { WorkoutSet } from '../../db/models'
+import { useStores } from '../../../db/helpers/useStores'
+import { WorkoutSet } from '../../../db/models'
 
 const WorkoutExerciseTrackView: React.FC = () => {
   const { workoutStore } = useStores()

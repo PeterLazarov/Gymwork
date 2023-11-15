@@ -4,9 +4,9 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { Appbar, Menu, SegmentedButtons } from 'react-native-paper'
 
-import WorkoutExerciseHistoryView from '../components/WorkoutExercise/WorkoutExerciseHistoryView'
+import WorkoutExerciseHistoryView from '../components/WorkoutExercise/WorkoutExerciseHistoryView/WorkoutExerciseHistoryView'
 import WorkoutExerciseRecordsView from '../components/WorkoutExercise/WorkoutExerciseRecordsView'
-import WorkoutExerciseTrackView from '../components/WorkoutExercise/WorkoutExerciseTrackView'
+import WorkoutExerciseTrackView from '../components/WorkoutExercise/WorkoutExerciseTrackView/WorkoutExerciseTrackView'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
 

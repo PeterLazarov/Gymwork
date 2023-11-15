@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { View, TextInput } from 'react-native'
 import { Button } from 'react-native-paper'
 
-import { useStores } from '../../db/helpers/useStores'
-import { WorkoutSet } from '../../db/models'
-import { Divider } from '../../designSystem'
-import { SubSectionLabel } from '../../designSystem/Label'
-import colors from '../../designSystem/colors'
-import texts from '../../texts'
-import IncrementDecrementButtons from '../IncrementDecrementButtons'
+import { useStores } from '../../../db/helpers/useStores'
+import { WorkoutSet } from '../../../db/models'
+import { Divider } from '../../../designSystem'
+import { SubSectionLabel } from '../../../designSystem/Label'
+import colors from '../../../designSystem/colors'
+import texts from '../../../texts'
+import IncrementDecrementButtons from '../../IncrementDecrementButtons'
 
 type Props = {
   selectedSet: WorkoutSet | null

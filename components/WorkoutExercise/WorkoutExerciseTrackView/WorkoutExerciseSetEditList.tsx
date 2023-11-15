@@ -3,10 +3,10 @@ import React, { useCallback, useMemo } from 'react'
 import { View, FlatList } from 'react-native'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
-import { useStores } from '../../db/helpers/useStores'
-import { WorkoutSet } from '../../db/models'
-import { Divider } from '../../designSystem'
-import { SectionLabel } from '../../designSystem/Label'
+import { useStores } from '../../../db/helpers/useStores'
+import { WorkoutSet } from '../../../db/models'
+import { Divider } from '../../../designSystem'
+import { SectionLabel } from '../../../designSystem/Label'
 
 type Props = {
   selectedSet: WorkoutSet | null

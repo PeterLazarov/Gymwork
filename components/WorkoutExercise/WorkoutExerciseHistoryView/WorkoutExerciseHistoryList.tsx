@@ -3,8 +3,8 @@ import React, { useCallback, useMemo } from 'react'
 import { FlatList } from 'react-native'
 
 import WorkoutExerciseHistoryDayItem from './WorkoutExerciseHistoryListItem'
-import { useStores } from '../../db/helpers/useStores'
-import { Workout } from '../../db/models'
+import { useStores } from '../../../db/helpers/useStores'
+import { Workout } from '../../../db/models'
 
 type Props = {
   workouts: Workout[]
