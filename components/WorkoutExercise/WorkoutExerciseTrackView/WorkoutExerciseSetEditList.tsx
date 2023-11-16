@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import { View, FlatList } from 'react-native'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
@@ -19,13 +19,6 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
 }) => {
   const { workoutStore } = useStores()
 
-  const warmupSetsCount = useMemo(
-    () =>
-      workoutStore.currentWorkoutOpenedExerciseSets.filter(e => e.isWarmup)
-        .length,
-    [workoutStore.currentWorkoutOpenedExerciseSets]
-  )
-
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
   }
@@ -37,7 +30,6 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
           set={item}
           isFocused={selectedSet?.guid === item.guid}
           onPress={() => toggleSelectedSet(item)}
-          number={item.isWarmup ? undefined : index + 2 - warmupSetsCount}
         />
       )
     },
@@ -63,14 +55,14 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       }}
     >
       <FlatList
-        data={workoutStore.currentWorkoutOpenedExerciseSets}
+        data={workoutStore.openedExerciseSets}
         renderItem={renderItem}
         keyExtractor={set => set.guid}
         getItemLayout={getItemLayout}
         ItemSeparatorComponent={Divider}
       />
 
-      {workoutStore.currentWorkoutOpenedExerciseSets.length === 0 && (
+      {workoutStore.openedExerciseSets.length === 0 && (
         <SectionLabel> No sets entered </SectionLabel>
       )}
     </View>

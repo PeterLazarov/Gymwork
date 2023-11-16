@@ -12,14 +12,12 @@ import texts from '../../../texts'
 type Props = {
   set: WorkoutSet
   isFocused?: boolean
-  number?: number
   onPress: () => void
 }
 
 const WorkoutExerciseSetEditItem: React.FC<Props> = ({
   set,
   isFocused,
-  number,
   onPress,
 }) => {
   const { workoutStore } = useStores()
@@ -27,6 +25,13 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
     record => record.guid === set.guid
   )
   const color = isFocused ? colors.primary : colors.secondaryText
+
+  function calcWorkSetNumber() {
+    const workArrayIndex = workoutStore.openedExerciseWorkSets.indexOf(set)
+    return workArrayIndex + 1
+  }
+
+  const number = set.isWarmup ? undefined : calcWorkSetNumber()
 
   function toggleSetWarmup() {
     workoutStore.setWorkoutSetWarmup(set, !set.isWarmup)

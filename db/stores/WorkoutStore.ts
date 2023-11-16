@@ -52,13 +52,17 @@ export const WorkoutStoreModel = types
         : []
     },
 
-    get currentWorkoutOpenedExerciseSets(): WorkoutSet[] {
+    get openedExerciseSets(): WorkoutSet[] {
       const exerciseSets =
         this.currentWorkout?.sets.filter(
           e => e.exercise.guid === store.openedExerciseGuid
         ) ?? []
 
       return exerciseSets
+    },
+
+    get openedExerciseWorkSets(): WorkoutSet[] {
+      return this.openedExerciseSets.filter(s => !s.isWarmup)
     },
 
     get exerciseWorkouts(): Record<Exercise['guid'], Workout[]> {

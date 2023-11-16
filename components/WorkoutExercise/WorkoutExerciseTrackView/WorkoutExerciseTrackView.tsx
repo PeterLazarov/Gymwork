@@ -20,7 +20,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
   }
 
   function removeSet(setToRemove: WorkoutSet) {
-    const sets = workoutStore.currentWorkoutOpenedExerciseSets
+    const sets = workoutStore.openedExerciseSets
     const i = sets.indexOf(setToRemove)
     const nextSet = sets[i + 1]
     const prevSet = sets[i - 1]
