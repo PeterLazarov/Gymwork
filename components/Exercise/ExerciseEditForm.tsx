@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useState } from 'react'
 import { Text, View } from 'react-native'
-import { TextInput, IconButton } from 'react-native-paper'
+import { TextInput, IconButton, HelperText } from 'react-native-paper'
 
 import { useStores } from '../../db/helpers/useStores'
 import { Exercise } from '../../db/models'
@@ -15,10 +15,20 @@ type Props = {
 const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   const { exerciseStore } = useStores()
 
+  const [nameError, setNameError] = useState('')
+  const [weightIncError, setWeightIncError] = useState('')
+  const [musclesError, setMusclesError] = useState('')
+
   function runValidCheck(data: Exercise) {
     const nameInvalid = data.name.trim() === ''
     const weightIncrementInvalid = data.weightIncrement === 0
     const musclesInvalid = data.muscles.length === 0
+
+    setNameError(nameInvalid ? 'Exercise name cannot be empty.' : '')
+    setWeightIncError(
+      weightIncrementInvalid ? 'Weight increment cannot be 0.' : ''
+    )
+    setMusclesError(musclesInvalid ? 'At least one muscle area required.' : '')
 
     return !(nameInvalid || weightIncrementInvalid || musclesInvalid)
   }
@@ -58,13 +68,31 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
             name: text,
           })
         }
+        error={nameError !== ''}
       />
+      {nameError !== '' && (
+        <HelperText
+          type="error"
+          visible={nameError !== ''}
+        >
+          {nameError}
+        </HelperText>
+      )}
       <TextInput
         value={`${exercise.weightIncrement}`}
         keyboardType="decimal-pad"
         onChangeText={handleNumericChange}
         label="Weight Increment"
+        error={weightIncError !== ''}
       />
+      {weightIncError !== '' && (
+        <HelperText
+          type="error"
+          visible={weightIncError !== ''}
+        >
+          {weightIncError}
+        </HelperText>
+      )}
       <View style={{ flexDirection: 'row' }}>
         <Multiselect
           options={exerciseStore.muscleOptions}
@@ -78,6 +106,14 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           onPress={onAddMusclePress}
         />
       </View>
+      {musclesError !== '' && (
+        <HelperText
+          type="error"
+          visible={musclesError !== ''}
+        >
+          {musclesError}
+        </HelperText>
+      )}
       <Text>TODO: Measurement Type</Text>
       <Text>TODO: Measurement Unit Type</Text>
     </View>
