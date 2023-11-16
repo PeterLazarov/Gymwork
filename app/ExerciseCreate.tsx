@@ -7,7 +7,7 @@ import { Appbar, Button } from 'react-native-paper'
 import ConfirmationDialog from '../components/ConfirmationDialog'
 import ExerciseEditForm from '../components/Exercise/ExerciseEditForm'
 import { useStores } from '../db/helpers/useStores'
-import { ExerciseModel } from '../db/models'
+import { Exercise, ExerciseModel } from '../db/models'
 import { Icon } from '../designSystem'
 
 const ExerciseCreatePage: React.FC = () => {
@@ -15,6 +15,7 @@ const ExerciseCreatePage: React.FC = () => {
   const { exerciseStore } = useStores()
 
   const [exercise, setExercise] = useState(ExerciseModel.create())
+  const [formValid, setFormValid] = useState(false)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
   function onBackPress() {
@@ -24,6 +25,11 @@ const ExerciseCreatePage: React.FC = () => {
   function onBackConfirmed() {
     setConfirmDialogOpen(false)
     router.back()
+  }
+
+  function onUpdate(updated: Exercise, isValid: boolean) {
+    setExercise(updated)
+    setFormValid(isValid)
   }
 
   function onComplete() {
@@ -46,16 +52,18 @@ const ExerciseCreatePage: React.FC = () => {
             )}
             onPress={onComplete}
             animated={false}
+            disabled={!formValid}
           />
         </Appbar.Header>
         <View style={{ flex: 1, gap: 8, padding: 8 }}>
           <ExerciseEditForm
             exercise={exercise}
-            setExercise={setExercise}
+            onUpdate={onUpdate}
           />
           <Button
             mode="contained"
             onPress={onComplete}
+            disabled={!formValid}
           >
             Save
           </Button>

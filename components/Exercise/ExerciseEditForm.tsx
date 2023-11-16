@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
+import React from 'react'
 import { Text, View } from 'react-native'
 import { TextInput, IconButton } from 'react-native-paper'
 
@@ -10,30 +10,37 @@ import Multiselect from '../../designSystem/Multiselect'
 
 type Props = {
   exercise: Exercise
-  setExercise: (updated: Exercise) => void
+  onUpdate: (updated: Exercise, isValid: boolean) => void
 }
-const ExerciseEditForm: React.FC<Props> = ({ exercise, setExercise }) => {
+const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   const { exerciseStore } = useStores()
-  const [weightIncrement, setWeightIncrement] = useState(
-    `${exercise.weightIncrement}`
-  )
+
+  function runValidCheck(data: Exercise) {
+    const nameInvalid = data.name.trim() === ''
+    const weightIncrementInvalid = data.weightIncrement === 0
+    const musclesInvalid = data.muscles.length === 0
+
+    return !(nameInvalid || weightIncrementInvalid || musclesInvalid)
+  }
+
+  function onFormChange(updated: Exercise) {
+    const valid = runValidCheck(updated)
+    onUpdate(updated, valid)
+  }
   function handleNumericChange(text: string) {
     // Remove non-numeric characters using a regular expression
     const sanitizedValue = text.replace(/[^0-9.]/g, '')
-    setWeightIncrement(sanitizedValue)
-    setExercise({
+    onFormChange({
       ...exercise,
       weightIncrement: Number(sanitizedValue),
     })
   }
 
   function onMusclesChange(selected: string[]) {
-    if (selected.length > 0) {
-      setExercise({
-        ...exercise,
-        muscles: selected as Exercise['muscles'],
-      })
-    }
+    onFormChange({
+      ...exercise,
+      muscles: selected as Exercise['muscles'],
+    })
   }
 
   function onAddMusclePress() {
@@ -46,14 +53,14 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, setExercise }) => {
         label="Name"
         value={exercise.name}
         onChangeText={text =>
-          setExercise({
+          onFormChange({
             ...exercise,
             name: text,
           })
         }
       />
       <TextInput
-        value={weightIncrement}
+        value={`${exercise.weightIncrement}`}
         keyboardType="decimal-pad"
         onChangeText={handleNumericChange}
         label="Weight Increment"
