@@ -9,13 +9,13 @@ import { useStores } from '../../db/helpers/useStores'
 import { WorkoutModel, WorkoutSet } from '../../db/models'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
-  const { openedExerciseRecords, workoutStore, openedExercise } = useStores()
+  const { openedExerciseRecords, openedExercise, stateStore } = useStores()
   const router = useRouter()
 
   // TODO extract out to action?
   function goToDate(set: WorkoutSet) {
     const workout = getParentOfType(set, WorkoutModel)
-    workoutStore.setProp('openedDate', workout.date)
+    stateStore.setProp('openedDate', workout.date)
     router.push('/')
   }
 

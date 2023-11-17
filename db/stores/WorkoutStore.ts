@@ -144,17 +144,17 @@ export const WorkoutStoreModel = types
     },
     createWorkout() {
       const created = WorkoutModel.create({
-        date: self.rootStore.openedDate,
+        date: self.rootStore.stateStore.openedDate,
       })
       self.workouts.push(created)
     },
     addSet(newSet: WorkoutSetSnapshotIn) {
       const created = WorkoutSetModel.create(newSet)
 
-      self.rootStore.openedWorkout?.sets.push(created)
+      self.rootStore.stateStore.openedWorkout?.sets.push(created)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
-      const set = self.rootStore.openedWorkout?.sets.find(
+      const set = self.rootStore.stateStore.openedWorkout?.sets.find(
         s => s.guid === setGuid
       )
       if (set) {
@@ -163,18 +163,17 @@ export const WorkoutStoreModel = types
     },
     updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
       // TODO: fix typescript hackery
-      const updated = self.rootStore.openedWorkout?.sets.map(set =>
+      const updated = self.rootStore.stateStore.openedWorkout?.sets.map(set =>
         set.guid === updatedSet.guid ? updatedSet : set
       )
-      if (self.rootStore.openedWorkout) {
-        self.rootStore.openedWorkout.sets = updated as unknown as IMSTArray<
-          typeof WorkoutSetModel
-        >
+      if (self.rootStore.stateStore.openedWorkout) {
+        self.rootStore.stateStore.openedWorkout.sets =
+          updated as unknown as IMSTArray<typeof WorkoutSetModel>
       }
     },
     setWorkoutNotes(notes: string) {
-      if (self.rootStore.openedWorkout) {
-        self.rootStore.openedWorkout.notes = notes
+      if (self.rootStore.stateStore.openedWorkout) {
+        self.rootStore.stateStore.openedWorkout.notes = notes
       }
     },
     setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {

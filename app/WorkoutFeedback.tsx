@@ -9,7 +9,7 @@ import { useStores } from '../db/helpers/useStores'
 import { SectionLabel } from '../designSystem/Label'
 
 const WorkoutFeedbackPage: React.FC = () => {
-  const { openedWorkout } = useStores()
+  const { stateStore } = useStores()
   const router = useRouter()
 
   function onBackPress() {
@@ -26,12 +26,16 @@ const WorkoutFeedbackPage: React.FC = () => {
       <View style={{ padding: 8, gap: 16, flex: 1 }}>
         <SectionLabel>How was the workout?</SectionLabel>
         <FeedbackPicker
-          onChange={feeling => openedWorkout!.setProp('feeling', feeling)}
+          onChange={feeling =>
+            stateStore.openedWorkout!.setProp('feeling', feeling)
+          }
         />
         <ScrollView>
           <TextInput
-            value={openedWorkout?.notes}
-            onChangeText={text => openedWorkout!.setProp('notes', text)}
+            value={stateStore.openedWorkout?.notes}
+            onChangeText={text =>
+              stateStore.openedWorkout!.setProp('notes', text)
+            }
             multiline
             placeholder="Enter comments..."
           />

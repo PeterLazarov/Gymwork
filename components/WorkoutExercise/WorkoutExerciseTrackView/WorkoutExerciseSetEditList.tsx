@@ -17,7 +17,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   selectedSet,
   setSelectedSet,
 }) => {
-  const { openedExerciseSets } = useStores()
+  const { stateStore } = useStores()
 
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
@@ -55,14 +55,14 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       }}
     >
       <FlatList
-        data={openedExerciseSets}
+        data={stateStore.openedExerciseSets}
         renderItem={renderItem}
         keyExtractor={set => set.guid}
         getItemLayout={getItemLayout}
         ItemSeparatorComponent={Divider}
       />
 
-      {openedExerciseSets.length === 0 && (
+      {stateStore.openedExerciseSets.length === 0 && (
         <SectionLabel> No sets entered </SectionLabel>
       )}
     </View>

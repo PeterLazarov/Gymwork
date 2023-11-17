@@ -63,7 +63,7 @@ const ExerciseHistoryChart = observer(
     width?: number
   }) => {
     const router = useRouter()
-    const { workoutStore } = useStores()
+    const { workoutStore, stateStore } = useStores()
 
     const chartElRef = useRef<any>(null)
     const eChartRef = useRef<ECharts>()
@@ -271,7 +271,7 @@ const ExerciseHistoryChart = observer(
 
     // TODO does not highlight set in question
     function handleBtnPress() {
-      workoutStore.setProp('openedDate', selectedDate)
+      stateStore.setProp('openedDate', selectedDate)
       router.push('/')
     }
 

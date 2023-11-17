@@ -12,13 +12,8 @@ import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
 
 const WorkoutPage: React.FC = () => {
-  const {
-    workoutStore,
-    timeStore,
-    openedWorkout,
-    isOpenedWorkoutToday,
-    openedWorkoutExercises,
-  } = useStores()
+  const { workoutStore, timeStore, stateStore, openedWorkoutExercises } =
+    useStores()
   const router = useRouter()
 
   function newWorkout() {
@@ -81,15 +76,15 @@ const WorkoutPage: React.FC = () => {
         />
       </Appbar.Header>
       <DayControl />
-      {timeStore.stopwatchValue !== '' && isOpenedWorkoutToday && (
+      {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
         <WorkoutTimer />
       )}
       <ScrollView style={{ flex: 1 }}>
-        {openedWorkout &&
+        {stateStore.openedWorkout &&
           openedWorkoutExercises.map(exercise => (
             <WorkoutExerciseCard
-              key={`${openedWorkout!.date}_${exercise.guid}`}
-              workout={openedWorkout!}
+              key={`${stateStore.openedWorkout!.date}_${exercise.guid}`}
+              workout={stateStore.openedWorkout!}
               exercise={exercise}
             />
           ))}

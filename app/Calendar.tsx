@@ -12,7 +12,7 @@ import { Icon } from '../designSystem'
 import texts from '../texts'
 
 const CalendarPage: React.FC = () => {
-  const { workoutStore, openedWorkout, openedDate, setOpenedDate } = useStores()
+  const { workoutStore, stateStore } = useStores()
 
   const [openedWorkoutDialogDate, setOpenedWorkoutDialogDate] = useState('')
 
@@ -27,12 +27,12 @@ const CalendarPage: React.FC = () => {
           return acc
         },
         {
-          [openedDate]: {
+          [stateStore.openedDate]: {
             selected: true,
           },
         } as MarkedDates
       ),
-    [workoutStore.workouts, openedDate, openedWorkout]
+    [workoutStore.workouts, stateStore.openedDate, stateStore.openedWorkout]
   )
 
   const router = useRouter()
@@ -45,7 +45,7 @@ const CalendarPage: React.FC = () => {
     setOpenedWorkoutDialogDate(dateString)
   }
   function goGoDay() {
-    setOpenedDate(openedWorkoutDialogDate)
+    stateStore.setOpenedDate(openedWorkoutDialogDate)
     setOpenedWorkoutDialogDate('')
     router.push('/')
   }
