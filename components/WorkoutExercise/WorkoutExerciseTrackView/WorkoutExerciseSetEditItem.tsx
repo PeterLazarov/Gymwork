@@ -20,14 +20,15 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
   isFocused,
   onPress,
 }) => {
-  const { workoutStore } = useStores()
-  const isRecord = Object.values(workoutStore.openedExerciseRecords).some(
+  const { workoutStore, openedExerciseRecords, openedExerciseWorkSets } =
+    useStores()
+  const isRecord = Object.values(openedExerciseRecords).some(
     record => record.guid === set.guid
   )
   const color = isFocused ? colors.primary : colors.secondaryText
 
   function calcWorkSetNumber() {
-    const workArrayIndex = workoutStore.openedExerciseWorkSets.indexOf(set)
+    const workArrayIndex = openedExerciseWorkSets.indexOf(set)
     return workArrayIndex + 1
   }
 

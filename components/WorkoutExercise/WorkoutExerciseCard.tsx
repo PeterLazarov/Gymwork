@@ -13,14 +13,14 @@ type Props = {
 
 const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
   const router = useRouter()
-  const { workoutStore } = useStores()
+  const { setOpenedExercise } = useStores()
 
   const sets = useMemo(() => {
     return workout.sets.filter(set => set.exercise === exercise)
   }, [workout, exercise])
 
   function onLinkPress() {
-    workoutStore.setOpenedExercise(exercise)
+    setOpenedExercise(exercise)
     router.push('/WorkoutExercise')
   }
 

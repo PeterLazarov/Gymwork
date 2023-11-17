@@ -8,22 +8,21 @@ import { useStores } from '../../../db/helpers/useStores'
 import { WorkoutSet } from '../../../db/models'
 
 const WorkoutExerciseTrackView: React.FC = () => {
-  const { workoutStore } = useStores()
+  const { workoutStore, openedExerciseSets, openedExerciseGuid } = useStores()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
   async function addSet(setToAdd: Pick<WorkoutSet, 'reps' | 'weight'>) {
     workoutStore.addSet({
       ...setToAdd,
-      exercise: workoutStore.openedExerciseGuid,
+      exercise: openedExerciseGuid,
     })
   }
 
   function removeSet(setToRemove: WorkoutSet) {
-    const sets = workoutStore.openedExerciseSets
-    const i = sets.indexOf(setToRemove)
-    const nextSet = sets[i + 1]
-    const prevSet = sets[i - 1]
+    const i = openedExerciseSets.indexOf(setToRemove)
+    const nextSet = openedExerciseSets[i + 1]
+    const prevSet = openedExerciseSets[i - 1]
     setSelectedSet(nextSet ?? prevSet ?? null)
     workoutStore.removeSet(setToRemove.guid)
   }

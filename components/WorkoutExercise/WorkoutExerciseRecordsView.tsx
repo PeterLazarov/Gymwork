@@ -9,7 +9,7 @@ import { useStores } from '../../db/helpers/useStores'
 import { WorkoutModel, WorkoutSet } from '../../db/models'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
-  const { workoutStore, openedExercise } = useStores()
+  const { openedExerciseRecords, workoutStore, openedExercise } = useStores()
   const router = useRouter()
 
   // TODO extract out to action?
@@ -34,7 +34,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
           flexBasis: 0,
         }}
       >
-        {Object.values(workoutStore.openedExerciseRecords).map((set, i) => {
+        {Object.values(openedExerciseRecords).map((set, i) => {
           return (
             <TouchableOpacity
               key={set.guid}

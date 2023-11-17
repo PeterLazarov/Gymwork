@@ -28,7 +28,6 @@ export const WorkoutStoreModel = types
   .props({
     workouts: types.array(WorkoutModel),
     openedDate: types.optional(types.string, today.toISODate()!), // TODO move out?
-    openedExerciseGuid: '', // TODO move out?
   })
   .views(store => ({
     getWorkoutForDate(date: string): Workout | undefined {
@@ -53,19 +52,6 @@ export const WorkoutStoreModel = types
       return this.openedWorkout
         ? this.getWorkoutExercises(this.openedWorkout)
         : []
-    },
-
-    get openedExerciseSets(): WorkoutSet[] {
-      const exerciseSets =
-        this.openedWorkout?.sets.filter(
-          e => e.exercise.guid === store.openedExerciseGuid
-        ) ?? []
-
-      return exerciseSets
-    },
-
-    get openedExerciseWorkSets(): WorkoutSet[] {
-      return this.openedExerciseSets.filter(s => !s.isWarmup)
     },
 
     get exerciseWorkouts(): Record<Exercise['guid'], Workout[]> {
@@ -147,13 +133,6 @@ export const WorkoutStoreModel = types
     ): Record<WorkoutSet['reps'], WorkoutSet> {
       return this.allExerciseRecords[exerciseID]
     },
-
-    get openedExerciseHistory() {
-      return this.exerciseHistory[store.openedExerciseGuid]
-    },
-    get openedExerciseRecords() {
-      return this.getExerciseRecords(store.openedExerciseGuid)
-    },
   }))
   .actions(withSetPropAction)
   .actions(store => ({
@@ -179,9 +158,6 @@ export const WorkoutStoreModel = types
         date: store.openedDate,
       })
       store.workouts.push(created)
-    },
-    setOpenedExercise(exercise: Exercise | null) {
-      store.openedExerciseGuid = exercise?.guid || ''
     },
     addSet(newSet: WorkoutSetSnapshotIn) {
       const created = WorkoutSetModel.create(newSet)

@@ -11,11 +11,11 @@ import { Icon } from '../designSystem'
 import texts from '../texts'
 
 const ExerciseSelectPage: React.FC = () => {
-  const { workoutStore } = useStores()
+  const { setOpenedExercise } = useStores()
   const router = useRouter()
 
   function handleSelectExercise(exercise: Exercise) {
-    workoutStore.setOpenedExercise(exercise)
+    setOpenedExercise(exercise)
     router.push('/WorkoutExercise')
   }
 

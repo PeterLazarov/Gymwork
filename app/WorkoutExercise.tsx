@@ -12,7 +12,8 @@ import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
 
 const WorkoutExercisePage: React.FC = () => {
-  const { workoutStore, timeStore, openedExercise } = useStores()
+  const { workoutStore, timeStore, openedExercise, setOpenedExercise } =
+    useStores()
   const router = useRouter()
 
   const [view, setView] = useState('track')
@@ -21,7 +22,7 @@ const WorkoutExercisePage: React.FC = () => {
 
   function onBackPress() {
     router.push('/')
-    workoutStore.setOpenedExercise(null)
+    setOpenedExercise(null)
   }
 
   function onEditExercisePress() {

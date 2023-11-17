@@ -10,15 +10,13 @@ type Props = {
   workouts: Workout[]
 }
 const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
-  const { workoutStore } = useStores()
+  const { openedExerciseGuid } = useStores()
 
   const exerciseFilteredWorkouts = useMemo(
     () =>
       workouts.map(workout => ({
         ...workout,
-        sets: workout.sets.filter(
-          e => e.exercise.guid === workoutStore.openedExerciseGuid
-        ),
+        sets: workout.sets.filter(e => e.exercise.guid === openedExerciseGuid),
       })) as Workout[],
     [workouts]
   )

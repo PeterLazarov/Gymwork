@@ -12,7 +12,7 @@ type Props = {
   graphHidden: boolean
 }
 const WorkoutExerciseHistoryView: React.FC<Props> = ({ graphHidden }) => {
-  const { workoutStore } = useStores()
+  const { workoutStore, openedExerciseGuid } = useStores()
 
   return (
     <View
@@ -29,15 +29,13 @@ const WorkoutExerciseHistoryView: React.FC<Props> = ({ graphHidden }) => {
       {!graphHidden && (
         <ExerciseHistoryChart
           view="ALL"
-          exerciseID={workoutStore.openedExerciseGuid}
+          exerciseID={openedExerciseGuid}
           height={250}
           width={Dimensions.get('window').width - padding * 2}
         />
       )}
       <WorkoutExerciseHistoryList
-        workouts={
-          workoutStore.exerciseWorkouts[workoutStore.openedExerciseGuid]
-        }
+        workouts={workoutStore.exerciseWorkouts[openedExerciseGuid]}
       />
     </View>
   )
