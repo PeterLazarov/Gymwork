@@ -11,7 +11,7 @@ import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
 
 const WorkoutPage: React.FC = () => {
-  const { workoutStore } = useStores()
+  const { workoutStore, timeStore } = useStores()
   const router = useRouter()
 
   function newWorkout() {
@@ -20,9 +20,6 @@ const WorkoutPage: React.FC = () => {
 
   function openCalendar() {
     router.push('/Calendar')
-  }
-  function openLogs() {
-    router.push('/Log')
   }
 
   return (
@@ -42,11 +39,34 @@ const WorkoutPage: React.FC = () => {
           onPress={openCalendar}
           animated={false}
         />
-        <Appbar.Action
-          icon={() => <Icon icon="analytics" />}
-          onPress={openLogs}
-          animated={false}
-        />
+        {!timeStore.stopwatchRunning && !timeStore.stopwatchPaused && (
+          <Appbar.Action
+            icon={() => <Icon icon="stopwatch" />}
+            onPress={timeStore.startStopwatch}
+            animated={false}
+          />
+        )}
+        {timeStore.stopwatchPaused && (
+          <Appbar.Action
+            icon={() => <Icon icon="play" />}
+            onPress={timeStore.startStopwatch}
+            animated={false}
+          />
+        )}
+        {timeStore.stopwatchRunning && (
+          <Appbar.Action
+            icon={() => <Icon icon="pause-outline" />}
+            onPress={timeStore.pauseStopwatch}
+            animated={false}
+          />
+        )}
+        {(timeStore.stopwatchRunning || timeStore.stopwatchPaused) && (
+          <Appbar.Action
+            icon={() => <Icon icon="stop" />}
+            onPress={timeStore.stopStopwatch}
+            animated={false}
+          />
+        )}
         <Appbar.Action
           icon={() => <Icon icon="ellipsis-vertical" />}
           onPress={() => {}}

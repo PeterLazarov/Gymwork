@@ -22,13 +22,21 @@ const IoniconsIcons = [
   'copy-outline',
   'pencil',
   'checkmark',
+  'pause-outline',
+  'stop',
+  'play',
 ] as const
 type IonicIcon = (typeof IoniconsIcons)[number]
 
 const MCIcons = ['yoga'] as const
 type MCIcon = (typeof MCIcons)[number]
 
-const EntypoIcons = ['emoji-happy', 'emoji-neutral', 'emoji-sad'] as const
+const EntypoIcons = [
+  'emoji-happy',
+  'emoji-neutral',
+  'emoji-sad',
+  'stopwatch',
+] as const
 type EntypoIcon = (typeof EntypoIcons)[number]
 
 // todo: get typing of all ant design icons

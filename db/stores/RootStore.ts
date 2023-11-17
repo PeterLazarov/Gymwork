@@ -1,17 +1,16 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import { ExerciseStoreModel } from './ExerciseStore'
+import { TimeStoreModel } from './TimeStore'
 import { WorkoutStoreModel } from './WorkoutStore'
 import { Exercise } from '../models'
 
-/**
- * A RootStore model.
- */
 export const RootStoreModel = types
   .model('RootStore')
   .props({
     exerciseStore: types.optional(ExerciseStoreModel, {}),
     workoutStore: types.optional(WorkoutStoreModel, {}),
+    timeStore: types.optional(TimeStoreModel, {}),
   })
   .views(self => ({
     get openedExercise(): Exercise | undefined {

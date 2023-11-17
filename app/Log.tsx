@@ -11,6 +11,7 @@ import { Exercise } from '../db/models'
 import { Icon } from '../designSystem'
 import texts from '../texts'
 
+// TODO: screen is unused - remove?
 const Log = observer(() => {
   const router = useRouter()
   const { exercisesPerformed } = useStores()
