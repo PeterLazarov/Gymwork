@@ -12,9 +12,9 @@ import { Icon } from '../designSystem'
 
 const ExerciseEditPage: React.FC = () => {
   const router = useRouter()
-  const { openedExercise, exerciseStore } = useStores()
+  const { stateStore, exerciseStore } = useStores()
 
-  const [exercise, setExercise] = useState(openedExercise!)
+  const [exercise, setExercise] = useState(stateStore.openedExercise!)
   const [formValid, setFormValid] = useState(false)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 

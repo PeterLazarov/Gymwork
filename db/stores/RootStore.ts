@@ -20,21 +20,10 @@ export const RootStoreModel = types
         ? self.workoutStore.getWorkoutExercises(self.stateStore.openedWorkout)
         : []
     },
-    get openedExercise(): Exercise | undefined {
-      return self.exerciseStore.exercises.find(
-        e => e.guid === self.stateStore.openedExerciseGuid
-      )
-    },
     get exercisesPerformed(): Exercise[] {
       return Object.keys(self.workoutStore.exerciseWorkouts)
         .map(id => self.exerciseStore.exercises.find(e => e.guid === id))
         .filter(Boolean)
-    },
-    // TODO: unused
-    get openedExerciseHistory() {
-      return self.workoutStore.exerciseHistory[
-        self.stateStore.openedExerciseGuid
-      ]
     },
     get openedExerciseRecords() {
       return self.workoutStore.getExerciseRecords(

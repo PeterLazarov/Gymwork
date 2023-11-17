@@ -11,8 +11,8 @@ type Props = {
 }
 
 const WorkoutExerciseSetEditList: React.FC<Props> = ({ sets, exercise }) => {
-  const { openedExercise } = useStores()
-  const exerciseToUse = exercise || openedExercise!
+  const { stateStore } = useStores()
+  const exerciseToUse = exercise || stateStore.openedExercise!
 
   const warmupSets = useMemo(() => sets.filter(e => e.isWarmup), [sets])
   const actualSets = useMemo(() => sets.filter(e => !e.isWarmup), [sets])

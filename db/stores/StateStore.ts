@@ -18,6 +18,11 @@ export const StateStoreModel = types
     get rootStore(): RootStore {
       return getParent(self) as RootStore
     },
+    get openedExercise(): Exercise | undefined {
+      return this.rootStore.exerciseStore.exercises.find(
+        e => e.guid === self.openedExerciseGuid
+      )
+    },
     // TODO to allow for multiple workouts per date?
     get openedWorkout(): Workout | undefined {
       return this.rootStore.workoutStore.getWorkoutForDate(self.openedDate)
