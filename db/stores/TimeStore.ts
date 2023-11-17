@@ -45,9 +45,8 @@ export const TimeStoreModel = types
       const elapsedTime = currentTime
         .diff(luxonStartOrUnpauseTime, 'milliseconds')
         .plus(store.stopwatchPausedTime)
-        .toISOTime({ suppressMilliseconds: true })!
 
-      store.stopwatchValue = elapsedTime
+      store.stopwatchValue = elapsedTime.toFormat('hh:mm:ss')
     },
   }))
 

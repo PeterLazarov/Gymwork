@@ -7,9 +7,9 @@ import { Appbar } from 'react-native-paper'
 import DayControl from '../components/DayControl'
 import WorkoutControlButtons from '../components/WorkoutControlButtons'
 import WorkoutExerciseCard from '../components/WorkoutExercise/WorkoutExerciseCard'
+import WorkoutTimer from '../components/WorkoutTimer'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
-import { SubSectionLabel } from '../designSystem/Label'
 
 const WorkoutPage: React.FC = () => {
   const { workoutStore, timeStore } = useStores()
@@ -76,7 +76,7 @@ const WorkoutPage: React.FC = () => {
       </Appbar.Header>
       <DayControl />
       {timeStore.stopwatchValue !== '' && workoutStore.isOpenedWorkoutToday && (
-        <SubSectionLabel>{timeStore.stopwatchValue}</SubSectionLabel>
+        <WorkoutTimer />
       )}
       <ScrollView style={{ flex: 1 }}>
         {workoutStore.openedWorkout &&
