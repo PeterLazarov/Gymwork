@@ -9,6 +9,7 @@ import WorkoutControlButtons from '../components/WorkoutControlButtons'
 import WorkoutExerciseCard from '../components/WorkoutExercise/WorkoutExerciseCard'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
+import { SubSectionLabel } from '../designSystem/Label'
 
 const WorkoutPage: React.FC = () => {
   const { workoutStore, timeStore } = useStores()
@@ -74,13 +75,15 @@ const WorkoutPage: React.FC = () => {
         />
       </Appbar.Header>
       <DayControl />
-
+      {timeStore.stopwatchValue !== '' && workoutStore.isOpenedWorkoutToday && (
+        <SubSectionLabel>{timeStore.stopwatchValue}</SubSectionLabel>
+      )}
       <ScrollView style={{ flex: 1 }}>
-        {workoutStore.currentWorkout &&
-          workoutStore.currentWorkoutExercises.map(exercise => (
+        {workoutStore.openedWorkout &&
+          workoutStore.openedWorkoutExercises.map(exercise => (
             <WorkoutExerciseCard
-              key={`${workoutStore.currentWorkout!.date}_${exercise.guid}`}
-              workout={workoutStore.currentWorkout!}
+              key={`${workoutStore.openedWorkout!.date}_${exercise.guid}`}
+              workout={workoutStore.openedWorkout!}
               exercise={exercise}
             />
           ))}

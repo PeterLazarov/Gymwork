@@ -36,8 +36,11 @@ export const WorkoutStoreModel = types
       return workout
     },
     // TODO to allow for multiple workouts per date?
-    get currentWorkout(): Workout | undefined {
+    get openedWorkout(): Workout | undefined {
       return this.getWorkoutForDate(store.openedDate)
+    },
+    get isOpenedWorkoutToday() {
+      return this.openedWorkout!.date === today.toISODate()!
     },
     getWorkoutExercises(workout: Workout) {
       const set = workout.sets.reduce(
@@ -46,15 +49,15 @@ export const WorkoutStoreModel = types
       )
       return [...set]
     },
-    get currentWorkoutExercises() {
-      return this.currentWorkout
-        ? this.getWorkoutExercises(this.currentWorkout)
+    get openedWorkoutExercises() {
+      return this.openedWorkout
+        ? this.getWorkoutExercises(this.openedWorkout)
         : []
     },
 
     get openedExerciseSets(): WorkoutSet[] {
       const exerciseSets =
-        this.currentWorkout?.sets.filter(
+        this.openedWorkout?.sets.filter(
           e => e.exercise.guid === store.openedExerciseGuid
         ) ?? []
 
@@ -183,21 +186,21 @@ export const WorkoutStoreModel = types
     addSet(newSet: WorkoutSetSnapshotIn) {
       const created = WorkoutSetModel.create(newSet)
 
-      store.currentWorkout?.sets.push(created)
+      store.openedWorkout?.sets.push(created)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
-      const set = store.currentWorkout?.sets.find(s => s.guid === setGuid)
+      const set = store.openedWorkout?.sets.find(s => s.guid === setGuid)
       if (set) {
         destroy(set)
       }
     },
     updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
       // TODO: fix typescript hackery
-      const updated = store.currentWorkout?.sets.map(set =>
+      const updated = store.openedWorkout?.sets.map(set =>
         set.guid === updatedSet.guid ? updatedSet : set
       )
-      if (store.currentWorkout) {
-        store.currentWorkout.sets = updated as unknown as IMSTArray<
+      if (store.openedWorkout) {
+        store.openedWorkout.sets = updated as unknown as IMSTArray<
           typeof WorkoutSetModel
         >
       }
@@ -211,8 +214,8 @@ export const WorkoutStoreModel = types
       store.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
     },
     setWorkoutNotes(notes: string) {
-      if (store.currentWorkout) {
-        store.currentWorkout.notes = notes
+      if (store.openedWorkout) {
+        store.openedWorkout.notes = notes
       }
     },
     setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {

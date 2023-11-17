@@ -27,14 +27,14 @@ const WorkoutPage: React.FC = () => {
         <SectionLabel>How was the workout?</SectionLabel>
         <FeedbackPicker
           onChange={feeling =>
-            workoutStore.currentWorkout!.setProp('feeling', feeling)
+            workoutStore.openedWorkout!.setProp('feeling', feeling)
           }
         />
         <ScrollView>
           <TextInput
-            value={workoutStore.currentWorkout?.notes}
+            value={workoutStore.openedWorkout?.notes}
             onChangeText={text =>
-              workoutStore.currentWorkout!.setProp('notes', text)
+              workoutStore.openedWorkout!.setProp('notes', text)
             }
             multiline
             placeholder="Enter comments..."

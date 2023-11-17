@@ -32,11 +32,7 @@ const CalendarPage: React.FC = () => {
           },
         } as MarkedDates
       ),
-    [
-      workoutStore.workouts,
-      workoutStore.openedDate,
-      workoutStore.currentWorkout,
-    ]
+    [workoutStore.workouts, workoutStore.openedDate, workoutStore.openedWorkout]
   )
 
   const router = useRouter()

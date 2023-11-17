@@ -17,8 +17,8 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
   const router = useRouter()
   const { workoutStore } = useStores()
 
-  const isWorkoutStarted = !!workoutStore.currentWorkout
-  const hasNotes = workoutStore.currentWorkout?.notes !== ''
+  const isWorkoutStarted = !!workoutStore.openedWorkout
+  const hasNotes = workoutStore.openedWorkout?.notes !== ''
   function onAddExercisePress() {
     router.push('/ExerciseSelect')
   }
