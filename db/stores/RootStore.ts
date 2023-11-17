@@ -1,9 +1,13 @@
+import { DateTime } from 'luxon'
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import { ExerciseStoreModel } from './ExerciseStore'
 import { TimeStoreModel } from './TimeStore'
 import { WorkoutStoreModel } from './WorkoutStore'
-import { Exercise, WorkoutSet } from '../models'
+import { Exercise, Workout, WorkoutSet } from '../models'
+
+const now = DateTime.now()
+const today = now.set({ hour: 0, minute: 0, second: 0 })
 
 export const RootStoreModel = types
   .model('RootStore')
@@ -12,8 +16,21 @@ export const RootStoreModel = types
     workoutStore: types.optional(WorkoutStoreModel, {}),
     timeStore: types.optional(TimeStoreModel, {}),
     openedExerciseGuid: '',
+    openedDate: types.optional(types.string, today.toISODate()!),
   })
   .views(self => ({
+    // TODO to allow for multiple workouts per date?
+    get openedWorkout(): Workout | undefined {
+      return self.workoutStore.getWorkoutForDate(self.openedDate)
+    },
+    get isOpenedWorkoutToday() {
+      return this.openedWorkout?.date === today.toISODate()!
+    },
+    get openedWorkoutExercises() {
+      return this.openedWorkout
+        ? self.workoutStore.getWorkoutExercises(this.openedWorkout)
+        : []
+    },
     get openedExercise(): Exercise | undefined {
       return self.exerciseStore.exercises.find(
         e => e.guid === self.openedExerciseGuid
@@ -26,7 +43,7 @@ export const RootStoreModel = types
     },
     get openedExerciseSets(): WorkoutSet[] {
       const exerciseSets =
-        self.workoutStore.openedWorkout?.sets.filter(
+        this.openedWorkout?.sets.filter(
           e => e.exercise.guid === self.openedExerciseGuid
         ) ?? []
 
@@ -47,6 +64,17 @@ export const RootStoreModel = types
   .actions(self => ({
     setOpenedExercise(exercise: Exercise | null) {
       self.openedExerciseGuid = exercise?.guid || ''
+    },
+    setOpenedDate(date: string) {
+      self.openedDate = date
+    },
+    incrementCurrentDate() {
+      const luxonDate = DateTime.fromISO(self.openedDate)
+      self.openedDate = luxonDate.plus({ days: 1 }).toISODate()!
+    },
+    decrementCurrentDate() {
+      const luxonDate = DateTime.fromISO(self.openedDate)
+      self.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
     },
   }))
 

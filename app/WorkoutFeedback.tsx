@@ -8,8 +8,8 @@ import FeedbackPicker from '../components/FeedbackPicker'
 import { useStores } from '../db/helpers/useStores'
 import { SectionLabel } from '../designSystem/Label'
 
-const WorkoutPage: React.FC = () => {
-  const { workoutStore } = useStores()
+const WorkoutFeedbackPage: React.FC = () => {
+  const { openedWorkout } = useStores()
   const router = useRouter()
 
   function onBackPress() {
@@ -26,16 +26,12 @@ const WorkoutPage: React.FC = () => {
       <View style={{ padding: 8, gap: 16, flex: 1 }}>
         <SectionLabel>How was the workout?</SectionLabel>
         <FeedbackPicker
-          onChange={feeling =>
-            workoutStore.openedWorkout!.setProp('feeling', feeling)
-          }
+          onChange={feeling => openedWorkout!.setProp('feeling', feeling)}
         />
         <ScrollView>
           <TextInput
-            value={workoutStore.openedWorkout?.notes}
-            onChangeText={text =>
-              workoutStore.openedWorkout!.setProp('notes', text)
-            }
+            value={openedWorkout?.notes}
+            onChangeText={text => openedWorkout!.setProp('notes', text)}
             multiline
             placeholder="Enter comments..."
           />
@@ -50,4 +46,4 @@ const WorkoutPage: React.FC = () => {
     </View>
   )
 }
-export default observer(WorkoutPage)
+export default observer(WorkoutFeedbackPage)

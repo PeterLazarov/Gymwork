@@ -12,7 +12,7 @@ import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
 
 const WorkoutExercisePage: React.FC = () => {
-  const { workoutStore, timeStore, openedExercise, setOpenedExercise } =
+  const { timeStore, openedExercise, setOpenedExercise, isOpenedWorkoutToday } =
     useStores()
   const router = useRouter()
 
@@ -86,7 +86,7 @@ const WorkoutExercisePage: React.FC = () => {
           { value: 'records', label: 'Records' },
         ]}
       />
-      {timeStore.stopwatchValue !== '' && workoutStore.isOpenedWorkoutToday && (
+      {timeStore.stopwatchValue !== '' && isOpenedWorkoutToday && (
         <WorkoutTimer />
       )}
       <View

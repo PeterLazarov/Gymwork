@@ -15,10 +15,10 @@ type Props = {
 
 const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
   const router = useRouter()
-  const { workoutStore } = useStores()
+  const { openedWorkout } = useStores()
 
-  const isWorkoutStarted = !!workoutStore.openedWorkout
-  const hasNotes = workoutStore.openedWorkout?.notes !== ''
+  const isWorkoutStarted = !!openedWorkout
+  const hasNotes = openedWorkout?.notes !== ''
   function onAddExercisePress() {
     router.push('/ExerciseSelect')
   }

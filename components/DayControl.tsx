@@ -10,10 +10,10 @@ import { Divider, Icon } from '../designSystem'
 import { capitalize } from '../utils/string'
 
 const DayControl = () => {
-  const { workoutStore } = useStores()
+  const { openedDate, incrementCurrentDate, decrementCurrentDate } = useStores()
   const router = useRouter()
 
-  const luxonDate = DateTime.fromISO(workoutStore.openedDate)
+  const luxonDate = DateTime.fromISO(openedDate)
   const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
   const todayDiff = Math.round(luxonDate.diff(today, 'days').days)
   const label =
@@ -36,7 +36,7 @@ const DayControl = () => {
       >
         <Appbar.Action
           icon={() => <Icon icon="chevron-back" />}
-          onPress={workoutStore.decrementCurrentDate}
+          onPress={decrementCurrentDate}
           animated={false}
         />
         <Appbar.Content
@@ -45,7 +45,7 @@ const DayControl = () => {
         />
         <Appbar.Action
           icon={() => <Icon icon="chevron-forward" />}
-          onPress={workoutStore.incrementCurrentDate}
+          onPress={incrementCurrentDate}
           animated={false}
         />
       </View>

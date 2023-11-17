@@ -1,12 +1,13 @@
-import { DateTime } from 'luxon'
 import {
   IMSTArray,
   Instance,
   SnapshotOut,
   types,
   destroy,
+  getParent,
 } from 'mobx-state-tree'
 
+import { RootStore } from './RootStore'
 import workoutSeedData from '../../data/workout-seed-data'
 import * as storage from '../../utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
@@ -20,38 +21,26 @@ import {
   WorkoutSetSnapshotIn,
 } from '../models'
 
-const now = DateTime.now()
-const today = now.set({ hour: 0, minute: 0, second: 0 })
-
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
   .props({
     workouts: types.array(WorkoutModel),
-    openedDate: types.optional(types.string, today.toISODate()!), // TODO move out?
   })
   .views(store => ({
+    get rootStore(): RootStore {
+      return getParent(store) as RootStore
+    },
     getWorkoutForDate(date: string): Workout | undefined {
       const [workout] = store.workouts.filter(w => w.date === date)
       return workout
     },
     // TODO to allow for multiple workouts per date?
-    get openedWorkout(): Workout | undefined {
-      return this.getWorkoutForDate(store.openedDate)
-    },
-    get isOpenedWorkoutToday() {
-      return this.openedWorkout!.date === today.toISODate()!
-    },
     getWorkoutExercises(workout: Workout) {
       const set = workout.sets.reduce(
         (acc, set) => acc.add(set.exercise),
         new Set<Exercise>()
       )
       return [...set]
-    },
-    get openedWorkoutExercises() {
-      return this.openedWorkout
-        ? this.getWorkoutExercises(this.openedWorkout)
-        : []
     },
 
     get exerciseWorkouts(): Record<Exercise['guid'], Workout[]> {
@@ -135,14 +124,14 @@ export const WorkoutStoreModel = types
     },
   }))
   .actions(withSetPropAction)
-  .actions(store => ({
+  .actions(self => ({
     async fetch() {
       setTimeout(async () => {
         const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
         console.log('fetching')
 
         if (workouts && workouts?.length > 0) {
-          store.setProp('workouts', workouts)
+          self.setProp('workouts', workouts)
         } else {
           await this.seed()
         }
@@ -151,47 +140,41 @@ export const WorkoutStoreModel = types
     async seed() {
       console.log('seeding')
 
-      store.setProp('workouts', workoutSeedData)
+      self.setProp('workouts', workoutSeedData)
     },
     createWorkout() {
       const created = WorkoutModel.create({
-        date: store.openedDate,
+        date: self.rootStore.openedDate,
       })
-      store.workouts.push(created)
+      self.workouts.push(created)
     },
     addSet(newSet: WorkoutSetSnapshotIn) {
       const created = WorkoutSetModel.create(newSet)
 
-      store.openedWorkout?.sets.push(created)
+      self.rootStore.openedWorkout?.sets.push(created)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
-      const set = store.openedWorkout?.sets.find(s => s.guid === setGuid)
+      const set = self.rootStore.openedWorkout?.sets.find(
+        s => s.guid === setGuid
+      )
       if (set) {
         destroy(set)
       }
     },
     updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
       // TODO: fix typescript hackery
-      const updated = store.openedWorkout?.sets.map(set =>
+      const updated = self.rootStore.openedWorkout?.sets.map(set =>
         set.guid === updatedSet.guid ? updatedSet : set
       )
-      if (store.openedWorkout) {
-        store.openedWorkout.sets = updated as unknown as IMSTArray<
+      if (self.rootStore.openedWorkout) {
+        self.rootStore.openedWorkout.sets = updated as unknown as IMSTArray<
           typeof WorkoutSetModel
         >
       }
     },
-    incrementCurrentDate() {
-      const luxonDate = DateTime.fromISO(store.openedDate)
-      store.openedDate = luxonDate.plus({ days: 1 }).toISODate()!
-    },
-    decrementCurrentDate() {
-      const luxonDate = DateTime.fromISO(store.openedDate)
-      store.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
-    },
     setWorkoutNotes(notes: string) {
-      if (store.openedWorkout) {
-        store.openedWorkout.notes = notes
+      if (self.rootStore.openedWorkout) {
+        self.rootStore.openedWorkout.notes = notes
       }
     },
     setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {
