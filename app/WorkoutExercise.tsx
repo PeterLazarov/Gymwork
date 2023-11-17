@@ -7,11 +7,12 @@ import { Appbar, Menu, SegmentedButtons } from 'react-native-paper'
 import WorkoutExerciseHistoryView from '../components/WorkoutExercise/WorkoutExerciseHistoryView/WorkoutExerciseHistoryView'
 import WorkoutExerciseRecordsView from '../components/WorkoutExercise/WorkoutExerciseRecordsView'
 import WorkoutExerciseTrackView from '../components/WorkoutExercise/WorkoutExerciseTrackView/WorkoutExerciseTrackView'
+import WorkoutTimer from '../components/WorkoutTimer'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
 
 const WorkoutExercisePage: React.FC = () => {
-  const { workoutStore, openedExercise } = useStores()
+  const { workoutStore, timeStore, openedExercise } = useStores()
   const router = useRouter()
 
   const [view, setView] = useState('track')
@@ -84,6 +85,9 @@ const WorkoutExercisePage: React.FC = () => {
           { value: 'records', label: 'Records' },
         ]}
       />
+      {timeStore.stopwatchValue !== '' && workoutStore.isOpenedWorkoutToday && (
+        <WorkoutTimer />
+      )}
       <View
         style={{
           flexGrow: 1,
