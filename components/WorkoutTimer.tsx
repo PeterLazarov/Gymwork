@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
+import { Text } from 'react-native-paper'
 
 import { useStores } from '../db/helpers/useStores'
 import { SubSectionLabel } from '../designSystem/Label'
@@ -9,17 +10,28 @@ import colors from '../designSystem/colors'
 const WorkoutTimer: React.FC = () => {
   const { timeStore } = useStores()
 
+  function onPress() {
+    if (!timeStore.timerRunning) {
+      timeStore.startTimer()
+    }
+  }
+
   return (
-    <View style={styles.timerPanel}>
-      <SubSectionLabel>{timeStore.stopwatchValue}</SubSectionLabel>
-    </View>
+    <TouchableOpacity
+      style={styles.timerPanel}
+      onPress={onPress}
+    >
+      <Text variant="labelSmall">Press to edit</Text>
+      <SubSectionLabel>W: {timeStore.stopwatchValue}</SubSectionLabel>
+      <SubSectionLabel>E: {timeStore.timerValue}</SubSectionLabel>
+    </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   timerPanel: {
     display: 'flex',
-    flexDirection: 'row',
+    // flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.secondary,
@@ -28,7 +40,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     marginBottom: 4,
-    width: 120,
+    width: 140,
     alignSelf: 'center',
   },
 })

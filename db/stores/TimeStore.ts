@@ -1,7 +1,10 @@
 import { DateTime } from 'luxon'
-import { Instance, SnapshotOut, types } from 'mobx-state-tree'
+import { Instance, SnapshotOut, getParent, types } from 'mobx-state-tree'
+
+import { RootStore } from './RootStore'
 
 let stopwatchInterval: NodeJS.Timeout
+let timerInterval: NodeJS.Timeout
 
 export const TimeStoreModel = types
   .model('TimeStore')
@@ -11,7 +14,15 @@ export const TimeStoreModel = types
     stopwatchPausedTime: 0,
     startOrUnpauseTime: '',
     stopwatchValue: '',
+    timerRunning: false,
+    timerTimeLeft: 0,
+    timerValue: '',
   })
+  .views(self => ({
+    get rootStore(): RootStore {
+      return getParent(self) as RootStore
+    },
+  }))
   .actions(store => ({
     startStopwatch() {
       store.stopwatchRunning = true
@@ -47,6 +58,32 @@ export const TimeStoreModel = types
         .plus(store.stopwatchPausedTime)
 
       store.stopwatchValue = elapsedTime.toFormat('hh:mm:ss')
+    },
+
+    startTimer() {
+      store.timerTimeLeft = store.rootStore.stateStore.timerDurationSecs
+      this._updateTimerSeconds()
+      timerInterval = setInterval(this._tickTimer, 1000)
+    },
+    _tickTimer() {
+      this._updateTimerSeconds()
+      if (store.timerTimeLeft <= 0) {
+        this._stopTimer()
+      } else {
+        store.timerTimeLeft--
+      }
+    },
+    _stopTimer() {
+      clearInterval(timerInterval)
+      store.timerRunning = false
+      store.timerTimeLeft = store.rootStore.stateStore.timerDurationSecs
+    },
+    _updateTimerSeconds() {
+      const minutes = Math.floor((store.timerTimeLeft % 3600) / 60)
+      const seconds = store.timerTimeLeft % 60
+
+      const formattedTime = `${minutes}:${seconds}`
+      store.timerValue = formattedTime
     },
   }))
 

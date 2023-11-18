@@ -13,6 +13,7 @@ export const StateStoreModel = types
   .props({
     openedExerciseGuid: '',
     openedDate: types.optional(types.string, today.toISODate()!),
+    timerDurationSecs: 2,
   })
   .views(self => ({
     get rootStore(): RootStore {
