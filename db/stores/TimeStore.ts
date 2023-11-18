@@ -77,6 +77,7 @@ export const TimeStoreModel = types
       clearInterval(timerInterval)
       store.timerRunning = false
       store.timerTimeLeft = store.rootStore.stateStore.timerDurationSecs
+      this._updateTimerSeconds()
     },
     _updateTimerSeconds() {
       const minutes = Math.floor((store.timerTimeLeft % 3600) / 60)

@@ -13,7 +13,7 @@ export const StateStoreModel = types
   .props({
     openedExerciseGuid: '',
     openedDate: types.optional(types.string, today.toISODate()!),
-    timerDurationSecs: 2,
+    timerDurationSecs: 120,
   })
   .views(self => ({
     get rootStore(): RootStore {
@@ -66,6 +66,9 @@ export const StateStoreModel = types
     decrementCurrentDate() {
       const luxonDate = DateTime.fromISO(self.openedDate)
       self.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
+    },
+    setTimerDuration(timerSeconds: number) {
+      self.timerDurationSecs = timerSeconds
     },
   }))
 

@@ -25,10 +25,11 @@ const IoniconsIcons = [
   'pause-outline',
   'stop',
   'play',
+  'settings-outline',
 ] as const
 type IonicIcon = (typeof IoniconsIcons)[number]
 
-const MCIcons = ['yoga'] as const
+const MCIcons = ['yoga', 'weight-lifter'] as const
 type MCIcon = (typeof MCIcons)[number]
 
 const EntypoIcons = [

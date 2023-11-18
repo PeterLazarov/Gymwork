@@ -1,30 +1,58 @@
 import { observer } from 'mobx-react-lite'
-import React from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
-import { Text } from 'react-native-paper'
+import React, { useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import { IconButton } from 'react-native-paper'
 
+import TimerEditModal from './TimerEditModal'
 import { useStores } from '../db/helpers/useStores'
+import { Icon } from '../designSystem'
 import { SubSectionLabel } from '../designSystem/Label'
 import colors from '../designSystem/colors'
 
 const WorkoutTimer: React.FC = () => {
   const { timeStore } = useStores()
 
-  function onPress() {
+  const [settingDialogOpen, setSettingDialogOpen] = useState(false)
+
+  function onPlayPress() {
     if (!timeStore.timerRunning) {
       timeStore.startTimer()
     }
   }
 
+  function onSettingsPress() {
+    setSettingDialogOpen(true)
+  }
+
   return (
-    <TouchableOpacity
-      style={styles.timerPanel}
-      onPress={onPress}
-    >
-      <Text variant="labelSmall">Press to edit</Text>
-      <SubSectionLabel>W: {timeStore.stopwatchValue}</SubSectionLabel>
-      <SubSectionLabel>E: {timeStore.timerValue}</SubSectionLabel>
-    </TouchableOpacity>
+    <>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <IconButton
+          onPress={onPlayPress}
+          icon={() => <Icon icon="weight-lifter" />}
+        />
+        <View style={styles.timerPanel}>
+          <SubSectionLabel>W: {timeStore.stopwatchValue}</SubSectionLabel>
+          <SubSectionLabel>E: {timeStore.timerValue}</SubSectionLabel>
+        </View>
+        <IconButton
+          onPress={onSettingsPress}
+          icon={() => <Icon icon="settings-outline" />}
+        />
+      </View>
+      <TimerEditModal
+        open={settingDialogOpen}
+        onClose={() => {
+          setSettingDialogOpen(false)
+        }}
+      />
+    </>
   )
 }
 
