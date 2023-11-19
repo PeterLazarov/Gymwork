@@ -10,7 +10,7 @@ import { SubSectionLabel } from '../designSystem/Label'
 import colors from '../designSystem/colors'
 
 const WorkoutTimer: React.FC = () => {
-  const { timeStore } = useStores()
+  const { timeStore, stateStore } = useStores()
 
   const [settingDialogOpen, setSettingDialogOpen] = useState(false)
 
@@ -39,7 +39,7 @@ const WorkoutTimer: React.FC = () => {
         />
         <View style={styles.timerPanel}>
           <SubSectionLabel>W: {timeStore.stopwatchValue}</SubSectionLabel>
-          <SubSectionLabel>E: {timeStore.timerValue}</SubSectionLabel>
+          <SubSectionLabel>E: {stateStore.timerValue}</SubSectionLabel>
         </View>
         <IconButton
           onPress={onSettingsPress}

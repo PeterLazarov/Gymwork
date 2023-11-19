@@ -3,6 +3,7 @@ import { Instance, SnapshotOut, getParent, types } from 'mobx-state-tree'
 import { Vibration } from 'react-native'
 
 import { RootStore } from './RootStore'
+import { getFormatedDuration } from '../../utils/time'
 
 let stopwatchInterval: NodeJS.Timeout
 let timerInterval: NodeJS.Timeout
@@ -17,7 +18,7 @@ export const TimeStoreModel = types
     stopwatchValue: '',
     timerRunning: false,
     timerTimeLeft: 0,
-    timerValue: '',
+    timerCountdownValue: '',
   })
   .views(self => ({
     get rootStore(): RootStore {
@@ -70,7 +71,7 @@ export const TimeStoreModel = types
       clearInterval(timerInterval)
       store.timerRunning = false
       store.timerTimeLeft = store.rootStore.stateStore.timerDurationSecs
-      this._updateTimerSeconds()
+      store.timerCountdownValue = ''
     },
     _tickTimer() {
       this._updateTimerSeconds()
@@ -82,11 +83,8 @@ export const TimeStoreModel = types
       }
     },
     _updateTimerSeconds() {
-      const minutes = Math.floor((store.timerTimeLeft % 3600) / 60)
-      const seconds = store.timerTimeLeft % 60
-
-      const formattedTime = `${minutes}:${seconds}`
-      store.timerValue = formattedTime
+      const formattedTime = getFormatedDuration(store.timerTimeLeft)
+      store.timerCountdownValue = formattedTime
     },
   }))
 

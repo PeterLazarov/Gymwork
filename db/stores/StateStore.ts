@@ -1,7 +1,11 @@
 import { DateTime } from 'luxon'
 import { Instance, SnapshotOut, types, getParent } from 'mobx-state-tree'
 
+import { ExerciseStore } from './ExerciseStore'
 import { RootStore } from './RootStore'
+import { TimeStore } from './TimeStore'
+import { WorkoutStore } from './WorkoutStore'
+import { getFormatedDuration } from '../../utils/time'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { Exercise, Workout, WorkoutSet } from '../models'
 
@@ -19,23 +23,35 @@ export const StateStoreModel = types
     get rootStore(): RootStore {
       return getParent(self) as RootStore
     },
+    get timeStore(): TimeStore {
+      return this.rootStore.timeStore
+    },
+    get exerciseStore(): ExerciseStore {
+      return this.rootStore.exerciseStore
+    },
+    get workoutStore(): WorkoutStore {
+      return this.rootStore.workoutStore
+    },
+    get timerValue() {
+      return this.timeStore.timerCountdownValue !== ''
+        ? this.timeStore.timerCountdownValue
+        : getFormatedDuration(self.timerDurationSecs)
+    },
     get openedExercise(): Exercise | undefined {
-      return this.rootStore.exerciseStore.exercises.find(
+      return this.exerciseStore.exercises.find(
         e => e.guid === self.openedExerciseGuid
       )
     },
     // TODO to allow for multiple workouts per date?
     get openedWorkout(): Workout | undefined {
-      return this.rootStore.workoutStore.getWorkoutForDate(self.openedDate)
+      return this.workoutStore.getWorkoutForDate(self.openedDate)
     },
     get isOpenedWorkoutToday() {
       return this.openedWorkout?.date === today.toISODate()!
     },
     get exercisesPerformed(): Exercise[] {
-      return Object.keys(this.rootStore.workoutStore.exerciseWorkouts)
-        .map(id =>
-          this.rootStore.exerciseStore.exercises.find(e => e.guid === id)
-        )
+      return Object.keys(this.workoutStore.exerciseWorkouts)
+        .map(id => this.exerciseStore.exercises.find(e => e.guid === id))
         .filter(Boolean)
     },
     get openedExerciseSets(): WorkoutSet[] {
