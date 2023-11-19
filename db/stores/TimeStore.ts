@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 import { Instance, SnapshotOut, getParent, types } from 'mobx-state-tree'
+import { Vibration } from 'react-native'
 
 import { RootStore } from './RootStore'
 
@@ -75,6 +76,7 @@ export const TimeStoreModel = types
       this._updateTimerSeconds()
       if (store.timerTimeLeft <= 0) {
         this.stopTimer()
+        Vibration.vibrate([500, 200, 500])
       } else {
         store.timerTimeLeft--
       }
