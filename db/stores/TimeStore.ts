@@ -65,19 +65,19 @@ export const TimeStoreModel = types
       this._updateTimerSeconds()
       timerInterval = setInterval(this._tickTimer, 1000)
     },
-    _tickTimer() {
-      this._updateTimerSeconds()
-      if (store.timerTimeLeft <= 0) {
-        this._stopTimer()
-      } else {
-        store.timerTimeLeft--
-      }
-    },
-    _stopTimer() {
+    stopTimer() {
       clearInterval(timerInterval)
       store.timerRunning = false
       store.timerTimeLeft = store.rootStore.stateStore.timerDurationSecs
       this._updateTimerSeconds()
+    },
+    _tickTimer() {
+      this._updateTimerSeconds()
+      if (store.timerTimeLeft <= 0) {
+        this.stopTimer()
+      } else {
+        store.timerTimeLeft--
+      }
     },
     _updateTimerSeconds() {
       const minutes = Math.floor((store.timerTimeLeft % 3600) / 60)
