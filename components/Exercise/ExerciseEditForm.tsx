@@ -6,7 +6,9 @@ import { TextInput, IconButton, HelperText } from 'react-native-paper'
 import { useStores } from '../../db/helpers/useStores'
 import { Exercise } from '../../db/models'
 import { Icon } from '../../designSystem'
+import Dropdown from '../../designSystem/Dropdown'
 import Multiselect from '../../designSystem/Multiselect'
+import ExerciseType from '../../enums/ExerciseType'
 
 type Props = {
   exercise: Exercise
@@ -50,6 +52,12 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
     onFormChange({
       ...exercise,
       muscles: selected as Exercise['muscles'],
+    })
+  }
+  function onExerciseChange(measurementType: string) {
+    onFormChange({
+      ...exercise,
+      measurementType,
     })
   }
 
@@ -114,7 +122,11 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           {musclesError}
         </HelperText>
       )}
-      <Text>TODO: Measurement Type</Text>
+      <Dropdown
+        options={Object.values(ExerciseType)}
+        selectedOption={exercise.measurementType}
+        onSelect={onExerciseChange}
+      />
       <Text>TODO: Measurement Unit Type</Text>
     </View>
   )
