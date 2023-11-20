@@ -12,6 +12,8 @@ export const WorkoutSetModel = types
     exercise: types.reference(ExerciseModel),
     weight: 0,
     reps: 0,
+    distance: 0,
+    distanceUnit: 'm',
     isWarmup: false,
   })
   .actions(withSetPropAction)

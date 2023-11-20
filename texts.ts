@@ -7,6 +7,7 @@ export default {
   search: 'Search',
   reps: 'reps',
   weight: 'weight',
+  distance: 'distance',
   updateSet: 'Update set',
   remove: 'Remove',
   calendar: 'Calendar',

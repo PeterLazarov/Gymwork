@@ -1,12 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { Button } from 'react-native-paper'
 
+import SetEditPanelSection from './SetEditPanelSection'
 import { useStores } from '../../../db/helpers/useStores'
 import { WorkoutSet } from '../../../db/models'
-import IncrementEditor from '../../../designSystem/IncrementEditor'
+import DistanceEditor from '../../../designSystem/DistanceEditor'
+import IncrementNumericEditor from '../../../designSystem/IncrementNumericEditor'
 import colors from '../../../designSystem/colors'
-import ExerciseType from '../../../enums/ExerciseType'
 import texts from '../../../texts'
 
 type Props = {
@@ -15,18 +16,6 @@ type Props = {
   updateSet: (set: WorkoutSet) => void
   removeSet: (set: WorkoutSet) => void
 }
-
-const REP_MEASUREMENTS = [
-  ExerciseType.WEIGHT,
-  ExerciseType.REPS_DISTANCE,
-  ExerciseType.REPS_TIME,
-  ExerciseType.REPS,
-]
-const WEIGHT_MEASUREMENTS = [
-  ExerciseType.WEIGHT,
-  ExerciseType.WEIGHT_DISTANCE,
-  ExerciseType.WEIGHT_TIME,
-]
 
 const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   selectedSet,
@@ -38,21 +27,12 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
 
   const [reps, setReps] = useState(selectedSet?.reps || 0)
   const [weight, setWeight] = useState(selectedSet?.weight || 0)
-
-  const hasReps = useMemo(
-    () => REP_MEASUREMENTS.includes(stateStore.openedExercise!.measurementType),
-    [stateStore.openedExercise!.measurementType]
-  )
-
-  const hasWeight = useMemo(
-    () =>
-      WEIGHT_MEASUREMENTS.includes(stateStore.openedExercise!.measurementType),
-    [stateStore.openedExercise!.measurementType]
-  )
+  const [distance, setDistance] = useState(selectedSet?.distance || 0)
 
   useEffect(() => {
     setReps(selectedSet?.reps || 0)
     setWeight(selectedSet?.weight || 0)
+    setDistance(selectedSet?.distance || 0)
   }, [selectedSet])
 
   function saveChanges() {
@@ -72,21 +52,33 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
 
   return (
     <View style={{ gap: 16 }}>
-      {hasReps && (
-        <IncrementEditor
-          text={texts.reps}
-          value={reps}
-          onChange={setReps}
-        />
+      {stateStore.openedExercise!.hasRepMeasument && (
+        <SetEditPanelSection text={texts.reps}>
+          <IncrementNumericEditor
+            value={reps}
+            onChange={setReps}
+          />
+        </SetEditPanelSection>
       )}
 
-      {hasWeight && (
-        <IncrementEditor
-          text={texts.weight}
-          value={weight}
-          onChange={setWeight}
-          step={stateStore.openedExercise!.weightIncrement}
-        />
+      {stateStore.openedExercise!.hasWeightMeasument && (
+        <SetEditPanelSection text={texts.weight}>
+          <IncrementNumericEditor
+            value={weight}
+            onChange={setWeight}
+            step={stateStore.openedExercise!.weightIncrement}
+          />
+        </SetEditPanelSection>
+      )}
+
+      {stateStore.openedExercise!.hasDistanceMeasument && (
+        <SetEditPanelSection text={texts.distance}>
+          <DistanceEditor
+            value={distance}
+            onChange={setDistance}
+            unit="m"
+          />
+        </SetEditPanelSection>
       )}
 
       <View style={{ flexDirection: 'row', gap: 8 }}>
