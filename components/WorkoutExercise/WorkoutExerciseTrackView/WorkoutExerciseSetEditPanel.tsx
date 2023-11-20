@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { View, TextInput } from 'react-native'
+import React, { useEffect, useMemo, useState } from 'react'
+import { View } from 'react-native'
 import { Button } from 'react-native-paper'
 
 import { useStores } from '../../../db/helpers/useStores'
 import { WorkoutSet } from '../../../db/models'
-import { Divider } from '../../../designSystem'
-import { SubSectionLabel } from '../../../designSystem/Label'
+import IncrementEditor from '../../../designSystem/IncrementEditor'
 import colors from '../../../designSystem/colors'
+import ExerciseType from '../../../enums/ExerciseType'
 import texts from '../../../texts'
-import IncrementDecrementButtons from '../../IncrementDecrementButtons'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -16,6 +15,18 @@ type Props = {
   updateSet: (set: WorkoutSet) => void
   removeSet: (set: WorkoutSet) => void
 }
+
+const REP_MEASUREMENTS = [
+  ExerciseType.WEIGHT,
+  ExerciseType.REPS_DISTANCE,
+  ExerciseType.REPS_TIME,
+  ExerciseType.REPS,
+]
+const WEIGHT_MEASUREMENTS = [
+  ExerciseType.WEIGHT,
+  ExerciseType.WEIGHT_DISTANCE,
+  ExerciseType.WEIGHT_TIME,
+]
 
 const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   selectedSet,
@@ -27,6 +38,17 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
 
   const [reps, setReps] = useState(selectedSet?.reps || 0)
   const [weight, setWeight] = useState(selectedSet?.weight || 0)
+
+  const hasReps = useMemo(
+    () => REP_MEASUREMENTS.includes(stateStore.openedExercise!.measurementType),
+    [stateStore.openedExercise!.measurementType]
+  )
+
+  const hasWeight = useMemo(
+    () =>
+      WEIGHT_MEASUREMENTS.includes(stateStore.openedExercise!.measurementType),
+    [stateStore.openedExercise!.measurementType]
+  )
 
   useEffect(() => {
     setReps(selectedSet?.reps || 0)
@@ -50,54 +72,22 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
 
   return (
     <View style={{ gap: 16 }}>
-      <View>
-        <SubSectionLabel style={{ textTransform: 'uppercase' }}>
-          {texts.reps}
-        </SubSectionLabel>
-        <Divider />
-      </View>
-      <IncrementDecrementButtons
-        value={reps}
-        onChange={n => setReps(Math.max(n, 0))}
-      >
-        <TextInput
-          style={{ flexGrow: 1, textAlign: 'center' }}
-          inputMode="numeric"
-          multiline={false}
-          keyboardType="number-pad"
-          onChangeText={text => {
-            setReps(isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0))
-          }}
-          maxLength={3}
-        >
-          {reps}
-        </TextInput>
-      </IncrementDecrementButtons>
+      {hasReps && (
+        <IncrementEditor
+          text={texts.reps}
+          value={reps}
+          onChange={setReps}
+        />
+      )}
 
-      <View>
-        <SubSectionLabel style={{ textTransform: 'uppercase' }}>
-          {texts.weight}
-        </SubSectionLabel>
-        <Divider />
-      </View>
-      <IncrementDecrementButtons
-        value={weight}
-        onChange={n => setWeight(Math.max(n, 0))}
-        step={stateStore.openedExercise!.weightIncrement}
-      >
-        <TextInput
-          style={{ flexGrow: 1, textAlign: 'center' }}
-          inputMode="numeric"
-          multiline={false}
-          keyboardType="number-pad"
-          onChangeText={text => {
-            setWeight(isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0))
-          }}
-          maxLength={3}
-        >
-          {weight}
-        </TextInput>
-      </IncrementDecrementButtons>
+      {hasWeight && (
+        <IncrementEditor
+          text={texts.weight}
+          value={weight}
+          onChange={setWeight}
+          step={stateStore.openedExercise!.weightIncrement}
+        />
+      )}
 
       <View style={{ flexDirection: 'row', gap: 8 }}>
         <Button
