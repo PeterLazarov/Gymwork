@@ -10,9 +10,10 @@ import IncrementNumericEditor from '../../../designSystem/IncrementNumericEditor
 import colors from '../../../designSystem/colors'
 import texts from '../../../texts'
 
+type SetEditFields = 'weight' | 'reps' | 'distance'
 type Props = {
   selectedSet: WorkoutSet | null
-  addSet: (set: Pick<WorkoutSet, 'weight' | 'reps'>) => void
+  addSet: (set: Pick<WorkoutSet, SetEditFields>) => void
   updateSet: (set: WorkoutSet) => void
   removeSet: (set: WorkoutSet) => void
 }
@@ -41,11 +42,13 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
         ...selectedSet,
         reps,
         weight,
+        distance,
       })
     } else {
       addSet({
         reps,
         weight,
+        distance,
       })
     }
   }
