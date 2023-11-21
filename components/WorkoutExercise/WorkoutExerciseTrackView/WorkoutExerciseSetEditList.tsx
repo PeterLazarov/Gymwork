@@ -40,9 +40,10 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
     data: ArrayLike<WorkoutSet> | null | undefined,
     index: number
   ) => {
+    // TODO: offset messed up on set added / removed
     return {
       length: ITEM_HEIGHT,
-      offset: ITEM_HEIGHT * index,
+      offset: ITEM_HEIGHT * (index + 1),
       index,
     }
   }
