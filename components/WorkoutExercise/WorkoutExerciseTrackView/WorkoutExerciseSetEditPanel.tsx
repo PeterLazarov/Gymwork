@@ -6,12 +6,18 @@ import SetEditPanelSection from './SetEditPanelSection'
 import { useStores } from '../../../db/helpers/useStores'
 import { WorkoutSet } from '../../../db/models'
 import DistanceEditor from '../../../designSystem/DistanceEditor'
+import DurationInput from '../../../designSystem/DurationInput'
 import IncrementNumericEditor from '../../../designSystem/IncrementNumericEditor'
 import colors from '../../../designSystem/colors'
 import DistanceType from '../../../enums/DistanceType'
 import texts from '../../../texts'
 
-type SetEditFields = 'weight' | 'reps' | 'distance' | 'distanceUnit'
+type SetEditFields =
+  | 'weight'
+  | 'reps'
+  | 'distance'
+  | 'distanceUnit'
+  | 'durationSecs'
 type Props = {
   selectedSet: WorkoutSet | null
   addSet: (set: Pick<WorkoutSet, SetEditFields>) => void
@@ -33,12 +39,16 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   const [distanceUnit, setDistanceUnit] = useState(
     selectedSet?.distanceUnit || DistanceType.M
   )
+  const [durationSecs, setDurationSecs] = useState(
+    selectedSet?.durationSecs || 0
+  )
 
   useEffect(() => {
     setReps(selectedSet?.reps || 0)
     setWeight(selectedSet?.weight || 0)
     setDistance(selectedSet?.distance || 0)
     setDistanceUnit(selectedSet?.distanceUnit || DistanceType.M)
+    setDurationSecs(selectedSet?.durationSecs || 0)
   }, [selectedSet])
 
   function saveChanges() {
@@ -49,6 +59,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
         weight,
         distance,
         distanceUnit,
+        durationSecs,
       })
     } else {
       addSet({
@@ -56,6 +67,7 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
         weight,
         distance,
         distanceUnit,
+        durationSecs,
       })
     }
   }
@@ -88,6 +100,15 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
             onChange={setDistance}
             onUnitChange={setDistanceUnit}
             unit={distanceUnit}
+          />
+        </SetEditPanelSection>
+      )}
+
+      {stateStore.openedExercise!.hasTimeMeasument && (
+        <SetEditPanelSection text={texts.time}>
+          <DurationInput
+            valueSeconds={durationSecs}
+            onUpdate={setDurationSecs}
           />
         </SetEditPanelSection>
       )}

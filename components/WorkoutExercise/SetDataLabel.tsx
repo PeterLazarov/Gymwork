@@ -6,7 +6,7 @@ import colors from '../../designSystem/colors'
 
 type Props = {
   value: string | number
-  unit: string
+  unit?: string
   isFocused?: boolean
 }
 
@@ -26,13 +26,15 @@ const ReadOnlyListItemDataLabel: React.FC<Props> = ({
       >
         {value}
       </Text>
-      <Text
-        style={{
-          color,
-        }}
-      >
-        {unit}
-      </Text>
+      {unit && (
+        <Text
+          style={{
+            color,
+          }}
+        >
+          {unit}
+        </Text>
+      )}
     </View>
   )
 }

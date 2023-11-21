@@ -83,7 +83,7 @@ export const TimeStoreModel = types
       }
     },
     _updateTimerSeconds() {
-      const formattedTime = getFormatedDuration(store.timerTimeLeft)
+      const formattedTime = getFormatedDuration(store.timerTimeLeft, true)
       store.timerCountdownValue = formattedTime
     },
   }))

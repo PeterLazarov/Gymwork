@@ -4,7 +4,7 @@ import { Portal, Modal, Button } from 'react-native-paper'
 
 import { useStores } from '../db/helpers/useStores'
 import { Divider } from '../designSystem'
-import DurationPicker from '../designSystem/DurationPicker'
+import DurationInput from '../designSystem/DurationInput'
 import { HeadingLabel } from '../designSystem/Label'
 import colors from '../designSystem/colors'
 
@@ -35,10 +35,13 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
       >
         <HeadingLabel style={{ padding: 16 }}>Edit Rest Timer</HeadingLabel>
         <Divider />
-        <DurationPicker
-          valueSeconds={timerSecs}
-          onUpdate={setTimerSecs}
-        />
+        <View style={{ paddingVertical: 16 }}>
+          <DurationInput
+            valueSeconds={timerSecs}
+            onUpdate={setTimerSecs}
+            hideHours
+          />
+        </View>
         <View style={{ flexDirection: 'row' }}>
           <Button
             style={{ flex: 1 }}

@@ -35,7 +35,7 @@ export const StateStoreModel = types
     get timerValue() {
       return this.timeStore.timerCountdownValue !== ''
         ? this.timeStore.timerCountdownValue
-        : getFormatedDuration(self.timerDurationSecs)
+        : getFormatedDuration(self.timerDurationSecs, true)
     },
     get openedExercise(): Exercise | undefined {
       return this.exerciseStore.exercises.find(

@@ -2,8 +2,7 @@
   {
     "name": "Threadmill",
     "muscles": ["cardio"],
-    "measurementType": "distance",
-    "distanceUnit": "m"
+    "measurementType": "time-distance"
   },
   {
     "name": "3/4 Sit-Up",

@@ -8,6 +8,7 @@ import { WorkoutSet } from '../../../db/models'
 import { ButtonContainer, Icon } from '../../../designSystem'
 import colors from '../../../designSystem/colors'
 import texts from '../../../texts'
+import { getFormatedDuration } from '../../../utils/time'
 import SetDataLabel from '../SetDataLabel'
 
 type Props = {
@@ -90,6 +91,9 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
             value={set.distance}
             unit={set.distanceUnit}
           />
+        )}
+        {stateStore.openedExercise!.hasTimeMeasument && (
+          <SetDataLabel value={getFormatedDuration(set.durationSecs)} />
         )}
       </View>
     </ButtonContainer>

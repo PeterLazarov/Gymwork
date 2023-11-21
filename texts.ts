@@ -8,6 +8,7 @@ export default {
   reps: 'reps',
   weight: 'weight',
   distance: 'distance',
+  time: 'time',
   updateSet: 'Update set',
   remove: 'Remove',
   calendar: 'Calendar',

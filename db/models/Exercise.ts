@@ -26,6 +26,7 @@ const TIME_MEASUREMENTS = [
   ExerciseType.TIME_DISTANCE,
   ExerciseType.REPS_TIME,
   ExerciseType.TIME,
+  ExerciseType.WEIGHT_TIME,
 ]
 
 export const ExerciseModel = types

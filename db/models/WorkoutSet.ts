@@ -14,6 +14,7 @@ export const WorkoutSetModel = types
     reps: 0,
     distance: 0,
     distanceUnit: 'm',
+    durationSecs: 0,
     isWarmup: false,
   })
   .actions(withSetPropAction)
