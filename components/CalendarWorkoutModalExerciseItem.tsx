@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 
-import WorkoutExerciseSetReadOnlyList from './WorkoutExercise/WorkoutExerciseSetReadOnlyList'
+import WorkoutExerciseSetReadOnlyList from './WorkoutExercise/WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList'
 import { Exercise, WorkoutSet } from '../db/models'
 import { SectionLabel } from '../designSystem/Label'
 

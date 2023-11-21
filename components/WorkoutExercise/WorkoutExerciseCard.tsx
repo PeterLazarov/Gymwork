@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router'
 import React, { useMemo } from 'react'
 import { Card } from 'react-native-paper'
 
-import WorkoutExerciseSetReadOnlyList from './WorkoutExerciseSetReadOnlyList'
+import WorkoutExerciseSetReadOnlyList from './WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList'
 import { useStores } from '../../db/helpers/useStores'
 import { Exercise, Workout } from '../../db/models'
 

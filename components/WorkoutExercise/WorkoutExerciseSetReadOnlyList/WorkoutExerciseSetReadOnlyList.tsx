@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 
-import WorkoutExerciseSetListItem from './WorkoutExerciseSetReadOnlyListItem'
-import { useStores } from '../../db/helpers/useStores'
-import { Exercise, WorkoutSet } from '../../db/models'
+import WorkoutExerciseSetListItem from './ReadOnlyListItem'
+import { useStores } from '../../../db/helpers/useStores'
+import { Exercise, WorkoutSet } from '../../../db/models'
 
 type Props = {
   sets: WorkoutSet[]

@@ -6,7 +6,7 @@ import { View } from 'react-native'
 import { WorkoutSet } from '../../../db/models'
 import { Divider } from '../../../designSystem'
 import { SectionLabel } from '../../../designSystem/Label'
-import WorkoutExerciseSetReadOnlyList from '../WorkoutExerciseSetReadOnlyList'
+import WorkoutExerciseSetReadOnlyList from '../WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList'
 
 type Props = {
   date: string

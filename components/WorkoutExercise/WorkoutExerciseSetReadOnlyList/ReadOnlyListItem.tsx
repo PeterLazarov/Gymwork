@@ -2,11 +2,12 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Text, View } from 'react-native'
 
-import { useStores } from '../../db/helpers/useStores'
-import { Exercise, WorkoutSet } from '../../db/models'
-import { Icon } from '../../designSystem'
-import colors from '../../designSystem/colors'
-import texts from '../../texts'
+import { useStores } from '../../../db/helpers/useStores'
+import { Exercise, WorkoutSet } from '../../../db/models'
+import { Icon } from '../../../designSystem'
+import colors from '../../../designSystem/colors'
+import texts from '../../../texts'
+import SetDataLabel from '../SetDataLabel'
 
 type Props = {
   set: WorkoutSet
@@ -16,7 +17,7 @@ type Props = {
   hideRecords?: boolean
 }
 
-const WorkoutExerciseSetListItem: React.FC<Props> = ({
+const ReadOnlyListItem: React.FC<Props> = ({
   set,
   exercise,
   isFocused,
@@ -62,42 +63,26 @@ const WorkoutExerciseSetListItem: React.FC<Props> = ({
           )}
         </View>
       )}
-      <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color,
-          }}
-        >
-          {set.reps}
-        </Text>
-        <Text
-          style={{
-            color,
-          }}
-        >
-          {texts.reps}
-        </Text>
-      </View>
-      <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            color,
-          }}
-        >
-          {set.weight}
-        </Text>
-        <Text
-          style={{
-            color,
-          }}
-        >
-          kgs
-        </Text>
-      </View>
+      {exercise.hasRepMeasument && (
+        <SetDataLabel
+          value={set.reps}
+          unit={texts.reps}
+        />
+      )}
+      {exercise.hasWeightMeasument && (
+        <SetDataLabel
+          value={set.weight}
+          unit="kg"
+        />
+      )}
+      {exercise.hasDistanceMeasument && (
+        <SetDataLabel
+          value={set.distance}
+          unit={set.distanceUnit}
+        />
+      )}
     </View>
   )
 }
 
-export default observer(WorkoutExerciseSetListItem)
+export default observer(ReadOnlyListItem)

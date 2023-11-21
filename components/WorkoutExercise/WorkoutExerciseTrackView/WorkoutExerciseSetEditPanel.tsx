@@ -97,7 +97,6 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
           mode="contained"
           onPress={saveChanges}
           style={{ flex: 1 }}
-          disabled={reps < 1}
         >
           {selectedSet ? texts.updateSet : texts.addSet}
         </Button>

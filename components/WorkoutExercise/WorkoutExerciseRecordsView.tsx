@@ -4,7 +4,7 @@ import { getParentOfType } from 'mobx-state-tree'
 import React from 'react'
 import { View, ScrollView, TouchableOpacity } from 'react-native'
 
-import WorkoutExerciseSetListItem from './WorkoutExerciseSetReadOnlyListItem'
+import WorkoutExerciseSetListItem from './WorkoutExerciseSetReadOnlyList/ReadOnlyListItem'
 import { useStores } from '../../db/helpers/useStores'
 import { WorkoutModel, WorkoutSet } from '../../db/models'
 

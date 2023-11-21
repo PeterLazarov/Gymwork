@@ -20,6 +20,7 @@ const DistanceEditor: React.FC<Props> = ({
   return (
     <View style={{ flexDirection: 'row', gap: 24 }}>
       <TextInput
+        value={`${value}`}
         style={{ textAlign: 'center', flex: 1.5 }}
         inputMode="numeric"
         keyboardType="number-pad"
@@ -27,9 +28,7 @@ const DistanceEditor: React.FC<Props> = ({
           onChange(isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0))
         }}
         maxLength={3}
-      >
-        {value}
-      </TextInput>
+      />
       <Dropdown
         options={Object.values(DistanceType)}
         selectedOption={unit}

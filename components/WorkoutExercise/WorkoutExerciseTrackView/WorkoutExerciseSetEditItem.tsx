@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
 import WorkoutExerciseSetWarmupButton from './WorkoutExerciseSetWarmupButton'
 import { useStores } from '../../../db/helpers/useStores'
@@ -8,6 +8,7 @@ import { WorkoutSet } from '../../../db/models'
 import { ButtonContainer, Icon } from '../../../designSystem'
 import colors from '../../../designSystem/colors'
 import texts from '../../../texts'
+import SetDataLabel from '../SetDataLabel'
 
 type Props = {
   set: WorkoutSet
@@ -72,40 +73,24 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
             />
           )}
         </View>
-        <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color,
-            }}
-          >
-            {set.reps}
-          </Text>
-          <Text
-            style={{
-              color,
-            }}
-          >
-            {texts.reps}
-          </Text>
-        </View>
-        <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color,
-            }}
-          >
-            {set.weight}
-          </Text>
-          <Text
-            style={{
-              color,
-            }}
-          >
-            kg
-          </Text>
-        </View>
+        {stateStore.openedExercise!.hasRepMeasument && (
+          <SetDataLabel
+            value={set.reps}
+            unit={texts.reps}
+          />
+        )}
+        {stateStore.openedExercise!.hasWeightMeasument && (
+          <SetDataLabel
+            value={set.weight}
+            unit="kg"
+          />
+        )}
+        {stateStore.openedExercise!.hasDistanceMeasument && (
+          <SetDataLabel
+            value={set.distance}
+            unit={set.distanceUnit}
+          />
+        )}
       </View>
     </ButtonContainer>
   )
