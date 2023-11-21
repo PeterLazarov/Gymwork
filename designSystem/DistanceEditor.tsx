@@ -1,4 +1,7 @@
+import { View } from 'react-native'
 import { TextInput } from 'react-native-paper'
+
+import Dropdown from './Dropdown'
 
 type Props = {
   value: number
@@ -7,19 +10,27 @@ type Props = {
 }
 
 const DistanceEditor: React.FC<Props> = ({ value, unit, onChange }) => {
+  function onSelect(value: string) {}
   return (
-    <TextInput
-      style={{ flexGrow: 1, textAlign: 'center' }}
-      inputMode="numeric"
-      multiline={false}
-      keyboardType="number-pad"
-      onChangeText={text => {
-        onChange(isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0))
-      }}
-      maxLength={3}
-    >
-      {value}
-    </TextInput>
+    <View style={{ flexDirection: 'row' }}>
+      <TextInput
+        style={{ textAlign: 'center' }}
+        inputMode="numeric"
+        keyboardType="number-pad"
+        onChangeText={text => {
+          onChange(isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0))
+        }}
+        maxLength={3}
+      >
+        {value}
+      </TextInput>
+      <Dropdown
+        options={[unit]}
+        selectedOption={unit}
+        onSelect={onSelect}
+        containerStyle={{ height: 20 }}
+      />
+    </View>
   )
 }
 

@@ -4,10 +4,11 @@ import { Text, View } from 'react-native'
 import { TextInput, IconButton, HelperText } from 'react-native-paper'
 
 import { useStores } from '../../db/helpers/useStores'
-import { Exercise } from '../../db/models'
+import { Exercise, ExerciseSnapshotIn } from '../../db/models'
 import { Icon } from '../../designSystem'
 import Dropdown from '../../designSystem/Dropdown'
 import Multiselect from '../../designSystem/Multiselect'
+import DistanceType from '../../enums/DistanceType'
 import ExerciseType from '../../enums/ExerciseType'
 
 type Props = {
@@ -42,23 +43,20 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   function handleNumericChange(text: string) {
     // Remove non-numeric characters using a regular expression
     const sanitizedValue = text.replace(/[^0-9.]/g, '')
-    onFormChange({
-      ...exercise,
-      weightIncrement: Number(sanitizedValue),
-    })
+    exercise.setProp('weightIncrement', Number(sanitizedValue))
+    onFormChange(exercise)
   }
 
   function onMusclesChange(selected: string[]) {
-    onFormChange({
-      ...exercise,
-      muscles: selected as Exercise['muscles'],
-    })
+    exercise.setProp('muscles', selected as Exercise['muscles'])
+    onFormChange(exercise)
   }
-  function onExerciseChange(measurementType: string) {
-    onFormChange({
-      ...exercise,
-      measurementType,
-    })
+  function onPropChange(
+    field: keyof ExerciseSnapshotIn,
+    measurementType: string
+  ) {
+    exercise.setProp(field, measurementType)
+    onFormChange(exercise)
   }
 
   function onAddMusclePress() {
@@ -70,12 +68,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
       <TextInput
         label="Name"
         value={exercise.name}
-        onChangeText={text =>
-          onFormChange({
-            ...exercise,
-            name: text,
-          })
-        }
+        onChangeText={text => onPropChange('name', text)}
         error={nameError !== ''}
       />
       {nameError !== '' && (
@@ -84,21 +77,6 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           visible={nameError !== ''}
         >
           {nameError}
-        </HelperText>
-      )}
-      <TextInput
-        value={`${exercise.weightIncrement}`}
-        keyboardType="decimal-pad"
-        onChangeText={handleNumericChange}
-        label="Weight Increment"
-        error={weightIncError !== ''}
-      />
-      {weightIncError !== '' && (
-        <HelperText
-          type="error"
-          visible={weightIncError !== ''}
-        >
-          {weightIncError}
         </HelperText>
       )}
       <View style={{ flexDirection: 'row' }}>
@@ -125,9 +103,35 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
       <Dropdown
         options={Object.values(ExerciseType)}
         selectedOption={exercise.measurementType}
-        onSelect={onExerciseChange}
+        onSelect={type => onPropChange('measurementType', type)}
       />
-      <Text>TODO: Measurement Unit Type</Text>
+      <Text>TODO: Imperial / Metric Unit Type</Text>
+      {exercise.hasDistanceMeasument && (
+        <Dropdown
+          options={Object.values(DistanceType)}
+          selectedOption={exercise.distanceUnit}
+          onSelect={distanceUnit => onPropChange('distanceUnit', distanceUnit)}
+        />
+      )}
+      {exercise.hasWeightMeasument && (
+        <>
+          <TextInput
+            value={`${exercise.weightIncrement}`}
+            keyboardType="decimal-pad"
+            onChangeText={handleNumericChange}
+            label="Weight Increment"
+            error={weightIncError !== ''}
+          />
+          {weightIncError !== '' && (
+            <HelperText
+              type="error"
+              visible={weightIncError !== ''}
+            >
+              {weightIncError}
+            </HelperText>
+          )}
+        </>
+      )}
     </View>
   )
 }

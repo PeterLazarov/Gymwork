@@ -28,6 +28,7 @@ const ExerciseEditPage: React.FC = () => {
   }
 
   function onUpdate(updated: Exercise, isValid: boolean) {
+    console.log(exercise.hasWeightMeasument)
     setExercise(updated)
     setFormValid(isValid)
   }

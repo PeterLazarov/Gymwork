@@ -2,6 +2,7 @@ import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
+import DistanceType from '../../enums/DistanceType'
 import ExerciseType from '../../enums/ExerciseType'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
@@ -19,6 +20,7 @@ const WEIGHT_MEASUREMENTS = [
 const DISTANCE_MEASUREMENTS = [
   ExerciseType.TIME_DISTANCE,
   ExerciseType.REPS_DISTANCE,
+  ExerciseType.WEIGHT_DISTANCE,
 ]
 
 export const ExerciseModel = types
@@ -27,8 +29,9 @@ export const ExerciseModel = types
     guid: types.optional(types.identifier, () => uuidv4()),
     name: '',
     muscles: types.array(types.string),
-    measurementType: '',
+    measurementType: ExerciseType.REPS_WEIGHT,
     weightIncrement: 2.5,
+    distanceUnit: DistanceType.M,
   })
   .views(exercise => ({
     get hasWeightMeasument() {
