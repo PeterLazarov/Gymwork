@@ -8,9 +8,10 @@ import { WorkoutSet } from '../../../db/models'
 import DistanceEditor from '../../../designSystem/DistanceEditor'
 import IncrementNumericEditor from '../../../designSystem/IncrementNumericEditor'
 import colors from '../../../designSystem/colors'
+import DistanceType from '../../../enums/DistanceType'
 import texts from '../../../texts'
 
-type SetEditFields = 'weight' | 'reps' | 'distance'
+type SetEditFields = 'weight' | 'reps' | 'distance' | 'distanceUnit'
 type Props = {
   selectedSet: WorkoutSet | null
   addSet: (set: Pick<WorkoutSet, SetEditFields>) => void
@@ -29,11 +30,15 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   const [reps, setReps] = useState(selectedSet?.reps || 0)
   const [weight, setWeight] = useState(selectedSet?.weight || 0)
   const [distance, setDistance] = useState(selectedSet?.distance || 0)
+  const [distanceUnit, setDistanceUnit] = useState(
+    selectedSet?.distanceUnit || DistanceType.M
+  )
 
   useEffect(() => {
     setReps(selectedSet?.reps || 0)
     setWeight(selectedSet?.weight || 0)
     setDistance(selectedSet?.distance || 0)
+    setDistanceUnit(selectedSet?.distanceUnit || DistanceType.M)
   }, [selectedSet])
 
   function saveChanges() {
@@ -43,12 +48,14 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
         reps,
         weight,
         distance,
+        distanceUnit,
       })
     } else {
       addSet({
         reps,
         weight,
         distance,
+        distanceUnit,
       })
     }
   }
@@ -79,7 +86,8 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
           <DistanceEditor
             value={distance}
             onChange={setDistance}
-            unit="m"
+            onUnitChange={setDistanceUnit}
+            unit={distanceUnit}
           />
         </SetEditPanelSection>
       )}

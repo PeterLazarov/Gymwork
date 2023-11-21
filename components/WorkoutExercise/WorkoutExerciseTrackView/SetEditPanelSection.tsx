@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import { View } from 'react-native'
-import { Divider } from 'react-native-paper'
 
+import { Divider } from '../../../designSystem'
 import { SubSectionLabel } from '../../../designSystem/Label'
 
 type Props = {
