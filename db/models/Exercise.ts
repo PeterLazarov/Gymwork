@@ -22,6 +22,11 @@ const DISTANCE_MEASUREMENTS = [
   ExerciseType.REPS_DISTANCE,
   ExerciseType.WEIGHT_DISTANCE,
 ]
+const TIME_MEASUREMENTS = [
+  ExerciseType.TIME_DISTANCE,
+  ExerciseType.REPS_TIME,
+  ExerciseType.TIME,
+]
 
 export const ExerciseModel = types
   .model('Workout')
@@ -42,6 +47,9 @@ export const ExerciseModel = types
     },
     get hasDistanceMeasument() {
       return DISTANCE_MEASUREMENTS.includes(exercise.measurementType)
+    },
+    get hasTimeMeasument() {
+      return TIME_MEASUREMENTS.includes(exercise.measurementType)
     },
   }))
   .actions(withSetPropAction)
