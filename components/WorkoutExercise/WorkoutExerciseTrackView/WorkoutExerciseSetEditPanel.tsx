@@ -18,6 +18,7 @@ type SetEditFields =
   | 'distance'
   | 'distanceUnit'
   | 'durationSecs'
+type WorkoutSetEditData = Pick<WorkoutSet, SetEditFields>
 type Props = {
   selectedSet: WorkoutSet | null
   addSet: (set: Pick<WorkoutSet, SetEditFields>) => void
@@ -33,42 +34,30 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
 }) => {
   const { stateStore } = useStores()
 
-  const [reps, setReps] = useState(selectedSet?.reps || 0)
-  const [weight, setWeight] = useState(selectedSet?.weight || 0)
-  const [distance, setDistance] = useState(selectedSet?.distance || 0)
-  const [distanceUnit, setDistanceUnit] = useState(
-    selectedSet?.distanceUnit || DistanceType.M
-  )
-  const [durationSecs, setDurationSecs] = useState(
-    selectedSet?.durationSecs || 0
-  )
+  const emptySet: WorkoutSetEditData = {
+    reps: 0,
+    weight: 0,
+    distance: 0,
+    distanceUnit: DistanceType.M,
+    durationSecs: 0,
+  }
+
+  const [editData, setEditData] = useState<WorkoutSetEditData>({
+    ...emptySet,
+  })
 
   useEffect(() => {
-    setReps(selectedSet?.reps || 0)
-    setWeight(selectedSet?.weight || 0)
-    setDistance(selectedSet?.distance || 0)
-    setDistanceUnit(selectedSet?.distanceUnit || DistanceType.M)
-    setDurationSecs(selectedSet?.durationSecs || 0)
+    setEditData({ ...(selectedSet ?? emptySet) })
   }, [selectedSet])
 
   function saveChanges() {
     if (selectedSet) {
       updateSet({
         ...selectedSet,
-        reps,
-        weight,
-        distance,
-        distanceUnit,
-        durationSecs,
+        ...editData,
       })
     } else {
-      addSet({
-        reps,
-        weight,
-        distance,
-        distanceUnit,
-        durationSecs,
-      })
+      addSet(editData)
     }
   }
 
@@ -77,8 +66,8 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
       {stateStore.openedExercise!.hasRepMeasument && (
         <SetEditPanelSection text={texts.reps}>
           <IncrementNumericEditor
-            value={reps}
-            onChange={setReps}
+            value={editData.reps}
+            onChange={reps => setEditData({ ...editData, reps })}
           />
         </SetEditPanelSection>
       )}
@@ -86,8 +75,8 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
       {stateStore.openedExercise!.hasWeightMeasument && (
         <SetEditPanelSection text={texts.weight}>
           <IncrementNumericEditor
-            value={weight}
-            onChange={setWeight}
+            value={editData.weight}
+            onChange={weight => setEditData({ ...editData, weight })}
             step={stateStore.openedExercise!.weightIncrement}
           />
         </SetEditPanelSection>
@@ -96,10 +85,12 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
       {stateStore.openedExercise!.hasDistanceMeasument && (
         <SetEditPanelSection text={texts.distance}>
           <DistanceEditor
-            value={distance}
-            onChange={setDistance}
-            onUnitChange={setDistanceUnit}
-            unit={distanceUnit}
+            value={editData.distance}
+            onChange={distance => setEditData({ ...editData, distance })}
+            unit={editData.distanceUnit}
+            onUnitChange={distanceUnit =>
+              setEditData({ ...editData, distanceUnit })
+            }
           />
         </SetEditPanelSection>
       )}
@@ -107,8 +98,10 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
       {stateStore.openedExercise!.hasTimeMeasument && (
         <SetEditPanelSection text={texts.time}>
           <DurationInput
-            valueSeconds={durationSecs}
-            onUpdate={setDurationSecs}
+            valueSeconds={editData.durationSecs}
+            onUpdate={durationSecs =>
+              setEditData({ ...editData, durationSecs })
+            }
           />
         </SetEditPanelSection>
       )}

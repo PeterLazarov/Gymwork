@@ -30,7 +30,7 @@ const TIME_MEASUREMENTS = [
 ]
 
 export const ExerciseModel = types
-  .model('Workout')
+  .model('Exercise')
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
     name: '',

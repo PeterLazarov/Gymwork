@@ -3,13 +3,19 @@ import { View } from 'react-native'
 import { Icon, IconButtonContainer } from '../designSystem'
 import colors from '../designSystem/colors'
 
-// TODO snap to increment
-export default function IncrementDecrementButtons(props: {
+type Props = {
   value: number
   onChange(m: number): void
   children?: React.ReactNode
   step?: number
-}) {
+}
+
+const IncrementDecrementButtons: React.FC<Props> = ({
+  value,
+  onChange,
+  children,
+  step,
+}) => {
   return (
     <View
       style={{
@@ -20,17 +26,17 @@ export default function IncrementDecrementButtons(props: {
     >
       <IconButtonContainer
         variant="full"
-        onPress={() => props.onChange(props.value - (props.step ?? 1))}
+        onPress={() => onChange(value - (step ?? 1))}
       >
         <Icon
           icon="remove"
           color={colors.iconText}
         />
       </IconButtonContainer>
-      {props.children}
+      {children}
       <IconButtonContainer
         variant="full"
-        onPress={() => props.onChange(props.value + (props.step ?? 1))}
+        onPress={() => onChange(value + (step ?? 1))}
       >
         <Icon
           icon="add"
@@ -40,3 +46,5 @@ export default function IncrementDecrementButtons(props: {
     </View>
   )
 }
+
+export default IncrementDecrementButtons
