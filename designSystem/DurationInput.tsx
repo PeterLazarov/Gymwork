@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 import { TextInput } from 'react-native-paper'
 
 type Props = {
@@ -22,21 +22,31 @@ const DurationPicker: React.FC<Props> = ({
   const seconds = valueSeconds % 60
 
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 12 }}>
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 12,
+      }}
+    >
       {!hideHours && (
-        <TextInput
-          value={`${hours}`}
-          style={{ textAlign: 'center' }}
-          inputMode="numeric"
-          multiline={false}
-          keyboardType="number-pad"
-          onChangeText={text => {
-            const newHours = Math.floor(Number(text))
-            onChange(newHours, minutes, seconds)
-          }}
-          placeholder="hh"
-          maxLength={2}
-        />
+        <>
+          <TextInput
+            value={`${hours}`}
+            style={{ textAlign: 'center' }}
+            inputMode="numeric"
+            multiline={false}
+            keyboardType="number-pad"
+            onChangeText={text => {
+              const newHours = Math.floor(Number(text))
+              onChange(newHours, minutes, seconds)
+            }}
+            placeholder="hh"
+            maxLength={2}
+          />
+          <Text>:</Text>
+        </>
       )}
       <TextInput
         value={`${minutes}`}
@@ -53,6 +63,7 @@ const DurationPicker: React.FC<Props> = ({
         placeholder="mm"
         maxLength={2}
       />
+      <Text>:</Text>
       <TextInput
         value={`${seconds}`}
         style={{ textAlign: 'center' }}
