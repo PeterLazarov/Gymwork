@@ -52,6 +52,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
             <ScrollView>
               {exercises.map(exercise => (
                 <CalendarWorkoutModalExerciseItem
+                  key={exercise.guid}
                   exercise={exercise}
                   sets={groupedSets[exercise.guid] as WorkoutSet[]}
                 />

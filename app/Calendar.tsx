@@ -9,6 +9,7 @@ import { Appbar } from 'react-native-paper'
 import CalendarWorkoutModal from '../components/CalendarWorkoutModal'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
+import colors from '../designSystem/colors'
 import texts from '../texts'
 
 const CalendarPage: React.FC = () => {
@@ -24,6 +25,8 @@ const CalendarPage: React.FC = () => {
             acc[curr.date] = {}
           }
           acc[curr.date].marked = true
+          acc[curr.date].dotColor = colors.primary
+
           return acc
         },
         {
@@ -67,6 +70,10 @@ const CalendarPage: React.FC = () => {
             handleCalendarDayPress(dateString)
           }}
           markedDates={markedDates}
+          theme={{
+            selectedDayBackgroundColor: colors.primary,
+            arrowColor: colors.primary,
+          }}
         />
       </View>
       {openedWorkoutDialogDate !== '' && (
