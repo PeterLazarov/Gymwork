@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
 import { View } from 'react-native'
-import { Calendar } from 'react-native-calendars'
+import { CalendarList } from 'react-native-calendars'
 import { MarkedDates } from 'react-native-calendars/src/types'
 import { Appbar } from 'react-native-paper'
 
@@ -65,7 +65,7 @@ const CalendarPage: React.FC = () => {
           />
         </Appbar.Header>
 
-        <Calendar
+        <CalendarList
           onDayPress={({ dateString }) => {
             handleCalendarDayPress(dateString)
           }}
@@ -74,6 +74,10 @@ const CalendarPage: React.FC = () => {
             selectedDayBackgroundColor: colors.primary,
             arrowColor: colors.primary,
           }}
+          pastScrollRange={12}
+          futureScrollRange={1}
+          calendarHeight={360}
+          animateScroll
         />
       </View>
       {openedWorkoutDialogDate !== '' && (
