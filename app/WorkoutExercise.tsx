@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { Appbar, Menu, SegmentedButtons } from 'react-native-paper'
+import { Appbar, Menu } from 'react-native-paper'
 
 import WorkoutExerciseHistoryView from '../components/WorkoutExercise/WorkoutExerciseHistoryView/WorkoutExerciseHistoryView'
 import WorkoutExerciseRecordsView from '../components/WorkoutExercise/WorkoutExerciseRecordsView'
@@ -10,6 +10,7 @@ import WorkoutExerciseTrackView from '../components/WorkoutExercise/WorkoutExerc
 import WorkoutTimer from '../components/WorkoutTimer'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
+import SwipeTabs from '../designSystem/SwipeTabs'
 
 const WorkoutExercisePage: React.FC = () => {
   const { timeStore, stateStore } = useStores()
@@ -32,6 +33,25 @@ const WorkoutExercisePage: React.FC = () => {
     setGraphHidden(!graphHidden)
     setMenuOpen(false)
   }
+
+  const tabs = [
+    {
+      label: 'Track',
+      name: 'track',
+      component: WorkoutExerciseTrackView,
+    },
+    {
+      label: 'History',
+      name: 'history',
+      component: WorkoutExerciseHistoryView,
+      props: { graphHidden }, // (optional) additional props
+    },
+    {
+      label: 'Records',
+      name: 'records',
+      component: WorkoutExerciseRecordsView,
+    },
+  ]
 
   return (
     <View
@@ -69,37 +89,17 @@ const WorkoutExercisePage: React.FC = () => {
           )}
         </Menu>
       </Appbar.Header>
-      <SegmentedButtons
-        value={view}
-        onValueChange={setView}
-        style={{ marginHorizontal: 16 }}
-        buttons={[
-          {
-            value: 'track',
-            label: 'Track',
-          },
-          {
-            value: 'history',
-            label: 'History',
-          },
-          { value: 'records', label: 'Records' },
-        ]}
-      />
-      {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
-        <WorkoutTimer />
-      )}
-      <View
-        style={{
-          flexGrow: 1,
-        }}
+
+      <SwipeTabs
+        tabsConfig={tabs}
+        onTabChange={setView}
       >
-        {view === 'track' && <WorkoutExerciseTrackView />}
-        {view === 'history' && (
-          <WorkoutExerciseHistoryView graphHidden={graphHidden} />
+        {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
+          <WorkoutTimer />
         )}
-        {view === 'records' && <WorkoutExerciseRecordsView />}
-      </View>
+      </SwipeTabs>
     </View>
   )
 }
+
 export default observer(WorkoutExercisePage)
