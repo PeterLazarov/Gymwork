@@ -27,7 +27,7 @@ const DistanceEditor: React.FC<Props> = ({
         onChangeText={text => {
           onChange(isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0))
         }}
-        maxLength={3}
+        maxLength={5}
       />
       <Dropdown
         options={Object.values(DistanceType)}
