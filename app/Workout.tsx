@@ -10,6 +10,7 @@ import WorkoutExerciseCard from '../components/WorkoutExercise/WorkoutExerciseCa
 import WorkoutTimer from '../components/WorkoutTimer'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
+import SwipeContainer from '../designSystem/SwipeContainer'
 
 const WorkoutPage: React.FC = () => {
   const { workoutStore, timeStore, stateStore, openedWorkoutExercises } =
@@ -22,6 +23,13 @@ const WorkoutPage: React.FC = () => {
 
   function openCalendar() {
     router.push('/Calendar')
+  }
+
+  function onSwipeRight() {
+    stateStore.decrementCurrentDate()
+  }
+  function onSwipeLeft() {
+    stateStore.incrementCurrentDate()
   }
 
   return (
@@ -75,21 +83,26 @@ const WorkoutPage: React.FC = () => {
           animated={false}
         />
       </Appbar.Header>
-      <DayControl />
-      {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
-        <WorkoutTimer />
-      )}
-      <ScrollView style={{ flex: 1 }}>
-        {stateStore.openedWorkout &&
-          openedWorkoutExercises.map(exercise => (
-            <WorkoutExerciseCard
-              key={`${stateStore.openedWorkout!.date}_${exercise.guid}`}
-              workout={stateStore.openedWorkout!}
-              exercise={exercise}
-            />
-          ))}
-      </ScrollView>
-      <WorkoutControlButtons createWorkout={newWorkout} />
+      <SwipeContainer
+        onSwipeRight={onSwipeRight}
+        onSwipeLeft={onSwipeLeft}
+      >
+        <DayControl />
+        {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
+          <WorkoutTimer />
+        )}
+        <ScrollView style={{ flex: 1 }}>
+          {stateStore.openedWorkout &&
+            openedWorkoutExercises.map(exercise => (
+              <WorkoutExerciseCard
+                key={`${stateStore.openedWorkout!.date}_${exercise.guid}`}
+                workout={stateStore.openedWorkout!}
+                exercise={exercise}
+              />
+            ))}
+        </ScrollView>
+        <WorkoutControlButtons createWorkout={newWorkout} />
+      </SwipeContainer>
     </View>
   )
 }
