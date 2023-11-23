@@ -9,6 +9,7 @@ import ExerciseEditForm from '../components/Exercise/ExerciseEditForm'
 import { useStores } from '../db/helpers/useStores'
 import { Exercise, ExerciseModel } from '../db/models'
 import { Icon } from '../designSystem'
+import colors from '../designSystem/colors'
 
 const ExerciseCreatePage: React.FC = () => {
   const router = useRouter()
@@ -40,7 +41,7 @@ const ExerciseCreatePage: React.FC = () => {
   return (
     <>
       <View style={{ flex: 1 }}>
-        <Appbar.Header>
+        <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
           <Appbar.BackAction onPress={onBackPress} />
           <Appbar.Content title="Create exercise" />
           <Appbar.Action

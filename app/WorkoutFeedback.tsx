@@ -7,6 +7,7 @@ import { Appbar, TextInput, Button } from 'react-native-paper'
 import FeedbackPicker from '../components/FeedbackPicker'
 import { useStores } from '../db/helpers/useStores'
 import { SectionLabel } from '../designSystem/Label'
+import colors from '../designSystem/colors'
 
 const WorkoutFeedbackPage: React.FC = () => {
   const { stateStore } = useStores()
@@ -18,7 +19,7 @@ const WorkoutFeedbackPage: React.FC = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header>
+      <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
         <Appbar.BackAction onPress={onBackPress} />
         <Appbar.Content title="Workout comments" />
       </Appbar.Header>

@@ -8,6 +8,7 @@ import ExerciseSelect from '../components/Exercise/ExerciseSelect'
 import { useStores } from '../db/helpers/useStores'
 import { Exercise } from '../db/models'
 import { Icon } from '../designSystem'
+import colors from '../designSystem/colors'
 import texts from '../texts'
 
 const ExerciseSelectPage: React.FC = () => {
@@ -29,7 +30,7 @@ const ExerciseSelectPage: React.FC = () => {
 
   return (
     <View>
-      <Appbar.Header>
+      <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
         <Appbar.BackAction onPress={onBackPress} />
         <Appbar.Content title={texts.selectExercise} />
         <Appbar.Action

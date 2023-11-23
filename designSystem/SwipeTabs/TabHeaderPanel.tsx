@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native'
 
 import TabHeader from './TabHeader'
 import { TabConfig, TabStyles } from './types'
+import colors from '../colors'
 
 type Props = {
   tabsConfig: TabConfig[]
@@ -32,9 +33,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: 'white',
     paddingTop: 12,
     alignItems: 'center',
+    backgroundColor: colors.lightgray,
   },
 })
 

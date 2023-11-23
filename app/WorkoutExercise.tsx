@@ -11,6 +11,7 @@ import WorkoutTimer from '../components/WorkoutTimer'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
 import SwipeTabs from '../designSystem/SwipeTabs'
+import colors from '../designSystem/colors'
 
 const WorkoutExercisePage: React.FC = () => {
   const { timeStore, stateStore } = useStores()
@@ -61,7 +62,7 @@ const WorkoutExercisePage: React.FC = () => {
         display: 'flex',
       }}
     >
-      <Appbar.Header>
+      <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
         <Appbar.BackAction onPress={onBackPress} />
         <Appbar.Content title={stateStore.openedExercise?.name} />
 

@@ -62,7 +62,7 @@ const CalendarPage: React.FC = () => {
   return (
     <>
       <View>
-        <Appbar.Header>
+        <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
           <Appbar.BackAction onPress={onBackPress} />
           <Appbar.Content title={texts.calendar} />
           <Appbar.Action

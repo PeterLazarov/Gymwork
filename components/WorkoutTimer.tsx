@@ -59,10 +59,9 @@ const WorkoutTimer: React.FC = () => {
 const styles = StyleSheet.create({
   timerPanel: {
     display: 'flex',
-    // flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.lightgray,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
     paddingVertical: 8,

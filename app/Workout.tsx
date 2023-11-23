@@ -11,6 +11,7 @@ import WorkoutTimer from '../components/WorkoutTimer'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
 import SwipeContainer from '../designSystem/SwipeContainer'
+import colors from '../designSystem/colors'
 
 const WorkoutPage: React.FC = () => {
   const { workoutStore, timeStore, stateStore, openedWorkoutExercises } =
@@ -34,7 +35,7 @@ const WorkoutPage: React.FC = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header>
+      <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
         <Appbar.Action
           icon={() => <Icon icon="logo-react" />}
           animated={false}
