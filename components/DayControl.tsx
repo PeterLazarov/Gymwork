@@ -8,6 +8,7 @@ import { Appbar } from 'react-native-paper'
 import { useStores } from '../db/helpers/useStores'
 import { Divider, Icon } from '../designSystem'
 import { capitalize } from '../utils/string'
+import colors from '../designSystem/colors'
 
 const DayControl = () => {
   const { stateStore } = useStores()
@@ -32,6 +33,7 @@ const DayControl = () => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
+          backgroundColor: colors.lightgray,
         }}
       >
         <Appbar.Action
