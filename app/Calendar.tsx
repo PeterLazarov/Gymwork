@@ -1,9 +1,10 @@
 import { useRouter } from 'expo-router'
+import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
 import { View } from 'react-native'
-import { CalendarList } from 'react-native-calendars'
-import { MarkedDates } from 'react-native-calendars/src/types'
+import { Calendar } from 'react-native-calendario'
+import { MarkedDays } from 'react-native-month'
 import { Appbar } from 'react-native-paper'
 
 import CalendarWorkoutModal from '../components/CalendarWorkoutModal'
@@ -19,24 +20,27 @@ const CalendarPage: React.FC = () => {
 
   const markedDates = useMemo(
     () =>
-      workoutStore.workouts.reduce(
-        (acc, curr) => {
-          if (!(curr.date in acc)) {
-            acc[curr.date] = {}
-          }
-          acc[curr.date].marked = true
-          acc[curr.date].dotColor = colors.primary
-
-          return acc
-        },
-        {
-          [stateStore.openedDate]: {
-            selected: true,
+      workoutStore.workouts.reduce((acc, curr) => {
+        if (!(curr.date in acc)) {
+          acc[curr.date] = {}
+        }
+        acc[curr.date].dots = [
+          {
+            color: colors.primary,
+            selectedColor: colors.primaryText,
           },
-        } as MarkedDates
-      ),
+        ]
+
+        return acc
+      }, {} as MarkedDays),
     [workoutStore.workouts, stateStore.openedDate, stateStore.openedWorkout]
   )
+
+  const startingMonth = useMemo(
+    () => DateTime.now().minus({ month: 6 }).toFormat('yyyy-MM-dd'),
+    []
+  )
+  const today = useMemo(() => DateTime.now().toJSDate(), [])
 
   const router = useRouter()
 
@@ -44,8 +48,11 @@ const CalendarPage: React.FC = () => {
     router.push('/')
   }
 
-  function handleCalendarDayPress(dateString: string) {
-    setOpenedWorkoutDialogDate(dateString)
+  function handleCalendarDayPress(date: Date) {
+    const dateString = DateTime.fromISO(date.toISOString()).toISODate()!
+    if (Object.keys(markedDates).includes(dateString)) {
+      setOpenedWorkoutDialogDate(dateString)
+    }
   }
   function goGoDay() {
     stateStore.setOpenedDate(openedWorkoutDialogDate)
@@ -65,19 +72,24 @@ const CalendarPage: React.FC = () => {
           />
         </Appbar.Header>
 
-        <CalendarList
-          onDayPress={({ dateString }) => {
-            handleCalendarDayPress(dateString)
+        <Calendar
+          onPress={date => {
+            handleCalendarDayPress(date)
           }}
-          markedDates={markedDates}
+          startDate={today}
+          startingMonth={startingMonth}
+          markedDays={markedDates}
           theme={{
-            selectedDayBackgroundColor: colors.primary,
-            arrowColor: colors.primary,
+            startDateContainerStyle: {
+              backgroundColor: colors.primary,
+              width: 39,
+              flex: 0,
+            },
           }}
-          pastScrollRange={12}
-          futureScrollRange={1}
-          calendarHeight={360}
-          animateScroll
+          disableRange
+          monthHeight={370}
+          numberOfMonths={24}
+          firstDayMonday
         />
       </View>
       {openedWorkoutDialogDate !== '' && (
