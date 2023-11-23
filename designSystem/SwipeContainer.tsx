@@ -37,8 +37,6 @@ const SwipeContainer: React.FC<Props> = ({
     event: GestureEvent<PanGestureHandlerEventPayload>
   ) {
     if (event.nativeEvent.state === State.END) {
-      // State 4 represents the "END" state
-      // Reset the swipeTriggered state after the swipe is complete
       setSwipeTriggered(false)
     }
   }
