@@ -12,6 +12,8 @@ type Props = {
 const FavoriteExerciseSelect: React.FC<Props> = ({ onSelect }) => {
   const { workoutStore } = useStores()
 
+  // TODO: handle empty state
+  // TODO: convert most used to favorited exercises?
   return (
     <ExerciseList
       exercises={workoutStore.mostUsedExercises}
