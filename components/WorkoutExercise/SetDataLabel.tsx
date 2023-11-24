@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
+import { BodySmallLabel } from '../../designSystem/Label'
 import colors from '../../designSystem/colors'
 
 type Props = {
@@ -18,22 +19,22 @@ const ReadOnlyListItemDataLabel: React.FC<Props> = ({
   const color = isFocused ? colors.primary : colors.secondaryText
   return (
     <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
-      <Text
+      <BodySmallLabel
         style={{
           fontWeight: 'bold',
           color,
         }}
       >
         {value}
-      </Text>
+      </BodySmallLabel>
       {unit && (
-        <Text
+        <BodySmallLabel
           style={{
             color,
           }}
         >
           {unit}
-        </Text>
+        </BodySmallLabel>
       )}
     </View>
   )

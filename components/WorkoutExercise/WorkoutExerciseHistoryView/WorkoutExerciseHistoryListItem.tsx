@@ -5,7 +5,7 @@ import { View } from 'react-native'
 
 import { WorkoutSet } from '../../../db/models'
 import { Divider } from '../../../designSystem'
-import { SectionLabel } from '../../../designSystem/Label'
+import { BodyLargeLabel } from '../../../designSystem/Label'
 import WorkoutExerciseSetReadOnlyList from '../WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList'
 
 type Props = {
@@ -18,9 +18,9 @@ const WorkoutExerciseHistoryListItem: React.FC<Props> = ({ date, sets }) => {
       style={{ gap: 8, marginBottom: 12 }}
       key={date}
     >
-      <SectionLabel>
+      <BodyLargeLabel style={{ textAlign: 'center' }}>
         {DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}
-      </SectionLabel>
+      </BodyLargeLabel>
       <Divider />
       <WorkoutExerciseSetReadOnlyList sets={sets} />
     </View>

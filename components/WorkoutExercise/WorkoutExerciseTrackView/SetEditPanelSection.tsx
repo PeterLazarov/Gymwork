@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 import { View } from 'react-native'
 
 import { Divider } from '../../../designSystem'
-import { SubSectionLabel } from '../../../designSystem/Label'
+import { BodySmallLabel } from '../../../designSystem/Label'
 
 type Props = {
   text: string
@@ -13,9 +13,9 @@ const SetEditPanelSection: React.FC<Props> = ({ text, children }) => {
   return (
     <View style={{ gap: 16 }}>
       <View>
-        <SubSectionLabel style={{ textTransform: 'uppercase' }}>
+        <BodySmallLabel style={{ textTransform: 'uppercase' }}>
           {text}
-        </SubSectionLabel>
+        </BodySmallLabel>
         <Divider />
       </View>
       {children}

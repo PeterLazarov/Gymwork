@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { IconButton } from 'react-native-paper'
 
 import { Icon, iconSizes } from '../designSystem'
+import { BodySmallLabel } from '../designSystem/Label'
 import colors from '../designSystem/colors'
 
 type Props = {
@@ -34,14 +35,14 @@ const FeedbackPicker: React.FC<Props> = ({ onChange }) => {
             />
           )}
         />
-        <Text
+        <BodySmallLabel
           style={{
             color: colors.red,
             opacity: selectedEmoji === 'sad' ? 1 : unselectedTextOpacity,
           }}
         >
           Bad
-        </Text>
+        </BodySmallLabel>
       </View>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <IconButton
@@ -58,14 +59,14 @@ const FeedbackPicker: React.FC<Props> = ({ onChange }) => {
             />
           )}
         />
-        <Text
+        <BodySmallLabel
           style={{
             color: colors.yellow,
             opacity: selectedEmoji === 'neutral' ? 1 : unselectedTextOpacity,
           }}
         >
           Normal
-        </Text>
+        </BodySmallLabel>
       </View>
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
         <IconButton
@@ -80,14 +81,14 @@ const FeedbackPicker: React.FC<Props> = ({ onChange }) => {
             />
           )}
         />
-        <Text
+        <BodySmallLabel
           style={{
             color: colors.green,
             opacity: selectedEmoji === 'happy' ? 1 : unselectedTextOpacity,
           }}
         >
           Good
-        </Text>
+        </BodySmallLabel>
       </View>
     </View>
   )

@@ -1,5 +1,6 @@
-import { Portal, Dialog, Text, Button } from 'react-native-paper'
+import { Portal, Dialog, Button } from 'react-native-paper'
 
+import { BodyMediumLabel } from '../designSystem/Label'
 import colors from '../designSystem/colors'
 
 type Props = {
@@ -22,7 +23,7 @@ const ConfirmationDialog: React.FC<Props> = ({
       >
         <Dialog.Title>Warning</Dialog.Title>
         <Dialog.Content>
-          <Text variant="bodyLarge">{message}</Text>
+          <BodyMediumLabel>{message}</BodyMediumLabel>
         </Dialog.Content>
         <Dialog.Actions>
           <Button

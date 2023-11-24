@@ -1,5 +1,7 @@
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { TextInput } from 'react-native-paper'
+
+import { BodySmallLabel } from './Label'
 
 type Props = {
   valueSeconds: number
@@ -45,7 +47,7 @@ const DurationPicker: React.FC<Props> = ({
             placeholder="hh"
             maxLength={2}
           />
-          <Text>:</Text>
+          <BodySmallLabel>:</BodySmallLabel>
         </>
       )}
       <TextInput
@@ -63,7 +65,7 @@ const DurationPicker: React.FC<Props> = ({
         placeholder="mm"
         maxLength={2}
       />
-      <Text>:</Text>
+      <BodySmallLabel>:</BodySmallLabel>
       <TextInput
         value={`${seconds}`}
         style={{ textAlign: 'center' }}

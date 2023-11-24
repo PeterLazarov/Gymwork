@@ -6,7 +6,7 @@ import { Appbar, TextInput, Button } from 'react-native-paper'
 
 import FeedbackPicker from '../components/FeedbackPicker'
 import { useStores } from '../db/helpers/useStores'
-import { SectionLabel } from '../designSystem/Label'
+import { BodyLargeLabel } from '../designSystem/Label'
 import colors from '../designSystem/colors'
 
 const WorkoutFeedbackPage: React.FC = () => {
@@ -25,7 +25,9 @@ const WorkoutFeedbackPage: React.FC = () => {
       </Appbar.Header>
 
       <View style={{ padding: 8, gap: 16, flex: 1 }}>
-        <SectionLabel>How was the workout?</SectionLabel>
+        <BodyLargeLabel style={{ textAlign: 'center' }}>
+          How was the workout?
+        </BodyLargeLabel>
         <FeedbackPicker
           onChange={feeling =>
             stateStore.openedWorkout!.setProp('feeling', feeling)

@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
 import { useStores } from '../../../db/helpers/useStores'
 import { Exercise, WorkoutSet } from '../../../db/models'
 import { Icon } from '../../../designSystem'
+import { BodyMediumLabel } from '../../../designSystem/Label'
 import colors from '../../../designSystem/colors'
 import texts from '../../../texts'
 import { getFormatedDuration } from '../../../utils/time'
@@ -49,11 +50,11 @@ const ReadOnlyListItem: React.FC<Props> = ({
       {!hideRecords && (
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
           {!set.isWarmup && (
-            <Text
-              style={{ color, fontWeight: 'bold', fontSize: 15, marginLeft: 8 }}
+            <BodyMediumLabel
+              style={{ color, fontWeight: 'bold', marginLeft: 8 }}
             >
               {number}.{' '}
-            </Text>
+            </BodyMediumLabel>
           )}
           {set.isWarmup && <Icon icon="yoga" />}
           {isRecord && (

@@ -6,7 +6,7 @@ import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from '../../../db/helpers/useStores'
 import { WorkoutSet } from '../../../db/models'
 import { Divider } from '../../../designSystem'
-import { SectionLabel } from '../../../designSystem/Label'
+import { BodyLargeLabel } from '../../../designSystem/Label'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -64,7 +64,9 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       />
 
       {stateStore.openedExerciseSets.length === 0 && (
-        <SectionLabel> No sets entered </SectionLabel>
+        <BodyLargeLabel style={{ textAlign: 'center' }}>
+          No sets entered{' '}
+        </BodyLargeLabel>
       )}
     </View>
   )

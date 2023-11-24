@@ -6,7 +6,7 @@ import { IconButton } from 'react-native-paper'
 import TimerEditModal from './TimerEditModal'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
-import { SubSectionLabel } from '../designSystem/Label'
+import { BodySmallLabel } from '../designSystem/Label'
 import colors from '../designSystem/colors'
 
 const WorkoutTimer: React.FC = () => {
@@ -38,8 +38,8 @@ const WorkoutTimer: React.FC = () => {
           icon={() => <Icon icon="weight-lifter" />}
         />
         <View style={styles.timerPanel}>
-          <SubSectionLabel>W: {timeStore.stopwatchValue}</SubSectionLabel>
-          <SubSectionLabel>E: {stateStore.timerValue}</SubSectionLabel>
+          <BodySmallLabel>W: {timeStore.stopwatchValue}</BodySmallLabel>
+          <BodySmallLabel>E: {stateStore.timerValue}</BodySmallLabel>
         </View>
         <IconButton
           onPress={onSettingsPress}

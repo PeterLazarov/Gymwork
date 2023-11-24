@@ -5,11 +5,14 @@ export const HeadingLabel = styled.Text`
   font-size: 20px;
 `
 
-export const SectionLabel = styled.Text`
-  text-align: center;
-  font-size: 18px;
+export const BodySmallLabel = styled.Text`
+  font-size: 13px;
 `
 
-export const SubSectionLabel = styled.Text`
-  font-size: 13px;
+export const BodyMediumLabel = styled.Text`
+  font-size: 15px;
+`
+
+export const BodyLargeLabel = styled.Text`
+  font-size: 18px;
 `

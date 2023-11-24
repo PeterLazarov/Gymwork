@@ -2,7 +2,7 @@ import { View } from 'react-native'
 
 import WorkoutExerciseSetReadOnlyList from './WorkoutExercise/WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList'
 import { Exercise, WorkoutSet } from '../db/models'
-import { SectionLabel } from '../designSystem/Label'
+import { BodyLargeLabel } from '../designSystem/Label'
 
 type Props = {
   exercise: Exercise
@@ -14,12 +14,12 @@ const CalendarWorkoutModalExerciseItem: React.FC<Props> = ({
 }) => {
   return (
     <View style={{ padding: 8 }}>
-      <SectionLabel
-        style={{ marginBottom: 8 }}
+      <BodyLargeLabel
+        style={{ marginBottom: 8, textAlign: 'center' }}
         key={exercise.guid}
       >
         {exercise.name}
-      </SectionLabel>
+      </BodyLargeLabel>
       <WorkoutExerciseSetReadOnlyList
         exercise={exercise}
         sets={sets}
