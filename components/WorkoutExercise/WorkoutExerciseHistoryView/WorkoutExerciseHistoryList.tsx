@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback, useMemo } from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, ListRenderItemInfo } from 'react-native'
 
 import WorkoutExerciseHistoryDayItem from './WorkoutExerciseHistoryListItem'
 import { useStores } from '../../../db/helpers/useStores'
@@ -24,7 +24,7 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
   )
 
   const renderItem = useCallback(
-    ({ item, index }: { item: Workout; index: number }) => {
+    ({ item, index }: ListRenderItemInfo<Workout>) => {
       return (
         <WorkoutExerciseHistoryDayItem
           date={item.date}

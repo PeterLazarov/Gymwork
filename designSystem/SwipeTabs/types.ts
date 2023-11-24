@@ -1,13 +1,12 @@
 import { FunctionComponent } from 'react'
-import { ViewStyle } from 'react-native'
+import { TextStyle, ViewStyle } from 'react-native'
 
 export type TabStyles = {
   headerPanelContainer?: ViewStyle
   header?: {
-    button?: ViewStyle
-    labelColor?: string
-    activeLabelColor?: string
-    activeIndicatorBorderColor?: string
+    label?: TextStyle
+    activeLabel?: TextStyle
+    activeIndicatorBorder?: ViewStyle
   }
 }
 

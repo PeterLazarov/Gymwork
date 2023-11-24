@@ -1,8 +1,8 @@
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { View } from 'react-native'
 
+import { ActiveIndicator, TabHeaderTouchable, TabLabel } from './styled'
 import { TabConfig, TabStyles } from './types'
-import colors from '../colors'
 
 type Props = {
   index: number
@@ -20,37 +20,18 @@ const TabHeader: React.FC<Props> = ({
   onHeaderPress,
 }) => {
   const isActive = index === currentIndex
-  const inactiveColor = style?.labelColor || colors.gray
-  const activeColor = style?.activeLabelColor || colors.primary
-  const color = isActive ? activeColor : inactiveColor
 
   return (
     <View style={{ flex: 1, height: 30 }}>
-      <TouchableOpacity
-        onPress={() => onHeaderPress(index)}
-        style={[
-          {
-            paddingHorizontal: 5,
-            flexGrow: 1,
-            flex: 1,
-            alignItems: 'center',
-          },
-          style?.button,
-        ]}
-      >
-        <Text style={{ color }}>{item.label}</Text>
-      </TouchableOpacity>
-      {isActive && (
-        <View
-          style={[
-            {
-              marginHorizontal: 10,
-              borderBottomWidth: 2,
-              borderColor: style?.activeIndicatorBorderColor || colors.primary,
-            },
-          ]}
-        />
-      )}
+      <TabHeaderTouchable onPress={() => onHeaderPress(index)}>
+        <TabLabel
+          isActive={isActive}
+          style={isActive ? style?.activeLabel : style?.label}
+        >
+          {item.label}
+        </TabLabel>
+      </TabHeaderTouchable>
+      {isActive && <ActiveIndicator style={style?.activeIndicatorBorder} />}
     </View>
   )
 }

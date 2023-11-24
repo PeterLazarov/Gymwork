@@ -7,6 +7,7 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   View,
+  ListRenderItemInfo,
 } from 'react-native'
 
 import TabHeader from './TabHeaderPanel'
@@ -35,8 +36,7 @@ const SwipeTabs: React.FC<Props> = ({
   const flatList = useRef<FlatList<TabConfig>>(null)
   const [currentIndex, setCurrentIndex] = useState(initialScrollIndex || 0)
 
-  // Scroll to pressed button index
-  const onButtonPress = (index: number) => {
+  const onTabPress = (index: number) => {
     if (keyboardDismissOnScroll) Keyboard.dismiss()
 
     flatList.current?.scrollToIndex({ index })
@@ -62,17 +62,32 @@ const SwipeTabs: React.FC<Props> = ({
     index,
   })
 
+  const renderItem = ({
+    item: { component: Component, props = {} },
+    index,
+  }: ListRenderItemInfo<TabConfig>) => (
+    <View
+      style={{ width, flex: 1 }}
+      key={index}
+    >
+      <Component {...props} />
+    </View>
+  )
+
   return (
     <View style={{ flex: 1 }}>
       <TabHeader
         style={style?.header}
         tabsConfig={tabsConfig}
         currentIndex={currentIndex}
-        onHeaderPress={onButtonPress}
+        onHeaderPress={onTabPress}
       />
       {children}
       <FlatList
         ref={flatList}
+        style={{
+          flex: 1,
+        }}
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={16}
         onScroll={onFlatListScroll}
@@ -81,18 +96,8 @@ const SwipeTabs: React.FC<Props> = ({
         getItemLayout={getItemLayout}
         horizontal
         data={tabsConfig}
-        renderItem={({ item: { component: Component, props = {} }, index }) => (
-          <View
-            style={{ width, flex: 1 }}
-            key={index}
-          >
-            <Component {...props} />
-          </View>
-        )}
+        renderItem={renderItem}
         snapToAlignment="center"
-        style={{
-          flex: 1,
-        }}
         initialScrollIndex={initialScrollIndex}
         {...flatlistProps}
       />

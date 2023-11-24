@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback } from 'react'
-import { View, FlatList } from 'react-native'
+import { View, FlatList, ListRenderItemInfo } from 'react-native'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from '../../../db/helpers/useStores'
@@ -24,7 +24,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   }
 
   const renderItem = useCallback(
-    ({ item, index }: { item: WorkoutSet; index: number }) => {
+    ({ item, index }: ListRenderItemInfo<WorkoutSet>) => {
       return (
         <WorkoutExerciseSetEditItem
           set={item}

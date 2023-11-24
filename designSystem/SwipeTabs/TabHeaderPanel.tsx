@@ -15,7 +15,7 @@ type Props = {
 const TabHeaderPanel: React.FC<Props> = ({ tabsConfig, style, ...rest }) => {
   return (
     <View style={styles.container}>
-      {!!tabsConfig?.length &&
+      {tabsConfig.length &&
         tabsConfig.map((item, index) => (
           <TabHeader
             key={index}
