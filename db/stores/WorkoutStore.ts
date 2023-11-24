@@ -72,6 +72,17 @@ export const WorkoutStoreModel = types
         })
       )
     },
+    get mostUsedExercises(): Exercise[] {
+      const sortedExercises = Object.entries(this.exerciseHistory)
+        .map(([exerciseId, sets]) => ({
+          exercise: sets[0].exercise,
+          count: sets.length,
+        }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 10)
+
+      return sortedExercises.map(({ exercise }) => exercise)
+    },
 
     get allExerciseRecords(): Record<
       Exercise['guid'],

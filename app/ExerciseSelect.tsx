@@ -4,10 +4,12 @@ import React from 'react'
 import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
-import ExerciseSelect from '../components/Exercise/ExerciseSelect'
+import AllExerciseSelect from '../components/Exercise/AllExerciseSelect'
+import FavoriteExerciseSelect from '../components/Exercise/FavoriteExerciseSelect'
 import { useStores } from '../db/helpers/useStores'
 import { Exercise } from '../db/models'
 import { Icon } from '../designSystem'
+import SwipeTabs from '../designSystem/SwipeTabs'
 import colors from '../designSystem/colors'
 import texts from '../texts'
 
@@ -28,8 +30,22 @@ const ExerciseSelectPage: React.FC = () => {
     router.push('/ExerciseCreate')
   }
 
+  const tabsConfig = [
+    {
+      label: 'Most used',
+      name: 'tabFavorite',
+      component: FavoriteExerciseSelect,
+      props: { onSelect: handleSelectExercise },
+    },
+    {
+      label: 'All exercises',
+      name: 'tabAll',
+      component: AllExerciseSelect,
+      props: { onSelect: handleSelectExercise },
+    },
+  ]
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
         <Appbar.BackAction onPress={onBackPress} />
         <Appbar.Content title={texts.selectExercise} />
@@ -45,7 +61,7 @@ const ExerciseSelectPage: React.FC = () => {
         />
       </Appbar.Header>
 
-      <ExerciseSelect onSelect={handleSelectExercise} />
+      <SwipeTabs tabsConfig={tabsConfig} />
     </View>
   )
 }
