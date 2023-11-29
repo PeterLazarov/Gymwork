@@ -7,6 +7,7 @@ import { useStores } from '../../../db/helpers/useStores'
 import { WorkoutSet } from '../../../db/models'
 import { Divider } from '../../../designSystem'
 import { BodyLargeLabel } from '../../../designSystem/Label'
+import colors from '../../../designSystem/colors'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -64,7 +65,14 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       />
 
       {stateStore.openedExerciseSets.length === 0 && (
-        <BodyLargeLabel style={{ textAlign: 'center' }}>
+        <BodyLargeLabel
+          style={{
+            textAlign: 'center',
+            alignItems: 'center',
+            flex: 1,
+            color: colors.gray,
+          }}
+        >
           No sets entered{' '}
         </BodyLargeLabel>
       )}
