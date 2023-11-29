@@ -4,14 +4,13 @@ import {
   FlatList,
   Keyboard,
   FlatListProps,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
   View,
   ListRenderItemInfo,
 } from 'react-native'
 
 import TabHeader from './TabHeaderPanel'
 import { TabConfig, TabStyles } from './types'
+import HorizontalScreenList from '../HorizontalScreenList'
 
 type Props = {
   style?: TabStyles
@@ -42,25 +41,11 @@ const SwipeTabs: React.FC<Props> = ({
     flatList.current?.scrollToIndex({ index })
   }
 
-  const onFlatListScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (keyboardDismissOnScroll) Keyboard.dismiss()
-
-    const index = Math.round(e.nativeEvent.contentOffset.x / width)
-    if (index !== currentIndex) {
-      setCurrentIndex(index)
-      const tab = tabsConfig[index].label
-      onTabChange?.(tab)
-    }
+  const onScreenChange = (index: number) => {
+    setCurrentIndex(index)
+    const tab = tabsConfig[index].label
+    onTabChange?.(tab)
   }
-
-  const getItemLayout = (
-    data: ArrayLike<TabConfig> | null | undefined,
-    index: number
-  ) => ({
-    length: width,
-    offset: width * index,
-    index,
-  })
 
   const renderItem = ({
     item: { component: Component, props = {} },
@@ -83,21 +68,11 @@ const SwipeTabs: React.FC<Props> = ({
         onHeaderPress={onTabPress}
       />
       {children}
-      <FlatList
+      <HorizontalScreenList
         ref={flatList}
-        style={{
-          flex: 1,
-        }}
-        showsHorizontalScrollIndicator={false}
-        scrollEventThrottle={16}
-        onScroll={onFlatListScroll}
-        pagingEnabled
-        keyExtractor={(item, index) => String(index)}
-        getItemLayout={getItemLayout}
-        horizontal
+        onScreenChange={onScreenChange}
         data={tabsConfig}
         renderItem={renderItem}
-        snapToAlignment="center"
         initialScrollIndex={initialScrollIndex}
         {...flatlistProps}
       />
