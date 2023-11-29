@@ -1,6 +1,5 @@
 import React, { ReactNode, useRef, useState } from 'react'
 import {
-  useWindowDimensions,
   FlatList,
   Keyboard,
   FlatListProps,
@@ -30,8 +29,6 @@ const SwipeTabs: React.FC<Props> = ({
   keyboardDismissOnScroll,
   flatlistProps,
 }) => {
-  const width = useWindowDimensions().width
-
   const flatList = useRef<FlatList<TabConfig>>(null)
   const [currentIndex, setCurrentIndex] = useState(initialScrollIndex || 0)
 
@@ -51,12 +48,10 @@ const SwipeTabs: React.FC<Props> = ({
     item: { component: Component, props = {} },
     index,
   }: ListRenderItemInfo<TabConfig>) => (
-    <View
-      style={{ width, flex: 1 }}
+    <Component
+      {...props}
       key={index}
-    >
-      <Component {...props} />
-    </View>
+    />
   )
 
   return (
