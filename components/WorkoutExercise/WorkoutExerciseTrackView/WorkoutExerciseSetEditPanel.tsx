@@ -9,7 +9,6 @@ import DistanceEditor from '../../../designSystem/DistanceEditor'
 import DurationInput from '../../../designSystem/DurationInput'
 import IncrementNumericEditor from '../../../designSystem/IncrementNumericEditor'
 import colors from '../../../designSystem/colors'
-import DistanceType from '../../../enums/DistanceType'
 import texts from '../../../texts'
 
 type SetEditFields =
@@ -32,15 +31,9 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   updateSet,
   removeSet,
 }) => {
-  const { stateStore } = useStores()
+  const { stateStore, workoutStore } = useStores()
 
-  const emptySet: WorkoutSetEditData = {
-    reps: 0,
-    weight: 0,
-    distance: 0,
-    distanceUnit: DistanceType.M,
-    durationSecs: 0,
-  }
+  const emptySet = workoutStore.getEmptySet()
 
   const [editData, setEditData] = useState<WorkoutSetEditData>({
     ...emptySet,

@@ -9,6 +9,7 @@ import {
 
 import { RootStore } from './RootStore'
 import workoutSeedData from '../../data/workout-seed-data'
+import DistanceType from '../../enums/DistanceType'
 import * as storage from '../../utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import {
@@ -190,6 +191,18 @@ export const WorkoutStoreModel = types
     },
     setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {
       set.isWarmup = value
+    },
+    getEmptySet(): Pick<
+      WorkoutSet,
+      'reps' | 'weight' | 'distance' | 'distanceUnit' | 'durationSecs'
+    > {
+      return {
+        reps: 0,
+        weight: 0,
+        distance: 0,
+        distanceUnit: DistanceType.M,
+        durationSecs: 0,
+      }
     },
   }))
 
