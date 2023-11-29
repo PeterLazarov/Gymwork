@@ -20,6 +20,7 @@ import {
   Exercise,
   Workout,
   WorkoutSetSnapshotIn,
+  WorkoutSetTrackData,
 } from '../models'
 
 export const WorkoutStoreModel = types
@@ -192,10 +193,7 @@ export const WorkoutStoreModel = types
     setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {
       set.isWarmup = value
     },
-    getEmptySet(): Pick<
-      WorkoutSet,
-      'reps' | 'weight' | 'distance' | 'distanceUnit' | 'durationSecs'
-    > {
+    getEmptySet(): WorkoutSetTrackData {
       return {
         reps: 0,
         weight: 0,

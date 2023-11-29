@@ -4,23 +4,16 @@ import { Button } from 'react-native-paper'
 
 import SetEditPanelSection from './SetEditPanelSection'
 import { useStores } from '../../../db/helpers/useStores'
-import { WorkoutSet } from '../../../db/models'
+import { WorkoutSet, WorkoutSetTrackData } from '../../../db/models'
 import DistanceEditor from '../../../designSystem/DistanceEditor'
 import DurationInput from '../../../designSystem/DurationInput'
 import IncrementNumericEditor from '../../../designSystem/IncrementNumericEditor'
 import colors from '../../../designSystem/colors'
 import texts from '../../../texts'
 
-type SetEditFields =
-  | 'weight'
-  | 'reps'
-  | 'distance'
-  | 'distanceUnit'
-  | 'durationSecs'
-type WorkoutSetEditData = Pick<WorkoutSet, SetEditFields>
 type Props = {
   selectedSet: WorkoutSet | null
-  addSet: (set: Pick<WorkoutSet, SetEditFields>) => void
+  addSet: (set: WorkoutSetTrackData) => void
   updateSet: (set: WorkoutSet) => void
   removeSet: (set: WorkoutSet) => void
 }
@@ -31,16 +24,16 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   updateSet,
   removeSet,
 }) => {
-  const { stateStore, workoutStore } = useStores()
+  const { stateStore } = useStores()
 
-  const emptySet = workoutStore.getEmptySet()
+  const nextSet = stateStore.openedExerciseNextSet
 
-  const [editData, setEditData] = useState<WorkoutSetEditData>({
-    ...emptySet,
+  const [editData, setEditData] = useState<WorkoutSetTrackData>({
+    ...nextSet,
   })
 
   useEffect(() => {
-    setEditData({ ...(selectedSet ?? emptySet) })
+    setEditData({ ...(selectedSet ?? nextSet) })
   }, [selectedSet])
 
   function saveChanges() {

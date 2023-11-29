@@ -7,7 +7,7 @@ import { TimeStore } from './TimeStore'
 import { WorkoutStore } from './WorkoutStore'
 import { getFormatedDuration } from '../../utils/time'
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import { Exercise, Workout, WorkoutSet } from '../models'
+import { Exercise, Workout, WorkoutSet, WorkoutSetTrackData } from '../models'
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -61,6 +61,28 @@ export const StateStoreModel = types
         ) ?? []
 
       return exerciseSets
+    },
+    get openedExerciseNextSet(): WorkoutSetTrackData {
+      const lastSet =
+        this.openedExerciseSets?.[this.openedExerciseSets.length - 1]
+
+      return lastSet
+        ? {
+            reps: lastSet.reps,
+            weight: lastSet.weight,
+            distance: lastSet.distance,
+            distanceUnit: lastSet.distanceUnit,
+            durationSecs: lastSet.durationSecs,
+          }
+        : this.workoutStore.getEmptySet()
+    },
+    get openedExerciseSet(): WorkoutSet {
+      const exerciseSets =
+        this.openedWorkout?.sets.filter(
+          e => e.exercise.guid === self.openedExerciseGuid
+        ) ?? []
+
+      return exerciseSets[exerciseSets.length - 1]
     },
 
     get openedExerciseWorkSets(): WorkoutSet[] {

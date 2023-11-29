@@ -24,3 +24,8 @@ export interface WorkoutSetSnapshotOut
   extends SnapshotOut<typeof WorkoutSetModel> {}
 export interface WorkoutSetSnapshotIn
   extends SnapshotIn<typeof WorkoutSetModel> {}
+
+export type WorkoutSetTrackData = Pick<
+  WorkoutSet,
+  'reps' | 'weight' | 'distance' | 'distanceUnit' | 'durationSecs'
+>
