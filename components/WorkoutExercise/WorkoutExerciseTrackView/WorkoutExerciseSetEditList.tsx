@@ -73,7 +73,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
             color: colors.gray,
           }}
         >
-          No sets entered{' '}
+          No sets entered
         </BodyLargeLabel>
       )}
     </View>
