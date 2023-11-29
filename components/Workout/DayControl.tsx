@@ -5,10 +5,10 @@ import React from 'react'
 import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
-import { useStores } from '../db/helpers/useStores'
-import { Divider, Icon } from '../designSystem'
-import colors from '../designSystem/colors'
-import { capitalize } from '../utils/string'
+import { useStores } from '../../db/helpers/useStores'
+import { Divider, Icon } from '../../designSystem'
+import colors from '../../designSystem/colors'
+import { capitalize } from '../../utils/string'
 
 const DayControl = () => {
   const { stateStore } = useStores()

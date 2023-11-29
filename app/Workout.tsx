@@ -1,12 +1,12 @@
 import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { ScrollView, View } from 'react-native'
+import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
-import DayControl from '../components/DayControl'
-import WorkoutControlButtons from '../components/WorkoutControlButtons'
-import WorkoutExerciseCard from '../components/WorkoutExercise/WorkoutExerciseCard'
+import DayControl from '../components/Workout/DayControl'
+import WorkoutControlButtons from '../components/Workout/WorkoutControlButtons'
+import WorkoutExerciseList from '../components/Workout/WorkoutExerciseList'
 import WorkoutTimer from '../components/WorkoutTimer'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
@@ -14,8 +14,7 @@ import SwipeContainer from '../designSystem/SwipeContainer'
 import colors from '../designSystem/colors'
 
 const WorkoutPage: React.FC = () => {
-  const { workoutStore, timeStore, stateStore, openedWorkoutExercises } =
-    useStores()
+  const { workoutStore, timeStore, stateStore } = useStores()
   const router = useRouter()
 
   function newWorkout() {
@@ -92,16 +91,7 @@ const WorkoutPage: React.FC = () => {
         {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
           <WorkoutTimer />
         )}
-        <ScrollView style={{ flex: 1 }}>
-          {stateStore.openedWorkout &&
-            openedWorkoutExercises.map(exercise => (
-              <WorkoutExerciseCard
-                key={`${stateStore.openedWorkout!.date}_${exercise.guid}`}
-                workout={stateStore.openedWorkout!}
-                exercise={exercise}
-              />
-            ))}
-        </ScrollView>
+        <WorkoutExerciseList />
         <WorkoutControlButtons createWorkout={newWorkout} />
       </SwipeContainer>
     </View>
