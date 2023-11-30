@@ -1,19 +1,30 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { useStores } from './helpers/useStores'
 
 type Props = {
   children: React.ReactNode
 }
+
+let promise: Promise
+
 const DBStoreInitializer: React.FC<Props> = props => {
-  const { exerciseStore, workoutStore } = useStores()
+  const { exerciseStore, workoutStore, stateStore, timeStore } = useStores()
+
+  promise =
+    promise || Promise.all([exerciseStore.fetch(), workoutStore.fetch()])
+
+  const [render, setRender] = useState(false)
 
   useEffect(() => {
-    exerciseStore.fetch()
-    workoutStore.fetch()
+    promise.then(() => {
+      setTimeout(() => {
+        setRender(true)
+      })
+    })
   }, [])
 
-  return props.children
+  return render && props.children
 }
 
 export default DBStoreInitializer

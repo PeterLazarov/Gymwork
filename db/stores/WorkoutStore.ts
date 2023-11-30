@@ -140,16 +140,14 @@ export const WorkoutStoreModel = types
   .actions(withSetPropAction)
   .actions(self => ({
     async fetch() {
-      setTimeout(async () => {
-        const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
-        console.log('fetching')
+      const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
+      console.log('fetching')
 
-        if (workouts && workouts?.length > 0) {
-          self.setProp('workouts', workouts)
-        } else {
-          await this.seed()
-        }
-      }, 1000) // TODO
+      if (workouts && workouts?.length > 0) {
+        self.setProp('workouts', workouts)
+      } else {
+        await this.seed()
+      }
     },
     async seed() {
       console.log('seeding')
