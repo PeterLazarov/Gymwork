@@ -1,38 +1,30 @@
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
-import React, { useEffect, useRef, useState } from 'react'
-import { ListRenderItemInfo, Text, View } from 'react-native'
+import React, { useEffect, useMemo, useRef } from 'react'
+import { FlatList, ListRenderItemInfo, Text, View } from 'react-native'
 
 import { useStores } from '../../db/helpers/useStores'
 import HorizontalScreenList from '../../designSystem/HorizontalScreenList'
-// ... (other imports)
+import { getDateRange } from '../../utils/date'
 
-function usePrevious(value: any) {
-  const prevValueRef = useRef()
-
-  useEffect(() => {
-    prevValueRef.current = value
-  }, [value])
-
-  return prevValueRef.current
-}
+const datePaddingCount = 365
 
 function WorkoutHorizontalList() {
-  const { stateStore } = useStores()
+  const { stateStore, workoutStore } = useStores()
+  const workoutList = useRef<FlatList<string>>(null)
 
-  const initialOpendate = useRef(DateTime.fromISO(stateStore.openedDate))
-  const datePaddingCount = 5
+  const dates = useMemo(() => {
+    const firstWorkout = workoutStore.workouts[workoutStore.workouts.length - 1]
+    const lastWorkout = workoutStore.workouts[0]
+    const from = DateTime.fromISO(firstWorkout.date)
+      .minus({ day: datePaddingCount })
+      .toISODate()!
+    const to = DateTime.fromISO(lastWorkout.date)
+      .plus({ day: datePaddingCount })
+      .toISODate()!
 
-  // Initially 11 ISO Dates
-
-  const [dates, setDates] = useState(
-    Array.from({ length: 2 * datePaddingCount + 1 }, (_, i) => {
-      const newDate = initialOpendate.current.plus({
-        days: i - datePaddingCount,
-      })
-      return newDate.toISODate()!
-    })
-  )
+    return getDateRange(from, to)
+  }, [])
 
   function onScreenChange(index: number, isLeftSwipe: boolean) {
     if (isLeftSwipe) {
@@ -47,43 +39,18 @@ function WorkoutHorizontalList() {
       <Text key={index}>{item}</Text>
     </View>
   )
-
-  function prependDays() {
-    // console.log('prependDays')
-    // debugger
-    // setDates(
-    //   Array.from({ length: 5 })
-    //     .map((_, i) => {
-    //       return DateTime.fromISO(dates[0])
-    //         .minus({ days: 5 - i })
-    //         .toISODate()!
-    //     })
-    //     .concat(dates)
-    // )
-  }
-
-  function appendDays() {
-    console.log('appendDays')
-    debugger
-    setDates(
-      dates.concat(
-        Array.from({ length: 5 }).map((_, i) => {
-          return DateTime.fromISO(dates[dates.length - 1])
-            .plus({ days: i + 1 })
-            .toISODate()!
-        })
-      )
-    )
-  }
+  useEffect(() => {
+    const index = dates.indexOf(stateStore.openedDate)
+    workoutList.current?.scrollToIndex({ index })
+  }, [stateStore.openedDate])
 
   return (
     <HorizontalScreenList
+      ref={workoutList}
       data={dates}
       renderItem={renderItem}
       onScreenChange={onScreenChange}
-      initialScrollIndex={datePaddingCount}
-      onStartReached={prependDays}
-      onEndReached={appendDays}
+      initialScrollIndex={dates.indexOf(stateStore.openedDate)}
     />
   )
 }
