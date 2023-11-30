@@ -6,6 +6,7 @@ import DayControl from '../components/Workout/DayControl'
 import WorkoutControlButtons from '../components/Workout/WorkoutControlButtons'
 import WorkoutExerciseList from '../components/Workout/WorkoutExerciseList'
 import WorkoutHeader from '../components/Workout/WorkoutHeader'
+import WorkoutHorizontalList from '../components/Workout/WorkoutHorizontalList'
 import WorkoutTimer from '../components/WorkoutTimer'
 import { useStores } from '../db/helpers/useStores'
 import SwipeContainer from '../designSystem/SwipeContainer'
@@ -18,10 +19,10 @@ const WorkoutPage: React.FC = () => {
   }
 
   function onSwipeRight() {
-    stateStore.decrementCurrentDate()
+    // stateStore.decrementCurrentDate()
   }
   function onSwipeLeft() {
-    stateStore.incrementCurrentDate()
+    // stateStore.incrementCurrentDate()
   }
 
   return (
@@ -35,7 +36,8 @@ const WorkoutPage: React.FC = () => {
         {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
           <WorkoutTimer />
         )}
-        <WorkoutExerciseList />
+        {/* <WorkoutExerciseList /> */}
+        <WorkoutHorizontalList />
         <WorkoutControlButtons createWorkout={newWorkout} />
       </SwipeContainer>
     </View>
