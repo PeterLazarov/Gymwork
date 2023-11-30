@@ -27,12 +27,12 @@ const WorkoutHeader: React.FC = () => {
         style={{ alignItems: 'flex-start' }}
       />
 
+      {stateStore.isOpenedWorkoutToday && <WorkoutHeaderTimerButtons />}
       <Appbar.Action
         icon={() => <Icon icon="md-calendar-sharp" />}
         onPress={openCalendar}
         animated={false}
       />
-      {stateStore.isOpenedWorkoutToday && <WorkoutHeaderTimerButtons />}
       <Appbar.Action
         icon={() => <Icon icon="ellipsis-vertical" />}
         onPress={() => {}}
