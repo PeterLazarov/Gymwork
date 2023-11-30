@@ -57,7 +57,7 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
           flex: 1,
         }}
         showsHorizontalScrollIndicator={false}
-        scrollEventThrottle={16}
+        // scrollEventThrottle={16}
         onScroll={onFlatListScroll}
         pagingEnabled
         keyExtractor={(item, index) => String(index)}
@@ -66,8 +66,8 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
         horizontal
         snapToAlignment="center"
         initialScrollIndex={initialScrollIndex}
-        onEndReachedThreshold={width}
-        onStartReachedThreshold={width}
+        onEndReachedThreshold={1}
+        // onStartReachedThreshold={0.1}
         {...rest}
       />
     )

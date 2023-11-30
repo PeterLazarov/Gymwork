@@ -21,9 +21,11 @@ function WorkoutHorizontalList() {
   const { stateStore } = useStores()
 
   const initialOpendate = useRef(DateTime.fromISO(stateStore.openedDate))
-  const prevOpenedDate = usePrevious(stateStore.openedDate)
   const datePaddingCount = 5
-  const datesRef = useRef<string[]>(
+
+  // Initially 11 ISO Dates
+
+  const [dates, setDates] = useState(
     Array.from({ length: 2 * datePaddingCount + 1 }, (_, i) => {
       const newDate = initialOpendate.current.plus({
         days: i - datePaddingCount,
@@ -31,8 +33,6 @@ function WorkoutHorizontalList() {
       return newDate.toISODate()!
     })
   )
-
-  const [dates, setDates] = useState(datesRef.current)
 
   function onScreenChange(index: number, isLeftSwipe: boolean) {
     if (isLeftSwipe) {
@@ -48,23 +48,32 @@ function WorkoutHorizontalList() {
     </View>
   )
 
-  function onDatesEndReached(atEnd: boolean) {
-    console.log('end', atEnd)
-    const baseDate = datesRef.current[atEnd ? datesRef.current.length - 1 : 0]
-    const offset = atEnd ? 1 : -1
+  function prependDays() {
+    // console.log('prependDays')
+    // debugger
+    // setDates(
+    //   Array.from({ length: 5 })
+    //     .map((_, i) => {
+    //       return DateTime.fromISO(dates[0])
+    //         .minus({ days: 5 - i })
+    //         .toISODate()!
+    //     })
+    //     .concat(dates)
+    // )
+  }
 
-    const newDates = Array.from(
-      { length: 5 },
-      (_, index) =>
-        DateTime.fromISO(baseDate)
-          .plus({ days: offset * (index + 1) })
-          .toISODate()!
+  function appendDays() {
+    console.log('appendDays')
+    debugger
+    setDates(
+      dates.concat(
+        Array.from({ length: 5 }).map((_, i) => {
+          return DateTime.fromISO(dates[dates.length - 1])
+            .plus({ days: i + 1 })
+            .toISODate()!
+        })
+      )
     )
-
-    datesRef.current = atEnd
-      ? [...datesRef.current, ...newDates]
-      : [...newDates, ...datesRef.current]
-    setDates(datesRef.current)
   }
 
   return (
@@ -73,8 +82,8 @@ function WorkoutHorizontalList() {
       renderItem={renderItem}
       onScreenChange={onScreenChange}
       initialScrollIndex={datePaddingCount}
-      onStartReached={() => onDatesEndReached(false)}
-      onEndReached={() => onDatesEndReached(true)}
+      onStartReached={prependDays}
+      onEndReached={appendDays}
     />
   )
 }
