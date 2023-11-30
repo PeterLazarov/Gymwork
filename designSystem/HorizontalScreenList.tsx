@@ -66,8 +66,6 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
         horizontal
         snapToAlignment="center"
         initialScrollIndex={initialScrollIndex}
-        onEndReachedThreshold={width}
-        onStartReachedThreshold={width}
         {...rest}
       />
     )
