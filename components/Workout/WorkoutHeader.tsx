@@ -3,12 +3,13 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Appbar } from 'react-native-paper'
 
+import WorkoutHeaderTimerButtons from './WorkoutHeaderTimerButtons'
 import { useStores } from '../../db/helpers/useStores'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
 
 const WorkoutHeader: React.FC = () => {
-  const { timeStore } = useStores()
+  const { stateStore } = useStores()
   const router = useRouter()
 
   function openCalendar() {
@@ -31,34 +32,7 @@ const WorkoutHeader: React.FC = () => {
         onPress={openCalendar}
         animated={false}
       />
-      {!timeStore.stopwatchRunning && !timeStore.stopwatchPaused && (
-        <Appbar.Action
-          icon={() => <Icon icon="stopwatch" />}
-          onPress={timeStore.startStopwatch}
-          animated={false}
-        />
-      )}
-      {timeStore.stopwatchPaused && (
-        <Appbar.Action
-          icon={() => <Icon icon="play" />}
-          onPress={timeStore.startStopwatch}
-          animated={false}
-        />
-      )}
-      {timeStore.stopwatchRunning && (
-        <Appbar.Action
-          icon={() => <Icon icon="pause-outline" />}
-          onPress={timeStore.pauseStopwatch}
-          animated={false}
-        />
-      )}
-      {(timeStore.stopwatchRunning || timeStore.stopwatchPaused) && (
-        <Appbar.Action
-          icon={() => <Icon icon="stop" />}
-          onPress={timeStore.stopStopwatch}
-          animated={false}
-        />
-      )}
+      {stateStore.isOpenedWorkoutToday && <WorkoutHeaderTimerButtons />}
       <Appbar.Action
         icon={() => <Icon icon="ellipsis-vertical" />}
         onPress={() => {}}
@@ -67,4 +41,5 @@ const WorkoutHeader: React.FC = () => {
     </Appbar.Header>
   )
 }
+
 export default observer(WorkoutHeader)
