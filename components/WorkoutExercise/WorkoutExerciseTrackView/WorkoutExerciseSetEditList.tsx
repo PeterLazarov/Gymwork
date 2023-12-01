@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback } from 'react'
-import { View, FlatList, ListRenderItemInfo } from 'react-native'
+import { FlatList, ListRenderItemInfo, View } from 'react-native'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from '../../../db/helpers/useStores'
@@ -36,26 +36,20 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
     },
     [selectedSet]
   )
-  const ITEM_HEIGHT = 20
+  const ITEM_HEIGHT = 60
   const getItemLayout = (
     data: ArrayLike<WorkoutSet> | null | undefined,
     index: number
   ) => {
-    // TODO: offset messed up on set added / removed
     return {
       length: ITEM_HEIGHT,
       offset: ITEM_HEIGHT * (index + 1),
       index,
     }
   }
+
   return (
-    <View
-      style={{
-        borderRadius: 6,
-        flexBasis: 0,
-        flex: 1,
-      }}
-    >
+    <View style={{ flex: 1 }}>
       <FlatList
         data={stateStore.openedExerciseSets}
         renderItem={renderItem}

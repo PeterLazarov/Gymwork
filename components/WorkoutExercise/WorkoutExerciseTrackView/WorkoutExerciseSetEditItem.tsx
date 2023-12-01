@@ -43,65 +43,61 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
     <ButtonContainer
       variant="tertiary"
       onPress={onPress}
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        height: 48,
+      }}
     >
       <View
         style={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 16,
+          flex: 1,
           alignItems: 'center',
-          justifyContent: 'space-around',
-          height: 24,
+          flexDirection: 'row',
         }}
       >
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            flexDirection: 'row',
-          }}
-        >
-          <WorkoutExerciseSetWarmupButton
-            isWarmup={set.isWarmup}
-            toggleSetWarmup={toggleSetWarmup}
-            number={number}
-            color={color}
-          />
-          {isRecord && (
-            <Icon
-              icon="trophy"
-              color={colors.primary}
-            />
-          )}
-        </View>
-        {stateStore.openedExercise!.hasRepMeasument && (
-          <SetDataLabel
-            value={set.reps}
-            unit={texts.reps}
-            isFocused={isFocused}
-          />
-        )}
-        {stateStore.openedExercise!.hasWeightMeasument && (
-          <SetDataLabel
-            value={set.weight}
-            unit="kg"
-            isFocused={isFocused}
-          />
-        )}
-        {stateStore.openedExercise!.hasDistanceMeasument && (
-          <SetDataLabel
-            value={set.distance}
-            unit={set.distanceUnit}
-            isFocused={isFocused}
-          />
-        )}
-        {stateStore.openedExercise!.hasTimeMeasument && (
-          <SetDataLabel
-            value={getFormatedDuration(set.durationSecs)}
-            isFocused={isFocused}
+        <WorkoutExerciseSetWarmupButton
+          isWarmup={set.isWarmup}
+          toggleSetWarmup={toggleSetWarmup}
+          number={number}
+          color={color}
+        />
+        {isRecord && (
+          <Icon
+            icon="trophy"
+            color={colors.primary}
           />
         )}
       </View>
+      {stateStore.openedExercise!.hasRepMeasument && (
+        <SetDataLabel
+          value={set.reps}
+          unit={texts.reps}
+          isFocused={isFocused}
+        />
+      )}
+      {stateStore.openedExercise!.hasWeightMeasument && (
+        <SetDataLabel
+          value={set.weight}
+          unit="kg"
+          isFocused={isFocused}
+        />
+      )}
+      {stateStore.openedExercise!.hasDistanceMeasument && (
+        <SetDataLabel
+          value={set.distance}
+          unit={set.distanceUnit}
+          isFocused={isFocused}
+        />
+      )}
+      {stateStore.openedExercise!.hasTimeMeasument && (
+        <SetDataLabel
+          value={getFormatedDuration(set.durationSecs)}
+          isFocused={isFocused}
+        />
+      )}
     </ButtonContainer>
   )
 }

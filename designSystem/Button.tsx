@@ -23,7 +23,6 @@ export const IconButtonContainer = styled.TouchableOpacity<IconButtonProps>`
 `
 
 export const ButtonContainer = styled.TouchableOpacity<ButtonProps>`
-  flex: 1;
   padding: 12px;
   border-radius: 10px;
   justify-content: center;
