@@ -19,7 +19,7 @@ const DayControl = () => {
   const todayDiff = Math.round(luxonDate.diff(today, 'days').days)
   const label =
     Math.abs(todayDiff) < 2
-      ? luxonDate.toRelativeCalendar()!
+      ? luxonDate.toRelativeCalendar({ unit: 'days' })!
       : luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
   function openCalendar() {

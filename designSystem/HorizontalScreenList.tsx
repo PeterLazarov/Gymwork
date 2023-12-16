@@ -12,7 +12,7 @@ import {
 type LockedProps = 'onScroll' | 'getItemLayout' | 'horizontal'
 
 type Props = Omit<FlatListProps<any>, LockedProps> & {
-  onScreenChange: (index: number, isLeftSwipe: boolean) => void
+  onScreenChange: (index: number) => void
 }
 
 const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
@@ -34,7 +34,7 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
       const index = Math.round(e.nativeEvent.contentOffset.x / width)
       if (index !== currentIndex) {
         setCurrentIndex(index)
-        onScreenChange(index, index < currentIndex)
+        onScreenChange(index)
       }
     }
 
@@ -53,6 +53,7 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
 
     return (
       <FlatList
+        ref={ref}
         style={{
           flex: 1,
         }}
