@@ -17,6 +17,26 @@ export const WorkoutSetModel = types
     durationSecs: 0,
     isWarmup: false,
   })
+  .views(set => ({
+    get measurementValue() {
+      if (set.exercise.hasWeightMeasument) {
+        return set.weight
+      } else if (set.exercise.hasDistanceMeasument) {
+        return set.distance
+      } else if (set.exercise.hasTimeMeasument) {
+        return set.durationSecs
+      }
+      return set.reps
+    },
+    get groupingValue() {
+      if (set.exercise.hasWeightMeasument) {
+        return set.weight
+      } else if (set.exercise.hasTimeGrouping) {
+        return set.durationSecs
+      }
+      return set.reps
+    },
+  }))
   .actions(withSetPropAction)
 
 export interface WorkoutSet extends Instance<typeof WorkoutSetModel> {}

@@ -12,8 +12,17 @@ const REP_MEASUREMENTS = [
   ExerciseType.REPS_TIME,
   ExerciseType.REPS,
 ]
+const REP_GROUPINGS = [
+  ExerciseType.REPS,
+  ExerciseType.REPS_WEIGHT,
+  ExerciseType.REPS_DISTANCE,
+]
 const WEIGHT_MEASUREMENTS = [
   ExerciseType.REPS_WEIGHT,
+  ExerciseType.WEIGHT_DISTANCE,
+  ExerciseType.WEIGHT_TIME,
+]
+const WEIGHT_GROUPINGS = [
   ExerciseType.WEIGHT_DISTANCE,
   ExerciseType.WEIGHT_TIME,
 ]
@@ -28,6 +37,7 @@ const TIME_MEASUREMENTS = [
   ExerciseType.TIME,
   ExerciseType.WEIGHT_TIME,
 ]
+const TIME_GROUPINGS = [ExerciseType.TIME_DISTANCE, ExerciseType.TIME]
 
 export const ExerciseModel = types
   .model('Exercise')
@@ -43,14 +53,23 @@ export const ExerciseModel = types
     get hasWeightMeasument() {
       return WEIGHT_MEASUREMENTS.includes(exercise.measurementType)
     },
+    get hasWeightGrouping() {
+      return WEIGHT_GROUPINGS.includes(exercise.measurementType)
+    },
     get hasRepMeasument() {
       return REP_MEASUREMENTS.includes(exercise.measurementType)
+    },
+    get hasRepGrouping() {
+      return REP_GROUPINGS.includes(exercise.measurementType)
     },
     get hasDistanceMeasument() {
       return DISTANCE_MEASUREMENTS.includes(exercise.measurementType)
     },
     get hasTimeMeasument() {
       return TIME_MEASUREMENTS.includes(exercise.measurementType)
+    },
+    get hasTimeGrouping() {
+      return TIME_GROUPINGS.includes(exercise.measurementType)
     },
   }))
   .actions(withSetPropAction)

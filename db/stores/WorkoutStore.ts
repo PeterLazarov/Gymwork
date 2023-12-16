@@ -103,30 +103,34 @@ export const WorkoutStoreModel = types
           if (!records[set.exercise.guid]) {
             records[set.exercise.guid] = {}
           }
-          if (
-            !records[set.exercise.guid][set.reps] ||
-            records[set.exercise.guid][set.reps].weight < set.weight
-          ) {
-            records[set.exercise.guid][set.reps] = set
-          }
+          checkSetRecord(records, set)
         }
       }
 
-      // Remove weak-ass records
-      for (const exerciseID in records) {
-        const exerciseRecords = records[exerciseID]
-        const repRangeDescending = Object.keys(exerciseRecords).reverse()
-        let lastRecord = exerciseRecords[repRangeDescending[0] as any as number]
-
-        for (const reps of repRangeDescending) {
-          const record = exerciseRecords[reps as any as number]
-          if (lastRecord.weight >= record.weight) {
-            delete exerciseRecords[reps as any as number]
-          } else {
-            lastRecord = record
-          }
-        }
-      }
+      // TODO: weak ass records breaks stuff for non rep-weight exercises
+      // // Remove weak-ass records
+      // for (const exerciseID in records[0]) {
+      //   const exerciseRecords = records[exerciseID]
+      //   console.log({ exerciseID })
+      //   console.log({ exerciseRecords })
+      //   const groupingsDescending = Object.keys(exerciseRecords).reverse()
+      //   let lastRecord =
+      //     exerciseRecords[groupingsDescending[0] as any as number]
+      //   console.log({ groupingsDescending })
+      //   for (const grouping of groupingsDescending) {
+      //     const record = exerciseRecords[grouping as any as number]
+      //     if (
+      //       lastRecord.measurementValue >= record.measurementValue &&
+      //       lastRecord.guid !== record.guid
+      //     ) {
+      //       console.log('deleted record', lastRecord)
+      //       console.log('reason', record)
+      //       delete exerciseRecords[grouping as any as number]
+      //     } else {
+      //       lastRecord = record
+      //     }
+      //   }
+      // }
 
       return records
     },
@@ -207,3 +211,18 @@ export const WorkoutStoreModel = types
 export interface WorkoutStore extends Instance<typeof WorkoutStoreModel> {}
 export interface WorkoutStoreSnapshot
   extends SnapshotOut<typeof WorkoutStoreModel> {}
+
+function checkSetRecord(
+  records: Record<string, Record<number, WorkoutSet>>,
+  setToCompare: WorkoutSet
+) {
+  const exerciseRecords = records[setToCompare.exercise.guid]
+  const currentRecord = exerciseRecords[setToCompare.reps]
+
+  if (
+    !currentRecord ||
+    currentRecord.measurementValue < setToCompare.measurementValue
+  ) {
+    exerciseRecords[setToCompare.groupingValue] = setToCompare
+  }
+}
