@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useMemo, useRef } from 'react'
-import { FlatList, ListRenderItemInfo, Text, View } from 'react-native'
+import { FlatList, ListRenderItemInfo, Text } from 'react-native'
 
+import WorkoutExerciseList from './WorkoutExerciseList'
 import { useStores } from '../../db/helpers/useStores'
 import HorizontalScreenList from '../../designSystem/HorizontalScreenList'
 import { getDateRange } from '../../utils/date'
@@ -30,11 +31,16 @@ function WorkoutHorizontalList() {
     stateStore.setOpenedDate(dates[index])
   }
 
-  const renderItem = ({ item, index }: ListRenderItemInfo<string>) => (
-    <View style={{ backgroundColor: 'cyan', margin: 10 }}>
-      <Text key={index}>{item}</Text>
-    </View>
-  )
+  // TODO render workout scre
+  const renderItem = ({ item, index }: ListRenderItemInfo<string>) => {
+    const workout = workoutStore.getWorkoutForDate(dates[index])
+    return workout ? (
+      <WorkoutExerciseList workout={workout} />
+    ) : (
+      // TODO prettier fallback
+      <Text>No workout Found</Text>
+    )
+  }
   useEffect(() => {
     const index = dates.indexOf(stateStore.openedDate)
     workoutList.current?.scrollToIndex({ index })

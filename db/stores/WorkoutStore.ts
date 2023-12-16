@@ -37,12 +37,8 @@ export const WorkoutStoreModel = types
       return workout
     },
     // TODO to allow for multiple workouts per date?
-    getWorkoutExercises(workout: Workout) {
-      const set = workout.sets.reduce(
-        (acc, set) => acc.add(set.exercise),
-        new Set<Exercise>()
-      )
-      return [...set]
+    getWorkoutExercises(workout: Workout): Exercise[] {
+      return workout.exercises
     },
 
     get exerciseWorkouts(): Record<Exercise['guid'], Workout[]> {
