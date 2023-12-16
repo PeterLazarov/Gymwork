@@ -8,6 +8,7 @@ import { useStores } from '../../db/helpers/useStores'
 import HorizontalScreenList from '../../designSystem/HorizontalScreenList'
 import { getDateRange } from '../../utils/date'
 
+// TODO this breaks BADLY if the date goes outside of this range
 const datePaddingCount = 365
 
 function WorkoutHorizontalList() {
@@ -17,10 +18,16 @@ function WorkoutHorizontalList() {
   const dates = useMemo(() => {
     const firstWorkout = workoutStore.workouts[workoutStore.workouts.length - 1]
     const lastWorkout = workoutStore.workouts[0]
-    const from = DateTime.fromISO(firstWorkout.date)
+
+    const from = (
+      firstWorkout ? DateTime.fromISO(firstWorkout.date) : DateTime.now()
+    )
       .minus({ day: datePaddingCount })
       .toISODate()!
-    const to = DateTime.fromISO(lastWorkout.date)
+
+    const to = (
+      lastWorkout ? DateTime.fromISO(lastWorkout.date) : DateTime.now()
+    )
       .plus({ day: datePaddingCount })
       .toISODate()!
 
@@ -33,17 +40,27 @@ function WorkoutHorizontalList() {
 
   // TODO render workout scre
   const renderItem = ({ item, index }: ListRenderItemInfo<string>) => {
-    const workout = workoutStore.getWorkoutForDate(dates[index])
+    const date = dates[index]
+    const workout = workoutStore.getWorkoutForDate(date)
+    // console.log(date, workout)
     return workout ? (
       <WorkoutExerciseList workout={workout} />
     ) : (
       // TODO prettier fallback
-      <Text>No workout Found</Text>
+      <Text>No workout found for date: {date}</Text>
     )
   }
   useEffect(() => {
     const index = dates.indexOf(stateStore.openedDate)
-    workoutList.current?.scrollToIndex({ index })
+
+    if (index < 0 || index >= dates.length) {
+      // should not happen
+      return
+    }
+
+    // TODO bug. does not react to all scrolls. Throttle or Debounce?
+    // Scrolls list from external sources
+    workoutList.current?.scrollToIndex({ index, animated: false })
   }, [stateStore.openedDate])
 
   return (
