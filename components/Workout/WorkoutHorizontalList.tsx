@@ -26,12 +26,8 @@ function WorkoutHorizontalList() {
     return getDateRange(from, to)
   }, [])
 
-  function onScreenChange(index: number, isLeftSwipe: boolean) {
-    if (isLeftSwipe) {
-      stateStore.decrementCurrentDate()
-    } else {
-      stateStore.incrementCurrentDate()
-    }
+  function onScreenChange(index: number) {
+    stateStore.setOpenedDate(dates[index])
   }
 
   const renderItem = ({ item, index }: ListRenderItemInfo<string>) => (
