@@ -98,7 +98,7 @@ const CalendarPage: React.FC = () => {
           workoutDate={openedWorkoutDialogDate}
           onClose={() => setOpenedWorkoutDialogDate('')}
           onConfirm={goGoDay}
-          confirmButtonText="Go to"
+          confirmButtonText={texts.goToWorkout}
         />
       )}
     </>

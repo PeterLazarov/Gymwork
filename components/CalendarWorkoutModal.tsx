@@ -59,6 +59,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
               ))}
             </ScrollView>
           </View>
+          <Divider />
           <View style={{ flexDirection: 'row' }}>
             <Button
               style={{ flex: 1 }}
