@@ -60,7 +60,7 @@ function WorkoutHorizontalList() {
 
     // TODO bug. does not react to all scrolls. Throttle or Debounce?
     // Scrolls list from external sources
-    workoutList.current?.scrollToIndex({ index })
+    workoutList.current?.scrollToIndex({ index, animated: false })
   }, [stateStore.openedDate])
 
   return (
