@@ -35,7 +35,6 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
       changed: ViewToken[]
     }) {
       const index = info?.viewableItems[0]?.index
-      console.log({ index })
       if (typeof index === 'number' && index >= 0) {
         onScreenChange(index)
       }
