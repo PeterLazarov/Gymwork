@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Appbar } from 'react-native-paper'
 
-import WorkoutHeaderTimerButtons from './WorkoutHeaderTimerButtons'
+import WorkoutHeaderTimerButtons from '../Timer/TimerButtons'
 import { useStores } from '../../db/helpers/useStores'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'

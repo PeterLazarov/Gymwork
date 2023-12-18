@@ -6,7 +6,7 @@ import DayControl from '../components/Workout/DayControl'
 import WorkoutControlButtons from '../components/Workout/WorkoutControlButtons'
 import WorkoutExerciseList from '../components/Workout/WorkoutExerciseList'
 import WorkoutHeader from '../components/Workout/WorkoutHeader'
-import WorkoutTimer from '../components/WorkoutTimer'
+import Timer from '../components/Timer/Timer'
 import { useStores } from '../db/helpers/useStores'
 import SwipeContainer from '../designSystem/SwipeContainer'
 import WorkoutHorizontalList from '../components/Workout/WorkoutHorizontalList'
@@ -34,7 +34,7 @@ const WorkoutPage: React.FC = () => {
       >
         <DayControl />
         {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
-          <WorkoutTimer />
+          <Timer />
         )}
         <WorkoutHorizontalList />
         <WorkoutControlButtons createWorkout={newWorkout} />

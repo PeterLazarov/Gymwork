@@ -7,7 +7,7 @@ import { Appbar, Menu } from 'react-native-paper'
 import WorkoutExerciseHistoryView from '../components/WorkoutExercise/WorkoutExerciseHistoryView/WorkoutExerciseHistoryView'
 import WorkoutExerciseRecordsView from '../components/WorkoutExercise/WorkoutExerciseRecordsView'
 import WorkoutExerciseTrackView from '../components/WorkoutExercise/WorkoutExerciseTrackView/WorkoutExerciseTrackView'
-import WorkoutTimer from '../components/WorkoutTimer'
+import Timer from '../components/Timer/Timer'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../designSystem'
 import SwipeTabs from '../designSystem/SwipeTabs'
@@ -96,7 +96,7 @@ const WorkoutExercisePage: React.FC = () => {
         onTabChange={setView}
       >
         {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
-          <WorkoutTimer />
+          <Timer />
         )}
       </SwipeTabs>
     </View>

@@ -5,7 +5,7 @@ import { Appbar } from 'react-native-paper'
 import { useStores } from '../../db/helpers/useStores'
 import { Icon } from '../../designSystem'
 
-const WorkoutHeader: React.FC = () => {
+const TimerButtons: React.FC = () => {
   const { timeStore } = useStores()
 
   return (
@@ -42,4 +42,4 @@ const WorkoutHeader: React.FC = () => {
   )
 }
 
-export default observer(WorkoutHeader)
+export default observer(TimerButtons)

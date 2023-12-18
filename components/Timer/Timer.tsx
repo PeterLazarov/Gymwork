@@ -3,13 +3,13 @@ import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { IconButton } from 'react-native-paper'
 
-import TimerEditModal from './TimerEditModal'
-import { useStores } from '../db/helpers/useStores'
-import { Icon } from '../designSystem'
-import { BodySmallLabel } from '../designSystem/Label'
-import colors from '../designSystem/colors'
+import TimerEditModal from '../TimerEditModal'
+import { useStores } from '../../db/helpers/useStores'
+import { Icon } from '../../designSystem'
+import { BodySmallLabel } from '../../designSystem/Label'
+import colors from '../../designSystem/colors'
 
-const WorkoutTimer: React.FC = () => {
+const Timer: React.FC = () => {
   const { timeStore, stateStore } = useStores()
 
   const [settingDialogOpen, setSettingDialogOpen] = useState(false)
@@ -72,4 +72,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default observer(WorkoutTimer)
+export default observer(Timer)
