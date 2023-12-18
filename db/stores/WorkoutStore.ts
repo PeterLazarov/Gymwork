@@ -84,11 +84,11 @@ export const WorkoutStoreModel = types
 
     get allExerciseRecords(): Record<
       Exercise['guid'],
-      Record<WorkoutSet['reps'], WorkoutSet>
+      Record<WorkoutSet['groupingValue'], WorkoutSet>
     > {
       const records: Record<
         Exercise['guid'],
-        Record<WorkoutSet['reps'], WorkoutSet>
+        Record<WorkoutSet['groupingValue'], WorkoutSet>
       > = {}
 
       for (let i = 0; i < store.workouts.length; i++) {
@@ -99,34 +99,37 @@ export const WorkoutStoreModel = types
           if (!records[set.exercise.guid]) {
             records[set.exercise.guid] = {}
           }
-          checkSetRecord(records, set)
+
+          const exerciseRecords = records[set.exercise.guid]
+          const currentRecord = exerciseRecords[set.groupingValue]
+          if (
+            !currentRecord ||
+            currentRecord.measurementValue < set.measurementValue
+          ) {
+            exerciseRecords[set.groupingValue] = set
+          }
         }
       }
 
       // TODO: weak ass records breaks stuff for non rep-weight exercises
-      // // Remove weak-ass records
-      // for (const exerciseID in records[0]) {
-      //   const exerciseRecords = records[exerciseID]
-      //   console.log({ exerciseID })
-      //   console.log({ exerciseRecords })
-      //   const groupingsDescending = Object.keys(exerciseRecords).reverse()
-      //   let lastRecord =
-      //     exerciseRecords[groupingsDescending[0] as any as number]
-      //   console.log({ groupingsDescending })
-      //   for (const grouping of groupingsDescending) {
-      //     const record = exerciseRecords[grouping as any as number]
-      //     if (
-      //       lastRecord.measurementValue >= record.measurementValue &&
-      //       lastRecord.guid !== record.guid
-      //     ) {
-      //       console.log('deleted record', lastRecord)
-      //       console.log('reason', record)
-      //       delete exerciseRecords[grouping as any as number]
-      //     } else {
-      //       lastRecord = record
-      //     }
-      //   }
-      // }
+      for (const exerciseID in records) {
+        const exerciseRecords = records[exerciseID]
+        const groupingsDescending = Object.keys(exerciseRecords).reverse()
+        let lastRecord =
+          exerciseRecords[groupingsDescending[0] as any as number]
+        for (const grouping of groupingsDescending) {
+          const record = exerciseRecords[grouping as any as number]
+          if (
+            // not sure if higher value is always better
+            lastRecord.measurementValue >= record.measurementValue &&
+            lastRecord.guid !== record.guid
+          ) {
+            delete exerciseRecords[grouping as any as number]
+          } else {
+            lastRecord = record
+          }
+        }
+      }
 
       return records
     },
@@ -205,18 +208,3 @@ export const WorkoutStoreModel = types
 export interface WorkoutStore extends Instance<typeof WorkoutStoreModel> {}
 export interface WorkoutStoreSnapshot
   extends SnapshotOut<typeof WorkoutStoreModel> {}
-
-function checkSetRecord(
-  records: Record<string, Record<number, WorkoutSet>>,
-  setToCompare: WorkoutSet
-) {
-  const exerciseRecords = records[setToCompare.exercise.guid]
-  const currentRecord = exerciseRecords[setToCompare.reps]
-
-  if (
-    !currentRecord ||
-    currentRecord.measurementValue < setToCompare.measurementValue
-  ) {
-    exerciseRecords[setToCompare.groupingValue] = setToCompare
-  }
-}

@@ -24,13 +24,13 @@ export const WorkoutSetModel = types
       } else if (set.exercise.hasDistanceMeasument) {
         return set.distance
       } else if (set.exercise.hasTimeMeasument) {
-        return set.durationSecs
+        return set.durationSecs // ! sometimes less is better!
       }
       return set.reps
     },
     get groupingValue() {
       if (set.exercise.hasWeightMeasument) {
-        return set.weight
+        return set.reps
       } else if (set.exercise.hasTimeGrouping) {
         return set.durationSecs
       }

@@ -6,13 +6,12 @@ type Props = {
   children: React.ReactNode
 }
 
-let promise: Promise
+let promise: Promise<void>
 
 const DBStoreInitializer: React.FC<Props> = props => {
-  const { exerciseStore, workoutStore, stateStore, timeStore } = useStores()
+  const { exerciseStore, workoutStore } = useStores()
 
-  promise =
-    promise || Promise.all([exerciseStore.fetch(), workoutStore.fetch()])
+  promise = promise || exerciseStore.fetch().then(() => workoutStore.fetch())
 
   const [render, setRender] = useState(false)
 
@@ -20,7 +19,7 @@ const DBStoreInitializer: React.FC<Props> = props => {
     promise.then(() => {
       setTimeout(() => {
         setRender(true)
-      })
+      }, 1000)
     })
   }, [])
 
