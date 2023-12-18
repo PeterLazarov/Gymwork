@@ -45,31 +45,37 @@ export const ExerciseModel = types
     guid: types.optional(types.identifier, () => uuidv4()),
     name: '',
     muscles: types.array(types.string),
-    measurementType: ExerciseType.REPS_WEIGHT,
+    // measurementType: ExerciseType.REPS_WEIGHT,
     weightIncrement: 2.5,
     distanceUnit: DistanceType.M,
   })
   .views(exercise => ({
+    get measurementType() {
+      if (exercise.muscles.includes('cardio')) {
+        return ExerciseType.TIME_DISTANCE
+      }
+      return ExerciseType.REPS_WEIGHT
+    },
     get hasWeightMeasument() {
-      return WEIGHT_MEASUREMENTS.includes(exercise.measurementType)
+      return WEIGHT_MEASUREMENTS.includes(this.measurementType)
     },
     get hasWeightGrouping() {
-      return WEIGHT_GROUPINGS.includes(exercise.measurementType)
+      return WEIGHT_GROUPINGS.includes(this.measurementType)
     },
     get hasRepMeasument() {
-      return REP_MEASUREMENTS.includes(exercise.measurementType)
+      return REP_MEASUREMENTS.includes(this.measurementType)
     },
     get hasRepGrouping() {
-      return REP_GROUPINGS.includes(exercise.measurementType)
+      return REP_GROUPINGS.includes(this.measurementType)
     },
     get hasDistanceMeasument() {
-      return DISTANCE_MEASUREMENTS.includes(exercise.measurementType)
+      return DISTANCE_MEASUREMENTS.includes(this.measurementType)
     },
     get hasTimeMeasument() {
-      return TIME_MEASUREMENTS.includes(exercise.measurementType)
+      return TIME_MEASUREMENTS.includes(this.measurementType)
     },
     get hasTimeGrouping() {
-      return TIME_GROUPINGS.includes(exercise.measurementType)
+      return TIME_GROUPINGS.includes(this.measurementType)
     },
   }))
   .actions(withSetPropAction)
