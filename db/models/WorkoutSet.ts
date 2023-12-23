@@ -29,8 +29,8 @@ export const WorkoutSetModel = types
       return set.reps
     },
     get groupingValue() {
-      if (set.exercise.hasWeightMeasument) {
-        return set.reps
+      if (set.exercise.hasWeightGrouping) {
+        return set.weight
       } else if (set.exercise.hasTimeGrouping) {
         return set.durationSecs
       }
