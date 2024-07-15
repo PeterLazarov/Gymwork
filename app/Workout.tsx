@@ -10,6 +10,7 @@ import Timer from '../components/Timer/Timer'
 import { useStores } from '../db/helpers/useStores'
 import SwipeContainer from '../designSystem/SwipeContainer'
 import WorkoutHorizontalList from '../components/Workout/WorkoutHorizontalList'
+import Timer2 from '../components/Timer/Timer2'
 
 const WorkoutPage: React.FC = () => {
   const { workoutStore, timeStore, stateStore } = useStores()
@@ -36,6 +37,7 @@ const WorkoutPage: React.FC = () => {
         {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
           <Timer />
         )}
+        <Timer2 />
         <WorkoutHorizontalList />
         <WorkoutControlButtons createWorkout={newWorkout} />
       </SwipeContainer>

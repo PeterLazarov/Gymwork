@@ -11,6 +11,7 @@ import { useInitialRootStore } from '../db/helpers/useStores'
 export default function Layout() {
   useInitialRootStore(() => {})
 
+  console.log('LAYOUT INITIALIZED')
   return (
     <DBStoreInitializer>
       <PaperProvider>

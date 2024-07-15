@@ -1,4 +1,11 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
+import {
+  Instance,
+  SnapshotIn,
+  SnapshotOut,
+  types,
+  get,
+  getIdentifier,
+} from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -16,12 +23,25 @@ export const WorkoutModel = types
     feeling: 'neutral',
   })
   .views(self => ({
-    get exercises(): Exercise[] {
+    // get exercises(): Exercise[] {
+    //   // ! TODO
+    //   const uniqueExercises = self.sets.reduce(
+    //     // ! accessing set.exercise breaks everything?
+    //     (acc, set) => acc.add(set.exercise),
+    //     new Set<Exercise>()
+    //   )
+    //   return [...uniqueExercises]
+    // },
+    get exercises(): unknown[] {
       const uniqueExercises = self.sets.reduce(
-        (acc, set) => acc.add(set.exercise),
+        // ! accessing set.exercise breaks everything?
+        (acc, set) => acc.add(getIdentifier(set.exercise)),
         new Set<Exercise>()
       )
-      return [...uniqueExercises]
+
+      console.log({ uniqueExercises })
+
+      return []
     },
   }))
   .actions(withSetPropAction)

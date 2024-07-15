@@ -9,7 +9,7 @@ type Props = {
 let promise: Promise<void>
 
 const DBStoreInitializer: React.FC<Props> = props => {
-  const { exerciseStore, workoutStore } = useStores()
+  const { exerciseStore, workoutStore, stateStore } = useStores()
 
   promise = promise || exerciseStore.fetch().then(() => workoutStore.fetch())
 
@@ -19,6 +19,8 @@ const DBStoreInitializer: React.FC<Props> = props => {
     promise.then(() => {
       setTimeout(() => {
         setRender(true)
+        debugger
+        console.log(JSON.stringify({ exerciseStore, workoutStore }, null, 2))
       }, 1000)
     })
   }, [])
