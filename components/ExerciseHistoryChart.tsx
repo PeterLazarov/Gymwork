@@ -12,7 +12,7 @@ import { use, ECharts, init } from 'echarts/core'
 import { useRouter } from 'expo-router'
 import { DateInput, DateTime, Interval } from 'luxon'
 import { observer } from 'mobx-react-lite'
-import { calculate1RM } from 'onerepmax.js'
+import { oneRepMaxEpley } from 'fitness-calc'
 import { useRef, useEffect, useState, useMemo } from 'react'
 import { Dimensions, View } from 'react-native'
 
@@ -257,7 +257,7 @@ const ExerciseHistoryChart = observer(
                     Number(
                       Math.max(
                         max,
-                        calculate1RM.adams(set.weight!, set.reps!)
+                        oneRepMaxEpley(set.weight!, set.reps!)
                       ).toFixed(2)
                     ),
                   0
