@@ -1,10 +1,10 @@
-import { useRouter } from 'expo-router'
+// import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 import { Button } from 'react-native-paper'
 
-import { useStores } from '../../db/helpers/useStores'
+import { useStores } from '../../app/db/helpers/useStores'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
 import texts from '../../texts'
@@ -14,13 +14,13 @@ type Props = {
 }
 
 const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
-  const router = useRouter()
+  // const router = useRouter()()
   const { stateStore } = useStores()
 
   const isWorkoutStarted = !!stateStore.openedWorkout
   const hasNotes = stateStore.openedWorkout?.notes !== ''
   function onAddExercisePress() {
-    router.push('/ExerciseSelect')
+    //  router.push('/ExerciseSelect')
   }
 
   function copyPrevWorkout() {
@@ -28,7 +28,7 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
   }
 
   function onCommentPress() {
-    router.push('/WorkoutFeedback')
+    //  router.push('/WorkoutFeedback')
   }
 
   return (

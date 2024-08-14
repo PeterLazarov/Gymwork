@@ -9,15 +9,15 @@ import {
   // TimelineComponent,
 } from 'echarts/components'
 import { use, ECharts, init } from 'echarts/core'
-import { useRouter } from 'expo-router'
+// import { useRouter } from 'expo-router'
 import { DateInput, DateTime, Interval } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import { oneRepMaxEpley } from 'fitness-calc'
 import { useRef, useEffect, useState, useMemo } from 'react'
 import { Dimensions, View } from 'react-native'
 
-import { useStores } from '../db/helpers/useStores'
-import { WorkoutSet } from '../db/models'
+import { useStores } from '../app/db/helpers/useStores'
+import { WorkoutSet } from '../app/db/models'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -62,7 +62,7 @@ const ExerciseHistoryChart = observer(
     height?: number
     width?: number
   }) => {
-    const router = useRouter()
+    // const router = useRouter()()
     const { workoutStore, stateStore } = useStores()
 
     const chartElRef = useRef<any>(null)
@@ -90,7 +90,7 @@ const ExerciseHistoryChart = observer(
           const interval = Interval.fromDateTimes(
             ...(range.map(iso => DateTime.fromISO(iso)) as [
               DateInput,
-              DateInput,
+              DateInput
             ])
           )
 
@@ -110,13 +110,13 @@ const ExerciseHistoryChart = observer(
 
     const symbolSize: number = useMemo(
       () =>
-        (
-          ({
+        ((
+          {
             '30D': 10,
             '7D': 15,
             ALL: 5,
-          }) satisfies Record<CHART_VIEW, number>
-        )[props.view],
+          } satisfies Record<CHART_VIEW, number>
+        )[props.view]),
       [props.view]
     )
 
@@ -272,7 +272,7 @@ const ExerciseHistoryChart = observer(
     // TODO does not highlight set in question
     function handleBtnPress() {
       stateStore.setProp('openedDate', selectedDate)
-      router.push('/')
+      //  router.push('/')
     }
 
     return (

@@ -1,18 +1,17 @@
-import { useRouter } from 'expo-router'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
-import { useStores } from '../../db/helpers/useStores'
+import { useStores } from '../../app/db/helpers/useStores'
 import { Divider, Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
-import { capitalize } from '../../utils/string'
+import { capitalize } from '../../app/utils/string'
 
 const DayControl = () => {
   const { stateStore } = useStores()
-  const router = useRouter()
+  // const router = useRouter()()()
 
   const luxonDate = DateTime.fromISO(stateStore.openedDate)
   const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
@@ -22,9 +21,10 @@ const DayControl = () => {
       ? luxonDate.toRelativeCalendar({ unit: 'days' })!
       : luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
-  function openCalendar() {
-    router.push('/Calendar')
-  }
+  // TODO
+  // function openCalendar() {
+  //  //  router.push('/Calendar')
+  // }
 
   return (
     <>
@@ -43,7 +43,7 @@ const DayControl = () => {
         />
         <Appbar.Content
           title={capitalize(label)}
-          onPress={openCalendar}
+          //  onPress={openCalendar}
         />
         <Appbar.Action
           icon={() => <Icon icon="chevron-forward" />}

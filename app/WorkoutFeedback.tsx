@@ -1,20 +1,20 @@
-import { useRouter } from 'expo-router'
+// import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
 import { Appbar, TextInput, Button } from 'react-native-paper'
 
 import FeedbackPicker from '../components/FeedbackPicker'
-import { useStores } from '../db/helpers/useStores'
+import { useStores } from './db/helpers/useStores'
 import { BodyLargeLabel } from '../designSystem/Label'
 import colors from '../designSystem/colors'
 
 const WorkoutFeedbackPage: React.FC = () => {
   const { stateStore } = useStores()
-  const router = useRouter()
+  // const router = useRouter()()
 
   function onBackPress() {
-    router.push('/')
+    //  router.push('/')
   }
 
   return (

@@ -16,12 +16,14 @@ import {
 import { DemoPodcastListScreen } from '../screens/DemoPodcastListScreen'
 import { colors, spacing, typography } from '../theme'
 import { AppStackParamList, AppStackScreenProps } from './AppNavigator'
+import Workout from 'app/Workout'
 
 export type DemoTabParamList = {
   DemoCommunity: undefined
   DemoShowroom: { queryIndex?: string; itemIndex?: string }
   DemoDebug: undefined
   DemoPodcastList: undefined
+  Gymwork: undefined
 }
 
 /**
@@ -113,6 +115,20 @@ export function DemoNavigator() {
           tabBarIcon: ({ focused }) => (
             <Icon
               icon="debug"
+              color={focused ? colors.tint : undefined}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Gymwork"
+        component={Workout}
+        options={{
+          tabBarLabel: 'Gymwork tab label',
+          tabBarIcon: ({ focused }) => (
+            <Icon
+              icon="heart"
               color={focused ? colors.tint : undefined}
               size={30}
             />

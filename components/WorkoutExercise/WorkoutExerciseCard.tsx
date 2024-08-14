@@ -1,10 +1,10 @@
-import { useRouter } from 'expo-router'
+// import { useRouter } from 'expo-router'
 import React, { useMemo } from 'react'
 import { Card } from 'react-native-paper'
 
 import WorkoutExerciseSetReadOnlyList from './WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList'
-import { useStores } from '../../db/helpers/useStores'
-import { Exercise, Workout } from '../../db/models'
+import { useStores } from '../../app/db/helpers/useStores'
+import { Exercise, Workout } from '../../app/db/models'
 
 type Props = {
   workout: Workout
@@ -12,7 +12,7 @@ type Props = {
 }
 
 const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
-  const router = useRouter()
+  // const router = useRouter()()
   const { stateStore } = useStores()
 
   const sets = useMemo(() => {
@@ -21,7 +21,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
 
   function onLinkPress() {
     stateStore.setOpenedExercise(exercise)
-    router.push('/WorkoutExercise')
+    //  router.push('/WorkoutExercise')
   }
 
   return (

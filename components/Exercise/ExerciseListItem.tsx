@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { List } from 'react-native-paper'
 
-import { Exercise } from '../../db/models'
+import { Exercise } from '../../app/db/models'
 
 type Props = {
   exercise: Exercise

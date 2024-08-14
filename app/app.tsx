@@ -28,7 +28,7 @@ import { ViewStyle } from 'react-native'
 
 import Config from './config'
 import './i18n'
-import DBStoreInitializer from './db/DBStoreInitializer'
+// import DBStoreInitializer from './db/DBStoreInitializer'
 import { useInitialRootStore } from './db/helpers/useStores'
 import { AppNavigator, useNavigationPersistence } from './navigators'
 import './utils/ignoreWarnings'

@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native'
 import { IconButton } from 'react-native-paper'
 
 import TimerEditModal from '../TimerEditModal'
-import { useStores } from '../../db/helpers/useStores'
+import { useStores } from '../../app/db/helpers/useStores'
 import { Icon } from '../../designSystem'
 import { BodySmallLabel } from '../../designSystem/Label'
 import colors from '../../designSystem/colors'

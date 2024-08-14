@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router'
+// import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { ScrollView, View } from 'react-native'
@@ -6,22 +6,22 @@ import { Appbar } from 'react-native-paper'
 
 import ExerciseList from '../components/Exercise/ExerciseList'
 import ExerciseHistoryChart from '../components/ExerciseHistoryChart'
-import { useStores } from '../db/helpers/useStores'
-import { Exercise } from '../db/models'
+import { useStores } from './db/helpers/useStores'
+import { Exercise } from './db/models'
 import { Icon } from '../designSystem'
 import colors from '../designSystem/colors'
 import texts from '../texts'
 
 // TODO: screen is unused - remove?
 const Log = observer(() => {
-  const router = useRouter()
+  // const router = useRouter()()
   const { exercisesPerformed } = useStores()
 
   // TODO remove default
   const [exercise, setExercise] = useState<Exercise>()
 
   function onBackPress() {
-    router.push('/')
+    //  router.push('/')
   }
   return (
     <View

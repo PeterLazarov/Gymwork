@@ -2,8 +2,8 @@ import { observer } from 'mobx-react-lite'
 import { View } from 'react-native'
 
 import ExerciseList from './ExerciseList'
-import { useStores } from '../../db/helpers/useStores'
-import { Exercise } from '../../db/models'
+import { useStores } from '../../app/db/helpers/useStores'
+import { Exercise } from '../../app/db/models'
 import { BodyLargeLabel } from '../../designSystem/Label'
 import colors from '../../designSystem/colors'
 

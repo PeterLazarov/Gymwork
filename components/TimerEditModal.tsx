@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { View } from 'react-native'
 import { Portal, Modal, Button } from 'react-native-paper'
 
-import { useStores } from '../db/helpers/useStores'
+import { useStores } from '../app/db/helpers/useStores'
 import { Divider } from '../designSystem'
 import DurationInput from '../designSystem/DurationInput'
 import { HeadingLabel } from '../designSystem/Label'

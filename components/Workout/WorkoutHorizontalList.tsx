@@ -4,9 +4,9 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import { FlatList, ListRenderItemInfo, Text } from 'react-native'
 
 import WorkoutExerciseList from './WorkoutExerciseList'
-import { useStores } from '../../db/helpers/useStores'
+import { useStores } from '../../app/db/helpers/useStores'
 import HorizontalScreenList from '../../designSystem/HorizontalScreenList'
-import { getDateRange } from '../../utils/date'
+import { getDateRange } from '../../app/utils/date'
 
 // TODO this breaks BADLY if the date goes outside of this range
 const datePaddingCount = 365

@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router'
+// import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
@@ -6,8 +6,8 @@ import { Appbar } from 'react-native-paper'
 
 import AllExerciseSelect from '../components/Exercise/AllExerciseSelect'
 import FavoriteExerciseSelect from '../components/Exercise/FavoriteExerciseSelect'
-import { useStores } from '../db/helpers/useStores'
-import { Exercise } from '../db/models'
+import { useStores } from './db/helpers/useStores'
+import { Exercise } from './db/models'
 import { Icon } from '../designSystem'
 import SwipeTabs from '../designSystem/SwipeTabs'
 import colors from '../designSystem/colors'
@@ -15,19 +15,19 @@ import texts from '../texts'
 
 const ExerciseSelectPage: React.FC = () => {
   const { stateStore } = useStores()
-  const router = useRouter()
+  // const router = useRouter()()
 
   function handleSelectExercise(exercise: Exercise) {
     stateStore.setOpenedExercise(exercise)
-    router.push('/WorkoutExercise')
+    //  router.push('/WorkoutExercise')
   }
 
   function onBackPress() {
-    router.push('/')
+    //  router.push('/')
   }
 
   function onAddExercisePress() {
-    router.push('/ExerciseCreate')
+    //  router.push('/ExerciseCreate')
   }
 
   const tabsConfig = [

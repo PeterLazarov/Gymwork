@@ -3,7 +3,7 @@ import React from 'react'
 import { View, Dimensions } from 'react-native'
 
 import WorkoutExerciseHistoryList from './WorkoutExerciseHistoryList'
-import { useStores } from '../../../db/helpers/useStores'
+import { useStores } from '../../../app/db/helpers/useStores'
 import ExerciseHistoryChart from '../../ExerciseHistoryChart'
 
 const padding = 16

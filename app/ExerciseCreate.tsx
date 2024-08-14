@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router'
+// import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
@@ -6,13 +6,13 @@ import { Appbar, Button } from 'react-native-paper'
 
 import ConfirmationDialog from '../components/ConfirmationDialog'
 import ExerciseEditForm from '../components/Exercise/ExerciseEditForm'
-import { useStores } from '../db/helpers/useStores'
-import { Exercise, ExerciseModel } from '../db/models'
+import { useStores } from './db/helpers/useStores'
+import { Exercise, ExerciseModel } from './db/models'
 import { Icon } from '../designSystem'
 import colors from '../designSystem/colors'
 
 const ExerciseCreatePage: React.FC = () => {
-  const router = useRouter()
+  // const router = useRouter()()()
   const { exerciseStore } = useStores()
 
   const [exercise, setExercise] = useState(ExerciseModel.create())
@@ -25,7 +25,7 @@ const ExerciseCreatePage: React.FC = () => {
 
   function onBackConfirmed() {
     setConfirmDialogOpen(false)
-    router.back()
+    //  router.back()
   }
 
   function onUpdate(updated: Exercise, isValid: boolean) {
@@ -35,7 +35,7 @@ const ExerciseCreatePage: React.FC = () => {
 
   function onComplete() {
     exerciseStore.createExercise(exercise)
-    router.back()
+    //  router.back()
   }
 
   return (

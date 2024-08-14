@@ -3,12 +3,12 @@ import { ScrollView, View } from 'react-native'
 import { Portal, Modal, Button } from 'react-native-paper'
 
 import CalendarWorkoutModalExerciseItem from './CalendarWorkoutModalExerciseItem'
-import { useStores } from '../db/helpers/useStores'
-import { WorkoutSet } from '../db/models'
+import { useStores } from '../app/db/helpers/useStores'
+import { WorkoutSet } from '../app/db/models'
 import { Divider } from '../designSystem'
 import { HeadingLabel } from '../designSystem/Label'
 import colors from '../designSystem/colors'
-import { groupBy } from '../utils/array'
+import { groupBy } from '../app/utils/array'
 
 type Props = {
   open: boolean

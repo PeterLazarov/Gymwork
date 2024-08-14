@@ -10,7 +10,7 @@ import {
 import { RootStore } from './RootStore'
 import workoutSeedData from '../seeds/workout-seed-data'
 import DistanceType from '../../enums/DistanceType'
-import * as storage from '../../utils/storage'
+import * as storage from '../../../app/utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import {
   WorkoutSet,

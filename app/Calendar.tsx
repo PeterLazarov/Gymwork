@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router'
+// import { useRouter } from 'expo-router'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
@@ -8,7 +8,7 @@ import { MarkedDays } from 'react-native-month'
 import { Appbar } from 'react-native-paper'
 
 import CalendarWorkoutModal from '../components/CalendarWorkoutModal'
-import { useStores } from '../db/helpers/useStores'
+import { useStores } from './db/helpers/useStores'
 import { Icon } from '../designSystem'
 import colors from '../designSystem/colors'
 import texts from '../texts'
@@ -42,10 +42,10 @@ const CalendarPage: React.FC = () => {
   )
   const today = useMemo(() => DateTime.now().toJSDate(), [])
 
-  const router = useRouter()
+  // const router = useRouter()()()
 
   function onBackPress() {
-    router.push('/')
+    //  router.push('/')
   }
 
   function handleCalendarDayPress(date: Date) {
@@ -57,7 +57,7 @@ const CalendarPage: React.FC = () => {
   function goGoDay() {
     stateStore.setOpenedDate(openedWorkoutDialogDate)
     setOpenedWorkoutDialogDate('')
-    router.push('/')
+    //  router.push('/')
   }
   return (
     <>

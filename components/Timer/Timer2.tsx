@@ -3,8 +3,8 @@ import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import { StyleSheet, View, Text, Button } from 'react-native'
 
-import { useStores } from '../../db/helpers/useStores'
-import useTimer from '../../db/stores/useTimer'
+// import { useStores } from '../../app/db/helpers/useStores'
+import useTimer from '../../app/db/stores/useTimer'
 import colors from '../../designSystem/colors'
 
 export default observer(function Timer2() {

@@ -11,7 +11,7 @@
  */
 import { applySnapshot, IDisposer, onSnapshot } from 'mobx-state-tree'
 
-import * as storage from '../../utils/storage'
+import * as storage from '../../../app/utils/storage'
 import { RootStore, RootStoreSnapshot } from '../stores/RootStore'
 
 /**

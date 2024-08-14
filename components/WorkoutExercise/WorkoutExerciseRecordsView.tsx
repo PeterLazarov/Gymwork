@@ -1,22 +1,22 @@
-import { useRouter } from 'expo-router'
+// import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import { getParentOfType } from 'mobx-state-tree'
 import React from 'react'
 import { View, ScrollView, TouchableOpacity } from 'react-native'
 
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetReadOnlyList/ReadOnlyListItem'
-import { useStores } from '../../db/helpers/useStores'
-import { WorkoutModel, WorkoutSet } from '../../db/models'
+import { useStores } from '../../app/db/helpers/useStores'
+import { WorkoutModel, WorkoutSet } from '../../app/db/models'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
   const { openedExerciseRecords, stateStore } = useStores()
-  const router = useRouter()
+  // const router = useRouter()()
 
   // TODO extract out to action?
   function goToDate(set: WorkoutSet) {
     const workout = getParentOfType(set, WorkoutModel)
     stateStore.setProp('openedDate', workout.date)
-    router.push('/')
+    //  router.push('/')
   }
 
   return (

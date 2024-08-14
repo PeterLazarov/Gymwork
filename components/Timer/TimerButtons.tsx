@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Appbar } from 'react-native-paper'
 
-import { useStores } from '../../db/helpers/useStores'
+import { useStores } from '../../app/db/helpers/useStores'
 import { Icon } from '../../designSystem'
 
 const TimerButtons: React.FC = () => {
