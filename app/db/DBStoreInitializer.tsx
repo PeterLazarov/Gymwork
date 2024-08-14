@@ -25,7 +25,9 @@ const DBStoreInitializer: React.FC<Props> = ({ children }) => {
     })
   }, [])
 
-  return render && children
+  if (!render) return null
+
+  return children
 }
 
 export default DBStoreInitializer
