@@ -4,32 +4,32 @@ import {
   SnapshotOut,
   types,
   // getIdentifier,
-} from "mobx-state-tree";
-import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
+} from 'mobx-state-tree'
+import 'react-native-get-random-values'
+import { v4 as uuidv4 } from 'uuid'
 
-import { Exercise } from "./Exercise";
-import { WorkoutSetModel } from "./WorkoutSet";
-import { withSetPropAction } from "../helpers/withSetPropAction";
+import { Exercise } from './Exercise'
+import { WorkoutSetModel } from './WorkoutSet'
+import { withSetPropAction } from '../helpers/withSetPropAction'
 
 export const WorkoutModel = types
-  .model("Workout")
+  .model('Workout')
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
-    date: "",
-    notes: "",
+    date: '',
+    notes: '',
     sets: types.array(WorkoutSetModel),
-    feeling: "neutral",
+    feeling: 'neutral',
   })
-  .views((self) => ({
+  .views(self => ({
     get exercises(): Exercise[] {
       // ! TODO
       const uniqueExercises = self.sets.reduce(
         // ! accessing set.exercise breaks everything?
         (acc, set) => acc.add(set.exercise),
         new Set<Exercise>()
-      );
-      return [...uniqueExercises];
+      )
+      return [...uniqueExercises]
     },
     // get exercises(): unknown[] {
     //   const uniqueExercises = self.sets.reduce(
@@ -43,7 +43,7 @@ export const WorkoutModel = types
     //   return []
     // },
   }))
-  .actions(withSetPropAction);
+  .actions(withSetPropAction)
 
 export interface Workout extends Instance<typeof WorkoutModel> {}
 export interface WorkoutSnapshotOut extends SnapshotOut<typeof WorkoutModel> {}

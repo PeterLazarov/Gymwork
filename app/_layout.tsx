@@ -1,24 +1,24 @@
-import { Slot } from "expo-router";
-import { SafeAreaView } from "react-native";
-import { PaperProvider, Portal } from "react-native-paper";
+import { Slot } from 'expo-router'
+import { SafeAreaView } from 'react-native'
+import { PaperProvider, Portal } from 'react-native-paper'
 
-import "reflect-metadata";
+import 'reflect-metadata'
 
-import "../utils/ignoreWarnings";
-import DBStoreInitializer from "../db/DBStoreInitializer";
-import { useInitialRootStore } from "../db/helpers/useStores";
+import '../utils/ignoreWarnings'
+import DBStoreInitializer from '../db/DBStoreInitializer'
+import { useInitialRootStore } from '../db/helpers/useStores'
 
 export default function Layout() {
-  useInitialRootStore(() => {});
+  useInitialRootStore(() => {})
 
-  console.log("LAYOUT INITIALIZED");
+  console.log('LAYOUT INITIALIZED')
   return (
     <DBStoreInitializer>
       <PaperProvider>
         <SafeAreaView
           style={{
-            display: "flex",
-            height: "100%",
+            display: 'flex',
+            height: '100%',
           }}
         >
           <Portal.Host>
@@ -27,5 +27,5 @@ export default function Layout() {
         </SafeAreaView>
       </PaperProvider>
     </DBStoreInitializer>
-  );
+  )
 }

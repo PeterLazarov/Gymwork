@@ -1,15 +1,15 @@
 /* eslint-disable react/jsx-key */
-import React from "react";
-import { Text } from "../../../components";
-import { colors } from "../../../theme";
-import { Demo } from "../DemoShowroomScreen";
-import { DemoDivider } from "../DemoDivider";
-import { DemoUseCase } from "../DemoUseCase";
+import React from 'react'
+import { Text } from '../../../components'
+import { colors } from '../../../theme'
+import { Demo } from '../DemoShowroomScreen'
+import { DemoDivider } from '../DemoDivider'
+import { DemoUseCase } from '../DemoUseCase'
 
 export const DemoText: Demo = {
-  name: "Text",
+  name: 'Text',
   description:
-    "For your text displaying needs. This component is a HOC over the built-in React Native one.",
+    'For your text displaying needs. This component is a HOC over the built-in React Native one.',
   data: [
     <DemoUseCase
       name="Presets"
@@ -36,7 +36,10 @@ export const DemoText: Demo = {
       <Text preset="heading">heading preset - Voluptate Adipis.</Text>
     </DemoUseCase>,
 
-    <DemoUseCase name="Sizes" description="There's a size prop.">
+    <DemoUseCase
+      name="Sizes"
+      description="There's a size prop."
+    >
       <Text size="xs">xs - Ea ipsum est ea ex sunt.</Text>
 
       <DemoDivider />
@@ -60,7 +63,10 @@ export const DemoText: Demo = {
       <Text size="xxl">xxl - Cillum eu laboris.</Text>
     </DemoUseCase>,
 
-    <DemoUseCase name="Weights" description="There's a weight prop.">
+    <DemoUseCase
+      name="Weights"
+      description="There's a weight prop."
+    >
       <Text weight="light">
         light - Nulla magna incididunt excepteur est occaecat duis culpa dolore
         cupidatat enim et.
@@ -149,8 +155,8 @@ export const DemoText: Demo = {
         <Text
           /* eslint-disable react-native/no-inline-styles */
           style={{
-            textDecorationLine: "underline line-through",
-            textDecorationStyle: "dashed",
+            textDecorationLine: 'underline line-through',
+            textDecorationStyle: 'dashed',
             color: colors.error,
             textDecorationColor: colors.error,
           }}
@@ -161,4 +167,4 @@ export const DemoText: Demo = {
       </Text>
     </DemoUseCase>,
   ],
-};
+}

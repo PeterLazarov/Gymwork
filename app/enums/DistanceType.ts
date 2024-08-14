@@ -1,4 +1,4 @@
 export default {
-  M: "m",
-  KM: "km",
-};
+  M: 'm',
+  KM: 'km',
+}

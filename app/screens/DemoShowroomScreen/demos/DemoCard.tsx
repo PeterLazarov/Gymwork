@@ -1,15 +1,15 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import React from "react";
-import { AutoImage, Button, Card, Icon } from "../../../components";
-import { colors, spacing } from "../../../theme";
-import { Demo } from "../DemoShowroomScreen";
-import { DemoDivider } from "../DemoDivider";
-import { DemoUseCase } from "../DemoUseCase";
+import React from 'react'
+import { AutoImage, Button, Card, Icon } from '../../../components'
+import { colors, spacing } from '../../../theme'
+import { Demo } from '../DemoShowroomScreen'
+import { DemoDivider } from '../DemoDivider'
+import { DemoUseCase } from '../DemoUseCase'
 
 export const DemoCard: Demo = {
-  name: "Card",
+  name: 'Card',
   description:
-    "Cards are useful for displaying related information in a contained way. If a ListItem displays content horizontally, a Card can be used to display content vertically.",
+    'Cards are useful for displaying related information in a contained way. If a ListItem displays content horizontally, a Card can be used to display content vertically.',
   data: [
     <DemoUseCase
       name="Presets"
@@ -80,11 +80,11 @@ export const DemoCard: Demo = {
       <Card
         preset="reversed"
         headingTx="demoShowroomScreen.demoViaSpecifiedTxProp"
-        headingTxOptions={{ prop: "heading" }}
+        headingTxOptions={{ prop: 'heading' }}
         contentTx="demoShowroomScreen.demoViaSpecifiedTxProp"
-        contentTxOptions={{ prop: "content" }}
+        contentTxOptions={{ prop: 'content' }}
         footerTx="demoShowroomScreen.demoViaSpecifiedTxProp"
-        footerTxOptions={{ prop: "footer" }}
+        footerTxOptions={{ prop: 'footer' }}
       />
     </DemoUseCase>,
 
@@ -97,8 +97,11 @@ export const DemoCard: Demo = {
           <Button
             preset="reversed"
             text="HeadingComponent"
-            LeftAccessory={(props) => (
-              <Icon style={props.style} icon="ladybug" />
+            LeftAccessory={props => (
+              <Icon
+                style={props.style}
+                icon="ladybug"
+              />
             )}
           />
         }
@@ -106,8 +109,11 @@ export const DemoCard: Demo = {
           <Button
             style={{ marginVertical: spacing.sm }}
             text="ContentComponent"
-            LeftAccessory={(props) => (
-              <Icon style={props.style} icon="ladybug" />
+            LeftAccessory={props => (
+              <Icon
+                style={props.style}
+                icon="ladybug"
+              />
             )}
           />
         }
@@ -115,8 +121,11 @@ export const DemoCard: Demo = {
           <Button
             preset="reversed"
             text="FooterComponent"
-            LeftAccessory={(props) => (
-              <Icon style={props.style} icon="ladybug" />
+            LeftAccessory={props => (
+              <Icon
+                style={props.style}
+                icon="ladybug"
+              />
             )}
           />
         }
@@ -129,9 +138,9 @@ export const DemoCard: Demo = {
           <AutoImage
             maxWidth={80}
             maxHeight={60}
-            style={{ alignSelf: "center" }}
+            style={{ alignSelf: 'center' }}
             source={{
-              uri: "https://user-images.githubusercontent.com/1775841/184508739-f90d0ce5-7219-42fd-a91f-3382d016eae0.png",
+              uri: 'https://user-images.githubusercontent.com/1775841/184508739-f90d0ce5-7219-42fd-a91f-3382d016eae0.png',
             }}
           />
         }
@@ -145,9 +154,9 @@ export const DemoCard: Demo = {
           <AutoImage
             maxWidth={80}
             maxHeight={60}
-            style={{ alignSelf: "center" }}
+            style={{ alignSelf: 'center' }}
             source={{
-              uri: "https://user-images.githubusercontent.com/1775841/184508739-f90d0ce5-7219-42fd-a91f-3382d016eae0.png",
+              uri: 'https://user-images.githubusercontent.com/1775841/184508739-f90d0ce5-7219-42fd-a91f-3382d016eae0.png',
             }}
           />
         }
@@ -168,8 +177,8 @@ export const DemoCard: Demo = {
         }}
         footer="Style the Footer"
         footerStyle={{
-          textDecorationLine: "underline line-through",
-          textDecorationStyle: "dashed",
+          textDecorationLine: 'underline line-through',
+          textDecorationStyle: 'dashed',
           color: colors.error,
           textDecorationColor: colors.error,
         }}
@@ -181,4 +190,4 @@ export const DemoCard: Demo = {
       />
     </DemoUseCase>,
   ],
-};
+}

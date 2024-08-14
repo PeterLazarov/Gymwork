@@ -1,49 +1,49 @@
 /* eslint-disable react/jsx-key */
-import React from "react";
-import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
-import { Button, Icon, Text } from "../../../components";
-import { colors, typography } from "../../../theme";
-import { Demo } from "../DemoShowroomScreen";
-import { DemoDivider } from "../DemoDivider";
-import { DemoUseCase } from "../DemoUseCase";
+import React from 'react'
+import { ImageStyle, TextStyle, View, ViewStyle } from 'react-native'
+import { Button, Icon, Text } from '../../../components'
+import { colors, typography } from '../../../theme'
+import { Demo } from '../DemoShowroomScreen'
+import { DemoDivider } from '../DemoDivider'
+import { DemoUseCase } from '../DemoUseCase'
 
-const $iconStyle: ImageStyle = { width: 30, height: 30 };
+const $iconStyle: ImageStyle = { width: 30, height: 30 }
 const $customButtonStyle: ViewStyle = {
   backgroundColor: colors.error,
   height: 100,
-};
-const $customButtonPressedStyle: ViewStyle = { backgroundColor: colors.error };
+}
+const $customButtonPressedStyle: ViewStyle = { backgroundColor: colors.error }
 const $customButtonTextStyle: TextStyle = {
   color: colors.error,
   fontFamily: typography.primary.bold,
-  textDecorationLine: "underline",
+  textDecorationLine: 'underline',
   textDecorationColor: colors.error,
-};
+}
 const $customButtonPressedTextStyle: TextStyle = {
   color: colors.palette.neutral100,
-};
+}
 const $customButtonRightAccessoryStyle: ViewStyle = {
-  width: "53%",
-  height: "200%",
+  width: '53%',
+  height: '200%',
   backgroundColor: colors.error,
-  position: "absolute",
+  position: 'absolute',
   top: 0,
   right: 0,
-};
+}
 const $customButtonPressedRightAccessoryStyle: ImageStyle = {
   tintColor: colors.palette.neutral100,
-};
+}
 
-const $disabledOpacity: ViewStyle = { opacity: 0.5 };
+const $disabledOpacity: ViewStyle = { opacity: 0.5 }
 const $disabledButtonTextStyle: TextStyle = {
   color: colors.palette.neutral100,
   textDecorationColor: colors.palette.neutral100,
-};
+}
 
 export const DemoButton: Demo = {
-  name: "Button",
+  name: 'Button',
   description:
-    "A component that allows users to take actions and make choices. Wraps the Text component with a Pressable component.",
+    'A component that allows users to take actions and make choices. Wraps the Text component with a Pressable component.',
   data: [
     <DemoUseCase
       name="Presets"
@@ -73,7 +73,7 @@ export const DemoButton: Demo = {
 
       <Button
         preset="filled"
-        RightAccessory={(props) => (
+        RightAccessory={props => (
           <Icon
             containerStyle={props.style}
             style={$iconStyle}
@@ -87,7 +87,7 @@ export const DemoButton: Demo = {
 
       <Button
         preset="filled"
-        LeftAccessory={(props) => (
+        LeftAccessory={props => (
           <Icon
             containerStyle={props.style}
             style={$iconStyle}
@@ -114,14 +114,14 @@ export const DemoButton: Demo = {
 
       <Button
         preset="reversed"
-        RightAccessory={(props) => (
+        RightAccessory={props => (
           <Icon
             containerStyle={props.style}
             style={$iconStyle}
             icon="ladybug"
           />
         )}
-        LeftAccessory={(props) => (
+        LeftAccessory={props => (
           <Icon
             containerStyle={props.style}
             style={$iconStyle}
@@ -141,7 +141,10 @@ export const DemoButton: Demo = {
       <Button style={$customButtonStyle}>Style Container - Exercitation</Button>
       <DemoDivider />
 
-      <Button preset="filled" textStyle={$customButtonTextStyle}>
+      <Button
+        preset="filled"
+        textStyle={$customButtonTextStyle}
+      >
         Style Text - Ea Anim
       </Button>
       <DemoDivider />
@@ -157,7 +160,7 @@ export const DemoButton: Demo = {
       <Button
         pressedStyle={$customButtonPressedStyle}
         pressedTextStyle={$customButtonPressedTextStyle}
-        RightAccessory={(props) => (
+        RightAccessory={props => (
           <Icon
             containerStyle={props.style}
             style={[
@@ -213,7 +216,7 @@ export const DemoButton: Demo = {
         disabled
         pressedStyle={$customButtonPressedStyle}
         pressedTextStyle={$customButtonPressedTextStyle}
-        RightAccessory={(props) => (
+        RightAccessory={props => (
           <View
             style={
               props.disabled
@@ -238,4 +241,4 @@ export const DemoButton: Demo = {
       </Button>
     </DemoUseCase>,
   ],
-};
+}

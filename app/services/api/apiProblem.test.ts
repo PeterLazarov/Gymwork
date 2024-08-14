@@ -1,98 +1,98 @@
-import { getGeneralApiProblem } from "./apiProblem";
-import { ApiErrorResponse } from "apisauce";
+import { getGeneralApiProblem } from './apiProblem'
+import { ApiErrorResponse } from 'apisauce'
 
-test("handles connection errors", () => {
+test('handles connection errors', () => {
   expect(
     getGeneralApiProblem({
-      problem: "CONNECTION_ERROR",
+      problem: 'CONNECTION_ERROR',
     } as ApiErrorResponse<null>)
   ).toEqual({
-    kind: "cannot-connect",
+    kind: 'cannot-connect',
     temporary: true,
-  });
-});
+  })
+})
 
-test("handles network errors", () => {
+test('handles network errors', () => {
   expect(
-    getGeneralApiProblem({ problem: "NETWORK_ERROR" } as ApiErrorResponse<null>)
+    getGeneralApiProblem({ problem: 'NETWORK_ERROR' } as ApiErrorResponse<null>)
   ).toEqual({
-    kind: "cannot-connect",
+    kind: 'cannot-connect',
     temporary: true,
-  });
-});
+  })
+})
 
-test("handles timeouts", () => {
+test('handles timeouts', () => {
   expect(
-    getGeneralApiProblem({ problem: "TIMEOUT_ERROR" } as ApiErrorResponse<null>)
+    getGeneralApiProblem({ problem: 'TIMEOUT_ERROR' } as ApiErrorResponse<null>)
   ).toEqual({
-    kind: "timeout",
+    kind: 'timeout',
     temporary: true,
-  });
-});
+  })
+})
 
-test("handles server errors", () => {
+test('handles server errors', () => {
   expect(
-    getGeneralApiProblem({ problem: "SERVER_ERROR" } as ApiErrorResponse<null>)
+    getGeneralApiProblem({ problem: 'SERVER_ERROR' } as ApiErrorResponse<null>)
   ).toEqual({
-    kind: "server",
-  });
-});
+    kind: 'server',
+  })
+})
 
-test("handles unknown errors", () => {
+test('handles unknown errors', () => {
   expect(
-    getGeneralApiProblem({ problem: "UNKNOWN_ERROR" } as ApiErrorResponse<null>)
+    getGeneralApiProblem({ problem: 'UNKNOWN_ERROR' } as ApiErrorResponse<null>)
   ).toEqual({
-    kind: "unknown",
+    kind: 'unknown',
     temporary: true,
-  });
-});
+  })
+})
 
-test("handles unauthorized errors", () => {
+test('handles unauthorized errors', () => {
   expect(
     getGeneralApiProblem({
-      problem: "CLIENT_ERROR",
+      problem: 'CLIENT_ERROR',
       status: 401,
     } as ApiErrorResponse<null>)
   ).toEqual({
-    kind: "unauthorized",
-  });
-});
+    kind: 'unauthorized',
+  })
+})
 
-test("handles forbidden errors", () => {
+test('handles forbidden errors', () => {
   expect(
     getGeneralApiProblem({
-      problem: "CLIENT_ERROR",
+      problem: 'CLIENT_ERROR',
       status: 403,
     } as ApiErrorResponse<null>)
   ).toEqual({
-    kind: "forbidden",
-  });
-});
+    kind: 'forbidden',
+  })
+})
 
-test("handles not-found errors", () => {
+test('handles not-found errors', () => {
   expect(
     getGeneralApiProblem({
-      problem: "CLIENT_ERROR",
+      problem: 'CLIENT_ERROR',
       status: 404,
     } as ApiErrorResponse<null>)
   ).toEqual({
-    kind: "not-found",
-  });
-});
+    kind: 'not-found',
+  })
+})
 
-test("handles other client errors", () => {
+test('handles other client errors', () => {
   expect(
     getGeneralApiProblem({
-      problem: "CLIENT_ERROR",
+      problem: 'CLIENT_ERROR',
       status: 418,
     } as ApiErrorResponse<null>)
   ).toEqual({
-    kind: "rejected",
-  });
-});
+    kind: 'rejected',
+  })
+})
 
-test("handles cancellation errors", () => {
+test('handles cancellation errors', () => {
   expect(
-    getGeneralApiProblem({ problem: "CANCEL_ERROR" } as ApiErrorResponse<null>)
-  ).toBeNull();
-});
+    getGeneralApiProblem({ problem: 'CANCEL_ERROR' } as ApiErrorResponse<null>)
+  ).toBeNull()
+})
