@@ -31,6 +31,6 @@
       "module": "commonjs"
     }
   },
-  "include": ["index.js", "App.tsx", "app", "types", "plugins", "app.config.ts"],
+  "include": ["index.js", "App.tsx", "app", "types", "plugins", "app.config.ts", "app/components/Exercise", "app/components/Timer", "app/components/Workout", "app/components/WorkoutExercise", "app/components/CalendarWorkoutModal.tsx", "app/components/CalendarWorkoutModalExerciseItem.tsx", "app/components/ConfirmationDialog.tsx", "app/components/ExerciseHistoryChart.tsx", "app/components/FeedbackPicker.tsx", "app/components/IncrementDecrementButtons.tsx", "app/components/TimerEditModal.tsx"],
   "exclude": ["node_modules", "test/**/*"]
 }

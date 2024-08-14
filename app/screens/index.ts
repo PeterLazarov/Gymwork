@@ -1,9 +1,9 @@
-export * from './WelcomeScreen'
+export * from "./_WelcomeScreen"
 
-export * from './LoginScreen'
-export * from './DemoCommunityScreen'
-export * from './DemoDebugScreen'
-export * from './DemoShowroomScreen/DemoShowroomScreen'
+export * from "./_LoginScreen"
+export * from "./_DemoCommunityScreen"
+export * from "./_DemoDebugScreen"
+export * from "./DemoShowroomScreen/DemoShowroomScreen"
 
 export * from './ErrorScreen/ErrorBoundary'
 // export other screens here
