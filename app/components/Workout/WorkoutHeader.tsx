@@ -1,25 +1,31 @@
-import { useRouter } from "expo-router";
-import { observer } from "mobx-react-lite";
-import React from "react";
-import { Appbar } from "react-native-paper";
+// import { useRouter } from "expo-router";
+import { observer } from 'mobx-react-lite'
+import React from 'react'
+import { Appbar } from 'react-native-paper'
 
-import WorkoutHeaderTimerButtons from "../Timer/TimerButtons";
-import { useStores } from "../../db/helpers/useStores";
-import { Icon } from "../../../designSystem";
-import colors from "../../../designSystem/colors";
+import WorkoutHeaderTimerButtons from '../Timer/TimerButtons'
+import { useStores } from '../../db/helpers/useStores'
+import { Icon } from '../../../designSystem'
+import colors from '../../../designSystem/colors'
 
 const WorkoutHeader: React.FC = () => {
-  const { stateStore } = useStores();
-  const router = useRouter();
+  const { stateStore } = useStores()
+  // const router = useRouter()
 
   function openCalendar() {
-    router.push("/Calendar");
+    router.push('/Calendar')
   }
 
   return (
     <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
-      <Appbar.Action icon={() => <Icon icon="logo-react" />} animated={false} />
-      <Appbar.Content title="Gymwork" style={{ alignItems: "flex-start" }} />
+      <Appbar.Action
+        icon={() => <Icon icon="logo-react" />}
+        animated={false}
+      />
+      <Appbar.Content
+        title="Gymwork"
+        style={{ alignItems: 'flex-start' }}
+      />
 
       {stateStore.isOpenedWorkoutToday && <WorkoutHeaderTimerButtons />}
       <Appbar.Action
@@ -33,7 +39,7 @@ const WorkoutHeader: React.FC = () => {
         animated={false}
       />
     </Appbar.Header>
-  );
-};
+  )
+}
 
-export default observer(WorkoutHeader);
+export default observer(WorkoutHeader)

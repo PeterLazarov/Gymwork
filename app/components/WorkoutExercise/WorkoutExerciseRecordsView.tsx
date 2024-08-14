@@ -1,22 +1,22 @@
-import { useRouter } from "expo-router";
-import { observer } from "mobx-react-lite";
-import { getParentOfType } from "mobx-state-tree";
-import React from "react";
-import { View, ScrollView, TouchableOpacity } from "react-native";
+// import { useRouter } from "expo-router";
+import { observer } from 'mobx-react-lite'
+import { getParentOfType } from 'mobx-state-tree'
+import React from 'react'
+import { View, ScrollView, TouchableOpacity } from 'react-native'
 
-import WorkoutExerciseSetListItem from "./WorkoutExerciseSetReadOnlyList/ReadOnlyListItem";
-import { useStores } from "../../db/helpers/useStores";
-import { WorkoutModel, WorkoutSet } from "../../db/models";
+import WorkoutExerciseSetListItem from './WorkoutExerciseSetReadOnlyList/ReadOnlyListItem'
+import { useStores } from '../../db/helpers/useStores'
+import { WorkoutModel, WorkoutSet } from '../../db/models'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
-  const { openedExerciseRecords, stateStore } = useStores();
-  const router = useRouter();
+  const { openedExerciseRecords, stateStore } = useStores()
+  // const router = useRouter()
 
   // TODO extract out to action?
   function goToDate(set: WorkoutSet) {
-    const workout = getParentOfType(set, WorkoutModel);
-    stateStore.setProp("openedDate", workout.date);
-    router.push("/");
+    const workout = getParentOfType(set, WorkoutModel)
+    stateStore.setProp('openedDate', workout.date)
+    router.push('/')
   }
 
   return (
@@ -25,7 +25,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
         padding: 16,
         // margin: 16,
         borderRadius: 8,
-        display: "flex",
+        display: 'flex',
         flexGrow: 1,
       }}
     >
@@ -49,11 +49,11 @@ const WorkoutExerciseRecordsView: React.FC = () => {
                 exercise={stateStore.openedExercise!}
               />
             </TouchableOpacity>
-          );
+          )
         })}
       </ScrollView>
     </View>
-  );
-};
+  )
+}
 
-export default observer(WorkoutExerciseRecordsView);
+export default observer(WorkoutExerciseRecordsView)
