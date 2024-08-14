@@ -28,7 +28,7 @@ import { ViewStyle } from 'react-native'
 
 import Config from './config'
 import './i18n'
-import DBStoreInitializer from './db/DBStoreInitializer'
+// import DBStoreInitializer from './db/DBStoreInitializer'
 import { useInitialRootStore } from './db/helpers/useStores'
 import { AppNavigator, useNavigationPersistence } from './navigators'
 import './utils/ignoreWarnings'
@@ -94,19 +94,19 @@ function App() {
 
   // otherwise, we're ready to render the app
   return (
-    <DBStoreInitializer>
-      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <ErrorBoundary catchErrors={Config.catchErrors}>
-          <GestureHandlerRootView style={$container}>
-            <AppNavigator
-              linking={linking}
-              initialState={initialNavigationState}
-              onStateChange={onNavigationStateChange}
-            />
-          </GestureHandlerRootView>
-        </ErrorBoundary>
-      </SafeAreaProvider>
-    </DBStoreInitializer>
+    // <DBStoreInitializer>
+    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+      <ErrorBoundary catchErrors={Config.catchErrors}>
+        <GestureHandlerRootView style={$container}>
+          <AppNavigator
+            linking={linking}
+            initialState={initialNavigationState}
+            onStateChange={onNavigationStateChange}
+          />
+        </GestureHandlerRootView>
+      </ErrorBoundary>
+    </SafeAreaProvider>
+    // </DBStoreInitializer>
   )
 }
 
