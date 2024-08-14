@@ -1,13 +1,13 @@
 import { observer } from 'mobx-react-lite'
 import React, { FC } from 'react'
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from 'react-native'
-import { isRTL } from '../i18n'
+import { isRTL } from '../../i18n'
 import { useStores } from '../models'
-import { AppStackScreenProps } from '../navigators'
-import { colors, spacing } from '../theme'
-import { useHeader } from '../utils/useHeader'
-import { useSafeAreaInsetsStyle } from '../utils/useSafeAreaInsetsStyle'
-import { Button, Text } from '../components'
+import { AppStackScreenProps } from '../../navigators'
+import { colors, spacing } from '../../theme'
+import { useHeader } from '../../utils/useHeader'
+import { useSafeAreaInsetsStyle } from '../../utils/useSafeAreaInsetsStyle'
+import { Button, Text } from '../../components'
 
 const welcomeLogo = require('../../assets/images/logo.png')
 const welcomeFace = require('../../assets/images/welcome-face.png')

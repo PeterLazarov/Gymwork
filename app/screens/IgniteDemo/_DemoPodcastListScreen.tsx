@@ -1,5 +1,5 @@
-import { observer } from "mobx-react-lite"
-import React, { ComponentType, FC, useEffect, useMemo } from "react"
+import { observer } from 'mobx-react-lite'
+import React, { ComponentType, FC, useEffect, useMemo } from 'react'
 import {
   AccessibilityProps,
   ActivityIndicator,
@@ -11,15 +11,15 @@ import {
   TextStyle,
   View,
   ViewStyle,
-} from "react-native"
-import { type ContentStyle } from "@shopify/flash-list"
+} from 'react-native'
+import { type ContentStyle } from '@shopify/flash-list'
 import Animated, {
   Extrapolate,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-} from "react-native-reanimated"
+} from 'react-native-reanimated'
 import {
   Button,
   ButtonAccessoryProps,
@@ -30,24 +30,24 @@ import {
   Screen,
   Text,
   Toggle,
-} from "../components"
-import { isRTL, translate } from "../i18n"
-import { useStores } from "../models"
-import { Episode } from "../models/Episode"
-import { DemoTabScreenProps } from "../navigators/DemoNavigator"
-import { colors, spacing } from "../theme"
-import { delay } from "../utils/delay"
-import { openLinkInBrowser } from "../utils/openLinkInBrowser"
+} from '../../components'
+import { isRTL, translate } from '../../i18n'
+import { useStores } from '../models'
+import { Episode } from '../models/Episode'
+import { DemoTabScreenProps } from '../../navigators/DemoNavigator'
+import { colors, spacing } from '../../theme'
+import { delay } from '../../utils/delay'
+import { openLinkInBrowser } from '../../utils/openLinkInBrowser'
 
 const ICON_SIZE = 14
 
-const rnrImage1 = require("../../assets/images/demo/rnr-image-1.png")
-const rnrImage2 = require("../../assets/images/demo/rnr-image-2.png")
-const rnrImage3 = require("../../assets/images/demo/rnr-image-3.png")
+const rnrImage1 = require('../../assets/images/demo/rnr-image-1.png')
+const rnrImage2 = require('../../assets/images/demo/rnr-image-2.png')
+const rnrImage3 = require('../../assets/images/demo/rnr-image-3.png')
 const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 
-export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
-  function DemoPodcastListScreen(_props) {
+export const DemoPodcastListScreen: FC<DemoTabScreenProps<'DemoPodcastList'>> =
+  observer(function DemoPodcastListScreen(_props) {
     const { episodeStore } = useStores()
 
     const [refreshing, setRefreshing] = React.useState(false)
@@ -72,13 +72,15 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     return (
       <Screen
         preset="fixed"
-        safeAreaEdges={["top"]}
+        safeAreaEdges={['top']}
         contentContainerStyle={$screenContentContainer}
       >
         <ListView<Episode>
           contentContainerStyle={$listContentContainer}
           data={episodeStore.episodesForList.slice()}
-          extraData={episodeStore.favorites.length + episodeStore.episodes.length}
+          extraData={
+            episodeStore.favorites.length + episodeStore.episodes.length
+          }
           refreshing={refreshing}
           estimatedItemSize={177}
           onRefresh={manualRefresh}
@@ -91,36 +93,45 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
                 style={$emptyState}
                 headingTx={
                   episodeStore.favoritesOnly
-                    ? "demoPodcastListScreen.noFavoritesEmptyState.heading"
+                    ? 'demoPodcastListScreen.noFavoritesEmptyState.heading'
                     : undefined
                 }
                 contentTx={
                   episodeStore.favoritesOnly
-                    ? "demoPodcastListScreen.noFavoritesEmptyState.content"
+                    ? 'demoPodcastListScreen.noFavoritesEmptyState.content'
                     : undefined
                 }
-                button={episodeStore.favoritesOnly ? "" : undefined}
+                button={episodeStore.favoritesOnly ? '' : undefined}
                 buttonOnPress={manualRefresh}
                 imageStyle={$emptyStateImage}
-                ImageProps={{ resizeMode: "contain" }}
+                ImageProps={{ resizeMode: 'contain' }}
               />
             )
           }
           ListHeaderComponent={
             <View style={$heading}>
-              <Text preset="heading" tx="demoPodcastListScreen.title" />
-              {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
+              <Text
+                preset="heading"
+                tx="demoPodcastListScreen.title"
+              />
+              {(episodeStore.favoritesOnly ||
+                episodeStore.episodesForList.length > 0) && (
                 <View style={$toggle}>
                   <Toggle
                     value={episodeStore.favoritesOnly}
                     onValueChange={() =>
-                      episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
+                      episodeStore.setProp(
+                        'favoritesOnly',
+                        !episodeStore.favoritesOnly
+                      )
                     }
                     variant="switch"
                     labelTx="demoPodcastListScreen.onlyFavorites"
                     labelPosition="left"
                     labelStyle={$labelStyle}
-                    accessibilityLabel={translate("demoPodcastListScreen.accessibility.switch")}
+                    accessibilityLabel={translate(
+                      'demoPodcastListScreen.accessibility.switch'
+                    )}
                   />
                 </View>
               )}
@@ -136,8 +147,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
         />
       </Screen>
     )
-  },
-)
+  })
 
 const EpisodeCard = observer(function EpisodeCard({
   episode,
@@ -187,26 +197,31 @@ const EpisodeCard = observer(function EpisodeCard({
       Platform.select<AccessibilityProps>({
         ios: {
           accessibilityLabel: episode.title,
-          accessibilityHint: translate("demoPodcastListScreen.accessibility.cardHint", {
-            action: isFavorite ? "unfavorite" : "favorite",
-          }),
+          accessibilityHint: translate(
+            'demoPodcastListScreen.accessibility.cardHint',
+            {
+              action: isFavorite ? 'unfavorite' : 'favorite',
+            }
+          ),
         },
         android: {
           accessibilityLabel: episode.title,
           accessibilityActions: [
             {
-              name: "longpress",
-              label: translate("demoPodcastListScreen.accessibility.favoriteAction"),
+              name: 'longpress',
+              label: translate(
+                'demoPodcastListScreen.accessibility.favoriteAction'
+              ),
             },
           ],
           onAccessibilityAction: ({ nativeEvent }) => {
-            if (nativeEvent.actionName === "longpress") {
+            if (nativeEvent.actionName === 'longpress') {
               handlePressFavorite()
             }
           },
         },
       }),
-    [episode, isFavorite],
+    [episode, isFavorite]
   )
 
   const handlePressFavorite = () => {
@@ -224,7 +239,11 @@ const EpisodeCard = observer(function EpisodeCard({
         return (
           <View>
             <Animated.View
-              style={[$iconContainer, StyleSheet.absoluteFill, animatedLikeButtonStyles]}
+              style={[
+                $iconContainer,
+                StyleSheet.absoluteFill,
+                animatedLikeButtonStyles,
+              ]}
             >
               <Icon
                 icon="heart"
@@ -242,7 +261,7 @@ const EpisodeCard = observer(function EpisodeCard({
           </View>
         )
       },
-    [],
+    []
   )
 
   return (
@@ -271,7 +290,12 @@ const EpisodeCard = observer(function EpisodeCard({
       }
       content={`${episode.parsedTitleAndSubtitle.title} - ${episode.parsedTitleAndSubtitle.subtitle}`}
       {...accessibilityHintProps}
-      RightComponent={<Image source={imageUri} style={$itemThumbnail} />}
+      RightComponent={
+        <Image
+          source={imageUri}
+          style={$itemThumbnail}
+        />
+      }
       FooterComponent={
         <Button
           onPress={handlePressFavorite}
@@ -279,8 +303,8 @@ const EpisodeCard = observer(function EpisodeCard({
           style={[$favoriteButton, isFavorite && $unFavoriteButton]}
           accessibilityLabel={
             isFavorite
-              ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
-              : translate("demoPodcastListScreen.accessibility.favoriteIcon")
+              ? translate('demoPodcastListScreen.accessibility.unfavoriteIcon')
+              : translate('demoPodcastListScreen.accessibility.favoriteIcon')
           }
           LeftAccessory={ButtonLeftAccessory}
         >
@@ -290,8 +314,8 @@ const EpisodeCard = observer(function EpisodeCard({
             weight="medium"
             text={
               isFavorite
-                ? translate("demoPodcastListScreen.unfavoriteButton")
-                : translate("demoPodcastListScreen.favoriteButton")
+                ? translate('demoPodcastListScreen.unfavoriteButton')
+                : translate('demoPodcastListScreen.favoriteButton')
             }
           />
         </Button>
@@ -324,7 +348,7 @@ const $item: ViewStyle = {
 const $itemThumbnail: ImageStyle = {
   marginTop: spacing.sm,
   borderRadius: 50,
-  alignSelf: "flex-start",
+  alignSelf: 'flex-start',
 }
 
 const $toggle: ViewStyle = {
@@ -332,20 +356,20 @@ const $toggle: ViewStyle = {
 }
 
 const $labelStyle: TextStyle = {
-  textAlign: "left",
+  textAlign: 'left',
 }
 
 const $iconContainer: ViewStyle = {
   height: ICON_SIZE,
   width: ICON_SIZE,
-  flexDirection: "row",
+  flexDirection: 'row',
   marginEnd: spacing.sm,
 }
 
 const $metadata: TextStyle = {
   color: colors.textDim,
   marginTop: spacing.xs,
-  flexDirection: "row",
+  flexDirection: 'row',
 }
 
 const $metadataText: TextStyle = {
@@ -357,14 +381,14 @@ const $metadataText: TextStyle = {
 const $favoriteButton: ViewStyle = {
   borderRadius: 17,
   marginTop: spacing.md,
-  justifyContent: "flex-start",
+  justifyContent: 'flex-start',
   backgroundColor: colors.palette.neutral300,
   borderColor: colors.palette.neutral300,
   paddingHorizontal: spacing.md,
   paddingTop: spacing.xxxs,
   paddingBottom: 0,
   minHeight: 32,
-  alignSelf: "flex-start",
+  alignSelf: 'flex-start',
 }
 
 const $unFavoriteButton: ViewStyle = {

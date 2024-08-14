@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 
 import { setupRootStore } from './setupRootStore'
 import { RootStore, RootStoreModel } from '../stores/RootStore'
+import { reactotron } from 'app/devtools/ReactotronConfig'
 
 /**
  * Create the initial (empty) global RootStore instance here.
@@ -16,6 +17,7 @@ import { RootStore, RootStoreModel } from '../stores/RootStore'
  * instantiating it, although that should be rare.
  */
 const _rootStore = RootStoreModel.create({})
+reactotron.trackMstNode(_rootStore)
 
 /**
  * The RootStoreContext provides a way to access

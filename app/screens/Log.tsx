@@ -10,7 +10,7 @@ import { useStores } from '../db/helpers/useStores'
 import { Exercise } from '../db/models'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
-import texts from '../../texts'
+import { translate } from 'app/i18n'
 
 // TODO: screen is unused - remove?
 const Log = observer(() => {
@@ -31,7 +31,7 @@ const Log = observer(() => {
     >
       <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
         <Appbar.BackAction onPress={onBackPress} />
-        <Appbar.Content title={exercise?.name ?? texts.addExercise} />
+        <Appbar.Content title={exercise?.name ?? translate('addExercise')} />
         <Appbar.Action
           icon={() => <Icon icon="ellipsis-vertical" />}
           onPress={() => {}}

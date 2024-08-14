@@ -15,10 +15,10 @@ import {
   Text,
   TextField,
   TextFieldAccessoryProps,
-} from '../components'
+} from '../../components'
 import { useStores } from '../models'
-import { AppStackScreenProps } from '../navigators'
-import { colors, spacing } from '../theme'
+import { AppStackScreenProps } from '../../navigators'
+import { colors, spacing } from '../../theme'
 
 interface LoginScreenProps extends AppStackScreenProps<'Login'> {}
 

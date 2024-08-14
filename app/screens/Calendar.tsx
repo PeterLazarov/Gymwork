@@ -10,7 +10,7 @@ import CalendarWorkoutModal from '../components/CalendarWorkoutModal'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
-import texts from '../../texts'
+import { translate } from 'app/i18n'
 
 const CalendarPage: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
@@ -63,7 +63,7 @@ const CalendarPage: React.FC = () => {
       <View>
         <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
           <Appbar.BackAction onPress={onBackPress} />
-          <Appbar.Content title={texts.calendar} />
+          <Appbar.Content title={translate('calendar')} />
           <Appbar.Action
             icon={() => <Icon icon="ellipsis-vertical" />}
             onPress={() => {}}
@@ -97,7 +97,7 @@ const CalendarPage: React.FC = () => {
           workoutDate={openedWorkoutDialogDate}
           onClose={() => setOpenedWorkoutDialogDate('')}
           onConfirm={goGoDay}
-          confirmButtonText={texts.goToWorkout}
+          confirmButtonText={translate('goToWorkout')}
         />
       )}
     </>

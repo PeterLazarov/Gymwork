@@ -11,14 +11,20 @@ import {
 } from 'react-native'
 import { Drawer } from 'react-native-drawer-layout'
 import { type ContentStyle } from '@shopify/flash-list'
-import { ListItem, ListView, ListViewRef, Screen, Text } from '../../components'
-import { isRTL } from '../../i18n'
+import {
+  ListItem,
+  ListView,
+  ListViewRef,
+  Screen,
+  Text,
+} from '../../../components'
+import { isRTL } from '../../../i18n'
 import {
   DemoTabParamList,
   DemoTabScreenProps,
-} from '../../navigators/DemoNavigator'
-import { colors, spacing } from '../../theme'
-import { useSafeAreaInsetsStyle } from '../../utils/useSafeAreaInsetsStyle'
+} from '../../../navigators/DemoNavigator'
+import { colors, spacing } from '../../../theme'
+import { useSafeAreaInsetsStyle } from '../../../utils/useSafeAreaInsetsStyle'
 import * as Demos from './demos'
 import { DrawerIconButton } from './DrawerIconButton'
 

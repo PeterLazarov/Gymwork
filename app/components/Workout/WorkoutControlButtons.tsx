@@ -7,7 +7,7 @@ import { Button } from 'react-native-paper'
 import { useStores } from '../../db/helpers/useStores'
 import { Icon } from '../../../designSystem'
 import colors from '../../../designSystem/colors'
-import texts from '../../../texts'
+import { translate } from 'app/i18n'
 
 type Props = {
   createWorkout: () => void
@@ -55,7 +55,7 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
               />
             )}
           >
-            {texts.newWorkout}
+            {translate('newWorkout')}
           </Button>
           <Button
             mode="contained"
@@ -68,7 +68,7 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
               />
             )}
           >
-            {texts.copyWorkout}
+            {translate('copyWorkout')}
           </Button>
         </>
       )}
@@ -85,7 +85,7 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
               />
             )}
           >
-            {texts.addExercise}
+            {translate('addExercise')}
           </Button>
           <Button
             mode="contained"

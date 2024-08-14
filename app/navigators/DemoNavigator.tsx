@@ -13,7 +13,7 @@ import {
   DemoShowroomScreen,
   DemoDebugScreen,
 } from '../screens'
-import { DemoPodcastListScreen } from '../screens/_DemoPodcastListScreen'
+import { DemoPodcastListScreen } from '../screens/IgniteDemo/_DemoPodcastListScreen'
 import { colors, spacing, typography } from '../theme'
 import { AppStackParamList, AppStackScreenProps } from './AppNavigator'
 import Workout from 'app/screens/Workout'
@@ -61,7 +61,7 @@ export function DemoNavigator() {
         tabBarItemStyle: $tabBarItem,
       }}
     >
-      <Tab.Screen
+      {/* <Tab.Screen
         name="DemoShowroom"
         component={DemoShowroomScreen}
         options={{
@@ -95,7 +95,6 @@ export function DemoNavigator() {
         name="DemoPodcastList"
         component={DemoPodcastListScreen}
         options={{
-          tabBarAccessibilityLabel: translate('demoNavigator.podcastListTab'),
           tabBarLabel: translate('demoNavigator.podcastListTab'),
           tabBarIcon: ({ focused }) => (
             <Icon
@@ -120,7 +119,7 @@ export function DemoNavigator() {
             />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Gymwork"
         component={Workout}

@@ -7,8 +7,8 @@ import ExerciseAcordionList from './ExerciseAcordionList'
 import ExerciseList from './ExerciseList'
 import { useStores } from '../../db/helpers/useStores'
 import { Exercise } from '../../db/models'
-import texts from '../../../texts'
 import { groupBy } from '../../utils/array'
+import { translate } from 'app/i18n'
 
 const noop = () => {}
 
@@ -39,7 +39,7 @@ const AllExerciseSelect: React.FC<Props> = ({ onSelect }) => {
   return (
     <>
       <Searchbar
-        placeholder={texts.search}
+        placeholder={translate('search')}
         onChangeText={setFilterString}
         value={filterString}
         mode="view"

@@ -7,9 +7,9 @@ import { Exercise, WorkoutSet } from '../../../db/models'
 import { Icon } from '../../../../designSystem'
 import { BodyMediumLabel } from '../../../../designSystem/Label'
 import colors from '../../../../designSystem/colors'
-import texts from '../../../../texts'
 import { getFormatedDuration } from '../../../utils/time'
 import SetDataLabel from '../SetDataLabel'
+import { translate } from 'app/i18n'
 
 type Props = {
   set: WorkoutSet
@@ -68,7 +68,7 @@ const ReadOnlyListItem: React.FC<Props> = ({
       {exercise.hasRepMeasument && (
         <SetDataLabel
           value={set.reps}
-          unit={texts.reps}
+          unit={translate('reps')}
         />
       )}
       {exercise.hasWeightMeasument && (
