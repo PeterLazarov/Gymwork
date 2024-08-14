@@ -1,16 +1,16 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import React from "react"
-import { TextStyle, View, ViewStyle } from "react-native"
-import { Icon, ListItem, ListView, Text } from "../../../components"
-import { colors, spacing } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
-import { DemoDivider } from "../DemoDivider"
-import { DemoUseCase } from "../DemoUseCase"
+import React from "react";
+import { TextStyle, View, ViewStyle } from "react-native";
+import { Icon, ListItem, ListView, Text } from "../../../components";
+import { colors, spacing } from "../../../theme";
+import { Demo } from "../DemoShowroomScreen";
+import { DemoDivider } from "../DemoDivider";
+import { DemoUseCase } from "../DemoUseCase";
 
 const listData =
   `Tempor Id Ea Aliqua Pariatur Aliquip. Irure Minim Voluptate Consectetur Consequat Sint Esse Proident Irure. Nostrud Elit Veniam Nostrud Excepteur Minim Deserunt Quis Dolore Velit Nulla Irure Voluptate Tempor. Occaecat Amet Laboris Nostrud Qui Do Quis Lorem Ex Elit Fugiat Deserunt. In Pariatur Excepteur Exercitation Ex Incididunt Qui Mollit Dolor Sit Non. Culpa Officia Minim Cillum Exercitation Voluptate Proident Laboris Et Est Reprehenderit Quis Pariatur Nisi`
     .split(".")
-    .map((item) => item.trim())
+    .map((item) => item.trim());
 
 const $customLeft: ViewStyle = {
   backgroundColor: colors.error,
@@ -20,30 +20,31 @@ const $customLeft: ViewStyle = {
   flexDirection: "row",
   flexWrap: "wrap",
   overflow: "hidden",
-}
+};
 
 const $customTextStyle: TextStyle = {
   color: colors.error,
-}
+};
 
 const $customTouchableStyle: ViewStyle = {
   backgroundColor: colors.error,
-}
+};
 
 const $customContainerStyle: ViewStyle = {
   borderTopWidth: 5,
   borderTopColor: colors.palette.neutral100,
-}
+};
 
 const $listStyle: ViewStyle = {
   height: 148,
   paddingHorizontal: spacing.xs,
   backgroundColor: colors.palette.neutral200,
-}
+};
 
 export const DemoListItem: Demo = {
   name: "ListItem",
-  description: "A styled row component that can be used in FlatList, SectionList, or by itself.",
+  description:
+    "A styled row component that can be used in FlatList, SectionList, or by itself.",
   data: [
     <DemoUseCase name="Height" description="The row can be different heights.">
       <ListItem topSeparator>Default height (56px)</ListItem>
@@ -53,11 +54,13 @@ export const DemoListItem: Demo = {
       </ListItem>
 
       <ListItem topSeparator>
-        Height determined by text content - Reprehenderit incididunt deserunt do do ea labore.
+        Height determined by text content - Reprehenderit incididunt deserunt do
+        do ea labore.
       </ListItem>
 
       <ListItem topSeparator bottomSeparator TextProps={{ numberOfLines: 1 }}>
-        Limit long text to one line - Reprehenderit incididunt deserunt do do ea labore.
+        Limit long text to one line - Reprehenderit incididunt deserunt do do ea
+        labore.
       </ListItem>
     </DemoUseCase>,
 
@@ -78,7 +81,10 @@ export const DemoListItem: Demo = {
       <ListItem bottomSeparator>Only bottom separator</ListItem>
     </DemoUseCase>,
 
-    <DemoUseCase name="Icons" description="You can customize the icons on the left or right.">
+    <DemoUseCase
+      name="Icons"
+      description="You can customize the icons on the left or right."
+    >
       <ListItem topSeparator leftIcon="ladybug">
         Left icon
       </ListItem>
@@ -87,7 +93,12 @@ export const DemoListItem: Demo = {
         Right Icon
       </ListItem>
 
-      <ListItem topSeparator bottomSeparator rightIcon="ladybug" leftIcon="ladybug">
+      <ListItem
+        topSeparator
+        bottomSeparator
+        rightIcon="ladybug"
+        leftIcon="ladybug"
+      >
         Left & Right Icons
       </ListItem>
     </DemoUseCase>,
@@ -101,7 +112,12 @@ export const DemoListItem: Demo = {
         LeftComponent={
           <View style={[$customLeft, { marginEnd: spacing.md }]}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
-              <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
+              <Icon
+                key={i}
+                icon="ladybug"
+                color={colors.palette.neutral100}
+                size={20}
+              />
             ))}
           </View>
         }
@@ -115,7 +131,12 @@ export const DemoListItem: Demo = {
         RightComponent={
           <View style={[$customLeft, { marginStart: spacing.md }]}>
             {Array.from({ length: 9 }, (x, i) => i).map((i) => (
-              <Icon key={i} icon="ladybug" color={colors.palette.neutral100} size={20} />
+              <Icon
+                key={i}
+                icon="ladybug"
+                color={colors.palette.neutral100}
+                size={20}
+              />
             ))}
           </View>
         }
@@ -162,7 +183,10 @@ export const DemoListItem: Demo = {
       </View>
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily.">
+    <DemoUseCase
+      name="Styling"
+      description="The component can be styled easily."
+    >
       <ListItem topSeparator textStyle={$customTextStyle}>
         Styled Text
       </ListItem>
@@ -197,4 +221,4 @@ export const DemoListItem: Demo = {
       </ListItem>
     </DemoUseCase>,
   ],
-}
+};

@@ -1,34 +1,34 @@
 /* eslint-disable react/jsx-key */
-import React from "react"
-import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { Icon, iconRegistry, IconTypes, Text } from "../../../components"
-import { colors, spacing } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
-import { DemoUseCase } from "../DemoUseCase"
+import React from "react";
+import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
+import { Icon, iconRegistry, IconTypes, Text } from "../../../components";
+import { colors, spacing } from "../../../theme";
+import { Demo } from "../DemoShowroomScreen";
+import { DemoUseCase } from "../DemoUseCase";
 
 const $demoIconContainer: ViewStyle = {
   padding: spacing.xs,
-}
+};
 
 const $iconTile: ViewStyle = {
   width: "33.333%",
   alignItems: "center",
   paddingVertical: spacing.xs,
-}
+};
 
 const $iconTileLabel: TextStyle = {
   marginTop: spacing.xxs,
   color: colors.textDim,
-}
+};
 
 const $customIconContainer: ViewStyle = {
   padding: spacing.md,
   backgroundColor: colors.palette.angry500,
-}
+};
 
 const $customIcon: ImageStyle = {
   tintColor: colors.palette.neutral100,
-}
+};
 
 export const DemoIcon: Demo = {
   name: "Icon",
@@ -59,19 +59,44 @@ export const DemoIcon: Demo = {
     </DemoUseCase>,
 
     <DemoUseCase name="Color" description="There's a color prop." layout="row">
-      <Icon icon="ladybug" color={colors.palette.accent500} containerStyle={$demoIconContainer} />
-      <Icon icon="ladybug" color={colors.palette.primary500} containerStyle={$demoIconContainer} />
+      <Icon
+        icon="ladybug"
+        color={colors.palette.accent500}
+        containerStyle={$demoIconContainer}
+      />
+      <Icon
+        icon="ladybug"
+        color={colors.palette.primary500}
+        containerStyle={$demoIconContainer}
+      />
       <Icon
         icon="ladybug"
         color={colors.palette.secondary500}
         containerStyle={$demoIconContainer}
       />
-      <Icon icon="ladybug" color={colors.palette.neutral700} containerStyle={$demoIconContainer} />
-      <Icon icon="ladybug" color={colors.palette.angry500} containerStyle={$demoIconContainer} />
+      <Icon
+        icon="ladybug"
+        color={colors.palette.neutral700}
+        containerStyle={$demoIconContainer}
+      />
+      <Icon
+        icon="ladybug"
+        color={colors.palette.angry500}
+        containerStyle={$demoIconContainer}
+      />
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily." layout="row">
-      <Icon icon="ladybug" style={$customIcon} size={40} containerStyle={$customIconContainer} />
+    <DemoUseCase
+      name="Styling"
+      description="The component can be styled easily."
+      layout="row"
+    >
+      <Icon
+        icon="ladybug"
+        style={$customIcon}
+        size={40}
+        containerStyle={$customIconContainer}
+      />
     </DemoUseCase>,
   ],
-}
+};

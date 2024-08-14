@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import React from "react"
-import { EmptyState } from "../../../components"
-import { colors } from "../../../theme"
-import { DemoDivider } from "../DemoDivider"
-import { Demo } from "../DemoShowroomScreen"
-import { DemoUseCase } from "../DemoUseCase"
+import React from "react";
+import { EmptyState } from "../../../components";
+import { colors } from "../../../theme";
+import { DemoDivider } from "../DemoDivider";
+import { Demo } from "../DemoShowroomScreen";
+import { DemoUseCase } from "../DemoUseCase";
 
 export const DemoEmptyState: Demo = {
   name: "EmptyState",
@@ -48,7 +48,10 @@ export const DemoEmptyState: Demo = {
       />
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily.">
+    <DemoUseCase
+      name="Styling"
+      description="The component can be styled easily."
+    >
       <EmptyState
         preset="generic"
         style={{ backgroundColor: colors.error, paddingVertical: 20 }}
@@ -64,7 +67,10 @@ export const DemoEmptyState: Demo = {
           textDecorationLine: "underline",
           textDecorationColor: colors.palette.neutral100,
         }}
-        buttonStyle={{ alignSelf: "center", backgroundColor: colors.palette.neutral100 }}
+        buttonStyle={{
+          alignSelf: "center",
+          backgroundColor: colors.palette.neutral100,
+        }}
         buttonTextStyle={{ color: colors.error }}
         ButtonProps={{
           preset: "reversed",
@@ -72,4 +78,4 @@ export const DemoEmptyState: Demo = {
       />
     </DemoUseCase>,
   ],
-}
+};

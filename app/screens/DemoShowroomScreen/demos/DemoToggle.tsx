@@ -1,27 +1,27 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import React from "react"
-import { TextStyle, View, ViewStyle } from "react-native"
-import { Text, Toggle, ToggleProps } from "../../../components"
-import { colors, spacing } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
-import { DemoDivider } from "../DemoDivider"
-import { DemoUseCase } from "../DemoUseCase"
+import React from "react";
+import { TextStyle, View, ViewStyle } from "react-native";
+import { Text, Toggle, ToggleProps } from "../../../components";
+import { colors, spacing } from "../../../theme";
+import { Demo } from "../DemoShowroomScreen";
+import { DemoDivider } from "../DemoDivider";
+import { DemoUseCase } from "../DemoUseCase";
 
 function ControlledToggle(props: ToggleProps) {
-  const [value, setValue] = React.useState(props.value || false)
-  return <Toggle {...props} value={value} onPress={() => setValue(!value)} />
+  const [value, setValue] = React.useState(props.value || false);
+  return <Toggle {...props} value={value} onPress={() => setValue(!value)} />;
 }
 
 const $centeredOneThirdCol: ViewStyle = {
   width: "33.33333%",
   alignItems: "center",
   justifyContent: "center",
-}
+};
 const $centeredText: TextStyle = {
   textAlign: "center",
   width: "100%",
   marginTop: spacing.xs,
-}
+};
 
 export const DemoToggle: Demo = {
   name: "Toggle",
@@ -56,22 +56,52 @@ export const DemoToggle: Demo = {
       description="There is a status prop - similar to `preset` in other components, but affects component functionality as well."
       layout="row"
     >
-      <ControlledToggle variant="checkbox" containerStyle={$centeredOneThirdCol} />
+      <ControlledToggle
+        variant="checkbox"
+        containerStyle={$centeredOneThirdCol}
+      />
       <ControlledToggle variant="radio" containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="switch" containerStyle={$centeredOneThirdCol} />
+      <ControlledToggle
+        variant="switch"
+        containerStyle={$centeredOneThirdCol}
+      />
       <DemoDivider style={{ width: "100%" }} />
-      <ControlledToggle variant="checkbox" value containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="radio" value containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="switch" value containerStyle={$centeredOneThirdCol} />
+      <ControlledToggle
+        variant="checkbox"
+        value
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledToggle
+        variant="radio"
+        value
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledToggle
+        variant="switch"
+        value
+        containerStyle={$centeredOneThirdCol}
+      />
       <Text preset="formHelper" style={$centeredText}>
         No status - this is the default
       </Text>
 
       <DemoDivider size={24} style={{ width: "100%" }} />
 
-      <ControlledToggle variant="checkbox" status="error" containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="radio" status="error" containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="switch" status="error" containerStyle={$centeredOneThirdCol} />
+      <ControlledToggle
+        variant="checkbox"
+        status="error"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledToggle
+        variant="radio"
+        status="error"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledToggle
+        variant="switch"
+        status="error"
+        containerStyle={$centeredOneThirdCol}
+      />
       <DemoDivider style={{ width: "100%" }} />
       <ControlledToggle
         variant="checkbox"
@@ -102,8 +132,16 @@ export const DemoToggle: Demo = {
         status="disabled"
         containerStyle={$centeredOneThirdCol}
       />
-      <ControlledToggle variant="radio" status="disabled" containerStyle={$centeredOneThirdCol} />
-      <ControlledToggle variant="switch" status="disabled" containerStyle={$centeredOneThirdCol} />
+      <ControlledToggle
+        variant="radio"
+        status="disabled"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledToggle
+        variant="switch"
+        status="disabled"
+        containerStyle={$centeredOneThirdCol}
+      />
       <DemoDivider style={{ width: "100%" }} />
       <ControlledToggle
         variant="checkbox"
@@ -188,7 +226,11 @@ export const DemoToggle: Demo = {
       />
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily." layout="row">
+    <DemoUseCase
+      name="Styling"
+      description="The component can be styled easily."
+      layout="row"
+    >
       <ControlledToggle
         variant="checkbox"
         containerStyle={$centeredOneThirdCol}
@@ -382,4 +424,4 @@ export const DemoToggle: Demo = {
       </View>
     </DemoUseCase>,
   ],
-}
+};

@@ -1,43 +1,44 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import React from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { AutoImage, Text } from "../../../components"
-import { colors, spacing } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
-import { DemoDivider } from "../DemoDivider"
-import { DemoUseCase } from "../DemoUseCase"
+import React from "react";
+import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native";
+import { AutoImage, Text } from "../../../components";
+import { colors, spacing } from "../../../theme";
+import { Demo } from "../DemoShowroomScreen";
+import { DemoDivider } from "../DemoDivider";
+import { DemoUseCase } from "../DemoUseCase";
 
 const $imageContainer: ViewStyle = {
   alignItems: "center",
-}
+};
 
 const $aspectRatioDescription: TextStyle = {
   textAlign: "center",
   width: "100%",
   marginTop: spacing.xs,
-}
+};
 
 const $aspectRatioWidthExampleContainer: ViewStyle = {
   flexDirection: "row",
   justifyContent: "space-between",
-}
+};
 
 const $aspectRatioHeightExampleContainer: ViewStyle = {
   alignItems: "stretch",
   justifyContent: "space-between",
   height: 130,
-}
+};
 
 const $aspectRatioBox: ViewStyle & ImageStyle = {
   borderRadius: 4,
   borderWidth: 3,
   borderColor: colors.palette.secondary300,
   backgroundColor: colors.palette.neutral800,
-}
+};
 
 export const DemoAutoImage: Demo = {
   name: "AutoImage",
-  description: "An Image component that automatically sizes a remote or data-uri image.",
+  description:
+    "An Image component that automatically sizes a remote or data-uri image.",
   data: [
     <DemoUseCase name="Remote URI">
       <View style={$imageContainer}>
@@ -75,13 +76,21 @@ export const DemoAutoImage: Demo = {
           text="<Image />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", textAlign: "center", color: colors.palette.secondary400 }}
+          style={{
+            flexBasis: "33.3333%",
+            textAlign: "center",
+            color: colors.palette.secondary400,
+          }}
         />
         <Text
           text="<AutoImage />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", textAlign: "right", color: colors.palette.secondary400 }}
+          style={{
+            flexBasis: "33.3333%",
+            textAlign: "right",
+            color: colors.palette.secondary400,
+          }}
         />
       </View>
 
@@ -133,7 +142,12 @@ export const DemoAutoImage: Demo = {
           />
         </View>
 
-        <View style={[$aspectRatioHeightExampleContainer, { flex: 1, marginStart: spacing.sm }]}>
+        <View
+          style={[
+            $aspectRatioHeightExampleContainer,
+            { flex: 1, marginStart: spacing.sm },
+          ]}
+        >
           <View style={[$aspectRatioBox, { height: 32 }]} />
           <Image
             source={{
@@ -169,13 +183,21 @@ export const DemoAutoImage: Demo = {
           text="<Image />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", textAlign: "center", color: colors.palette.secondary400 }}
+          style={{
+            flexBasis: "33.3333%",
+            textAlign: "center",
+            color: colors.palette.secondary400,
+          }}
         />
         <Text
           text="<AutoImage />"
           size="xxs"
           weight="bold"
-          style={{ flexBasis: "33.3333%", textAlign: "right", color: colors.palette.secondary400 }}
+          style={{
+            flexBasis: "33.3333%",
+            textAlign: "right",
+            color: colors.palette.secondary400,
+          }}
         />
       </View>
 
@@ -205,4 +227,4 @@ export const DemoAutoImage: Demo = {
       </Text>
     </DemoUseCase>,
   ],
-}
+};

@@ -1,41 +1,41 @@
-import { useRouter } from 'expo-router'
-import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
-import { View } from 'react-native'
-import { Appbar, Button } from 'react-native-paper'
+import { useRouter } from "expo-router";
+import { observer } from "mobx-react-lite";
+import React, { useState } from "react";
+import { View } from "react-native";
+import { Appbar, Button } from "react-native-paper";
 
-import ConfirmationDialog from '../components/ConfirmationDialog'
-import ExerciseEditForm from '../components/Exercise/ExerciseEditForm'
-import { useStores } from '../db/helpers/useStores'
-import { Exercise, ExerciseModel } from '../db/models'
-import { Icon } from '../designSystem'
-import colors from '../designSystem/colors'
+import ConfirmationDialog from "../components/ConfirmationDialog";
+import ExerciseEditForm from "../components/Exercise/ExerciseEditForm";
+import { useStores } from "../db/helpers/useStores";
+import { Exercise, ExerciseModel } from "../db/models";
+import { Icon } from "../designSystem";
+import colors from "../designSystem/colors";
 
 const ExerciseCreatePage: React.FC = () => {
-  const router = useRouter()
-  const { exerciseStore } = useStores()
+  const router = useRouter();
+  const { exerciseStore } = useStores();
 
-  const [exercise, setExercise] = useState(ExerciseModel.create())
-  const [formValid, setFormValid] = useState(false)
-  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
+  const [exercise, setExercise] = useState(ExerciseModel.create());
+  const [formValid, setFormValid] = useState(false);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
   function onBackPress() {
-    setConfirmDialogOpen(true)
+    setConfirmDialogOpen(true);
   }
 
   function onBackConfirmed() {
-    setConfirmDialogOpen(false)
-    router.back()
+    setConfirmDialogOpen(false);
+    router.back();
   }
 
   function onUpdate(updated: Exercise, isValid: boolean) {
-    setExercise(updated)
-    setFormValid(isValid)
+    setExercise(updated);
+    setFormValid(isValid);
   }
 
   function onComplete() {
-    exerciseStore.createExercise(exercise)
-    router.back()
+    exerciseStore.createExercise(exercise);
+    router.back();
   }
 
   return (
@@ -45,27 +45,15 @@ const ExerciseCreatePage: React.FC = () => {
           <Appbar.BackAction onPress={onBackPress} />
           <Appbar.Content title="Create exercise" />
           <Appbar.Action
-            icon={() => (
-              <Icon
-                icon="checkmark"
-                size="large"
-              />
-            )}
+            icon={() => <Icon icon="checkmark" size="large" />}
             onPress={onComplete}
             animated={false}
             disabled={!formValid}
           />
         </Appbar.Header>
         <View style={{ flex: 1, gap: 8, padding: 8 }}>
-          <ExerciseEditForm
-            exercise={exercise}
-            onUpdate={onUpdate}
-          />
-          <Button
-            mode="contained"
-            onPress={onComplete}
-            disabled={!formValid}
-          >
+          <ExerciseEditForm exercise={exercise} onUpdate={onUpdate} />
+          <Button mode="contained" onPress={onComplete} disabled={!formValid}>
             Save
           </Button>
         </View>
@@ -77,6 +65,6 @@ const ExerciseCreatePage: React.FC = () => {
         onConfirm={onBackConfirmed}
       />
     </>
-  )
-}
-export default observer(ExerciseCreatePage)
+  );
+};
+export default observer(ExerciseCreatePage);

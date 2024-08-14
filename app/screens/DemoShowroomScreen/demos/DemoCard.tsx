@@ -1,17 +1,20 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
-import React from "react"
-import { AutoImage, Button, Card, Icon } from "../../../components"
-import { colors, spacing } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
-import { DemoDivider } from "../DemoDivider"
-import { DemoUseCase } from "../DemoUseCase"
+import React from "react";
+import { AutoImage, Button, Card, Icon } from "../../../components";
+import { colors, spacing } from "../../../theme";
+import { Demo } from "../DemoShowroomScreen";
+import { DemoDivider } from "../DemoDivider";
+import { DemoUseCase } from "../DemoUseCase";
 
 export const DemoCard: Demo = {
   name: "Card",
   description:
     "Cards are useful for displaying related information in a contained way. If a ListItem displays content horizontally, a Card can be used to display content vertically.",
   data: [
-    <DemoUseCase name="Presets" description="There are a few presets that are preconfigured.">
+    <DemoUseCase
+      name="Presets"
+      description="There are a few presets that are preconfigured."
+    >
       <Card
         heading="Default Preset (default)"
         content="Incididunt magna ut aliquip consectetur mollit dolor."
@@ -68,7 +71,11 @@ export const DemoCard: Demo = {
       name="Passing Content"
       description="There are a few different ways to pass content."
     >
-      <Card heading="Via `heading` Prop" content="Via `content` Prop" footer="Via `footer` Prop" />
+      <Card
+        heading="Via `heading` Prop"
+        content="Via `content` Prop"
+        footer="Via `footer` Prop"
+      />
       <DemoDivider />
       <Card
         preset="reversed"
@@ -90,21 +97,27 @@ export const DemoCard: Demo = {
           <Button
             preset="reversed"
             text="HeadingComponent"
-            LeftAccessory={(props) => <Icon style={props.style} icon="ladybug" />}
+            LeftAccessory={(props) => (
+              <Icon style={props.style} icon="ladybug" />
+            )}
           />
         }
         ContentComponent={
           <Button
             style={{ marginVertical: spacing.sm }}
             text="ContentComponent"
-            LeftAccessory={(props) => <Icon style={props.style} icon="ladybug" />}
+            LeftAccessory={(props) => (
+              <Icon style={props.style} icon="ladybug" />
+            )}
           />
         }
         FooterComponent={
           <Button
             preset="reversed"
             text="FooterComponent"
-            LeftAccessory={(props) => <Icon style={props.style} icon="ladybug" />}
+            LeftAccessory={(props) => (
+              <Icon style={props.style} icon="ladybug" />
+            )}
           />
         }
       />
@@ -141,12 +154,18 @@ export const DemoCard: Demo = {
       />
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily.">
+    <DemoUseCase
+      name="Styling"
+      description="The component can be styled easily."
+    >
       <Card
         heading="Style the Heading"
         headingStyle={{ color: colors.error }}
         content="Style the Content"
-        contentStyle={{ backgroundColor: colors.error, color: colors.palette.neutral100 }}
+        contentStyle={{
+          backgroundColor: colors.error,
+          color: colors.palette.neutral100,
+        }}
         footer="Style the Footer"
         footerStyle={{
           textDecorationLine: "underline line-through",
@@ -162,4 +181,4 @@ export const DemoCard: Demo = {
       />
     </DemoUseCase>,
   ],
-}
+};

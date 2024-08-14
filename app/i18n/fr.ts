@@ -1,4 +1,4 @@
-import { Translations } from "./en"
+import { Translations } from "./en";
 
 const fr: Translations = {
   common: {
@@ -115,7 +115,8 @@ const fr: Translations = {
       favoriteIcon: "Épisode non favori",
       unfavoriteIcon: "Épisode favori",
       publishLabel: "Publié le {{date}}",
-      durationLabel: "Durée : {{hours}} heures {{minutes}} minutes {{seconds}} secondes",
+      durationLabel:
+        "Durée : {{hours}} heures {{minutes}} minutes {{seconds}} secondes",
     },
     noFavoritesEmptyState: {
       heading: "C'est un peu vide ici",
@@ -123,6 +124,6 @@ const fr: Translations = {
         "Aucun favori n'a été ajouté pour le moment. Appuyez sur le cœur d'un épisode pour l'ajouter à vos favoris !",
     },
   },
-}
+};
 
-export default fr
+export default fr;

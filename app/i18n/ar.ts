@@ -1,4 +1,4 @@
-import { Translations } from "./en"
+import { Translations } from "./en";
 
 const ar: Translations = {
   common: {
@@ -24,7 +24,8 @@ const ar: Translations = {
   emptyStateComponent: {
     generic: {
       heading: "فارغة جداً....حزين",
-      content: "لا توجد بيانات حتى الآن. حاول النقر فوق الزر لتحديث التطبيق او اعادة تحميله.",
+      content:
+        "لا توجد بيانات حتى الآن. حاول النقر فوق الزر لتحديث التطبيق او اعادة تحميله.",
       button: "لنحاول هذا مرّة أخرى",
     },
   },
@@ -62,7 +63,8 @@ const ar: Translations = {
       "هل لديك فكرة لجعل Ignite افضل؟ نحن سعداء لسماع ذلك! نحن نبحث دائماً عن الآخرين الذين يرغبون في مساعدتنا في بناء افضل الادوات المحلية التفاعلية المتوفرة هناك. انضم الينا عبر GitHub للانضمام الينا في بناء مستقبل Ignite",
     contributeToIgniteLink: "ساهم في Ignite",
     theLatestInReactNativeTitle: "الاحدث في React Native",
-    theLatestInReactNative: "نخن هنا لنبقيك محدثاً على جميع React Native التي تعرضها",
+    theLatestInReactNative:
+      "نخن هنا لنبقيك محدثاً على جميع React Native التي تعرضها",
     reactNativeRadioLink: "راديو React Native",
     reactNativeNewsletterLink: "نشرة اخبار React Native",
     reactNativeLiveLink: "مباشر React Native",
@@ -83,7 +85,8 @@ const ar: Translations = {
   demoDebugScreen: {
     howTo: "كيف",
     title: "التصحيح",
-    tagLine: "مبروك، لديك نموذج اصلي متقدم للغاية للتفاعل هنا. الاستفادة من هذه النمذجة",
+    tagLine:
+      "مبروك، لديك نموذج اصلي متقدم للغاية للتفاعل هنا. الاستفادة من هذه النمذجة",
     reactotron: "Reactotron ارسل إلى",
     reportBugs: "الابلاغ عن اخطاء",
     demoList: "قائمة تجريبية",
@@ -92,8 +95,10 @@ const ar: Translations = {
       "اذا لم ينجح ذللك، فتأكد من تشغيل تطبيق الحاسوب الخاص Reactotron، وقم بتشغيل عكس adb tcp:9090 \ntcp:9090 من جهازك الطرفي ، واعد تحميل التطبيق",
     iosReactotronHint:
       "اذا لم ينجح ذلك، فتأكد من تشغيل تطبيق الحاسوب الخاص ب Reactotron وأعد تحميل التطبيق",
-    macosReactotronHint: "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
-    webReactotronHint: "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
+    macosReactotronHint:
+      "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
+    webReactotronHint:
+      "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
     windowsReactotronHint:
       "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
   },
@@ -103,13 +108,15 @@ const ar: Translations = {
     favoriteButton: "المفضل",
     unfavoriteButton: "غير مفضل",
     accessibility: {
-      cardHint: "انقر مرّتين للاستماع على الحلقة. انقر مرّتين وانتظر لتفعيل {{action}} هذه الحلقة.",
+      cardHint:
+        "انقر مرّتين للاستماع على الحلقة. انقر مرّتين وانتظر لتفعيل {{action}} هذه الحلقة.",
       switch: "قم بالتبديل لاظهار المفضّلة فقط.",
       favoriteAction: "تبديل المفضلة",
       favoriteIcon: "الحلقة الغير مفضّلة",
       unfavoriteIcon: "الحلقة المفضّلة",
       publishLabel: "نشرت {{date}}",
-      durationLabel: "المدّة: {{hours}} ساعات {{minutes}} دقائق {{seconds}} ثواني",
+      durationLabel:
+        "المدّة: {{hours}} ساعات {{minutes}} دقائق {{seconds}} ثواني",
     },
     noFavoritesEmptyState: {
       heading: "هذا يبدو فارغاً بعض الشيء.",
@@ -117,6 +124,6 @@ const ar: Translations = {
         "لم تتم اضافة اي مفضلات حتى الان. اضغط على القلب في إحدى الحلقات لإضافته الى المفضلة.",
     },
   },
-}
+};
 
-export default ar
+export default ar;

@@ -1,56 +1,56 @@
-import { Instance, SnapshotOut, types } from 'mobx-state-tree'
+import { Instance, SnapshotOut, types } from "mobx-state-tree";
 
-import exerciseSeedData from '../seeds/exercises-seed-data.json'
-import { uniqueValues } from '../../utils/array'
-import * as storage from '../../utils/storage'
-import { withSetPropAction } from '../helpers/withSetPropAction'
-import { Exercise, ExerciseModel, ExerciseSnapshotIn } from '../models'
+import exerciseSeedData from "../seeds/exercises-seed-data.json";
+import { uniqueValues } from "../../utils/array";
+import * as storage from "../../utils/storage";
+import { withSetPropAction } from "../helpers/withSetPropAction";
+import { Exercise, ExerciseModel, ExerciseSnapshotIn } from "../models";
 
 export const ExerciseStoreModel = types
-  .model('ExerciseStore')
+  .model("ExerciseStore")
   .props({
     exercises: types.array(ExerciseModel),
   })
   .actions(withSetPropAction)
-  .actions(store => ({
+  .actions((store) => ({
     async fetch() {
-      const exercises = await storage.load<ExerciseSnapshotIn[]>('exercises')
-      console.log('fetching')
+      const exercises = await storage.load<ExerciseSnapshotIn[]>("exercises");
+      console.log("fetching");
 
       if (exercises && exercises?.length > 0) {
-        store.setProp('exercises', exercises)
+        store.setProp("exercises", exercises);
       } else {
-        await this.seed()
+        await this.seed();
       }
     },
     async seed() {
-      console.log('seeding')
+      console.log("seeding");
 
       store.setProp(
-        'exercises',
+        "exercises",
         exerciseSeedData.map(
           (exercise, i): ExerciseSnapshotIn => ({
             ...exercise,
             guid: String(i),
           })
         )
-      )
+      );
     },
     editExercise(updated: Exercise) {
-      const mappedArray = store.exercises.map(e =>
+      const mappedArray = store.exercises.map((e) =>
         e.guid === updated.guid ? updated : e
-      )
-      store.setProp('exercises', mappedArray)
+      );
+      store.setProp("exercises", mappedArray);
     },
     createExercise(created: Exercise) {
-      store.exercises.push(created)
+      store.exercises.push(created);
     },
   }))
-  .views(store => ({
+  .views((store) => ({
     get muscleOptions() {
-      return uniqueValues(store.exercises.flatMap(e => e.muscles))
+      return uniqueValues(store.exercises.flatMap((e) => e.muscles));
     },
-  }))
+  }));
 
 export interface ExerciseStore extends Instance<typeof ExerciseStoreModel> {}
 export interface ExerciseStoreSnapshot

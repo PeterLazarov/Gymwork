@@ -1,4 +1,4 @@
-import { Translations } from "./en"
+import { Translations } from "./en";
 
 const jp: Translations = {
   common: {
@@ -121,6 +121,6 @@ const jp: Translations = {
         "お気に入りのエピソードがまだありません。エピソードにあるハートマークにタップして、お気に入りに追加しましょう！",
     },
   },
-}
+};
 
-export default jp
+export default jp;

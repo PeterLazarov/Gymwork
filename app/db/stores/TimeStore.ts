@@ -1,92 +1,94 @@
-import { DateTime } from 'luxon'
-import { Instance, SnapshotOut, getParent, types } from 'mobx-state-tree'
-import { Vibration } from 'react-native'
+import { DateTime } from "luxon";
+import { Instance, SnapshotOut, getParent, types } from "mobx-state-tree";
+import { Vibration } from "react-native";
 
-import { RootStore } from './RootStore'
-import { getFormatedDuration } from '../../utils/time'
+import { RootStore } from "./RootStore";
+import { getFormatedDuration } from "../../utils/time";
 
-let stopwatchInterval: NodeJS.Timeout
-let timerInterval: NodeJS.Timeout
+let stopwatchInterval: NodeJS.Timeout;
+let timerInterval: NodeJS.Timeout;
 
 export const TimeStoreModel = types
-  .model('TimeStore')
+  .model("TimeStore")
   .props({
     stopwatchRunning: false,
     stopwatchPaused: false,
     stopwatchPausedTime: 0,
-    startOrUnpauseTime: '',
-    stopwatchValue: '',
+    startOrUnpauseTime: "",
+    stopwatchValue: "",
     timerRunning: false,
     timerTimeLeft: 0,
-    timerCountdownValue: '',
+    timerCountdownValue: "",
   })
-  .views(self => ({
+  .views((self) => ({
     get rootStore(): RootStore {
-      return getParent(self) as RootStore
+      return getParent(self) as RootStore;
     },
   }))
-  .actions(store => ({
+  .actions((store) => ({
     startStopwatch() {
-      store.stopwatchRunning = true
-      store.stopwatchPaused = false
-      store.startOrUnpauseTime = DateTime.now().toISOTime()!
+      store.stopwatchRunning = true;
+      store.stopwatchPaused = false;
+      store.startOrUnpauseTime = DateTime.now().toISOTime()!;
 
-      stopwatchInterval = setInterval(this._tickStopwatch, 1000)
+      stopwatchInterval = setInterval(this._tickStopwatch, 1000);
     },
     pauseStopwatch() {
-      store.stopwatchRunning = false
-      store.stopwatchPaused = true
+      store.stopwatchRunning = false;
+      store.stopwatchPaused = true;
 
-      clearInterval(stopwatchInterval)
-      const currentTime = DateTime.local()
+      clearInterval(stopwatchInterval);
+      const currentTime = DateTime.local();
       store.stopwatchPausedTime += currentTime.diff(
         DateTime.fromISO(store.startOrUnpauseTime),
-        'milliseconds'
-      ).milliseconds
+        "milliseconds"
+      ).milliseconds;
     },
     stopStopwatch() {
-      store.stopwatchRunning = false
-      store.stopwatchPaused = false
-      store.stopwatchPausedTime = 0
-      store.stopwatchValue = ''
+      store.stopwatchRunning = false;
+      store.stopwatchPaused = false;
+      store.stopwatchPausedTime = 0;
+      store.stopwatchValue = "";
 
-      clearInterval(stopwatchInterval)
+      clearInterval(stopwatchInterval);
     },
     _tickStopwatch() {
-      const currentTime = DateTime.local()
-      const luxonStartOrUnpauseTime = DateTime.fromISO(store.startOrUnpauseTime)
+      const currentTime = DateTime.local();
+      const luxonStartOrUnpauseTime = DateTime.fromISO(
+        store.startOrUnpauseTime
+      );
       const elapsedTime = currentTime
-        .diff(luxonStartOrUnpauseTime, 'milliseconds')
-        .plus(store.stopwatchPausedTime)
+        .diff(luxonStartOrUnpauseTime, "milliseconds")
+        .plus(store.stopwatchPausedTime);
 
-      store.stopwatchValue = elapsedTime.toFormat('hh:mm:ss')
+      store.stopwatchValue = elapsedTime.toFormat("hh:mm:ss");
     },
 
     startTimer() {
-      store.timerTimeLeft = store.rootStore.stateStore.timerDurationSecs
-      this._updateTimerSeconds()
-      timerInterval = setInterval(this._tickTimer, 1000)
+      store.timerTimeLeft = store.rootStore.stateStore.timerDurationSecs;
+      this._updateTimerSeconds();
+      timerInterval = setInterval(this._tickTimer, 1000);
     },
     stopTimer() {
-      clearInterval(timerInterval)
-      store.timerRunning = false
-      store.timerTimeLeft = store.rootStore.stateStore.timerDurationSecs
-      store.timerCountdownValue = ''
+      clearInterval(timerInterval);
+      store.timerRunning = false;
+      store.timerTimeLeft = store.rootStore.stateStore.timerDurationSecs;
+      store.timerCountdownValue = "";
     },
     _tickTimer() {
-      this._updateTimerSeconds()
+      this._updateTimerSeconds();
       if (store.timerTimeLeft <= 0) {
-        this.stopTimer()
-        Vibration.vibrate([500, 200, 500])
+        this.stopTimer();
+        Vibration.vibrate([500, 200, 500]);
       } else {
-        store.timerTimeLeft--
+        store.timerTimeLeft--;
       }
     },
     _updateTimerSeconds() {
-      const formattedTime = getFormatedDuration(store.timerTimeLeft, true)
-      store.timerCountdownValue = formattedTime
+      const formattedTime = getFormatedDuration(store.timerTimeLeft, true);
+      store.timerCountdownValue = formattedTime;
     },
-  }))
+  }));
 
 export interface TimeStore extends Instance<typeof TimeStoreModel> {}
 export interface TimeStoreSnapshot extends SnapshotOut<typeof TimeStoreModel> {}

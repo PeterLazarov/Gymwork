@@ -1,4 +1,4 @@
-import { Translations } from "./en"
+import { Translations } from "./en";
 
 const ko: Translations = {
   common: {
@@ -24,7 +24,8 @@ const ko: Translations = {
   emptyStateComponent: {
     generic: {
       heading: "너무 텅 비어서.. 너무 슬퍼요..",
-      content: "데이터가 없습니다. 버튼을 눌러서 리프레쉬 하시거나 앱을 리로드하세요.",
+      content:
+        "데이터가 없습니다. 버튼을 눌러서 리프레쉬 하시거나 앱을 리로드하세요.",
       button: "다시 시도해봅시다",
     },
   },
@@ -62,7 +63,8 @@ const ko: Translations = {
       "Ignite 을 더 좋게 만들 아이디어가 있나요? 기쁜 소식이네요. 우리는 항상 최고의 React Native 도구를 구축하는데 도움을 줄 수 있는 분들을 찾고 있습니다. GitHub 에서 Ignite 의 미래를 만들어 가는것에 함께해 주세요.",
     contributeToIgniteLink: "Ignite 에 기여하기",
     theLatestInReactNativeTitle: "React Native 의 최신정보",
-    theLatestInReactNative: "React Native 가 제공하는 모든 최신 정보를 알려드립니다.",
+    theLatestInReactNative:
+      "React Native 가 제공하는 모든 최신 정보를 알려드립니다.",
     reactNativeRadioLink: "React Native 라디오",
     reactNativeNewsletterLink: "React Native 뉴스레터",
     reactNativeLiveLink: "React Native 라이브 스트리밍",
@@ -117,9 +119,10 @@ const ko: Translations = {
     },
     noFavoritesEmptyState: {
       heading: "조금 텅 비어 있네요.",
-      content: "즐겨찾기가 없습니다. 에피소드에 있는 하트를 눌러서 즐겨찾기에 추가하세요.",
+      content:
+        "즐겨찾기가 없습니다. 에피소드에 있는 하트를 눌러서 즐겨찾기에 추가하세요.",
     },
   },
-}
+};
 
-export default ko
+export default ko;

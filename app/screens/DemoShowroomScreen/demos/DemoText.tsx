@@ -1,27 +1,30 @@
 /* eslint-disable react/jsx-key */
-import React from "react"
-import { Text } from "../../../components"
-import { colors } from "../../../theme"
-import { Demo } from "../DemoShowroomScreen"
-import { DemoDivider } from "../DemoDivider"
-import { DemoUseCase } from "../DemoUseCase"
+import React from "react";
+import { Text } from "../../../components";
+import { colors } from "../../../theme";
+import { Demo } from "../DemoShowroomScreen";
+import { DemoDivider } from "../DemoDivider";
+import { DemoUseCase } from "../DemoUseCase";
 
 export const DemoText: Demo = {
   name: "Text",
   description:
     "For your text displaying needs. This component is a HOC over the built-in React Native one.",
   data: [
-    <DemoUseCase name="Presets" description="There are a few presets that are preconfigured.">
+    <DemoUseCase
+      name="Presets"
+      description="There are a few presets that are preconfigured."
+    >
       <Text>
-        default preset - Cillum eu laboris in labore. Excepteur mollit tempor reprehenderit fugiat
-        elit et eu consequat laborum.
+        default preset - Cillum eu laboris in labore. Excepteur mollit tempor
+        reprehenderit fugiat elit et eu consequat laborum.
       </Text>
 
       <DemoDivider />
 
       <Text preset="bold">
-        bold preset - Tempor et ullamco cupidatat in officia. Nulla ea duis elit id sunt ipsum
-        cillum duis deserunt nostrud ut nostrud id.
+        bold preset - Tempor et ullamco cupidatat in officia. Nulla ea duis elit
+        id sunt ipsum cillum duis deserunt nostrud ut nostrud id.
       </Text>
 
       <DemoDivider />
@@ -59,18 +62,22 @@ export const DemoText: Demo = {
 
     <DemoUseCase name="Weights" description="There's a weight prop.">
       <Text weight="light">
-        light - Nulla magna incididunt excepteur est occaecat duis culpa dolore cupidatat enim et.
+        light - Nulla magna incididunt excepteur est occaecat duis culpa dolore
+        cupidatat enim et.
       </Text>
 
       <DemoDivider />
 
       <Text weight="normal">
-        normal - Magna incididunt dolor ut veniam veniam laboris aliqua velit ea incididunt.
+        normal - Magna incididunt dolor ut veniam veniam laboris aliqua velit ea
+        incididunt.
       </Text>
 
       <DemoDivider />
 
-      <Text weight="medium">medium - Non duis laborum quis laboris occaecat culpa cillum.</Text>
+      <Text weight="medium">
+        medium - Non duis laborum quis laboris occaecat culpa cillum.
+      </Text>
 
       <DemoDivider />
 
@@ -80,7 +87,9 @@ export const DemoText: Demo = {
 
       <DemoDivider />
 
-      <Text weight="bold">bold - Eiusmod ullamco magna exercitation est excepteur.</Text>
+      <Text weight="bold">
+        bold - Eiusmod ullamco magna exercitation est excepteur.
+      </Text>
     </DemoUseCase>,
 
     <DemoUseCase
@@ -98,7 +107,10 @@ export const DemoText: Demo = {
 
       <DemoDivider />
 
-      <Text>children - Aliqua velit irure reprehenderit eu qui amet veniam consectetur.</Text>
+      <Text>
+        children - Aliqua velit irure reprehenderit eu qui amet veniam
+        consectetur.
+      </Text>
 
       <DemoDivider />
 
@@ -114,16 +126,24 @@ export const DemoText: Demo = {
       </Text>
     </DemoUseCase>,
 
-    <DemoUseCase name="Styling" description="The component can be styled easily.">
+    <DemoUseCase
+      name="Styling"
+      description="The component can be styled easily."
+    >
       <Text>
         <Text style={{ color: colors.error }}>
-          Consequat ullamco veniam velit mollit proident excepteur aliquip id culpa ipsum velit sint
-          nostrud.
+          Consequat ullamco veniam velit mollit proident excepteur aliquip id
+          culpa ipsum velit sint nostrud.
         </Text>
         {` `}
-        <Text style={{ color: colors.palette.neutral100, backgroundColor: colors.error }}>
-          Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco
-          adipisicing tempor adipisicing.
+        <Text
+          style={{
+            color: colors.palette.neutral100,
+            backgroundColor: colors.error,
+          }}
+        >
+          Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur.
+          Magna ullamco adipisicing tempor adipisicing.
         </Text>
         {` `}
         <Text
@@ -135,10 +155,10 @@ export const DemoText: Demo = {
             textDecorationColor: colors.error,
           }}
         >
-          Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur. Magna ullamco
-          adipisicing tempor adipisicing.
+          Eiusmod occaecat laboris eu ex veniam ipsum adipisicing consectetur.
+          Magna ullamco adipisicing tempor adipisicing.
         </Text>
       </Text>
     </DemoUseCase>,
   ],
-}
+};
