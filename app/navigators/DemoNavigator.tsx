@@ -13,7 +13,7 @@ import {
   DemoShowroomScreen,
   DemoDebugScreen,
 } from '../screens'
-import { DemoPodcastListScreen } from '../screens/DemoPodcastListScreen'
+import { DemoPodcastListScreen } from '../screens/_DemoPodcastListScreen'
 import { colors, spacing, typography } from '../theme'
 import { AppStackParamList, AppStackScreenProps } from './AppNavigator'
 import Workout from 'app/screens/Workout'
