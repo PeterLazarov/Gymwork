@@ -3,8 +3,7 @@ import {
   SnapshotIn,
   SnapshotOut,
   types,
-  get,
-  getIdentifier,
+  // getIdentifier,
 } from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
@@ -23,26 +22,26 @@ export const WorkoutModel = types
     feeling: 'neutral',
   })
   .views(self => ({
-    // get exercises(): Exercise[] {
-    //   // ! TODO
-    //   const uniqueExercises = self.sets.reduce(
-    //     // ! accessing set.exercise breaks everything?
-    //     (acc, set) => acc.add(set.exercise),
-    //     new Set<Exercise>()
-    //   )
-    //   return [...uniqueExercises]
-    // },
-    get exercises(): unknown[] {
+    get exercises(): Exercise[] {
+      // ! TODO
       const uniqueExercises = self.sets.reduce(
         // ! accessing set.exercise breaks everything?
-        (acc, set) => acc.add(getIdentifier(set.exercise)),
+        (acc, set) => acc.add(set.exercise),
         new Set<Exercise>()
       )
-
-      console.log({ uniqueExercises })
-
-      return []
+      return [...uniqueExercises]
     },
+    // get exercises(): unknown[] {
+    //   const uniqueExercises = self.sets.reduce(
+    //     // ! accessing set.exercise breaks everything?
+    //     (acc, set) => acc.add(getIdentifier(set.exercise)),
+    //     new Set<Exercise>()
+    //   )
+
+    //   console.log({ uniqueExercises })
+
+    //   return []
+    // },
   }))
   .actions(withSetPropAction)
 
