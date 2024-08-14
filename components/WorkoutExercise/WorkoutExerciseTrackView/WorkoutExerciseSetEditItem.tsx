@@ -2,14 +2,14 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 
-import WorkoutExerciseSetWarmupButton from './WorkoutExerciseSetWarmupButton'
+import WorkoutExerciseSetWarmupButton from '../../../app/components/WorkoutExerciseSetWarmupButton'
 import { useStores } from '../../../app/db/helpers/useStores'
 import { WorkoutSet } from '../../../app/db/models'
 import { ButtonContainer, Icon } from '../../../designSystem'
 import colors from '../../../designSystem/colors'
 import texts from '../../../texts'
 import { getFormatedDuration } from '../../../app/utils/time'
-import SetDataLabel from '../SetDataLabel'
+import SetDataLabel from '../../../app/components/WorkoutExercise/SetDataLabel'
 
 type Props = {
   set: WorkoutSet

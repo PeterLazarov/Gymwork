@@ -10,7 +10,7 @@ import CalendarWorkoutModal from '../components/CalendarWorkoutModal'
 import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
-import texts from '../texts'
+import texts from '../../texts'
 
 const CalendarPage: React.FC = () => {
   const { workoutStore, stateStore } = useStores()

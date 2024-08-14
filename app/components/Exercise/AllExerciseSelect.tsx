@@ -7,7 +7,7 @@ import ExerciseAcordionList from './ExerciseAcordionList'
 import ExerciseList from './ExerciseList'
 import { useStores } from '../../db/helpers/useStores'
 import { Exercise } from '../../db/models'
-import texts from '../../texts'
+import texts from '../../../texts'
 import { groupBy } from '../../utils/array'
 
 const noop = () => {}

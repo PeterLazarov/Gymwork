@@ -9,7 +9,7 @@ import { BodyMediumLabel } from '../../../designSystem/Label'
 import colors from '../../../designSystem/colors'
 import texts from '../../../texts'
 import { getFormatedDuration } from '../../../app/utils/time'
-import SetDataLabel from '../SetDataLabel'
+import SetDataLabel from '../../../app/components/WorkoutExercise/SetDataLabel'
 
 type Props = {
   set: WorkoutSet

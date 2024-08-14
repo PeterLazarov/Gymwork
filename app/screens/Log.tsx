@@ -10,7 +10,7 @@ import { useStores } from '../db/helpers/useStores'
 import { Exercise } from '../db/models'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
-import texts from '../texts'
+import texts from '../../texts'
 
 // TODO: screen is unused - remove?
 const Log = observer(() => {
