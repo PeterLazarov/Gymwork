@@ -7,6 +7,7 @@ import { Button } from 'react-native-paper'
 import { useStores } from '../../db/helpers/useStores'
 import { Icon } from '../../../designSystem'
 import colors from '../../../designSystem/colors'
+import texts from '../../../texts'
 
 type Props = {
   createWorkout: () => void
