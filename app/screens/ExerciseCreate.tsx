@@ -60,15 +60,22 @@ const ExerciseCreatePage: React.FC<ExerciseCreatePageProps> = ({
             disabled={!formValid}
           />
         </Appbar.Header>
-        <View style={{ flex: 1, gap: 8, padding: 8 }}>
-          <ExerciseEditForm
-            exercise={exercise}
-            onUpdate={onUpdate}
-          />
+
+        <ExerciseEditForm
+          exercise={exercise}
+          onUpdate={onUpdate}
+        />
+
+        <View
+          style={{
+            backgroundColor: formValid ? colors.primary : colors.disabled,
+          }}
+        >
           <Button
-            mode="contained"
+            mode="text"
             onPress={onComplete}
             disabled={!formValid}
+            textColor={colors.white}
           >
             Save
           </Button>

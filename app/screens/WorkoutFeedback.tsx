@@ -47,11 +47,19 @@ const WorkoutFeedbackPage: React.FC<WorkoutFeedbackPageProps> = ({
             placeholder="Enter comments..."
           />
         </ScrollView>
+      </View>
+
+      <View
+        style={{
+          backgroundColor: colors.primary,
+        }}
+      >
         <Button
-          mode="contained"
+          mode="text"
           onPress={onBackPress}
+          textColor={colors.white}
         >
-          Continue
+          Save
         </Button>
       </View>
     </View>

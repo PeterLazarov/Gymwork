@@ -13,6 +13,7 @@ export default {
   green: '#15a015',
   yellow: '#FFBF00',
   gray: '#626262',
+  disabled: '#C0C0C0',
   lightgray: '#F7F3F9',
   white: '#ffffff',
 }

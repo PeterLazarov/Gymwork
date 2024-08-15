@@ -64,7 +64,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   }
 
   return (
-    <View style={{ flex: 1, gap: 8 }}>
+    <View style={{ flex: 1, gap: 8, padding: 8 }}>
       <TextInput
         label="Name"
         value={exercise.name}
