@@ -1,23 +1,17 @@
-import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Appbar } from 'react-native-paper'
 
 import WorkoutHeaderTimerButtons from '../Timer/TimerButtons'
-import { useStores } from '../../db/helpers/useStores'
-import { Icon } from '../../../designSystem'
-import colors from '../../../designSystem/colors'
-import { AppStackParamList } from 'app/navigators'
+import { useStores } from 'app/db/helpers/useStores'
+import { navigate } from 'app/navigators'
+import { Icon, colors } from 'designSystem'
 
 const WorkoutHeader: React.FC = () => {
   const { stateStore } = useStores()
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AppStackParamList, 'Workout'>>()
 
   function openCalendar() {
-    navigation.navigate('Calendar')
+    navigate('Calendar')
   }
 
   return (

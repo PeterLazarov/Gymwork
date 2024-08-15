@@ -3,22 +3,15 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { Appbar, Menu } from 'react-native-paper'
 
-import WorkoutExerciseHistoryView from '../components/WorkoutExercise/WorkoutExerciseHistoryView/WorkoutExerciseHistoryView'
-import WorkoutExerciseRecordsView from '../components/WorkoutExercise/WorkoutExerciseRecordsView'
-import WorkoutExerciseTrackView from '../components/WorkoutExercise/WorkoutExerciseTrackView/WorkoutExerciseTrackView'
-import Timer from '../components/Timer/Timer'
-import { useStores } from '../db/helpers/useStores'
-import { Icon } from '../../designSystem'
-import SwipeTabs from '../../designSystem/SwipeTabs'
-import colors from '../../designSystem/colors'
-import { AppStackScreenProps } from 'app/navigators'
+import WorkoutExerciseHistoryView from 'app/components/WorkoutExercise/WorkoutExerciseHistoryView/WorkoutExerciseHistoryView'
+import WorkoutExerciseRecordsView from 'app/components/WorkoutExercise/WorkoutExerciseRecordsView'
+import WorkoutExerciseTrackView from 'app/components/WorkoutExercise/WorkoutExerciseTrackView/WorkoutExerciseTrackView'
+import Timer from 'app/components/Timer/Timer'
+import { useStores } from 'app/db/helpers/useStores'
+import { navigate } from 'app/navigators'
+import { Icon, SwipeTabs, colors } from 'designSystem'
 
-interface WorkoutExercisePageProps
-  extends AppStackScreenProps<'WorkoutExercise'> {}
-
-const WorkoutExercisePage: React.FC<WorkoutExercisePageProps> = ({
-  navigation,
-}) => {
+const WorkoutExercisePage: React.FC = () => {
   const { timeStore, stateStore } = useStores()
 
   const [view, setView] = useState('track')
@@ -26,12 +19,12 @@ const WorkoutExercisePage: React.FC<WorkoutExercisePageProps> = ({
   const [graphHidden, setGraphHidden] = useState(false)
 
   function onBackPress() {
-    navigation.navigate('Workout')
+    navigate('Workout')
     stateStore.setOpenedExercise(null)
   }
 
   function onEditExercisePress() {
-    navigation.navigate('ExerciseEdit')
+    navigate('ExerciseEdit')
   }
 
   function onToggleGraphPress() {

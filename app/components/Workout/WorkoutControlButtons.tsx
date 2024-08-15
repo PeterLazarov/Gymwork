@@ -1,13 +1,10 @@
-import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
-import {} from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { AppStackParamList } from 'app/navigators'
+import { navigate } from 'app/navigators'
 import { colors, Icon, Button, ButtonText } from 'designSystem'
 
 type Props = {
@@ -15,15 +12,13 @@ type Props = {
 }
 
 const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AppStackParamList, 'Workout'>>()
   const { stateStore } = useStores()
 
   const isWorkoutStarted = !!stateStore.openedWorkout
   const hasNotes = stateStore.openedWorkout?.notes !== ''
 
   function onAddExercisePress() {
-    navigation.navigate('ExerciseSelect')
+    navigate('ExerciseSelect')
   }
 
   function copyPrevWorkout() {
@@ -31,7 +26,7 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
   }
 
   function onCommentPress() {
-    navigation.navigate('WorkoutFeedback')
+    navigate('WorkoutFeedback')
   }
 
   return (

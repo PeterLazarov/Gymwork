@@ -6,12 +6,11 @@ import { Calendar } from 'react-native-calendario'
 import { MarkedDays } from 'react-native-month'
 import { Appbar } from 'react-native-paper'
 
-import CalendarWorkoutModal from '../components/CalendarWorkoutModal'
-import { useStores } from '../db/helpers/useStores'
-import { Icon } from '../../designSystem'
-import colors from '../../designSystem/colors'
+import CalendarWorkoutModal from 'app/components/CalendarWorkoutModal'
+import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { AppStackScreenProps } from 'app/navigators'
+import { AppStackScreenProps, navigate } from 'app/navigators'
+import { Icon, colors } from 'designSystem'
 
 interface CalendarPageProps extends AppStackScreenProps<'Calendar'> {}
 
@@ -45,7 +44,7 @@ const CalendarPage: React.FC<CalendarPageProps> = ({ navigation }) => {
   const today = useMemo(() => DateTime.now().toJSDate(), [])
 
   function onBackPress() {
-    navigation.navigate('Workout')
+    navigate('Workout')
   }
 
   function handleCalendarDayPress(date: Date) {
@@ -57,7 +56,7 @@ const CalendarPage: React.FC<CalendarPageProps> = ({ navigation }) => {
   function goGoDay() {
     stateStore.setOpenedDate(openedWorkoutDialogDate)
     setOpenedWorkoutDialogDate('')
-    navigation.navigate('Workout')
+    navigate('Workout')
   }
   return (
     <>

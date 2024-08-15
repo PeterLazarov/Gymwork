@@ -10,25 +10,23 @@ import { Exercise } from '../db/models'
 import { Icon } from '../../designSystem'
 import SwipeTabs from '../../designSystem/SwipeTabs'
 import colors from '../../designSystem/colors'
-import { AppStackScreenProps } from 'app/navigators'
+import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
 
-interface ExerciseSelectProps extends AppStackScreenProps<'ExerciseSelect'> {}
-
-const ExerciseSelectPage: React.FC<ExerciseSelectProps> = ({ navigation }) => {
+const ExerciseSelectPage: React.FC = () => {
   const { stateStore } = useStores()
 
   function handleSelectExercise(exercise: Exercise) {
     stateStore.setOpenedExercise(exercise)
-    navigation.navigate('ExerciseSelect')
+    navigate('ExerciseSelect')
   }
 
   function onBackPress() {
-    navigation.navigate('Workout')
+    navigate('Workout')
   }
 
   function onAddExercisePress() {
-    navigation.navigate('ExerciseCreate')
+    navigate('ExerciseCreate')
   }
 
   const tabsConfig = [

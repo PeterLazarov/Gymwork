@@ -5,19 +5,14 @@ import { Appbar, TextInput } from 'react-native-paper'
 
 import FeedbackPicker from 'app/components/FeedbackPicker'
 import { useStores } from 'app/db/helpers/useStores'
-import { AppStackScreenProps } from 'app/navigators'
+import { navigate } from 'app/navigators'
 import { BodyLargeLabel, Button, ButtonText, colors } from 'designSystem'
 
-interface WorkoutFeedbackPageProps
-  extends AppStackScreenProps<'WorkoutFeedback'> {}
-
-const WorkoutFeedbackPage: React.FC<WorkoutFeedbackPageProps> = ({
-  navigation,
-}) => {
+const WorkoutFeedbackPage: React.FC = () => {
   const { stateStore } = useStores()
 
   function onBackPress() {
-    navigation.navigate('Workout')
+    navigate('Workout')
   }
 
   return (
