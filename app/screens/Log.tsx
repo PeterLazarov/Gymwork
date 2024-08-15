@@ -1,4 +1,4 @@
-// import { useRouter } from "expo-router";
+import { Link } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { ScrollView, View } from 'react-native'
@@ -14,15 +14,11 @@ import { translate } from 'app/i18n'
 
 // TODO: screen is unused - remove?
 const Log = observer(() => {
-  // const router = useRouter()
   const { exercisesPerformed } = useStores()
 
   // TODO remove default
   const [exercise, setExercise] = useState<Exercise>()
 
-  function onBackPress() {
-    // router.push('/')
-  }
   return (
     <View
       style={{
@@ -30,7 +26,9 @@ const Log = observer(() => {
       }}
     >
       <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
-        <Appbar.BackAction onPress={onBackPress} />
+        <Link to={{ screen: 'Workout' }}>
+          <Appbar.BackAction />
+        </Link>
         <Appbar.Content title={exercise?.name ?? translate('addExercise')} />
         <Appbar.Action
           icon={() => <Icon icon="ellipsis-vertical" />}

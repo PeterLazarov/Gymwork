@@ -1,4 +1,4 @@
-// import { useRouter } from "expo-router";
+import { useNavigation } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Appbar } from 'react-native-paper'
@@ -10,10 +10,10 @@ import colors from '../../../designSystem/colors'
 
 const WorkoutHeader: React.FC = () => {
   const { stateStore } = useStores()
-  // const router = useRouter()
+  const navigation = useNavigation()
 
   function openCalendar() {
-    router.push('/Calendar')
+    navigation.navigate('Calendar')
   }
 
   return (

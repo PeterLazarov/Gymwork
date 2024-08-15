@@ -26,12 +26,12 @@ const WorkoutExercisePage: React.FC<WorkoutExercisePageProps> = ({
   const [graphHidden, setGraphHidden] = useState(false)
 
   function onBackPress() {
-    navigation.navigate('Workout', { screen: 'Workout' })
+    navigation.navigate('Workout')
     stateStore.setOpenedExercise(null)
   }
 
   function onEditExercisePress() {
-    navigation.navigate('ExerciseEdit', { screen: 'ExerciseEdit' })
+    navigation.navigate('ExerciseEdit')
   }
 
   function onToggleGraphPress() {

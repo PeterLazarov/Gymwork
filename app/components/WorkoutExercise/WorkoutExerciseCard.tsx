@@ -1,4 +1,4 @@
-// import { useRouter } from "expo-router";
+import { useNavigation } from '@react-navigation/native'
 import React, { useMemo } from 'react'
 import { Card } from 'react-native-paper'
 
@@ -12,7 +12,7 @@ type Props = {
 }
 
 const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
-  // const router = useRouter()
+  const navigation = useNavigation()
   const { stateStore } = useStores()
 
   const sets = useMemo(() => {
@@ -21,7 +21,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
 
   function onLinkPress() {
     stateStore.setOpenedExercise(exercise)
-    router.push('/WorkoutExercise')
+    navigation.navigate('WorkoutExercise')
   }
 
   return (

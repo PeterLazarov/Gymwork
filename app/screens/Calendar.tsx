@@ -45,7 +45,7 @@ const CalendarPage: React.FC<CalendarPageProps> = ({ navigation }) => {
   const today = useMemo(() => DateTime.now().toJSDate(), [])
 
   function onBackPress() {
-    navigation.navigate('Workout', { screen: 'Workout' })
+    navigation.navigate('Workout')
   }
 
   function handleCalendarDayPress(date: Date) {
@@ -57,7 +57,7 @@ const CalendarPage: React.FC<CalendarPageProps> = ({ navigation }) => {
   function goGoDay() {
     stateStore.setOpenedDate(openedWorkoutDialogDate)
     setOpenedWorkoutDialogDate('')
-    navigation.navigate('Workout', { screen: 'Workout' })
+    navigation.navigate('Workout')
   }
   return (
     <>

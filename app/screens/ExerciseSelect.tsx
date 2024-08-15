@@ -20,21 +20,15 @@ const ExerciseSelectPage: React.FC<ExerciseSelectProps> = ({ navigation }) => {
 
   function handleSelectExercise(exercise: Exercise) {
     stateStore.setOpenedExercise(exercise)
-    navigation.navigate('ExerciseSelect', {
-      screen: 'ExerciseSelect',
-      params: {},
-    })
+    navigation.navigate('ExerciseSelect')
   }
 
   function onBackPress() {
-    navigation.navigate('Workout', { screen: 'Workout', params: {} })
+    navigation.navigate('Workout')
   }
 
   function onAddExercisePress() {
-    navigation.navigate('ExerciseCreate', {
-      screen: 'ExerciseCreate',
-      params: {},
-    })
+    navigation.navigate('ExerciseCreate')
   }
 
   const tabsConfig = [

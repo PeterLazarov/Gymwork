@@ -9,13 +9,16 @@ import { BodyLargeLabel } from '../../designSystem/Label'
 import colors from '../../designSystem/colors'
 import { AppStackScreenProps } from 'app/navigators'
 
-interface WorkoutFeedbackPage extends AppStackScreenProps<'WorkoutFeedback'> {}
+interface WorkoutFeedbackPageProps
+  extends AppStackScreenProps<'WorkoutFeedback'> {}
 
-const WorkoutFeedbackPage: React.FC<WorkoutFeedbackPage> = ({ navigation }) => {
+const WorkoutFeedbackPage: React.FC<WorkoutFeedbackPageProps> = ({
+  navigation,
+}) => {
   const { stateStore } = useStores()
 
   function onBackPress() {
-    navigation.navigate('Workout', { screen: 'Workout' })
+    navigation.navigate('Workout')
   }
 
   return (

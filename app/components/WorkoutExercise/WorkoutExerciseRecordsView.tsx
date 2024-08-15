@@ -1,4 +1,4 @@
-// import { useRouter } from "expo-router";
+import { useNavigation } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import { getParentOfType } from 'mobx-state-tree'
 import React from 'react'
@@ -10,13 +10,13 @@ import { WorkoutModel, WorkoutSet } from '../../db/models'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
   const { openedExerciseRecords, stateStore } = useStores()
-  // const router = useRouter()
+  const navigation = useNavigation()
 
   // TODO extract out to action?
   function goToDate(set: WorkoutSet) {
     const workout = getParentOfType(set, WorkoutModel)
     stateStore.setProp('openedDate', workout.date)
-    router.push('/')
+    navigation.navigate('Workout')
   }
 
   return (
