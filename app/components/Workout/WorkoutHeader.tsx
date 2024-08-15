@@ -6,13 +6,18 @@ import WorkoutHeaderTimerButtons from '../Timer/TimerButtons'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { Icon, colors } from 'designSystem'
+import { useShare } from 'app/utils/useShare'
+import { isDev } from 'app/utils/isDev'
 
 const WorkoutHeader: React.FC = () => {
   const { stateStore } = useStores()
+  const { workoutStore } = useStores()
 
   function openCalendar() {
     navigate('Calendar')
   }
+
+  const share = useShare()
 
   return (
     <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
@@ -32,6 +37,18 @@ const WorkoutHeader: React.FC = () => {
         onPress={openCalendar}
         animated={false}
       />
+
+      {isDev && (
+        <Appbar.Action
+          icon={() => <Icon icon="analytics" />}
+          onPress={() => {
+            share(workoutStore)
+          }}
+          animated={false}
+        />
+      )}
+
+      {/* TODO */}
       <Appbar.Action
         icon={() => <Icon icon="ellipsis-vertical" />}
         onPress={() => {}}

@@ -22,6 +22,7 @@ import {
   WorkoutSetTrackData,
 } from '../models'
 import DistanceType from 'app/enums/DistanceType'
+import { isDev } from 'app/utils/isDev'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -143,7 +144,7 @@ export const WorkoutStoreModel = types
       const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
       console.log('fetching')
 
-      if (workouts && workouts?.length > 0) {
+      if (workouts && workouts?.length > 0 && isDev) {
         self.setProp('workouts', workouts)
       } else {
         await this.seed()
