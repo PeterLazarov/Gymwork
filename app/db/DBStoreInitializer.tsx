@@ -18,7 +18,6 @@ const DBStoreInitializer: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     promise.then(() => {
       setRender(true)
-      console.log(JSON.stringify({ exerciseStore, workoutStore }, null, 2))
     })
   }, [])
 
