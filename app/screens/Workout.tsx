@@ -10,6 +10,7 @@ import Timer from 'app/components/Timer/Timer'
 import Timer2 from 'app/components/Timer/Timer2'
 import WorkoutHeader from 'app/components/Workout/WorkoutHeader'
 import { useStores } from 'app/db/helpers/useStores'
+import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { SwipeContainer } from 'designSystem'
 
 const WorkoutPage: React.FC = () => {
@@ -27,7 +28,7 @@ const WorkoutPage: React.FC = () => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <EmptyLayout>
       <WorkoutHeader />
       <SwipeContainer
         onSwipeRight={onSwipeRight}
@@ -41,7 +42,7 @@ const WorkoutPage: React.FC = () => {
         <WorkoutHorizontalList />
         <WorkoutControlButtons createWorkout={newWorkout} />
       </SwipeContainer>
-    </View>
+    </EmptyLayout>
   )
 }
 export default observer(WorkoutPage)

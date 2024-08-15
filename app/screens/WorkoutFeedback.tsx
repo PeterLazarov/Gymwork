@@ -6,6 +6,7 @@ import { Appbar, TextInput } from 'react-native-paper'
 import FeedbackPicker from 'app/components/FeedbackPicker'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
+import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { BodyLargeLabel, Button, ButtonText, colors } from 'designSystem'
 
 const WorkoutFeedbackPage: React.FC = () => {
@@ -16,7 +17,7 @@ const WorkoutFeedbackPage: React.FC = () => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <EmptyLayout>
       <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
         <Appbar.BackAction onPress={onBackPress} />
         <Appbar.Content title="Workout comments" />
@@ -55,7 +56,7 @@ const WorkoutFeedbackPage: React.FC = () => {
           <ButtonText variant="primary">Save</ButtonText>
         </Button>
       </View>
-    </View>
+    </EmptyLayout>
   )
 }
 export default observer(WorkoutFeedbackPage)

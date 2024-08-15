@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
 import AllExerciseSelect from 'app/components/Exercise/AllExerciseSelect'
@@ -10,6 +9,7 @@ import { Exercise } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
 import { Icon, SwipeTabs, colors } from 'designSystem'
+import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 
 const ExerciseSelectPage: React.FC = () => {
   const { stateStore } = useStores()
@@ -42,7 +42,7 @@ const ExerciseSelectPage: React.FC = () => {
     },
   ]
   return (
-    <View style={{ flex: 1 }}>
+    <EmptyLayout>
       <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
         <Appbar.BackAction onPress={onBackPress} />
         <Appbar.Content title={translate('selectExercise')} />
@@ -59,7 +59,7 @@ const ExerciseSelectPage: React.FC = () => {
       </Appbar.Header>
 
       <SwipeTabs tabsConfig={tabsConfig} />
-    </View>
+    </EmptyLayout>
   )
 }
 export default observer(ExerciseSelectPage)

@@ -23,6 +23,7 @@ const WorkoutHeader: React.FC = () => {
       <Appbar.Content
         title="Gymwork"
         style={{ alignItems: 'flex-start' }}
+        titleStyle={{ color: colors.secondaryText }}
       />
 
       {stateStore.isOpenedWorkoutToday && <WorkoutHeaderTimerButtons />}

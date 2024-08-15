@@ -22,6 +22,7 @@ const Log = observer(() => {
     <View
       style={{
         height: '100%',
+        backgroundColor: colors.secondary,
       }}
     >
       <Appbar.Header style={{ backgroundColor: colors.lightgray }}>

@@ -57,11 +57,18 @@ const WorkoutExercisePage: React.FC = () => {
         overflow: 'hidden',
         height: '100%',
         display: 'flex',
+        backgroundColor: colors.secondary,
       }}
     >
       <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
-        <Appbar.BackAction onPress={onBackPress} />
-        <Appbar.Content title={stateStore.openedExercise?.name} />
+        <Appbar.BackAction
+          onPress={onBackPress}
+          color={colors.secondaryText}
+        />
+        <Appbar.Content
+          title={stateStore.openedExercise?.name || ''}
+          titleStyle={{ color: colors.secondaryText }}
+        />
 
         <Menu
           visible={menuOpen}

@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
 import ConfirmationDialog from 'app/components/ConfirmationDialog'
@@ -9,6 +8,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, ExerciseModel } from 'app/db/models'
 import { goBack } from 'app/navigators'
 import { Button, ButtonText, Icon, colors } from 'designSystem'
+import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 
 const ExerciseCreatePage: React.FC = () => {
   const { exerciseStore } = useStores()
@@ -38,7 +38,7 @@ const ExerciseCreatePage: React.FC = () => {
 
   return (
     <>
-      <View style={{ flex: 1 }}>
+      <EmptyLayout>
         <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
           <Appbar.BackAction onPress={onBackPress} />
           <Appbar.Content title="Create exercise" />
@@ -67,7 +67,7 @@ const ExerciseCreatePage: React.FC = () => {
         >
           <ButtonText variant="primary">Save</ButtonText>
         </Button>
-      </View>
+      </EmptyLayout>
       <ConfirmationDialog
         open={confirmDialogOpen}
         message="Any changes made will be lost."

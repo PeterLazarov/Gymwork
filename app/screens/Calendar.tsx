@@ -1,7 +1,6 @@
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
-import { View } from 'react-native'
 import { Calendar } from 'react-native-calendario'
 import { MarkedDays } from 'react-native-month'
 import { Appbar } from 'react-native-paper'
@@ -9,12 +8,11 @@ import { Appbar } from 'react-native-paper'
 import CalendarWorkoutModal from 'app/components/CalendarWorkoutModal'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { AppStackScreenProps, navigate } from 'app/navigators'
+import { navigate } from 'app/navigators'
+import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { Icon, colors } from 'designSystem'
 
-interface CalendarPageProps extends AppStackScreenProps<'Calendar'> {}
-
-const CalendarPage: React.FC<CalendarPageProps> = ({ navigation }) => {
+const CalendarPage: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
 
   const [openedWorkoutDialogDate, setOpenedWorkoutDialogDate] = useState('')
@@ -60,7 +58,7 @@ const CalendarPage: React.FC<CalendarPageProps> = ({ navigation }) => {
   }
   return (
     <>
-      <View>
+      <EmptyLayout>
         <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
           <Appbar.BackAction onPress={onBackPress} />
           <Appbar.Content title={translate('calendar')} />
@@ -93,7 +91,7 @@ const CalendarPage: React.FC<CalendarPageProps> = ({ navigation }) => {
           numberOfMonths={24}
           firstDayMonday
         />
-      </View>
+      </EmptyLayout>
       {openedWorkoutDialogDate !== '' && (
         <CalendarWorkoutModal
           open={openedWorkoutDialogDate !== ''}

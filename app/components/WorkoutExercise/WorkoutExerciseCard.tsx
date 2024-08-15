@@ -5,6 +5,7 @@ import WorkoutExerciseSetReadOnlyList from './WorkoutExerciseSetReadOnlyList/Wor
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, Workout } from 'app/db/models'
 import { navigate } from 'app/navigators'
+import { colors } from 'designSystem'
 
 type Props = {
   workout: Workout
@@ -28,11 +29,13 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
       onPress={onLinkPress}
       style={{
         margin: 16,
+        backgroundColor: colors.lightgray,
       }}
     >
       <Card.Title
         title={exercise?.name}
         titleVariant="titleMedium"
+        titleStyle={{ color: colors.secondaryText }}
       />
       <Card.Content>
         <WorkoutExerciseSetReadOnlyList
