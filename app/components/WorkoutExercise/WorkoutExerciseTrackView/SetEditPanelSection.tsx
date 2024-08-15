@@ -1,8 +1,7 @@
 import React, { ReactNode } from 'react'
 import { View } from 'react-native'
 
-import { Divider } from '../../../../designSystem'
-import { BodySmallLabel } from '../../../../designSystem/Label'
+import { Divider, BodySmallLabel } from 'designSystem'
 
 type Props = {
   text: string

@@ -1,13 +1,13 @@
-import { View } from "react-native";
+import { View } from 'react-native'
 
-import WorkoutExerciseSetReadOnlyList from "./WorkoutExercise/WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList";
-import { Exercise, WorkoutSet } from "../db/models";
-import { BodyLargeLabel } from "../../designSystem/Label";
+import WorkoutExerciseSetReadOnlyList from './WorkoutExercise/WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList'
+import { Exercise, WorkoutSet } from 'app/db/models'
+import { BodyLargeLabel } from 'designSystem'
 
 type Props = {
-  exercise: Exercise;
-  sets: WorkoutSet[];
-};
+  exercise: Exercise
+  sets: WorkoutSet[]
+}
 const CalendarWorkoutModalExerciseItem: React.FC<Props> = ({
   exercise,
   sets,
@@ -15,14 +15,17 @@ const CalendarWorkoutModalExerciseItem: React.FC<Props> = ({
   return (
     <View style={{ padding: 8 }}>
       <BodyLargeLabel
-        style={{ marginBottom: 8, textAlign: "center" }}
+        style={{ marginBottom: 8, textAlign: 'center' }}
         key={exercise.guid}
       >
         {exercise.name}
       </BodyLargeLabel>
-      <WorkoutExerciseSetReadOnlyList exercise={exercise} sets={sets} />
+      <WorkoutExerciseSetReadOnlyList
+        exercise={exercise}
+        sets={sets}
+      />
     </View>
-  );
-};
+  )
+}
 
-export default CalendarWorkoutModalExerciseItem;
+export default CalendarWorkoutModalExerciseItem

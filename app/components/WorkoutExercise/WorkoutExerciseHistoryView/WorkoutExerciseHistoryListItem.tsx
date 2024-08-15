@@ -3,10 +3,9 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 
-import { WorkoutSet } from '../../../db/models'
-import { Divider } from '../../../../designSystem'
-import { BodyLargeLabel } from '../../../../designSystem/Label'
 import WorkoutExerciseSetReadOnlyList from '../WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList'
+import { WorkoutSet } from 'app/db/models'
+import { Divider, BodyLargeLabel } from 'designSystem'
 
 type Props = {
   date: string

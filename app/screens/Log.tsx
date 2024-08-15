@@ -4,12 +4,11 @@ import { useState } from 'react'
 import { ScrollView, View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
-import ExerciseList from '../components/Exercise/ExerciseList'
-import ExerciseHistoryChart from '../components/ExerciseHistoryChart'
-import { useStores } from '../db/helpers/useStores'
-import { Exercise } from '../db/models'
-import { Icon } from '../../designSystem'
-import colors from '../../designSystem/colors'
+import ExerciseList from 'app/components/Exercise/ExerciseList'
+import ExerciseHistoryChart from 'app/components/ExerciseHistoryChart'
+import { useStores } from 'app/db/helpers/useStores'
+import { Exercise } from 'app/db/models'
+import { Icon, colors } from 'designSystem'
 import { translate } from 'app/i18n'
 
 // TODO: screen is unused - remove?

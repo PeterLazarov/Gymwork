@@ -1,17 +1,15 @@
-import { observer } from "mobx-react-lite";
-import React from "react";
-import { IconButton } from "react-native-paper";
+import { observer } from 'mobx-react-lite'
+import React from 'react'
+import { IconButton } from 'react-native-paper'
 
-import { Icon } from "../../../../designSystem";
-import { BodyMediumLabel } from "../../../../designSystem/Label";
-import colors from "../../../../designSystem/colors";
+import { Icon, BodyMediumLabel, colors } from 'designSystem'
 
 type Props = {
-  isWarmup: boolean;
-  number?: number;
-  color: string;
-  toggleSetWarmup: () => void;
-};
+  isWarmup: boolean
+  number?: number
+  color: string
+  toggleSetWarmup: () => void
+}
 const WorkoutExerciseSetWarmupButton: React.FC<Props> = ({
   isWarmup,
   number,
@@ -34,15 +32,20 @@ const WorkoutExerciseSetWarmupButton: React.FC<Props> = ({
           <BodyMediumLabel
             style={{
               color,
-              fontWeight: "bold",
+              fontWeight: 'bold',
             }}
           >
             {number}.
           </BodyMediumLabel>
         )}
-        {isWarmup && <Icon icon="yoga" color={color} />}
+        {isWarmup && (
+          <Icon
+            icon="yoga"
+            color={color}
+          />
+        )}
       </>
     )}
   />
-);
-export default observer(WorkoutExerciseSetWarmupButton);
+)
+export default observer(WorkoutExerciseSetWarmupButton)

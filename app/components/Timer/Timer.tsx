@@ -1,36 +1,34 @@
-import { observer } from "mobx-react-lite";
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { IconButton } from "react-native-paper";
+import { observer } from 'mobx-react-lite'
+import React, { useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import { IconButton } from 'react-native-paper'
 
-import TimerEditModal from "../TimerEditModal";
-import { useStores } from "../../db/helpers/useStores";
-import { Icon } from "../../../designSystem";
-import { BodySmallLabel } from "../../../designSystem/Label";
-import colors from "../../../designSystem/colors";
+import TimerEditModal from '../TimerEditModal'
+import { useStores } from 'app/db/helpers/useStores'
+import { Icon, BodySmallLabel, colors } from 'designSystem'
 
 const Timer: React.FC = () => {
-  const { timeStore, stateStore } = useStores();
+  const { timeStore, stateStore } = useStores()
 
-  const [settingDialogOpen, setSettingDialogOpen] = useState(false);
+  const [settingDialogOpen, setSettingDialogOpen] = useState(false)
 
   function onPlayPress() {
     if (!timeStore.timerRunning) {
-      timeStore.startTimer();
+      timeStore.startTimer()
     }
   }
 
   function onSettingsPress() {
-    setSettingDialogOpen(true);
+    setSettingDialogOpen(true)
   }
 
   return (
     <>
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <IconButton
@@ -49,18 +47,18 @@ const Timer: React.FC = () => {
       <TimerEditModal
         open={settingDialogOpen}
         onClose={() => {
-          setSettingDialogOpen(false);
+          setSettingDialogOpen(false)
         }}
       />
     </>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   timerPanel: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.lightgray,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
@@ -68,8 +66,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 4,
     width: 140,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
-});
+})
 
-export default observer(Timer);
+export default observer(Timer)

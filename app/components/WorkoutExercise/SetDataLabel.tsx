@@ -1,27 +1,26 @@
-import { observer } from "mobx-react-lite";
-import React from "react";
-import { View } from "react-native";
+import { observer } from 'mobx-react-lite'
+import React from 'react'
+import { View } from 'react-native'
 
-import { BodySmallLabel } from "../../../designSystem/Label";
-import colors from "../../../designSystem/colors";
+import { BodySmallLabel, colors } from 'designSystem'
 
 type Props = {
-  value: string | number;
-  unit?: string;
-  isFocused?: boolean;
-};
+  value: string | number
+  unit?: string
+  isFocused?: boolean
+}
 
 const ReadOnlyListItemDataLabel: React.FC<Props> = ({
   value,
   unit,
   isFocused,
 }) => {
-  const color = isFocused ? colors.primary : colors.secondaryText;
+  const color = isFocused ? colors.primary : colors.secondaryText
   return (
-    <View style={{ flex: 1, flexDirection: "row", gap: 4 }}>
+    <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
       <BodySmallLabel
         style={{
-          fontWeight: "bold",
+          fontWeight: 'bold',
           color,
         }}
       >
@@ -37,7 +36,7 @@ const ReadOnlyListItemDataLabel: React.FC<Props> = ({
         </BodySmallLabel>
       )}
     </View>
-  );
-};
+  )
+}
 
-export default observer(ReadOnlyListItemDataLabel);
+export default observer(ReadOnlyListItemDataLabel)

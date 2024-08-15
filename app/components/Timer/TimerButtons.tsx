@@ -1,12 +1,12 @@
-import { observer } from "mobx-react-lite";
-import React from "react";
-import { Appbar } from "react-native-paper";
+import { observer } from 'mobx-react-lite'
+import React from 'react'
+import { Appbar } from 'react-native-paper'
 
-import { useStores } from "../../db/helpers/useStores";
-import { Icon } from "../../../designSystem";
+import { useStores } from 'app/db/helpers/useStores'
+import { Icon } from 'designSystem'
 
 const TimerButtons: React.FC = () => {
-  const { timeStore } = useStores();
+  const { timeStore } = useStores()
 
   return (
     <>
@@ -39,7 +39,7 @@ const TimerButtons: React.FC = () => {
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default observer(TimerButtons);
+export default observer(TimerButtons)

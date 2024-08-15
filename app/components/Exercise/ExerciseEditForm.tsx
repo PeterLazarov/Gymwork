@@ -3,13 +3,11 @@ import React, { useState } from 'react'
 import { Text, View } from 'react-native'
 import { TextInput, IconButton, HelperText } from 'react-native-paper'
 
-import { useStores } from '../../db/helpers/useStores'
-import { Exercise, ExerciseSnapshotIn } from '../../db/models'
-import { Icon } from '../../../designSystem'
-import Dropdown from '../../../designSystem/Dropdown'
-import Multiselect from '../../../designSystem/Multiselect'
+import { useStores } from 'app/db/helpers/useStores'
+import { Exercise, ExerciseSnapshotIn } from 'app/db/models'
 import DistanceType from 'app/enums/DistanceType'
 import ExerciseType from 'app/enums/ExerciseType'
+import { Icon, Dropdown, Multiselect } from 'designSystem'
 
 type Props = {
   exercise: Exercise

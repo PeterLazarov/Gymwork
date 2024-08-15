@@ -2,14 +2,12 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 
-import { useStores } from '../../../db/helpers/useStores'
-import { Exercise, WorkoutSet } from '../../../db/models'
-import { Icon } from '../../../../designSystem'
-import { BodyMediumLabel } from '../../../../designSystem/Label'
-import colors from '../../../../designSystem/colors'
-import { getFormatedDuration } from '../../../utils/time'
 import SetDataLabel from '../SetDataLabel'
+import { useStores } from 'app/db/helpers/useStores'
+import { Exercise, WorkoutSet } from 'app/db/models'
+import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
+import { Icon, BodyMediumLabel, colors } from 'designSystem'
 
 type Props = {
   set: WorkoutSet

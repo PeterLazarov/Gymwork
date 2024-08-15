@@ -3,15 +3,13 @@ import React from 'react'
 import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
-import AllExerciseSelect from '../components/Exercise/AllExerciseSelect'
-import FavoriteExerciseSelect from '../components/Exercise/FavoriteExerciseSelect'
-import { useStores } from '../db/helpers/useStores'
-import { Exercise } from '../db/models'
-import { Icon } from '../../designSystem'
-import SwipeTabs from '../../designSystem/SwipeTabs'
-import colors from '../../designSystem/colors'
+import AllExerciseSelect from 'app/components/Exercise/AllExerciseSelect'
+import FavoriteExerciseSelect from 'app/components/Exercise/FavoriteExerciseSelect'
+import { useStores } from 'app/db/helpers/useStores'
+import { Exercise } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
+import { Icon, SwipeTabs, colors } from 'designSystem'
 
 const ExerciseSelectPage: React.FC = () => {
   const { stateStore } = useStores()

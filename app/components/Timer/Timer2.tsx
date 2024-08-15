@@ -1,26 +1,26 @@
-import { Duration } from "luxon";
-import { observer } from "mobx-react-lite";
-import React, { useMemo } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { Duration } from 'luxon'
+import { observer } from 'mobx-react-lite'
+import React, { useMemo } from 'react'
+import { StyleSheet, View, Text, Button } from 'react-native'
 
-import { useStores } from "../../db/helpers/useStores";
-import useTimer from "../../db/stores/useTimer";
-import colors from "../../../designSystem/colors";
+import { useStores } from 'app/db/helpers/useStores'
+import useTimer from 'app/db/stores/useTimer'
+import { colors } from 'designSystem'
 
 export default observer(function Timer2() {
   // const { timerStore2 } = useStores()
-  const { clear, start, stop, timeLeft } = useTimer();
+  const { clear, start, stop, timeLeft } = useTimer()
 
   const idk = useMemo(() => {
-    return timeLeft.toFormat("mm:ss");
-  }, []);
+    return timeLeft.toFormat('mm:ss')
+  }, [])
   return (
     <>
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <Button
@@ -32,17 +32,20 @@ export default observer(function Timer2() {
           <Text>{idk}</Text>
         </View>
 
-        <Button title="Stop" onPress={() => stop()} />
+        <Button
+          title="Stop"
+          onPress={() => stop()}
+        />
       </View>
     </>
-  );
-});
+  )
+})
 
 const styles = StyleSheet.create({
   timerPanel: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.lightgray,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
@@ -50,6 +53,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 4,
     width: 140,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
-});
+})

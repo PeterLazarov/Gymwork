@@ -1,14 +1,13 @@
-import { Portal, Dialog, Button } from "react-native-paper";
+import { Portal, Dialog, Button } from 'react-native-paper'
 
-import { BodyMediumLabel } from "../../designSystem/Label";
-import colors from "../../designSystem/colors";
+import { BodyMediumLabel, colors } from 'designSystem'
 
 type Props = {
-  open: boolean;
-  message: string;
-  onConfirm: () => void;
-  onClose: () => void;
-};
+  open: boolean
+  message: string
+  onConfirm: () => void
+  onClose: () => void
+}
 const ConfirmationDialog: React.FC<Props> = ({
   open,
   message,
@@ -17,7 +16,10 @@ const ConfirmationDialog: React.FC<Props> = ({
 }) => {
   return (
     <Portal>
-      <Dialog visible={open} onDismiss={onClose}>
+      <Dialog
+        visible={open}
+        onDismiss={onClose}
+      >
         <Dialog.Title>Warning</Dialog.Title>
         <Dialog.Content>
           <BodyMediumLabel>{message}</BodyMediumLabel>
@@ -40,7 +42,7 @@ const ConfirmationDialog: React.FC<Props> = ({
         </Dialog.Actions>
       </Dialog>
     </Portal>
-  );
-};
+  )
+}
 
-export default ConfirmationDialog;
+export default ConfirmationDialog
