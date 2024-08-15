@@ -188,7 +188,10 @@ export function useNavigationPersistence(
  * @param {unknown} name - The name of the route to navigate to.
  * @param {unknown} params - The params to pass to the route.
  */
-export function navigate(name: unknown, params?: unknown) {
+export function navigate<T extends keyof AppStackParamList>(
+  name: T,
+  params?: AppStackParamList[T]
+) {
   if (navigationRef.isReady()) {
     // @ts-expect-error
     navigationRef.navigate(name as never, params as never)
