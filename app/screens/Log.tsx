@@ -21,7 +21,7 @@ const Log = observer(() => {
   const [exercise, setExercise] = useState<Exercise>()
 
   function onBackPress() {
-    router.push('/')
+    // router.push('/')
   }
   return (
     <View

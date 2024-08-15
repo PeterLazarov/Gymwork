@@ -11,8 +11,11 @@ import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
 import { translate } from 'app/i18n'
+import { AppStackScreenProps } from 'app/navigators'
 
-const CalendarPage: React.FC = () => {
+interface CalendarPageProps extends AppStackScreenProps<'Calendar'> {}
+
+const CalendarPage: React.FC<CalendarPageProps> = ({ navigation }) => {
   const { workoutStore, stateStore } = useStores()
 
   const [openedWorkoutDialogDate, setOpenedWorkoutDialogDate] = useState('')
@@ -41,10 +44,8 @@ const CalendarPage: React.FC = () => {
   )
   const today = useMemo(() => DateTime.now().toJSDate(), [])
 
-  // const router = useRouter();
-
   function onBackPress() {
-    router.push('/')
+    navigation.navigate('Workout', { screen: 'Workout' })
   }
 
   function handleCalendarDayPress(date: Date) {
@@ -56,7 +57,7 @@ const CalendarPage: React.FC = () => {
   function goGoDay() {
     stateStore.setOpenedDate(openedWorkoutDialogDate)
     setOpenedWorkoutDialogDate('')
-    router.push('/')
+    navigation.navigate('Workout', { screen: 'Workout' })
   }
   return (
     <>

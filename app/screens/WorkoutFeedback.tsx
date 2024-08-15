@@ -1,4 +1,3 @@
-// import { useRouter } from "expo-router";
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
@@ -8,13 +7,15 @@ import FeedbackPicker from '../components/FeedbackPicker'
 import { useStores } from '../db/helpers/useStores'
 import { BodyLargeLabel } from '../../designSystem/Label'
 import colors from '../../designSystem/colors'
+import { AppStackScreenProps } from 'app/navigators'
 
-const WorkoutFeedbackPage: React.FC = () => {
+interface WorkoutFeedbackPage extends AppStackScreenProps<'WorkoutFeedback'> {}
+
+const WorkoutFeedbackPage: React.FC<WorkoutFeedbackPage> = ({ navigation }) => {
   const { stateStore } = useStores()
-  // const router = useRouter()
 
   function onBackPress() {
-    router.push('/')
+    navigation.navigate('Workout', { screen: 'Workout' })
   }
 
   return (

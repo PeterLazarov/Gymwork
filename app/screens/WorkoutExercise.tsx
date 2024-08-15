@@ -1,4 +1,3 @@
-// import { useRouter } from "expo-router";
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
@@ -12,22 +11,27 @@ import { useStores } from '../db/helpers/useStores'
 import { Icon } from '../../designSystem'
 import SwipeTabs from '../../designSystem/SwipeTabs'
 import colors from '../../designSystem/colors'
+import { AppStackScreenProps } from 'app/navigators'
 
-const WorkoutExercisePage: React.FC = () => {
+interface WorkoutExercisePageProps
+  extends AppStackScreenProps<'WorkoutExercise'> {}
+
+const WorkoutExercisePage: React.FC<WorkoutExercisePageProps> = ({
+  navigation,
+}) => {
   const { timeStore, stateStore } = useStores()
-  // const router = useRouter()
 
   const [view, setView] = useState('track')
   const [menuOpen, setMenuOpen] = useState(false)
   const [graphHidden, setGraphHidden] = useState(false)
 
   function onBackPress() {
-    router.push('/')
+    navigation.navigate('Workout', { screen: 'Workout' })
     stateStore.setOpenedExercise(null)
   }
 
   function onEditExercisePress() {
-    router.push('/ExerciseEdit')
+    navigation.navigate('ExerciseEdit', { screen: 'ExerciseEdit' })
   }
 
   function onToggleGraphPress() {

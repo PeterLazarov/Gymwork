@@ -1,4 +1,3 @@
-// import { useRouter } from "expo-router";
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
@@ -10,9 +9,14 @@ import { useStores } from '../db/helpers/useStores'
 import { Exercise, ExerciseModel } from '../db/models'
 import { Icon } from '../../designSystem'
 import colors from '../../designSystem/colors'
+import { AppStackScreenProps } from 'app/navigators'
 
-const ExerciseCreatePage: React.FC = () => {
-  // const router = useRouter()
+interface ExerciseCreatePageProps
+  extends AppStackScreenProps<'ExerciseCreate'> {}
+
+const ExerciseCreatePage: React.FC<ExerciseCreatePageProps> = ({
+  navigation,
+}) => {
   const { exerciseStore } = useStores()
 
   const [exercise, setExercise] = useState(ExerciseModel.create())
@@ -25,7 +29,7 @@ const ExerciseCreatePage: React.FC = () => {
 
   function onBackConfirmed() {
     setConfirmDialogOpen(false)
-    router.back()
+    navigation.goBack()
   }
 
   function onUpdate(updated: Exercise, isValid: boolean) {
@@ -35,7 +39,7 @@ const ExerciseCreatePage: React.FC = () => {
 
   function onComplete() {
     exerciseStore.createExercise(exercise)
-    router.back()
+    navigation.goBack()
   }
 
   return (
