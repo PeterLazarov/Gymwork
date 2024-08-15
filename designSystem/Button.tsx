@@ -8,6 +8,7 @@ type IconButtonProps = {
 
 type ButtonProps = {
   variant: 'primary' | 'secondary' | 'critical' | 'tertiary'
+  type?: 'filled' | 'outline'
   disabled?: boolean
 }
 
@@ -32,11 +33,18 @@ const buttonVariants = {
 export const Button = styled.TouchableOpacity<ButtonProps>`
   justify-content: center;
   align-items: center;
-  height: 42px;
+  height: 48px;
   gap: 6px;
   flex-direction: row;
-  background: ${props =>
-    props.disabled ? colors.disabled : buttonVariants[props.variant]};
+  background: ${({ disabled, variant, type }) =>
+    disabled
+      ? colors.disabled
+      : type !== 'outline'
+      ? buttonVariants[variant]
+      : colors.secondary};
+  border-width: ${({ type }) => (type === 'outline' ? '2px' : 0)};
+  border-color: ${({ type, variant }) =>
+    type === 'outline' ? buttonVariants[variant] : 'transparent'};
 `
 
 const buttonTextVariants = {
@@ -48,5 +56,6 @@ const buttonTextVariants = {
 export const ButtonText = styled.Text<ButtonProps>`
   font-size: 16px;
   text-align: center;
-  color: ${props => buttonTextVariants[props.variant]};
+  color: ${({ variant, type }) =>
+    type !== 'outline' ? buttonTextVariants[variant] : buttonVariants[variant]};
 `

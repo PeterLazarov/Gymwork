@@ -96,7 +96,7 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
         )}
       </View>
 
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row', gap: 4 }}>
         <Button
           variant="primary"
           onPress={saveChanges}

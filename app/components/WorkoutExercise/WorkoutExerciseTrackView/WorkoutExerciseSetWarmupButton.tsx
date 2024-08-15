@@ -35,7 +35,7 @@ const WorkoutExerciseSetWarmupButton: React.FC<Props> = ({
               fontWeight: 'bold',
             }}
           >
-            {number}.
+            {number}
           </BodyMediumLabel>
         )}
         {isWarmup && (

@@ -16,7 +16,7 @@ const ExerciseSelectPage: React.FC = () => {
 
   function handleSelectExercise(exercise: Exercise) {
     stateStore.setOpenedExercise(exercise)
-    navigate('ExerciseSelect')
+    navigate('WorkoutExercise')
   }
 
   function onBackPress() {
