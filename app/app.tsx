@@ -1,30 +1,19 @@
 /* eslint-disable import/first */
-/**
- * Welcome to the main entry point of the app. In this file, we'll
- * be kicking off our app.
- *
- * Most of this file is boilerplate and you shouldn't need to modify
- * it very often. But take some time to look through and understand
- * what is going on here.
- *
- * The app navigation resides in ./app/navigators, so head over there
- * if you're interested in adding screens and navigators.
- */
 if (__DEV__) {
-  // Load Reactotron in development only.
   // Note that you must be using metro's `inlineRequires` for this to work.
   // If you turn it off in metro.config.js, you'll have to manually import it.
   require('./devtools/ReactotronConfig.ts')
 }
 import { useFonts } from 'expo-font'
 import React from 'react'
+import * as Linking from 'expo-linking'
+import { ViewStyle } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { PaperProvider, Portal } from 'react-native-paper'
 import {
   initialWindowMetrics,
   SafeAreaProvider,
 } from 'react-native-safe-area-context'
-import * as Linking from 'expo-linking'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { ViewStyle } from 'react-native'
 
 import Config from './config'
 import './i18n'
@@ -96,15 +85,19 @@ function App() {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <DBStoreInitializer>
-        <ErrorBoundary catchErrors={Config.catchErrors}>
-          <GestureHandlerRootView style={$container}>
-            <AppNavigator
-              linking={linking}
-              initialState={initialNavigationState}
-              onStateChange={onNavigationStateChange}
-            />
-          </GestureHandlerRootView>
-        </ErrorBoundary>
+        <PaperProvider>
+          <Portal.Host>
+            <ErrorBoundary catchErrors={Config.catchErrors}>
+              <GestureHandlerRootView style={$container}>
+                <AppNavigator
+                  linking={linking}
+                  initialState={initialNavigationState}
+                  onStateChange={onNavigationStateChange}
+                />
+              </GestureHandlerRootView>
+            </ErrorBoundary>
+          </Portal.Host>
+        </PaperProvider>
       </DBStoreInitializer>
     </SafeAreaProvider>
   )

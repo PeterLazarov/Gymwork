@@ -9,7 +9,6 @@ import {
   // TimelineComponent,
 } from 'echarts/components'
 import { use, ECharts, init } from 'echarts/core'
-// import { useRouter } from "expo-router";
 import { DateInput, DateTime, Interval } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import { oneRepMaxEpley } from 'fitness-calc'
@@ -62,7 +61,6 @@ const ExerciseHistoryChart = observer(
     height?: number
     width?: number
   }) => {
-    // const router = useRouter()
     const { workoutStore, stateStore } = useStores()
 
     const chartElRef = useRef<any>(null)
@@ -270,9 +268,9 @@ const ExerciseHistoryChart = observer(
     }, [workoutStore.workouts])
 
     // TODO does not highlight set in question
-    function handleBtnPress() {
+    function linkToWorkoutDate() {
       stateStore.setProp('openedDate', selectedDate)
-      router.push('/')
+      // navigate to workout screen
     }
 
     return (
