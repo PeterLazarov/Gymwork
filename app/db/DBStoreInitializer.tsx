@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useStores } from './helpers/useStores'
-import { Text, View } from 'react-native'
 
 type Props = {
   children: React.ReactNode

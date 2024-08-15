@@ -24,7 +24,7 @@ import {
 } from 'react-native-safe-area-context'
 import * as Linking from 'expo-linking'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { View, ViewStyle } from 'react-native'
+import { ViewStyle } from 'react-native'
 
 import Config from './config'
 import './i18n'
