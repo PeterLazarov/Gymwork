@@ -13,13 +13,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#191015"
     },
+    "userInterfaceStyle": "light",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "jsEngine": "hermes",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.gymwork",
@@ -53,10 +52,7 @@
       },
       "bundler": "metro"
     },
-    "plugins": [
-      "expo-localization",
-      "expo-font"
-    ],
+    "plugins": ["expo-localization", "expo-font"],
     "experiments": {
       "tsconfigPaths": true
     },

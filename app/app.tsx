@@ -26,6 +26,10 @@ import { ErrorBoundary } from './screens/ErrorScreen/ErrorBoundary'
 import { customFontsToLoad } from './theme'
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
+import * as SystemUI from 'expo-system-ui'
+import { colors } from 'designSystem'
+SystemUI.setBackgroundColorAsync(colors.secondary)
+
 // Web linking configuration
 const prefix = Linking.createURL('/')
 const config = {
