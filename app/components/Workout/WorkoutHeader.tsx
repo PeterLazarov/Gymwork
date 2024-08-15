@@ -29,7 +29,7 @@ const WorkoutHeader: React.FC = () => {
 
       {stateStore.isOpenedWorkoutToday && <WorkoutHeaderTimerButtons />}
       <Appbar.Action
-        icon={() => <Icon icon="md-calendar-sharp" />}
+        icon={() => <Icon icon="calendar-sharp" />}
         onPress={openCalendar}
         animated={false}
       />

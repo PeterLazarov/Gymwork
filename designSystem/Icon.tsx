@@ -15,7 +15,8 @@ const IoniconsIcons = [
   'remove',
   'close',
   'ellipsis-vertical',
-  'md-calendar-sharp',
+  // 'md-calendar-sharp',
+  'calendar-sharp',
   'logo-react',
   'trophy',
   'chatbox-ellipses',
@@ -26,10 +27,12 @@ const IoniconsIcons = [
   'stop',
   'play',
   'settings-outline',
-] as const
+] as const satisfies ReadonlyArray<keyof typeof Ionicons.glyphMap>
 type IonicIcon = (typeof IoniconsIcons)[number]
 
-const MCIcons = ['yoga', 'weight-lifter'] as const
+const MCIcons = ['yoga', 'weight-lifter'] as const satisfies ReadonlyArray<
+  keyof typeof MaterialCommunityIcons.glyphMap
+>
 type MCIcon = (typeof MCIcons)[number]
 
 const EntypoIcons = [
@@ -37,7 +40,7 @@ const EntypoIcons = [
   'emoji-neutral',
   'emoji-sad',
   'stopwatch',
-] as const
+] as const satisfies ReadonlyArray<keyof typeof Entypo.glyphMap>
 type EntypoIcon = (typeof EntypoIcons)[number]
 
 // todo: get typing of all ant design icons
