@@ -3,4 +3,5 @@
 - Update exrcise screen style updates
 - Use bottom offset (iOS shows a line. We souldn't overlap it)
 - TODO revise or remove web linking in app.tsx
-- fix android device animations 
+- fix android simulator errors
+- fix android device workout horizontal scrolling
