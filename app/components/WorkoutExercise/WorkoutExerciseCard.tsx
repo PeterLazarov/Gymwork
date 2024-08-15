@@ -1,10 +1,12 @@
 import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import React, { useMemo } from 'react'
 import { Card } from 'react-native-paper'
 
 import WorkoutExerciseSetReadOnlyList from './WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList'
 import { useStores } from '../../db/helpers/useStores'
 import { Exercise, Workout } from '../../db/models'
+import { AppStackParamList } from 'app/navigators'
 
 type Props = {
   workout: Workout
@@ -12,7 +14,9 @@ type Props = {
 }
 
 const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
-  const navigation = useNavigation()
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AppStackParamList, 'Workout'>>()
+
   const { stateStore } = useStores()
 
   const sets = useMemo(() => {

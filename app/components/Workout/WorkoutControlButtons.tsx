@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
@@ -8,13 +9,15 @@ import { useStores } from '../../db/helpers/useStores'
 import { Icon } from '../../../designSystem'
 import colors from '../../../designSystem/colors'
 import { translate } from 'app/i18n'
+import { AppStackParamList } from 'app/navigators'
 
 type Props = {
   createWorkout: () => void
 }
 
 const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
-  const navigation = useNavigation()
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AppStackParamList, 'Workout'>>()
   const { stateStore } = useStores()
 
   const isWorkoutStarted = !!stateStore.openedWorkout

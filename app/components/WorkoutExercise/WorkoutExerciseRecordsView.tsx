@@ -1,4 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+
 import { observer } from 'mobx-react-lite'
 import { getParentOfType } from 'mobx-state-tree'
 import React from 'react'
@@ -7,10 +9,14 @@ import { View, ScrollView, TouchableOpacity } from 'react-native'
 import WorkoutExerciseSetListItem from './WorkoutExerciseSetReadOnlyList/ReadOnlyListItem'
 import { useStores } from '../../db/helpers/useStores'
 import { WorkoutModel, WorkoutSet } from '../../db/models'
+import { AppStackParamList } from 'app/navigators'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
   const { openedExerciseRecords, stateStore } = useStores()
-  const navigation = useNavigation()
+  const navigation =
+    useNavigation<
+      NativeStackNavigationProp<AppStackParamList, 'WorkoutExercise'>
+    >()
 
   // TODO extract out to action?
   function goToDate(set: WorkoutSet) {
