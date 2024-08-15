@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { useStores } from './helpers/useStores'
+import { Text, View } from 'react-native'
 
 type Props = {
   children: React.ReactNode
@@ -17,11 +18,8 @@ const DBStoreInitializer: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     promise.then(() => {
-      setTimeout(() => {
-        setRender(true)
-        debugger
-        console.log(JSON.stringify({ exerciseStore, workoutStore }, null, 2))
-      }, 1000)
+      setRender(true)
+      console.log(JSON.stringify({ exerciseStore, workoutStore }, null, 2))
     })
   }, [])
 

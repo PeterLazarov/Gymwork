@@ -24,11 +24,11 @@ import {
 } from 'react-native-safe-area-context'
 import * as Linking from 'expo-linking'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { ViewStyle } from 'react-native'
+import { View, ViewStyle } from 'react-native'
 
 import Config from './config'
 import './i18n'
-// import DBStoreInitializer from './db/DBStoreInitializer'
+import DBStoreInitializer from './db/DBStoreInitializer'
 import { useInitialRootStore } from './db/helpers/useStores'
 import { AppNavigator, useNavigationPersistence } from './navigators'
 import './utils/ignoreWarnings'
@@ -94,19 +94,19 @@ function App() {
 
   // otherwise, we're ready to render the app
   return (
-    // <DBStoreInitializer>
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <ErrorBoundary catchErrors={Config.catchErrors}>
-        <GestureHandlerRootView style={$container}>
-          <AppNavigator
-            linking={linking}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
-        </GestureHandlerRootView>
-      </ErrorBoundary>
+      <DBStoreInitializer>
+        <ErrorBoundary catchErrors={Config.catchErrors}>
+          <GestureHandlerRootView style={$container}>
+            <AppNavigator
+              linking={linking}
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+          </GestureHandlerRootView>
+        </ErrorBoundary>
+      </DBStoreInitializer>
     </SafeAreaProvider>
-    // </DBStoreInitializer>
   )
 }
 
