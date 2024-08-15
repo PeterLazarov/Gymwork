@@ -2,7 +2,7 @@ import { Link } from '@react-navigation/native'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { Appbar } from 'react-native-paper'
 
 import { useStores } from '../../db/helpers/useStores'
@@ -52,7 +52,7 @@ const DayControl = () => {
           animated={false}
         />
       </View>
-      <Divider />
+      <Divider orientation="horizontal" />
     </>
   )
 }

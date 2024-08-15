@@ -10,6 +10,7 @@ import { Icon } from '../../../designSystem'
 import colors from '../../../designSystem/colors'
 import { translate } from 'app/i18n'
 import { AppStackParamList } from 'app/navigators'
+import { Divider } from 'designSystem'
 
 type Props = {
   createWorkout: () => void
@@ -44,14 +45,16 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
         padding: 8,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: colors.primary,
       }}
     >
       {!isWorkoutStarted && (
         <>
           <Button
-            mode="contained"
+            mode="text"
             onPress={createWorkout}
             style={{ flex: 1 }}
+            textColor={colors.primaryText}
             icon={() => (
               <Icon
                 color={colors.primaryText}
@@ -61,10 +64,15 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
           >
             {translate('newWorkout')}
           </Button>
+          <Divider
+            style={{ backgroundColor: colors.primaryText, flex: 0 }}
+            orientation="vertical"
+          />
           <Button
-            mode="contained"
+            mode="text"
             onPress={copyPrevWorkout}
             style={{ flex: 1 }}
+            textColor={colors.primaryText}
             icon={() => (
               <Icon
                 color={colors.primaryText}
@@ -77,11 +85,12 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
         </>
       )}
       {isWorkoutStarted && (
-        <View style={{ flexDirection: 'row', gap: 8 }}>
+        <>
           <Button
-            mode="contained"
+            mode="text"
             onPress={onAddExercisePress}
             style={{ flex: 1 }}
+            textColor={colors.primaryText}
             icon={() => (
               <Icon
                 color={colors.primaryText}
@@ -92,10 +101,15 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
             {translate('addExercise')}
           </Button>
 
+          <Divider
+            style={{ backgroundColor: colors.primaryText, flex: 0 }}
+            orientation="vertical"
+          />
           <Button
-            mode="contained"
+            mode="text"
             onPress={onCommentPress}
             style={{ flex: 1 }}
+            textColor={colors.primaryText}
             icon={() => (
               <Icon
                 color={colors.primaryText}
@@ -105,7 +119,7 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
           >
             {hasNotes ? 'View comment' : 'Add comment'}
           </Button>
-        </View>
+        </>
       )}
     </View>
   )

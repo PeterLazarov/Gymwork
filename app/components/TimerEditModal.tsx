@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { View } from "react-native";
-import { Portal, Modal, Button } from "react-native-paper";
+import { useState } from 'react'
+import { View } from 'react-native'
+import { Portal, Modal, Button } from 'react-native-paper'
 
-import { useStores } from "../db/helpers/useStores";
-import { Divider } from "../../designSystem";
-import DurationInput from "../../designSystem/DurationInput";
-import { HeadingLabel } from "../../designSystem/Label";
-import colors from "../../designSystem/colors";
+import { useStores } from '../db/helpers/useStores'
+import { Divider } from '../../designSystem'
+import DurationInput from '../../designSystem/DurationInput'
+import { HeadingLabel } from '../../designSystem/Label'
+import colors from '../../designSystem/colors'
 
 type Props = {
-  open: boolean;
-  onClose: () => void;
-};
+  open: boolean
+  onClose: () => void
+}
 const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
-  const { stateStore, timeStore } = useStores();
+  const { stateStore, timeStore } = useStores()
 
-  const [timerSecs, setTimerSecs] = useState(stateStore.timerDurationSecs);
+  const [timerSecs, setTimerSecs] = useState(stateStore.timerDurationSecs)
   function onConfirm() {
-    stateStore.setTimerDuration(timerSecs);
-    timeStore.stopTimer();
-    onClose();
+    stateStore.setTimerDuration(timerSecs)
+    timeStore.stopTimer()
+    onClose()
   }
 
   return (
@@ -34,7 +34,7 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
         }}
       >
         <HeadingLabel style={{ padding: 16 }}>Edit Rest Timer</HeadingLabel>
-        <Divider />
+        <Divider orientation="horizontal" />
         <View style={{ paddingVertical: 16 }}>
           <DurationInput
             valueSeconds={timerSecs}
@@ -42,7 +42,7 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
             hideHours
           />
         </View>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: 'row' }}>
           <Button
             style={{ flex: 1 }}
             textColor={colors.tertiaryText}
@@ -60,7 +60,7 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
         </View>
       </Modal>
     </Portal>
-  );
-};
+  )
+}
 
-export default TimerEditModal;
+export default TimerEditModal

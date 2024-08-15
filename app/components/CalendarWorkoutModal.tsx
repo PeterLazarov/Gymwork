@@ -1,22 +1,22 @@
-import { DateTime } from "luxon";
-import { ScrollView, View } from "react-native";
-import { Portal, Modal, Button } from "react-native-paper";
+import { DateTime } from 'luxon'
+import { ScrollView, View } from 'react-native'
+import { Portal, Modal, Button } from 'react-native-paper'
 
-import CalendarWorkoutModalExerciseItem from "./CalendarWorkoutModalExerciseItem";
-import { useStores } from "../db/helpers/useStores";
-import { WorkoutSet } from "../db/models";
-import { Divider } from "../../designSystem";
-import { HeadingLabel } from "../../designSystem/Label";
-import colors from "../../designSystem/colors";
-import { groupBy } from "../utils/array";
+import CalendarWorkoutModalExerciseItem from './CalendarWorkoutModalExerciseItem'
+import { useStores } from '../db/helpers/useStores'
+import { WorkoutSet } from '../db/models'
+import { Divider } from '../../designSystem'
+import { HeadingLabel } from '../../designSystem/Label'
+import colors from '../../designSystem/colors'
+import { groupBy } from '../utils/array'
 
 type Props = {
-  open: boolean;
-  workoutDate: string;
-  onConfirm: () => void;
-  onClose: () => void;
-  confirmButtonText: string;
-};
+  open: boolean
+  workoutDate: string
+  onConfirm: () => void
+  onClose: () => void
+  confirmButtonText: string
+}
 const CalendarWorkoutModal: React.FC<Props> = ({
   open,
   workoutDate,
@@ -24,14 +24,14 @@ const CalendarWorkoutModal: React.FC<Props> = ({
   onClose,
   confirmButtonText,
 }) => {
-  const { workoutStore } = useStores();
-  const workout = workoutStore.getWorkoutForDate(workoutDate)!;
-  const exercises = workoutStore.getWorkoutExercises(workout);
+  const { workoutStore } = useStores()
+  const workout = workoutStore.getWorkoutForDate(workoutDate)!
+  const exercises = workoutStore.getWorkoutExercises(workout)
 
-  const groupedSets = groupBy(workout.sets, "exercise.guid");
+  const groupedSets = groupBy(workout.sets, 'exercise.guid')
 
-  const luxonDate = DateTime.fromISO(workout.date);
-  const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY);
+  const luxonDate = DateTime.fromISO(workout.date)
+  const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
   return (
     <Portal>
@@ -45,12 +45,12 @@ const CalendarWorkoutModal: React.FC<Props> = ({
           flex: 1,
         }}
       >
-        <View style={{ height: "100%" }}>
+        <View style={{ height: '100%' }}>
           <HeadingLabel style={{ padding: 16 }}>{label}</HeadingLabel>
-          <Divider />
+          <Divider orientation="horizontal" />
           <View style={{ flex: 1 }}>
             <ScrollView>
-              {exercises.map((exercise) => (
+              {exercises.map(exercise => (
                 <CalendarWorkoutModalExerciseItem
                   key={exercise.guid}
                   exercise={exercise}
@@ -59,8 +59,8 @@ const CalendarWorkoutModal: React.FC<Props> = ({
               ))}
             </ScrollView>
           </View>
-          <Divider />
-          <View style={{ flexDirection: "row" }}>
+          <Divider orientation="horizontal" />
+          <View style={{ flexDirection: 'row' }}>
             <Button
               style={{ flex: 1 }}
               textColor={colors.tertiaryText}
@@ -79,7 +79,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
         </View>
       </Modal>
     </Portal>
-  );
-};
+  )
+}
 
-export default CalendarWorkoutModal;
+export default CalendarWorkoutModal
