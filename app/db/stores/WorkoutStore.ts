@@ -9,7 +9,6 @@ import {
 
 import { RootStore } from './RootStore'
 import workoutSeedData from '../seeds/workout-seed-data'
-import DistanceType from '../../enums/DistanceType'
 import * as storage from '../../../app/utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import {
@@ -22,6 +21,7 @@ import {
   WorkoutSetSnapshotIn,
   WorkoutSetTrackData,
 } from '../models'
+import DistanceType from 'app/enums/DistanceType'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')

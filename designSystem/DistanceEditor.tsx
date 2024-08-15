@@ -2,7 +2,7 @@ import { View } from 'react-native'
 import { TextInput } from 'react-native-paper'
 
 import Dropdown from './Dropdown'
-import DistanceType from '../enums/DistanceType'
+import DistanceType from 'app/enums/DistanceType'
 
 type Props = {
   value: number

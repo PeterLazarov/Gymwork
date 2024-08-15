@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { View } from "react-native";
-import { Button } from "react-native-paper";
+import React, { useEffect, useState } from 'react'
+import { View } from 'react-native'
+import { Button } from 'react-native-paper'
 
-import SetEditPanelSection from "./SetEditPanelSection";
-import { useStores } from "../../../db/helpers/useStores";
-import { WorkoutSet, WorkoutSetTrackData } from "../../../db/models";
-import DistanceEditor from "../../../../designSystem/DistanceEditor";
-import DurationInput from "../../../../designSystem/DurationInput";
-import IncrementNumericEditor from "../../../../designSystem/IncrementNumericEditor";
-import colors from "../../../../designSystem/colors";
-import texts from "../../../texts";
+import SetEditPanelSection from './SetEditPanelSection'
+import { useStores } from '../../../db/helpers/useStores'
+import { WorkoutSet, WorkoutSetTrackData } from '../../../db/models'
+import DistanceEditor from '../../../../designSystem/DistanceEditor'
+import DurationInput from '../../../../designSystem/DurationInput'
+import IncrementNumericEditor from '../../../../designSystem/IncrementNumericEditor'
+import colors from '../../../../designSystem/colors'
+import { translate } from 'app/i18n'
 
 type Props = {
-  selectedSet: WorkoutSet | null;
-  addSet: (set: WorkoutSetTrackData) => void;
-  updateSet: (set: WorkoutSet) => void;
-  removeSet: (set: WorkoutSet) => void;
-};
+  selectedSet: WorkoutSet | null
+  addSet: (set: WorkoutSetTrackData) => void
+  updateSet: (set: WorkoutSet) => void
+  removeSet: (set: WorkoutSet) => void
+}
 
 const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   selectedSet,
@@ -24,57 +24,57 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   updateSet,
   removeSet,
 }) => {
-  const { stateStore } = useStores();
+  const { stateStore } = useStores()
 
-  const nextSet = stateStore.openedExerciseNextSet;
+  const nextSet = stateStore.openedExerciseNextSet
 
   const [editData, setEditData] = useState<WorkoutSetTrackData>({
     ...nextSet,
-  });
+  })
 
   useEffect(() => {
-    setEditData({ ...(selectedSet ?? nextSet) });
-  }, [selectedSet]);
+    setEditData({ ...(selectedSet ?? nextSet) })
+  }, [selectedSet])
 
   function saveChanges() {
     if (selectedSet) {
       updateSet({
         ...selectedSet,
         ...editData,
-      });
+      })
     } else {
-      addSet(editData);
+      addSet(editData)
     }
   }
 
   return (
     <View style={{ gap: 16 }}>
       {stateStore.openedExercise!.hasRepMeasument && (
-        <SetEditPanelSection text={texts.reps}>
+        <SetEditPanelSection text={translate('reps')}>
           <IncrementNumericEditor
             value={editData.reps}
-            onChange={(reps) => setEditData({ ...editData, reps })}
+            onChange={reps => setEditData({ ...editData, reps })}
           />
         </SetEditPanelSection>
       )}
 
       {stateStore.openedExercise!.hasWeightMeasument && (
-        <SetEditPanelSection text={texts.weight}>
+        <SetEditPanelSection text={translate('weight')}>
           <IncrementNumericEditor
             value={editData.weight}
-            onChange={(weight) => setEditData({ ...editData, weight })}
+            onChange={weight => setEditData({ ...editData, weight })}
             step={stateStore.openedExercise!.weightIncrement}
           />
         </SetEditPanelSection>
       )}
 
       {stateStore.openedExercise!.hasDistanceMeasument && (
-        <SetEditPanelSection text={texts.distance}>
+        <SetEditPanelSection text={translate('distance')}>
           <DistanceEditor
             value={editData.distance}
-            onChange={(distance) => setEditData({ ...editData, distance })}
+            onChange={distance => setEditData({ ...editData, distance })}
             unit={editData.distanceUnit}
-            onUnitChange={(distanceUnit) =>
+            onUnitChange={distanceUnit =>
               setEditData({ ...editData, distanceUnit })
             }
           />
@@ -82,19 +82,23 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
       )}
 
       {stateStore.openedExercise!.hasTimeMeasument && (
-        <SetEditPanelSection text={texts.time}>
+        <SetEditPanelSection text={translate('time')}>
           <DurationInput
             valueSeconds={editData.durationSecs}
-            onUpdate={(durationSecs) =>
+            onUpdate={durationSecs =>
               setEditData({ ...editData, durationSecs })
             }
           />
         </SetEditPanelSection>
       )}
 
-      <View style={{ flexDirection: "row", gap: 8 }}>
-        <Button mode="contained" onPress={saveChanges} style={{ flex: 1 }}>
-          {selectedSet ? texts.updateSet : texts.addSet}
+      <View style={{ flexDirection: 'row', gap: 8 }}>
+        <Button
+          mode="contained"
+          onPress={saveChanges}
+          style={{ flex: 1 }}
+        >
+          {selectedSet ? translate('updateSet') : translate('addSet')}
         </Button>
         {selectedSet && (
           <Button
@@ -103,12 +107,12 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
             style={{ flex: 1 }}
             buttonColor={colors.critical}
           >
-            {texts.remove}
+            {translate('remove')}
           </Button>
         )}
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default WorkoutExerciseEntrySetEditPanel;
+export default WorkoutExerciseEntrySetEditPanel

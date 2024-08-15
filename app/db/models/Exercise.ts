@@ -2,9 +2,9 @@ import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import DistanceType from '../../enums/DistanceType'
-import ExerciseType from '../../enums/ExerciseType'
 import { withSetPropAction } from '../helpers/withSetPropAction'
+import DistanceType from 'app/enums/DistanceType'
+import ExerciseType from 'app/enums/ExerciseType'
 
 const REP_MEASUREMENTS = [
   ExerciseType.REPS_WEIGHT,

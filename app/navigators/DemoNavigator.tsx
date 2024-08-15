@@ -17,13 +17,15 @@ import { DemoPodcastListScreen } from '../screens/IgniteDemo/_DemoPodcastListScr
 import { colors, spacing, typography } from '../theme'
 import { AppStackParamList, AppStackScreenProps } from './AppNavigator'
 import Workout from 'app/screens/Workout'
+import ExerciseSelect from 'app/screens/ExerciseSelect'
 
 export type DemoTabParamList = {
-  DemoCommunity: undefined
-  DemoShowroom: { queryIndex?: string; itemIndex?: string }
-  DemoDebug: undefined
-  DemoPodcastList: undefined
+  // DemoCommunity: undefined
+  // DemoShowroom: { queryIndex?: string; itemIndex?: string }
+  // DemoDebug: undefined
+  // DemoPodcastList: undefined
   Gymwork: undefined
+  ExerciseSelect: undefined
 }
 
 /**
@@ -124,7 +126,21 @@ export function DemoNavigator() {
         name="Gymwork"
         component={Workout}
         options={{
-          tabBarLabel: 'Gymwork tab label',
+          tabBarLabel: 'Workout',
+          tabBarIcon: ({ focused }) => (
+            <Icon
+              icon="heart"
+              color={focused ? colors.tint : undefined}
+              size={30}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ExerciseSelect"
+        component={ExerciseSelect}
+        options={{
+          tabBarLabel: 'Exercise Select',
           tabBarIcon: ({ focused }) => (
             <Icon
               icon="heart"

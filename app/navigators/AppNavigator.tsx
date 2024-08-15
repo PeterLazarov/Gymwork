@@ -23,6 +23,13 @@ import Config from '../config'
 import { DemoNavigator, DemoTabParamList } from './DemoNavigator'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 import { colors } from 'app/theme'
+import Workout from 'app/screens/Workout'
+import ExerciseSelect from 'app/screens/ExerciseSelect'
+import ExerciseCreate from 'app/screens/ExerciseCreate'
+import ExerciseEdit from 'app/screens/ExerciseEdit'
+import WorkoutExercise from 'app/screens/WorkoutExercise'
+import WorkoutFeedback from 'app/screens/WorkoutFeedback'
+import Calendar from 'app/screens/Calendar'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -40,7 +47,14 @@ import { colors } from 'app/theme'
 export type AppStackParamList = {
   // Welcome: undefined
   // Login: undefined
-  Demo: NavigatorScreenParams<DemoTabParamList>
+  // Demo: NavigatorScreenParams<DemoTabParamList>
+  Calendar: undefined
+  ExerciseCreate: undefined
+  ExerciseEdit: undefined
+  ExerciseSelect: undefined
+  Workout: undefined
+  WorkoutExercise: undefined
+  WorkoutFeedback: undefined
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
@@ -69,7 +83,7 @@ const AppStack = observer(function AppStack() {
         navigationBarColor: colors.background,
       }}
       // initialRouteName={isAuthenticated ? 'Welcome' : 'Login'}
-      initialRouteName={'Demo'}
+      initialRouteName={'Workout'}
     >
       {/* {isAuthenticated ? ( */}
       <>
@@ -78,9 +92,42 @@ const AppStack = observer(function AppStack() {
             component={Screens.WelcomeScreen}
           /> */}
 
+        {/* <Stack.Screen
+          name="Demo"
+          component={DemoNavigator}
+        />
         <Stack.Screen
           name="Demo"
           component={DemoNavigator}
+        /> */}
+
+        <Stack.Screen
+          name="Calendar"
+          component={Calendar}
+        />
+        <Stack.Screen
+          name="ExerciseCreate"
+          component={ExerciseCreate}
+        />
+        <Stack.Screen
+          name="ExerciseEdit"
+          component={ExerciseEdit}
+        />
+        <Stack.Screen
+          name="ExerciseSelect"
+          component={ExerciseSelect}
+        />
+        <Stack.Screen
+          name="Workout"
+          component={Workout}
+        />
+        <Stack.Screen
+          name="WorkoutExercise"
+          component={WorkoutExercise}
+        />
+        <Stack.Screen
+          name="WorkoutFeedback"
+          component={WorkoutFeedback}
         />
       </>
       {/* ) : (

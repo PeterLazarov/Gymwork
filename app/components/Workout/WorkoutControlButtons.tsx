@@ -8,6 +8,7 @@ import { useStores } from '../../db/helpers/useStores'
 import { Icon } from '../../../designSystem'
 import colors from '../../../designSystem/colors'
 import { translate } from 'app/i18n'
+import { Link } from '@react-navigation/native'
 
 type Props = {
   createWorkout: () => void
@@ -19,9 +20,9 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
 
   const isWorkoutStarted = !!stateStore.openedWorkout
   const hasNotes = stateStore.openedWorkout?.notes !== ''
-  function onAddExercisePress() {
-    // router.push("/ExerciseSelect");
-  }
+  // function onAddExercisePress() {
+  //   // router.push("/ExerciseSelect");
+  // }
 
   function copyPrevWorkout() {
     // TODO
@@ -74,19 +75,22 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
       )}
       {isWorkoutStarted && (
         <View style={{ flexDirection: 'row', gap: 8 }}>
-          <Button
-            mode="contained"
-            onPress={onAddExercisePress}
-            style={{ flex: 1 }}
-            icon={() => (
-              <Icon
-                color={colors.primaryText}
-                icon="add"
-              />
-            )}
-          >
-            {translate('addExercise')}
-          </Button>
+          <Link to={{ screen: 'ExerciseSelect' }}>
+            <Button
+              mode="contained"
+              // onPress={onAddExercisePress}
+              // style={{ flex: 1 }}
+              icon={() => (
+                <Icon
+                  color={colors.primaryText}
+                  icon="add"
+                />
+              )}
+            >
+              {translate('addExercise')}
+            </Button>
+          </Link>
+
           <Button
             mode="contained"
             onPress={onCommentPress}
