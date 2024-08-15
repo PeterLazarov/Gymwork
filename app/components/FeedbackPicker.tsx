@@ -1,92 +1,119 @@
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
-import { View } from 'react-native'
+import { Platform, View } from 'react-native'
 import { IconButton } from 'react-native-paper'
 
-import { Icon, iconSizes, BodySmallLabel, colors } from 'designSystem'
+import { Icon, iconSizes, BodyMediumLabel, colors } from 'designSystem'
 
 type Props = {
+  selected?: string
   onChange: (feeling: string) => void
 }
-const FeedbackPicker: React.FC<Props> = ({ onChange }) => {
-  const [selectedEmoji, setSelectedEmoji] = useState('neutral')
-  const unselectedOpacity = 0.3
-  const unselectedTextOpacity = 0.6
+const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
+  const [selectedEmoji, setSelectedEmoji] = useState(selected || 'neutral')
 
   function onPress(feeling: string) {
     setSelectedEmoji(feeling)
     onChange(feeling)
   }
 
+  const sadSelected = selectedEmoji === 'sad'
+  const neutralSelected = selectedEmoji === 'neutral'
+  const happySelected = selectedEmoji === 'happy'
+
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+      }}
+    >
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: sadSelected ? colors.white : 'transparent',
+          borderRadius: 8,
+          paddingBottom: 8,
+        }}
+      >
         <IconButton
           size={iconSizes.xLarge}
           onPress={() => onPress('sad')}
-          style={{ opacity: selectedEmoji === 'sad' ? 1 : unselectedOpacity }}
           icon={() => (
             <Icon
               icon="emoji-sad"
               size="large"
-              color={colors.red}
+              color={sadSelected ? colors.red : colors.lightred}
             />
           )}
         />
-        <BodySmallLabel
+        <BodyMediumLabel
           style={{
-            color: colors.red,
-            opacity: selectedEmoji === 'sad' ? 1 : unselectedTextOpacity,
+            color: sadSelected ? colors.red : colors.lightred,
+            fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
           Bad
-        </BodySmallLabel>
+        </BodyMediumLabel>
       </View>
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: neutralSelected ? colors.white : 'transparent',
+          borderRadius: 8,
+          paddingBottom: 8,
+        }}
+      >
         <IconButton
           size={iconSizes.xLarge}
           onPress={() => onPress('neutral')}
-          style={{
-            opacity: selectedEmoji === 'neutral' ? 1 : unselectedOpacity,
-          }}
           icon={() => (
             <Icon
               icon="emoji-neutral"
               size="large"
-              color={colors.yellow}
+              color={neutralSelected ? colors.yellow : colors.lightyellow}
             />
           )}
         />
-        <BodySmallLabel
+        <BodyMediumLabel
           style={{
-            color: colors.yellow,
-            opacity: selectedEmoji === 'neutral' ? 1 : unselectedTextOpacity,
+            color: neutralSelected ? colors.yellow : colors.lightyellow,
+            fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
           Normal
-        </BodySmallLabel>
+        </BodyMediumLabel>
       </View>
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: happySelected ? colors.white : 'transparent',
+          borderRadius: 8,
+          paddingBottom: 8,
+        }}
+      >
         <IconButton
           size={iconSizes.xLarge}
           onPress={() => onPress('happy')}
-          style={{ opacity: selectedEmoji === 'happy' ? 1 : unselectedOpacity }}
           icon={() => (
             <Icon
               icon="emoji-happy"
               size="large"
-              color={colors.green}
+              color={happySelected ? colors.green : colors.lightgreen}
             />
           )}
         />
-        <BodySmallLabel
+        <BodyMediumLabel
           style={{
-            color: colors.green,
-            opacity: selectedEmoji === 'happy' ? 1 : unselectedTextOpacity,
+            color: happySelected ? colors.green : colors.lightgreen,
+            fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
           Good
-        </BodySmallLabel>
+        </BodyMediumLabel>
       </View>
     </View>
   )

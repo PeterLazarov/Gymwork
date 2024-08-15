@@ -6,8 +6,8 @@ import { Appbar, TextInput } from 'react-native-paper'
 import FeedbackPicker from 'app/components/FeedbackPicker'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { BodyLargeLabel, Button, ButtonText, colors } from 'designSystem'
+import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 
 const WorkoutFeedbackPage: React.FC = () => {
   const { stateStore } = useStores()
@@ -17,7 +17,7 @@ const WorkoutFeedbackPage: React.FC = () => {
   }
 
   return (
-    <EmptyLayout>
+    <EmptyLayout style={{ backgroundColor: colors.lightgray }}>
       <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
         <Appbar.BackAction onPress={onBackPress} />
         <Appbar.Content title="Workout comments" />
@@ -28,6 +28,7 @@ const WorkoutFeedbackPage: React.FC = () => {
           How was the workout?
         </BodyLargeLabel>
         <FeedbackPicker
+          selected={stateStore.openedWorkout!.feeling}
           onChange={feeling =>
             stateStore.openedWorkout!.setProp('feeling', feeling)
           }
@@ -53,7 +54,7 @@ const WorkoutFeedbackPage: React.FC = () => {
           variant="primary"
           onPress={onBackPress}
         >
-          <ButtonText variant="primary">Save</ButtonText>
+          <ButtonText variant="primary">Done</ButtonText>
         </Button>
       </View>
     </EmptyLayout>
