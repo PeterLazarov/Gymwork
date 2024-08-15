@@ -18,7 +18,7 @@ type Props = {
   removeSet: (set: WorkoutSet) => void
 }
 
-const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
+const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
   selectedSet,
   addSet,
   updateSet,
@@ -115,4 +115,4 @@ const WorkoutExerciseEntrySetEditPanel: React.FC<Props> = ({
   )
 }
 
-export default WorkoutExerciseEntrySetEditPanel
+export default WorkoutExerciseSetEditPanel
