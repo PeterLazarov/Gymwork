@@ -15,17 +15,17 @@ dependencies:
     specifier: ~3.2.1
     version: 3.2.3(react-native@0.74.5)
   '@expo/vector-icons':
-    specifier: ^13.0.0
-    version: 13.0.0
+    specifier: ^14.0.2
+    version: 14.0.2
   '@expo/webpack-config':
     specifier: ^19.0.0
     version: 19.0.1(expo@51.0.28)
   '@react-native-async-storage/async-storage':
-    specifier: 1.21.0
-    version: 1.21.0(react-native@0.74.5)
+    specifier: 1.23.1
+    version: 1.23.1(react-native@0.74.5)
   '@react-native-picker/picker':
-    specifier: 2.4.10
-    version: 2.4.10(react-native@0.74.5)(react@18.2.0)
+    specifier: 2.7.5
+    version: 2.7.5(react-native@0.74.5)(react@18.2.0)
   '@react-navigation/bottom-tabs':
     specifier: ^6.3.2
     version: 6.6.1(@react-navigation/native@6.1.18)(react-native-safe-area-context@4.10.5)(react-native-screens@3.31.1)(react-native@0.74.5)(react@18.2.0)
@@ -39,14 +39,14 @@ dependencies:
     specifier: ^6.0.2
     version: 6.11.0(@react-navigation/native@6.1.18)(react-native-safe-area-context@4.10.5)(react-native-screens@3.31.1)(react-native@0.74.5)(react@18.2.0)
   '@shopify/flash-list':
-    specifier: 1.6.3
-    version: 1.6.3(@babel/runtime@7.25.0)(react-native@0.74.5)(react@18.2.0)
+    specifier: 1.6.4
+    version: 1.6.4(@babel/runtime@7.25.0)(react-native@0.74.5)(react@18.2.0)
   '@shopify/react-native-skia':
-    specifier: 0.1.196
-    version: 0.1.196(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
+    specifier: 1.2.3
+    version: 1.2.3(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
   '@wuba/react-native-echarts':
     specifier: ^1.2.5
-    version: 1.3.1(@shopify/react-native-skia@0.1.196)(echarts@5.5.1)(react-native-gesture-handler@2.16.2)(react-native-svg@13.9.0)(react-native@0.74.5)(react@18.2.0)(zrender@5.6.0)
+    version: 1.3.1(@shopify/react-native-skia@1.2.3)(echarts@5.5.1)(react-native-gesture-handler@2.16.2)(react-native-svg@15.2.0)(react-native@0.74.5)(react@18.2.0)(zrender@5.6.0)
   apisauce:
     specifier: 3.0.1
     version: 3.0.1
@@ -66,8 +66,8 @@ dependencies:
     specifier: ~0.12.1
     version: 0.12.5(expo@51.0.28)
   expo-constants:
-    specifier: ~14.4.2
-    version: 14.4.2(expo@51.0.28)
+    specifier: ~16.0.2
+    version: 16.0.2(expo@51.0.28)
   expo-font:
     specifier: ~12.0.5
     version: 12.0.9(expo@51.0.28)
@@ -78,8 +78,8 @@ dependencies:
     specifier: ~15.0.3
     version: 15.0.3(expo@51.0.28)
   expo-sqlite:
-    specifier: ~11.3.3
-    version: 11.3.3(expo@51.0.28)
+    specifier: ~14.0.6
+    version: 14.0.6(expo@51.0.28)
   expo-status-bar:
     specifier: ~1.12.1
     version: 1.12.1
@@ -89,6 +89,9 @@ dependencies:
   i18n-js:
     specifier: 3.9.2
     version: 3.9.2
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   luxon:
     specifier: ^3.4.3
     version: 3.5.0
@@ -115,7 +118,7 @@ dependencies:
     version: 3.5.2(react-native@0.74.5)(react@18.2.0)
   react-native-chart-kit:
     specifier: ^6.12.0
-    version: 6.12.0(react-native-svg@13.9.0)(react-native@0.74.5)(react@18.2.0)
+    version: 6.12.0(react-native-svg@15.2.0)(react-native@0.74.5)(react@18.2.0)
   react-native-drawer-layout:
     specifier: 4.0.0-alpha.9
     version: 4.0.0-alpha.9(react-native-gesture-handler@2.16.2)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
@@ -127,10 +130,10 @@ dependencies:
     version: 1.11.0(react-native@0.74.5)
   react-native-graph:
     specifier: ^1.0.2
-    version: 1.1.0(@shopify/react-native-skia@0.1.196)(react-native-gesture-handler@2.16.2)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
+    version: 1.1.0(@shopify/react-native-skia@1.2.3)(react-native-gesture-handler@2.16.2)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
   react-native-multiple-select:
     specifier: ^0.5.12
-    version: 0.5.12(deprecated-react-native-prop-types@5.0.0)(react-native-vector-icons@10.1.0)(react-native@0.74.5)(react@18.2.0)
+    version: 0.5.12(deprecated-react-native-prop-types@5.0.0)(lodash@4.17.21)(react-native-vector-icons@10.1.0)(react-native@0.74.5)(react@18.2.0)
   react-native-paper:
     specifier: ^5.11.1
     version: 5.12.5(react-native-safe-area-context@4.10.5)(react-native-vector-icons@10.1.0)(react-native@0.74.5)(react@18.2.0)
@@ -144,8 +147,8 @@ dependencies:
     specifier: 3.31.1
     version: 3.31.1(react-native@0.74.5)(react@18.2.0)
   react-native-svg:
-    specifier: 13.9.0
-    version: 13.9.0(react-native@0.74.5)(react@18.2.0)
+    specifier: 15.2.0
+    version: 15.2.0(react-native@0.74.5)(react@18.2.0)
   react-native-timer-picker:
     specifier: ^1.2.11
     version: 1.10.3(react-native@0.74.5)(react@18.2.0)
@@ -1919,28 +1922,6 @@ packages:
       nullthrows: 1.1.1
     dev: false
 
-  /@expo/config-plugins@7.2.5:
-    resolution: {integrity: sha512-w+5ccu1IxBHgyQk9CPFKLZOk8yZQEyTjbJwOzESK1eR7QwosbcsLkN1c1WWUZYiCXwORu3UTwJYll4+X2xxJhQ==}
-    dependencies:
-      '@expo/config-types': 49.0.0
-      '@expo/json-file': 8.2.37
-      '@expo/plist': 0.0.20
-      '@expo/sdk-runtime-versions': 1.0.0
-      '@react-native/normalize-color': 2.1.0
-      chalk: 4.1.2
-      debug: 4.3.6
-      find-up: 5.0.0
-      getenv: 1.0.0
-      glob: 7.1.6
-      resolve-from: 5.0.0
-      semver: 7.5.3
-      slash: 3.0.0
-      xcode: 3.0.1
-      xml2js: 0.6.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /@expo/config-plugins@8.0.8:
     resolution: {integrity: sha512-Fvu6IO13EUw0R9WeqxUO37FkM62YJBNcZb9DyJAOgMz7Ez/vaKQGEjKt9cwT+Q6uirtCATMgaq6VWAW7YW8xXw==}
     dependencies:
@@ -1963,30 +1944,8 @@ packages:
       - supports-color
     dev: false
 
-  /@expo/config-types@49.0.0:
-    resolution: {integrity: sha512-8eyREVi+K2acnMBe/rTIu1dOfyR2+AMnTLHlut+YpMV9OZPdeKV0Bs9BxAewGqBA2slslbQ9N39IS2CuTKpXkA==}
-    dev: false
-
   /@expo/config-types@51.0.2:
     resolution: {integrity: sha512-IglkIoiDwJMY01lYkF/ZSBoe/5cR+O3+Gx6fpLFjLfgZGBTdyPkKa1g8NWoWQCk+D3cKL2MDbszT2DyRRB0YqQ==}
-    dev: false
-
-  /@expo/config@8.1.2:
-    resolution: {integrity: sha512-4e7hzPj50mQIlsrzOH6XZ36O094mPfPTIDIH4yv49bWNMc7GFLTofB/lcT+QyxiLaJuC0Wlk9yOLB8DIqmtwug==}
-    dependencies:
-      '@babel/code-frame': 7.10.4
-      '@expo/config-plugins': 7.2.5
-      '@expo/config-types': 49.0.0
-      '@expo/json-file': 8.3.3
-      getenv: 1.0.0
-      glob: 7.1.6
-      require-from-string: 2.0.2
-      resolve-from: 5.0.0
-      semver: 7.5.3
-      slugify: 1.6.6
-      sucrase: 3.35.0
-    transitivePeerDependencies:
-      - supports-color
     dev: false
 
   /@expo/config@9.0.3:
@@ -2077,14 +2036,6 @@ packages:
       - encoding
     dev: false
 
-  /@expo/json-file@8.2.37:
-    resolution: {integrity: sha512-YaH6rVg11JoTS2P6LsW7ybS2CULjf40AbnAHw2F1eDPuheprNjARZMnyHFPkKv7GuxCy+B9GPcbOKgc4cgA80Q==}
-    dependencies:
-      '@babel/code-frame': 7.10.4
-      json5: 2.2.3
-      write-file-atomic: 2.4.3
-    dev: false
-
   /@expo/json-file@8.3.3:
     resolution: {integrity: sha512-eZ5dld9AD0PrVRiIWpRkm5aIoWBw3kAyd8VkuWEy92sEthBKDDDHAnK2a0dw0Eil6j7rK7lS/Qaq/Zzngv2h5A==}
     dependencies:
@@ -2151,14 +2102,6 @@ packages:
       sudo-prompt: 9.1.1
     dev: false
 
-  /@expo/plist@0.0.20:
-    resolution: {integrity: sha512-UXQ4LXCfTZ580LDHGJ5q62jSTwJFFJ1GqBu8duQMThiHKWbMJ+gajJh6rsB6EJ3aLUr9wcauxneL5LVRFxwBEA==}
-    dependencies:
-      '@xmldom/xmldom': 0.7.13
-      base64-js: 1.5.1
-      xmlbuilder: 14.0.0
-    dev: false
-
   /@expo/plist@0.1.3:
     resolution: {integrity: sha512-GW/7hVlAylYg1tUrEASclw1MMk9FP4ZwyFAY/SUTJIhPDQHtfOlXREyWV3hhrHdX/K+pS73GNgdfT6E/e+kBbg==}
     dependencies:
@@ -2220,10 +2163,6 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       cross-spawn: 7.0.3
-    dev: false
-
-  /@expo/vector-icons@13.0.0:
-    resolution: {integrity: sha512-TI+l71+5aSKnShYclFa14Kum+hQMZ86b95SH6tQUG3qZEmLTarvWpKwqtTwQKqvlJSJrpFiSFu3eCuZokY6zWA==}
     dev: false
 
   /@expo/vector-icons@14.0.2:
@@ -2473,8 +2412,8 @@ packages:
     dev: false
     optional: true
 
-  /@react-native-async-storage/async-storage@1.21.0(react-native@0.74.5):
-    resolution: {integrity: sha512-JL0w36KuFHFCvnbOXRekqVAUplmOyT/OuCQkogo6X98MtpSaJOKEAeZnYO8JB0U/RIEixZaGI5px73YbRm/oag==}
+  /@react-native-async-storage/async-storage@1.23.1(react-native@0.74.5):
+    resolution: {integrity: sha512-Qd2kQ3yi6Y3+AcUlrHxSLlnBvpdCEMVGFlVBneVOjaFaPU61g1huc38g339ysXspwY1QZA2aNhrk/KlHGO+ewA==}
     peerDependencies:
       react-native: ^0.0.0-0 || >=0.60 <1.0
     dependencies:
@@ -2643,11 +2582,11 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@react-native-picker/picker@2.4.10(react-native@0.74.5)(react@18.2.0):
-    resolution: {integrity: sha512-EvAlHmPEPOwvbP6Pjg/gtDV3XJzIjIxr10fXFNlX5r9HeHw582G1Zt2o8FLyB718nOttgj8HYUTGxvhu4N65sQ==}
+  /@react-native-picker/picker@2.7.5(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-vhMaOLkXSUb+YKVbukMJToU4g+89VMhBG2U9+cLYF8X8HtFRidrHjohGqT8/OyesDuKIXeLIP+UFYI9Q9CRA9Q==}
     peerDependencies:
-      react: '>=16'
-      react-native: '>=0.57'
+      react: '*'
+      react-native: '*'
     dependencies:
       react: 18.2.0
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
@@ -2838,10 +2777,6 @@ packages:
       - '@babel/preset-env'
       - supports-color
 
-  /@react-native/normalize-color@2.1.0:
-    resolution: {integrity: sha512-Z1jQI2NpdFJCVgpY+8Dq/Bt3d+YUi1928Q+/CZm/oh66fzM0RUl54vvuXlPJKybH4pdCZey1eDTPaLHkMPNgWA==}
-    dev: false
-
   /@react-native/normalize-colors@0.73.2:
     resolution: {integrity: sha512-bRBcb2T+I88aG74LMVHaKms2p/T8aQd8+BZ7LuuzXlRfog1bMWWn/C5i0HVuvW4RPtXQYgIlGiXVDy9Ir1So/w==}
     dev: false
@@ -2998,8 +2933,8 @@ packages:
       join-component: 1.1.0
     dev: false
 
-  /@shopify/flash-list@1.6.3(@babel/runtime@7.25.0)(react-native@0.74.5)(react@18.2.0):
-    resolution: {integrity: sha512-XM2iu4CeD9SOEUxaGG3UkxfUxGPWG9yacga1yQSgskAjUsRDFTsD3y4Dyon9n8MfDwgrRpEwuijd+7NeQQoWaQ==}
+  /@shopify/flash-list@1.6.4(@babel/runtime@7.25.0)(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-M2momcnY7swsvmpHIFDVbdOaFw4aQocJXA/lFP0Gpz+alQjFylqVKvszxl4atYO2SNbjxlb2L6hEP9WEcAknGQ==}
     peerDependencies:
       '@babel/runtime': '*'
       react: '*'
@@ -3012,10 +2947,9 @@ packages:
       tslib: 2.4.0
     dev: false
 
-  /@shopify/react-native-skia@0.1.196(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0):
-    resolution: {integrity: sha512-MwL+X9XzwPdyp5juOel6pNkd7DoRfPSbjqlkOTs5C83HCdceZOO0x6DMK9uiZv/mVxQwOnexfNh5h06185qiow==}
+  /@shopify/react-native-skia@1.2.3(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-gyUD/HGsMyZ+YAoWxVh24HYN5juwC/dZWINL/0sKP7Ttee/0igCRxWPneH1BbVH28dhyf+tvksQNUwpMM3VWbg==}
     hasBin: true
-    requiresBuild: true
     peerDependencies:
       react: '>=18.0'
       react-native: '>=0.64'
@@ -3026,7 +2960,7 @@ packages:
       react-native-reanimated:
         optional: true
     dependencies:
-      canvaskit-wasm: 0.38.0
+      canvaskit-wasm: 0.39.1
       react: 18.2.0
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
       react-native-reanimated: 3.10.1(@babel/core@7.25.2)(react-native@0.74.5)(react@18.2.0)
@@ -3571,7 +3505,11 @@ packages:
       '@xtuc/long': 4.2.2
     dev: false
 
-  /@wuba/react-native-echarts@1.3.1(@shopify/react-native-skia@0.1.196)(echarts@5.5.1)(react-native-gesture-handler@2.16.2)(react-native-svg@13.9.0)(react-native@0.74.5)(react@18.2.0)(zrender@5.6.0):
+  /@webgpu/types@0.1.21:
+    resolution: {integrity: sha512-pUrWq3V5PiSGFLeLxoGqReTZmiiXwY3jRkIG5sLLKjyqNxrwm/04b4nw7LSmGWJcKk59XOM/YRTUwOzo4MMlow==}
+    dev: false
+
+  /@wuba/react-native-echarts@1.3.1(@shopify/react-native-skia@1.2.3)(echarts@5.5.1)(react-native-gesture-handler@2.16.2)(react-native-svg@15.2.0)(react-native@0.74.5)(react@18.2.0)(zrender@5.6.0):
     resolution: {integrity: sha512-ShQSWeBWhiZO04IY3BaXwrKGtu1ofYxW5IpW4oiDiHJ9R2An8cIyZyqs1VWtOS0WI0e8RRydRo4wY/H1IbwZ+w==}
     engines: {node: '>= 14.0.0'}
     peerDependencies:
@@ -3583,14 +3521,14 @@ packages:
       react-native-svg: '*'
       zrender: '*'
     dependencies:
-      '@shopify/react-native-skia': 0.1.196(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
+      '@shopify/react-native-skia': 1.2.3(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
       '@xmldom/xmldom': 0.8.10
       echarts: 5.5.1
       entities: 4.5.0
       react: 18.2.0
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
       react-native-gesture-handler: 2.16.2(react-native@0.74.5)(react@18.2.0)
-      react-native-svg: 13.9.0(react-native@0.74.5)(react@18.2.0)
+      react-native-svg: 15.2.0(react-native@0.74.5)(react@18.2.0)
       zrender: 5.6.0
     dev: false
 
@@ -4307,8 +4245,10 @@ packages:
   /caniuse-lite@1.0.30001651:
     resolution: {integrity: sha512-9Cf+Xv1jJNe1xPZLGuUXLNkE1BoDkqRqYyFJ9TDYSqhduqA4hu4oR9HluGoWYQC/aj8WHjsGVV+bwkh0+tegRg==}
 
-  /canvaskit-wasm@0.38.0:
-    resolution: {integrity: sha512-ZEG6lucpbQ4Ld+mY8C1Ng+PMLVP+/AX02jS0Sdl28NyMxuKSa9uKB8oGd1BYp1XWPyO2Jgr7U8pdyjJ/F3xR5Q==}
+  /canvaskit-wasm@0.39.1:
+    resolution: {integrity: sha512-Gy3lCmhUdKq+8bvDrs9t8+qf7RvcjuQn+we7vTVVyqgOVO1UVfHpsnBxkTZw+R4ApEJ3D5fKySl9TU11hmjl/A==}
+    dependencies:
+      '@webgpu/types': 0.1.21
     dev: false
 
   /chalk@2.4.2:
@@ -5780,18 +5720,6 @@ packages:
       semver: 7.6.3
     dev: false
 
-  /expo-constants@14.4.2(expo@51.0.28):
-    resolution: {integrity: sha512-nOB122DOAjk+KrJT69lFQAoYVQGQjFHSigCPVBzVdko9S1xGsfiOH9+X5dygTsZTIlVLpQJDdmZ7ONiv3i+26w==}
-    peerDependencies:
-      expo: '*'
-    dependencies:
-      '@expo/config': 8.1.2
-      expo: 51.0.28(@babel/core@7.25.2)(@babel/preset-env@7.25.3)
-      uuid: 3.4.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /expo-constants@16.0.2(expo@51.0.28):
     resolution: {integrity: sha512-9tNY3OVO0jfiMzl7ngb6IOyR5VFzNoN5OOazUWoeGfmMqVB5kltTemRvKraK9JRbBKIw+SOYLEmF0sEqgFZ6OQ==}
     peerDependencies:
@@ -5882,8 +5810,8 @@ packages:
       - encoding
     dev: false
 
-  /expo-sqlite@11.3.3(expo@51.0.28):
-    resolution: {integrity: sha512-73n+mhwi5mO28oVVrDGYcjy28XeUjNtpXVPtEmc+sr/NQ0hKlkIf2PD3/gKsyNuI8O/twNCZxsAQdM32yHGr8A==}
+  /expo-sqlite@14.0.6(expo@51.0.28):
+    resolution: {integrity: sha512-T3YNx7LT7lM4UQRgi8ml+cj0Wf3Ep09+B4CVaWtUCjdyYJIZjsHDT65hypKG+r6btTLLEd11hjlrstNQhzt5gQ==}
     peerDependencies:
       expo: '*'
     dependencies:
@@ -9232,7 +9160,7 @@ packages:
       react-native-month: 1.6.3(react-native@0.74.5)(react@18.2.0)
     dev: false
 
-  /react-native-chart-kit@6.12.0(react-native-svg@13.9.0)(react-native@0.74.5)(react@18.2.0):
+  /react-native-chart-kit@6.12.0(react-native-svg@15.2.0)(react-native@0.74.5)(react@18.2.0):
     resolution: {integrity: sha512-nZLGyCFzZ7zmX0KjYeeSV1HKuPhl1wOMlTAqa0JhlyW62qV/1ZPXHgT8o9s8mkFaGxdqbspOeuaa6I9jUQDgnA==}
     peerDependencies:
       react: '> 16.7.0'
@@ -9244,7 +9172,7 @@ packages:
       point-in-polygon: 1.1.0
       react: 18.2.0
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
-      react-native-svg: 13.9.0(react-native@0.74.5)(react@18.2.0)
+      react-native-svg: 15.2.0(react-native@0.74.5)(react@18.2.0)
     dev: false
 
   /react-native-drawer-layout@4.0.0-alpha.9(react-native-gesture-handler@2.16.2)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0):
@@ -9298,7 +9226,7 @@ packages:
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
     dev: false
 
-  /react-native-graph@1.1.0(@shopify/react-native-skia@0.1.196)(react-native-gesture-handler@2.16.2)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0):
+  /react-native-graph@1.1.0(@shopify/react-native-skia@1.2.3)(react-native-gesture-handler@2.16.2)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0):
     resolution: {integrity: sha512-jcPLfhOOzjNaug1yw4Y6RecqMTdsiW0dQD+VruOpgzUUIZivNHIQD4LCp3vqdpqhok/nqggviuHVAYQv1ICRTw==}
     peerDependencies:
       '@shopify/react-native-skia': '>=0.1.233'
@@ -9307,7 +9235,7 @@ packages:
       react-native-gesture-handler: '>=2'
       react-native-reanimated: '>=3.1.0'
     dependencies:
-      '@shopify/react-native-skia': 0.1.196(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
+      '@shopify/react-native-skia': 1.2.3(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
       react: 18.2.0
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
       react-native-gesture-handler: 2.16.2(react-native@0.74.5)(react@18.2.0)
@@ -9324,7 +9252,7 @@ packages:
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
     dev: false
 
-  /react-native-multiple-select@0.5.12(deprecated-react-native-prop-types@5.0.0)(react-native-vector-icons@10.1.0)(react-native@0.74.5)(react@18.2.0):
+  /react-native-multiple-select@0.5.12(deprecated-react-native-prop-types@5.0.0)(lodash@4.17.21)(react-native-vector-icons@10.1.0)(react-native@0.74.5)(react@18.2.0):
     resolution: {integrity: sha512-lFw0u798/2qHr4TwDdxMtReRtsNOCC2SWPzWHRGKE4XcBiUll0hHhke7iqQg4xJdfo46C/h69f1ZXphDOjZY3A==}
     peerDependencies:
       deprecated-react-native-prop-types: '>2.0.0'
@@ -9334,6 +9262,7 @@ packages:
       react-native-vector-icons: '>6.0.0'
     dependencies:
       deprecated-react-native-prop-types: 5.0.0
+      lodash: 4.17.21
       prop-types: 15.8.1
       react: 18.2.0
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
@@ -9401,8 +9330,8 @@ packages:
       warn-once: 0.1.1
     dev: false
 
-  /react-native-svg@13.9.0(react-native@0.74.5)(react@18.2.0):
-    resolution: {integrity: sha512-Ey18POH0dA0ob/QiwCBVrxIiwflhYuw0P0hBlOHeY4J5cdbs8ngdKHeWC/Kt9+ryP6fNoEQ1PUgPYw2Bs/rp5Q==}
+  /react-native-svg@15.2.0(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-R0E6IhcJfVLsL0lRmnUSm72QO+mTqcAOM5Jb8FVGxJqX3NfJMlMP0YyvcajZiaRR8CqQUpEoqrY25eyZb006kw==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -9952,14 +9881,6 @@ packages:
     resolution: {integrity: sha512-OrOb32TeeambH6UrhtShmF7CRDqhL6/5XpPNp2DuRH6+9QLw/orhp72j87v8Qa1ScDkvrrBNpZcDejAirJmfXQ==}
     engines: {node: '>=10'}
     hasBin: true
-    dev: false
-
-  /semver@7.5.3:
-    resolution: {integrity: sha512-QBlUtyVk/5EeHbi7X0fw6liDZc7BBmEaSYn01fMU1OUYbf6GPsbTtd8WmnqbI20SeycoHSeiybkE/q1Q+qlThQ==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dependencies:
-      lru-cache: 6.0.0
     dev: false
 
   /semver@7.5.4:
@@ -11139,12 +11060,6 @@ packages:
   /utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
-
-  /uuid@3.4.0:
-    resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
-    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
-    hasBin: true
-    dev: false
 
   /uuid@7.0.3:
     resolution: {integrity: sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==}
