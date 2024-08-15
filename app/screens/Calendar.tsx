@@ -85,6 +85,9 @@ const CalendarPage: React.FC<CalendarPageProps> = ({ navigation }) => {
               width: 39,
               flex: 0,
             },
+            dayContainerStyle: {
+              backgroundColor: colors.secondary,
+            },
           }}
           disableRange
           monthHeight={370}

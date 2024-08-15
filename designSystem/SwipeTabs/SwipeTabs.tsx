@@ -40,7 +40,7 @@ const SwipeTabs: React.FC<Props> = ({
 
   const onScreenChange = (index: number) => {
     setCurrentIndex(index)
-    const tab = tabsConfig[index].label
+    const tab = tabsConfig[index].name
     onTabChange?.(tab)
   }
 
