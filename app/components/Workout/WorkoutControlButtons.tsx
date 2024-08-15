@@ -3,14 +3,12 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
-import { Button } from 'react-native-paper'
+import {} from 'react-native-paper'
 
-import { useStores } from '../../db/helpers/useStores'
-import { Icon } from '../../../designSystem'
-import colors from '../../../designSystem/colors'
+import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { AppStackParamList } from 'app/navigators'
-import { Divider } from 'designSystem'
+import { colors, Icon, Button, ButtonText } from 'designSystem'
 
 type Props = {
   createWorkout: () => void
@@ -41,83 +39,67 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
       style={{
         display: 'flex',
         flexDirection: 'row',
-        gap: 8,
-        padding: 8,
         alignItems: 'center',
+        gap: 1,
         justifyContent: 'center',
-        backgroundColor: colors.primary,
       }}
     >
       {!isWorkoutStarted && (
         <>
           <Button
-            mode="text"
+            variant="primary"
             onPress={createWorkout}
             style={{ flex: 1 }}
-            textColor={colors.primaryText}
-            icon={() => (
-              <Icon
-                color={colors.primaryText}
-                icon="add"
-              />
-            )}
           >
-            {translate('newWorkout')}
+            <Icon
+              color={colors.primaryText}
+              icon="add"
+            />
+            <ButtonText variant="primary">{translate('newWorkout')}</ButtonText>
           </Button>
-          <Divider
-            style={{ backgroundColor: colors.primaryText, flex: 0 }}
-            orientation="vertical"
-          />
           <Button
-            mode="text"
+            variant="primary"
             onPress={copyPrevWorkout}
             style={{ flex: 1 }}
-            textColor={colors.primaryText}
-            icon={() => (
-              <Icon
-                color={colors.primaryText}
-                icon="copy-outline"
-              />
-            )}
           >
-            {translate('copyWorkout')}
+            <Icon
+              color={colors.primaryText}
+              icon="copy-outline"
+            />
+            <ButtonText variant="primary">
+              {translate('copyWorkout')}
+            </ButtonText>
           </Button>
         </>
       )}
       {isWorkoutStarted && (
         <>
           <Button
-            mode="text"
+            variant="primary"
             onPress={onAddExercisePress}
             style={{ flex: 1 }}
-            textColor={colors.primaryText}
-            icon={() => (
-              <Icon
-                color={colors.primaryText}
-                icon="add"
-              />
-            )}
           >
-            {translate('addExercise')}
+            <Icon
+              color={colors.primaryText}
+              icon="add"
+            />
+            <ButtonText variant="primary">
+              {translate('addExercise')}
+            </ButtonText>
           </Button>
 
-          <Divider
-            style={{ backgroundColor: colors.primaryText, flex: 0 }}
-            orientation="vertical"
-          />
           <Button
-            mode="text"
+            variant="primary"
             onPress={onCommentPress}
             style={{ flex: 1 }}
-            textColor={colors.primaryText}
-            icon={() => (
-              <Icon
-                color={colors.primaryText}
-                icon="chatbox-ellipses"
-              />
-            )}
           >
-            {hasNotes ? 'View comment' : 'Add comment'}
+            <Icon
+              color={colors.primaryText}
+              icon="chatbox-ellipses"
+            />
+            <ButtonText variant="primary">
+              {hasNotes ? 'View comment' : 'Add comment'}
+            </ButtonText>
           </Button>
         </>
       )}

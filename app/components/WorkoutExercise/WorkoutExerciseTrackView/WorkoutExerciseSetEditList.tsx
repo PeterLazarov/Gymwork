@@ -3,11 +3,9 @@ import React, { useCallback } from 'react'
 import { FlatList, ListRenderItemInfo, View } from 'react-native'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
-import { useStores } from '../../../db/helpers/useStores'
-import { WorkoutSet } from '../../../db/models'
-import { Divider } from '../../../../designSystem'
-import { BodyLargeLabel } from '../../../../designSystem/Label'
-import colors from '../../../../designSystem/colors'
+import { useStores } from 'app/db/helpers/useStores'
+import { WorkoutSet } from 'app/db/models'
+import { colors, Divider, BodyLargeLabel } from 'designSystem'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -36,7 +34,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
     },
     [selectedSet]
   )
-  const ITEM_HEIGHT = 60
+  const ITEM_HEIGHT = 62
   const getItemLayout = (
     data: ArrayLike<WorkoutSet> | null | undefined,
     index: number
@@ -49,7 +47,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, padding: 16 }}>
       <FlatList
         data={stateStore.openedExerciseSets}
         renderItem={renderItem}

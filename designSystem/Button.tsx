@@ -8,6 +8,7 @@ type IconButtonProps = {
 
 type ButtonProps = {
   variant: 'primary' | 'secondary' | 'critical' | 'tertiary'
+  disabled?: boolean
 }
 
 export const IconButtonContainer = styled.TouchableOpacity<IconButtonProps>`
@@ -19,30 +20,33 @@ export const IconButtonContainer = styled.TouchableOpacity<IconButtonProps>`
     ({
       default: colors.tertiary,
       full: colors.iconBG,
-    })[props.variant || 'default']};
+    }[props.variant || 'default'])};
 `
 
-export const ButtonContainer = styled.TouchableOpacity<ButtonProps>`
-  padding: 12px;
-  border-radius: 10px;
+const buttonVariants = {
+  primary: colors.primary,
+  secondary: colors.secondary,
+  critical: colors.critical,
+  tertiary: colors.tertiary,
+}
+export const Button = styled.TouchableOpacity<ButtonProps>`
   justify-content: center;
+  align-items: center;
+  height: 42px;
+  gap: 6px;
+  flex-direction: row;
   background: ${props =>
-    ({
-      primary: colors.primary,
-      secondary: colors.secondary,
-      critical: colors.critical,
-      tertiary: colors.tertiary,
-    })[props.variant]};
+    props.disabled ? colors.disabled : buttonVariants[props.variant]};
 `
 
+const buttonTextVariants = {
+  primary: colors.primaryText,
+  secondary: colors.secondaryText,
+  critical: colors.criticalText,
+  tertiary: colors.tertiaryText,
+}
 export const ButtonText = styled.Text<ButtonProps>`
   font-size: 16px;
   text-align: center;
-  color: ${props =>
-    ({
-      primary: colors.primaryText,
-      secondary: colors.secondaryText,
-      critical: colors.criticalText,
-      tertiary: colors.tertiaryText,
-    })[props.variant]};
+  color: ${props => buttonTextVariants[props.variant]};
 `

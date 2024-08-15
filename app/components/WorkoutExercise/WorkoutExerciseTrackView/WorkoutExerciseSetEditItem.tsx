@@ -1,15 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 
-import WorkoutExerciseSetWarmupButton from './WorkoutExerciseSetWarmupButton'
-import { useStores } from '../../../db/helpers/useStores'
-import { WorkoutSet } from '../../../db/models'
-import { ButtonContainer, Icon } from '../../../../designSystem'
-import colors from '../../../../designSystem/colors'
-import { getFormatedDuration } from '../../../utils/time'
-import SetDataLabel from '../SetDataLabel'
+import { useStores } from 'app/db/helpers/useStores'
+import { WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
+import { colors, Icon } from 'designSystem'
+import { getFormatedDuration } from 'app/utils/time'
+import WorkoutExerciseSetWarmupButton from './WorkoutExerciseSetWarmupButton'
+import SetDataLabel from '../SetDataLabel'
 
 type Props = {
   set: WorkoutSet
@@ -40,15 +39,15 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
   }
 
   return (
-    <ButtonContainer
-      variant="tertiary"
+    <TouchableOpacity
       onPress={onPress}
       style={{
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        height: 48,
+        paddingHorizontal: 10,
+        paddingVertical: 1,
       }}
     >
       <View
@@ -98,7 +97,7 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
           isFocused={isFocused}
         />
       )}
-    </ButtonContainer>
+    </TouchableOpacity>
   )
 }
 

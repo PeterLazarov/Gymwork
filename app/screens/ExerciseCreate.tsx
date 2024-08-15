@@ -1,15 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { Appbar, Button } from 'react-native-paper'
+import { Appbar } from 'react-native-paper'
 
-import ConfirmationDialog from '../components/ConfirmationDialog'
-import ExerciseEditForm from '../components/Exercise/ExerciseEditForm'
-import { useStores } from '../db/helpers/useStores'
-import { Exercise, ExerciseModel } from '../db/models'
-import { Icon } from '../../designSystem'
-import colors from '../../designSystem/colors'
+import ConfirmationDialog from 'app/components/ConfirmationDialog'
+import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
+import { useStores } from 'app/db/helpers/useStores'
+import { Exercise, ExerciseModel } from 'app/db/models'
 import { AppStackScreenProps } from 'app/navigators'
+import { Button, ButtonText, Icon, colors } from 'designSystem'
 
 interface ExerciseCreatePageProps
   extends AppStackScreenProps<'ExerciseCreate'> {}
@@ -66,20 +65,13 @@ const ExerciseCreatePage: React.FC<ExerciseCreatePageProps> = ({
           onUpdate={onUpdate}
         />
 
-        <View
-          style={{
-            backgroundColor: formValid ? colors.primary : colors.disabled,
-          }}
+        <Button
+          variant="primary"
+          onPress={onComplete}
+          disabled={!formValid}
         >
-          <Button
-            mode="text"
-            onPress={onComplete}
-            disabled={!formValid}
-            textColor={colors.white}
-          >
-            Save
-          </Button>
-        </View>
+          <ButtonText variant="primary">Save</ButtonText>
+        </Button>
       </View>
       <ConfirmationDialog
         open={confirmDialogOpen}

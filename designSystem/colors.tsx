@@ -1,7 +1,7 @@
 export default {
   primary: '#764abc',
   secondary: '#f4f4f4',
-  critical: 'red',
+  critical: '#B22222',
   tertiary: 'transparent',
   iconBG: '#dfdfdf',
   primaryText: 'white',

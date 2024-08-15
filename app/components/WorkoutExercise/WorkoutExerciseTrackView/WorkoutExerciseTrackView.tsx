@@ -4,8 +4,8 @@ import { View } from 'react-native'
 
 import WorkoutExerciseSetEditList from './WorkoutExerciseSetEditList'
 import WorkoutExerciseSetEditPanel from './WorkoutExerciseSetEditPanel'
-import { useStores } from '../../../db/helpers/useStores'
-import { WorkoutSet } from '../../../db/models'
+import { useStores } from 'app/db/helpers/useStores'
+import { WorkoutSet } from 'app/db/models'
 
 const WorkoutExerciseTrackView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
@@ -34,7 +34,6 @@ const WorkoutExerciseTrackView: React.FC = () => {
   return (
     <View
       style={{
-        padding: 16,
         borderRadius: 8,
         gap: 24,
         flexDirection: 'column',
@@ -42,16 +41,15 @@ const WorkoutExerciseTrackView: React.FC = () => {
         display: 'flex',
       }}
     >
+      <WorkoutExerciseSetEditList
+        selectedSet={selectedSet}
+        setSelectedSet={setSelectedSet}
+      />
       <WorkoutExerciseSetEditPanel
         selectedSet={selectedSet}
         addSet={addSet}
         updateSet={updateSet}
         removeSet={removeSet}
-      />
-
-      <WorkoutExerciseSetEditList
-        selectedSet={selectedSet}
-        setSelectedSet={setSelectedSet}
       />
     </View>
   )

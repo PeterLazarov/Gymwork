@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
-import { Button } from 'react-native-paper'
 
 import SetEditPanelSection from './SetEditPanelSection'
-import { useStores } from '../../../db/helpers/useStores'
-import { WorkoutSet, WorkoutSetTrackData } from '../../../db/models'
-import DistanceEditor from '../../../../designSystem/DistanceEditor'
-import DurationInput from '../../../../designSystem/DurationInput'
-import IncrementNumericEditor from '../../../../designSystem/IncrementNumericEditor'
-import colors from '../../../../designSystem/colors'
+import { useStores } from 'app/db/helpers/useStores'
+import { WorkoutSet, WorkoutSetTrackData } from 'app/db/models'
 import { translate } from 'app/i18n'
+import {
+  Button,
+  DistanceEditor,
+  DurationInput,
+  IncrementNumericEditor,
+  ButtonText,
+} from 'designSystem'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -48,70 +50,73 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
   }
 
   return (
-    <View style={{ gap: 16 }}>
-      {stateStore.openedExercise!.hasRepMeasument && (
-        <SetEditPanelSection text={translate('reps')}>
-          <IncrementNumericEditor
-            value={editData.reps}
-            onChange={reps => setEditData({ ...editData, reps })}
-          />
-        </SetEditPanelSection>
-      )}
+    <>
+      <View style={{ gap: 16, padding: 16 }}>
+        {stateStore.openedExercise!.hasRepMeasument && (
+          <SetEditPanelSection text={translate('reps')}>
+            <IncrementNumericEditor
+              value={editData.reps}
+              onChange={reps => setEditData({ ...editData, reps })}
+            />
+          </SetEditPanelSection>
+        )}
 
-      {stateStore.openedExercise!.hasWeightMeasument && (
-        <SetEditPanelSection text={translate('weight')}>
-          <IncrementNumericEditor
-            value={editData.weight}
-            onChange={weight => setEditData({ ...editData, weight })}
-            step={stateStore.openedExercise!.weightIncrement}
-          />
-        </SetEditPanelSection>
-      )}
+        {stateStore.openedExercise!.hasWeightMeasument && (
+          <SetEditPanelSection text={translate('weight')}>
+            <IncrementNumericEditor
+              value={editData.weight}
+              onChange={weight => setEditData({ ...editData, weight })}
+              step={stateStore.openedExercise!.weightIncrement}
+            />
+          </SetEditPanelSection>
+        )}
 
-      {stateStore.openedExercise!.hasDistanceMeasument && (
-        <SetEditPanelSection text={translate('distance')}>
-          <DistanceEditor
-            value={editData.distance}
-            onChange={distance => setEditData({ ...editData, distance })}
-            unit={editData.distanceUnit}
-            onUnitChange={distanceUnit =>
-              setEditData({ ...editData, distanceUnit })
-            }
-          />
-        </SetEditPanelSection>
-      )}
+        {stateStore.openedExercise!.hasDistanceMeasument && (
+          <SetEditPanelSection text={translate('distance')}>
+            <DistanceEditor
+              value={editData.distance}
+              onChange={distance => setEditData({ ...editData, distance })}
+              unit={editData.distanceUnit}
+              onUnitChange={distanceUnit =>
+                setEditData({ ...editData, distanceUnit })
+              }
+            />
+          </SetEditPanelSection>
+        )}
 
-      {stateStore.openedExercise!.hasTimeMeasument && (
-        <SetEditPanelSection text={translate('time')}>
-          <DurationInput
-            valueSeconds={editData.durationSecs}
-            onUpdate={durationSecs =>
-              setEditData({ ...editData, durationSecs })
-            }
-          />
-        </SetEditPanelSection>
-      )}
+        {stateStore.openedExercise!.hasTimeMeasument && (
+          <SetEditPanelSection text={translate('time')}>
+            <DurationInput
+              valueSeconds={editData.durationSecs}
+              onUpdate={durationSecs =>
+                setEditData({ ...editData, durationSecs })
+              }
+            />
+          </SetEditPanelSection>
+        )}
+      </View>
 
-      <View style={{ flexDirection: 'row', gap: 8 }}>
+      <View style={{ flexDirection: 'row' }}>
         <Button
-          mode="contained"
+          variant="primary"
           onPress={saveChanges}
           style={{ flex: 1 }}
         >
-          {selectedSet ? translate('updateSet') : translate('addSet')}
+          <ButtonText variant="primary">
+            {selectedSet ? translate('updateSet') : translate('addSet')}
+          </ButtonText>
         </Button>
         {selectedSet && (
           <Button
-            mode="contained"
+            variant="critical"
             onPress={() => removeSet(selectedSet)}
             style={{ flex: 1 }}
-            buttonColor={colors.critical}
           >
-            {translate('remove')}
+            <ButtonText variant="critical">{translate('remove')}</ButtonText>
           </Button>
         )}
       </View>
-    </View>
+    </>
   )
 }
 

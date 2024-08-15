@@ -1,13 +1,12 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
-import { Appbar, TextInput, Button } from 'react-native-paper'
+import { Appbar, TextInput } from 'react-native-paper'
 
-import FeedbackPicker from '../components/FeedbackPicker'
-import { useStores } from '../db/helpers/useStores'
-import { BodyLargeLabel } from '../../designSystem/Label'
-import colors from '../../designSystem/colors'
+import FeedbackPicker from 'app/components/FeedbackPicker'
+import { useStores } from 'app/db/helpers/useStores'
 import { AppStackScreenProps } from 'app/navigators'
+import { BodyLargeLabel, Button, ButtonText, colors } from 'designSystem'
 
 interface WorkoutFeedbackPageProps
   extends AppStackScreenProps<'WorkoutFeedback'> {}
@@ -55,11 +54,10 @@ const WorkoutFeedbackPage: React.FC<WorkoutFeedbackPageProps> = ({
         }}
       >
         <Button
-          mode="text"
+          variant="primary"
           onPress={onBackPress}
-          textColor={colors.white}
         >
-          Save
+          <ButtonText variant="primary">Save</ButtonText>
         </Button>
       </View>
     </View>
