@@ -7,12 +7,10 @@ import ConfirmationDialog from 'app/components/ConfirmationDialog'
 import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
-import { AppStackScreenProps } from 'app/navigators'
+import { goBack } from 'app/navigators'
 import { Button, ButtonText, Icon, colors } from 'designSystem'
 
-interface ExerciseEditPageProps extends AppStackScreenProps<'ExerciseEdit'> {}
-
-const ExerciseEditPage: React.FC<ExerciseEditPageProps> = ({ navigation }) => {
+const ExerciseEditPage: React.FC = () => {
   const { stateStore, exerciseStore } = useStores()
 
   const [exercise, setExercise] = useState(stateStore.openedExercise!)
@@ -25,7 +23,7 @@ const ExerciseEditPage: React.FC<ExerciseEditPageProps> = ({ navigation }) => {
 
   function onBackConfirmed() {
     setConfirmDialogOpen(false)
-    navigation.goBack()
+    goBack()
   }
 
   function onUpdate(updated: Exercise, isValid: boolean) {
@@ -35,7 +33,7 @@ const ExerciseEditPage: React.FC<ExerciseEditPageProps> = ({ navigation }) => {
 
   function onComplete() {
     exerciseStore.editExercise(exercise)
-    navigation.goBack()
+    goBack()
   }
 
   return (
