@@ -23,13 +23,12 @@ const CalendarWorkoutModal: React.FC<Props> = ({
   confirmButtonText,
 }) => {
   const { workoutStore } = useStores()
-  const workout = workoutStore.getWorkoutForDate(workoutDate)!
-  const exercises = workoutStore.getWorkoutExercises(workout)
-
-  const groupedSets = groupBy(workout.sets, 'exercise.guid')
-
-  const luxonDate = DateTime.fromISO(workout.date)
+  const luxonDate = DateTime.fromISO(workoutDate)
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
+
+  const workout = workoutStore.getWorkoutForDate(workoutDate)
+  const exercises = workout ? workoutStore.getWorkoutExercises(workout) : null
+  const groupedSets = workout ? groupBy(workout.sets, 'exercise.guid') : null
 
   return (
     <Portal>
@@ -47,15 +46,17 @@ const CalendarWorkoutModal: React.FC<Props> = ({
           <HeadingLabel style={{ padding: 16 }}>{label}</HeadingLabel>
           <Divider orientation="horizontal" />
           <View style={{ flex: 1 }}>
-            <ScrollView>
-              {exercises.map(exercise => (
-                <CalendarWorkoutModalExerciseItem
-                  key={exercise.guid}
-                  exercise={exercise}
-                  sets={groupedSets[exercise.guid] as WorkoutSet[]}
-                />
-              ))}
-            </ScrollView>
+            {workout ? (
+              <ScrollView>
+                {exercises?.map(exercise => (
+                  <CalendarWorkoutModalExerciseItem
+                    key={exercise.guid}
+                    exercise={exercise}
+                    sets={groupedSets?.[exercise.guid] as WorkoutSet[]}
+                  />
+                ))}
+              </ScrollView>
+            ) : null}
           </View>
           <Divider orientation="horizontal" />
           <View style={{ flexDirection: 'row' }}>

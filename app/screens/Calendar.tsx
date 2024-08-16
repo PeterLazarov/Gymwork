@@ -35,11 +35,27 @@ const CalendarPage: React.FC = () => {
     [workoutStore.workouts, stateStore.openedDate, stateStore.openedWorkout]
   )
 
-  const startingMonth = useMemo(
-    () => DateTime.now().minus({ month: 6 }).toFormat('yyyy-MM-dd'),
+  const monthBeforeFirstWorkout = useMemo(
+    () =>
+      DateTime.fromISO(
+        workoutStore.workouts.at(-1)?.date ?? new Date().toISOString()
+      )
+        .minus({ month: 1 })
+        .toISO() ?? undefined,
     []
   )
+
+  const lastDayOfNextMonth = useMemo(
+    () => DateTime.now().plus({ month: 1 }).endOf('month').toJSDate(),
+    []
+  )
+
+  // TODO WIP
   const today = useMemo(() => DateTime.now().toJSDate(), [])
+  const yesterday = useMemo(
+    () => DateTime.now().minus({ day: 1 }).toJSDate(),
+    []
+  )
 
   function onBackPress() {
     navigate('Workout')
@@ -49,13 +65,16 @@ const CalendarPage: React.FC = () => {
     const dateString = DateTime.fromISO(date.toISOString()).toISODate()!
     if (Object.keys(markedDates).includes(dateString)) {
       setOpenedWorkoutDialogDate(dateString)
+    } else {
+      goGoDay
     }
   }
-  function goGoDay() {
-    stateStore.setOpenedDate(openedWorkoutDialogDate)
+  function goGoDay(date?: Date) {
+    stateStore.setOpenedDate(date?.toISOString() ?? openedWorkoutDialogDate)
     setOpenedWorkoutDialogDate('')
     navigate('Workout')
   }
+
   return (
     <>
       <EmptyLayout>
@@ -73,8 +92,9 @@ const CalendarPage: React.FC = () => {
           onPress={date => {
             handleCalendarDayPress(date)
           }}
-          startDate={today}
-          startingMonth={startingMonth}
+          startDate={yesterday}
+          startingMonth={monthBeforeFirstWorkout}
+          endDate={lastDayOfNextMonth}
           markedDays={markedDates}
           theme={{
             startDateContainerStyle: {
@@ -84,10 +104,14 @@ const CalendarPage: React.FC = () => {
             dayContainerStyle: {
               backgroundColor: colors.secondary,
             },
+            todayContainerStyle: {
+              backgroundColor: colors.lightgreen,
+              aspectRatio: 1,
+              borderRadius: 50,
+            },
           }}
           disableRange
           monthHeight={370}
-          numberOfMonths={24}
           firstDayMonday
         />
       </EmptyLayout>
