@@ -15,6 +15,7 @@ type Props = {
   selectText?: string
   containerStyle: ViewStyle
   hideSelectedItemsRemove?: boolean
+  error?: boolean
 }
 
 const Multiselect: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const Multiselect: React.FC<Props> = ({
   selectText,
   containerStyle = {},
   hideSelectedItemsRemove,
+  error,
 }) => {
   const [selectionOpen, setSelectionOpen] = useState(false)
 
@@ -62,6 +64,7 @@ const Multiselect: React.FC<Props> = ({
         <SelectButton
           onPress={openSelection}
           text={selectText}
+          error={error}
         />
         <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
           {selectedValues.map(selectedValue => {

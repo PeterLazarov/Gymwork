@@ -84,6 +84,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           onSelect={onMusclesChange}
           containerStyle={{ flex: 1 }}
           selectText="Muscle areas"
+          error={musclesError !== ''}
         />
         <IconButton
           icon={() => <Icon icon="add" />}

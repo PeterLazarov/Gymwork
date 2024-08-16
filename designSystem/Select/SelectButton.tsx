@@ -6,9 +6,10 @@ import { BodyLargeLabel, colors, Icon } from 'designSystem'
 type Props = {
   onPress: () => void
   text?: string
+  error?: boolean
 }
 
-const SelectButton: React.FC<Props> = ({ onPress, text }) => {
+const SelectButton: React.FC<Props> = ({ onPress, text, error }) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View
@@ -22,7 +23,11 @@ const SelectButton: React.FC<Props> = ({ onPress, text }) => {
           // gap: 4,
         }}
       >
-        <BodyLargeLabel>{text}</BodyLargeLabel>
+        <BodyLargeLabel
+          style={{ color: error ? colors.critical : colors.secondaryText }}
+        >
+          {text}
+        </BodyLargeLabel>
         <View style={{ marginLeft: 4 }}>
           <Icon
             icon="chevron-down"
