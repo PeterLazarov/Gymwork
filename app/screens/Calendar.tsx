@@ -108,7 +108,7 @@ const CalendarPage: React.FC = () => {
               backgroundColor: colors.secondary,
             },
             todayContainerStyle: {
-              backgroundColor: colors.lightgreen,
+              backgroundColor: colors.primaryLight,
               aspectRatio: 1,
               borderRadius: 50,
             },
