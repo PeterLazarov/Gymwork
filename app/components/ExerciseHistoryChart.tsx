@@ -82,7 +82,6 @@ const ExerciseHistoryChart = observer(
 
           // TODO grey out tab when no history
           if (range.some(x => x === undefined)) {
-            console.warn('exercise was never performed?')
             break
           }
 

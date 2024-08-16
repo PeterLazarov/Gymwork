@@ -10,3 +10,4 @@
 - change icon and remove ignite splashscreen
 - in ExterciseTrack screen show last sets when keyboard open
 - copy workout button
+- disable / fix history and records for never performed before exercises
