@@ -2,11 +2,15 @@ import React, { useState } from 'react'
 import { View, ViewStyle } from 'react-native'
 
 import SelectedLabel from './SelectedLabel'
-import { SelectButton, SelectOptionsModal } from 'designSystem'
+import {
+  SelectButton,
+  SelectOption,
+  SelectOptionsModal,
+} from 'designSystem/Select'
 
 type Props = {
-  options: string[]
-  selectedOptions: string[]
+  options: SelectOption[]
+  selectedValues: string[]
   onSelect: (selected: string[]) => void
   selectText?: string
   containerStyle: ViewStyle
@@ -15,7 +19,7 @@ type Props = {
 
 const Multiselect: React.FC<Props> = ({
   options,
-  selectedOptions,
+  selectedValues,
   onSelect,
   selectText,
   containerStyle = {},
@@ -26,18 +30,27 @@ const Multiselect: React.FC<Props> = ({
   const openSelection = () => setSelectionOpen(true)
   const closeSelection = () => setSelectionOpen(false)
 
+  const getOptionValue = (option: SelectOption): string =>
+    typeof option === 'string' ? option : option.value
+
+  const getOptionLabel = (option: SelectOption): string =>
+    typeof option === 'string' ? option : option.label
+
   const removeSelection = (selection: string) => {
-    const filtered = selectedOptions.filter(i => i !== selection)
+    const filtered = selectedValues.filter(value => value !== selection)
     onSelect(filtered)
   }
 
-  const onOptionSelect = (option: string) => {
-    if (selectedOptions.includes(option)) {
-      removeSelection(option)
+  const onOptionSelect = (option: SelectOption) => {
+    const optionValue = getOptionValue(option)
+
+    if (selectedValues.includes(optionValue)) {
+      removeSelection(optionValue)
     } else {
-      onSelect([...selectedOptions, option])
+      onSelect([...selectedValues, optionValue])
     }
   }
+
   return (
     <>
       <View
@@ -51,14 +64,19 @@ const Multiselect: React.FC<Props> = ({
           text={selectText}
         />
         <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
-          {selectedOptions.map(selection => (
-            <SelectedLabel
-              key={selection}
-              selection={selection}
-              onRemove={removeSelection}
-              hideRemove={hideSelectedItemsRemove}
-            />
-          ))}
+          {selectedValues.map(selectedValue => {
+            const option = options.find(
+              opt => getOptionValue(opt) === selectedValue
+            )
+            return (
+              <SelectedLabel
+                key={selectedValue}
+                selection={option ? getOptionLabel(option) : selectedValue}
+                onRemove={() => removeSelection(selectedValue)}
+                hideRemove={hideSelectedItemsRemove}
+              />
+            )
+          })}
         </View>
       </View>
       <SelectOptionsModal
@@ -66,7 +84,7 @@ const Multiselect: React.FC<Props> = ({
         open={selectionOpen}
         onClose={closeSelection}
         options={options}
-        selectedOptions={selectedOptions}
+        selectedValues={selectedValues}
         onOptionSelect={onOptionSelect}
       />
     </>

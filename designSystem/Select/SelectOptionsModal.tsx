@@ -1,24 +1,18 @@
-import React, { Fragment } from 'react'
-import { ScrollView, View, TouchableOpacity, Dimensions } from 'react-native'
+import React from 'react'
+import { ScrollView, View, Dimensions } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
-import {
-  BodyLargeLabel,
-  Button,
-  ButtonText,
-  Divider,
-  HeadingLabel,
-  colors,
-} from '..'
+import { Button, ButtonText, Divider, HeadingLabel, colors } from 'designSystem'
+import { SelectOption } from './types'
+import OptionListItem from './OptionListItem'
 
-type Option = string
 type Props = {
   header?: string
   open: boolean
   onClose: () => void
-  options: Option[]
-  selectedOptions: Option[]
-  onOptionSelect: (option: string) => void
+  options: SelectOption[]
+  selectedValues: string[]
+  onOptionSelect: (option: SelectOption) => void
   hideButton?: boolean
 }
 const SelectOptionsModal: React.FC<Props> = ({
@@ -26,7 +20,7 @@ const SelectOptionsModal: React.FC<Props> = ({
   open,
   onClose,
   options,
-  selectedOptions,
+  selectedValues,
   onOptionSelect,
   hideButton,
 }) => {
@@ -57,28 +51,13 @@ const SelectOptionsModal: React.FC<Props> = ({
           <View style={{ flex: 1 }}>
             <ScrollView>
               {options.map((option, index) => (
-                <Fragment key={option}>
-                  {index !== 0 && (
-                    <Divider
-                      orientation="horizontal"
-                      style={{ backgroundColor: colors.secondary }}
-                    />
-                  )}
-                  <TouchableOpacity
-                    style={{ paddingHorizontal: 10, paddingVertical: 15 }}
-                    onPress={() => onOptionSelect(option)}
-                  >
-                    <BodyLargeLabel
-                      style={{
-                        color: selectedOptions.includes(option)
-                          ? colors.primary
-                          : colors.secondaryText,
-                      }}
-                    >
-                      {option}
-                    </BodyLargeLabel>
-                  </TouchableOpacity>
-                </Fragment>
+                <OptionListItem
+                  key={index}
+                  option={option}
+                  showDivider={index !== 0}
+                  onSelect={onOptionSelect}
+                  selectedValues={selectedValues}
+                />
               ))}
             </ScrollView>
           </View>

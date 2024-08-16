@@ -7,7 +7,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, ExerciseSnapshotIn } from 'app/db/models'
 import DistanceType from 'app/enums/DistanceType'
 import ExerciseType from 'app/enums/ExerciseType'
-import { Icon, Dropdown, Multiselect, Select } from 'designSystem'
+import { Icon, Multiselect, Select } from 'designSystem'
 
 type Props = {
   exercise: Exercise
@@ -80,7 +80,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
       <View style={{ flexDirection: 'row' }}>
         <Multiselect
           options={exerciseStore.muscleOptions}
-          selectedOptions={exercise.muscles}
+          selectedValues={exercise.muscles}
           onSelect={onMusclesChange}
           containerStyle={{ flex: 1 }}
           selectText="Muscle areas"

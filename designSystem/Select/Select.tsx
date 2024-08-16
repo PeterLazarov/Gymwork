@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { View, ViewStyle } from 'react-native'
 
+import SelectButton from './SelectButton'
 import SelectOptionsModal from './SelectOptionsModal'
-import { SelectButton } from 'designSystem'
+import { SelectOption } from './types'
 
 type Props = {
-  options: string[]
+  options: SelectOption[]
   value?: string
   onChange: (selected: string) => void
   placeholder?: string
@@ -25,16 +26,28 @@ const Select: React.FC<Props> = ({
   const openSelection = () => setSelectionOpen(true)
   const closeSelection = () => setSelectionOpen(false)
 
-  const onOptionSelect = (option: string) => {
-    if (option !== value) {
-      onChange(option)
+  const getOptionLabel = (option: SelectOption): string => {
+    return typeof option === 'string' ? option : option.label
+  }
+  const getOptionValue = (option: SelectOption): string => {
+    return typeof option === 'string' ? option : option.value
+  }
+  const selectedOption = useMemo(
+    () => options.find(opt => getOptionValue(opt) === value),
+    [value]
+  )
+
+  const onOptionSelect = (option: SelectOption) => {
+    const selectedValue = getOptionValue(option)
+    if (selectedValue !== value) {
+      onChange(selectedValue)
       closeSelection()
     }
   }
   return (
     <View style={{ ...containerStyle }}>
       <SelectButton
-        text={value ?? placeholder}
+        text={selectedOption ? getOptionLabel(selectedOption) : placeholder}
         onPress={openSelection}
       />
       <SelectOptionsModal
@@ -42,7 +55,7 @@ const Select: React.FC<Props> = ({
         open={selectionOpen}
         onClose={closeSelection}
         options={options}
-        selectedOptions={value ? [value] : []}
+        selectedValues={value ? [value] : []}
         onOptionSelect={onOptionSelect}
         hideButton
       />

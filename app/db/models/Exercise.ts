@@ -7,37 +7,37 @@ import DistanceType from 'app/enums/DistanceType'
 import ExerciseType from 'app/enums/ExerciseType'
 
 const REP_MEASUREMENTS = [
-  ExerciseType.REPS_WEIGHT,
-  ExerciseType.REPS_DISTANCE,
-  ExerciseType.REPS_TIME,
-  ExerciseType.REPS,
+  ExerciseType.REPS_WEIGHT.value,
+  ExerciseType.REPS_DISTANCE.value,
+  ExerciseType.REPS_TIME.value,
+  ExerciseType.REPS.value,
 ]
 const REP_GROUPINGS = [
-  ExerciseType.REPS,
-  ExerciseType.REPS_WEIGHT,
-  ExerciseType.REPS_DISTANCE,
+  ExerciseType.REPS.value,
+  ExerciseType.REPS_WEIGHT.value,
+  ExerciseType.REPS_DISTANCE.value,
 ]
 const WEIGHT_MEASUREMENTS = [
-  ExerciseType.REPS_WEIGHT,
-  ExerciseType.WEIGHT_DISTANCE,
-  ExerciseType.WEIGHT_TIME,
+  ExerciseType.REPS_WEIGHT.value,
+  ExerciseType.WEIGHT_DISTANCE.value,
+  ExerciseType.WEIGHT_TIME.value,
 ]
 const WEIGHT_GROUPINGS = [
-  ExerciseType.WEIGHT_DISTANCE,
-  ExerciseType.WEIGHT_TIME,
+  ExerciseType.WEIGHT_DISTANCE.value,
+  ExerciseType.WEIGHT_TIME.value,
 ]
 const DISTANCE_MEASUREMENTS = [
-  ExerciseType.TIME_DISTANCE,
-  ExerciseType.REPS_DISTANCE,
-  ExerciseType.WEIGHT_DISTANCE,
+  ExerciseType.TIME_DISTANCE.value,
+  ExerciseType.REPS_DISTANCE.value,
+  ExerciseType.WEIGHT_DISTANCE.value,
 ]
 const TIME_MEASUREMENTS = [
-  ExerciseType.TIME_DISTANCE,
-  ExerciseType.REPS_TIME,
-  ExerciseType.TIME,
-  ExerciseType.WEIGHT_TIME,
+  ExerciseType.TIME_DISTANCE.value,
+  ExerciseType.REPS_TIME.value,
+  ExerciseType.TIME.value,
+  ExerciseType.WEIGHT_TIME.value,
 ]
-const TIME_GROUPINGS = [ExerciseType.TIME_DISTANCE, ExerciseType.TIME]
+const TIME_GROUPINGS = [ExerciseType.TIME_DISTANCE.value, ExerciseType.TIME.value]
 
 export const ExerciseModel = types
   .model('Exercise')
@@ -52,9 +52,9 @@ export const ExerciseModel = types
   .views(exercise => ({
     get measurementType() {
       if (exercise.muscles.includes('cardio')) {
-        return ExerciseType.TIME_DISTANCE
+        return ExerciseType.TIME_DISTANCE.value
       }
-      return ExerciseType.REPS_WEIGHT
+      return ExerciseType.REPS_WEIGHT.value
     },
     get hasWeightMeasument() {
       return WEIGHT_MEASUREMENTS.includes(this.measurementType)
