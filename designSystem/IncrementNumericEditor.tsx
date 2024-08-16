@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { TextInput } from 'react-native'
 
 import IncrementDecrementButtons from '../app/components/IncrementDecrementButtons'
@@ -9,7 +9,19 @@ type Props = {
   step?: number
 }
 
+const maxDigits = 4
+const maxDecimals = 2
+const maxLength = maxDigits + maxDecimals + 1
+
 const IncrementNumericEditor: React.FC<Props> = ({ value, onChange, step }) => {
+  const [rendered, setRendered] = useState(String(value) ?? '')
+
+  useEffect(() => {
+    if (Number(rendered) !== value) {
+      setRendered(String(value))
+    }
+  })
+
   return (
     <IncrementDecrementButtons
       value={value}
@@ -22,12 +34,23 @@ const IncrementNumericEditor: React.FC<Props> = ({ value, onChange, step }) => {
         multiline={false}
         keyboardType="number-pad"
         onChangeText={text => {
-          onChange(isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0))
+          const asNum = Number(text)
+          if (isNaN(asNum)) {
+            return
+          }
+
+          const toFixed = text.slice(
+            0,
+            text.includes('.')
+              ? Math.min(text.indexOf('.') + 3, maxLength)
+              : maxDigits
+          )
+          setRendered(toFixed)
+
+          onChange(Number(toFixed))
         }}
-        maxLength={3}
-      >
-        {value}
-      </TextInput>
+        value={rendered}
+      ></TextInput>
     </IncrementDecrementButtons>
   )
 }
