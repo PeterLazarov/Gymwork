@@ -79,8 +79,7 @@ const CalendarPage: React.FC = () => {
           theme={{
             startDateContainerStyle: {
               backgroundColor: colors.primary,
-              width: 39,
-              flex: 0,
+              aspectRatio: 1,
             },
             dayContainerStyle: {
               backgroundColor: colors.secondary,
