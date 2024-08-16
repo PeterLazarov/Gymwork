@@ -1,7 +1,7 @@
 import { View } from 'react-native'
 import { TextInput } from 'react-native-paper'
 
-import Dropdown from './Dropdown'
+import { Select } from './Select'
 import DistanceType from 'app/enums/DistanceType'
 
 type Props = {
@@ -29,10 +29,10 @@ const DistanceEditor: React.FC<Props> = ({
         }}
         maxLength={5}
       />
-      <Dropdown
+      <Select
         options={Object.values(DistanceType)}
-        selectedOption={unit}
-        onSelect={onUnitChange}
+        value={unit}
+        onChange={onUnitChange}
         containerStyle={{ flex: 1 }}
       />
     </View>

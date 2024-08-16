@@ -7,7 +7,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, ExerciseSnapshotIn } from 'app/db/models'
 import DistanceType from 'app/enums/DistanceType'
 import ExerciseType from 'app/enums/ExerciseType'
-import { Icon, Dropdown, Multiselect } from 'designSystem'
+import { Icon, Dropdown, Multiselect, Select } from 'designSystem'
 
 type Props = {
   exercise: Exercise
@@ -98,17 +98,17 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           {musclesError}
         </HelperText>
       )}
-      <Dropdown
+      <Select
         options={Object.values(ExerciseType)}
-        selectedOption={exercise.measurementType}
-        onSelect={type => onPropChange('measurementType', type)}
+        value={exercise.measurementType}
+        onChange={type => onPropChange('measurementType', type)}
       />
       <Text>TODO: Imperial / Metric Unit Type</Text>
       {exercise.hasDistanceMeasument && (
-        <Dropdown
+        <Select
           options={Object.values(DistanceType)}
-          selectedOption={exercise.distanceUnit}
-          onSelect={distanceUnit => onPropChange('distanceUnit', distanceUnit)}
+          value={exercise.distanceUnit}
+          onChange={distanceUnit => onPropChange('distanceUnit', distanceUnit)}
         />
       )}
       {exercise.hasWeightMeasument && (

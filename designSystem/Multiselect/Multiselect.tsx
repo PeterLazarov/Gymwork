@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { View, ViewStyle, TouchableWithoutFeedback } from 'react-native'
+import { View, ViewStyle } from 'react-native'
 
 import SelectedLabel from './SelectedLabel'
-import OptionsModal from './OptionsModal'
-import { BodyLargeLabel, colors, Icon } from 'designSystem'
+import { SelectButton, SelectOptionsModal } from 'designSystem'
 
 type Props = {
   options: string[]
@@ -14,7 +13,7 @@ type Props = {
   hideSelectedItemsRemove?: boolean
 }
 
-const MultiselectWrapper: React.FC<Props> = ({
+const Multiselect: React.FC<Props> = ({
   options,
   selectedOptions,
   onSelect,
@@ -47,24 +46,10 @@ const MultiselectWrapper: React.FC<Props> = ({
           ...containerStyle,
         }}
       >
-        <TouchableWithoutFeedback onPress={openSelection}>
-          <View
-            style={{
-              backgroundColor: colors.primaryLight,
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <BodyLargeLabel>{selectText}</BodyLargeLabel>
-            <Icon
-              icon="chevron-down"
-              size="small"
-            />
-          </View>
-        </TouchableWithoutFeedback>
+        <SelectButton
+          onPress={openSelection}
+          text={selectText}
+        />
         <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
           {selectedOptions.map(selection => (
             <SelectedLabel
@@ -76,7 +61,7 @@ const MultiselectWrapper: React.FC<Props> = ({
           ))}
         </View>
       </View>
-      <OptionsModal
+      <SelectOptionsModal
         header={selectText}
         open={selectionOpen}
         onClose={closeSelection}
@@ -88,4 +73,4 @@ const MultiselectWrapper: React.FC<Props> = ({
   )
 }
 
-export default MultiselectWrapper
+export default Multiselect

@@ -1,5 +1,5 @@
-import React from 'react'
-import { ScrollView, View, TouchableOpacity } from 'react-native'
+import React, { Fragment } from 'react'
+import { ScrollView, View, TouchableOpacity, Dimensions } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
 import {
@@ -19,15 +19,21 @@ type Props = {
   options: Option[]
   selectedOptions: Option[]
   onOptionSelect: (option: string) => void
+  hideButton?: boolean
 }
-const CalendarWorkoutModal: React.FC<Props> = ({
+const SelectOptionsModal: React.FC<Props> = ({
   header = 'Select an option',
   open,
   onClose,
   options,
   selectedOptions,
   onOptionSelect,
+  hideButton,
 }) => {
+  const maxHeight = Dimensions.get('screen').height - 100
+  const itemHeight = 53
+  const modalHeight = (options.length + 1) * itemHeight
+
   return (
     <Portal>
       <Modal
@@ -37,16 +43,21 @@ const CalendarWorkoutModal: React.FC<Props> = ({
           backgroundColor: colors.white,
           marginVertical: 8,
           marginHorizontal: 20,
-          flex: 1,
+          maxHeight: maxHeight,
         }}
       >
-        <View style={{ height: '100%' }}>
+        <View
+          style={{
+            height: modalHeight,
+            maxHeight: maxHeight,
+          }}
+        >
           <HeadingLabel style={{ padding: 16 }}>{header}</HeadingLabel>
           <Divider orientation="horizontal" />
           <View style={{ flex: 1 }}>
             <ScrollView>
               {options.map((option, index) => (
-                <>
+                <Fragment key={option}>
                   {index !== 0 && (
                     <Divider
                       orientation="horizontal"
@@ -68,24 +79,28 @@ const CalendarWorkoutModal: React.FC<Props> = ({
                       {option}
                     </BodyLargeLabel>
                   </TouchableOpacity>
-                </>
+                </Fragment>
               ))}
             </ScrollView>
           </View>
-          <Divider orientation="horizontal" />
-          <View style={{ flexDirection: 'row' }}>
-            <Button
-              variant="primary"
-              style={{ flex: 1 }}
-              onPress={onClose}
-            >
-              <ButtonText variant="primary">Done</ButtonText>
-            </Button>
-          </View>
+          {!hideButton && (
+            <>
+              <Divider orientation="horizontal" />
+              <View style={{ flexDirection: 'row' }}>
+                <Button
+                  variant="primary"
+                  style={{ flex: 1 }}
+                  onPress={onClose}
+                >
+                  <ButtonText variant="primary">Done</ButtonText>
+                </Button>
+              </View>
+            </>
+          )}
         </View>
       </Modal>
     </Portal>
   )
 }
 
-export default CalendarWorkoutModal
+export default SelectOptionsModal

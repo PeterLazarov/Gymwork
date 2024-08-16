@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 
-import { BodyMediumLabel, colors, Icon } from 'designSystem'
+import { BodyMediumLabel, colors, Icon } from '..'
 
 type Props = {
   selection: string
