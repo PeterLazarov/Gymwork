@@ -76,10 +76,11 @@ const ExerciseHistoryChart = observer(
           return getPastDays(30)
         case 'ALL': {
           const range = [
-            workoutStore.exerciseWorkouts[props.exerciseID].at(-1)?.date!,
-            workoutStore.exerciseWorkouts[props.exerciseID][0]?.date,
+            workoutStore.exerciseWorkouts[props.exerciseID]?.at(-1)?.date!,
+            workoutStore.exerciseWorkouts[props.exerciseID]?.[0]?.date,
           ] as const
 
+          // TODO grey out tab when no history
           if (range.some(x => x === undefined)) {
             console.warn('exercise was never performed?')
             break

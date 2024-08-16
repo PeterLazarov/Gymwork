@@ -35,7 +35,9 @@ const WorkoutExerciseHistoryView: React.FC<Props> = ({ graphHidden }) => {
         />
       )}
       <WorkoutExerciseHistoryList
-        workouts={workoutStore.exerciseWorkouts[stateStore.openedExerciseGuid]}
+        workouts={
+          workoutStore.exerciseWorkouts[stateStore.openedExerciseGuid] ?? []
+        }
       />
     </View>
   )

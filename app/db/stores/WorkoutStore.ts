@@ -135,7 +135,7 @@ export const WorkoutStoreModel = types
     getExerciseRecords(
       exerciseID: Exercise['guid']
     ): Record<WorkoutSet['reps'], WorkoutSet> {
-      return this.allExerciseRecords[exerciseID]
+      return this.allExerciseRecords[exerciseID] ?? {}
     },
   }))
   .actions(withSetPropAction)
