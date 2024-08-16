@@ -10,11 +10,7 @@ type Props = {
   isFocused?: boolean
 }
 
-const ReadOnlyListItemDataLabel: React.FC<Props> = ({
-  value,
-  unit,
-  isFocused,
-}) => {
+const SetDataLabel: React.FC<Props> = ({ value, unit, isFocused }) => {
   const color = isFocused ? colors.primary : colors.secondaryText
   return (
     <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
@@ -39,4 +35,4 @@ const ReadOnlyListItemDataLabel: React.FC<Props> = ({
   )
 }
 
-export default observer(ReadOnlyListItemDataLabel)
+export default observer(SetDataLabel)

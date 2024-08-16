@@ -10,7 +10,10 @@ type Props = {
   exercise?: Exercise
 }
 
-const WorkoutExerciseSetEditList: React.FC<Props> = ({ sets, exercise }) => {
+const WorkoutExerciseSetReadOnlyList: React.FC<Props> = ({
+  sets,
+  exercise,
+}) => {
   const { stateStore } = useStores()
   const exerciseToUse = exercise || stateStore.openedExercise!
 
@@ -38,4 +41,4 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({ sets, exercise }) => {
   )
 }
 
-export default observer(WorkoutExerciseSetEditList)
+export default observer(WorkoutExerciseSetReadOnlyList)

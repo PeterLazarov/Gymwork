@@ -3,9 +3,9 @@
 - Use bottom offset (iOS shows a line. We souldn't overlap it)
 - TODO revise or remove web linking in app.tsx
 - in 'Update exercice' screen muscle areas plus icon is not implemented
-- add floating placeholder in Select component 
+- add floating placeholder in Select component
 - change icon and remove ignite splashscreen
 - in ExterciseTrack screen show last sets when keyboard open
 - fix error when export data in android simulator
 - refresh records on workout coy for a previous day
-- WorkoutExerciseList and WorkoutExerciseCard rendering for new data
+- add min 1 rep
