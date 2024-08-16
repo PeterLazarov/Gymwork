@@ -11,16 +11,16 @@ import { Divider, HeadingLabel, colors } from 'designSystem'
 type Props = {
   open: boolean
   workoutDate: string
-  onConfirm: () => void
   onClose: () => void
-  confirmButtonText: string
+  action: () => void
+  actionText: string
 }
 const CalendarWorkoutModal: React.FC<Props> = ({
   open,
   workoutDate,
-  onConfirm,
   onClose,
-  confirmButtonText,
+  action,
+  actionText,
 }) => {
   const { workoutStore } = useStores()
   const luxonDate = DateTime.fromISO(workoutDate)
@@ -70,9 +70,9 @@ const CalendarWorkoutModal: React.FC<Props> = ({
             <Button
               style={{ flex: 1 }}
               textColor={colors.tertiaryText}
-              onPress={onConfirm}
+              onPress={action}
             >
-              {confirmButtonText}
+              {actionText}
             </Button>
           </View>
         </View>

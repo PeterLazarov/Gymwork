@@ -8,7 +8,8 @@ import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
-  NavigatorScreenParams,
+  RouteProp,
+  useRoute,
 } from '@react-navigation/native'
 import {
   createNativeStackNavigator,
@@ -20,7 +21,6 @@ import { useColorScheme } from 'react-native'
 // import * as Screens from 'app/screens'
 import Config from '../config'
 // import { useStores } from '../models'
-import { DemoNavigator, DemoTabParamList } from './DemoNavigator'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 import { colors } from 'app/theme'
 import Workout from 'app/screens/Workout'
@@ -29,7 +29,7 @@ import ExerciseCreate from 'app/screens/ExerciseCreate'
 import ExerciseEdit from 'app/screens/ExerciseEdit'
 import WorkoutExercise from 'app/screens/WorkoutExercise'
 import WorkoutFeedback from 'app/screens/WorkoutFeedback'
-import Calendar from 'app/screens/Calendar'
+import Calendar, { CalendarPageParams } from 'app/screens/Calendar'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -48,7 +48,7 @@ export type AppStackParamList = {
   // Welcome: undefined
   // Login: undefined
   // Demo: NavigatorScreenParams<DemoTabParamList>
-  Calendar: undefined
+  Calendar: CalendarPageParams
   ExerciseCreate: undefined
   ExerciseEdit: undefined
   ExerciseSelect: undefined
@@ -57,6 +57,14 @@ export type AppStackParamList = {
   WorkoutFeedback: undefined
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
+}
+
+export const useRouteParams = <T extends keyof AppStackParamList>(
+  screen: T
+): AppStackParamList[T] => {
+  const route = useRoute<RouteProp<AppStackParamList, T>>()
+
+  return route.params as AppStackParamList[T]
 }
 
 /**

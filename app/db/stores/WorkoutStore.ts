@@ -160,6 +160,18 @@ export const WorkoutStoreModel = types
       })
       self.workouts.push(created)
     },
+    copyWorkout(template: Workout) {
+      const cleanedSets: WorkoutSetSnapshotIn[] = template.sets.map(({guid, exercise, ...otherProps}) => ({
+        exercise: exercise.guid,
+        ...otherProps
+      }))
+
+      const created = WorkoutModel.create({
+        date: self.rootStore.stateStore.openedDate,
+        sets: cleanedSets
+      })
+      self.workouts.push(created)
+    },
     addSet(newSet: WorkoutSetSnapshotIn) {
       const created = WorkoutSetModel.create(newSet)
 

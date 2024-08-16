@@ -3,12 +3,10 @@
 - add Exercise model measurementType prop
 - Use bottom offset (iOS shows a line. We souldn't overlap it)
 - TODO revise or remove web linking in app.tsx
-- fix android simulator errors
-- fix android device workout horizontal scrolling
 - in 'Update exercice' screen muscle areas plus icon is not implemented
 - add floating placeholder in Select component 
 - change icon and remove ignite splashscreen
 - in ExterciseTrack screen show last sets when keyboard open
-- copy workout button
 - disable / fix history and records for never performed before exercises
 - fix error when export data in android simulator
+- refresh records on workout coy for a previous day

@@ -8,13 +8,17 @@ import { Appbar } from 'react-native-paper'
 import CalendarWorkoutModal from 'app/components/CalendarWorkoutModal'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { navigate } from 'app/navigators'
+import { navigate, useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { Icon, colors } from 'designSystem'
 
+export type CalendarPageParams = {
+  copyWorkoutMode?: boolean
+}
 const CalendarPage: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
 
+  const { copyWorkoutMode } = useRouteParams('Calendar')
   const [openedWorkoutDialogDate, setOpenedWorkoutDialogDate] = useState('')
 
   const markedDates = useMemo(
@@ -73,9 +77,17 @@ const CalendarPage: React.FC = () => {
     navigate('Workout')
   }
 
-  function handleModalConfirm() {
+  function handleModalAction() {
     setOpenedWorkoutDialogDate('')
-    goToDay(openedWorkoutDialogDate)
+
+    if (copyWorkoutMode) {
+      const workout = workoutStore.getWorkoutForDate(openedWorkoutDialogDate)
+
+      workoutStore.copyWorkout(workout!)
+      navigate('Workout')
+    } else {
+      goToDay(openedWorkoutDialogDate)
+    }
   }
 
   return (
@@ -123,8 +135,10 @@ const CalendarPage: React.FC = () => {
           open={!!openedWorkoutDialogDate}
           workoutDate={openedWorkoutDialogDate}
           onClose={() => setOpenedWorkoutDialogDate('')}
-          onConfirm={handleModalConfirm}
-          confirmButtonText={translate('goToWorkout')}
+          action={handleModalAction}
+          actionText={translate(
+            copyWorkoutMode ? 'copyWorkout' : 'goToWorkout'
+          )}
         />
       )}
     </>

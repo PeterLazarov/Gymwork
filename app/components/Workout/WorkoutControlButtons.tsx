@@ -25,7 +25,9 @@ const WorkoutControlButtons: React.FC<Props> = () => {
   }
 
   function copyPrevWorkout() {
-    // TODO
+    navigate('Calendar', {
+      copyWorkoutMode: true,
+    })
   }
 
   function onCommentPress() {
@@ -59,7 +61,6 @@ const WorkoutControlButtons: React.FC<Props> = () => {
             variant="primary"
             onPress={copyPrevWorkout}
             style={{ flex: 1 }}
-            disabled
           >
             <Icon
               color={colors.primaryText}
