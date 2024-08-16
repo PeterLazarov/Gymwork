@@ -70,10 +70,9 @@ const SelectOptionsModal: React.FC<Props> = ({
                   >
                     <BodyLargeLabel
                       style={{
-                        color:
-                          selectedOptions.indexOf(option) !== -1
-                            ? colors.primary
-                            : colors.secondaryText,
+                        color: selectedOptions.includes(option)
+                          ? colors.primary
+                          : colors.secondaryText,
                       }}
                     >
                       {option}

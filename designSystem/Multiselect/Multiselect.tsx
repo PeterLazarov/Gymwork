@@ -32,7 +32,7 @@ const Multiselect: React.FC<Props> = ({
   }
 
   const onOptionSelect = (option: string) => {
-    if (selectedOptions.indexOf(option) !== -1) {
+    if (selectedOptions.includes(option)) {
       removeSelection(option)
     } else {
       onSelect([...selectedOptions, option])
