@@ -142,7 +142,6 @@ export const WorkoutStoreModel = types
   .actions(self => ({
     async fetch() {
       const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
-      console.log('fetching')
 
       if (workouts && workouts?.length > 0 && isDev) {
         self.setProp('workouts', workouts)

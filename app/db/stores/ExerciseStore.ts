@@ -15,7 +15,6 @@ export const ExerciseStoreModel = types
   .actions(store => ({
     async fetch() {
       const exercises = await storage.load<ExerciseSnapshotIn[]>('exercises')
-      console.log('fetching')
 
       if (exercises && exercises?.length > 0) {
         store.setProp('exercises', exercises)
@@ -24,17 +23,14 @@ export const ExerciseStoreModel = types
       }
     },
     async seed() {
-      console.log('seeding')
+      console.log('seeding excercises')
 
-      store.setProp(
-        'exercises',
-        exerciseSeedData.map(
-          (exercise, i): ExerciseSnapshotIn => ({
-            ...exercise,
-            guid: String(i),
-          })
-        )
-      )
+      const exercisesData: ExerciseSnapshotIn[] = exerciseSeedData.map(
+      (exercise, i): ExerciseSnapshotIn => ({
+        ...exercise,
+        guid: String(i),
+      }))
+      store.setProp('exercises', exercisesData)
     },
     editExercise(updated: Exercise) {
       const mappedArray = store.exercises.map(e =>

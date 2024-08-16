@@ -39,43 +39,42 @@ const TIME_MEASUREMENTS = [
 ]
 const TIME_GROUPINGS = [ExerciseType.TIME_DISTANCE.value, ExerciseType.TIME.value]
 
+const ExerciseTypeValues = Object.values(ExerciseType).map(e => e.value)
+console.log({ExerciseTypeValues})
 export const ExerciseModel = types
   .model('Exercise')
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
     name: '',
     muscles: types.array(types.string),
-    // measurementType: ExerciseType.REPS_WEIGHT,
+    measurementType: types.optional(
+      types.enumeration(ExerciseTypeValues), 
+      () => ExerciseType.REPS_WEIGHT.value
+    ),
     weightIncrement: 2.5,
     distanceUnit: DistanceType.M,
   })
   .views(exercise => ({
-    get measurementType() {
-      if (exercise.muscles.includes('cardio')) {
-        return ExerciseType.TIME_DISTANCE.value
-      }
-      return ExerciseType.REPS_WEIGHT.value
-    },
     get hasWeightMeasument() {
-      return WEIGHT_MEASUREMENTS.includes(this.measurementType)
+      return WEIGHT_MEASUREMENTS.includes(exercise.measurementType)
     },
     get hasWeightGrouping() {
-      return WEIGHT_GROUPINGS.includes(this.measurementType)
+      return WEIGHT_GROUPINGS.includes(exercise.measurementType)
     },
     get hasRepMeasument() {
-      return REP_MEASUREMENTS.includes(this.measurementType)
+      return REP_MEASUREMENTS.includes(exercise.measurementType)
     },
     get hasRepGrouping() {
-      return REP_GROUPINGS.includes(this.measurementType)
+      return REP_GROUPINGS.includes(exercise.measurementType)
     },
     get hasDistanceMeasument() {
-      return DISTANCE_MEASUREMENTS.includes(this.measurementType)
+      return DISTANCE_MEASUREMENTS.includes(exercise.measurementType)
     },
     get hasTimeMeasument() {
-      return TIME_MEASUREMENTS.includes(this.measurementType)
+      return TIME_MEASUREMENTS.includes(exercise.measurementType)
     },
     get hasTimeGrouping() {
-      return TIME_GROUPINGS.includes(this.measurementType)
+      return TIME_GROUPINGS.includes(exercise.measurementType)
     },
   }))
   .actions(withSetPropAction)

@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { ScrollView } from 'react-native'
 
-import { Workout } from '../../db/models'
+import { Workout } from 'app/db/models'
 import WorkoutExerciseCard from '../WorkoutExercise/WorkoutExerciseCard'
 
 type Props = {
