@@ -1,9 +1,17 @@
 import { useState } from 'react'
 import { View } from 'react-native'
-import { Portal, Modal, Button } from 'react-native-paper'
+import { Portal, Modal } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { Divider, DurationInput, HeadingLabel, colors } from 'designSystem'
+import {
+  Button,
+  ButtonText,
+  Divider,
+  DurationInput,
+  HeadingLabel,
+  colors,
+} from 'designSystem'
+import { translate } from 'app/i18n'
 
 type Props = {
   open: boolean
@@ -30,7 +38,9 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
           marginHorizontal: 20,
         }}
       >
-        <HeadingLabel style={{ padding: 16 }}>Edit Rest Timer</HeadingLabel>
+        <HeadingLabel style={{ padding: 16 }}>
+          {translate('editRestTimer')}
+        </HeadingLabel>
         <Divider orientation="horizontal" />
         <View style={{ paddingVertical: 16 }}>
           <DurationInput
@@ -41,18 +51,18 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
         </View>
         <View style={{ flexDirection: 'row' }}>
           <Button
+            variant="tertiary"
             style={{ flex: 1 }}
-            textColor={colors.tertiaryText}
             onPress={onClose}
           >
-            Cancel
+            <ButtonText variant="tertiary">{translate('cancel')}</ButtonText>
           </Button>
           <Button
+            variant="tertiary"
             style={{ flex: 1 }}
-            textColor={colors.tertiaryText}
             onPress={onConfirm}
           >
-            Confirm
+            <ButtonText variant="tertiary">{translate('confirm')}</ButtonText>
           </Button>
         </View>
       </Modal>

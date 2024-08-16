@@ -1,6 +1,7 @@
-import { Portal, Dialog, Button } from 'react-native-paper'
+import { Portal, Dialog } from 'react-native-paper'
 
-import { BodyMediumLabel, colors } from 'designSystem'
+import { BodyLargeLabel, Button, ButtonText } from 'designSystem'
+import { translate } from 'app/i18n'
 
 type Props = {
   open: boolean
@@ -20,24 +21,24 @@ const ConfirmationDialog: React.FC<Props> = ({
         visible={open}
         onDismiss={onClose}
       >
-        <Dialog.Title>Warning</Dialog.Title>
+        <Dialog.Title>{translate('warning')}</Dialog.Title>
         <Dialog.Content>
-          <BodyMediumLabel>{message}</BodyMediumLabel>
+          <BodyLargeLabel>{message}</BodyLargeLabel>
         </Dialog.Content>
         <Dialog.Actions>
           <Button
+            variant="tertiary"
             style={{ flex: 1 }}
-            textColor={colors.tertiaryText}
             onPress={onClose}
           >
-            Cancel
+            <ButtonText variant="tertiary">{translate('cancel')}</ButtonText>
           </Button>
           <Button
+            variant="tertiary"
             style={{ flex: 1 }}
-            textColor={colors.tertiaryText}
             onPress={onConfirm}
           >
-            Confirm
+            <ButtonText variant="tertiary"> {translate('confirm')}</ButtonText>
           </Button>
         </Dialog.Actions>
       </Dialog>
