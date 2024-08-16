@@ -7,3 +7,5 @@
 - fix android device workout horizontal scrolling
 - in 'Update exercice' screen muscle areas plus icon is not implemented
 - add floating placeholder in Select component 
+- change icon and remove ignite splashscreen
+- in ExterciseTrack screen show last sets when keyboard open

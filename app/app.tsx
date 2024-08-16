@@ -7,7 +7,7 @@ if (__DEV__) {
 import { useFonts } from 'expo-font'
 import React from 'react'
 import * as Linking from 'expo-linking'
-import { ViewStyle } from 'react-native'
+import { KeyboardAvoidingView, Platform, ViewStyle } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { PaperProvider, Portal } from 'react-native-paper'
 import {
@@ -88,21 +88,26 @@ function App() {
   // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <DBStoreInitializer>
-        <PaperProvider>
-          <Portal.Host>
-            <ErrorBoundary catchErrors={Config.catchErrors}>
-              <GestureHandlerRootView style={$container}>
-                <AppNavigator
-                  linking={linking}
-                  initialState={initialNavigationState}
-                  onStateChange={onNavigationStateChange}
-                />
-              </GestureHandlerRootView>
-            </ErrorBoundary>
-          </Portal.Host>
-        </PaperProvider>
-      </DBStoreInitializer>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ height: '100%' }}
+      >
+        <DBStoreInitializer>
+          <PaperProvider>
+            <Portal.Host>
+              <ErrorBoundary catchErrors={Config.catchErrors}>
+                <GestureHandlerRootView style={$container}>
+                  <AppNavigator
+                    linking={linking}
+                    initialState={initialNavigationState}
+                    onStateChange={onNavigationStateChange}
+                  />
+                </GestureHandlerRootView>
+              </ErrorBoundary>
+            </Portal.Host>
+          </PaperProvider>
+        </DBStoreInitializer>
+      </KeyboardAvoidingView>
     </SafeAreaProvider>
   )
 }
