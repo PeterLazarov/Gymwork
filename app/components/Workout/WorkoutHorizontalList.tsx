@@ -1,12 +1,13 @@
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useMemo, useRef } from 'react'
-import { FlatList, ListRenderItemInfo, Text } from 'react-native'
+import { FlatList, ListRenderItemInfo } from 'react-native'
 
-import WorkoutExerciseList from './WorkoutExerciseList'
 import { useStores } from 'app/db/helpers/useStores'
 import { getDateRange } from 'app/utils/date'
 import { HorizontalScreenList } from 'designSystem'
+import WorkoutExerciseList from './WorkoutExerciseList'
+import WorkoutEmptyTemplate from './WorkoutEmptyTemplate'
 
 // TODO this breaks BADLY if the date goes outside of this range
 const datePaddingCount = 365
@@ -38,16 +39,14 @@ function WorkoutHorizontalList() {
     stateStore.setOpenedDate(dates[index])
   }
 
-  // TODO render workout scre
   const renderItem = ({ item, index }: ListRenderItemInfo<string>) => {
     const date = dates[index]
     const workout = workoutStore.getWorkoutForDate(date)
-    // console.log(date, workout)
+
     return workout ? (
       <WorkoutExerciseList workout={workout} />
     ) : (
-      // TODO prettier fallback
-      <Text>No workout found for date: {date}</Text>
+      <WorkoutEmptyTemplate />
     )
   }
   useEffect(() => {
