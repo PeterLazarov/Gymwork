@@ -11,11 +11,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 
 const WorkoutPage: React.FC = () => {
-  const { workoutStore, timeStore, stateStore } = useStores()
-
-  function newWorkout() {
-    workoutStore.createWorkout()
-  }
+  const { timeStore, stateStore } = useStores()
 
   return (
     <EmptyLayout>
@@ -26,7 +22,7 @@ const WorkoutPage: React.FC = () => {
       )}
       <Timer2 />
       <WorkoutHorizontalList />
-      <WorkoutControlButtons createWorkout={newWorkout} />
+      <WorkoutControlButtons />
     </EmptyLayout>
   )
 }
