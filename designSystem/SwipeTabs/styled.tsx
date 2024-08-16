@@ -15,6 +15,7 @@ export const TabHeaderTouchable = styled.TouchableOpacity`
 
 export const TabLabel = styled.Text<TabLabelProps>`
   color: ${({ isActive }) => (isActive ? colors.primary : colors.gray)};
+  font-size: 16px;
 `
 
 export const ActiveIndicator = styled.View`

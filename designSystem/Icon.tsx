@@ -41,6 +41,8 @@ const EntypoIcons = [
   'emoji-neutral',
   'emoji-sad',
   'stopwatch',
+  'heart',
+  'heart-outlined',
 ] as const satisfies ReadonlyArray<keyof typeof Entypo.glyphMap>
 type EntypoIcon = (typeof EntypoIcons)[number]
 

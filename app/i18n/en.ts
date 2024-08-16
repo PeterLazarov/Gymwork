@@ -33,6 +33,11 @@ const en = {
   recordsLogEmpty: 'Records Log Empty',
   workoutLogEmpty: 'Workout Log Empty',
   exportData: 'Export data',
+  noWorkoutsEntered: 'No workouts entered yet',
+  noFavoriteExercises: 'No favorite exercises set',
+  favorite: 'Favorite',
+  mostUsed: 'Most used',
+  allExercises: 'All Exercises',
 }
 
 export default en

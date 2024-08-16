@@ -3,13 +3,14 @@ import React from 'react'
 import { Appbar } from 'react-native-paper'
 
 import AllExerciseSelect from 'app/components/Exercise/AllExerciseSelect'
-import FavoriteExerciseSelect from 'app/components/Exercise/FavoriteExerciseSelect'
+import FavoriteExerciseSelect from 'app/components/Exercise/FavoriteExercisesList'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
 import { Icon, SwipeTabs, colors } from 'designSystem'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
+import MostUsedExercisesList from 'app/components/Exercise/MostUsedExercisesList'
 
 const ExerciseSelectPage: React.FC = () => {
   const { stateStore } = useStores()
@@ -29,13 +30,19 @@ const ExerciseSelectPage: React.FC = () => {
 
   const tabsConfig = [
     {
-      label: 'Most used',
+      label: translate('favorite'),
       name: 'tabFavorite',
       component: FavoriteExerciseSelect,
       props: { onSelect: handleSelectExercise },
     },
     {
-      label: 'All exercises',
+      label: translate('mostUsed'),
+      name: 'tabMostUsed',
+      component: MostUsedExercisesList,
+      props: { onSelect: handleSelectExercise },
+    },
+    {
+      label: translate('allExercises'),
       name: 'tabAll',
       component: AllExerciseSelect,
       props: { onSelect: handleSelectExercise },

@@ -53,6 +53,7 @@ export const ExerciseModel = types
     ),
     weightIncrement: 2.5,
     distanceUnit: DistanceType.M,
+    isFavorite: false
   })
   .views(exercise => ({
     get hasWeightMeasument() {

@@ -46,6 +46,9 @@ export const ExerciseStoreModel = types
     get muscleOptions() {
       return uniqueValues(store.exercises.flatMap(e => e.muscles))
     },
+    get favoriteExercises() {
+      return store.exercises.filter(e => e.isFavorite)
+    }
   }))
 
 export interface ExerciseStore extends Instance<typeof ExerciseStoreModel> {}

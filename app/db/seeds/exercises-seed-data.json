@@ -2,7 +2,8 @@
   {
     "name": "Threadmill",
     "muscles": ["cardio"],
-    "measurementType": "time-distance"
+    "measurementType": "time-distance",
+    "isFavorite": true
   },
   {
     "name": "3/4 Sit-Up",
@@ -266,7 +267,8 @@
     "name": "Barbell Bench Press - Medium Grip",
     "muscles": ["chest"],
     "measurementType": "reps-weight",
-    "weightIncrement": 2.5
+    "weightIncrement": 2.5,
+    "isFavorite": true
   },
   {
     "name": "Barbell Curl",

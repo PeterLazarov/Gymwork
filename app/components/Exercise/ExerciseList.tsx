@@ -3,6 +3,7 @@ import React from 'react'
 
 import ExerciseListItem from './ExerciseListItem'
 import { Exercise } from 'app/db/models'
+import { ScrollView } from 'react-native'
 
 type Props = {
   exercises: Exercise[]
@@ -10,7 +11,7 @@ type Props = {
 }
 const ExerciseList: React.FC<Props> = ({ exercises, onSelect }) => {
   return (
-    <>
+    <ScrollView>
       {exercises.map(exercise => (
         <ExerciseListItem
           key={exercise.guid}
@@ -18,7 +19,7 @@ const ExerciseList: React.FC<Props> = ({ exercises, onSelect }) => {
           onSelect={onSelect}
         />
       ))}
-    </>
+    </ScrollView>
   )
 }
 
