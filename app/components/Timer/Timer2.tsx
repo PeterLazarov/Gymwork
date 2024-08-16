@@ -2,18 +2,15 @@ import { Duration } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import { StyleSheet, View, Text, Button } from 'react-native'
-
-import { useStores } from 'app/db/helpers/useStores'
 import useTimer from 'app/db/stores/useTimer'
 import { colors } from 'designSystem'
 
 export default observer(function Timer2() {
-  // const { timerStore2 } = useStores()
-  const { clear, start, stop, timeLeft } = useTimer()
+  const { start, stop, timeLeft, clear } = useTimer()
 
   const idk = useMemo(() => {
     return timeLeft.toFormat('mm:ss')
-  }, [])
+  }, [timeLeft])
   return (
     <>
       <View
@@ -35,6 +32,10 @@ export default observer(function Timer2() {
         <Button
           title="Stop"
           onPress={() => stop()}
+        />
+        <Button
+          title="Clear"
+          onPress={() => clear()}
         />
       </View>
     </>

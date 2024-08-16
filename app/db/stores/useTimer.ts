@@ -1,47 +1,74 @@
 import { Duration } from 'luxon'
 import { useMemo, useRef, useState } from 'react'
 
-// TODO store timestamps in context
+const defaultDuration = Duration.fromDurationLike({ minutes: 0 })
+const defaultUpdateFrequency = Duration.fromMillis(50)
 
 export default function useTimer() {
-  const startedAt = useRef(0)
   const intervalHandle = useRef<NodeJS.Timeout>()
 
-  const [_timeLeft, setTimeLeft] = useState(0)
+  const [timeElapsed, setTimeElapsed] = useState(Duration.fromMillis(0))
+  const [duration, setDuration] = useState(defaultDuration)
+  const lastTickAt = useRef(Date.now())
 
-  const timeLeft = useMemo(() => {
-    return Duration.fromMillis(_timeLeft)
-  }, [_timeLeft])
+  const timeLeft = useMemo(
+    () => duration.minus(timeElapsed),
+    [timeElapsed, duration]
+  )
 
+  // TODO should reset and start anew
   function start(
-    duration: Duration,
-    updateFrequency: Duration = Duration.fromMillis(1000)
+    duration: Duration = defaultDuration,
+    updateFrequency: Duration = defaultUpdateFrequency
   ) {
-    const now = Date.now()
-    // startedAt.current = now
-    startedAt.current = now
+    setDuration(duration)
+    setTimeElapsed(Duration.fromMillis(0))
 
-    console.log(now)
+    startTickInterval(updateFrequency)
+  }
 
-    intervalHandle.current = setInterval(() => {
-      const now2 = Date.now()
-      setTimeLeft(now2 - startedAt.current)
-      console.log({
-        now,
-        now2,
-        startedAt: startedAt.current,
-        timeLeft: _timeLeft,
-      })
-    }, updateFrequency.toMillis())
+  // Resume teleports to time in the past
+  function startTickInterval(
+    updateFrequency: Duration = defaultUpdateFrequency
+  ) {
+    if (!intervalHandle.current) {
+      lastTickAt.current = Date.now()
+      intervalHandle.current = setInterval(tick, updateFrequency.toMillis())
+    }
   }
 
   function stop() {
-    intervalHandle.current && clearInterval(intervalHandle.current)
-    setTimeLeft(Date.now() - startedAt.current)
-  }
-  function clear() {
-    // setStartedAt(0)
+    if (intervalHandle.current) {
+      clearInterval(intervalHandle.current)
+      intervalHandle.current = undefined
+      tick()
+    }
   }
 
-  return { timeLeft, start, stop, clear }
+  function tick() {
+    const now = Date.now()
+
+    const timePassedSinceLastTick = Duration.fromMillis(
+      now - lastTickAt.current
+    )
+
+    lastTickAt.current = now
+    setTimeElapsed(timeElapsed => timeElapsed.plus(timePassedSinceLastTick))
+  }
+
+  function clear() {
+    stop()
+    setTimeElapsed(Duration.fromMillis(0))
+    setDuration(Duration.fromMillis(0))
+  }
+
+  // clear -> resume leads to -
+
+  return {
+    timeLeft,
+    timeElapsed,
+    start,
+    stop,
+    clear,
+  }
 }
