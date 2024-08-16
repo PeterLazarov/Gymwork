@@ -50,11 +50,9 @@ const CalendarPage: React.FC = () => {
     []
   )
 
-  // TODO WIP
-  const today = useMemo(() => DateTime.now().toJSDate(), [])
-  const yesterday = useMemo(
-    () => DateTime.now().minus({ day: 1 }).toJSDate(),
-    []
+  const activeDate = useMemo(
+    () => DateTime.fromISO(stateStore.openedDate).toJSDate(),
+    [stateStore.openedDate]
   )
 
   function onBackPress() {
@@ -63,16 +61,21 @@ const CalendarPage: React.FC = () => {
 
   function handleCalendarDayPress(date: Date) {
     const dateString = DateTime.fromISO(date.toISOString()).toISODate()!
-    if (Object.keys(markedDates).includes(dateString)) {
+    const didWorkoutOnDate = Object.keys(markedDates).includes(dateString)
+    if (didWorkoutOnDate) {
       setOpenedWorkoutDialogDate(dateString)
     } else {
-      goGoDay
+      goToDay(dateString)
     }
   }
-  function goGoDay(date?: Date) {
-    stateStore.setOpenedDate(date?.toISOString() ?? openedWorkoutDialogDate)
-    setOpenedWorkoutDialogDate('')
+  function goToDay(date: string) {
+    stateStore.setOpenedDate(date)
     navigate('Workout')
+  }
+
+  function handleModalConfirm() {
+    setOpenedWorkoutDialogDate('')
+    goToDay(openedWorkoutDialogDate)
   }
 
   return (
@@ -92,7 +95,7 @@ const CalendarPage: React.FC = () => {
           onPress={date => {
             handleCalendarDayPress(date)
           }}
-          startDate={yesterday}
+          startDate={activeDate}
           startingMonth={monthBeforeFirstWorkout}
           endDate={lastDayOfNextMonth}
           markedDays={markedDates}
@@ -115,12 +118,12 @@ const CalendarPage: React.FC = () => {
           firstDayMonday
         />
       </EmptyLayout>
-      {openedWorkoutDialogDate !== '' && (
+      {openedWorkoutDialogDate && (
         <CalendarWorkoutModal
-          open={openedWorkoutDialogDate !== ''}
+          open={!!openedWorkoutDialogDate}
           workoutDate={openedWorkoutDialogDate}
           onClose={() => setOpenedWorkoutDialogDate('')}
-          onConfirm={goGoDay}
+          onConfirm={handleModalConfirm}
           confirmButtonText={translate('goToWorkout')}
         />
       )}
