@@ -5,5 +5,5 @@
 - TODO revise or remove web linking in app.tsx
 - fix android simulator errors
 - fix android device workout horizontal scrolling
-- close context menu on 'Edit exercise' option click
 - in 'Update exercice' screen muscle areas plus icon is not implemented
+- add floating placeholder in Select component 

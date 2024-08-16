@@ -24,12 +24,13 @@ const WorkoutExercisePage: React.FC = () => {
   }
 
   function onEditExercisePress() {
+    setMenuOpen(false)
     navigate('ExerciseEdit')
   }
 
   function onToggleGraphPress() {
-    setGraphHidden(!graphHidden)
     setMenuOpen(false)
+    setGraphHidden(!graphHidden)
   }
 
   const tabs = [
