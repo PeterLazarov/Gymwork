@@ -5,9 +5,9 @@ import { Searchbar } from 'react-native-paper'
 
 import ExerciseAcordionList from './ExerciseAcordionList'
 import ExerciseList from './ExerciseList'
-import { useStores } from '../../db/helpers/useStores'
-import { Exercise } from '../../db/models'
-import { groupBy } from '../../utils/array'
+import { useStores } from 'app/db/helpers/useStores'
+import { Exercise } from 'app/db/models'
+import { groupBy } from 'app/utils/array'
 import { translate } from 'app/i18n'
 
 const noop = () => {}

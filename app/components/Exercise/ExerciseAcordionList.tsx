@@ -3,8 +3,8 @@ import React from 'react'
 import { List } from 'react-native-paper'
 
 import ExerciseListItem from './ExerciseListItem'
-import { Exercise } from '../../db/models'
-import { capitalize } from '../../utils/string'
+import { Exercise } from 'app/db/models'
+import { capitalize } from 'app/utils/string'
 
 type Props = {
   exercises: Record<string, Exercise[]>

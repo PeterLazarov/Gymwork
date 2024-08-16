@@ -1,17 +1,17 @@
-import { observer } from "mobx-react-lite";
-import React from "react";
+import { observer } from 'mobx-react-lite'
+import React from 'react'
 
-import ExerciseListItem from "./ExerciseListItem";
-import { Exercise } from "../../db/models";
+import ExerciseListItem from './ExerciseListItem'
+import { Exercise } from 'app/db/models'
 
 type Props = {
-  exercises: Exercise[];
-  onSelect: (exercise: Exercise) => void;
-};
+  exercises: Exercise[]
+  onSelect: (exercise: Exercise) => void
+}
 const ExerciseList: React.FC<Props> = ({ exercises, onSelect }) => {
   return (
     <>
-      {exercises.map((exercise) => (
+      {exercises.map(exercise => (
         <ExerciseListItem
           key={exercise.guid}
           exercise={exercise}
@@ -19,7 +19,7 @@ const ExerciseList: React.FC<Props> = ({ exercises, onSelect }) => {
         />
       ))}
     </>
-  );
-};
+  )
+}
 
-export default observer(ExerciseList);
+export default observer(ExerciseList)

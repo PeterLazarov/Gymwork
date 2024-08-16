@@ -15,8 +15,8 @@ import { oneRepMaxEpley } from 'fitness-calc'
 import { useRef, useEffect, useState, useMemo } from 'react'
 import { Dimensions, View } from 'react-native'
 
-import { useStores } from '../db/helpers/useStores'
-import { WorkoutSet } from '../db/models'
+import { useStores } from 'app/db/helpers/useStores'
+import { WorkoutSet } from 'app/db/models'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
