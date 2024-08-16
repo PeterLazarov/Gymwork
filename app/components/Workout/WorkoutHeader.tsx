@@ -7,7 +7,6 @@ import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { Icon, colors } from 'designSystem'
 import { useShare } from 'app/utils/useShare'
-import { isDev } from 'app/utils/isDev'
 
 const WorkoutHeader: React.FC = () => {
   const { stateStore } = useStores()
@@ -57,12 +56,10 @@ const WorkoutHeader: React.FC = () => {
           />
         }
       >
-        {isDev && (
-          <Menu.Item
-            onPress={exportData}
-            title="Export data"
-          />
-        )}
+        <Menu.Item
+          onPress={exportData}
+          title="Export data"
+        />
       </Menu>
     </Appbar.Header>
   )
