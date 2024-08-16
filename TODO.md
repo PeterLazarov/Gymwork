@@ -6,7 +6,6 @@
 - add floating placeholder in Select component 
 - change icon and remove ignite splashscreen
 - in ExterciseTrack screen show last sets when keyboard open
-- disable / fix history and records for never performed before exercises
 - fix error when export data in android simulator
 - refresh records on workout coy for a previous day
 - WorkoutExerciseList and WorkoutExerciseCard rendering for new data

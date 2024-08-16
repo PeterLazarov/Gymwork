@@ -5,7 +5,9 @@ import { FlatList, ListRenderItemInfo, View } from 'react-native'
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
-import { colors, Divider, BodyLargeLabel } from 'designSystem'
+import { Divider } from 'designSystem'
+import EmptyState from 'app/components/EmptyState'
+import { translate } from 'app/i18n'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -57,16 +59,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       />
 
       {stateStore.openedExerciseSets.length === 0 && (
-        <BodyLargeLabel
-          style={{
-            textAlign: 'center',
-            alignItems: 'center',
-            flex: 1,
-            color: colors.gray,
-          }}
-        >
-          No sets entered
-        </BodyLargeLabel>
+        <EmptyState text={translate('noSetsEntered')} />
       )}
     </View>
   )

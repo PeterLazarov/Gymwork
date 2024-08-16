@@ -4,10 +4,11 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import { FlatList, ListRenderItemInfo } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
+import { translate } from 'app/i18n'
 import { getDateRange } from 'app/utils/date'
 import { HorizontalScreenList } from 'designSystem'
 import WorkoutExerciseList from './WorkoutExerciseList'
-import WorkoutEmptyTemplate from './WorkoutEmptyTemplate'
+import EmptyState from '../EmptyState'
 
 // TODO this breaks BADLY if the date goes outside of this range
 const datePaddingCount = 365
@@ -46,7 +47,7 @@ function WorkoutHorizontalList() {
     return workout ? (
       <WorkoutExerciseList workout={workout} />
     ) : (
-      <WorkoutEmptyTemplate />
+      <EmptyState text={translate('workoutLogEmpty')} />
     )
   }
   useEffect(() => {

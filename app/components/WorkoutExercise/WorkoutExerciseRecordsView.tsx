@@ -3,10 +3,12 @@ import { getParentOfType } from 'mobx-state-tree'
 import React from 'react'
 import { View, ScrollView, TouchableOpacity } from 'react-native'
 
-import WorkoutExerciseSetListItem from './WorkoutExerciseSetReadOnlyList/ReadOnlyListItem'
-import { useStores } from '../../db/helpers/useStores'
-import { WorkoutModel, WorkoutSet } from '../../db/models'
+import { useStores } from 'app/db/helpers/useStores'
+import { WorkoutModel, WorkoutSet } from 'app/db/models'
+import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
+import WorkoutExerciseSetListItem from './WorkoutExerciseSetReadOnlyList/ReadOnlyListItem'
+import EmptyState from '../EmptyState'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
   const { openedExerciseRecords, stateStore } = useStores()
@@ -28,29 +30,33 @@ const WorkoutExerciseRecordsView: React.FC = () => {
         flexGrow: 1,
       }}
     >
-      <ScrollView
-        style={{
-          flexBasis: 0,
-        }}
-      >
-        {Object.values(openedExerciseRecords).map((set, i) => {
-          return (
-            <TouchableOpacity
-              key={set.guid}
-              style={{
-                marginVertical: 4,
-              }}
-              onPress={() => goToDate(set)}
-            >
-              <WorkoutExerciseSetListItem
-                set={set}
-                hideRecords
-                exercise={stateStore.openedExercise!}
-              />
-            </TouchableOpacity>
-          )
-        })}
-      </ScrollView>
+      {Object.values(openedExerciseRecords).length > 0 ? (
+        <ScrollView
+          style={{
+            flexBasis: 0,
+          }}
+        >
+          {Object.values(openedExerciseRecords).map((set, i) => {
+            return (
+              <TouchableOpacity
+                key={set.guid}
+                style={{
+                  marginVertical: 4,
+                }}
+                onPress={() => goToDate(set)}
+              >
+                <WorkoutExerciseSetListItem
+                  set={set}
+                  hideRecords
+                  exercise={stateStore.openedExercise!}
+                />
+              </TouchableOpacity>
+            )
+          })}
+        </ScrollView>
+      ) : (
+        <EmptyState text={translate('recordsLogEmpty')} />
+      )}
     </View>
   )
 }

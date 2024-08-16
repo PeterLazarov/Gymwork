@@ -13,6 +13,10 @@ const en = {
   remove: 'Remove',
   calendar: 'Calendar',
   goToWorkout: 'Go to workout',
+  noSetsEntered: 'No sets entered',
+  historyLogEmpty: 'History Log Empty',
+  recordsLogEmpty: 'Records Log Empty',
+  workoutLogEmpty: 'Workout Log Empty',
 }
 
 export default en
