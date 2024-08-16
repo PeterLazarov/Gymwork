@@ -11,3 +11,4 @@
 - in ExterciseTrack screen show last sets when keyboard open
 - copy workout button
 - disable / fix history and records for never performed before exercises
+- fix error when export data in android simulator

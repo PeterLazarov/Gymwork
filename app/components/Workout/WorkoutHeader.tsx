@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
-import React from 'react'
-import { Appbar } from 'react-native-paper'
+import React, { useState } from 'react'
+import { Appbar, Menu } from 'react-native-paper'
 
 import WorkoutHeaderTimerButtons from '../Timer/TimerButtons'
 import { useStores } from 'app/db/helpers/useStores'
@@ -13,11 +13,18 @@ const WorkoutHeader: React.FC = () => {
   const { stateStore } = useStores()
   const { workoutStore } = useStores()
 
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const share = useShare()
+
   function openCalendar() {
     navigate('Calendar')
   }
 
-  const share = useShare()
+  const exportData = () => {
+    setMenuOpen(false)
+    share(workoutStore)
+  }
 
   return (
     <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
@@ -38,22 +45,25 @@ const WorkoutHeader: React.FC = () => {
         animated={false}
       />
 
-      {isDev && (
-        <Appbar.Action
-          icon={() => <Icon icon="analytics" />}
-          onPress={() => {
-            share(workoutStore)
-          }}
-          animated={false}
-        />
-      )}
-
-      {/* TODO */}
-      <Appbar.Action
-        icon={() => <Icon icon="ellipsis-vertical" />}
-        onPress={() => {}}
-        animated={false}
-      />
+      <Menu
+        visible={menuOpen}
+        onDismiss={() => setMenuOpen(false)}
+        anchorPosition="bottom"
+        anchor={
+          <Appbar.Action
+            icon={() => <Icon icon="ellipsis-vertical" />}
+            onPress={() => setMenuOpen(true)}
+            animated={false}
+          />
+        }
+      >
+        {isDev && (
+          <Menu.Item
+            onPress={exportData}
+            title="Export data"
+          />
+        )}
+      </Menu>
     </Appbar.Header>
   )
 }
