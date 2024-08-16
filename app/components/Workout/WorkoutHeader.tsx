@@ -5,8 +5,9 @@ import { Appbar, Menu } from 'react-native-paper'
 import WorkoutHeaderTimerButtons from '../Timer/TimerButtons'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
-import { Icon, colors } from 'designSystem'
 import { useShare } from 'app/utils/useShare'
+import { translate } from 'app/i18n'
+import { Icon, colors } from 'designSystem'
 
 const WorkoutHeader: React.FC = () => {
   const { stateStore } = useStores()
@@ -58,7 +59,7 @@ const WorkoutHeader: React.FC = () => {
       >
         <Menu.Item
           onPress={exportData}
-          title="Export data"
+          title={translate('exportData')}
         />
       </Menu>
     </Appbar.Header>

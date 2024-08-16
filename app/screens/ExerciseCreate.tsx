@@ -7,8 +7,9 @@ import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, ExerciseModel } from 'app/db/models'
 import { goBack } from 'app/navigators'
-import { Button, ButtonText, Icon, colors } from 'designSystem'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
+import { translate } from 'app/i18n'
+import { Button, ButtonText, Icon, colors } from 'designSystem'
 
 const ExerciseCreatePage: React.FC = () => {
   const { exerciseStore } = useStores()
@@ -41,7 +42,7 @@ const ExerciseCreatePage: React.FC = () => {
       <EmptyLayout>
         <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
           <Appbar.BackAction onPress={onBackPress} />
-          <Appbar.Content title="Create exercise" />
+          <Appbar.Content title={translate('createExercise')} />
           <Appbar.Action
             icon={() => (
               <Icon
@@ -65,12 +66,12 @@ const ExerciseCreatePage: React.FC = () => {
           onPress={onComplete}
           disabled={!formValid}
         >
-          <ButtonText variant="primary">Save</ButtonText>
+          <ButtonText variant="primary">{translate('save')}</ButtonText>
         </Button>
       </EmptyLayout>
       <ConfirmationDialog
         open={confirmDialogOpen}
-        message="Any changes made will be lost."
+        message={translate('changesWillBeLost')}
         onClose={() => setConfirmDialogOpen(false)}
         onConfirm={onBackConfirmed}
       />

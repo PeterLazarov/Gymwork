@@ -6,8 +6,9 @@ import { Appbar, TextInput } from 'react-native-paper'
 import FeedbackPicker from 'app/components/FeedbackPicker'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
-import { BodyLargeLabel, Button, ButtonText, colors } from 'designSystem'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
+import { translate } from 'app/i18n'
+import { BodyLargeLabel, Button, ButtonText, colors } from 'designSystem'
 
 const WorkoutFeedbackPage: React.FC = () => {
   const { stateStore } = useStores()
@@ -20,12 +21,12 @@ const WorkoutFeedbackPage: React.FC = () => {
     <EmptyLayout style={{ backgroundColor: colors.lightgray }}>
       <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
         <Appbar.BackAction onPress={onBackPress} />
-        <Appbar.Content title="Workout comments" />
+        <Appbar.Content title={translate('workoutComments')} />
       </Appbar.Header>
 
       <View style={{ padding: 8, gap: 16, flex: 1 }}>
         <BodyLargeLabel style={{ textAlign: 'center' }}>
-          How was the workout?
+          {translate('howWasWorkout')}
         </BodyLargeLabel>
         <FeedbackPicker
           selected={stateStore.openedWorkout!.feeling}
@@ -40,7 +41,7 @@ const WorkoutFeedbackPage: React.FC = () => {
               stateStore.openedWorkout!.setProp('notes', text)
             }
             multiline
-            placeholder="Enter comments..."
+            placeholder={translate('enterComments')}
           />
         </ScrollView>
       </View>
@@ -54,7 +55,7 @@ const WorkoutFeedbackPage: React.FC = () => {
           variant="primary"
           onPress={onBackPress}
         >
-          <ButtonText variant="primary">Done</ButtonText>
+          <ButtonText variant="primary">{translate('done')}</ButtonText>
         </Button>
       </View>
     </EmptyLayout>

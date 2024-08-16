@@ -2,6 +2,7 @@ import React from 'react'
 import { ScrollView, View, Dimensions } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
+import { translate } from 'app/i18n'
 import { Button, ButtonText, Divider, HeadingLabel, colors } from 'designSystem'
 import { SelectOption } from './types'
 import OptionListItem from './OptionListItem'
@@ -70,7 +71,7 @@ const SelectOptionsModal: React.FC<Props> = ({
                   style={{ flex: 1 }}
                   onPress={onClose}
                 >
-                  <ButtonText variant="primary">Done</ButtonText>
+                  <ButtonText variant="primary">{translate('done')}</ButtonText>
                 </Button>
               </View>
             </>

@@ -10,6 +10,7 @@ import Timer from 'app/components/Timer/Timer'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { Icon, SwipeTabs, colors } from 'designSystem'
+import { translate } from 'app/i18n'
 
 const WorkoutExercisePage: React.FC = () => {
   const { timeStore, stateStore } = useStores()
@@ -85,12 +86,12 @@ const WorkoutExercisePage: React.FC = () => {
         >
           <Menu.Item
             onPress={onEditExercisePress}
-            title="Edit exercise"
+            title={translate('editExercise')}
           />
           {view === 'history' && (
             <Menu.Item
               onPress={onToggleGraphPress}
-              title={graphHidden ? 'Show graph' : 'Hide graph'}
+              title={translate(graphHidden ? 'showGraph' : 'hideGraph')}
             />
           )}
         </Menu>

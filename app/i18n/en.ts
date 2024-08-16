@@ -12,11 +12,23 @@ const en = {
   updateSet: 'Update set',
   remove: 'Remove',
   calendar: 'Calendar',
+  save: 'Save',
+  createExercise: 'Create exercise',
+  updateExercise: 'Update exercise',
+  editExercise: 'Edit exercise',
+  showGraph: 'Show graph',
+  hideGraph: 'Hide graph',
+  changesWillBeLost: 'Any changes made will be lost.',
+  done: 'Done',
+  workoutComments: 'Workout comments',
+  enterComments: 'Enter comments...',
+  howWasWorkout: 'How was the workout?',
   goToWorkout: 'Go to workout',
   noSetsEntered: 'No sets entered',
   historyLogEmpty: 'History Log Empty',
   recordsLogEmpty: 'Records Log Empty',
   workoutLogEmpty: 'Workout Log Empty',
+  exportData: 'Export data',
 }
 
 export default en
