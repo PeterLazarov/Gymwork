@@ -52,7 +52,7 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
   return (
     <>
       <View style={{ gap: 16, padding: 16 }}>
-        {stateStore.openedExercise!.hasRepMeasument && (
+        {stateStore.openedExercise?.hasRepMeasument && (
           <SetEditPanelSection text={translate('reps')}>
             <IncrementNumericEditor
               value={editData.reps}
