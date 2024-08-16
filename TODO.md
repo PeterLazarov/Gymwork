@@ -9,3 +9,4 @@
 - add floating placeholder in Select component 
 - change icon and remove ignite splashscreen
 - in ExterciseTrack screen show last sets when keyboard open
+- copy workout button

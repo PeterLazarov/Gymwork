@@ -32,9 +32,8 @@ const IncrementNumericEditor: React.FC<Props> = ({ value, onChange, step }) => {
     >
       <TextInput
         style={{ flexGrow: 1, textAlign: 'center', fontSize: 16 }}
-        inputMode="numeric"
         multiline={false}
-        keyboardType="number-pad"
+        keyboardType="decimal-pad"
         onChangeText={text => {
           const asNum = Number(text)
           if (isNaN(asNum)) {
@@ -55,7 +54,7 @@ const IncrementNumericEditor: React.FC<Props> = ({ value, onChange, step }) => {
           onChange(Number(toFixed))
         }}
         value={rendered}
-      ></TextInput>
+      />
     </IncrementDecrementButtons>
   )
 }
