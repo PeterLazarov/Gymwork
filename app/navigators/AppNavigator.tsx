@@ -64,7 +64,7 @@ export const useRouteParams = <T extends keyof AppStackParamList>(
 ): AppStackParamList[T] => {
   const route = useRoute<RouteProp<AppStackParamList, T>>()
 
-  return route.params as AppStackParamList[T]
+  return (route.params ?? {}) as AppStackParamList[T]
 }
 
 /**
