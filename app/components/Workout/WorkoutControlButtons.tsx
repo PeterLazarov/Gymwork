@@ -7,17 +7,20 @@ import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
 import { colors, Icon, Button, ButtonText } from 'designSystem'
 
-type Props = {
-  createWorkout: () => void
-}
+type Props = {}
 
-const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
-  const { stateStore } = useStores()
+const WorkoutControlButtons: React.FC<Props> = () => {
+  const { stateStore, workoutStore } = useStores()
 
   const isWorkoutStarted = !!stateStore.openedWorkout
   const hasNotes = stateStore.openedWorkout?.notes !== ''
 
   function onAddExercisePress() {
+    navigate('ExerciseSelect')
+  }
+
+  function createWorkout() {
+    workoutStore.createWorkout()
     navigate('ExerciseSelect')
   }
 
@@ -56,6 +59,7 @@ const WorkoutControlButtons: React.FC<Props> = ({ createWorkout }) => {
             variant="primary"
             onPress={copyPrevWorkout}
             style={{ flex: 1 }}
+            disabled
           >
             <Icon
               color={colors.primaryText}
