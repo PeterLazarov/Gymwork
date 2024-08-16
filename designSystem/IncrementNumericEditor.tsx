@@ -18,7 +18,9 @@ const IncrementNumericEditor: React.FC<Props> = ({ value, onChange, step }) => {
 
   useEffect(() => {
     if (Number(rendered) !== value) {
-      setRendered(String(value.toFixed(maxDecimals)))
+      setRendered(
+        String(value.toFixed(String(value).includes('.') ? maxDecimals : 0))
+      )
     }
   })
 
@@ -39,12 +41,15 @@ const IncrementNumericEditor: React.FC<Props> = ({ value, onChange, step }) => {
             return
           }
 
-          const toFixed = text.slice(
-            0,
-            text.includes('.')
-              ? Math.min(text.indexOf('.') + maxDecimals + 1, maxLength)
-              : maxDigits
-          )
+          // Strip leading zeroes, enforce max length
+          const toFixed = text
+            .replace(/^0+/, '')
+            .slice(
+              0,
+              text.includes('.')
+                ? Math.min(text.indexOf('.') + maxDecimals + 1, maxLength)
+                : maxDigits
+            )
           setRendered(toFixed)
 
           onChange(Number(toFixed))
