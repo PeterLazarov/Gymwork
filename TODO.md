@@ -1,4 +1,3 @@
-- Chart has no labels and is not full width
 - Check if records work right
 - Use bottom offset (iOS shows a line. We souldn't overlap it)
 - TODO revise or remove web linking in app.tsx
