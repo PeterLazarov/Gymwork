@@ -30,9 +30,12 @@ const IoniconsIcons = [
 ] as const satisfies ReadonlyArray<keyof typeof Ionicons.glyphMap>
 type IonicIcon = (typeof IoniconsIcons)[number]
 
-const MCIcons = ['yoga', 'weight-lifter'] as const satisfies ReadonlyArray<
-  keyof typeof MaterialCommunityIcons.glyphMap
->
+const MCIcons = [
+  'yoga',
+  'weight-lifter',
+  'timer-off',
+  'pause-circle',
+] as const satisfies ReadonlyArray<keyof typeof MaterialCommunityIcons.glyphMap>
 type MCIcon = (typeof MCIcons)[number]
 
 const EntypoIcons = [
