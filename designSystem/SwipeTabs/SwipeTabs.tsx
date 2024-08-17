@@ -1,19 +1,23 @@
 import React, { ReactNode, useRef, useState } from 'react'
-import { Keyboard, FlatListProps, View } from 'react-native'
+import { Keyboard, View } from 'react-native'
 
 import TabHeader from './TabHeaderPanel'
 import { TabConfig, TabStyles } from './types'
 import HorizontalScreenList from '../HorizontalScreenList'
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
+import {
+  FlashList,
+  FlashListProps,
+  ListRenderItemInfo,
+} from '@shopify/flash-list'
 
 type Props = {
   style?: TabStyles
-  tabsConfig: ReadonlyArray<TabConfig>
+  tabsConfig: TabConfig[]
   initialScrollIndex?: number
   children?: ReactNode
   onTabChange?: (name: string) => void
   keyboardDismissOnScroll?: boolean
-  flatlistProps?: Partial<FlatListProps<any>>
+  flatlistProps?: Partial<FlashListProps<any>>
 }
 const SwipeTabs: React.FC<Props> = ({
   style,
@@ -24,13 +28,13 @@ const SwipeTabs: React.FC<Props> = ({
   keyboardDismissOnScroll,
   flatlistProps,
 }) => {
-  const flatList = useRef<FlashList<TabConfig>>(null)
+  const flashList = useRef<FlashList<TabConfig>>(null)
   const [currentIndex, setCurrentIndex] = useState(initialScrollIndex || 0)
 
   const onTabPress = (index: number) => {
     if (keyboardDismissOnScroll) Keyboard.dismiss()
 
-    flatList.current?.scrollToIndex({ index })
+    flashList.current?.scrollToIndex({ index })
   }
 
   const onScreenChange = (index: number) => {
@@ -59,7 +63,7 @@ const SwipeTabs: React.FC<Props> = ({
       />
       {children}
       <HorizontalScreenList
-        ref={flatList}
+        ref={flashList}
         onScreenChange={onScreenChange}
         data={tabsConfig}
         renderItem={renderItem}
