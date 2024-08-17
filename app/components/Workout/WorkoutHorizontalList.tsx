@@ -48,7 +48,7 @@ function WorkoutHorizontalList() {
   const renderItem = ({ item, index }: ListRenderItemInfo<string>) => {
     const date = dates[index]
     const workout = workoutStore.getWorkoutForDate(date)
-    console.log('item render', !!workout)
+    console.log('item render')
     return workout ? (
       <View style={{ height: 200 }}>
         <EmptyState text={date} />
