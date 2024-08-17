@@ -16,3 +16,4 @@
 - how to resume a rest timer after pause
 - android horizontal scroll
 - horizontal scrolling on exercite track screen is iffy
+- in exercise track screen on android when using device keyboard hitting done doesn't create the set
