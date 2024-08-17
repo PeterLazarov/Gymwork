@@ -34,9 +34,9 @@ const WorkoutExerciseHistoryView: React.FC<Props> = ({ graphHidden }) => {
         <>
           {!graphHidden && (
             <ExerciseHistoryChart
-              view="ALL"
+              view="30D"
               exerciseID={stateStore.openedExerciseGuid}
-              height={200}
+              height={250}
               width={Dimensions.get('window').width}
             />
           )}
