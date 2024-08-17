@@ -1,5 +1,5 @@
 // Choose your preferred renderer
-import { SVGRenderer, SkiaChart } from '@wuba/react-native-echarts'
+import { SVGRenderer, SvgChart } from '@wuba/react-native-echarts'
 import { LineChart } from 'echarts/charts'
 import {
   TitleComponent,
@@ -282,7 +282,7 @@ const ExerciseHistoryChart = observer(
       >
         {/* Select exercise */}
         {/* Select view */}
-        <SkiaChart ref={chartElRef} />
+        <SvgChart ref={chartElRef} />
         {/* <Button
           disabled={!selectedDate}
           onPress={handleBtnPress}
