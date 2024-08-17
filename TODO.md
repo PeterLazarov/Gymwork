@@ -12,3 +12,5 @@
 - weak ass records breaks stuff for non rep-weight exercises
 - After deleting a set, cannot add another
 - Add ability to reorder sets (force touch? hold touch?)
+- negative rest timer should not have a minus for seconds
+- how to resume a rest timer after pause
