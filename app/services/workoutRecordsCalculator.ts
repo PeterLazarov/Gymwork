@@ -16,10 +16,12 @@ const removeWeakAssRecords = (records: Record<Exercise['guid'], ExerciseRecord>)
   for (const exerciseID in records) {
     const exerciseRecords = records[exerciseID]
     const groupingsDescending = Object.keys(exerciseRecords).reverse()
-    let lastRecord =
-      exerciseRecords[groupingsDescending[0] as any as number]
+
+    let lastRecord = exerciseRecords[groupingsDescending[0] as any as number]
+
     for (const grouping of groupingsDescending) {
       const record = exerciseRecords[grouping as any as number]
+
       if (
         // not sure if higher value is always better
         lastRecord.measurementValue >= record.measurementValue &&
@@ -36,8 +38,14 @@ const removeWeakAssRecords = (records: Record<Exercise['guid'], ExerciseRecord>)
 const getRepRecords = (workouts: Workout[]) => {
   const records: Record<Exercise['guid'], ExerciseRecord> = {}
 
-  for (let i = 0; i < workouts.length; i++) {
-    const workout = workouts[i]
+  const sortedWorkouts = workouts.slice().sort((w1,w2) =>  { 
+    var dateA = new Date(w1.date).getTime();
+    var dateB = new Date(w2.date).getTime();
+    return dateA - dateB;
+  })
+
+  for (let i = 0; i < sortedWorkouts.length; i++) {
+    const workout = sortedWorkouts[i]
     for (let j = 0; j < workout.sets.length; j++) {
       const set = workout.sets[j]
 

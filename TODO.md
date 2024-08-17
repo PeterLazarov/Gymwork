@@ -7,7 +7,6 @@
 - change icon and remove ignite splashscreen
 - in ExterciseTrack screen show last sets when keyboard open
 - fix error when export data in android simulator
-- refresh records on workout copy for a previous day
 - add min 1 rep
 - In exercise edit an empty name / muscle area is still saved regardless of the validation
 - deselect set after being updated

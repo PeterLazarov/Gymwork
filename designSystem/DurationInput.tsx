@@ -16,7 +16,6 @@ const DurationPicker: React.FC<Props> = ({
 }) => {
   function onChange(hours: string, minutes: string, seconds: string) {
     const totalSeconds = +hours * 3600 + +minutes * 60 + +seconds
-    console.log({ hours, minutes, seconds, totalSeconds })
     onUpdate(totalSeconds)
   }
 
@@ -26,7 +25,7 @@ const DurationPicker: React.FC<Props> = ({
   const minutesStr = minutes !== 0 ? `${minutes}` : ''
   const seconds = valueSeconds % 60
   const secontdsStr = seconds !== 0 ? `${seconds}` : ''
-  console.log({ hours, minutes, seconds })
+
   return (
     <View
       style={{
