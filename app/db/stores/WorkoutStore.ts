@@ -34,6 +34,8 @@ export const WorkoutStoreModel = types
       return getParent(store) as RootStore
     },
     getWorkoutForDate(date: string): Workout | undefined {
+      console.log('workoutStore',store.workouts.toJSON())
+      console.log({date})
       const [workout] = store.workouts.filter(w => w.date === date)
       return workout
     },
@@ -150,9 +152,9 @@ export const WorkoutStoreModel = types
       }
     },
     async seed() {
-      console.log('seeding workouts')
+      // console.log('seeding workouts')
 
-      self.setProp('workouts', workoutSeedData)
+      // self.setProp('workouts', workoutSeedData)
     },
     createWorkout() {
       const created = WorkoutModel.create({

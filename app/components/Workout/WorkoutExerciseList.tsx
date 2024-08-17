@@ -10,6 +10,8 @@ type Props = {
 }
 
 const WorkoutExerciseList: React.FC<Props> = ({ workout }) => {
+  console.log('sets', workout.sets.toJSON())
+  console.log('ex', workout.exercises)
   return (
     <ScrollView
       style={{ flex: 1 }}

@@ -26,7 +26,7 @@ const SwipeTabs: React.FC<Props> = ({
   children,
   onTabChange,
   keyboardDismissOnScroll,
-  flatlistProps,
+  flatlistProps: flashlistProps,
 }) => {
   const flashList = useRef<FlashList<TabConfig>>(null)
   const [currentIndex, setCurrentIndex] = useState(initialScrollIndex || 0)
@@ -68,7 +68,7 @@ const SwipeTabs: React.FC<Props> = ({
         data={tabsConfig}
         renderItem={renderItem}
         initialScrollIndex={initialScrollIndex}
-        {...flatlistProps}
+        {...flashlistProps}
       />
     </View>
   )

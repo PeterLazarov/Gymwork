@@ -3,12 +3,10 @@ import { observer } from 'mobx-react-lite'
 import React, { useEffect, useMemo, useRef } from 'react'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { translate } from 'app/i18n'
 import { getDateRange } from 'app/utils/date'
 import { HorizontalScreenList } from 'designSystem'
-import WorkoutExerciseList from './WorkoutExerciseList'
-import EmptyState from '../EmptyState'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
+import WorkoutDayView from './WorkoutDayView'
 
 // TODO this breaks BADLY if the date goes outside of this range
 const datePaddingCount = 365
@@ -41,14 +39,7 @@ function WorkoutHorizontalList() {
   }
 
   const renderItem = ({ item, index }: ListRenderItemInfo<string>) => {
-    const date = dates[index]
-    const workout = workoutStore.getWorkoutForDate(date)
-
-    return workout ? (
-      <WorkoutExerciseList workout={workout} />
-    ) : (
-      <EmptyState text={translate('workoutLogEmpty')} />
-    )
+    return <WorkoutDayView date={dates[index]} />
   }
   useEffect(() => {
     const index = dates.indexOf(stateStore.openedDate)
@@ -65,15 +56,13 @@ function WorkoutHorizontalList() {
 
   return (
     <>
-      {dates.length > 0 && (
-        <HorizontalScreenList
-          ref={workoutList}
-          data={dates}
-          renderItem={renderItem}
-          onScreenChange={onScreenChange}
-          initialScrollIndex={dates.indexOf(stateStore.openedDate)}
-        />
-      )}
+      <HorizontalScreenList
+        ref={workoutList}
+        data={dates}
+        renderItem={renderItem}
+        onScreenChange={onScreenChange}
+        initialScrollIndex={dates.indexOf(stateStore.openedDate)}
+      />
     </>
   )
 }
