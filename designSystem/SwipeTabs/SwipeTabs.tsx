@@ -1,19 +1,14 @@
 import React, { ReactNode, useRef, useState } from 'react'
-import {
-  FlatList,
-  Keyboard,
-  FlatListProps,
-  View,
-  ListRenderItemInfo,
-} from 'react-native'
+import { Keyboard, FlatListProps, View } from 'react-native'
 
 import TabHeader from './TabHeaderPanel'
 import { TabConfig, TabStyles } from './types'
 import HorizontalScreenList from '../HorizontalScreenList'
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
 type Props = {
   style?: TabStyles
-  tabsConfig: TabConfig[]
+  tabsConfig: ReadonlyArray<TabConfig>
   initialScrollIndex?: number
   children?: ReactNode
   onTabChange?: (name: string) => void
@@ -29,7 +24,7 @@ const SwipeTabs: React.FC<Props> = ({
   keyboardDismissOnScroll,
   flatlistProps,
 }) => {
-  const flatList = useRef<FlatList<TabConfig>>(null)
+  const flatList = useRef<FlashList<TabConfig>>(null)
   const [currentIndex, setCurrentIndex] = useState(initialScrollIndex || 0)
 
   const onTabPress = (index: number) => {

@@ -40,7 +40,7 @@ const TIME_MEASUREMENTS = [
 const TIME_GROUPINGS = [ExerciseType.TIME_DISTANCE.value, ExerciseType.TIME.value]
 
 const ExerciseTypeValues = Object.values(ExerciseType).map(e => e.value)
-console.log({ExerciseTypeValues})
+
 export const ExerciseModel = types
   .model('Exercise')
   .props({

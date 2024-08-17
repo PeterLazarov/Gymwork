@@ -6,7 +6,7 @@ import { TabConfig, TabStyles } from './types'
 import colors from '../colors'
 
 type Props = {
-  tabsConfig: TabConfig[]
+  tabsConfig: ReadonlyArray<TabConfig>
   style?: TabStyles['header']
   currentIndex: number
   scrollableContainer?: boolean
