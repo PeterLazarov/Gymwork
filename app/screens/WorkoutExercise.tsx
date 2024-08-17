@@ -3,14 +3,14 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { Appbar, Menu } from 'react-native-paper'
 
-import WorkoutExerciseHistoryView from 'app/components/WorkoutExercise/WorkoutExerciseHistoryView/WorkoutExerciseHistoryView'
+import WorkoutExerciseHistoryView from 'app/components/WorkoutExercise/WorkoutExerciseHistoryView'
 import WorkoutExerciseRecordsView from 'app/components/WorkoutExercise/WorkoutExerciseRecordsView'
-import WorkoutExerciseTrackView from 'app/components/WorkoutExercise/WorkoutExerciseTrackView/WorkoutExerciseTrackView'
+import WorkoutExerciseTrackView from 'app/components/WorkoutExercise/WorkoutExerciseTrackView'
 import Timer from 'app/components/Timer/Timer'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
-import { Icon, SwipeTabs, colors } from 'designSystem'
 import { translate } from 'app/i18n'
+import { Icon, SwipeTabs, colors } from 'designSystem'
 
 const WorkoutExercisePage: React.FC = () => {
   const { timeStore, stateStore } = useStores()

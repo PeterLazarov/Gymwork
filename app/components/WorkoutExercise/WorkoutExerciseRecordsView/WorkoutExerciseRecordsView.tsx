@@ -3,12 +3,12 @@ import { getParentOfType } from 'mobx-state-tree'
 import React from 'react'
 import { View, ScrollView, TouchableOpacity } from 'react-native'
 
+import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutModel, WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
-import SetListItem from './WorkoutExerciseSetList/SetListItem'
-import EmptyState from '../EmptyState'
+import SetListItem from '../WorkoutExerciseSetList/SetListItem'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
   const { openedExerciseRecords, stateStore } = useStores()
