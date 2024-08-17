@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import { TextInput, View } from 'react-native'
 
 import SetEditPanelSection from './SetEditPanelSection'
 import { useStores } from 'app/db/helpers/useStores'
@@ -49,6 +49,17 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
     }
   }
 
+  function onHandleSubmit(isLastInput: boolean) {
+    if (isLastInput) {
+      addSet(editData)
+    } else {
+      input2.current?.focus()
+    }
+  }
+
+  const input1 = useRef<TextInput>(null)
+  const input2 = useRef<TextInput>(null)
+
   return (
     <>
       <View style={{ gap: 16, padding: 16 }}>
@@ -57,6 +68,9 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
             <IncrementNumericEditor
               value={editData.reps}
               onChange={reps => setEditData({ ...editData, reps })}
+              onSubmit={() => onHandleSubmit(false)}
+              returnKeyType="next"
+              ref={input1}
             />
           </SetEditPanelSection>
         )}
@@ -67,6 +81,8 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
               value={editData.weight}
               onChange={weight => setEditData({ ...editData, weight })}
               step={stateStore.openedExercise!.weightIncrement}
+              onSubmit={() => onHandleSubmit(true)}
+              ref={input2}
             />
           </SetEditPanelSection>
         )}

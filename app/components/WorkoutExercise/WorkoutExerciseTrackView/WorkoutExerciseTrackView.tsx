@@ -20,15 +20,13 @@ const WorkoutExerciseTrackView: React.FC = () => {
   }
 
   function removeSet(setToRemove: WorkoutSet) {
-    const i = stateStore.openedExerciseSets.indexOf(setToRemove)
-    const nextSet = stateStore.openedExerciseSets[i + 1]
-    const prevSet = stateStore.openedExerciseSets[i - 1]
-    setSelectedSet(nextSet ?? prevSet ?? null)
+    setSelectedSet(null)
     workoutStore.removeSet(setToRemove.guid)
   }
 
   function updateSet(updatedSet: WorkoutSet) {
     workoutStore.updateWorkoutExerciseSet(updatedSet)
+    setSelectedSet(null)
   }
 
   return (
