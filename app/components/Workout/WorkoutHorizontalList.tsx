@@ -8,12 +8,7 @@ import { getDateRange } from 'app/utils/date'
 import { HorizontalScreenList } from 'designSystem'
 import WorkoutExerciseList from './WorkoutExerciseList'
 import EmptyState from '../EmptyState'
-import {
-  FlashList,
-  ListRenderItem,
-  ListRenderItemInfo,
-} from '@shopify/flash-list'
-import { View } from 'react-native'
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
 // TODO this breaks BADLY if the date goes outside of this range
 const datePaddingCount = 365
@@ -48,16 +43,11 @@ function WorkoutHorizontalList() {
   const renderItem = ({ item, index }: ListRenderItemInfo<string>) => {
     const date = dates[index]
     const workout = workoutStore.getWorkoutForDate(date)
-    console.log('item render')
+
     return workout ? (
-      <View style={{ height: 200 }}>
-        <EmptyState text={date} />
-      </View>
+      <WorkoutExerciseList workout={workout} />
     ) : (
-      // <WorkoutExerciseList workout={workout} />
-      <View style={{ height: 200 }}>
-        <EmptyState text={translate('workoutLogEmpty')} />
-      </View>
+      <EmptyState text={translate('workoutLogEmpty')} />
     )
   }
   useEffect(() => {

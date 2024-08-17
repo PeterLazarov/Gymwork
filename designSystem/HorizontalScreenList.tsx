@@ -41,21 +41,22 @@ const HorizontalScreenList = forwardRef<FlashList<any>, Props>(
     },
     [])
 
-    console.log({ width })
-    // console.log({ data })
     return (
-      <View style={{ flex: 1, backgroundColor: 'lightgreen' }}>
+      <View style={{ flex: 1 }}>
         <FlashList
           ref={ref}
-          contentContainerStyle={{ backgroundColor: 'red' }}
-          // showsHorizontalScrollIndicator={true}
+          showsHorizontalScrollIndicator={false}
           viewabilityConfig={viewabilityConfig}
           data={data}
           onViewableItemsChanged={handleViewChange}
           pagingEnabled
           keyExtractor={(item, index) => String(index)}
           estimatedItemSize={width}
-          renderItem={externalRenderItem}
+          renderItem={props => (
+            <View style={{ width, height: '100%' }}>
+              {externalRenderItem!(props)}
+            </View>
+          )}
           horizontal
           snapToAlignment="center"
           initialScrollIndex={initialScrollIndex}
