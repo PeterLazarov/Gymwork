@@ -1,4 +1,3 @@
-- Check if records work right
 - Use bottom offset (iOS shows a line. We souldn't overlap it)
 - TODO revise or remove web linking in app.tsx
 - in 'Update exercice' screen muscle areas plus icon is not implemented
@@ -17,3 +16,4 @@
 - android horizontal scroll
 - horizontal scrolling on exercite track screen is iffy
 - in exercise track screen on android when using device keyboard hitting done doesn't create the set
+- keyboard avoiding view covers the screen a bit when opened and doesn't reset it when closed
