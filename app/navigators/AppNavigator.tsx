@@ -30,6 +30,7 @@ import ExerciseEdit from 'app/screens/ExerciseEdit'
 import WorkoutExercise from 'app/screens/WorkoutExercise'
 import WorkoutFeedback from 'app/screens/WorkoutFeedback'
 import Calendar, { CalendarPageParams } from 'app/screens/Calendar'
+import Log from 'app/screens/Log'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -55,6 +56,7 @@ export type AppStackParamList = {
   Workout: undefined
   WorkoutExercise: undefined
   WorkoutFeedback: undefined
+  Log: undefined
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
@@ -136,6 +138,10 @@ const AppStack = observer(function AppStack() {
         <Stack.Screen
           name="WorkoutFeedback"
           component={WorkoutFeedback}
+        />
+        <Stack.Screen
+          name="Log"
+          component={Log}
         />
       </>
       {/* ) : (
