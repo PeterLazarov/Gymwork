@@ -2,16 +2,21 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import { colors, fontSize } from 'designSystem'
+import { colors, fontSize as fontSizeToken } from 'designSystem'
 
 type Props = {
   value: string | number
   unit?: string
   isFocused?: boolean
+  fontSize?: keyof typeof fontSizeToken
 }
 
-const SetDataLabel: React.FC<Props> = ({ value, unit, isFocused }) => {
-  const color = isFocused ? colors.primary : colors.secondaryText
+const SetDataLabel: React.FC<Props> = ({
+  value,
+  unit,
+  isFocused,
+  fontSize,
+}) => {
   return (
     <View
       style={{
@@ -24,8 +29,8 @@ const SetDataLabel: React.FC<Props> = ({ value, unit, isFocused }) => {
       <Text
         style={{
           fontWeight: 'bold',
-          color,
-          fontSize: fontSize.xs,
+          color: isFocused ? colors.primary : colors.secondaryText,
+          fontSize: fontSize ? fontSizeToken[fontSize] : fontSizeToken.xs,
         }}
       >
         {value}
@@ -33,8 +38,8 @@ const SetDataLabel: React.FC<Props> = ({ value, unit, isFocused }) => {
       {unit && (
         <Text
           style={{
-            color,
-            fontSize: fontSize.xs,
+            color: isFocused ? colors.primary : colors.gray,
+            fontSize: fontSize ? fontSizeToken[fontSize] : fontSizeToken.xs,
           }}
         >
           {unit}
