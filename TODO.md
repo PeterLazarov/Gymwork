@@ -11,3 +11,4 @@
 - add min 1 rep
 - In exercise edit an empty name / muscle area is still saved regardless of the validation
 - deselect set after being updated
+- weak ass records breaks stuff for non rep-weight exercises

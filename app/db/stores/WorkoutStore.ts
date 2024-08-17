@@ -8,9 +8,9 @@ import {
 } from 'mobx-state-tree'
 
 import { RootStore } from './RootStore'
-import workoutSeedData from '../seeds/workout-seed-data'
-import * as storage from '../../../app/utils/storage'
-import { withSetPropAction } from '../helpers/withSetPropAction'
+import * as storage from 'app/utils/storage'
+import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
+import workoutSeedData from 'app/db/seeds/workout-seed-data'
 import {
   WorkoutSet,
   WorkoutSetModel,
@@ -20,9 +20,10 @@ import {
   Workout,
   WorkoutSetSnapshotIn,
   WorkoutSetTrackData,
-} from '../models'
+} from 'app/db/models'
 import DistanceType from 'app/enums/DistanceType'
 import { isDev } from 'app/utils/isDev'
+import { ExerciseRecord, calculateRecords } from 'app/services/workoutRecordsCalculator'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -34,8 +35,6 @@ export const WorkoutStoreModel = types
       return getParent(store) as RootStore
     },
     getWorkoutForDate(date: string): Workout | undefined {
-      console.log('workoutStore',store.workouts.toJSON())
-      console.log({date})
       const [workout] = store.workouts.filter(w => w.date === date)
       return workout
     },
@@ -84,54 +83,9 @@ export const WorkoutStoreModel = types
 
     get allExerciseRecords(): Record<
       Exercise['guid'],
-      Record<WorkoutSet['groupingValue'], WorkoutSet>
+      ExerciseRecord
     > {
-      const records: Record<
-        Exercise['guid'],
-        Record<WorkoutSet['groupingValue'], WorkoutSet>
-      > = {}
-
-      for (let i = 0; i < store.workouts.length; i++) {
-        const workout = store.workouts[i]
-        for (let j = 0; j < workout.sets.length; j++) {
-          const set = workout.sets[j]
-
-          if (!records[set.exercise.guid]) {
-            records[set.exercise.guid] = {}
-          }
-
-          const exerciseRecords = records[set.exercise.guid]
-          const currentRecord = exerciseRecords[set.groupingValue]
-          if (
-            !currentRecord ||
-            currentRecord.measurementValue < set.measurementValue
-          ) {
-            exerciseRecords[set.groupingValue] = set
-          }
-        }
-      }
-
-      // TODO: weak ass records breaks stuff for non rep-weight exercises
-      for (const exerciseID in records) {
-        const exerciseRecords = records[exerciseID]
-        const groupingsDescending = Object.keys(exerciseRecords).reverse()
-        let lastRecord =
-          exerciseRecords[groupingsDescending[0] as any as number]
-        for (const grouping of groupingsDescending) {
-          const record = exerciseRecords[grouping as any as number]
-          if (
-            // not sure if higher value is always better
-            lastRecord.measurementValue >= record.measurementValue &&
-            lastRecord.guid !== record.guid
-          ) {
-            delete exerciseRecords[grouping as any as number]
-          } else {
-            lastRecord = record
-          }
-        }
-      }
-
-      return records
+      return calculateRecords(store.workouts)
     },
 
     getExerciseRecords(
@@ -152,9 +106,9 @@ export const WorkoutStoreModel = types
       }
     },
     async seed() {
-      // console.log('seeding workouts')
+      console.log('seeding workouts')
 
-      // self.setProp('workouts', workoutSeedData)
+      self.setProp('workouts', workoutSeedData)
     },
     createWorkout() {
       const created = WorkoutModel.create({
