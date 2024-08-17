@@ -8,6 +8,7 @@ import { navigate } from 'app/navigators'
 import { colors } from 'designSystem'
 import { observer } from 'mobx-react-lite'
 import { computed } from 'mobx'
+import { TouchableOpacity } from 'react-native'
 computed
 type Props = {
   workout: Workout
@@ -27,25 +28,26 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
   }
 
   return (
-    <Card
-      onPress={onLinkPress}
-      style={{
-        margin: 16,
-        backgroundColor: colors.primaryLighter,
-      }}
-    >
-      <Card.Title
-        title={exercise?.name}
-        titleVariant="titleMedium"
-        titleStyle={{ color: colors.secondaryText }}
-      />
-      <Card.Content>
-        <WorkoutExerciseSetList
-          sets={sets}
-          exercise={exercise}
+    <TouchableOpacity onPress={onLinkPress}>
+      <Card
+        style={{
+          margin: 16,
+          backgroundColor: colors.primaryLighter,
+        }}
+      >
+        <Card.Title
+          title={exercise?.name}
+          titleVariant="titleMedium"
+          titleStyle={{ color: colors.secondaryText }}
         />
-      </Card.Content>
-    </Card>
+        <Card.Content>
+          <WorkoutExerciseSetList
+            sets={sets}
+            exercise={exercise}
+          />
+        </Card.Content>
+      </Card>
+    </TouchableOpacity>
   )
 }
 

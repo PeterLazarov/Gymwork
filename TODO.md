@@ -14,3 +14,5 @@
 - Add ability to reorder sets (force touch? hold touch?)
 - negative rest timer should not have a minus for seconds
 - how to resume a rest timer after pause
+- android horizontal scroll
+- horizontal scrolling on exercite track screen is iffy
