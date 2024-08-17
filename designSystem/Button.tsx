@@ -20,7 +20,7 @@ export const IconButtonContainer = styled.TouchableOpacity<IconButtonProps>`
   background: ${props =>
     ({
       default: colors.tertiary,
-      full: colors.iconBG,
+      full: colors.primaryLight,
     }[props.variant || 'default'])};
 `
 

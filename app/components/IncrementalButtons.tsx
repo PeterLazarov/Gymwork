@@ -9,7 +9,7 @@ type Props = {
   step?: number
 }
 
-const IncrementDecrementButtons: React.FC<Props> = ({
+const IncrementalButtons: React.FC<Props> = ({
   value,
   onChange,
   children,
@@ -46,4 +46,4 @@ const IncrementDecrementButtons: React.FC<Props> = ({
   )
 }
 
-export default IncrementDecrementButtons
+export default IncrementalButtons

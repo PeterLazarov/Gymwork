@@ -2,7 +2,7 @@ import React, { useEffect, useState, forwardRef } from 'react'
 import { TextInput } from 'react-native'
 import { TextInputProps } from 'react-native-paper'
 
-import IncrementDecrementButtons from '../app/components/IncrementDecrementButtons'
+import IncrementalButtons from 'app/components/IncrementalButtons'
 import { fontSize } from './tokens'
 
 type Props = {
@@ -30,7 +30,7 @@ const IncrementNumericEditor = forwardRef<TextInput, Props>(
     })
 
     return (
-      <IncrementDecrementButtons
+      <IncrementalButtons
         value={value}
         onChange={n => onChange(Math.max(n, 0))}
         step={step}
@@ -63,7 +63,7 @@ const IncrementNumericEditor = forwardRef<TextInput, Props>(
           value={rendered}
           returnKeyType={returnKeyType}
         />
-      </IncrementDecrementButtons>
+      </IncrementalButtons>
     )
   }
 )
