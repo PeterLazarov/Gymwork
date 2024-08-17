@@ -49,7 +49,7 @@ export const CHART_VIEWS = {
 export type CHART_VIEW = (typeof CHART_VIEWS)[keyof typeof CHART_VIEWS]
 
 const series = {
-  Weight: 'Weight',
+  Weight: 'Weight', // TODO kg / lbs
   'Predicted 1RM': 'Predicted 1RM',
 } as const
 
@@ -118,13 +118,14 @@ const ExerciseHistoryChart = observer(
       [props.view]
     )
 
-    const xAxis = useMemo(
-      () =>
-        props.view === '7D'
-          ? viewDays.map(d => d.weekdayShort!)
-          : viewDays.map(d => d.toISODate()),
-      [props.view]
-    )
+    // Avoiding a polyfill https://github.com/moment/luxon/issues/1500
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+    const xAxis = useMemo(() => {
+      return props.view === '7D'
+        ? viewDays.map(d => days[d.weekday - 1])
+        : viewDays.map(d => d.toISODate())
+    }, [props.view])
 
     const height = useMemo(() => props.height ?? 400, [props.height])
     const width = useMemo(
@@ -160,6 +161,9 @@ const ExerciseHistoryChart = observer(
           },
           yAxis: {
             type: 'value',
+            min: ({ min }) => (min * 0.95).toFixed(0),
+            max: ({ max }) => (max * 1.05).toFixed(0),
+
             // axisLabel: { formatter: '{value} KG' }, // ! breaks styling
             axisPointer: {
               snap: true,
@@ -178,6 +182,7 @@ const ExerciseHistoryChart = observer(
               name: series.Weight,
               type: 'line',
               symbolSize,
+              symbol: 'circle',
               showAllSymbol: true,
               connectNulls: true,
             },
@@ -185,8 +190,13 @@ const ExerciseHistoryChart = observer(
               name: series['Predicted 1RM'],
               type: 'line',
               symbolSize,
+              symbol: 'circle',
               showAllSymbol: true,
               connectNulls: true,
+
+              // areaStyle: {
+              //   color: 'rgba(230, 231, 231,0.8)',
+              // },
             },
           ],
         })
@@ -276,7 +286,7 @@ const ExerciseHistoryChart = observer(
     return (
       <View
         style={{
-          height,
+          height: height - 50,
           width,
         }}
       >
