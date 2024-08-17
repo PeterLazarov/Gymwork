@@ -7,7 +7,7 @@ import { Appbar } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { capitalize } from 'app/utils/string'
-import { Divider, Icon, colors } from 'designSystem'
+import { Divider, Icon, colors, fontSize } from 'designSystem'
 
 const DayControl = () => {
   const { stateStore } = useStores()
@@ -39,7 +39,7 @@ const DayControl = () => {
           title={
             <Link
               to={{ screen: 'Calendar' }}
-              style={{ fontSize: 22 }}
+              style={{ fontSize: fontSize.lg }}
             >
               {capitalize(label)}
             </Link>

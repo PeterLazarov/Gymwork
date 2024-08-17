@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
-import { Divider, BodySmallLabel } from 'designSystem'
+import { Divider, fontSize } from 'designSystem'
 
 type Props = {
   text: string
@@ -12,9 +12,14 @@ const SetEditPanelSection: React.FC<Props> = ({ text, children }) => {
   return (
     <View style={{ gap: 16 }}>
       <View>
-        <BodySmallLabel style={{ textTransform: 'uppercase' }}>
+        <Text
+          style={{
+            fontSize: fontSize.xs,
+            textTransform: 'uppercase',
+          }}
+        >
           {text}
-        </BodySmallLabel>
+        </Text>
         <Divider orientation="horizontal" />
       </View>
       {children}

@@ -1,12 +1,12 @@
 import { DateTime } from 'luxon'
-import { ScrollView, View } from 'react-native'
+import { ScrollView, View, Text } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
 import CalendarWorkoutModalExerciseItem from './CalendarWorkoutModalExerciseItem'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
 import { groupBy } from 'app/utils/array'
-import { Button, ButtonText, Divider, HeadingLabel, colors } from 'designSystem'
+import { Button, ButtonText, Divider, colors, fontSize } from 'designSystem'
 import { translate } from 'app/i18n'
 
 type Props = {
@@ -44,7 +44,15 @@ const CalendarWorkoutModal: React.FC<Props> = ({
         }}
       >
         <View style={{ height: '100%' }}>
-          <HeadingLabel style={{ padding: 16 }}>{label}</HeadingLabel>
+          <Text
+            style={{
+              fontSize: fontSize.lg,
+              textAlign: 'center',
+              padding: 16,
+            }}
+          >
+            {label}
+          </Text>
           <Divider orientation="horizontal" />
           <View style={{ flex: 1 }}>
             {workout ? (

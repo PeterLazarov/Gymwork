@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
-import { Platform, View } from 'react-native'
+import { Platform, View, Text } from 'react-native'
 import { IconButton } from 'react-native-paper'
 
-import { Icon, iconSizes, BodyMediumLabel, colors } from 'designSystem'
+import { Icon, iconSizes, colors, fontSize } from 'designSystem'
 
 type Props = {
   selected?: string
@@ -48,14 +48,15 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
             />
           )}
         />
-        <BodyMediumLabel
+        <Text
           style={{
+            fontSize: fontSize.sm,
             color: sadSelected ? colors.red : colors.lightred,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
           Bad
-        </BodyMediumLabel>
+        </Text>
       </View>
       <View
         style={{
@@ -77,14 +78,15 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
             />
           )}
         />
-        <BodyMediumLabel
+        <Text
           style={{
+            fontSize: fontSize.sm,
             color: neutralSelected ? colors.yellow : colors.lightyellow,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
           Normal
-        </BodyMediumLabel>
+        </Text>
       </View>
       <View
         style={{
@@ -106,14 +108,15 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
             />
           )}
         />
-        <BodyMediumLabel
+        <Text
           style={{
+            fontSize: fontSize.sm,
             color: happySelected ? colors.green : colors.lightgreen,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
           Good
-        </BodyMediumLabel>
+        </Text>
       </View>
     </View>
   )

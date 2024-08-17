@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
-import { BodySmallLabel, colors } from 'designSystem'
+import { colors, fontSize } from 'designSystem'
 
 type Props = {
   value: string | number
@@ -18,25 +18,27 @@ const SetDataLabel: React.FC<Props> = ({ value, unit, isFocused }) => {
         flex: 1,
         flexDirection: 'row',
         gap: 4,
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
       }}
     >
-      <BodySmallLabel
+      <Text
         style={{
           fontWeight: 'bold',
           color,
+          fontSize: fontSize.xs,
         }}
       >
         {value}
-      </BodySmallLabel>
+      </Text>
       {unit && (
-        <BodySmallLabel
+        <Text
           style={{
             color,
+            fontSize: fontSize.xs,
           }}
         >
           {unit}
-        </BodySmallLabel>
+        </Text>
       )}
     </View>
   )

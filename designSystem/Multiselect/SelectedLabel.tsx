@@ -1,7 +1,7 @@
 import React from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View, Text } from 'react-native'
 
-import { BodyMediumLabel, colors, Icon } from 'designSystem'
+import { colors, fontSize, Icon } from 'designSystem'
 
 type Props = {
   selection: string
@@ -27,9 +27,14 @@ const SelectedLabel: React.FC<Props> = ({
       alignItems: 'center',
     }}
   >
-    <BodyMediumLabel style={{ color: colors.primary }}>
+    <Text
+      style={{
+        fontSize: fontSize.sm,
+        color: colors.primary,
+      }}
+    >
       {selection}
-    </BodyMediumLabel>
+    </Text>
     {!hideRemove && (
       <TouchableOpacity onPress={() => onRemove?.(selection)}>
         <Icon

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
@@ -8,8 +8,8 @@ import {
   ButtonText,
   Divider,
   DurationInput,
-  HeadingLabel,
   colors,
+  fontSize,
 } from 'designSystem'
 import { translate } from 'app/i18n'
 
@@ -38,9 +38,15 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
           marginHorizontal: 20,
         }}
       >
-        <HeadingLabel style={{ padding: 16 }}>
+        <Text
+          style={{
+            fontSize: fontSize.lg,
+            textAlign: 'center',
+            padding: 16,
+          }}
+        >
           {translate('editRestTimer')}
-        </HeadingLabel>
+        </Text>
         <Divider orientation="horizontal" />
         <View style={{ paddingVertical: 16 }}>
           <DurationInput

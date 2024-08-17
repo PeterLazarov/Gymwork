@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { IconButton } from 'react-native-paper'
 
 import TimerEditModal from '../TimerEditModal'
 import { useStores } from 'app/db/helpers/useStores'
-import { Icon, BodySmallLabel, colors } from 'designSystem'
+import { Icon, colors, fontSize } from 'designSystem'
 
 const Timer: React.FC = () => {
   const { timeStore, stateStore } = useStores()
@@ -36,8 +36,12 @@ const Timer: React.FC = () => {
           icon={() => <Icon icon="weight-lifter" />}
         />
         <View style={styles.timerPanel}>
-          <BodySmallLabel>W: {timeStore.stopwatchValue}</BodySmallLabel>
-          <BodySmallLabel>E: {stateStore.timerValue}</BodySmallLabel>
+          <Text style={{ fontSize: fontSize.xs }}>
+            W: {timeStore.stopwatchValue}
+          </Text>
+          <Text style={{ fontSize: fontSize.xs }}>
+            E: {stateStore.timerValue}
+          </Text>
         </View>
         <IconButton
           onPress={onSettingsPress}

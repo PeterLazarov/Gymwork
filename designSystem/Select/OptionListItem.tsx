@@ -1,7 +1,7 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, Text } from 'react-native'
 
-import { BodyLargeLabel, Divider, colors } from 'designSystem'
+import { Divider, colors, fontSize } from 'designSystem'
 import { SelectOption } from './types'
 
 type Props = {
@@ -38,15 +38,16 @@ const OptionListItem: React.FC<Props> = ({
         style={{ paddingHorizontal: 10, paddingVertical: 15 }}
         onPress={() => onSelect(option)}
       >
-        <BodyLargeLabel
+        <Text
           style={{
+            fontSize: fontSize.md,
             color: selectedValues.includes(value)
               ? colors.primary
               : colors.secondaryText,
           }}
         >
           {label}
-        </BodyLargeLabel>
+        </Text>
       </TouchableOpacity>
     </>
   )

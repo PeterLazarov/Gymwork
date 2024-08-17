@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { TextInput } from 'react-native'
 
 import IncrementDecrementButtons from '../app/components/IncrementDecrementButtons'
+import { fontSize } from './tokens'
 
 type Props = {
   value: number
@@ -31,7 +32,7 @@ const IncrementNumericEditor: React.FC<Props> = ({ value, onChange, step }) => {
       step={step}
     >
       <TextInput
-        style={{ flexGrow: 1, textAlign: 'center', fontSize: 16 }}
+        style={{ flexGrow: 1, textAlign: 'center', fontSize: fontSize.md }}
         multiline={false}
         keyboardType="decimal-pad"
         onChangeText={text => {

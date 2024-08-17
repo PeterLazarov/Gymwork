@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { IconButton, List } from 'react-native-paper'
 
 import { Exercise } from 'app/db/models'
-import { BodyLargeLabel, Icon, colors, iconSizes } from 'designSystem'
+import { Icon, colors, fontSize, iconSizes } from 'designSystem'
 
 type Props = {
   exercise: Exercise
@@ -24,12 +24,12 @@ const ExerciseListItem: React.FC<Props> = ({ exercise, onSelect }) => {
             alignItems: 'center',
           }}
         >
-          <BodyLargeLabel
-            style={{ flex: 1 }}
+          <Text
+            style={{ fontSize: fontSize.md, flex: 1 }}
             numberOfLines={1}
           >
             {exercise.name}
-          </BodyLargeLabel>
+          </Text>
           <IconButton
             size={iconSizes.small}
             icon={() => (

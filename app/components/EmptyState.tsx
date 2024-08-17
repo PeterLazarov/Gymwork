@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import { colors } from 'designSystem'
+import { colors, fontSize } from 'designSystem'
 
 type Props = {
   text: string
@@ -15,7 +15,14 @@ const EmptyState: React.FC<Props> = ({ text }) => (
       minHeight: 10,
     }}
   >
-    <Text style={{ color: colors.gray, fontSize: 30 }}>{text}</Text>
+    <Text
+      style={{
+        color: colors.gray,
+        fontSize: fontSize.xl,
+      }}
+    >
+      {text}
+    </Text>
   </View>
 )
 

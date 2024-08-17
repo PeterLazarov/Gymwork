@@ -1,9 +1,9 @@
 import React from 'react'
-import { ScrollView, View, Dimensions } from 'react-native'
+import { ScrollView, View, Dimensions, Text } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
 import { translate } from 'app/i18n'
-import { Button, ButtonText, Divider, HeadingLabel, colors } from 'designSystem'
+import { Button, ButtonText, Divider, colors, fontSize } from 'designSystem'
 import { SelectOption } from './types'
 import OptionListItem from './OptionListItem'
 
@@ -47,7 +47,15 @@ const SelectOptionsModal: React.FC<Props> = ({
             maxHeight: maxHeight,
           }}
         >
-          <HeadingLabel style={{ padding: 16 }}>{header}</HeadingLabel>
+          <Text
+            style={{
+              fontSize: fontSize.lg,
+              textAlign: 'center',
+              padding: 16,
+            }}
+          >
+            {header}
+          </Text>
           <Divider orientation="horizontal" />
           <View style={{ flex: 1 }}>
             <ScrollView>

@@ -1,11 +1,11 @@
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
 import WorkoutExerciseSetList from '../WorkoutExerciseSetList'
 import { WorkoutSet } from 'app/db/models'
-import { Divider, BodyLargeLabel } from 'designSystem'
+import { Divider, fontSize } from 'designSystem'
 
 type Props = {
   date: string
@@ -17,9 +17,9 @@ const WorkoutExerciseHistoryListItem: React.FC<Props> = ({ date, sets }) => {
       style={{ gap: 8, marginBottom: 12 }}
       key={date}
     >
-      <BodyLargeLabel style={{ textAlign: 'center' }}>
+      <Text style={{ fontSize: fontSize.md, textAlign: 'center' }}>
         {DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}
-      </BodyLargeLabel>
+      </Text>
       <Divider orientation="horizontal" />
       <WorkoutExerciseSetList sets={sets} />
     </View>

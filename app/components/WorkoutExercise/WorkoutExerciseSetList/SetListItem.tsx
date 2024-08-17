@@ -1,13 +1,13 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
 import SetDataLabel from '../SetDataLabel'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
-import { Icon, BodyMediumLabel, colors } from 'designSystem'
+import { Icon, colors, fontSize } from 'designSystem'
 
 type Props = {
   set: WorkoutSet
@@ -48,11 +48,17 @@ const SetListItem: React.FC<Props> = ({
       {!hideRecords && (
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
           {!set.isWarmup && (
-            <BodyMediumLabel
-              style={{ color, fontWeight: 'bold', marginLeft: 8 }}
+            <Text
+              style={{
+                fontSize: fontSize.sm,
+                color,
+                fontWeight: 'bold',
+                marginLeft: 8,
+              }}
             >
+              {/* TODO: remove space */}
               {number}.{' '}
-            </BodyMediumLabel>
+            </Text>
           )}
           {set.isWarmup && <Icon icon="yoga" />}
           {isRecord && (

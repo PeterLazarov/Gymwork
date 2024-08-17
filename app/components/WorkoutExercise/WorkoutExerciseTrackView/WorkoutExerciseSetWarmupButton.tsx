@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
+import { Text } from 'react-native'
 import { IconButton } from 'react-native-paper'
 
-import { Icon, BodyMediumLabel, colors } from 'designSystem'
+import { Icon, colors, fontSize } from 'designSystem'
 
 type Props = {
   isWarmup: boolean
@@ -29,14 +30,15 @@ const WorkoutExerciseSetWarmupButton: React.FC<Props> = ({
     icon={() => (
       <>
         {!isWarmup && (
-          <BodyMediumLabel
+          <Text
             style={{
+              fontSize: fontSize.sm,
               color,
               fontWeight: 'bold',
             }}
           >
             {number}
-          </BodyMediumLabel>
+          </Text>
         )}
         {isWarmup && (
           <Icon

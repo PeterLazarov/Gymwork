@@ -1,7 +1,6 @@
-import { View } from 'react-native'
+import { fontSize } from 'designSystem'
+import { View, Text } from 'react-native'
 import { TextInput } from 'react-native-paper'
-
-import { BodySmallLabel } from './Label'
 
 type Props = {
   valueSeconds: number
@@ -9,7 +8,7 @@ type Props = {
   hideHours?: boolean
 }
 
-const DurationPicker: React.FC<Props> = ({
+const DurationInput: React.FC<Props> = ({
   valueSeconds,
   onUpdate,
   hideHours,
@@ -49,7 +48,7 @@ const DurationPicker: React.FC<Props> = ({
             placeholder="hh"
             maxLength={2}
           />
-          <BodySmallLabel>:</BodySmallLabel>
+          <Text style={{ fontSize: fontSize.xs }}>:</Text>
         </>
       )}
       <TextInput
@@ -67,7 +66,7 @@ const DurationPicker: React.FC<Props> = ({
         placeholder="mm"
         maxLength={2}
       />
-      <BodySmallLabel>:</BodySmallLabel>
+      <Text style={{ fontSize: fontSize.xs }}>:</Text>
       <TextInput
         value={secontdsStr}
         style={{ textAlign: 'center' }}
@@ -87,4 +86,4 @@ const DurationPicker: React.FC<Props> = ({
   )
 }
 
-export default DurationPicker
+export default DurationInput

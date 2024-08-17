@@ -1,6 +1,7 @@
+import { Text } from 'react-native'
 import { Portal, Dialog } from 'react-native-paper'
 
-import { BodyLargeLabel, Button, ButtonText } from 'designSystem'
+import { Button, ButtonText, fontSize } from 'designSystem'
 import { translate } from 'app/i18n'
 
 type Props = {
@@ -23,7 +24,7 @@ const ConfirmationDialog: React.FC<Props> = ({
       >
         <Dialog.Title>{translate('warning')}</Dialog.Title>
         <Dialog.Content>
-          <BodyLargeLabel>{message}</BodyLargeLabel>
+          <Text style={{ fontSize: fontSize.md }}>{message}</Text>
         </Dialog.Content>
         <Dialog.Actions>
           <Button

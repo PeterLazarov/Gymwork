@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, TouchableWithoutFeedback } from 'react-native'
 
-import { BodyLargeLabel, colors, Icon } from 'designSystem'
+import { colors, fontSize, Icon } from 'designSystem'
 
 type Props = {
   onPress: () => void
@@ -23,11 +23,14 @@ const SelectButton: React.FC<Props> = ({ onPress, text, error }) => {
           // gap: 4,
         }}
       >
-        <BodyLargeLabel
-          style={{ color: error ? colors.critical : colors.secondaryText }}
+        <Text
+          style={{
+            fontSize: fontSize.md,
+            color: error ? colors.critical : colors.secondaryText,
+          }}
         >
           {text}
-        </BodyLargeLabel>
+        </Text>
         <View style={{ marginLeft: 4 }}>
           <Icon
             icon="chevron-down"
