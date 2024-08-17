@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 
 import TabHeader from './TabHeader'
 import { TabConfig, TabStyles } from './types'
-import colors from '../colors'
+import { colors } from '../tokens'
 
 type Props = {
   tabsConfig: ReadonlyArray<TabConfig>
