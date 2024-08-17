@@ -27,7 +27,7 @@ const DayControl = () => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: colors.lightgray,
+          backgroundColor: colors.primaryLighter,
         }}
       >
         <Appbar.Action

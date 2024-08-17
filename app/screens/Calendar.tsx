@@ -93,11 +93,22 @@ const CalendarPage: React.FC = () => {
   return (
     <>
       <EmptyLayout>
-        <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
-          <Appbar.BackAction onPress={onBackPress} />
-          <Appbar.Content title={translate('calendar')} />
+        <Appbar.Header style={{ backgroundColor: colors.primary }}>
+          <Appbar.BackAction
+            onPress={onBackPress}
+            color={colors.primaryText}
+          />
+          <Appbar.Content
+            title={translate('calendar')}
+            color={colors.primaryText}
+          />
           <Appbar.Action
-            icon={() => <Icon icon="ellipsis-vertical" />}
+            icon={() => (
+              <Icon
+                icon="ellipsis-vertical"
+                color={colors.primaryText}
+              />
+            )}
             onPress={() => {}}
             animated={false}
           />

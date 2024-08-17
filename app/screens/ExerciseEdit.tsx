@@ -40,14 +40,21 @@ const ExerciseEditPage: React.FC = () => {
   return (
     <>
       <EmptyLayout>
-        <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
-          <Appbar.BackAction onPress={onBackPress} />
-          <Appbar.Content title={translate('updateExercise')} />
+        <Appbar.Header style={{ backgroundColor: colors.primary }}>
+          <Appbar.BackAction
+            onPress={onBackPress}
+            color={colors.primaryText}
+          />
+          <Appbar.Content
+            title={translate('updateExercise')}
+            color={colors.primaryText}
+          />
           <Appbar.Action
             icon={() => (
               <Icon
                 icon="checkmark"
                 size="large"
+                color={colors.primaryText}
               />
             )}
             disabled={!formValid}

@@ -50,14 +50,21 @@ const ExerciseSelectPage: React.FC = () => {
   ]
   return (
     <EmptyLayout>
-      <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
-        <Appbar.BackAction onPress={onBackPress} />
-        <Appbar.Content title={translate('selectExercise')} />
+      <Appbar.Header style={{ backgroundColor: colors.primary }}>
+        <Appbar.BackAction
+          onPress={onBackPress}
+          color={colors.primaryText}
+        />
+        <Appbar.Content
+          title={translate('selectExercise')}
+          color={colors.primaryText}
+        />
         <Appbar.Action
           icon={() => (
             <Icon
               icon="add"
               size="large"
+              color={colors.primaryText}
             />
           )}
           onPress={onAddExercisePress}

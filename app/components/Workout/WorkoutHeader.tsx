@@ -27,20 +27,21 @@ const WorkoutHeader: React.FC = () => {
   }
 
   return (
-    <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
-      <Appbar.Action
-        icon={() => <Icon icon="logo-react" />}
-        animated={false}
-      />
+    <Appbar.Header style={{ backgroundColor: colors.primary }}>
       <Appbar.Content
         title="Gymwork"
         style={{ alignItems: 'flex-start' }}
-        titleStyle={{ color: colors.secondaryText }}
+        titleStyle={{ color: colors.primaryText }}
       />
 
       {stateStore.isOpenedWorkoutToday && <WorkoutHeaderTimerButtons />}
       <Appbar.Action
-        icon={() => <Icon icon="calendar-sharp" />}
+        icon={() => (
+          <Icon
+            icon="calendar-sharp"
+            color={colors.primaryText}
+          />
+        )}
         onPress={openCalendar}
         animated={false}
       />
@@ -51,7 +52,12 @@ const WorkoutHeader: React.FC = () => {
         anchorPosition="bottom"
         anchor={
           <Appbar.Action
-            icon={() => <Icon icon="ellipsis-vertical" />}
+            icon={() => (
+              <Icon
+                icon="ellipsis-vertical"
+                color={colors.primaryText}
+              />
+            )}
             onPress={() => setMenuOpen(true)}
             animated={false}
           />

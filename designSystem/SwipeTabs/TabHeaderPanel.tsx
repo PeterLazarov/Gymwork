@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingTop: 12,
     alignItems: 'center',
-    backgroundColor: colors.lightgray,
+    backgroundColor: colors.primaryLighter,
   },
 })
 

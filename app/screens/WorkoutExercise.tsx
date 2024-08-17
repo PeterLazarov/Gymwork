@@ -62,14 +62,14 @@ const WorkoutExercisePage: React.FC = () => {
         backgroundColor: colors.secondary,
       }}
     >
-      <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
+      <Appbar.Header style={{ backgroundColor: colors.primary }}>
         <Appbar.BackAction
           onPress={onBackPress}
-          color={colors.secondaryText}
+          color={colors.primaryText}
         />
         <Appbar.Content
           title={stateStore.openedExercise?.name || ''}
-          titleStyle={{ color: colors.secondaryText }}
+          titleStyle={{ color: colors.primaryText }}
         />
 
         <Menu
@@ -78,7 +78,12 @@ const WorkoutExercisePage: React.FC = () => {
           anchorPosition="bottom"
           anchor={
             <Appbar.Action
-              icon={() => <Icon icon="ellipsis-vertical" />}
+              icon={() => (
+                <Icon
+                  icon="ellipsis-vertical"
+                  color={colors.primaryText}
+                />
+              )}
               onPress={() => setMenuOpen(true)}
               animated={false}
             />

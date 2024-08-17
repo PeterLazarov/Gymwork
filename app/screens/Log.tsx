@@ -25,13 +25,21 @@ const Log = observer(() => {
         backgroundColor: colors.secondary,
       }}
     >
-      <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
+      <Appbar.Header style={{ backgroundColor: colors.primary }}>
         <Link to={{ screen: 'Workout' }}>
-          <Appbar.BackAction />
+          <Appbar.BackAction color={colors.primaryText} />
         </Link>
-        <Appbar.Content title={exercise?.name ?? translate('addExercise')} />
+        <Appbar.Content
+          title={exercise?.name ?? translate('addExercise')}
+          color={colors.primaryText}
+        />
         <Appbar.Action
-          icon={() => <Icon icon="ellipsis-vertical" />}
+          icon={() => (
+            <Icon
+              icon="ellipsis-vertical"
+              color={colors.primaryText}
+            />
+          )}
           onPress={() => {}}
           animated={false}
         />

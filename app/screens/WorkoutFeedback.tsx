@@ -19,9 +19,15 @@ const WorkoutFeedbackPage: React.FC = () => {
 
   return (
     <EmptyLayout style={{ backgroundColor: colors.lightgray }}>
-      <Appbar.Header style={{ backgroundColor: colors.lightgray }}>
-        <Appbar.BackAction onPress={onBackPress} />
-        <Appbar.Content title={translate('workoutComments')} />
+      <Appbar.Header style={{ backgroundColor: colors.primary }}>
+        <Appbar.BackAction
+          onPress={onBackPress}
+          color={colors.primaryText}
+        />
+        <Appbar.Content
+          title={translate('workoutComments')}
+          color={colors.primaryText}
+        />
       </Appbar.Header>
 
       <View style={{ padding: 8, gap: 16, flex: 1 }}>

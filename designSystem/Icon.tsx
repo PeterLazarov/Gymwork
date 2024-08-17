@@ -18,7 +18,6 @@ const IoniconsIcons = [
   'ellipsis-vertical',
   // 'md-calendar-sharp',
   'calendar-sharp',
-  'logo-react',
   'trophy',
   'chatbox-ellipses',
   'copy-outline',
