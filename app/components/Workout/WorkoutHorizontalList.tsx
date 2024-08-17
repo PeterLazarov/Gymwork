@@ -55,15 +55,13 @@ function WorkoutHorizontalList() {
   }, [stateStore.openedDate])
 
   return (
-    <>
-      <HorizontalScreenList
-        ref={workoutList}
-        data={dates}
-        renderItem={renderItem}
-        onScreenChange={onScreenChange}
-        initialScrollIndex={dates.indexOf(stateStore.openedDate)}
-      />
-    </>
+    <HorizontalScreenList
+      ref={workoutList}
+      data={dates}
+      renderItem={renderItem}
+      onScreenChange={onScreenChange}
+      initialScrollIndex={dates.indexOf(stateStore.openedDate)}
+    />
   )
 }
 

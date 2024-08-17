@@ -106,9 +106,9 @@ export const WorkoutStoreModel = types
       }
     },
     async seed() {
-      // console.log('seeding workouts')
+      console.log('seeding workouts')
 
-      // self.setProp('workouts', workoutSeedData)
+      self.setProp('workouts', workoutSeedData)
     },
     createWorkout() {
       const created = WorkoutModel.create({

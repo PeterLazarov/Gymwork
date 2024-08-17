@@ -31,7 +31,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
       onPress={onLinkPress}
       style={{
         margin: 16,
-        backgroundColor: colors.lightgray,
+        backgroundColor: colors.primaryLighter,
       }}
     >
       <Card.Title

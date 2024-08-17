@@ -30,7 +30,7 @@ const WorkoutHeader: React.FC = () => {
     <Appbar.Header style={{ backgroundColor: colors.primary }}>
       <Appbar.Content
         title="Gymwork"
-        style={{ alignItems: 'flex-start' }}
+        style={{ marginLeft: 20, alignItems: 'flex-start' }}
         titleStyle={{ color: colors.primaryText }}
       />
 

@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.lightgray,
+    backgroundColor: colors.primaryLighter,
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
     paddingVertical: 8,
