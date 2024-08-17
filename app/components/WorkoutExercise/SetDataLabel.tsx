@@ -13,7 +13,14 @@ type Props = {
 const SetDataLabel: React.FC<Props> = ({ value, unit, isFocused }) => {
   const color = isFocused ? colors.primary : colors.secondaryText
   return (
-    <View style={{ flex: 1, flexDirection: 'row', gap: 4 }}>
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        gap: 4,
+        justifyContent: 'flex-end',
+      }}
+    >
       <BodySmallLabel
         style={{
           fontWeight: 'bold',

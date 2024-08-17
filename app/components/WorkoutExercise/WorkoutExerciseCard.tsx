@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Card } from 'react-native-paper'
 
-import WorkoutExerciseSetReadOnlyList from './WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList'
+import WorkoutExerciseSetList from './WorkoutExerciseSetList'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, Workout } from 'app/db/models'
 import { navigate } from 'app/navigators'
@@ -40,7 +40,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
         titleStyle={{ color: colors.secondaryText }}
       />
       <Card.Content>
-        <WorkoutExerciseSetReadOnlyList
+        <WorkoutExerciseSetList
           sets={sets}
           exercise={exercise}
         />

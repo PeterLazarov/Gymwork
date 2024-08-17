@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 
-import WorkoutExerciseSetReadOnlyList from '../WorkoutExerciseSetReadOnlyList/WorkoutExerciseSetReadOnlyList'
+import WorkoutExerciseSetList from '../WorkoutExerciseSetList'
 import { WorkoutSet } from 'app/db/models'
 import { Divider, BodyLargeLabel } from 'designSystem'
 
@@ -21,7 +21,7 @@ const WorkoutExerciseHistoryListItem: React.FC<Props> = ({ date, sets }) => {
         {DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}
       </BodyLargeLabel>
       <Divider orientation="horizontal" />
-      <WorkoutExerciseSetReadOnlyList sets={sets} />
+      <WorkoutExerciseSetList sets={sets} />
     </View>
   )
 }

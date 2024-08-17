@@ -17,7 +17,7 @@ type Props = {
   hideRecords?: boolean
 }
 
-const ReadOnlyListItem: React.FC<Props> = ({
+const SetListItem: React.FC<Props> = ({
   set,
   exercise,
   isFocused,
@@ -88,4 +88,4 @@ const ReadOnlyListItem: React.FC<Props> = ({
   )
 }
 
-export default observer(ReadOnlyListItem)
+export default observer(SetListItem)

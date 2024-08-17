@@ -7,7 +7,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutModel, WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
-import WorkoutExerciseSetListItem from './WorkoutExerciseSetReadOnlyList/ReadOnlyListItem'
+import SetListItem from './WorkoutExerciseSetList/SetListItem'
 import EmptyState from '../EmptyState'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
@@ -45,7 +45,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
                 }}
                 onPress={() => goToDate(set)}
               >
-                <WorkoutExerciseSetListItem
+                <SetListItem
                   set={set}
                   hideRecords
                   exercise={stateStore.openedExercise!}
