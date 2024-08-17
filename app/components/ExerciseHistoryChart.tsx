@@ -118,13 +118,10 @@ const ExerciseHistoryChart = observer(
       [props.view]
     )
 
-    // Avoiding a polyfill https://github.com/moment/luxon/issues/1500
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-
     const xAxis = useMemo(() => {
       return props.view === '7D'
-        ? viewDays.map(d => days[d.weekday - 1])
-        : viewDays.map(d => d.toISODate())
+        ? viewDays.map(d => d.toFormat('EEE'))
+        : viewDays.map(d => d.toFormat('dd LLL'))
     }, [props.view])
 
     const height = useMemo(() => props.height ?? 400, [props.height])
