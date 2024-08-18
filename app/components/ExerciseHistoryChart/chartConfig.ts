@@ -13,7 +13,7 @@ type ChartConfigParams = {
   xAxis: string[]
 }
 const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
-  const defaultOptions = {
+  const getViewOptions = () => ({
     animation: true,
     tooltip: {
       // allows you to point at random and mark dots
@@ -54,7 +54,7 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
         lineStyle: { color: series[name].color }
       })
     ),
-  }
+  })
 
   const createChartSeries = (data: WorkoutSet[][]) => {
     const numberOfPoints = data.filter(d => d.filter(Boolean)).flat().length
@@ -71,7 +71,7 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
   }
 
   return {
-    defaultOptions,
+    getViewOptions,
     createChartSeries,
   }
 }

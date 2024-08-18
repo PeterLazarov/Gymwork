@@ -10,6 +10,7 @@ type ButtonProps = {
   variant: 'primary' | 'secondary' | 'critical' | 'tertiary'
   type?: 'filled' | 'outline'
   disabled?: boolean
+  size?: 'default' | 'small'
 }
 
 export const IconButtonContainer = styled.TouchableOpacity<IconButtonProps>`
@@ -30,10 +31,14 @@ const buttonVariants = {
   critical: colors.critical,
   tertiary: colors.tertiary,
 }
+const buttonSizes = {
+  small: '32px',
+  default: '48px',
+}
 export const Button = styled.TouchableOpacity<ButtonProps>`
   justify-content: center;
   align-items: center;
-  height: 48px;
+  height: ${({ size }) => buttonSizes[size ?? 'default']};
   gap: 6px;
   flex-direction: row;
   background: ${({ disabled, variant, type }) =>

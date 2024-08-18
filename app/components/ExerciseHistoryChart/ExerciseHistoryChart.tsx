@@ -49,7 +49,8 @@ export const CHART_VIEWS = {
   '30D': '30D',
   ALL: 'ALL', // (Linear)
 } as const
-export type CHART_VIEW = (typeof CHART_VIEWS)[keyof typeof CHART_VIEWS]
+export type CHART_VIEW_KEY = keyof typeof CHART_VIEWS
+export type CHART_VIEW = (typeof CHART_VIEWS)[CHART_VIEW_KEY]
 
 // Component usage
 const ExerciseHistoryChart = (props: {
@@ -154,7 +155,7 @@ const ExerciseHistoryChart = (props: {
     },
   }
 
-  const { defaultOptions, createChartSeries } = chartConfig({
+  const { getViewOptions, createChartSeries } = chartConfig({
     series,
     symbolSize,
     xAxis,
@@ -197,8 +198,7 @@ const ExerciseHistoryChart = (props: {
         height,
       })
 
-      // Set default options
-      eChartRef.current.setOption(defaultOptions)
+      eChartRef.current.setOption(getViewOptions())
 
       // highlight and downplay catch both exact dot-clicks and non-exact ones
       eChartRef.current?.on('highlight', onHighlight)
@@ -220,22 +220,24 @@ const ExerciseHistoryChart = (props: {
   }
 
   return (
-    <View
-      style={{
-        height: height - 50,
-        width,
-      }}
-    >
-      {/* Select exercise */}
-      {/* Select view */}
-      <SvgChart ref={chartElRef} />
-      {/* <Button
+    <>
+      <View
+        style={{
+          height: height - 50,
+          width,
+        }}
+      >
+        {/* Select exercise */}
+        {/* Select view */}
+        <SvgChart ref={chartElRef} />
+        {/* <Button
           disabled={!selectedDate}
           onPress={handleBtnPress}
         >
           {texts.goToWorkout}
         </Button> */}
-    </View>
+      </View>
+    </>
   )
 }
 

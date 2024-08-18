@@ -1,4 +1,5 @@
 export * from './Button'
+export { default as ToggleGroupButton } from './ToggleGroupButton'
 export { default as DistanceEditor } from './DistanceEditor'
 export * from './Divider'
 export { default as DurationInput } from './DurationInput'
