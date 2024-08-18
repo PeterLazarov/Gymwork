@@ -6,7 +6,6 @@
 - fix error when export data in android simulator
 - In exercise edit an empty name / muscle area is still saved regardless of the validation
 - weak ass records breaks stuff for non rep-weight exercises
-- After deleting a set, cannot add another
 - negative rest timer should not have a minus for seconds
 - how to resume a rest timer after pause
 - android horizontal scroll
