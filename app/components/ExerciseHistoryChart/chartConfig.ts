@@ -6,8 +6,12 @@ import { colors } from 'designSystem'
 // Docs
 // https://echarts.apache.org/en/option.html#title
 
+type SeriesItem = {
+  data: Array<number | null>
+  color: string
+}
 type ChartConfigParams = {
-  series: Record<string, Array<number | null>>
+  series: Record<string, SeriesItem>
   symbolSize: number
   xAxis: string[]
 }
@@ -43,33 +47,26 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
       data: xAxis,
       boundaryGap: false,
     },
-    series: Object.keys(series).map((name, i) => {
-      const conf = {
+    series: Object.keys(series).map((name, i) => ({
         name: name,
         type: 'line',
         symbolSize,
         symbol: 'circle',
         showAllSymbol: true,
         connectNulls: true,
-      }
-
-      // first line. TODO configurable colors
-      if (i === 0) {
-        conf.lineStyle = { color: colors.primary }
-      }
-
-      return conf
-    }),
+        lineStyle: { color: series[name].color }
+      })
+    ),
   }
 
   const createChartSeries = (data: WorkoutSet[][]) => {
     const numberOfPoints = data.filter(d => d.filter(Boolean)).flat().length
 
-    const _series = Object.values(series).map((data, i) => {
+    const _series = Object.values(series).map((seriesItem, i) => {
       return {
-        data,
-        itemStyle: i === 0 ? { color: colors.primary } : undefined,
+        data: seriesItem.data,
         symbol: numberOfPoints > 50 ? 'none' : 'circle',
+        itemStyle: { color: seriesItem.color },
       }
     })
 

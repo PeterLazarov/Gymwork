@@ -19,6 +19,7 @@ import { WorkoutSet } from 'app/db/models'
 import chartConfig from './chartConfig'
 import { computed } from 'mobx'
 import { oneRepMaxEpley } from 'fitness-calc'
+import { colors } from 'designSystem'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -49,11 +50,6 @@ export const CHART_VIEWS = {
   ALL: 'ALL', // (Linear)
 } as const
 export type CHART_VIEW = (typeof CHART_VIEWS)[keyof typeof CHART_VIEWS]
-
-const series = {
-  Weight: 'Weight', // TODO kg / lbs
-  'Predicted 1RM': 'Predicted 1RM',
-} as const
 
 // Component usage
 const ExerciseHistoryChart = (props: {
@@ -136,25 +132,30 @@ const ExerciseHistoryChart = (props: {
     ).get()
   }, [viewDays, workoutStore.workouts])
 
-  // TODO get rid of enum?
-  const _series = {
-    [series.Weight]: setsByDay.map(
-      sets => sets?.reduce((max, set) => Math.max(max, set.weight), 0) || null
-    ),
-    [series['Predicted 1RM']]: setsByDay.map(
-      sets =>
-        sets?.reduce(
-          (max, set) =>
-            Number(
-              Math.max(max, oneRepMaxEpley(set.weight!, set.reps!)).toFixed(2)
-            ),
-          0
-        ) || null
-    ),
+  const series = {
+    Weight: {
+      data: setsByDay.map(
+        sets => sets?.reduce((max, set) => Math.max(max, set.weight), 0) || null
+      ),
+      color: colors.primary,
+    },
+    'Predicted 1RM': {
+      data: setsByDay.map(
+        sets =>
+          sets?.reduce(
+            (max, set) =>
+              Number(
+                Math.max(max, oneRepMaxEpley(set.weight!, set.reps!)).toFixed(2)
+              ),
+            0
+          ) || null
+      ),
+      color: colors.tealDark,
+    },
   }
 
   const { defaultOptions, createChartSeries } = chartConfig({
-    series: _series,
+    series,
     symbolSize,
     xAxis,
   })
