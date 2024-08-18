@@ -7,7 +7,6 @@
 - fix error when export data in android simulator
 - add min 1 rep
 - In exercise edit an empty name / muscle area is still saved regardless of the validation
-- deselect set after being updated
 - weak ass records breaks stuff for non rep-weight exercises
 - After deleting a set, cannot add another
 - Add ability to reorder sets (force touch? hold touch?)

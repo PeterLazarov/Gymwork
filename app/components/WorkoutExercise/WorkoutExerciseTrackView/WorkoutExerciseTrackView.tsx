@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { ScrollView } from 'react-native'
 
 import WorkoutExerciseSetEditList from './WorkoutExerciseSetEditList'
 import WorkoutExerciseSetEditPanel from './WorkoutExerciseSetEditPanel'
@@ -30,7 +30,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
   }
 
   return (
-    <View
+    <ScrollView
       style={{
         borderRadius: 8,
         gap: 24,
@@ -49,7 +49,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
         updateSet={updateSet}
         removeSet={removeSet}
       />
-    </View>
+    </ScrollView>
   )
 }
 
