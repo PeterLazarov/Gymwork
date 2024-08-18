@@ -5,7 +5,7 @@ export default function manageInputFocus(
   handleSubmit: (ref: React.RefObject<TextInput>) => void
 ) {
   function isLastInput(currInputRef: React.RefObject<TextInput>) {
-    return currInputRef === inputRefs.at(-1)
+    return currInputRef === inputRefs.filter(ref => !!ref.current).at(-1)
   }
 
   function onHandleSubmit(currInputRef: React.RefObject<TextInput>) {

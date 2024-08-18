@@ -11,7 +11,6 @@
 - how to resume a rest timer after pause
 - android horizontal scroll
 - horizontal scrolling on exercite track screen is iffy
-- in exercise track screen on android when using device keyboard hitting done doesn't create the set
 - keyboard avoiding view on android pushes the content over the header if th einput is on the bottom of screen
 - make history chart usable for other exercise types
 - Exercise track screen ->  VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead. 
