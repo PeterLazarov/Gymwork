@@ -9,7 +9,7 @@ import { colors } from 'designSystem'
 import { observer } from 'mobx-react-lite'
 import { computed } from 'mobx'
 import { TouchableOpacity } from 'react-native'
-computed
+
 type Props = {
   workout: Workout
   exercise: Exercise

@@ -49,7 +49,7 @@ const Timer: React.FC = () => {
           </Text>
           <Text style={{ fontSize: fontSize.xs }}>
             <Text style={{ fontWeight: 'bold', marginRight: 2 }}>R</Text>:{' '}
-            {restTimer.timeLeft.toFormat('mm:ss')}
+            {restTimer.timeLeft}
           </Text>
         </View>
         <IconButton onPress={onSettingsPress}>

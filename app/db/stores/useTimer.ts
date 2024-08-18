@@ -12,7 +12,15 @@ export default function useTimer() {
   const lastTickAt = useRef(Date.now())
 
   const timeLeft = useMemo(
-    () => duration.minus(timeElapsed),
+    () => {
+      const timeLeftDuration = duration.minus(timeElapsed)
+      const timeLeftMillis = timeLeftDuration.toMillis()
+      const absTimeLeft = Duration.fromMillis(Math.abs(timeLeftMillis))
+
+      const isNegative  = timeLeftMillis < 0
+
+      return `${isNegative ? '-' : ''}${absTimeLeft.toFormat('mm:ss')}`
+    },
     [timeElapsed, duration]
   )
 
