@@ -11,6 +11,5 @@
 - android horizontal scroll
 - horizontal scrolling on exercite track screen is iffy
 - keyboard avoiding view on android pushes the content over the header if th einput is on the bottom of screen
-- in exercise list "Barbell Incline Bench Press - Medium Grip" is shown as ...
 - make history chart usable for other exercise types
 - Exercise track screen ->  VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead. 

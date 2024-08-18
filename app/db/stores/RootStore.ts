@@ -3,7 +3,6 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { ExerciseStoreModel } from './ExerciseStore'
 import { StateStoreModel } from './StateStore'
 import { TimeStoreModel } from './TimeStore'
-import { TimerStore2Model } from './TimerStore2'
 import { WorkoutStoreModel } from './WorkoutStore'
 import { Exercise } from '../models'
 
@@ -14,7 +13,6 @@ export const RootStoreModel = types
     workoutStore: types.optional(WorkoutStoreModel, {}),
     timeStore: types.optional(TimeStoreModel, {}),
     stateStore: types.optional(StateStoreModel, {}),
-    timerStore2: types.optional(TimerStore2Model, {}),
   })
   .views(self => ({
     get openedWorkoutExercises() {
