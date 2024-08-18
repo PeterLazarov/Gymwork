@@ -5,6 +5,7 @@ import { View } from 'react-native'
 import SetDataLabel from '../SetDataLabel'
 import { Exercise, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
+import { translate } from 'app/i18n'
 
 type Props = {
   set: WorkoutSet
@@ -26,14 +27,14 @@ const RecordsListItem: React.FC<Props> = ({ set, exercise }) => {
       {exercise.hasRepMeasument && (
         <SetDataLabel
           value={set.reps}
-          unit="RM"
+          unit={translate('reps')} // RM = Rep Max?
           fontSize="md"
         />
       )}
       {exercise.hasWeightMeasument && (
         <SetDataLabel
           value={set.weight}
-          unit="kg"
+          unit={set.weightUnit}
           fontSize="md"
         />
       )}
@@ -46,7 +47,8 @@ const RecordsListItem: React.FC<Props> = ({ set, exercise }) => {
       )}
       {exercise.hasTimeMeasument && (
         <SetDataLabel
-          value={getFormatedDuration(set.durationSecs)}
+          value={getFormatedDuration(set.duration)}
+          unit={set.durationUnit}
           fontSize="md"
         />
       )}

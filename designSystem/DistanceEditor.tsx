@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { TextInput, TextInputProps, View } from 'react-native'
 import { Select } from './Select'
-import DistanceType from 'app/enums/DistanceType'
+import { measurementUnits } from 'app/db/models'
 
 type _Props = {
   value: number
@@ -28,7 +28,7 @@ const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(
           {...rest}
         />
         <Select
-          options={Object.values(DistanceType)}
+          options={Object.values(measurementUnits.distance)}
           value={unit}
           onChange={onUnitChange}
           containerStyle={{ flex: 1 }}

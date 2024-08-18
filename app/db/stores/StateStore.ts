@@ -1,11 +1,5 @@
 import { DateTime } from 'luxon'
-import {
-  Instance,
-  SnapshotOut,
-  types,
-  getParent,
-  getSnapshot,
-} from 'mobx-state-tree'
+import { Instance, SnapshotOut, types, getParent } from 'mobx-state-tree'
 
 import { ExerciseStore } from './ExerciseStore'
 import { RootStore } from './RootStore'
@@ -76,9 +70,11 @@ export const StateStoreModel = types
         ? {
             reps: lastSet.reps,
             weight: lastSet.weight,
+            weightUnit: lastSet.weightUnit,
             distance: lastSet.distance,
             distanceUnit: lastSet.distanceUnit,
-            durationSecs: lastSet.durationSecs,
+            duration: lastSet.duration,
+            durationUnit: lastSet.durationUnit,
           }
         : this.workoutStore.getEmptySet()
     },

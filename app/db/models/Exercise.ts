@@ -4,30 +4,78 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
+// TODO? would this be better as an enum?
+export const measurementUnits = {
+  time: {
+    ms: 'ms',
+    s: 's',
+    m: 'm',
+    h: 'h',
+  },
+  weight: {
+    kg: 'kg',
+    lbs: 'lbs',
+  },
+  distance: { cm: 'cm', m: 'm', km: 'km', ft: 'ft', mile: 'mile' },
+}
+
+enum x {}
+
 export const measurementDefaults = {
   time: {
-    unit: 's',
+    unit: measurementUnits.time.s,
     moreIsBetter: true,
   },
   reps: {
     moreIsBetter: true,
   },
   weight: {
-    unit: 'kg',
+    unit: measurementUnits.weight.kg,
     moreIsBetter: true,
   },
   distance: {
-    unit: 'm',
+    unit: measurementUnits.distance.m,
     moreIsBetter: true,
   },
-} as const
+}
+
+export const measurementTypes = Object.keys(measurementDefaults)
+
+// Should we group by multiple?
+const groupingDefaults: Array<{
+  measurement: measurementName[]
+  groupBy: measurementName
+}> = [
+  // { measurement: [], groupBy: '' },
+  { measurement: ['weight'], groupBy: 'weight' },
+  { measurement: ['time'], groupBy: 'time' },
+  { measurement: ['time', 'weight'], groupBy: 'weight' },
+  { measurement: ['reps'], groupBy: 'reps' },
+  { measurement: ['reps', 'weight'], groupBy: 'reps' },
+  { measurement: ['reps', 'time'], groupBy: 'time' },
+  { measurement: ['reps', 'time', 'weight'], groupBy: 'time' },
+  { measurement: ['distance'], groupBy: 'distance' },
+  { measurement: ['distance', 'weight'], groupBy: 'weight' },
+  { measurement: ['distance', 'time'], groupBy: 'time' },
+  { measurement: ['distance', 'time', 'weight'], groupBy: 'time' },
+  { measurement: ['distance', 'reps'], groupBy: 'reps' },
+  { measurement: ['distance', 'reps', 'weight'], groupBy: 'reps' },
+  { measurement: ['distance', 'reps', 'time'], groupBy: 'reps' },
+  {
+    measurement: ['distance', 'reps', 'time', 'weight'],
+    groupBy: 'reps',
+  },
+]
 
 export const ExerciseMeasurementModel = types
   .model('ExerciseMeasurement')
   .props({
     time: types.maybe(
       types.model({
-        unit: types.enumeration('timeUnit', ['ms', 's', 'm', 'h']),
+        unit: types.enumeration(
+          'timeUnit',
+          Object.values(measurementUnits.time)
+        ),
         moreIsBetter: types.boolean,
       })
     ),
@@ -38,20 +86,20 @@ export const ExerciseMeasurementModel = types
     ),
     weight: types.maybe(
       types.model({
-        unit: types.enumeration('weightUnit', ['kg', 'lbs']),
+        unit: types.enumeration(
+          'weightUnit',
+          Object.values(measurementUnits.weight)
+        ),
         step: 2.5, // is this neccessary?
         moreIsBetter: types.boolean,
       })
     ),
     distance: types.maybe(
       types.model({
-        unit: types.enumeration('distanceUnit', [
-          'cm',
-          'm',
-          'km',
-          'ft',
-          'mile',
-        ]),
+        unit: types.enumeration(
+          'distanceUnit',
+          Object.values(measurementUnits.distance)
+        ),
         moreIsBetter: types.boolean,
       })
     ),
@@ -83,35 +131,17 @@ export const ExerciseModel = types
     get measurementNames(): measurementName[] {
       return Object.entries(exercise.measurements)
         .filter(([k, v]) => v)
-        .map(([k]) => k)
+        .map(([k]) => k as measurementName)
     },
     get groupRecordsBy(): measurementName {
-      // TODO extract out
-      const groupByConfig: Array<{
-        measurement: measurementName[]
-        groupedBy: measurementName
-      }> = [
-        // TODO all types & logic
-        { measurement: ['weight', 'reps'], groupedBy: 'reps' },
-        { measurement: ['weight', 'time'], groupedBy: 'weight' },
-        { measurement: ['weight', 'distance'], groupedBy: 'weight' },
-        { measurement: ['weight'], groupedBy: 'weight' },
-        { measurement: ['reps', 'distance'], groupedBy: 'reps' },
-        { measurement: ['reps', 'time'], groupedBy: 'time' },
-        { measurement: ['reps'], groupedBy: 'reps' },
-        { measurement: ['time'], groupedBy: 'time' },
-        { measurement: ['time', 'distance'], groupedBy: 'time' },
-        { measurement: ['distance'], groupedBy: 'distance' },
-      ]
-
       const exerciseMeasurementNames = this.measurementNames
       const groupByFallback = exerciseMeasurementNames[0]
 
-      groupByConfig.find(cfg => {
+      groupingDefaults.find(cfg => {
         if (
           exerciseMeasurementNames.every(name => cfg.measurement.includes(name))
         ) {
-          return cfg.groupedBy
+          return cfg.groupBy
         }
       })
 

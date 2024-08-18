@@ -9,7 +9,7 @@ import {
 } from 'designSystem/Select'
 
 type Props = {
-  options: SelectOption[]
+  options: readonly SelectOption[]
   selectedValues: string[]
   onSelect: (selected: string[]) => void
   headerText?: string

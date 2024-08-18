@@ -1,7 +1,11 @@
 import { DateTime } from 'luxon'
 
 import exerciseSeedData from './exercises-seed-data.json'
-import { WorkoutSetSnapshotIn, WorkoutSnapshotIn } from '../models'
+import {
+  measurementUnits,
+  WorkoutSetSnapshotIn,
+  WorkoutSnapshotIn,
+} from '../models'
 const numberOfWorkouts = 100
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
 const weightIncrement = 2.5
@@ -19,9 +23,10 @@ const generateSets = (): WorkoutSetSnapshotIn[] => {
     length: between(3, 5),
   }).map((_, i) => {
     return {
-      exercise: '44',
+      exercise: '44', // Лежанка
       reps: between(3, 12),
       weight: between(8, 40) * weightIncrement,
+      weightUnit: measurementUnits.weight.kg,
       isWarmup: i === 0,
     }
   })
@@ -32,9 +37,10 @@ const generateSets = (): WorkoutSetSnapshotIn[] => {
 
     return {
       exercise: cardioExerciseID,
-      distanceUnit: 'm',
       distance: km * 1000,
-      durationSecs: km * between(4, 7) * 60,
+      distanceUnit: measurementUnits.distance.km,
+      duration: km * between(4, 7) * 60,
+      durationUnit: measurementUnits.time.m,
       reps: 1, // assumed 1?
       weight,
     } as WorkoutSetSnapshotIn
@@ -50,6 +56,7 @@ const generateSets = (): WorkoutSetSnapshotIn[] => {
         isWarmup: i === 0,
         reps: between(3, 12),
         weight: between(8, 40) * weightIncrement,
+        weightUnit: measurementUnits.weight.kg,
       }))
     })
     .concat(benchSets, cardioSets)

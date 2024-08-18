@@ -9,9 +9,10 @@ import {
   ExerciseSnapshotIn,
   measurementDefaults,
   measurementName,
+  measurementTypes,
+  measurementUnits,
 } from 'app/db/models'
-import DistanceType from 'app/enums/DistanceType'
-import ExerciseType from 'app/enums/ExerciseType'
+
 import { Icon, Multiselect, Select } from 'designSystem'
 
 type Props = {
@@ -140,18 +141,18 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
         </HelperText>
       )}
       <Multiselect
-        options={ExerciseType}
+        options={measurementTypes}
         selectedValues={exercise.measurementNames}
         headerText="Measurements"
         onSelect={selection => {
           setMeasurementTypes(selection as measurementName[])
         }}
-        error={measurementTypeRrror}
+        error={!!measurementTypeRrror}
       />
       <Text>TODO: Imperial / Metric Unit Type</Text>
       {exercise.hasDistanceMeasument && (
         <Select
-          options={Object.values(DistanceType)}
+          options={Object.values(measurementUnits.distance)}
           value={exercise.measurements.distance?.unit}
           onChange={distanceUnit => setDistanceType(distanceUnit)}
         />

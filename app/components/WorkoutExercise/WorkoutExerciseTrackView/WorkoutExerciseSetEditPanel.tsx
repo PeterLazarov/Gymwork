@@ -107,10 +107,8 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
         {stateStore.openedExercise!.hasTimeMeasument && (
           <SetEditPanelSection text={translate('time')}>
             <DurationInput
-              valueSeconds={editData.durationSecs}
-              onUpdate={durationSecs =>
-                setEditData({ ...editData, durationSecs })
-              }
+              valueSeconds={editData.duration}
+              onUpdate={duration => setEditData({ ...editData, duration })}
               onSubmitEditing={() => onHandleSubmit(input4)}
               ref={input4}
             />

@@ -20,10 +20,14 @@ import {
   Workout,
   WorkoutSetSnapshotIn,
   WorkoutSetTrackData,
+  measurementUnits,
+  measurementDefaults,
 } from 'app/db/models'
-import DistanceType from 'app/enums/DistanceType'
 import { isDev } from 'app/utils/isDev'
-import { ExerciseRecord, calculateRecords } from 'app/services/workoutRecordsCalculator'
+import {
+  ExerciseRecord,
+  calculateRecords,
+} from 'app/services/workoutRecordsCalculator'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -81,10 +85,7 @@ export const WorkoutStoreModel = types
       return sortedExercises.map(({ exercise }) => exercise)
     },
 
-    get allExerciseRecords(): Record<
-      Exercise['guid'],
-      ExerciseRecord
-    > {
+    get allExerciseRecords(): Record<Exercise['guid'], ExerciseRecord> {
       return calculateRecords(store.workouts)
     },
 
@@ -102,7 +103,7 @@ export const WorkoutStoreModel = types
       if (workouts && workouts?.length > 0 && isDev) {
         self.setProp('workouts', workouts)
       } else {
-        await this.seed()
+        // await this.seed()
       }
     },
     async seed() {
@@ -117,14 +118,16 @@ export const WorkoutStoreModel = types
       self.workouts.push(created)
     },
     copyWorkout(template: Workout) {
-      const cleanedSets: WorkoutSetSnapshotIn[] = template.sets.map(({guid, exercise, ...otherProps}) => ({
-        exercise: exercise.guid,
-        ...otherProps
-      }))
+      const cleanedSets: WorkoutSetSnapshotIn[] = template.sets.map(
+        ({ guid, exercise, ...otherProps }) => ({
+          exercise: exercise.guid,
+          ...otherProps,
+        })
+      )
 
       const created = WorkoutModel.create({
         date: self.rootStore.stateStore.openedDate,
-        sets: cleanedSets
+        sets: cleanedSets,
       })
       self.workouts.push(created)
     },
@@ -163,9 +166,11 @@ export const WorkoutStoreModel = types
       return {
         reps: 0,
         weight: 0,
+        weightUnit: measurementDefaults.weight.unit,
         distance: 0,
-        distanceUnit: DistanceType.M,
-        durationSecs: 0,
+        distanceUnit: measurementDefaults.distance.unit,
+        duration: 0,
+        durationUnit: measurementDefaults.time.unit,
       }
     },
   }))
