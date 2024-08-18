@@ -27,7 +27,7 @@ const SelectOptionsModal: React.FC<Props> = ({
 }) => {
   const maxHeight = Dimensions.get('screen').height - 100
   const itemHeight = 53
-  const modalHeight = (options.length + 1) * itemHeight
+  const modalHeight = (options.length + 2) * itemHeight
 
   return (
     <Portal>

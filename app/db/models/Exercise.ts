@@ -3,79 +3,134 @@ import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import DistanceType from 'app/enums/DistanceType'
-import ExerciseType from 'app/enums/ExerciseType'
 
-const REP_MEASUREMENTS = [
-  ExerciseType.REPS_WEIGHT.value,
-  ExerciseType.REPS_DISTANCE.value,
-  ExerciseType.REPS_TIME.value,
-  ExerciseType.REPS.value,
-]
-const REP_GROUPINGS = [
-  ExerciseType.REPS.value,
-  ExerciseType.REPS_WEIGHT.value,
-  ExerciseType.REPS_DISTANCE.value,
-]
-const WEIGHT_MEASUREMENTS = [
-  ExerciseType.REPS_WEIGHT.value,
-  ExerciseType.WEIGHT_DISTANCE.value,
-  ExerciseType.WEIGHT_TIME.value,
-]
-const WEIGHT_GROUPINGS = [
-  ExerciseType.WEIGHT_DISTANCE.value,
-  ExerciseType.WEIGHT_TIME.value,
-]
-const DISTANCE_MEASUREMENTS = [
-  ExerciseType.TIME_DISTANCE.value,
-  ExerciseType.REPS_DISTANCE.value,
-  ExerciseType.WEIGHT_DISTANCE.value,
-]
-const TIME_MEASUREMENTS = [
-  ExerciseType.TIME_DISTANCE.value,
-  ExerciseType.REPS_TIME.value,
-  ExerciseType.TIME.value,
-  ExerciseType.WEIGHT_TIME.value,
-]
-const TIME_GROUPINGS = [ExerciseType.TIME_DISTANCE.value, ExerciseType.TIME.value]
+export const measurementDefaults = {
+  time: {
+    unit: 's',
+    moreIsBetter: true,
+  },
+  reps: {
+    moreIsBetter: true,
+  },
+  weight: {
+    unit: 'kg',
+    moreIsBetter: true,
+  },
+  distance: {
+    unit: 'm',
+    moreIsBetter: true,
+  },
+} as const
 
-const ExerciseTypeValues = Object.values(ExerciseType).map(e => e.value)
+export const ExerciseMeasurementModel = types
+  .model('ExerciseMeasurement')
+  .props({
+    time: types.maybe(
+      types.model({
+        unit: types.enumeration('timeUnit', ['ms', 's', 'm', 'h']),
+        moreIsBetter: types.boolean,
+      })
+    ),
+    reps: types.maybe(
+      types.model({
+        moreIsBetter: types.boolean,
+      })
+    ),
+    weight: types.maybe(
+      types.model({
+        unit: types.enumeration('weightUnit', ['kg', 'lbs']),
+        step: 2.5, // is this neccessary?
+        moreIsBetter: types.boolean,
+      })
+    ),
+    distance: types.maybe(
+      types.model({
+        unit: types.enumeration('distanceUnit', [
+          'cm',
+          'm',
+          'km',
+          'ft',
+          'mile',
+        ]),
+        moreIsBetter: types.boolean,
+      })
+    ),
+  })
 
+export type FilterStrings<T> = T extends string ? T : never
+export type measurementName = FilterStrings<
+  keyof SnapshotOut<typeof ExerciseMeasurementModel>
+>
 export const ExerciseModel = types
   .model('Exercise')
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
     name: '',
     muscles: types.array(types.string),
-    measurementType: types.optional(
-      types.enumeration(ExerciseTypeValues), 
-      () => ExerciseType.REPS_WEIGHT.value
-    ),
-    weightIncrement: 2.5,
-    distanceUnit: DistanceType.M,
-    isFavorite: false
+    measurements: types.optional(ExerciseMeasurementModel, () => ({})),
+    isFavorite: false,
   })
   .views(exercise => ({
     get hasWeightMeasument() {
-      return WEIGHT_MEASUREMENTS.includes(exercise.measurementType)
+      return !!exercise.measurements.weight
     },
     get hasWeightGrouping() {
-      return WEIGHT_GROUPINGS.includes(exercise.measurementType)
+      return this.hasWeightMeasument
     },
     get hasRepMeasument() {
-      return REP_MEASUREMENTS.includes(exercise.measurementType)
+      return !!exercise.measurements.reps
+    },
+    get measurementNames(): measurementName[] {
+      return Object.entries(exercise.measurements)
+        .filter(([k, v]) => v)
+        .map(([k]) => k)
+    },
+    get groupRecordsBy(): measurementName {
+      // TODO extract out
+      const groupByConfig: Array<{
+        measurement: measurementName[]
+        groupedBy: measurementName
+      }> = [
+        // TODO all types & logic
+        { measurement: ['weight', 'reps'], groupedBy: 'reps' },
+        { measurement: ['weight', 'time'], groupedBy: 'weight' },
+        { measurement: ['weight', 'distance'], groupedBy: 'weight' },
+        { measurement: ['weight'], groupedBy: 'weight' },
+        { measurement: ['reps', 'distance'], groupedBy: 'reps' },
+        { measurement: ['reps', 'time'], groupedBy: 'time' },
+        { measurement: ['reps'], groupedBy: 'reps' },
+        { measurement: ['time'], groupedBy: 'time' },
+        { measurement: ['time', 'distance'], groupedBy: 'time' },
+        { measurement: ['distance'], groupedBy: 'distance' },
+      ]
+
+      const exerciseMeasurementNames = this.measurementNames
+      const groupByFallback = exerciseMeasurementNames[0]
+
+      groupByConfig.find(cfg => {
+        if (
+          exerciseMeasurementNames.every(name => cfg.measurement.includes(name))
+        ) {
+          return cfg.groupedBy
+        }
+      })
+
+      return groupByFallback
     },
     get hasRepGrouping() {
-      return REP_GROUPINGS.includes(exercise.measurementType)
+      return this.groupRecordsBy === 'reps'
     },
     get hasDistanceMeasument() {
-      return DISTANCE_MEASUREMENTS.includes(exercise.measurementType)
+      return !!exercise.measurements.distance
+    },
+    get hasDistanceGrouping() {
+      return this.groupRecordsBy === 'distance'
     },
     get hasTimeMeasument() {
-      return TIME_MEASUREMENTS.includes(exercise.measurementType)
+      return !!exercise.measurements.time
     },
     get hasTimeGrouping() {
-      return TIME_GROUPINGS.includes(exercise.measurementType)
+      return this.groupRecordsBy === 'time'
     },
   }))
   .actions(withSetPropAction)

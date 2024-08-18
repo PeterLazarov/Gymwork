@@ -12,8 +12,8 @@ type Props = {
   options: SelectOption[]
   selectedValues: string[]
   onSelect: (selected: string[]) => void
-  selectText?: string
-  containerStyle: ViewStyle
+  headerText?: string
+  containerStyle?: ViewStyle
   hideSelectedItemsRemove?: boolean
   error?: boolean
 }
@@ -22,7 +22,7 @@ const Multiselect: React.FC<Props> = ({
   options,
   selectedValues,
   onSelect,
-  selectText,
+  headerText,
   containerStyle = {},
   hideSelectedItemsRemove,
   error,
@@ -63,7 +63,7 @@ const Multiselect: React.FC<Props> = ({
       >
         <SelectButton
           onPress={openSelection}
-          text={selectText}
+          text={headerText}
           error={error}
         />
         <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
@@ -83,7 +83,7 @@ const Multiselect: React.FC<Props> = ({
         </View>
       </View>
       <SelectOptionsModal
-        header={selectText}
+        header={headerText}
         open={selectionOpen}
         onClose={closeSelection}
         options={options}

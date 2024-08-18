@@ -80,7 +80,7 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
             <IncrementNumericEditor
               value={editData.weight}
               onChange={weight => setEditData({ ...editData, weight })}
-              step={stateStore.openedExercise!.weightIncrement}
+              step={stateStore.openedExercise!.measurements.weight?.step}
               onSubmit={() => onHandleSubmit(input2)}
               ref={input2}
               returnKeyType={isLastInput(input2) ? 'default' : 'next'}

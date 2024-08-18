@@ -4,7 +4,12 @@ import exerciseSeedData from '../seeds/exercises-seed-data.json'
 import { uniqueValues } from '../../../app/utils/array'
 import * as storage from '../../../app/utils/storage'
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import { Exercise, ExerciseModel, ExerciseSnapshotIn } from '../models'
+import {
+  Exercise,
+  ExerciseModel,
+  ExerciseSnapshotIn,
+  measurementDefaults,
+} from '../models'
 
 export const ExerciseStoreModel = types
   .model('ExerciseStore')
@@ -26,10 +31,16 @@ export const ExerciseStoreModel = types
       console.log('seeding excercises')
 
       const exercisesData: ExerciseSnapshotIn[] = exerciseSeedData.map(
-      (exercise, i): ExerciseSnapshotIn => ({
-        ...exercise,
-        guid: String(i),
-      }))
+        ({ measurementType, ...exercise }, i): ExerciseSnapshotIn => {
+          return {
+            ...exercise,
+            guid: String(i),
+            measurements: Object.fromEntries(
+              measurementType.map(type => [type, measurementDefaults[type]])
+            ),
+          }
+        }
+      )
       store.setProp('exercises', exercisesData)
     },
     editExercise(updated: Exercise) {
@@ -48,7 +59,7 @@ export const ExerciseStoreModel = types
     },
     get favoriteExercises() {
       return store.exercises.filter(e => e.isFavorite)
-    }
+    },
   }))
 
 export interface ExerciseStore extends Instance<typeof ExerciseStoreModel> {}

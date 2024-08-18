@@ -12,7 +12,7 @@ import { translate } from 'app/i18n'
 import { Button, ButtonText, Icon, colors } from 'designSystem'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
-const ExerciseCreatePage: React.FC = () => {
+const ExerciseCreate: React.FC = () => {
   const { exerciseStore } = useStores()
 
   const [exercise, setExercise] = useState(ExerciseModel.create())
@@ -90,4 +90,4 @@ const ExerciseCreatePage: React.FC = () => {
     </>
   )
 }
-export default observer(ExerciseCreatePage)
+export default observer(ExerciseCreate)

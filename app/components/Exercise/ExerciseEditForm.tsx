@@ -4,7 +4,12 @@ import { Text, View } from 'react-native'
 import { TextInput, IconButton, HelperText } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { Exercise, ExerciseSnapshotIn } from 'app/db/models'
+import {
+  Exercise,
+  ExerciseSnapshotIn,
+  measurementDefaults,
+  measurementName,
+} from 'app/db/models'
 import DistanceType from 'app/enums/DistanceType'
 import ExerciseType from 'app/enums/ExerciseType'
 import { Icon, Multiselect, Select } from 'designSystem'
@@ -13,23 +18,30 @@ type Props = {
   exercise: Exercise
   onUpdate: (updated: Exercise, isValid: boolean) => void
 }
+// TODO? Exercise measurement types should only be additive
+// Otherwise they're destructive?
 const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   const { exerciseStore } = useStores()
 
   const [nameError, setNameError] = useState('')
   const [weightIncError, setWeightIncError] = useState('')
   const [musclesError, setMusclesError] = useState('')
+  const [measurementTypeRrror, setMeasurementTypeRrror] = useState('')
 
   function runValidCheck(data: Exercise) {
     const nameInvalid = data.name.trim() === ''
-    const weightIncrementInvalid = data.weightIncrement === 0
+    const weightIncrementInvalid = data.measurements.weight?.step === 0
     const musclesInvalid = data.muscles.length === 0
+    const measurementsInvalid = data.measurementNames.length === 0
 
     setNameError(nameInvalid ? 'Exercise name cannot be empty.' : '')
     setWeightIncError(
       weightIncrementInvalid ? 'Weight increment cannot be 0.' : ''
     )
     setMusclesError(musclesInvalid ? 'At least one muscle area required.' : '')
+    setMeasurementTypeRrror(
+      measurementsInvalid ? 'At least one measurement type required.' : ''
+    )
 
     return !(nameInvalid || weightIncrementInvalid || musclesInvalid)
   }
@@ -38,10 +50,18 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
     const valid = runValidCheck(updated)
     onUpdate(updated, valid)
   }
-  function handleNumericChange(text: string) {
+
+  function handleWeightIncrementChange(text: string) {
     // Remove non-numeric characters using a regular expression
     const sanitizedValue = text.replace(/[^0-9.]/g, '')
-    exercise.setProp('weightIncrement', Number(sanitizedValue))
+
+    exercise.setProp('measurements', {
+      ...exercise.measurements,
+      weight: {
+        ...exercise.measurements.weight!,
+        step: +sanitizedValue,
+      },
+    })
     onFormChange(exercise)
   }
 
@@ -59,6 +79,26 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
 
   function onAddMusclePress() {
     // Todo: route to muscle create
+  }
+
+  function setMeasurementTypes(measurementNames: measurementName[]) {
+    exercise.setProp(
+      'measurements',
+      Object.fromEntries(measurementNames.map(m => [m, measurementDefaults[m]]))
+    )
+
+    onFormChange(exercise)
+  }
+
+  function setDistanceType(unit: string) {
+    exercise.setProp('measurements', {
+      ...exercise.measurements,
+      distance: {
+        ...exercise.measurements.distance!,
+        unit,
+      },
+    })
+    onFormChange(exercise)
   }
 
   return (
@@ -83,7 +123,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           selectedValues={exercise.muscles}
           onSelect={onMusclesChange}
           containerStyle={{ flex: 1 }}
-          selectText="Muscle areas"
+          headerText="Muscle areas"
           error={musclesError !== ''}
         />
         <IconButton
@@ -99,25 +139,29 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           {musclesError}
         </HelperText>
       )}
-      <Select
-        options={Object.values(ExerciseType)}
-        value={exercise.measurementType}
-        onChange={type => onPropChange('measurementType', type)}
+      <Multiselect
+        options={ExerciseType}
+        selectedValues={exercise.measurementNames}
+        headerText="Measurements"
+        onSelect={selection => {
+          setMeasurementTypes(selection as measurementName[])
+        }}
+        error={measurementTypeRrror}
       />
       <Text>TODO: Imperial / Metric Unit Type</Text>
       {exercise.hasDistanceMeasument && (
         <Select
           options={Object.values(DistanceType)}
-          value={exercise.distanceUnit}
-          onChange={distanceUnit => onPropChange('distanceUnit', distanceUnit)}
+          value={exercise.measurements.distance?.unit}
+          onChange={distanceUnit => setDistanceType(distanceUnit)}
         />
       )}
       {exercise.hasWeightMeasument && (
         <>
           <TextInput
-            value={`${exercise.weightIncrement}`}
+            value={`${exercise.measurements.weight?.step}`}
             keyboardType="decimal-pad"
-            onChangeText={handleNumericChange}
+            onChangeText={handleWeightIncrementChange}
             label="Weight Increment"
             error={weightIncError !== ''}
           />
