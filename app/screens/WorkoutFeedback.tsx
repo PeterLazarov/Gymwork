@@ -9,6 +9,7 @@ import { navigate } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { translate } from 'app/i18n'
 import { Button, ButtonText, colors, fontSize } from 'designSystem'
+import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 const WorkoutFeedbackPage: React.FC = () => {
   const { stateStore } = useStores()
@@ -30,7 +31,10 @@ const WorkoutFeedbackPage: React.FC = () => {
         />
       </Appbar.Header>
 
-      <View style={{ padding: 8, gap: 16, flex: 1 }}>
+      <KeyboardAvoiderView
+        avoidMode="focused-input"
+        style={{ padding: 8, gap: 16, flex: 1 }}
+      >
         <Text
           style={{
             fontSize: fontSize.md,
@@ -55,7 +59,7 @@ const WorkoutFeedbackPage: React.FC = () => {
             placeholder={translate('enterComments')}
           />
         </ScrollView>
-      </View>
+      </KeyboardAvoiderView>
 
       <View
         style={{

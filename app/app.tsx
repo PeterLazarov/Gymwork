@@ -7,9 +7,9 @@ if (__DEV__) {
 import { useFonts } from 'expo-font'
 import React from 'react'
 import * as Linking from 'expo-linking'
-import { KeyboardAvoidingView, Platform, ViewStyle } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { PaperProvider, Portal } from 'react-native-paper'
+import { KeyboardAvoiderProvider } from '@good-react-native/keyboard-avoider'
 import {
   initialWindowMetrics,
   SafeAreaProvider,
@@ -88,15 +88,12 @@ function App() {
   // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ height: '100%' }}
-      >
+      <KeyboardAvoiderProvider>
         <DBStoreInitializer>
           <PaperProvider>
             <Portal.Host>
               <ErrorBoundary catchErrors={Config.catchErrors}>
-                <GestureHandlerRootView style={$container}>
+                <GestureHandlerRootView style={{ flex: 1 }}>
                   <AppNavigator
                     linking={linking}
                     initialState={initialNavigationState}
@@ -107,13 +104,9 @@ function App() {
             </Portal.Host>
           </PaperProvider>
         </DBStoreInitializer>
-      </KeyboardAvoidingView>
+      </KeyboardAvoiderProvider>
     </SafeAreaProvider>
   )
 }
 
 export default App
-
-const $container: ViewStyle = {
-  flex: 1,
-}

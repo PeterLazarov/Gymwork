@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { ScrollView } from 'react-native'
 
 import WorkoutExerciseSetEditList from './WorkoutExerciseSetEditList'
 import WorkoutExerciseSetEditPanel from './WorkoutExerciseSetEditPanel'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
+import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 const WorkoutExerciseTrackView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
@@ -30,7 +30,8 @@ const WorkoutExerciseTrackView: React.FC = () => {
   }
 
   return (
-    <ScrollView
+    <KeyboardAvoiderView
+      avoidMode="focused-input"
       style={{
         borderRadius: 8,
         gap: 24,
@@ -49,7 +50,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
         updateSet={updateSet}
         removeSet={removeSet}
       />
-    </ScrollView>
+    </KeyboardAvoiderView>
   )
 }
 

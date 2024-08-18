@@ -42,7 +42,6 @@ const en = {
   history: 'History',
   records: 'Records',
   chart: 'Chart',
-
 }
 
 export default en
