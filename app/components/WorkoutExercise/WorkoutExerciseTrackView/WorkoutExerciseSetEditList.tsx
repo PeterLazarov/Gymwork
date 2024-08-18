@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { View } from 'react-native'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
-import { colors, Divider, Icon } from 'designSystem'
+import { colors, Divider, Icon, PressableHighlight } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
@@ -33,7 +33,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       isActive,
     }: DragListRenderItemInfo<WorkoutSet>) => {
       return (
-        <TouchableOpacity
+        <PressableHighlight
           style={{
             backgroundColor: isActive ? colors.primaryLight : undefined,
           }}
@@ -61,7 +61,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
               isFocused={selectedSet?.guid === item.guid}
             />
           </View>
-        </TouchableOpacity>
+        </PressableHighlight>
       )
     },
     [selectedSet]

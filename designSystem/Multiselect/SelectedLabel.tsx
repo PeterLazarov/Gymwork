@@ -1,7 +1,7 @@
 import React from 'react'
-import { TouchableOpacity, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
 
-import { colors, fontSize, Icon } from 'designSystem'
+import { colors, fontSize, Icon, PressableHighlight } from 'designSystem'
 
 type Props = {
   selection: string
@@ -19,7 +19,7 @@ const SelectedLabel: React.FC<Props> = ({
       borderWidth: 1,
       borderColor: colors.primary,
       paddingHorizontal: 15,
-      paddingVertical: 8,
+      paddingVertical: 6,
       borderRadius: 8,
       gap: 8,
       flexDirection: 'row',
@@ -36,12 +36,15 @@ const SelectedLabel: React.FC<Props> = ({
       {selection}
     </Text>
     {!hideRemove && (
-      <TouchableOpacity onPress={() => onRemove?.(selection)}>
+      <PressableHighlight
+        variant="icon"
+        onPress={() => onRemove?.(selection)}
+      >
         <Icon
           icon="close"
           size="small"
         />
-      </TouchableOpacity>
+      </PressableHighlight>
     )}
   </View>
 )
