@@ -1,5 +1,11 @@
 import { DateTime } from 'luxon'
-import { Instance, SnapshotOut, types, getParent } from 'mobx-state-tree'
+import {
+  Instance,
+  SnapshotOut,
+  types,
+  getParent,
+  getSnapshot,
+} from 'mobx-state-tree'
 
 import { ExerciseStore } from './ExerciseStore'
 import { RootStore } from './RootStore'
@@ -91,6 +97,30 @@ export const StateStoreModel = types
   }))
   .actions(withSetPropAction)
   .actions(self => ({
+    /** Made to work with drag and drop */
+    reorderOpenedExerciseSets(from: number, to: number) {
+      const indexFromAllSets = self.openedWorkout?.sets.indexOf(
+        self.openedExerciseSets[from]
+      )
+      const indexToAllSets = self.openedWorkout?.sets.indexOf(
+        self.openedExerciseSets[to]
+      )
+
+      if (!indexFromAllSets || !indexToAllSets) {
+        console.warn('DnD issues?')
+        return
+      }
+
+      const item = self.openedWorkout?.sets[indexFromAllSets]!
+      const reorderedSets = self
+        .openedWorkout!.sets.toSpliced(indexFromAllSets, 1)
+        .toSpliced(indexToAllSets, 0, item)!
+
+      const before = getSnapshot(self.openedWorkout!)
+      self.openedWorkout!.setProp('sets', reorderedSets)
+      const after = getSnapshot(self.openedWorkout!)
+      console.log({ before, after })
+    },
     setOpenedExercise(exercise: Exercise | null) {
       self.openedExerciseGuid = exercise?.guid || ''
     },

@@ -1,13 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback } from 'react'
-import { FlatList, ListRenderItemInfo, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
-import { Divider } from 'designSystem'
+import { colors, Divider } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
+import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -25,13 +26,30 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   }
 
   const renderItem = useCallback(
-    ({ item, index }: ListRenderItemInfo<WorkoutSet>) => {
+    ({
+      item,
+      onDragStart,
+      onDragEnd,
+      isActive,
+    }: DragListRenderItemInfo<WorkoutSet>) => {
       return (
-        <WorkoutExerciseSetEditItem
-          set={item}
-          isFocused={selectedSet?.guid === item.guid}
+        <TouchableOpacity
+          style={{
+            backgroundColor: isActive ? colors.primaryLight : undefined,
+          }}
+          onLongPress={() => {
+            onDragStart()
+          }}
+          onPressOut={() => {
+            onDragEnd()
+          }}
           onPress={() => toggleSelectedSet(item)}
-        />
+        >
+          <WorkoutExerciseSetEditItem
+            set={item}
+            isFocused={selectedSet?.guid === item.guid}
+          />
+        </TouchableOpacity>
       )
     },
     [selectedSet]
@@ -48,13 +66,21 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
     }
   }
 
+  const handleReorder: (from: number, to: number) => Promise<void> | void = (
+    from,
+    to
+  ) => {
+    stateStore.reorderOpenedExerciseSets(from, to)
+  }
+
   return (
     <View style={{ flex: 1, padding: 16 }}>
-      <FlatList
+      <DragList
         data={stateStore.openedExerciseSets}
         renderItem={renderItem}
         keyExtractor={set => set.guid}
         getItemLayout={getItemLayout}
+        onReordered={handleReorder}
         ItemSeparatorComponent={() => <Divider orientation="horizontal" />}
       />
 

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
@@ -13,14 +13,9 @@ import SetDataLabel from '../SetDataLabel'
 type Props = {
   set: WorkoutSet
   isFocused?: boolean
-  onPress: () => void
 }
 
-const WorkoutExerciseSetEditItem: React.FC<Props> = ({
-  set,
-  isFocused,
-  onPress,
-}) => {
+const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
   const { workoutStore, openedExerciseRecords, stateStore } = useStores()
   const isRecord = Object.values(openedExerciseRecords).some(
     record => record.guid === set.guid
@@ -39,8 +34,7 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
   }
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
+    <View
       style={{
         display: 'flex',
         flexDirection: 'row',
@@ -97,7 +91,7 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
           isFocused={isFocused}
         />
       )}
-    </TouchableOpacity>
+    </View>
   )
 }
 
