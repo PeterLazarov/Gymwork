@@ -18,10 +18,11 @@ const SelectedLabel: React.FC<Props> = ({
     style={{
       borderWidth: 1,
       borderColor: colors.primary,
-      paddingHorizontal: 15,
+      paddingLeft: 10,
+      paddingRight: 4,
       paddingVertical: 6,
       borderRadius: 8,
-      gap: 8,
+      gap: 4,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
