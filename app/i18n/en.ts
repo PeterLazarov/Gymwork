@@ -38,6 +38,11 @@ const en = {
   favorite: 'Favorite',
   mostUsed: 'Most used',
   allExercises: 'All Exercises',
+  track: 'Track',
+  history: 'History',
+  records: 'Records',
+  chart: 'Chart',
+
 }
 
 export default en

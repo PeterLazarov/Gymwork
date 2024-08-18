@@ -5,7 +5,6 @@
 - change icon and remove ignite splashscreen
 - in ExterciseTrack screen show last sets when keyboard open
 - fix error when export data in android simulator
-- add min 1 rep
 - In exercise edit an empty name / muscle area is still saved regardless of the validation
 - weak ass records breaks stuff for non rep-weight exercises
 - After deleting a set, cannot add another
@@ -17,3 +16,4 @@
 - in exercise track screen on android when using device keyboard hitting done doesn't create the set
 - keyboard avoiding view covers the screen a bit when opened and doesn't reset it when closed
 - make history chart usable for other exercise types
+- Exercise track screen ->  VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead. 

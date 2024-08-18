@@ -6,6 +6,7 @@ import { Appbar, Menu } from 'react-native-paper'
 import WorkoutExerciseHistoryView from 'app/components/WorkoutExercise/WorkoutExerciseHistoryView'
 import WorkoutExerciseRecordsView from 'app/components/WorkoutExercise/WorkoutExerciseRecordsView'
 import WorkoutExerciseTrackView from 'app/components/WorkoutExercise/WorkoutExerciseTrackView'
+import WorkoutExerciseChartView from 'app/components/WorkoutExercise/WorkoutExerciseChartView'
 import Timer from 'app/components/Timer/Timer'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
@@ -15,9 +16,7 @@ import { Icon, SwipeTabs, colors } from 'designSystem'
 const WorkoutExercisePage: React.FC = () => {
   const { timeStore, stateStore } = useStores()
 
-  const [view, setView] = useState('track')
   const [menuOpen, setMenuOpen] = useState(false)
-  const [graphHidden, setGraphHidden] = useState(false)
 
   function onBackPress() {
     navigate('Workout')
@@ -29,27 +28,26 @@ const WorkoutExercisePage: React.FC = () => {
     navigate('ExerciseEdit')
   }
 
-  function onToggleGraphPress() {
-    setMenuOpen(false)
-    setGraphHidden(!graphHidden)
-  }
-
   const tabs = [
     {
-      label: 'Track',
+      label: translate('track'),
       name: 'track',
       component: WorkoutExerciseTrackView,
     },
     {
-      label: 'History',
+      label: translate('history'),
       name: 'history',
       component: WorkoutExerciseHistoryView,
-      props: { graphHidden }, // (optional) additional props
     },
     {
-      label: 'Records',
+      label: translate('records'),
       name: 'records',
       component: WorkoutExerciseRecordsView,
+    },
+    {
+      label: translate('chart'),
+      name: 'chart',
+      component: WorkoutExerciseChartView,
     },
   ]
 
@@ -93,19 +91,10 @@ const WorkoutExercisePage: React.FC = () => {
             onPress={onEditExercisePress}
             title={translate('editExercise')}
           />
-          {view === 'history' && (
-            <Menu.Item
-              onPress={onToggleGraphPress}
-              title={translate(graphHidden ? 'showGraph' : 'hideGraph')}
-            />
-          )}
         </Menu>
       </Appbar.Header>
 
-      <SwipeTabs
-        tabsConfig={tabs}
-        onTabChange={setView}
-      >
+      <SwipeTabs tabsConfig={tabs}>
         {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
           <Timer />
         )}
