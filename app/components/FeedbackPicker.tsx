@@ -1,9 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { Platform, View, Text } from 'react-native'
-import { IconButton } from 'react-native-paper'
 
-import { Icon, iconSizes, colors, fontSize } from 'designSystem'
+import { Icon, IconButton, colors, fontSize } from 'designSystem'
 
 type Props = {
   selected?: string
@@ -34,24 +33,23 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           alignItems: 'center',
           backgroundColor: sadSelected ? colors.white : 'transparent',
           borderRadius: 8,
-          paddingBottom: 8,
+          padding: 8,
         }}
       >
         <IconButton
-          size={iconSizes.xLarge}
+          size="lg"
           onPress={() => onPress('sad')}
-          icon={() => (
-            <Icon
-              icon="emoji-sad"
-              size="large"
-              color={sadSelected ? colors.red : colors.lightred}
-            />
-          )}
-        />
+        >
+          <Icon
+            icon="emoji-sad"
+            size="large"
+            color={sadSelected ? colors.red : colors.gray}
+          />
+        </IconButton>
         <Text
           style={{
             fontSize: fontSize.sm,
-            color: sadSelected ? colors.red : colors.lightred,
+            color: sadSelected ? colors.red : colors.gray,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
@@ -64,24 +62,23 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           alignItems: 'center',
           backgroundColor: neutralSelected ? colors.white : 'transparent',
           borderRadius: 8,
-          paddingBottom: 8,
+          padding: 8,
         }}
       >
         <IconButton
-          size={iconSizes.xLarge}
+          size="lg"
           onPress={() => onPress('neutral')}
-          icon={() => (
-            <Icon
-              icon="emoji-neutral"
-              size="large"
-              color={neutralSelected ? colors.yellow : colors.lightyellow}
-            />
-          )}
-        />
+        >
+          <Icon
+            icon="emoji-neutral"
+            size="large"
+            color={neutralSelected ? colors.yellow : colors.gray}
+          />
+        </IconButton>
         <Text
           style={{
             fontSize: fontSize.sm,
-            color: neutralSelected ? colors.yellow : colors.lightyellow,
+            color: neutralSelected ? colors.yellow : colors.gray,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
@@ -94,24 +91,23 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           alignItems: 'center',
           backgroundColor: happySelected ? colors.white : 'transparent',
           borderRadius: 8,
-          paddingBottom: 8,
+          padding: 8,
         }}
       >
         <IconButton
-          size={iconSizes.xLarge}
+          size="lg"
           onPress={() => onPress('happy')}
-          icon={() => (
-            <Icon
-              icon="emoji-happy"
-              size="large"
-              color={happySelected ? colors.green : colors.lightgreen}
-            />
-          )}
-        />
+        >
+          <Icon
+            icon="emoji-happy"
+            size="large"
+            color={happySelected ? colors.green : colors.gray}
+          />
+        </IconButton>
         <Text
           style={{
             fontSize: fontSize.sm,
-            color: happySelected ? colors.green : colors.lightgreen,
+            color: happySelected ? colors.green : colors.gray,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >

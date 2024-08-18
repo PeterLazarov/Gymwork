@@ -1,13 +1,12 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { IconButton } from 'react-native-paper'
 import { Duration } from 'luxon'
 
 import TimerEditModal from '../TimerEditModal'
 import { useStores } from 'app/db/helpers/useStores'
 import useTimer from 'app/db/stores/useTimer'
-import { Icon, colors, fontSize } from 'designSystem'
+import { IconButton, Icon, colors, fontSize } from 'designSystem'
 
 const Timer: React.FC = () => {
   const { timeStore, stateStore } = useStores()
@@ -34,16 +33,15 @@ const Timer: React.FC = () => {
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
+          gap: 4,
         }}
       >
-        <IconButton
-          onPress={restTimer.stop}
-          icon={() => <Icon icon="pause-circle" />}
-        />
-        <IconButton
-          onPress={onPlayPress}
-          icon={() => <Icon icon="weight-lifter" />}
-        />
+        <IconButton onPress={onPlayPress}>
+          <Icon icon="weight-lifter" />
+        </IconButton>
+        <IconButton onPress={restTimer.stop}>
+          <Icon icon="pause-circle" />
+        </IconButton>
         <View style={styles.timerPanel}>
           <Text style={{ fontSize: fontSize.xs }}>
             <Text style={{ fontWeight: 'bold' }}>W</Text>:{' '}
@@ -54,14 +52,13 @@ const Timer: React.FC = () => {
             {restTimer.timeLeft.toFormat('mm:ss')}
           </Text>
         </View>
-        <IconButton
-          onPress={onSettingsPress}
-          icon={() => <Icon icon="settings-outline" />}
-        />
-        <IconButton
-          onPress={restTimer.clear}
-          icon={() => <Icon icon="timer-off" />}
-        />
+        <IconButton onPress={onSettingsPress}>
+          <Icon icon="settings-outline" />
+        </IconButton>
+
+        <IconButton onPress={restTimer.clear}>
+          <Icon icon="timer-off" />
+        </IconButton>
       </View>
       <TimerEditModal
         open={settingDialogOpen}

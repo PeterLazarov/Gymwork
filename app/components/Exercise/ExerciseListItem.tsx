@@ -1,15 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View, Text } from 'react-native'
-import { IconButton } from 'react-native-paper'
 
 import { Exercise } from 'app/db/models'
 import {
   PressableHighlight,
+  IconButton,
   Icon,
   colors,
   fontSize,
-  iconSizes,
 } from 'designSystem'
 
 type Props = {
@@ -38,18 +37,16 @@ const ExerciseListItem: React.FC<Props> = ({ exercise, onSelect }) => {
           {exercise.name}
         </Text>
         <IconButton
-          size={iconSizes.small}
-          icon={() => (
-            <Icon
-              icon={heartIcon}
-              color={colors.primary}
-            />
-          )}
           onPress={e => {
             e.stopPropagation()
             exercise.setProp('isFavorite', !exercise.isFavorite)
           }}
-        />
+        >
+          <Icon
+            icon={heartIcon}
+            color={colors.primary}
+          />
+        </IconButton>
       </View>
     </PressableHighlight>
   )

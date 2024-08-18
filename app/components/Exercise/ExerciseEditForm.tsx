@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { Text, View } from 'react-native'
-import { TextInput, IconButton, HelperText } from 'react-native-paper'
+import { TextInput, HelperText } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
 import {
@@ -13,7 +13,7 @@ import {
   measurementUnits,
 } from 'app/db/models'
 
-import { Icon, Multiselect, Select } from 'designSystem'
+import { Icon, Multiselect, IconButton, Select } from 'designSystem'
 
 type Props = {
   exercise: Exercise
@@ -128,9 +128,11 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           error={musclesError !== ''}
         />
         <IconButton
-          icon={() => <Icon icon="add" />}
           onPress={onAddMusclePress}
-        />
+          style={{ margin: 4 }}
+        >
+          <Icon icon="add" />
+        </IconButton>
       </View>
       {musclesError !== '' && (
         <HelperText

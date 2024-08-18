@@ -1,6 +1,6 @@
 import { Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 
-export const iconSizes = {
+const iconSizes = {
   small: 16,
   default: 25,
   large: 36,

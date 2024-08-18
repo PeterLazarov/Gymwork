@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import { colors, fontSize, Icon, PressableHighlight } from 'designSystem'
+import { colors, fontSize, Icon, IconButton } from 'designSystem'
 
 type Props = {
   selection: string
@@ -36,15 +36,15 @@ const SelectedLabel: React.FC<Props> = ({
       {selection}
     </Text>
     {!hideRemove && (
-      <PressableHighlight
-        variant="icon"
+      <IconButton
         onPress={() => onRemove?.(selection)}
+        size="sm"
       >
         <Icon
           icon="close"
           size="small"
         />
-      </PressableHighlight>
+      </IconButton>
     )}
   </View>
 )

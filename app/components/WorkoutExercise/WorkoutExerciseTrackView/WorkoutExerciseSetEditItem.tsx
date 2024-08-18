@@ -7,7 +7,7 @@ import { WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { colors, Icon } from 'designSystem'
 import { getFormatedDuration } from 'app/utils/time'
-import WorkoutExerciseSetWarmupButton from './WorkoutExerciseSetWarmupButton'
+import SetWarmupButton from './SetWarmupButton'
 import SetDataLabel from '../SetDataLabel'
 
 type Props = {
@@ -49,9 +49,11 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
           flex: 1,
           alignItems: 'center',
           flexDirection: 'row',
+          paddingVertical: 4,
+          gap: 4,
         }}
       >
-        <WorkoutExerciseSetWarmupButton
+        <SetWarmupButton
           isWarmup={set.isWarmup}
           toggleSetWarmup={toggleSetWarmup}
           number={number}

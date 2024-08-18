@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 
-import { Icon, IconButtonContainer, colors } from 'designSystem'
+import { Icon, PressableHighlight, colors } from 'designSystem'
 
 type Props = {
   value: number
@@ -23,25 +23,25 @@ const IncrementalButtons: React.FC<Props> = ({
         justifyContent: 'center',
       }}
     >
-      <IconButtonContainer
-        variant="full"
+      <PressableHighlight
         onPress={() => onChange(value - (step ?? 1))}
+        style={{ backgroundColor: colors.primaryLight, padding: 4 }}
       >
         <Icon
           icon="remove"
           color={colors.iconText}
         />
-      </IconButtonContainer>
+      </PressableHighlight>
       {children}
-      <IconButtonContainer
-        variant="full"
+      <PressableHighlight
         onPress={() => onChange(value + (step ?? 1))}
+        style={{ backgroundColor: colors.primaryLight, padding: 4 }}
       >
         <Icon
           icon="add"
           color={colors.iconText}
         />
-      </IconButtonContainer>
+      </PressableHighlight>
     </View>
   )
 }
