@@ -11,3 +11,4 @@ export const Divider = styled.View<Props>`
   height: ${props => (props.orientation === 'horizontal' ? '1px' : '100%')};
   background-color: ${colors.primary};
 `
+Divider.displayName = 'Divider'

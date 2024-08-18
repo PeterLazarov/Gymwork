@@ -24,6 +24,7 @@ export const IconButtonContainer = styled.TouchableOpacity<IconButtonProps>`
       full: colors.primaryLight,
     }[props.variant || 'default'])};
 `
+IconButtonContainer.displayName = 'IconButtonContainer'
 
 const buttonVariants = {
   primary: colors.primary,
@@ -51,6 +52,7 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
   border-color: ${({ type, variant }) =>
     type === 'outline' ? buttonVariants[variant] : 'transparent'};
 `
+Button.displayName = 'Button'
 
 const buttonTextVariants = {
   primary: colors.primaryText,
@@ -64,3 +66,4 @@ export const ButtonText = styled.Text<ButtonProps>`
   color: ${({ variant, type }) =>
     type !== 'outline' ? buttonTextVariants[variant] : buttonVariants[variant]};
 `
+ButtonText.displayName = 'ButtonText'
