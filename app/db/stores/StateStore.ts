@@ -116,10 +116,8 @@ export const StateStoreModel = types
         .openedWorkout!.sets.toSpliced(indexFromAllSets, 1)
         .toSpliced(indexToAllSets, 0, item)!
 
-      const before = getSnapshot(self.openedWorkout!)
+      // TODO check type
       self.openedWorkout!.setProp('sets', reorderedSets)
-      const after = getSnapshot(self.openedWorkout!)
-      console.log({ before, after })
     },
     setOpenedExercise(exercise: Exercise | null) {
       self.openedExerciseGuid = exercise?.guid || ''

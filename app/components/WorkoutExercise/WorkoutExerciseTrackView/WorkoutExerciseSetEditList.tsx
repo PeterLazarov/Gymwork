@@ -5,7 +5,7 @@ import { TouchableOpacity, View } from 'react-native'
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
-import { colors, Divider } from 'designSystem'
+import { colors, Divider, Icon } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
@@ -45,10 +45,22 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
           }}
           onPress={() => toggleSelectedSet(item)}
         >
-          <WorkoutExerciseSetEditItem
-            set={item}
-            isFocused={selectedSet?.guid === item.guid}
-          />
+          <View
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingLeft: 10,
+            }}
+          >
+            {isActive && <Icon icon="drag-horizontal-variant" />}
+
+            <WorkoutExerciseSetEditItem
+              set={item}
+              isFocused={selectedSet?.guid === item.guid}
+            />
+          </View>
         </TouchableOpacity>
       )
     },

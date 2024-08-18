@@ -40,7 +40,7 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingHorizontal: 10,
+        paddingRight: 10,
         paddingVertical: 1,
       }}
     >
