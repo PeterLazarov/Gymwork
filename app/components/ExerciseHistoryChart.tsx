@@ -17,6 +17,7 @@ import { Dimensions, View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
+import { colors } from 'designSystem'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -130,6 +131,86 @@ const ExerciseHistoryChart = observer(
       [props.width]
     )
 
+    const defaultOptions = {
+      animation: true,
+      tooltip: {
+        // allows you to point at random and mark dots
+        trigger: 'axis',
+        axisPointer: { type: 'cross' }, // Pointer gains access and highlight
+      },
+      legend: {
+        data: [series.Weight, series['Predicted 1RM']], // the .name of series[number]
+        selected: {
+          [series.Weight]: true,
+          [series['Predicted 1RM']]: true,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        min: ({ min }) => (min * 0.95).toFixed(0),
+        max: ({ max }) => (max * 1.05).toFixed(0),
+
+        // axisLabel: { formatter: '{value} KG' }, // ! breaks styling
+        axisPointer: {
+          snap: true,
+        },
+      },
+
+      // options:[{}],
+      // timeline: [{}],
+      xAxis: {
+        type: 'category',
+        data: xAxis,
+        boundaryGap: false,
+      },
+      series: [
+        {
+          name: series.Weight,
+          type: 'line',
+          symbolSize,
+          symbol: 'circle',
+          showAllSymbol: true,
+          connectNulls: true,
+          lineStyle: { color: colors.primary },
+        },
+        {
+          name: series['Predicted 1RM'],
+          type: 'line',
+          symbolSize,
+          symbol: 'circle',
+          showAllSymbol: true,
+          connectNulls: true,
+
+          // areaStyle: {
+          //   color: 'rgba(230, 231, 231,0.8)',
+          // },
+        },
+      ],
+    }
+
+    const onHighlight = (data: unknown) => {
+      // @ts-ignore
+      const dateIndex = data.batch?.[0]?.dataIndex as number
+      const date = viewDays[dateIndex]
+
+      if (!date || !dateIndex) {
+        setSelectedDate(undefined)
+        return
+      }
+
+      const workout = workoutStore.workouts.find(
+        w => w.date === date.toISODate()
+      )
+
+      if (!workout) {
+        setSelectedDate(undefined)
+        return
+      }
+
+      // TODO set only if there's a workout there
+      setSelectedDate(dateIndex && date ? date.toISODate()! : undefined)
+    }
+
     // TODO this would be odd with multiple workouts+lines per day
     const [selectedDate, setSelectedDate] = useState<string>()
 
@@ -142,92 +223,16 @@ const ExerciseHistoryChart = observer(
         })
 
         // Set default options
-        eChartRef.current.setOption({
-          animation: true,
-          tooltip: {
-            // allows you to point at random and mark dots
-            trigger: 'axis',
-            axisPointer: { type: 'cross' }, // Pointer gains access and highlight
-          },
-          legend: {
-            data: [series.Weight, series['Predicted 1RM']], // the .name of series[number]
-            selected: {
-              [series.Weight]: true,
-              [series['Predicted 1RM']]: true,
-            },
-          },
-          yAxis: {
-            type: 'value',
-            min: ({ min }) => (min * 0.95).toFixed(0),
-            max: ({ max }) => (max * 1.05).toFixed(0),
-
-            // axisLabel: { formatter: '{value} KG' }, // ! breaks styling
-            axisPointer: {
-              snap: true,
-            },
-          },
-
-          // options:[{}],
-          // timeline: [{}],
-          xAxis: {
-            type: 'category',
-            data: xAxis,
-            boundaryGap: false,
-          },
-          series: [
-            {
-              name: series.Weight,
-              type: 'line',
-              symbolSize,
-              symbol: 'circle',
-              showAllSymbol: true,
-              connectNulls: true,
-            },
-            {
-              name: series['Predicted 1RM'],
-              type: 'line',
-              symbolSize,
-              symbol: 'circle',
-              showAllSymbol: true,
-              connectNulls: true,
-
-              // areaStyle: {
-              //   color: 'rgba(230, 231, 231,0.8)',
-              // },
-            },
-          ],
-        })
+        eChartRef.current.setOption(defaultOptions)
 
         // highlight and downplay catch both exact dot-clicks and non-exact ones
-        eChartRef.current?.on('highlight', data => {
-          // @ts-ignore
-          const dateIndex = data.batch?.[0]?.dataIndex as number
-          const date = viewDays[dateIndex]
-
-          if (!date || !dateIndex) {
-            setSelectedDate(undefined)
-            return
-          }
-
-          const workout = workoutStore.workouts.find(
-            w => w.date === date.toISODate()
-          )
-
-          if (!workout) {
-            setSelectedDate(undefined)
-            return
-          }
-
-          // TODO set only if there's a workout there
-          setSelectedDate(dateIndex && date ? date.toISODate()! : undefined)
-        })
+        eChartRef.current?.on('highlight', onHighlight)
       }
 
       return () => eChartRef.current?.dispose()
     }, [props.view])
 
-    // Feed chart with data
-    useEffect(() => {
+    function feedData() {
       const setsByDay = viewDays.map(date => {
         const dayExerciseSets = workoutStore.workouts
           .filter(workout => workout.date === date.toISODate())
@@ -250,7 +255,8 @@ const ExerciseHistoryChart = observer(
               sets =>
                 sets?.reduce((max, set) => Math.max(max, set.weight), 0) || null
             ),
-            symbol: numberOfPoints > 50 ? 'none' : 'circle', // has a large performance impact
+            symbol: numberOfPoints > 50 ? 'none' : 'circle',
+            itemStyle: { color: colors.primary },
           },
 
           // 1RM series
@@ -268,10 +274,13 @@ const ExerciseHistoryChart = observer(
                   0
                 ) || null
             ),
-            symbol: numberOfPoints > 50 ? 'none' : 'circle', // has a large performance impact
+            symbol: numberOfPoints > 50 ? 'none' : 'circle',
           },
         ],
       })
+    }
+    useEffect(() => {
+      feedData()
     }, [workoutStore.workouts])
 
     // TODO does not highlight set in question
