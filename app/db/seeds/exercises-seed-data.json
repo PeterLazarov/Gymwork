@@ -322,7 +322,8 @@
     "name": "Barbell Incline Bench Press - Medium Grip",
     "muscles": ["chest"],
     "measurementType": "reps-weight",
-    "weightIncrement": 2.5
+    "weightIncrement": 2.5,
+    "isFavorite": true
   },
   {
     "name": "Barbell Incline Shoulder Raise",
