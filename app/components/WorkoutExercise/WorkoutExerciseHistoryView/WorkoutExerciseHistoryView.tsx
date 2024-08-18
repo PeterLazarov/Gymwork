@@ -6,12 +6,12 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { ToggleGroupButton } from 'designSystem'
-import WorkoutExerciseHistoryList from './WorkoutExerciseHistoryList'
 import ExerciseHistoryChart, {
   CHART_VIEW,
   CHART_VIEWS,
   CHART_VIEW_KEY,
-} from '../../ExerciseHistoryChart'
+} from 'app/components/ExerciseHistoryChart'
+import WorkoutExerciseHistoryList from './WorkoutExerciseHistoryList'
 
 type Props = {
   graphHidden: boolean

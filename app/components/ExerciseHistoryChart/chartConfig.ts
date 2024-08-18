@@ -28,8 +28,8 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
     },
     yAxis: {
       type: 'value',
-      min: ({ min }) => (min * 0.95).toFixed(0),
-      max: ({ max }) => (max * 1.05).toFixed(0),
+      min: ({ min }: { min: number}) => (min * 0.95).toFixed(0),
+      max: ({ max }: { max: any}) => (max * 1.05).toFixed(0),
 
       // axisLabel: { formatter: '{value} KG' }, // ! breaks styling
       axisPointer: {

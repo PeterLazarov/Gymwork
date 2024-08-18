@@ -211,7 +211,7 @@ const ExerciseHistoryChart = (props: {
     eChartRef.current?.setOption({
       series: createChartSeries(setsByDay),
     })
-  }, [workoutStore.workouts])
+  }, [props.view, workoutStore.workouts])
 
   // TODO does not highlight set in question
   function linkToWorkoutDate() {
