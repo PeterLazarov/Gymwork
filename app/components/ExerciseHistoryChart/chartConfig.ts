@@ -1,7 +1,4 @@
-import { oneRepMaxEpley } from 'fitness-calc'
-
 import { WorkoutSet } from 'app/db/models'
-import { colors } from 'designSystem'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
