@@ -16,7 +16,9 @@ import { Dimensions, View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
-import useChartBackend from './useChartBackend'
+import chartConfig from './chartConfig'
+import { computed } from 'mobx'
+import { oneRepMaxEpley } from 'fitness-calc'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -120,8 +122,39 @@ const ExerciseHistoryChart = (props: {
       : viewDays.map(d => d.toFormat('dd LLL'))
   }, [props.view])
 
-  const { defaultOptions, createChartSeries } = useChartBackend({
-    series,
+  const setsByDay = useMemo(() => {
+    return computed(() =>
+      viewDays.map(date => {
+        const dayExerciseSets = workoutStore.workouts
+          .filter(workout => workout.date === date.toISODate())
+          .flatMap(({ sets }) => sets) as WorkoutSet[]
+
+        return dayExerciseSets.filter(
+          set => set.exercise.guid === props.exerciseID
+        )
+      })
+    ).get()
+  }, [viewDays, workoutStore.workouts])
+
+  // TODO get rid of enum?
+  const _series = {
+    [series.Weight]: setsByDay.map(
+      sets => sets?.reduce((max, set) => Math.max(max, set.weight), 0) || null
+    ),
+    [series['Predicted 1RM']]: setsByDay.map(
+      sets =>
+        sets?.reduce(
+          (max, set) =>
+            Number(
+              Math.max(max, oneRepMaxEpley(set.weight!, set.reps!)).toFixed(2)
+            ),
+          0
+        ) || null
+    ),
+  }
+
+  const { defaultOptions, createChartSeries } = chartConfig({
+    series: _series,
     symbolSize,
     xAxis,
   })
@@ -174,15 +207,6 @@ const ExerciseHistoryChart = (props: {
   }, [props.view])
 
   useEffect(() => {
-    const setsByDay = viewDays.map(date => {
-      const dayExerciseSets = workoutStore.workouts
-        .filter(workout => workout.date === date.toISODate())
-        .flatMap(({ sets }) => sets) as WorkoutSet[]
-
-      return dayExerciseSets.filter(
-        set => set.exercise.guid === props.exerciseID
-      )
-    })
     eChartRef.current?.setOption({
       series: createChartSeries(setsByDay),
     })
