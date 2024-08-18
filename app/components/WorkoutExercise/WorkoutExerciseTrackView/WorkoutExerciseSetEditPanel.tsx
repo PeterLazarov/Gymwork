@@ -12,6 +12,7 @@ import {
   IncrementNumericEditor,
   ButtonText,
 } from 'designSystem'
+import manageInputFocus from 'app/utils/inputFocus'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -49,16 +50,15 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
     }
   }
 
-  function onHandleSubmit(isLastInput: boolean) {
-    if (isLastInput) {
-      addSet(editData)
-    } else {
-      input2.current?.focus()
-    }
-  }
-
+  // TODO add more input options
   const input1 = useRef<TextInput>(null)
   const input2 = useRef<TextInput>(null)
+  const input3 = useRef<TextInput>(null)
+  const input4 = useRef<TextInput>(null)
+  const inputRefs = [input1, input2, input3, input4]
+  const { onHandleSubmit, isLastInput } = manageInputFocus(inputRefs, () =>
+    addSet(editData)
+  )
 
   return (
     <>
@@ -68,9 +68,9 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
             <IncrementNumericEditor
               value={editData.reps}
               onChange={reps => setEditData({ ...editData, reps })}
-              onSubmit={() => onHandleSubmit(false)}
-              returnKeyType="next"
+              onSubmit={() => onHandleSubmit(input1)}
               ref={input1}
+              returnKeyType={isLastInput(input1) ? 'default' : 'next'}
             />
           </SetEditPanelSection>
         )}
@@ -81,8 +81,9 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
               value={editData.weight}
               onChange={weight => setEditData({ ...editData, weight })}
               step={stateStore.openedExercise!.weightIncrement}
-              onSubmit={() => onHandleSubmit(true)}
+              onSubmit={() => onHandleSubmit(input2)}
               ref={input2}
+              returnKeyType={isLastInput(input2) ? 'default' : 'next'}
             />
           </SetEditPanelSection>
         )}
@@ -96,6 +97,9 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
               onUnitChange={distanceUnit =>
                 setEditData({ ...editData, distanceUnit })
               }
+              onSubmitEditing={() => onHandleSubmit(input3)}
+              ref={input3}
+              returnKeyType={isLastInput(input3) ? 'default' : 'next'}
             />
           </SetEditPanelSection>
         )}
@@ -107,6 +111,8 @@ const WorkoutExerciseSetEditPanel: React.FC<Props> = ({
               onUpdate={durationSecs =>
                 setEditData({ ...editData, durationSecs })
               }
+              onSubmitEditing={() => onHandleSubmit(input4)}
+              ref={input4}
             />
           </SetEditPanelSection>
         )}

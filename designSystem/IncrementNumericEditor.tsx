@@ -1,6 +1,5 @@
 import React, { useEffect, useState, forwardRef } from 'react'
-import { TextInput } from 'react-native'
-import { TextInputProps } from 'react-native-paper'
+import { TextInput, TextInputProps } from 'react-native'
 
 import IncrementalButtons from 'app/components/IncrementalButtons'
 import { fontSize } from './tokens'
