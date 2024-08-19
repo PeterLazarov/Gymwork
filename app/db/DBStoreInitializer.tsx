@@ -9,7 +9,7 @@ type Props = {
 let promise: Promise<void>
 
 const DBStoreInitializer: React.FC<Props> = ({ children }) => {
-  const { exerciseStore, workoutStore, stateStore } = useStores()
+  const { exerciseStore, workoutStore } = useStores()
 
   promise = promise || exerciseStore.fetch().then(() => workoutStore.fetch())
 

@@ -1,5 +1,3 @@
-- Use bottom offset (iOS shows a line. We souldn't overlap it)
-- TODO revise or remove web linking in app.tsx
 - in 'Update exercice' screen muscle areas plus icon is not implemented
 - add floating placeholder in Select component
 - change icon and remove ignite splashscreen
@@ -8,9 +6,7 @@
 - weak ass records breaks stuff for non rep-weight exercises
 - how to resume a rest timer after pause
 - keyboard avoiding view on android pushes the content over the header if th einput is on the bottom of screen
-- HistoryChart -> improve distance charts and make usable for other types
 - save workout timer in WorkoutModel. show readonly timer on old workouts
-- DayControl can go beyond the workout date range
 - add workout template support?
 - extend chart metrics
 - Exercise track screen ->  VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead. 

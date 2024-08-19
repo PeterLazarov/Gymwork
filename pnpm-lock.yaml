@@ -80,9 +80,6 @@ dependencies:
   expo-font:
     specifier: ~12.0.5
     version: 12.0.9(expo@51.0.28)
-  expo-linking:
-    specifier: ~6.3.1
-    version: 6.3.1(expo@51.0.28)
   expo-localization:
     specifier: ~15.0.3
     version: 15.0.3(expo@51.0.28)
@@ -6619,16 +6616,6 @@ packages:
       expo: '*'
     dependencies:
       expo: 51.0.28(@babel/core@7.25.2)(@babel/preset-env@7.25.3)
-    dev: false
-
-  /expo-linking@6.3.1(expo@51.0.28):
-    resolution: {integrity: sha512-xuZCntSBGWCD/95iZ+mTUGTwHdy8Sx+immCqbUBxdvZ2TN61P02kKg7SaLS8A4a/hLrSCwrg5tMMwu5wfKr35g==}
-    dependencies:
-      expo-constants: 16.0.2(expo@51.0.28)
-      invariant: 2.2.4
-    transitivePeerDependencies:
-      - expo
-      - supports-color
     dev: false
 
   /expo-localization@15.0.3(expo@51.0.28):

@@ -6,7 +6,6 @@ if (__DEV__) {
 }
 import { useFonts } from 'expo-font'
 import React from 'react'
-import * as Linking from 'expo-linking'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { PaperProvider, Portal } from 'react-native-paper'
 import { KeyboardAvoiderProvider } from '@good-react-native/keyboard-avoider'
@@ -30,31 +29,6 @@ import * as SystemUI from 'expo-system-ui'
 import { colors } from 'designSystem'
 SystemUI.setBackgroundColorAsync(colors.secondary)
 
-// Web linking configuration
-const prefix = Linking.createURL('/')
-const config = {
-  screens: {
-    Login: {
-      path: '',
-    },
-    Welcome: 'welcome',
-    Demo: {
-      screens: {
-        DemoShowroom: {
-          path: 'showroom/:queryIndex?/:itemIndex?',
-        },
-        DemoDebug: 'debug',
-        DemoPodcastList: 'podcast',
-        DemoCommunity: 'community',
-      },
-    },
-  },
-}
-
-/**
- * This is the root component of our app.
- * @returns {JSX.Element} The rendered `App` component.
- */
 function App() {
   const {
     initialNavigationState,
@@ -80,12 +54,6 @@ function App() {
     return null
   }
 
-  const linking = {
-    prefixes: [prefix],
-    config,
-  }
-
-  // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <KeyboardAvoiderProvider>
@@ -95,7 +63,6 @@ function App() {
               <ErrorBoundary catchErrors={Config.catchErrors}>
                 <GestureHandlerRootView style={{ flex: 1 }}>
                   <AppNavigator
-                    linking={linking}
                     initialState={initialNavigationState}
                     onStateChange={onNavigationStateChange}
                   />
