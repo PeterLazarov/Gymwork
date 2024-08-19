@@ -12,8 +12,8 @@ function WorkoutHorizontalList() {
   const workoutList = useRef<FlashList<string>>(null)
 
   const dates = useMemo(() => {
-    const from = stateStore.earliestDayVisible.toISODate()!
-    const to = stateStore.lastDayVisible.toISODate()!
+    const from = stateStore.earliestDayVisible
+    const to = stateStore.lastDayVisible
 
     return getDateRange(from, to)
   }, [])

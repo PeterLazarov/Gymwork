@@ -9,7 +9,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { navigate, useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
-import { Header, Icon, IconButton, colors } from 'designSystem'
+import { Header, Icon, IconButton, colors, fontSize } from 'designSystem'
 
 export type CalendarPageParams = {
   copyWorkoutMode?: boolean
@@ -41,10 +41,8 @@ const CalendarPage: React.FC = () => {
   const monthBeforeFirstWorkout = useMemo(
     () =>
       DateTime.fromISO(
-        workoutStore.workouts.at(-1)?.date ?? new Date().toISOString()
-      )
-        .minus({ month: 1 })
-        .toISO() ?? undefined,
+        stateStore.firstWorkout?.date ?? new Date().toISOString()
+      ).minus({ month: 1 }),
     []
   )
 
@@ -54,7 +52,7 @@ const CalendarPage: React.FC = () => {
   )
 
   const activeDate = useMemo(
-    () => DateTime.fromISO(stateStore.openedDate).toJSDate(),
+    () => DateTime.fromISO(stateStore.openedDate),
     [stateStore.openedDate]
   )
 
@@ -89,6 +87,14 @@ const CalendarPage: React.FC = () => {
     }
   }
 
+  const monthsDiff = activeDate.diff(monthBeforeFirstWorkout, 'month').months
+  const minFutureMonths = 2
+  const defaultMonthsToRender = 12
+  const monthsToRender = Math.max(
+    monthsDiff + minFutureMonths,
+    defaultMonthsToRender
+  )
+
   return (
     <>
       <EmptyLayout>
@@ -118,10 +124,11 @@ const CalendarPage: React.FC = () => {
           onPress={date => {
             handleCalendarDayPress(date)
           }}
-          startDate={activeDate}
-          startingMonth={monthBeforeFirstWorkout}
+          startDate={activeDate.toJSDate()}
+          startingMonth={monthBeforeFirstWorkout.toISO()!}
           endDate={lastDayOfNextMonth}
           markedDays={markedDates}
+          numberOfMonths={monthsToRender}
           theme={{
             startDateContainerStyle: {
               backgroundColor: colors.primary,
@@ -134,6 +141,9 @@ const CalendarPage: React.FC = () => {
               backgroundColor: colors.primaryLighter,
               aspectRatio: 1,
               borderRadius: 50,
+            },
+            monthTitleTextStyle: {
+              fontSize: fontSize.lg,
             },
           }}
           disableRange

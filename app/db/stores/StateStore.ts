@@ -93,18 +93,21 @@ export const StateStoreModel = types
       return this.openedExerciseSets.filter(s => !s.isWarmup)
     },
 
-    get earliestDayVisible(): DateTime {
-      const firstWorkout = this.workoutStore.workouts[this.workoutStore.workouts.length - 1]
+    get firstWorkout(): Workout {
+      return  this.workoutStore.workouts[this.workoutStore.workouts.length - 1]
+    },
+
+    get earliestDayVisible(): string {
       const from = (
-        firstWorkout ? DateTime.fromISO(firstWorkout.date) : DateTime.now()
+        this.firstWorkout ? DateTime.fromISO(this.firstWorkout.date) : DateTime.now()
       )
         .minus({ day: datePaddingCount })
 
-      return from
+      return from.toISODate()!
     },
 
-    get lastDayVisible(): DateTime {
-      return today.plus({ day: datePaddingCount })
+    get lastDayVisible(): string {
+      return today.plus({ day: datePaddingCount }).toISODate()!
     }
   }))
   .actions(withSetPropAction)
