@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { Appbar } from 'react-native-paper'
 
 import ConfirmationDialog from 'app/components/ConfirmationDialog'
 import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
@@ -9,7 +8,14 @@ import { Exercise } from 'app/db/models'
 import { goBack } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { translate } from 'app/i18n'
-import { Button, ButtonText, Icon, colors } from 'designSystem'
+import {
+  Button,
+  ButtonText,
+  Header,
+  Icon,
+  IconButton,
+  colors,
+} from 'designSystem'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 const ExerciseEditPage: React.FC = () => {
@@ -41,28 +47,29 @@ const ExerciseEditPage: React.FC = () => {
   return (
     <>
       <EmptyLayout>
-        <Appbar.Header style={{ backgroundColor: colors.primary }}>
-          <Appbar.BackAction
+        <Header>
+          <IconButton
             onPress={onBackPress}
-            color={colors.primaryText}
-          />
-          <Appbar.Content
-            title={translate('updateExercise')}
-            color={colors.primaryText}
-          />
-          <Appbar.Action
-            icon={() => (
-              <Icon
-                icon="checkmark"
-                size="large"
-                color={colors.primaryText}
-              />
-            )}
-            disabled={!formValid}
+            underlay="darker"
+          >
+            <Icon
+              icon="chevron-back"
+              color={colors.primaryText}
+            />
+          </IconButton>
+          <Header.Title title={translate('updateExercise')} />
+          <IconButton
             onPress={onComplete}
-            animated={false}
-          />
-        </Appbar.Header>
+            disabled={!formValid}
+            underlay="darker"
+          >
+            <Icon
+              icon="checkmark"
+              size="large"
+              color={colors.primaryText}
+            />
+          </IconButton>
+        </Header>
         <KeyboardAvoiderView
           avoidMode="focused-input"
           style={{ flex: 1 }}

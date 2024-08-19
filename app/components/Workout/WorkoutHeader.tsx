@@ -1,13 +1,13 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { Appbar, Menu } from 'react-native-paper'
+import { Menu } from 'react-native-paper'
 
 import WorkoutHeaderTimerButtons from '../Timer/TimerButtons'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { useShare } from 'app/utils/useShare'
 import { translate } from 'app/i18n'
-import { Icon, colors } from 'designSystem'
+import { Header, Icon, IconButton, colors } from 'designSystem'
 
 const WorkoutHeader: React.FC = () => {
   const { stateStore } = useStores()
@@ -27,40 +27,34 @@ const WorkoutHeader: React.FC = () => {
   }
 
   return (
-    <Appbar.Header style={{ backgroundColor: colors.primary }}>
-      <Appbar.Content
-        title="Gymwork"
-        style={{ marginLeft: 20, alignItems: 'flex-start' }}
-        titleStyle={{ color: colors.primaryText }}
-      />
+    <Header>
+      <Header.Title title="Gymwork" />
 
       {stateStore.isOpenedWorkoutToday && <WorkoutHeaderTimerButtons />}
-      <Appbar.Action
-        icon={() => (
-          <Icon
-            icon="calendar-sharp"
-            color={colors.primaryText}
-          />
-        )}
+      <IconButton
         onPress={openCalendar}
-        animated={false}
-      />
+        underlay="darker"
+      >
+        <Icon
+          icon="calendar-sharp"
+          color={colors.primaryText}
+        />
+      </IconButton>
 
       <Menu
         visible={menuOpen}
         onDismiss={() => setMenuOpen(false)}
         anchorPosition="bottom"
         anchor={
-          <Appbar.Action
-            icon={() => (
-              <Icon
-                icon="ellipsis-vertical"
-                color={colors.primaryText}
-              />
-            )}
+          <IconButton
             onPress={() => setMenuOpen(true)}
-            animated={false}
-          />
+            underlay="darker"
+          >
+            <Icon
+              icon="ellipsis-vertical"
+              color={colors.primaryText}
+            />
+          </IconButton>
         }
       >
         <Menu.Item
@@ -68,7 +62,7 @@ const WorkoutHeader: React.FC = () => {
           title={translate('exportData')}
         />
       </Menu>
-    </Appbar.Header>
+    </Header>
   )
 }
 

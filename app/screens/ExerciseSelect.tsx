@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { Appbar } from 'react-native-paper'
 
 import AllExerciseSelect from 'app/components/Exercise/AllExerciseSelect'
 import FavoriteExerciseSelect from 'app/components/Exercise/FavoriteExercisesList'
@@ -8,7 +7,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
-import { Icon, SwipeTabs, colors } from 'designSystem'
+import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import MostUsedExercisesList from 'app/components/Exercise/MostUsedExercisesList'
 
@@ -50,27 +49,28 @@ const ExerciseSelectPage: React.FC = () => {
   ]
   return (
     <EmptyLayout>
-      <Appbar.Header style={{ backgroundColor: colors.primary }}>
-        <Appbar.BackAction
+      <Header>
+        <IconButton
           onPress={onBackPress}
-          color={colors.primaryText}
-        />
-        <Appbar.Content
-          title={translate('selectExercise')}
-          color={colors.primaryText}
-        />
-        <Appbar.Action
-          icon={() => (
-            <Icon
-              icon="add"
-              size="large"
-              color={colors.primaryText}
-            />
-          )}
+          underlay="darker"
+        >
+          <Icon
+            icon="chevron-back"
+            color={colors.primaryText}
+          />
+        </IconButton>
+        <Header.Title title={translate('selectExercise')} />
+        <IconButton
           onPress={onAddExercisePress}
-          animated={false}
-        />
-      </Appbar.Header>
+          underlay="darker"
+        >
+          <Icon
+            icon="add"
+            size="large"
+            color={colors.primaryText}
+          />
+        </IconButton>
+      </Header>
 
       <SwipeTabs tabsConfig={tabsConfig} />
     </EmptyLayout>

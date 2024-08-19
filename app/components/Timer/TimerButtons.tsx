@@ -1,9 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { Appbar } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { Icon, colors } from 'designSystem'
+import { Icon, IconButton, colors } from 'designSystem'
 
 const TimerButtons: React.FC = () => {
   const { timeStore } = useStores()
@@ -11,52 +10,48 @@ const TimerButtons: React.FC = () => {
   return (
     <>
       {!timeStore.stopwatchRunning && !timeStore.stopwatchPaused && (
-        <Appbar.Action
-          icon={() => (
-            <Icon
-              icon="stopwatch"
-              color={colors.primaryText}
-            />
-          )}
+        <IconButton
           onPress={timeStore.startStopwatch}
-          animated={false}
-        />
+          underlay="darker"
+        >
+          <Icon
+            icon="stopwatch"
+            color={colors.primaryText}
+          />
+        </IconButton>
       )}
       {timeStore.stopwatchPaused && (
-        <Appbar.Action
-          icon={() => (
-            <Icon
-              icon="play"
-              color={colors.primaryText}
-            />
-          )}
+        <IconButton
           onPress={timeStore.startStopwatch}
-          animated={false}
-        />
+          underlay="darker"
+        >
+          <Icon
+            icon="play"
+            color={colors.primaryText}
+          />
+        </IconButton>
       )}
       {timeStore.stopwatchRunning && (
-        <Appbar.Action
-          icon={() => (
-            <Icon
-              icon="pause-outline"
-              color={colors.primaryText}
-            />
-          )}
+        <IconButton
           onPress={timeStore.pauseStopwatch}
-          animated={false}
-        />
+          underlay="darker"
+        >
+          <Icon
+            icon="pause-outline"
+            color={colors.primaryText}
+          />
+        </IconButton>
       )}
       {(timeStore.stopwatchRunning || timeStore.stopwatchPaused) && (
-        <Appbar.Action
-          icon={() => (
-            <Icon
-              icon="stop"
-              color={colors.primaryText}
-            />
-          )}
+        <IconButton
           onPress={timeStore.stopStopwatch}
-          animated={false}
-        />
+          underlay="darker"
+        >
+          <Icon
+            icon="stop"
+            color={colors.primaryText}
+          />
+        </IconButton>
       )}
     </>
   )

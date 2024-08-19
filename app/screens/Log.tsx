@@ -2,13 +2,12 @@ import { Link } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { ScrollView, View } from 'react-native'
-import { Appbar } from 'react-native-paper'
 
 import ExerciseList from 'app/components/Exercise/ExerciseList'
 import ExerciseHistoryChart from 'app/components/ExerciseHistoryChart'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
-import { Icon, colors } from 'designSystem'
+import { Header, Icon, IconButton, colors } from 'designSystem'
 import { translate } from 'app/i18n'
 
 // TODO: screen is unused - remove?
@@ -25,25 +24,26 @@ const Log = observer(() => {
         backgroundColor: colors.secondary,
       }}
     >
-      <Appbar.Header style={{ backgroundColor: colors.primary }}>
+      <Header>
         <Link to={{ screen: 'Workout' }}>
-          <Appbar.BackAction color={colors.primaryText} />
-        </Link>
-        <Appbar.Content
-          title={exercise?.name ?? translate('addExercise')}
-          color={colors.primaryText}
-        />
-        <Appbar.Action
-          icon={() => (
+          <IconButton underlay="darker">
             <Icon
-              icon="ellipsis-vertical"
+              icon="chevron-back"
               color={colors.primaryText}
             />
-          )}
+          </IconButton>
+        </Link>
+        <Header.Title title={exercise?.name ?? translate('addExercise')} />
+        <IconButton
           onPress={() => {}}
-          animated={false}
-        />
-      </Appbar.Header>
+          underlay="darker"
+        >
+          <Icon
+            icon="ellipsis-vertical"
+            color={colors.primaryText}
+          />
+        </IconButton>
+      </Header>
 
       {exercise ? (
         <ExerciseHistoryChart

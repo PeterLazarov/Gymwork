@@ -1,14 +1,22 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { ScrollView, View, Text } from 'react-native'
-import { Appbar, TextInput } from 'react-native-paper'
+import { TextInput } from 'react-native-paper'
 
 import FeedbackPicker from 'app/components/FeedbackPicker'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { translate } from 'app/i18n'
-import { Button, ButtonText, colors, fontSize } from 'designSystem'
+import {
+  Button,
+  ButtonText,
+  Header,
+  Icon,
+  IconButton,
+  colors,
+  fontSize,
+} from 'designSystem'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 const WorkoutFeedbackPage: React.FC = () => {
@@ -20,16 +28,18 @@ const WorkoutFeedbackPage: React.FC = () => {
 
   return (
     <EmptyLayout style={{ backgroundColor: colors.lightgray }}>
-      <Appbar.Header style={{ backgroundColor: colors.primary }}>
-        <Appbar.BackAction
+      <Header>
+        <IconButton
           onPress={onBackPress}
-          color={colors.primaryText}
-        />
-        <Appbar.Content
-          title={translate('workoutComments')}
-          color={colors.primaryText}
-        />
-      </Appbar.Header>
+          underlay="darker"
+        >
+          <Icon
+            icon="chevron-back"
+            color={colors.primaryText}
+          />
+        </IconButton>
+        <Header.Title title={translate('workoutComments')} />
+      </Header>
 
       <KeyboardAvoiderView
         avoidMode="focused-input"

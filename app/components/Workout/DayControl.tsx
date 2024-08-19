@@ -1,13 +1,12 @@
-import { Link } from '@react-navigation/native'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View } from 'react-native'
-import { Appbar } from 'react-native-paper'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { capitalize } from 'app/utils/string'
-import { Divider, Icon, colors, fontSize } from 'designSystem'
+import { Divider, Icon, IconButton, colors, fontSize } from 'designSystem'
+import { navigate } from 'app/navigators'
 
 const DayControl = () => {
   const { stateStore } = useStores()
@@ -28,28 +27,27 @@ const DayControl = () => {
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: colors.primaryLighter,
+          padding: 4,
         }}
       >
-        <Appbar.Action
-          icon={() => <Icon icon="chevron-back" />}
+        <IconButton
           onPress={stateStore.decrementCurrentDate}
-          animated={false}
-        />
-        <Appbar.Content
-          title={
-            <Link
-              to={{ screen: 'Calendar' }}
-              style={{ fontSize: fontSize.lg }}
-            >
-              {capitalize(label)}
-            </Link>
-          }
-        />
-        <Appbar.Action
-          icon={() => <Icon icon="chevron-forward" />}
+          underlay="darker"
+        >
+          <Icon icon="chevron-back" />
+        </IconButton>
+        <TouchableOpacity
+          onPress={() => navigate('Calendar')}
+          style={{ flex: 1 }}
+        >
+          <Text style={{ fontSize: fontSize.lg }}>{capitalize(label)}</Text>
+        </TouchableOpacity>
+        <IconButton
           onPress={stateStore.incrementCurrentDate}
-          animated={false}
-        />
+          underlay="darker"
+        >
+          <Icon icon="chevron-forward" />
+        </IconButton>
       </View>
       <Divider orientation="horizontal" />
     </>

@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { Appbar, Menu } from 'react-native-paper'
+import { Menu } from 'react-native-paper'
 
 import WorkoutExerciseHistoryView from 'app/components/WorkoutExercise/WorkoutExerciseHistoryView'
 import WorkoutExerciseRecordsView from 'app/components/WorkoutExercise/WorkoutExerciseRecordsView'
@@ -11,7 +11,7 @@ import Timer from 'app/components/Timer/Timer'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
-import { Icon, SwipeTabs, colors } from 'designSystem'
+import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
 
 const WorkoutExercisePage: React.FC = () => {
   const { timeStore, stateStore } = useStores()
@@ -60,31 +60,32 @@ const WorkoutExercisePage: React.FC = () => {
         backgroundColor: colors.secondary,
       }}
     >
-      <Appbar.Header style={{ backgroundColor: colors.primary }}>
-        <Appbar.BackAction
+      <Header>
+        <IconButton
           onPress={onBackPress}
-          color={colors.primaryText}
-        />
-        <Appbar.Content
-          title={stateStore.openedExercise?.name || ''}
-          titleStyle={{ color: colors.primaryText }}
-        />
+          underlay="darker"
+        >
+          <Icon
+            icon="chevron-back"
+            color={colors.primaryText}
+          />
+        </IconButton>
+        <Header.Title title={stateStore.openedExercise?.name || ''} />
 
         <Menu
           visible={menuOpen}
           onDismiss={() => setMenuOpen(false)}
           anchorPosition="bottom"
           anchor={
-            <Appbar.Action
-              icon={() => (
-                <Icon
-                  icon="ellipsis-vertical"
-                  color={colors.primaryText}
-                />
-              )}
+            <IconButton
               onPress={() => setMenuOpen(true)}
-              animated={false}
-            />
+              underlay="darker"
+            >
+              <Icon
+                icon="ellipsis-vertical"
+                color={colors.primaryText}
+              />
+            </IconButton>
           }
         >
           <Menu.Item
@@ -92,7 +93,7 @@ const WorkoutExercisePage: React.FC = () => {
             title={translate('editExercise')}
           />
         </Menu>
-      </Appbar.Header>
+      </Header>
 
       <SwipeTabs tabsConfig={tabs}>
         {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (

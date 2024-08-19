@@ -3,14 +3,13 @@ import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
 import { Calendar } from 'react-native-calendario'
 import { MarkedDays } from 'react-native-month'
-import { Appbar } from 'react-native-paper'
 
 import CalendarWorkoutModal from 'app/components/CalendarWorkoutModal'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { navigate, useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
-import { Icon, colors } from 'designSystem'
+import { Header, Icon, IconButton, colors } from 'designSystem'
 
 export type CalendarPageParams = {
   copyWorkoutMode?: boolean
@@ -93,26 +92,27 @@ const CalendarPage: React.FC = () => {
   return (
     <>
       <EmptyLayout>
-        <Appbar.Header style={{ backgroundColor: colors.primary }}>
-          <Appbar.BackAction
+        <Header>
+          <IconButton
             onPress={onBackPress}
-            color={colors.primaryText}
-          />
-          <Appbar.Content
-            title={translate('calendar')}
-            color={colors.primaryText}
-          />
-          <Appbar.Action
-            icon={() => (
-              <Icon
-                icon="ellipsis-vertical"
-                color={colors.primaryText}
-              />
-            )}
+            underlay="darker"
+          >
+            <Icon
+              icon="chevron-back"
+              color={colors.primaryText}
+            />
+          </IconButton>
+          <Header.Title title={translate('calendar')} />
+          <IconButton
             onPress={() => {}}
-            animated={false}
-          />
-        </Appbar.Header>
+            underlay="darker"
+          >
+            <Icon
+              icon="ellipsis-vertical"
+              color={colors.primaryText}
+            />
+          </IconButton>
+        </Header>
 
         <Calendar
           onPress={date => {

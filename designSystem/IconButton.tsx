@@ -11,8 +11,14 @@ const sizes = {
 type Props = Omit<TouchableHighlightProps, 'style'> & {
   style?: ViewStyle
   size?: keyof typeof sizes
+  underlay?: 'default' | 'darker'
 }
-const IconButton: React.FC<Props> = ({ style, size = 'md', ...props }) => (
+const IconButton: React.FC<Props> = ({
+  style,
+  size = 'md',
+  underlay = 'default',
+  ...props
+}) => (
   <PressableHighlight
     style={{
       flexGrow: 0,
@@ -23,6 +29,7 @@ const IconButton: React.FC<Props> = ({ style, size = 'md', ...props }) => (
       justifyContent: 'center',
       ...style,
     }}
+    underlay={underlay}
     {...props}
   />
 )

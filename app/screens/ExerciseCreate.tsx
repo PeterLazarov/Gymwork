@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { Appbar } from 'react-native-paper'
+import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 import ConfirmationDialog from 'app/components/ConfirmationDialog'
 import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
@@ -9,8 +9,14 @@ import { Exercise, ExerciseModel } from 'app/db/models'
 import { goBack } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { translate } from 'app/i18n'
-import { Button, ButtonText, Icon, colors } from 'designSystem'
-import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
+import {
+  Button,
+  ButtonText,
+  Header,
+  Icon,
+  IconButton,
+  colors,
+} from 'designSystem'
 
 const ExerciseCreate: React.FC = () => {
   const { exerciseStore } = useStores()
@@ -41,28 +47,25 @@ const ExerciseCreate: React.FC = () => {
   return (
     <>
       <EmptyLayout>
-        <Appbar.Header style={{ backgroundColor: colors.primary }}>
-          <Appbar.BackAction
-            onPress={onBackPress}
-            color={colors.primaryText}
-          />
-          <Appbar.Content
-            title={translate('createExercise')}
-            color={colors.primaryText}
-          />
-          <Appbar.Action
-            icon={() => (
-              <Icon
-                icon="checkmark"
-                size="large"
-                color={colors.primaryText}
-              />
-            )}
+        <Header>
+          <IconButton onPress={onBackPress}>
+            <Icon
+              icon="chevron-back"
+              color={colors.primaryText}
+            />
+          </IconButton>
+          <Header.Title title={translate('createExercise')} />
+          <IconButton
             onPress={onComplete}
-            animated={false}
             disabled={!formValid}
-          />
-        </Appbar.Header>
+          >
+            <Icon
+              icon="checkmark"
+              size="large"
+              color={colors.primaryText}
+            />
+          </IconButton>
+        </Header>
         <KeyboardAvoiderView
           avoidMode="focused-input"
           style={{ flex: 1, overflow: 'hidden' }}
