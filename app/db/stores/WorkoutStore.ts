@@ -20,7 +20,6 @@ import {
   Workout,
   WorkoutSetSnapshotIn,
   WorkoutSetTrackData,
-  measurementUnits,
   measurementDefaults,
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
@@ -103,7 +102,7 @@ export const WorkoutStoreModel = types
       if (workouts && workouts?.length > 0 && isDev) {
         self.setProp('workouts', workouts)
       } else {
-        // await this.seed()
+        await this.seed()
       }
     },
     async seed() {

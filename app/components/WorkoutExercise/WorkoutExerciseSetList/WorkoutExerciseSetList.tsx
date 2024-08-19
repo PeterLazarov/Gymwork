@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 
-import WorkoutExerciseSetListItem from './SetListItem'
+import SetListItem from './SetListItem'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, WorkoutSet } from 'app/db/models'
 
@@ -17,7 +17,7 @@ const WorkoutExerciseSetList: React.FC<Props> = ({ sets, exercise }) => {
   return (
     <>
       {sets.map((set, i) => (
-        <WorkoutExerciseSetListItem
+        <SetListItem
           key={set.guid}
           set={set}
           exercise={exerciseToUse}
