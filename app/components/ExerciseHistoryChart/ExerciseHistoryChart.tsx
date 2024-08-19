@@ -134,7 +134,7 @@ const ExerciseHistoryChart = (props: {
 
   const { getChartSeries } = seriesSetup({ data: setsByDay })
 
-  const series = getChartSeries(openedExercise)
+  const series = getChartSeries(openedExercise)!
 
   const { getViewOptions, feedChartSeriesData } = chartConfig({
     series,

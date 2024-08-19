@@ -8,7 +8,7 @@
 - weak ass records breaks stuff for non rep-weight exercises
 - how to resume a rest timer after pause
 - keyboard avoiding view on android pushes the content over the header if th einput is on the bottom of screen
-- make history chart usable for other exercise types
+- HistoryChart -> improve distance charts and make usable for other types
 - save workout timer in WorkoutModel. show readonly timer on old workouts
 - DayControl can go beyond the workout date range
 - add workout template support?

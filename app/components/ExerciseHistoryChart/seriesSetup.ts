@@ -11,7 +11,7 @@ const seriesSetup = ({ data }: Props) => {
     sets => sets?.reduce((max, set) => Math.max(max, set[metric]), 0) || null
     )
   }  
-  const singleRepMaxFormatter = () => {
+  const oneRepMaxFormatter = () => {
     return data.map(
       sets =>
         sets?.reduce(
@@ -45,14 +45,14 @@ const seriesSetup = ({ data }: Props) => {
           color: colors.primary,
         },
         'Predicted 1RM': {
-          data: singleRepMaxFormatter(),
+          data: oneRepMaxFormatter(),
           color: colors.tealDark,
         },
       }
 
       return weightSeries
     }
-    // else if (exercise.hasDistanceMeasument) {
+    else if (exercise.hasDistanceMeasument) {
       const distanceSeries = {
         Distance: {
           data: singleMetricFormatter('distance'),
@@ -65,9 +65,9 @@ const seriesSetup = ({ data }: Props) => {
       }
 
       return distanceSeries
-    // }
+    }
 
-    // return null
+    return null
   }
 
   return {
