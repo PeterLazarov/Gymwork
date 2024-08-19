@@ -18,8 +18,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
 import chartConfig from './chartConfig'
 import { computed } from 'mobx'
-import { oneRepMaxEpley } from 'fitness-calc'
-import { colors } from 'designSystem'
+import seriesSetup from './seriesSetup'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -55,11 +54,11 @@ export type CHART_VIEW = (typeof CHART_VIEWS)[CHART_VIEW_KEY]
 // Component usage
 const ExerciseHistoryChart = (props: {
   view: CHART_VIEW
-  exerciseID: string
   height?: number
   width?: number
 }) => {
   const { workoutStore, stateStore } = useStores()
+  const openedExercise = stateStore.openedExercise!
 
   const chartElRef = useRef<any>(null)
   const eChartRef = useRef<ECharts>()
@@ -86,8 +85,8 @@ const ExerciseHistoryChart = (props: {
         return getPastDays(30)
       case 'ALL': {
         const range = [
-          workoutStore.exerciseWorkouts[props.exerciseID]?.at(-1)?.date!,
-          workoutStore.exerciseWorkouts[props.exerciseID]?.[0]?.date,
+          workoutStore.exerciseWorkouts[openedExercise.guid]?.at(-1)?.date!,
+          workoutStore.exerciseWorkouts[openedExercise.guid]?.[0]?.date,
         ] as const
 
         // TODO grey out tab when no history
@@ -127,35 +126,17 @@ const ExerciseHistoryChart = (props: {
           .flatMap(({ sets }) => sets) as WorkoutSet[]
 
         return dayExerciseSets.filter(
-          set => set.exercise.guid === props.exerciseID
+          set => set.exercise.guid === openedExercise.guid
         )
       })
     ).get()
   }, [viewDays, workoutStore.workouts])
 
-  const series = {
-    Weight: {
-      data: setsByDay.map(
-        sets => sets?.reduce((max, set) => Math.max(max, set.weight), 0) || null
-      ),
-      color: colors.primary,
-    },
-    'Predicted 1RM': {
-      data: setsByDay.map(
-        sets =>
-          sets?.reduce(
-            (max, set) =>
-              Number(
-                Math.max(max, oneRepMaxEpley(set.weight!, set.reps!)).toFixed(2)
-              ),
-            0
-          ) || null
-      ),
-      color: colors.tealDark,
-    },
-  }
+  const { getChartSeries } = seriesSetup({ data: setsByDay })
 
-  const { getViewOptions, createChartSeries } = chartConfig({
+  const series = getChartSeries(openedExercise)
+
+  const { getViewOptions, feedChartSeriesData } = chartConfig({
     series,
     symbolSize,
     xAxis,
@@ -209,7 +190,7 @@ const ExerciseHistoryChart = (props: {
 
   useEffect(() => {
     eChartRef.current?.setOption({
-      series: createChartSeries(setsByDay),
+      series: feedChartSeriesData(setsByDay),
     })
   }, [props.view, workoutStore.workouts])
 

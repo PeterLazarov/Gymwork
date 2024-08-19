@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View, Dimensions } from 'react-native'
 
-import { useStores } from 'app/db/helpers/useStores'
 import { ToggleGroupButton } from 'designSystem'
 import ExerciseHistoryChart, {
   CHART_VIEW,
@@ -11,8 +10,6 @@ import ExerciseHistoryChart, {
 } from 'app/components/ExerciseHistoryChart'
 
 const WorkoutExerciseChartView: React.FC = () => {
-  const { stateStore } = useStores()
-
   const [activeView, setActiveView] = useState<CHART_VIEW>(
     Object.keys(CHART_VIEWS)[0] as CHART_VIEW_KEY
   )
@@ -37,7 +34,6 @@ const WorkoutExerciseChartView: React.FC = () => {
     >
       <ExerciseHistoryChart
         view={activeView}
-        exerciseID={stateStore.openedExerciseGuid}
         height={250}
         width={Dimensions.get('window').width}
       />

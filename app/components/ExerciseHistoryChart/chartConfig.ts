@@ -56,7 +56,7 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
     ),
   })
 
-  const createChartSeries = (data: WorkoutSet[][]) => {
+  const feedChartSeriesData = (data: WorkoutSet[][]) => {
     const numberOfPoints = data.filter(d => d.filter(Boolean)).flat().length
 
     const _series = Object.values(series).map((seriesItem, i) => {
@@ -72,7 +72,7 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
 
   return {
     getViewOptions,
-    createChartSeries,
+    feedChartSeriesData,
   }
 }
 

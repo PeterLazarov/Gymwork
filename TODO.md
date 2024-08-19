@@ -11,4 +11,6 @@
 - make history chart usable for other exercise types
 - save workout timer in WorkoutModel. show readonly timer on old workouts
 - DayControl can go beyond the workout date range
+- add workout template support?
+- extend chart metrics
 - Exercise track screen ->  VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead. 
