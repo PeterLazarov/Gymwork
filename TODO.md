@@ -7,8 +7,6 @@
 - In exercise edit an empty name / muscle area is still saved regardless of the validation
 - weak ass records breaks stuff for non rep-weight exercises
 - how to resume a rest timer after pause
-- android horizontal scroll
-- horizontal scrolling on exercite track screen is iffy
 - keyboard avoiding view on android pushes the content over the header if th einput is on the bottom of screen
 - make history chart usable for other exercise types
 - save workout timer in WorkoutModel. show readonly timer on old workouts
