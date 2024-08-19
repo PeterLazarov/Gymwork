@@ -1,6 +1,8 @@
+import { oneRepMaxEpley } from 'fitness-calc'
+
 import { Exercise, WorkoutSet } from 'app/db/models'
 import { colors } from 'designSystem'
-import { oneRepMaxEpley } from 'fitness-calc'
+import { SeriesItem } from './chartConfig'
 
 type Props = {
   data: WorkoutSet[][]
@@ -38,36 +40,35 @@ const seriesSetup = ({ data }: Props) => {
   }
 
   const getChartSeries = (exercise: Exercise) => {
-    if (exercise.hasWeightMeasument) {
-      const weightSeries = {
-        Weight: {
-          data: singleMetricFormatter('weight'),
-          color: colors.primary,
-        },
-        'Predicted 1RM': {
-          data: oneRepMaxFormatter(),
-          color: colors.tealDark,
-        },
-      }
+    const series: Record<string, SeriesItem> = {}
+    const colorsStack = [colors.tealDark, colors.primary]
 
-      return weightSeries
-    }
-    else if (exercise.hasDistanceMeasument) {
-      const distanceSeries = {
-        Distance: {
-          data: singleMetricFormatter('distance'),
-          color: colors.primary,
-        },
-        Speed: {
-          data: speedFormatter(),
-          color: colors.tealDark
+    if (exercise.hasWeightMeasument) {
+      series.Weight = {
+        data: singleMetricFormatter('weight'),
+        color: colorsStack.pop()!,
+      }
+      if (exercise.hasRepMeasument) {
+        series['Predicted 1RM'] = {
+          data: oneRepMaxFormatter(),
+          color: colorsStack.pop()!,
         }
       }
-
-      return distanceSeries
+    }
+    if (exercise.hasDistanceMeasument) {
+      series.Distance = {
+        data: singleMetricFormatter('distance'),
+        color: colorsStack.pop()!,
+      }
+      if (exercise.hasTimeMeasument) {
+        series.Speed = {
+          data: speedFormatter(),
+          color: colorsStack.pop()!
+        }
+      }
     }
 
-    return null
+    return series
   }
 
   return {

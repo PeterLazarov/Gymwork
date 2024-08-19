@@ -3,7 +3,7 @@ import { WorkoutSet } from 'app/db/models'
 // Docs
 // https://echarts.apache.org/en/option.html#title
 
-type SeriesItem = {
+export type SeriesItem = {
   data: Array<number | null>
   color: string
 }
