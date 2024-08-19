@@ -12,4 +12,5 @@
 - keyboard avoiding view on android pushes the content over the header if th einput is on the bottom of screen
 - make history chart usable for other exercise types
 - save workout timer in WorkoutModel. show readonly timer on old workouts
+- DayControl can go beyond the workout date range
 - Exercise track screen ->  VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead. 

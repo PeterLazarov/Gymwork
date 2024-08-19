@@ -14,7 +14,7 @@ type Props = Omit<FlashListProps<any>, LockedProps> & {
 }
 
 const viewabilityConfig: ViewabilityConfig = {
-  itemVisiblePercentThreshold: 100,
+  itemVisiblePercentThreshold: 50,
 }
 
 const HorizontalScreenList = forwardRef<FlashList<any>, Props>(
@@ -58,7 +58,6 @@ const HorizontalScreenList = forwardRef<FlashList<any>, Props>(
             </View>
           )}
           horizontal
-          snapToAlignment="center"
           initialScrollIndex={initialScrollIndex}
           {...rest}
         />
