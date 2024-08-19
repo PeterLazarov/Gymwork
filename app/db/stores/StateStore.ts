@@ -12,6 +12,9 @@ import { Exercise, Workout, WorkoutSet, WorkoutSetTrackData } from '../models'
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
 
+// TODO: horiontal scrolling breaks BADLY (maybe) if the date goes outside of this range
+const datePaddingCount = 365
+
 export const StateStoreModel = types
   .model('StateStore')
   .props({
@@ -42,7 +45,6 @@ export const StateStoreModel = types
         e => e.guid === self.openedExerciseGuid
       )
     },
-    // TODO to allow for multiple workouts per date?
     get openedWorkout(): Workout | undefined {
       return this.workoutStore.getWorkoutForDate(self.openedDate)
     },
@@ -90,6 +92,20 @@ export const StateStoreModel = types
     get openedExerciseWorkSets(): WorkoutSet[] {
       return this.openedExerciseSets.filter(s => !s.isWarmup)
     },
+
+    get earliestDayVisible(): DateTime {
+      const firstWorkout = this.workoutStore.workouts[this.workoutStore.workouts.length - 1]
+      const from = (
+        firstWorkout ? DateTime.fromISO(firstWorkout.date) : DateTime.now()
+      )
+        .minus({ day: datePaddingCount })
+
+      return from
+    },
+
+    get lastDayVisible(): DateTime {
+      return today.plus({ day: datePaddingCount })
+    }
   }))
   .actions(withSetPropAction)
   .actions(self => ({

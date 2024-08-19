@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useMemo, useRef } from 'react'
 
@@ -8,28 +7,13 @@ import { HorizontalScreenList } from 'designSystem'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import WorkoutDayView from './WorkoutDayView'
 
-// TODO this breaks BADLY if the date goes outside of this range
-const datePaddingCount = 365
-
 function WorkoutHorizontalList() {
-  const { stateStore, workoutStore } = useStores()
+  const { stateStore } = useStores()
   const workoutList = useRef<FlashList<string>>(null)
 
   const dates = useMemo(() => {
-    const firstWorkout = workoutStore.workouts[workoutStore.workouts.length - 1]
-    const lastWorkout = workoutStore.workouts[0]
-
-    const from = (
-      firstWorkout ? DateTime.fromISO(firstWorkout.date) : DateTime.now()
-    )
-      .minus({ day: datePaddingCount })
-      .toISODate()!
-
-    const to = (
-      lastWorkout ? DateTime.fromISO(lastWorkout.date) : DateTime.now()
-    )
-      .plus({ day: datePaddingCount })
-      .toISODate()!
+    const from = stateStore.earliestDayVisible.toISODate()!
+    const to = stateStore.lastDayVisible.toISODate()!
 
     return getDateRange(from, to)
   }, [])

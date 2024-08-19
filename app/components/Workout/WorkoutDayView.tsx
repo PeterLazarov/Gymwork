@@ -20,7 +20,7 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
       {workout ? (
         <WorkoutExerciseList workout={workout} />
       ) : (
-        <EmptyState text={translate('workoutLogEmpty')} />
+        <EmptyState text={translate('workoutLogEmpty') + date} />
       )}
     </View>
   )

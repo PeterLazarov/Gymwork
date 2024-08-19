@@ -19,6 +19,11 @@ const DayControl = () => {
       ? luxonDate.toRelativeCalendar({ unit: 'days' })!
       : luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
+  const isEarliestDate =
+    stateStore.openedDate === stateStore.earliestDayVisible.toISODate()
+  const isLastDate =
+    stateStore.openedDate === stateStore.lastDayVisible.toISODate()
+
   return (
     <>
       <View
@@ -32,6 +37,7 @@ const DayControl = () => {
       >
         <IconButton
           onPress={stateStore.decrementCurrentDate}
+          disabled={isEarliestDate}
           underlay="darker"
         >
           <Icon icon="chevron-back" />
@@ -45,6 +51,7 @@ const DayControl = () => {
         <IconButton
           onPress={stateStore.incrementCurrentDate}
           underlay="darker"
+          disabled={isLastDate}
         >
           <Icon icon="chevron-forward" />
         </IconButton>

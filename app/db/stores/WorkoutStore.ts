@@ -41,7 +41,6 @@ export const WorkoutStoreModel = types
       const [workout] = store.workouts.filter(w => w.date === date)
       return workout
     },
-    // TODO to allow for multiple workouts per date?
     getWorkoutExercises(workout: Workout): Exercise[] {
       return workout.exercises
     },
