@@ -7,12 +7,22 @@ type _Props = {
   value: number
   unit: string
   onChange: (selected: number) => void
-  onUnitChange: (unit: string) => void
+  // onUnitChange: (unit: string) => void
 }
 export type DistanceEditorProps = _Props & Omit<TextInputProps, keyof _Props>
 
 const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(
-  ({ value, unit, onChange, onUnitChange, ...rest }, ref) => {
+  (
+    {
+      value,
+      unit,
+      onChange,
+      // onUnitChange,
+
+      ...rest
+    },
+    ref
+  ) => {
     return (
       <View style={{ flexDirection: 'row', gap: 24 }}>
         <TextInput
@@ -27,12 +37,12 @@ const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(
           ref={ref}
           {...rest}
         />
-        <Select
+        {/* <Select
           options={Object.values(measurementUnits.distance)}
           value={unit}
           onChange={onUnitChange}
           containerStyle={{ flex: 1 }}
-        />
+        /> */}
       </View>
     )
   }

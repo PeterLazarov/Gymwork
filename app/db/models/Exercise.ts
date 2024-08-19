@@ -14,13 +14,14 @@ export const measurementUnits = {
   },
   weight: {
     kg: 'kg',
-    lbs: 'lbs',
+    lb: 'lb',
   },
-  distance: { cm: 'cm', m: 'm', km: 'km', ft: 'ft', mile: 'mile' },
-}
+  distance: { cm: 'cm', m: 'm', km: 'km', ft: 'ft', mile: 'mi' },
+} as const
 
-enum x {}
-
+// Default units the exercise shows for input
+// For example vertical jump distance could be feet
+// Running could be meters
 export const measurementDefaults = {
   time: {
     unit: measurementUnits.time.s,
@@ -104,6 +105,7 @@ export const ExerciseMeasurementModel = types
       })
     ),
   })
+  .actions(withSetPropAction)
 
 export type FilterStrings<T> = T extends string ? T : never
 export type measurementName = FilterStrings<

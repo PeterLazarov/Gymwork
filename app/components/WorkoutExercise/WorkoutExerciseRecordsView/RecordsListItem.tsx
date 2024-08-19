@@ -34,21 +34,21 @@ const RecordsListItem: React.FC<Props> = ({ set, exercise }) => {
       {exercise.hasWeightMeasument && (
         <SetDataLabel
           value={set.weight}
-          unit={set.weightUnit}
+          unit={set.exercise.measurements.weight?.unit}
           fontSize="md"
         />
       )}
       {exercise.hasDistanceMeasument && (
         <SetDataLabel
           value={set.distance}
-          unit={set.distanceUnit}
+          unit={set.exercise.measurements.distance?.unit}
           fontSize="md"
         />
       )}
       {exercise.hasTimeMeasument && (
         <SetDataLabel
           value={getFormatedDuration(set.duration)}
-          unit={set.durationUnit}
+          unit={set.exercise.measurements.time?.unit}
           fontSize="md"
         />
       )}

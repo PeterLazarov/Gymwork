@@ -19,9 +19,6 @@ import {
   Exercise,
   Workout,
   WorkoutSetSnapshotIn,
-  WorkoutSetTrackData,
-  measurementUnits,
-  measurementDefaults,
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
 import {
@@ -103,7 +100,7 @@ export const WorkoutStoreModel = types
       if (workouts && workouts?.length > 0 && isDev) {
         self.setProp('workouts', workouts)
       } else {
-        // await this.seed()
+        await this.seed()
       }
     },
     async seed() {
@@ -131,10 +128,8 @@ export const WorkoutStoreModel = types
       })
       self.workouts.push(created)
     },
-    addSet(newSet: WorkoutSetSnapshotIn) {
-      const created = WorkoutSetModel.create(newSet)
-
-      self.rootStore.stateStore.openedWorkout?.sets.push(created)
+    addSet(newSet: WorkoutSet) {
+      self.rootStore.stateStore.openedWorkout?.sets.push(newSet)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
       const set = self.rootStore.stateStore.openedWorkout?.sets.find(
@@ -162,16 +157,20 @@ export const WorkoutStoreModel = types
     setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {
       set.isWarmup = value
     },
-    getEmptySet(): WorkoutSetTrackData {
-      return {
+
+    getEmptySet() {
+      const set = WorkoutSetModel.create({
+        // TODO check type
+        // @ts-ignore
+        exercise: self.rootStore.stateStore.openedExerciseGuid,
         reps: 0,
-        weight: 0,
-        weightUnit: measurementDefaults.weight.unit,
-        distance: 0,
-        distanceUnit: measurementDefaults.distance.unit,
-        duration: 0,
-        durationUnit: measurementDefaults.time.unit,
-      }
+        weightUg: 0,
+        distanceMm: 0,
+        durationMs: 0,
+        isWarmup: false,
+      })
+
+      return set
     },
   }))
 

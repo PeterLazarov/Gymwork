@@ -92,15 +92,14 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   }
 
   function setDistanceType(unit: string) {
-    exercise.setProp('measurements', {
-      ...exercise.measurements,
-      distance: {
-        ...exercise.measurements.distance!,
-        unit,
-      },
+    exercise.measurements.setProp('distance', {
+      ...exercise.measurements.distance,
+      unit,
     })
     onFormChange(exercise)
   }
+
+  // TODO set time type / set weight type?
 
   return (
     <View style={{ flex: 1, gap: 8, padding: 8 }}>
