@@ -16,9 +16,9 @@ export const WorkoutSetModel = types
     reps: 0,
 
     // The smallest unit that can convert to both metric and imperial without fractions is the microgram (μg)
-    weightUg: types.maybeNull(types.number), // default is micrograms
+    weightMcg: 0, // default is micrograms
 
-    distanceMm: 0, // default is micrometers
+    distanceMm: 0, // default is millimeters (micrometers would be better)
 
     // The smallest unit that works without fractions & is used widely - ms
     durationMs: 0, // default is ms
@@ -26,7 +26,7 @@ export const WorkoutSetModel = types
   .views(set => ({
     // TODO redo?
     get measurementValue() {
-      return set.weightUg ?? set.distanceMm | set.durationMs
+      return set.weightMcg ?? set.distanceMm | set.durationMs
     },
     get groupingValue() {
       switch (set.exercise.groupRecordsBy) {
@@ -35,7 +35,7 @@ export const WorkoutSetModel = types
         case 'reps':
           return set.reps
         case 'weight':
-          return set.weightUg // TODO units?
+          return set.weightMcg // TODO units?
         case 'distance':
           return set.distanceMm // TODO units?
 
@@ -44,7 +44,7 @@ export const WorkoutSetModel = types
       }
     },
     get weight() {
-      return convert(set.weightUg ?? 0)
+      return convert(set.weightMcg ?? 0)
         .from('mcg')
         .to(set.exercise.measurements.weight!.unit)
     },
@@ -62,7 +62,7 @@ export const WorkoutSetModel = types
   .actions(withSetPropAction)
   .actions(self => ({
     setWeight(value: number, unit = self.exercise.measurements.weight?.unit!) {
-      self.setProp('weightUg', convert(value).from(unit).to('mcg'))
+      self.setProp('weightMcg', convert(value).from(unit).to('mcg'))
     },
     setDistance(
       value: number,
@@ -80,8 +80,3 @@ export interface WorkoutSetSnapshotOut
   extends SnapshotOut<typeof WorkoutSetModel> {}
 export interface WorkoutSetSnapshotIn
   extends SnapshotIn<typeof WorkoutSetModel> {}
-
-export type WorkoutSetTrackData = Pick<
-  WorkoutSet,
-  'reps' | 'weightUg' | 'distanceMm' | 'durationMs'
->

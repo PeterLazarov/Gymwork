@@ -19,13 +19,13 @@ const generateSets = (): WorkoutSetSnapshotIn[] => {
   const benchSets: WorkoutSetSnapshotIn[] = Array.from({
     length: between(3, 5),
   }).map((_, i) => {
-    const weightUg = convert(between(8, 40) * weightIncrementKg)
+    const weightMcg = convert(between(8, 40) * weightIncrementKg)
       .from('kg')
       .to('mcg')
     return {
       exercise: '44', // Лежанка
       reps: between(3, 12),
-      weightUg,
+      weightMcg,
       isWarmup: i === 0,
     }
   })
@@ -52,7 +52,7 @@ const generateSets = (): WorkoutSetSnapshotIn[] => {
         exercise,
         isWarmup: i === 0,
         reps: between(3, 12),
-        weightUg: convert(between(8, 40) * weightIncrementKg)
+        weightMcg: convert(between(8, 40) * weightIncrementKg)
           .from('kg')
           .to('mcg'),
       }))

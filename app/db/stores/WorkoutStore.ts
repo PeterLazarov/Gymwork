@@ -156,21 +156,6 @@ export const WorkoutStoreModel = types
     setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {
       set.isWarmup = value
     },
-
-    getEmptySet() {
-      const set = WorkoutSetModel.create({
-        // TODO check type
-        // @ts-ignore
-        exercise: self.rootStore.stateStore.openedExerciseGuid,
-        reps: 0,
-        weightUg: 0,
-        distanceMm: 0,
-        durationMs: 0,
-        isWarmup: false,
-      })
-
-      return set
-    },
   }))
 
 export interface WorkoutStore extends Instance<typeof WorkoutStoreModel> {}

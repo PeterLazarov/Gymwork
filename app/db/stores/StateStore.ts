@@ -27,9 +27,7 @@ export const StateStoreModel = types
     openedExerciseGuid: '',
     openedDate: types.optional(types.string, today.toISODate()!),
     timerDurationSecs: 120,
-
-    // Used so that .exercise can be found (no reference error)
-    // draftSet: types.reference,
+    draftSet: types.maybe(WorkoutSetModel),
   })
   .views(self => ({
     get rootStore(): RootStore {
@@ -80,7 +78,11 @@ export const StateStoreModel = types
       const { guid, ...rest } = getSnapshot(lastSet)
       const copiedSet = WorkoutSetModel.create(rest)
 
-      return lastSet ? copiedSet : this.workoutStore.getEmptySet()
+      return lastSet
+        ? copiedSet
+        : WorkoutSetModel.create({
+            exercise: self.openedExerciseGuid,
+          })
     },
     get openedExerciseSet(): WorkoutSet {
       const exerciseSets =
@@ -96,21 +98,22 @@ export const StateStoreModel = types
     },
 
     get firstWorkout(): Workout {
-      return  this.workoutStore.workouts[this.workoutStore.workouts.length - 1]
+      return this.workoutStore.workouts[this.workoutStore.workouts.length - 1]
     },
 
     get earliestDayVisible(): string {
       const from = (
-        this.firstWorkout ? DateTime.fromISO(this.firstWorkout.date) : DateTime.now()
-      )
-        .minus({ day: datePaddingCount })
+        this.firstWorkout
+          ? DateTime.fromISO(this.firstWorkout.date)
+          : DateTime.now()
+      ).minus({ day: datePaddingCount })
 
       return from.toISODate()!
     },
 
     get lastDayVisible(): string {
       return today.plus({ day: datePaddingCount }).toISODate()!
-    }
+    },
   }))
   .actions(withSetPropAction)
   .actions(self => ({
