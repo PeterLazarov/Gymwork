@@ -10,3 +10,4 @@
 - Model consistent suffixes (naming)
 - edit exercise moreIsBetter and groupBy
 - click on empty space OR back to remove focus on set
+- review sets seed. Looks like warmups come last?
