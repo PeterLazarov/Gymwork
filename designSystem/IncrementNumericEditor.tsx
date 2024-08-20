@@ -1,8 +1,8 @@
-import React, { useEffect, useState, forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 import { TextInput, TextInputProps } from 'react-native'
 
 import IncrementalButtons from 'app/components/IncrementalButtons'
-import { fontSize } from './tokens'
+import NumberInput from 'app/components/NumberInput'
 
 type Props = {
   value: number
@@ -12,22 +12,8 @@ type Props = {
   returnKeyType?: TextInputProps['returnKeyType']
 }
 
-const maxDigits = 4
-const maxDecimals = 2
-const maxLength = maxDigits + maxDecimals + 1
-
 const IncrementNumericEditor = forwardRef<TextInput, Props>(
   ({ value, onChange, step, onSubmit, returnKeyType }, ref) => {
-    const [rendered, setRendered] = useState(String(value) ?? '')
-
-    useEffect(() => {
-      if (Number(rendered) !== value) {
-        setRendered(
-          String(value.toFixed(String(value).includes('.') ? maxDecimals : 0))
-        )
-      }
-    })
-
     return (
       <IncrementalButtons
         value={value}
@@ -36,33 +22,16 @@ const IncrementNumericEditor = forwardRef<TextInput, Props>(
         }}
         step={step}
       >
-        <TextInput
-          style={{ flexGrow: 1, textAlign: 'center', fontSize: fontSize.md }}
-          multiline={false}
-          keyboardType="decimal-pad"
-          onSubmitEditing={onSubmit}
+        <NumberInput
+          onChange={onChange}
+          value={value}
+          onSubmit={onSubmit}
           ref={ref}
-          onChangeText={text => {
-            const asNum = Number(text)
-            if (isNaN(asNum)) {
-              return
-            }
-
-            // Strip leading zeroes, enforce max length
-            const toFixed = text
-              .replace(/^0+/, '')
-              .slice(
-                0,
-                text.includes('.')
-                  ? Math.min(text.indexOf('.') + maxDecimals + 1, maxLength)
-                  : maxDigits
-              )
-            setRendered(toFixed)
-
-            onChange(Number(toFixed))
-          }}
-          value={rendered}
           returnKeyType={returnKeyType}
+          textAlign="center"
+          style={{
+            textAlign: 'center',
+          }}
         />
       </IncrementalButtons>
     )

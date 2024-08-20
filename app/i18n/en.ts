@@ -42,6 +42,9 @@ const en = {
   history: 'History',
   records: 'Records',
   chart: 'Chart',
+  distanceMeasurementSettings: 'Distance Measurement Settings',
+  weightMeasurementSettings: 'Weight Measurement Settings',
+  unit: 'Unit',
 }
 
 export default en

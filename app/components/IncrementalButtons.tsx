@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { StyleProp, View, ViewStyle } from 'react-native'
 
 import { Icon, PressableHighlight, colors } from 'designSystem'
 
@@ -15,27 +15,34 @@ const IncrementalButtons: React.FC<Props> = ({
   children,
   step,
 }) => {
+  const btnStyle: StyleProp<ViewStyle> = {
+    backgroundColor: colors.primaryLight,
+    padding: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    aspectRatio: 1,
+  }
+
   return (
     <View
       style={{
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
       }}
     >
       <PressableHighlight
         onPress={() => onChange(value - (step ?? 1))}
-        style={{ backgroundColor: colors.primaryLight, padding: 4 }}
+        style={btnStyle}
       >
         <Icon
           icon="remove"
           color={colors.iconText}
         />
       </PressableHighlight>
-      {children}
+      <View style={{ flexGrow: 1 }}>{children}</View>
       <PressableHighlight
         onPress={() => onChange(value + (step ?? 1))}
-        style={{ backgroundColor: colors.primaryLight, padding: 4 }}
+        style={btnStyle}
       >
         <Icon
           icon="add"
