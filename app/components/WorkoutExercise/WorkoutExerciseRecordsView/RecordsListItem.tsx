@@ -48,7 +48,6 @@ const RecordsListItem: React.FC<Props> = ({ set, exercise }) => {
       {exercise.hasTimeMeasument && (
         <SetDataLabel
           value={getFormatedDuration(set.duration)}
-          unit={set.exercise.measurements.time?.unit}
           fontSize="md"
         />
       )}

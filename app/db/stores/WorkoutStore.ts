@@ -87,8 +87,14 @@ export const WorkoutStoreModel = types
 
     getExerciseRecords(
       exerciseID: Exercise['guid']
-    ): Record<WorkoutSet['reps'], WorkoutSet> {
-      return this.allExerciseRecords[exerciseID] ?? {}
+    ): WorkoutSet[] {
+
+      const exerciseRecords = this.allExerciseRecords[exerciseID] ?? {}
+      const sorted = Object.entries(exerciseRecords)
+      .sort((a, b) => Number(a[0]) - Number(b[0]))
+      .map(entry => entry[1]); 
+
+      return sorted
     },
   }))
   .actions(withSetPropAction)

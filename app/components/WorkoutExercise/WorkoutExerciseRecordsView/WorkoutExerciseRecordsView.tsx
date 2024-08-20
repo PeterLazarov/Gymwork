@@ -30,13 +30,13 @@ const WorkoutExerciseRecordsView: React.FC = () => {
         flexGrow: 1,
       }}
     >
-      {Object.values(openedExerciseRecords).length > 0 ? (
+      {openedExerciseRecords.length > 0 ? (
         <ScrollView
           style={{
             flexBasis: 0,
           }}
         >
-          {Object.values(openedExerciseRecords).map((set, i) => {
+          {openedExerciseRecords.map((set, i) => {
             return (
               <PressableHighlight
                 key={set.guid}

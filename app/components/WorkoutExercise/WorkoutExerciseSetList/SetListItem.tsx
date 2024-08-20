@@ -28,9 +28,9 @@ const SetListItem: React.FC<Props> = ({
 
   const exerciseActualRecords = exercise
     ? workoutStore.getExerciseRecords(exercise.guid)
-    : {}
+    : []
 
-  const isRecord = Object.values(exerciseActualRecords).some(
+  const isRecord = exerciseActualRecords.some(
     record => record.guid === set.guid
   )
   const color = isFocused ? colors.primary : colors.secondaryText
