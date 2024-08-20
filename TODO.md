@@ -9,4 +9,5 @@
 - save workout timer in WorkoutModel. show readonly timer on old workouts
 - add workout template support?
 - extend chart metrics
-- Exercise track screen ->  VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead. 
+- Exercise track screen -> VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead.
+- Model consistent suffixes (naming)
