@@ -1,5 +1,11 @@
 import { DateTime } from 'luxon'
-import { Instance, SnapshotOut, types, getParent } from 'mobx-state-tree'
+import {
+  Instance,
+  SnapshotOut,
+  types,
+  getParent,
+  getSnapshot,
+} from 'mobx-state-tree'
 
 import { ExerciseStore } from './ExerciseStore'
 import { RootStore } from './RootStore'
@@ -7,7 +13,7 @@ import { TimeStore } from './TimeStore'
 import { WorkoutStore } from './WorkoutStore'
 import { getFormatedDuration } from '../../utils/time'
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import { Exercise, Workout, WorkoutSet, WorkoutSetTrackData } from '../models'
+import { Exercise, Workout, WorkoutSet, WorkoutSetModel } from '../models'
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -21,6 +27,9 @@ export const StateStoreModel = types
     openedExerciseGuid: '',
     openedDate: types.optional(types.string, today.toISODate()!),
     timerDurationSecs: 120,
+
+    // Used so that .exercise can be found (no reference error)
+    // draftSet: types.reference,
   })
   .views(self => ({
     get rootStore(): RootStore {
@@ -64,21 +73,14 @@ export const StateStoreModel = types
 
       return exerciseSets
     },
-    get openedExerciseNextSet(): WorkoutSetTrackData {
+    get openedExerciseNextSet(): WorkoutSet {
       const lastSet =
         this.openedExerciseSets?.[this.openedExerciseSets.length - 1]
 
-      return lastSet
-        ? {
-            reps: lastSet.reps,
-            weight: lastSet.weight,
-            weightUnit: lastSet.weightUnit,
-            distance: lastSet.distance,
-            distanceUnit: lastSet.distanceUnit,
-            duration: lastSet.duration,
-            durationUnit: lastSet.durationUnit,
-          }
-        : this.workoutStore.getEmptySet()
+      const { guid, ...rest } = getSnapshot(lastSet)
+      const copiedSet = WorkoutSetModel.create(rest)
+
+      return lastSet ? copiedSet : this.workoutStore.getEmptySet()
     },
     get openedExerciseSet(): WorkoutSet {
       const exerciseSets =
@@ -132,6 +134,7 @@ export const StateStoreModel = types
         .toSpliced(indexToAllSets, 0, item)!
 
       // TODO check type
+      // @ts-ignore
       self.openedWorkout!.setProp('sets', reorderedSets)
     },
     setOpenedExercise(exercise: Exercise | null) {
