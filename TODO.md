@@ -8,7 +8,4 @@
 - add workout template support?
 - Exercise track screen -> VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead.
 - Model consistent suffixes (naming)
-- implement moreIsBetter for records
 - edit exercise moreIsBetter and groupBy
-- WorkoutSet action "isBetterThan" compare grouping also
-- non weight records are not refreshing on set add / update / delete

@@ -57,7 +57,7 @@ const getRecords = (workouts: Workout[]) => {
       const exerciseRecords = records[set.exercise.guid]
       const currentRecord = exerciseRecords[set.groupingValue]
 
-      const isRecord = !currentRecord || currentRecord.measurementValue < set.measurementValue
+      const isRecord = !currentRecord || set.isBetterThan(currentRecord)
       if (isRecord) {
         exerciseRecords[set.groupingValue] = set
       }

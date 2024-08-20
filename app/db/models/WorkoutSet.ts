@@ -84,13 +84,14 @@ export const WorkoutSetModel = types
     },
     isBetterThan(otherSet: WorkoutSet) {
       const isMoreBetter = self.exercise.measurements[self.exercise.measuredBy]!.moreIsBetter
+      const groupingIsMoreBetter = self.exercise.measurements[self.exercise.groupRecordsBy]!.moreIsBetter
 
-      if (isMoreBetter) {
-        return self.measurementValue > otherSet.measurementValue
-      }
-      else {
-        return self.measurementValue < otherSet.measurementValue
-      }
+      const isTied = self.measurementValue === otherSet.measurementValue
+      const tieBreak = groupingIsMoreBetter ? self.groupingValue > otherSet.groupingValue : self.groupingValue < otherSet.groupingValue
+
+      const isMeasurementMore = isMoreBetter ? self.measurementValue > otherSet.measurementValue : self.measurementValue < otherSet.measurementValue
+      
+      return isMeasurementMore || (isTied && tieBreak)
     }
   }))
 
