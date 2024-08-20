@@ -11,7 +11,7 @@ type Props = {
   header?: string
   open: boolean
   onClose: () => void
-  options: SelectOption[]
+  options: readonly SelectOption[]
   selectedValues: string[]
   onOptionSelect: (option: SelectOption) => void
   hideButton?: boolean
