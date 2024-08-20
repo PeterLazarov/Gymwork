@@ -1,31 +1,56 @@
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { getSnapshot } from 'mobx-state-tree'
 
 import WorkoutExerciseSetEditList from './WorkoutExerciseSetEditList'
-import WorkoutExerciseSetEditPanel from './WorkoutExerciseSetEditPanel'
+import WorkoutExerciseSetEditControls from './WorkoutExerciseSetEditControls'
 import { useStores } from 'app/db/helpers/useStores'
-import { WorkoutSet } from 'app/db/models'
+import { WorkoutSet, WorkoutSetModel } from 'app/db/models'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
+import { WorkoutExerciseSetEditActions } from './WorkoutExerciseSetEditActions'
 
 const WorkoutExerciseTrackView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
-  async function addSet(setToAdd: Pick<WorkoutSet, 'reps' | 'weight'>) {
-    workoutStore.addSet({
-      ...setToAdd,
-      exercise: stateStore.openedExerciseGuid,
-    })
+  useEffect(() => {
+    if (selectedSet) {
+      const { guid, exercise, ...rest } = selectedSet
+      const clonedSet = { exercise: exercise.guid, ...rest }
+      stateStore.setProp('draftSet', clonedSet)
+    } else {
+      // @ts-ignore
+      stateStore.setProp('draftSet', stateStore.openedExerciseNextSet)
+    }
+  }, [selectedSet])
+
+  function handleSubmit() {
+    // TODO
+  }
+  function handleAdd() {
+    if (stateStore.draftSet) {
+      const { guid, ...draftCopy } = stateStore.draftSet
+      const fromDraft = WorkoutSetModel.create({
+        ...draftCopy,
+        exercise: stateStore.openedExerciseGuid,
+      })
+      workoutStore.addSet(fromDraft)
+    }
   }
 
-  function removeSet(setToRemove: WorkoutSet) {
+  function handleUpdate() {
+    workoutStore.updateWorkoutExerciseSet(
+      WorkoutSetModel.create({
+        ...getSnapshot(stateStore.draftSet!),
+        exercise: selectedSet?.exercise.guid!,
+        guid: selectedSet!.guid,
+      })
+    )
+
     setSelectedSet(null)
-    workoutStore.removeSet(setToRemove.guid)
   }
-
-  function updateSet(updatedSet: WorkoutSet) {
-    workoutStore.updateWorkoutExerciseSet(updatedSet)
+  function handleRemove() {
+    workoutStore.removeSet(selectedSet!.guid)
     setSelectedSet(null)
   }
 
@@ -44,11 +69,19 @@ const WorkoutExerciseTrackView: React.FC = () => {
         selectedSet={selectedSet}
         setSelectedSet={setSelectedSet}
       />
-      <WorkoutExerciseSetEditPanel
-        selectedSet={selectedSet}
-        addSet={addSet}
-        updateSet={updateSet}
-        removeSet={removeSet}
+
+      {stateStore.draftSet && (
+        <WorkoutExerciseSetEditControls
+          value={stateStore.draftSet}
+          onSubmit={handleSubmit}
+        />
+      )}
+
+      <WorkoutExerciseSetEditActions
+        mode={selectedSet ? 'edit' : 'add'}
+        onAdd={handleAdd}
+        onUpdate={handleUpdate}
+        onRemove={handleRemove}
       />
     </KeyboardAvoiderView>
   )

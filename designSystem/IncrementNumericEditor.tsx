@@ -31,7 +31,9 @@ const IncrementNumericEditor = forwardRef<TextInput, Props>(
     return (
       <IncrementalButtons
         value={value}
-        onChange={n => onChange(Math.max(n, 0))}
+        onChange={n => {
+          onChange(Math.max(n, 0))
+        }}
         step={step}
       >
         <TextInput

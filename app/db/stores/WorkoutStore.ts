@@ -19,8 +19,6 @@ import {
   Exercise,
   Workout,
   WorkoutSetSnapshotIn,
-  WorkoutSetTrackData,
-  measurementDefaults,
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
 import {
@@ -129,10 +127,8 @@ export const WorkoutStoreModel = types
       })
       self.workouts.push(created)
     },
-    addSet(newSet: WorkoutSetSnapshotIn) {
-      const created = WorkoutSetModel.create(newSet)
-
-      self.rootStore.stateStore.openedWorkout?.sets.push(created)
+    addSet(newSet: WorkoutSet) {
+      self.rootStore.stateStore.openedWorkout?.sets.push(newSet)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
       const set = self.rootStore.stateStore.openedWorkout?.sets.find(
@@ -159,17 +155,6 @@ export const WorkoutStoreModel = types
     },
     setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {
       set.isWarmup = value
-    },
-    getEmptySet(): WorkoutSetTrackData {
-      return {
-        reps: 0,
-        weight: 0,
-        weightUnit: measurementDefaults.weight.unit,
-        distance: 0,
-        distanceUnit: measurementDefaults.distance.unit,
-        duration: 0,
-        durationUnit: measurementDefaults.time.unit,
-      }
     },
   }))
 

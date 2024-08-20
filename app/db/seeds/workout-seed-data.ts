@@ -1,14 +1,11 @@
 import { DateTime } from 'luxon'
 
 import exerciseSeedData from './exercises-seed-data.json'
-import {
-  measurementUnits,
-  WorkoutSetSnapshotIn,
-  WorkoutSnapshotIn,
-} from '../models'
+import { WorkoutSetSnapshotIn, WorkoutSnapshotIn } from '../models'
+import convert from 'convert-units'
 const numberOfWorkouts = 100
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
-const weightIncrement = 2.5
+const weightIncrementKg = 2.5
 
 function between(min: number, max: number) {
   return Math.round(Math.random() * (max - min) + min)
@@ -22,27 +19,27 @@ const generateSets = (): WorkoutSetSnapshotIn[] => {
   const benchSets: WorkoutSetSnapshotIn[] = Array.from({
     length: between(3, 5),
   }).map((_, i) => {
+    const weightMcg = convert(between(8, 40) * weightIncrementKg)
+      .from('kg')
+      .to('mcg')
     return {
       exercise: '44', // Лежанка
       reps: between(3, 12),
-      weight: between(8, 40) * weightIncrement,
-      weightUnit: measurementUnits.weight.kg,
+      weightMcg,
       isWarmup: i === 0,
     }
   })
 
   const cardioSets = Array.from({ length: between(1, 2) }).map((_, i) => {
     const km = between(2, 12)
-    const weight = between(0, 10) // not supported yet?
+    // const weight = between(0, 10) // not supported yet?
 
     return {
       exercise: cardioExerciseID,
-      distance: km * 1000,
-      distanceUnit: measurementUnits.distance.km,
-      duration: km * between(4, 7) * 60,
-      durationUnit: measurementUnits.time.m,
-      reps: 1, // assumed 1?
-      weight,
+      distanceMm: convert(km).from('km').to('mm'),
+      durationMs: convert(km * between(4, 7) * 60)
+        .from('min')
+        .to('ms'),
     } as WorkoutSetSnapshotIn
   })
 
@@ -55,8 +52,9 @@ const generateSets = (): WorkoutSetSnapshotIn[] => {
         exercise,
         isWarmup: i === 0,
         reps: between(3, 12),
-        weight: between(8, 40) * weightIncrement,
-        weightUnit: measurementUnits.weight.kg,
+        weightMcg: convert(between(8, 40) * weightIncrementKg)
+          .from('kg')
+          .to('mcg'),
       }))
     })
     .concat(benchSets, cardioSets)
