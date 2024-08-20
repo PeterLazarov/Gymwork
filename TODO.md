@@ -9,3 +9,4 @@
 - Exercise track screen -> VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead.
 - Model consistent suffixes (naming)
 - edit exercise moreIsBetter and groupBy
+- click on empty space OR back to remove focus on set
