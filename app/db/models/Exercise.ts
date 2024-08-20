@@ -17,6 +17,12 @@ export const measurementUnits = {
     lb: 'lb',
   },
   distance: { cm: 'cm', m: 'm', km: 'km', ft: 'ft', mile: 'mi' },
+  rest: {
+    ms: 'ms',
+    s: 's',
+    m: 'm',
+    h: 'h',
+  },
 } as const
 
 // Default units the exercise shows for input
@@ -37,6 +43,10 @@ export const measurementDefaults = {
   distance: {
     unit: measurementUnits.distance.m,
     moreIsBetter: true,
+  },
+  rest: {
+    unit: measurementUnits.time.s,
+    minAutorecordDurationSeconds: 30,
   },
 }
 
@@ -72,37 +82,56 @@ export const ExerciseMeasurementModel = types
   .model('ExerciseMeasurement')
   .props({
     time: types.maybe(
-      types.model({
-        unit: types.enumeration(
-          'timeUnit',
-          Object.values(measurementUnits.time)
-        ),
-        moreIsBetter: types.boolean,
-      })
+      types
+        .model({
+          unit: types.enumeration(
+            'timeUnit',
+            Object.values(measurementUnits.time)
+          ),
+          moreIsBetter: types.boolean,
+        })
+        .actions(withSetPropAction)
     ),
     reps: types.maybe(
-      types.model({
-        moreIsBetter: types.boolean,
-      })
+      types
+        .model({
+          moreIsBetter: types.boolean,
+        })
+        .actions(withSetPropAction)
     ),
     weight: types.maybe(
-      types.model({
-        unit: types.enumeration(
-          'weightUnit',
-          Object.values(measurementUnits.weight)
-        ),
-        step: 2.5, // is this neccessary?
-        moreIsBetter: types.boolean,
-      })
+      types
+        .model({
+          unit: types.enumeration(
+            'weightUnit',
+            Object.values(measurementUnits.weight)
+          ),
+          step: 2.5, // is this neccessary?
+          moreIsBetter: types.boolean,
+        })
+        .actions(withSetPropAction)
     ),
     distance: types.maybe(
-      types.model({
-        unit: types.enumeration(
-          'distanceUnit',
-          Object.values(measurementUnits.distance)
-        ),
-        moreIsBetter: types.boolean,
-      })
+      types
+        .model({
+          unit: types.enumeration(
+            'distanceUnit',
+            Object.values(measurementUnits.distance)
+          ),
+          moreIsBetter: types.boolean,
+        })
+        .actions(withSetPropAction)
+    ),
+    rest: types.maybe(
+      types
+        .model({
+          unit: types.enumeration(
+            'restUnit',
+            Object.values(measurementUnits.rest)
+          ),
+          minAutorecordDurationSeconds: types.number,
+        })
+        .actions(withSetPropAction)
     ),
   })
   .actions(withSetPropAction)
@@ -139,7 +168,6 @@ export const ExerciseModel = types
       const exerciseMeasurementNames = this.measurementNames
       const groupByFallback = exerciseMeasurementNames[0]
 
-      
       const grouping = groupingDefaults.find(cfg => {
         if (
           exerciseMeasurementNames.every(name => cfg.measurement.includes(name))
