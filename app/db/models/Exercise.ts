@@ -25,7 +25,7 @@ export const measurementUnits = {
 export const measurementDefaults = {
   time: {
     unit: measurementUnits.time.s,
-    moreIsBetter: true,
+    moreIsBetter: false,
   },
   reps: {
     moreIsBetter: true,
@@ -150,6 +150,18 @@ export const ExerciseModel = types
       })
 
       return grouping?.groupBy || groupByFallback
+    },
+    get measuredBy() {
+      if (this.hasWeightMeasument && this.groupRecordsBy !== 'weight') {
+        return 'weight'
+      }
+      if (this.hasDistanceMeasument && this.groupRecordsBy !== 'distance') {
+        return 'distance'
+      }
+      if (this.hasTimeMeasument && this.groupRecordsBy !== 'time') {
+        return 'time'
+      }
+      return null
     },
     get hasRepGrouping() {
       return this.groupRecordsBy === 'reps'

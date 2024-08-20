@@ -82,6 +82,16 @@ export const WorkoutSetModel = types
     setDuration(value: number, unit = self.exercise.measurements.time?.unit!) {
       self.setProp('durationMs', convert(value).from(unit).to('ms'))
     },
+    isBetterThan(otherSet: WorkoutSet) {
+      const isMoreBetter =  self.exercise.measurements[self.exercise.measuredBy!]!.moreIsBetter
+
+      if (isMoreBetter) {
+        return self.measurementValue > otherSet.measurementValue
+      }
+      else {
+        return self.measurementValue < otherSet.measurementValue
+      }
+    }
   }))
 
 export interface WorkoutSet extends Instance<typeof WorkoutSetModel> {}

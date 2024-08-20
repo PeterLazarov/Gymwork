@@ -2,7 +2,6 @@
 - change icon and remove ignite splashscreen
 - fix error when export data in android simulator
 - In exercise edit an empty name / muscle area is still saved regardless of the validation
-- weak ass records breaks stuff for non rep-weight exercises
 - how to resume a rest timer after pause
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - save workout timer in WorkoutModel. show readonly timer on old workouts
@@ -10,3 +9,7 @@
 - Exercise track screen -> VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead.
 - Model consistent suffixes (naming)
 - implement moreIsBetter for records
+- edit exercise moreIsBetter and groupBy
+- WorkoutSet action "isBetterThan" compare grouping also
+- non weight records are not refreshing on set add / update / delete
+- Exercise model change 'measuredBy' to be same as 'groupRecordsBy'

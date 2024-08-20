@@ -5,29 +5,30 @@ export type ExerciseRecord = Record<WorkoutSet['groupingValue'], WorkoutSet>
 export const calculateRecords = (workouts: Workout[]): 
   Record<Exercise['guid'], ExerciseRecord> =>  {
 
-  const records = getRepRecords(workouts)
+  const records = getRecords(workouts)
 
   removeWeakAssRecords(records)
 
   return records
 }
 
-const removeWeakAssRecords = (records: Record<Exercise['guid'], ExerciseRecord>) => {
+export const removeWeakAssRecords = (records: Record<Exercise['guid'], ExerciseRecord>): void => {
   for (const exerciseID in records) {
     const exerciseRecords = records[exerciseID]
-    const groupingsDescending = Object.keys(exerciseRecords).reverse()
-
-    let lastRecord = exerciseRecords[groupingsDescending[0] as any as number]
+    const groupingsDescending = Object.keys(exerciseRecords)
+      .map(Number) 
+      .sort((a, b) => b - a);
+    
+    let lastRecord = exerciseRecords[groupingsDescending[0]]
 
     for (const grouping of groupingsDescending) {
-      const record = exerciseRecords[grouping as any as number]
-
+      const record = exerciseRecords[grouping]
+      
       if (
-        // not sure if higher value is always better
-        lastRecord.measurementValue >= record.measurementValue &&
+        lastRecord.isBetterThan(record) &&
         lastRecord.guid !== record.guid
       ) {
-        delete exerciseRecords[grouping as any as number]
+        delete exerciseRecords[grouping]
       } else {
         lastRecord = record
       }
@@ -35,7 +36,7 @@ const removeWeakAssRecords = (records: Record<Exercise['guid'], ExerciseRecord>)
   }
 }
 
-const getRepRecords = (workouts: Workout[]) => {
+const getRecords = (workouts: Workout[]) => {
   const records: Record<Exercise['guid'], ExerciseRecord> = {}
 
   const sortedWorkouts = workouts.slice().sort((w1,w2) =>  { 
@@ -55,12 +56,14 @@ const getRepRecords = (workouts: Workout[]) => {
 
       const exerciseRecords = records[set.exercise.guid]
       const currentRecord = exerciseRecords[set.groupingValue]
-      if (!currentRecord ||
-        currentRecord.measurementValue < set.measurementValue) {
+
+      const isRecord = !currentRecord || currentRecord.measurementValue < set.measurementValue
+      if (isRecord) {
         exerciseRecords[set.groupingValue] = set
       }
     }
   }
+
 
   return records
 }
