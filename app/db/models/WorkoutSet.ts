@@ -44,19 +44,28 @@ export const WorkoutSetModel = types
       }
     },
     get weight() {
-      return convert(set.weightMcg ?? 0)
-        .from('mcg')
-        .to(set.exercise.measurements.weight!.unit)
+      return Number(
+        convert(set.weightMcg ?? 0)
+          .from('mcg')
+          .to(set.exercise.measurements.weight!.unit)
+          .toFixed(2)
+      )
     },
     get distance() {
-      return convert(set.distanceMm ?? 0)
-        .from('mm')
-        .to(set.exercise.measurements.distance!.unit)
+      return Number(
+        convert(set.distanceMm ?? 0)
+          .from('mm')
+          .to(set.exercise.measurements.distance!.unit)
+          .toFixed(2)
+      )
     },
     get duration() {
-      return convert(set.durationMs ?? 0)
-        .from('ms')
-        .to(set.exercise.measurements.time!.unit)
+      return Number(
+        convert(set.durationMs ?? 0)
+          .from('ms')
+          .to(set.exercise.measurements.time!.unit)
+          .toFixed(2)
+      )
     },
   }))
   .actions(withSetPropAction)

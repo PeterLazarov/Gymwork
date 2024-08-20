@@ -35,10 +35,9 @@ export const ExerciseStoreModel = types
           return {
             ...exercise,
             guid: String(i),
-            measurements: {
-              weight: measurementDefaults.weight,
-              reps: measurementDefaults.reps,
-            },
+            measurements: Object.fromEntries(
+              measurementType.map(type => [type, measurementDefaults[type]])
+            ),
           }
         }
       )
