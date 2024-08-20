@@ -14,12 +14,10 @@ import { observer } from 'mobx-react-lite'
 
 type Props = {
   value: WorkoutSet
-  onChange(data: WorkoutSet): void
   onSubmit(): void
 }
 
 const WorkoutExerciseSetEditControls: React.FC<Props> = ({
-  onChange,
   value,
   onSubmit,
 }) => {
@@ -38,7 +36,7 @@ const WorkoutExerciseSetEditControls: React.FC<Props> = ({
           <SetEditPanelSection text={translate('reps')}>
             <IncrementNumericEditor
               value={value.reps}
-              onChange={reps => onChange({ ...value, reps })}
+              onChange={reps => value.setProp('reps', reps)}
               onSubmit={() => onHandleSubmit(input1)}
               ref={input1}
               returnKeyType={isLastInput(input1) ? 'default' : 'next'}
@@ -50,15 +48,8 @@ const WorkoutExerciseSetEditControls: React.FC<Props> = ({
           <SetEditPanelSection text={translate('weight')}>
             {/* Works in KG */}
             <IncrementNumericEditor
-              value={convert(value.weightMcg!)
-                .from('mcg')
-                .to(value.exercise!.measurements.weight?.unit!)}
-              onChange={weight =>
-                onChange({
-                  ...value,
-                  weightMcg: convert(weight).from('kg').to('mcg'),
-                })
-              }
+              value={value.weight}
+              onChange={weight => value.setWeight(weight)}
               step={value.exercise!.measurements.weight?.step!}
               onSubmit={() => onHandleSubmit(input2)}
               ref={input2}
@@ -70,17 +61,8 @@ const WorkoutExerciseSetEditControls: React.FC<Props> = ({
         {value.exercise!.hasDistanceMeasument && (
           <SetEditPanelSection text={translate('distance')}>
             <DistanceEditor
-              value={convert(value.distanceMm)
-                .from('mm')
-                .to(value.exercise.measurements.distance?.unit!)}
-              onChange={distance =>
-                onChange({
-                  ...value,
-                  distanceMm: convert(distance)
-                    .from(value.exercise.measurements.distance?.unit!)
-                    .to('mm'),
-                })
-              }
+              value={value.distance}
+              onChange={distance => value.setDistance(distance)}
               unit={value.exercise!.measurements.distance?.unit!}
               // TODO REDO
               // onUnitChange={distanceUnit =>
@@ -98,10 +80,7 @@ const WorkoutExerciseSetEditControls: React.FC<Props> = ({
             <DurationInput
               valueSeconds={convert(value.durationMs).from('ms').to('s')}
               onUpdate={durationSeconds =>
-                onChange({
-                  ...value,
-                  durationMs: convert(durationSeconds).from('s').to('ms'),
-                })
+                value.setDuration(durationSeconds, 's')
               }
               onSubmitEditing={() => onHandleSubmit(input4)}
               ref={input4}

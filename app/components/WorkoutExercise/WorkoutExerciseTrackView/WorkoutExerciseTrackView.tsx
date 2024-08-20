@@ -73,9 +73,6 @@ const WorkoutExerciseTrackView: React.FC = () => {
       {stateStore.draftSet && (
         <WorkoutExerciseSetEditControls
           value={stateStore.draftSet}
-          onChange={changed => {
-            stateStore.setProp('draftSet', changed)
-          }}
           onSubmit={handleSubmit}
         />
       )}
