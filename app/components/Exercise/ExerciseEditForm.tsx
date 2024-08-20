@@ -14,6 +14,8 @@ import {
 } from 'app/db/models'
 
 import { Icon, Multiselect, IconButton, Select } from 'designSystem'
+import { translate } from 'app/i18n'
+import NumberInput from '../NumberInput'
 
 type Props = {
   exercise: Exercise
@@ -52,16 +54,10 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
     onUpdate(updated, valid)
   }
 
-  function handleWeightIncrementChange(text: string) {
-    // Remove non-numeric characters using a regular expression
-    const sanitizedValue = text.replace(/[^0-9.]/g, '')
-
-    exercise.setProp('measurements', {
-      ...exercise.measurements,
-      weight: {
-        ...exercise.measurements.weight!,
-        step: +sanitizedValue,
-      },
+  function handleWeightIncrementChange(n: number) {
+    exercise.measurements.setProp('weight', {
+      ...exercise.measurements.weight!,
+      step: n,
     })
     onFormChange(exercise)
   }
@@ -94,6 +90,14 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   function setDistanceType(unit: string) {
     exercise.measurements.setProp('distance', {
       ...exercise.measurements.distance,
+      unit,
+    })
+    onFormChange(exercise)
+  }
+
+  function setWeightType(unit: string) {
+    exercise.measurements.setProp('weight', {
+      ...exercise.measurements.weight,
       unit,
     })
     onFormChange(exercise)
@@ -150,20 +154,32 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
         }}
         error={!!measurementTypeRrror}
       />
-      <Text>TODO: Imperial / Metric Unit Type</Text>
       {exercise.hasDistanceMeasument && (
-        <Select
-          options={Object.values(measurementUnits.distance)}
-          value={exercise.measurements.distance?.unit}
-          onChange={distanceUnit => setDistanceType(distanceUnit)}
-        />
+        <>
+          <Text>{translate('distanceMeasurementSettings')}</Text>
+
+          <Select
+            options={Object.values(measurementUnits.distance)}
+            headerText={translate('unit')}
+            value={exercise.measurements.distance?.unit}
+            onChange={distanceUnit => setDistanceType(distanceUnit)}
+            label={translate('unit')}
+          />
+        </>
       )}
       {exercise.hasWeightMeasument && (
         <>
-          <TextInput
-            value={`${exercise.measurements.weight?.step}`}
-            keyboardType="decimal-pad"
-            onChangeText={handleWeightIncrementChange}
+          <Text>{translate('weightMeasurementSettings')}</Text>
+          <Select
+            options={Object.values(measurementUnits.weight)}
+            headerText={translate('unit')}
+            value={exercise.measurements.weight?.unit}
+            onChange={unit => setWeightType(unit)}
+            label={translate('unit')}
+          />
+          <NumberInput
+            value={exercise.measurements.weight?.step ?? 0}
+            onChange={handleWeightIncrementChange}
             label="Weight Increment"
             error={weightIncError !== ''}
           />

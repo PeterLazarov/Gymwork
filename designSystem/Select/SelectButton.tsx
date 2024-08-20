@@ -7,30 +7,52 @@ type Props = {
   onPress: () => void
   text?: string
   error?: boolean
+  label?: string
 }
 
-const SelectButton: React.FC<Props> = ({ onPress, text, error }) => {
+const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View
         style={{
           backgroundColor: colors.primaryLighter,
           paddingHorizontal: 15,
-          paddingVertical: 15,
+          paddingVertical: 12,
           flexDirection: 'row',
           justifyContent: 'space-between',
+          borderTopStartRadius: 4,
+          borderTopEndRadius: 4,
+          borderBottomWidth: 0.3,
+          // borderBottomColor: ,
           alignItems: 'center',
           // gap: 4,
         }}
       >
-        <Text
+        <View
           style={{
-            fontSize: fontSize.md,
-            color: error ? colors.critical : colors.secondaryText,
+            flexDirection: 'column',
+            // gap: 4,
           }}
         >
-          {text}
-        </Text>
+          {label && (
+            <Text
+              style={{
+                fontSize: fontSize.xs,
+                opacity: 0.75,
+              }}
+            >
+              {label}
+            </Text>
+          )}
+          <Text
+            style={{
+              fontSize: fontSize.md,
+              color: error ? colors.critical : colors.secondaryText,
+            }}
+          >
+            {text}
+          </Text>
+        </View>
         <View style={{ marginLeft: 4 }}>
           <Icon
             icon="chevron-down"

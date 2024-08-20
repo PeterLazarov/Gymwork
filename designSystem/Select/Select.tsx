@@ -9,16 +9,20 @@ type Props = {
   options: SelectOption[]
   value?: string
   onChange: (selected: string) => void
+  headerText?: string
   placeholder?: string
   containerStyle?: ViewStyle
   hideSelectedItemsRemove?: boolean
+  label?: string
 }
 
 const Select: React.FC<Props> = ({
   options,
   value,
   onChange,
+  headerText,
   placeholder,
+  label,
   containerStyle = {},
 }) => {
   const [selectionOpen, setSelectionOpen] = useState(false)
@@ -49,9 +53,10 @@ const Select: React.FC<Props> = ({
       <SelectButton
         text={selectedOption ? getOptionLabel(selectedOption) : placeholder}
         onPress={openSelection}
+        label={label}
       />
       <SelectOptionsModal
-        header={placeholder}
+        header={headerText || placeholder}
         open={selectionOpen}
         onClose={closeSelection}
         options={options}
