@@ -57,7 +57,7 @@ const groupingDefaults: Array<{
   { measurement: ['reps', 'time', 'weight'], groupBy: 'time' },
   { measurement: ['distance'], groupBy: 'distance' },
   { measurement: ['distance', 'weight'], groupBy: 'weight' },
-  { measurement: ['distance', 'time'], groupBy: 'time' },
+  { measurement: ['distance', 'time'], groupBy: 'distance' },
   { measurement: ['distance', 'time', 'weight'], groupBy: 'time' },
   { measurement: ['distance', 'reps'], groupBy: 'reps' },
   { measurement: ['distance', 'reps', 'weight'], groupBy: 'reps' },
@@ -139,15 +139,17 @@ export const ExerciseModel = types
       const exerciseMeasurementNames = this.measurementNames
       const groupByFallback = exerciseMeasurementNames[0]
 
-      groupingDefaults.find(cfg => {
+      
+      const grouping = groupingDefaults.find(cfg => {
         if (
           exerciseMeasurementNames.every(name => cfg.measurement.includes(name))
         ) {
           return cfg.groupBy
         }
+        return null
       })
 
-      return groupByFallback
+      return grouping?.groupBy || groupByFallback
     },
     get hasRepGrouping() {
       return this.groupRecordsBy === 'reps'

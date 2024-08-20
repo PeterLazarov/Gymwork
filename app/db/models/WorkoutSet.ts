@@ -26,7 +26,7 @@ export const WorkoutSetModel = types
   .views(set => ({
     // TODO redo?
     get measurementValue() {
-      return set.weightMcg ?? set.distanceMm | set.durationMs
+      return set.weightMcg || set.durationMs || set.distanceMm
     },
     get groupingValue() {
       switch (set.exercise.groupRecordsBy) {

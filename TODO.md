@@ -1,12 +1,12 @@
 - in 'Update exercice' screen muscle areas plus icon is not implemented
-- add floating placeholder in Select component
 - change icon and remove ignite splashscreen
 - fix error when export data in android simulator
 - In exercise edit an empty name / muscle area is still saved regardless of the validation
 - weak ass records breaks stuff for non rep-weight exercises
 - how to resume a rest timer after pause
-- keyboard avoiding view on android pushes the content over the header if th einput is on the bottom of screen
+- keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - save workout timer in WorkoutModel. show readonly timer on old workouts
 - add workout template support?
 - Exercise track screen -> VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead.
 - Model consistent suffixes (naming)
+- implement moreIsBetter for records
