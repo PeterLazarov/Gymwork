@@ -90,7 +90,6 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
       {stateStore.openedExercise!.hasTimeMeasument && (
         <SetDataLabel
           value={getFormatedDuration(set.duration)}
-          unit={set.exercise.measurements.time!.unit}
           isFocused={isFocused}
         />
       )}

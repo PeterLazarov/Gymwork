@@ -88,10 +88,7 @@ const SetListItem: React.FC<Props> = ({
         />
       )}
       {exercise.hasTimeMeasument && (
-        <SetDataLabel
-          value={getFormatedDuration(set.duration)}
-          unit={set.exercise.measurements.time!.unit}
-        />
+        <SetDataLabel value={getFormatedDuration(set.duration)} />
       )}
     </View>
   )
