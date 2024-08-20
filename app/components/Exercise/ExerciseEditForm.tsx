@@ -1,11 +1,13 @@
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
+import { getSnapshot } from 'mobx-state-tree'
+import React, { useMemo, useState } from 'react'
 import { Text, View } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
 import {
   Exercise,
+  ExerciseModel,
   ExerciseSnapshotIn,
   measurementDefaults,
   measurementName,
@@ -25,6 +27,10 @@ type Props = {
 // Otherwise they're destructive?
 const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   const { exerciseStore } = useStores()
+
+  const edittedExercise = useMemo(() => {
+    return ExerciseModel.create(getSnapshot(exercise))
+  }, [exercise])
 
   const [nameError, setNameError] = useState('')
   const [weightIncError, setWeightIncError] = useState('')
@@ -49,29 +55,29 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
     return !(nameInvalid || weightIncrementInvalid || musclesInvalid)
   }
 
-  function onFormChange(updated: Exercise) {
-    const valid = runValidCheck(updated)
-    onUpdate(updated, valid)
+  function onFormChange() {
+    const valid = runValidCheck(edittedExercise)
+    onUpdate(edittedExercise, valid)
   }
 
   function handleWeightIncrementChange(n: number) {
-    exercise.measurements.setProp('weight', {
+    edittedExercise.measurements.setProp('weight', {
       ...exercise.measurements.weight!,
       step: n,
     })
-    onFormChange(exercise)
+    onFormChange()
   }
 
   function onMusclesChange(selected: string[]) {
-    exercise.setProp('muscles', selected as Exercise['muscles'])
-    onFormChange(exercise)
+    edittedExercise.setProp('muscles', selected as Exercise['muscles'])
+    onFormChange()
   }
   function onPropChange(
     field: keyof ExerciseSnapshotIn,
     measurementType: string
   ) {
-    exercise.setProp(field, measurementType)
-    onFormChange(exercise)
+    edittedExercise.setProp(field, measurementType)
+    onFormChange()
   }
 
   function onAddMusclePress() {
@@ -79,28 +85,28 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   }
 
   function setMeasurementTypes(measurementNames: measurementName[]) {
-    exercise.setProp(
+    edittedExercise.setProp(
       'measurements',
       Object.fromEntries(measurementNames.map(m => [m, measurementDefaults[m]]))
     )
 
-    onFormChange(exercise)
+    onFormChange()
   }
 
   function setDistanceType(unit: string) {
-    exercise.measurements.setProp('distance', {
-      ...exercise.measurements.distance,
+    edittedExercise.measurements.setProp('distance', {
+      ...edittedExercise.measurements.distance,
       unit,
     })
-    onFormChange(exercise)
+    onFormChange()
   }
 
   function setWeightType(unit: string) {
-    exercise.measurements.setProp('weight', {
-      ...exercise.measurements.weight,
+    edittedExercise.measurements.setProp('weight', {
+      ...edittedExercise.measurements.weight,
       unit,
     })
-    onFormChange(exercise)
+    onFormChange()
   }
 
   // TODO set time type / set weight type?
@@ -109,7 +115,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
     <View style={{ flex: 1, gap: 8, padding: 8 }}>
       <TextInput
         label="Name"
-        value={exercise.name}
+        value={edittedExercise.name}
         onChangeText={text => onPropChange('name', text)}
         error={nameError !== ''}
       />
@@ -124,7 +130,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
       <View style={{ flexDirection: 'row' }}>
         <Multiselect
           options={exerciseStore.muscleOptions}
-          selectedValues={exercise.muscles}
+          selectedValues={edittedExercise.muscles}
           onSelect={onMusclesChange}
           containerStyle={{ flex: 1 }}
           headerText="Muscle areas"
@@ -147,38 +153,38 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
       )}
       <Multiselect
         options={measurementTypes}
-        selectedValues={exercise.measurementNames}
+        selectedValues={edittedExercise.measurementNames}
         headerText="Measurements"
         onSelect={selection => {
           setMeasurementTypes(selection as measurementName[])
         }}
         error={!!measurementTypeRrror}
       />
-      {exercise.hasDistanceMeasument && (
+      {edittedExercise.hasDistanceMeasument && (
         <>
           <Text>{translate('distanceMeasurementSettings')}</Text>
 
           <Select
             options={Object.values(measurementUnits.distance)}
             headerText={translate('unit')}
-            value={exercise.measurements.distance?.unit}
+            value={edittedExercise.measurements.distance?.unit}
             onChange={distanceUnit => setDistanceType(distanceUnit)}
             label={translate('unit')}
           />
         </>
       )}
-      {exercise.hasWeightMeasument && (
+      {edittedExercise.hasWeightMeasument && (
         <>
           <Text>{translate('weightMeasurementSettings')}</Text>
           <Select
             options={Object.values(measurementUnits.weight)}
             headerText={translate('unit')}
-            value={exercise.measurements.weight?.unit}
+            value={edittedExercise.measurements.weight?.unit}
             onChange={unit => setWeightType(unit)}
             label={translate('unit')}
           />
           <NumberInput
-            value={exercise.measurements.weight?.step ?? 0}
+            value={edittedExercise.measurements.weight?.step ?? 0}
             onChange={handleWeightIncrementChange}
             label="Weight Increment"
             error={weightIncError !== ''}
