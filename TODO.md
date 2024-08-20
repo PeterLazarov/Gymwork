@@ -12,4 +12,3 @@
 - edit exercise moreIsBetter and groupBy
 - WorkoutSet action "isBetterThan" compare grouping also
 - non weight records are not refreshing on set add / update / delete
-- Exercise model change 'measuredBy' to be same as 'groupRecordsBy'

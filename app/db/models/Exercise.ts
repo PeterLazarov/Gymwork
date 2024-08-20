@@ -53,7 +53,7 @@ export const measurementDefaults = {
 export const measurementTypes = Object.keys(measurementDefaults)
 
 // Should we group by multiple?
-const groupingDefaults: Array<{
+const groupingCombinations: Array<{
   measurement: measurementName[]
   groupBy: measurementName
 }> = [
@@ -76,6 +76,31 @@ const groupingDefaults: Array<{
     measurement: ['distance', 'reps', 'time', 'weight'],
     groupBy: 'reps',
   },
+]
+
+const measurementCombinations: Array<{
+  measurement: measurementName[]
+  measureBy: measurementName
+}> = [
+  // TODO: implement measureBy array for triple metrics ?
+  { measurement: ['weight'], measureBy: 'weight' },
+  { measurement: ['time'], measureBy: 'time' },
+  { measurement: ['time', 'weight'], measureBy: 'time' },
+  { measurement: ['reps'], measureBy: 'reps' },
+  { measurement: ['reps', 'weight'], measureBy: 'weight' },
+  { measurement: ['reps', 'time'], measureBy: 'reps' },
+  // { measurement: ['reps', 'time', 'weight'], measureBy: 'time' },
+  { measurement: ['distance'], measureBy: 'distance' },
+  { measurement: ['distance', 'weight'], measureBy: 'distance' },
+  { measurement: ['distance', 'time'], measureBy: 'time' },
+  // { measurement: ['distance', 'time', 'weight'], measureBy: 'time' },
+  { measurement: ['distance', 'reps'], measureBy: 'distance' },
+  // { measurement: ['distance', 'reps', 'weight'], measureBy: 'reps' },
+  // { measurement: ['distance', 'reps', 'time'], measureBy: 'reps' },
+  // {
+  //   measurement: ['distance', 'reps', 'time', 'weight'],
+  //   measureBy: 'reps',
+  // },
 ]
 
 export const ExerciseMeasurementModel = types
@@ -137,9 +162,12 @@ export const ExerciseMeasurementModel = types
   .actions(withSetPropAction)
 
 export type FilterStrings<T> = T extends string ? T : never
-export type measurementName = FilterStrings<
+
+type nonMetricFields = 'rest'
+export type measurementName = Exclude<FilterStrings<
   keyof SnapshotOut<typeof ExerciseMeasurementModel>
->
+>, nonMetricFields>
+
 export const ExerciseModel = types
   .model('Exercise')
   .props({
@@ -168,7 +196,7 @@ export const ExerciseModel = types
       const exerciseMeasurementNames = this.measurementNames
       const groupByFallback = exerciseMeasurementNames[0]
 
-      const grouping = groupingDefaults.find(cfg => {
+      const combination = groupingCombinations.find(cfg => {
         if (
           exerciseMeasurementNames.every(name => cfg.measurement.includes(name))
         ) {
@@ -177,19 +205,22 @@ export const ExerciseModel = types
         return null
       })
 
-      return grouping?.groupBy || groupByFallback
+      return combination?.groupBy || groupByFallback
     },
-    get measuredBy() {
-      if (this.hasWeightMeasument && this.groupRecordsBy !== 'weight') {
-        return 'weight'
-      }
-      if (this.hasDistanceMeasument && this.groupRecordsBy !== 'distance') {
-        return 'distance'
-      }
-      if (this.hasTimeMeasument && this.groupRecordsBy !== 'time') {
-        return 'time'
-      }
-      return null
+    get measuredBy(): measurementName {
+      const exerciseMeasurementNames = this.measurementNames
+      const measureByFallback = exerciseMeasurementNames[0]
+
+      const combination = measurementCombinations.find(cfg => {
+        if (
+          exerciseMeasurementNames.every(name => cfg.measurement.includes(name))
+        ) {
+          return cfg.measureBy
+        }
+        return null
+      })
+
+      return combination?.measureBy || measureByFallback
     },
     get hasRepGrouping() {
       return this.groupRecordsBy === 'reps'

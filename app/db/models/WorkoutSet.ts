@@ -83,7 +83,7 @@ export const WorkoutSetModel = types
       self.setProp('durationMs', convert(value).from(unit).to('ms'))
     },
     isBetterThan(otherSet: WorkoutSet) {
-      const isMoreBetter =  self.exercise.measurements[self.exercise.measuredBy!]!.moreIsBetter
+      const isMoreBetter = self.exercise.measurements[self.exercise.measuredBy]!.moreIsBetter
 
       if (isMoreBetter) {
         return self.measurementValue > otherSet.measurementValue
