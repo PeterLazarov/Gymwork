@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import exerciseSeedData from './exercises-seed-data.json'
 import { WorkoutSetSnapshotIn, WorkoutSnapshotIn } from '../models'
 import convert from 'convert-units'
-const numberOfWorkouts = 100
+const numberOfWorkouts = 10
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
 const weightIncrementKg = 2.5
 
@@ -14,6 +14,23 @@ function between(min: number, max: number) {
 const cardioExerciseID = exerciseSeedData
   .findIndex(e => e.muscles.includes('cardio'))
   .toString()
+
+const generateRandomExercises = () => {
+  return Array.from({
+    length: between(3, 8),
+  })
+    .flatMap((_, i): WorkoutSetSnapshotIn[] => {
+      const exercise = String(between(0, 100))
+      return Array.from({ length: between(2, 5) }).map((_, i) => ({
+        exercise,
+        isWarmup: i === 0,
+        reps: between(3, 12),
+        weightMcg: convert(between(8, 40) * weightIncrementKg)
+          .from('kg')
+          .to('mcg'),
+      }))
+    })
+}
 
 const generateSets = (): WorkoutSetSnapshotIn[] => {
   const benchSets: WorkoutSetSnapshotIn[] = Array.from({
@@ -43,20 +60,7 @@ const generateSets = (): WorkoutSetSnapshotIn[] => {
     } as WorkoutSetSnapshotIn
   })
 
-  return Array.from({
-    length: between(3, 8),
-  })
-    .flatMap((_, i): WorkoutSetSnapshotIn[] => {
-      const exercise = String(between(0, 100))
-      return Array.from({ length: between(2, 5) }).map((_, i) => ({
-        exercise,
-        isWarmup: i === 0,
-        reps: between(3, 12),
-        weightMcg: convert(between(8, 40) * weightIncrementKg)
-          .from('kg')
-          .to('mcg'),
-      }))
-    })
+  return generateRandomExercises()
     .concat(benchSets, cardioSets)
     .reverse()
 }

@@ -7,3 +7,9 @@
 - add workout template support?
 - edit exercise moreIsBetter and groupBy
 - click on empty space OR back to remove focus on set
+- fix weak sets being chosen for records on seeding (after seeding it's okay)
+- recalculate records only for the grouping of deleted set
+- ExerciseRecordSet model need to be rethough
+- If a record set is repeated on the same day all copies are shown as records
+- "workoutRecordsCalculator" uses functions from "exercise-records-seed-generator". This should be refactored
+- weak ass records should be removed

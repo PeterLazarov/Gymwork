@@ -34,18 +34,18 @@ const WorkoutExerciseTrackView: React.FC = () => {
         ...draftCopy,
         exercise: stateStore.openedExerciseGuid,
       })
-      workoutStore.addSet(fromDraft)
+      workoutStore.addSet(fromDraft, stateStore.openedDate)
     }
   }
 
   function handleUpdate() {
-    workoutStore.updateWorkoutExerciseSet(
-      WorkoutSetModel.create({
-        ...getSnapshot(stateStore.draftSet!),
-        exercise: selectedSet?.exercise.guid!,
-        guid: selectedSet!.guid,
-      })
-    )
+    const updatedSet = WorkoutSetModel.create({
+      ...getSnapshot(stateStore.draftSet!),
+      exercise: selectedSet?.exercise.guid!,
+      guid: selectedSet!.guid,
+    })
+
+    workoutStore.updateWorkoutExerciseSet(updatedSet, stateStore.openedDate)
 
     setSelectedSet(null)
   }

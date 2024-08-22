@@ -13,11 +13,11 @@ import { DateInput, DateTime, Interval } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import { useRef, useEffect, useState, useMemo } from 'react'
 import { Dimensions, View } from 'react-native'
+import { computed } from 'mobx'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
 import chartConfig from './chartConfig'
-import { computed } from 'mobx'
 import seriesSetup from './seriesSetup'
 
 // Docs

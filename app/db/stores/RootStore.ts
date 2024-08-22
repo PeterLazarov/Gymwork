@@ -4,7 +4,8 @@ import { ExerciseStoreModel } from './ExerciseStore'
 import { StateStoreModel } from './StateStore'
 import { TimeStoreModel } from './TimeStore'
 import { WorkoutStoreModel } from './WorkoutStore'
-import { Exercise } from '../models'
+import { RecordStoreModel } from './RecordStore'
+import { Exercise } from 'app/db/models'
 
 export const RootStoreModel = types
   .model('RootStore')
@@ -13,6 +14,7 @@ export const RootStoreModel = types
     workoutStore: types.optional(WorkoutStoreModel, {}),
     timeStore: types.optional(TimeStoreModel, {}),
     stateStore: types.optional(StateStoreModel, {}),
+    recordStore: types.optional(RecordStoreModel, {}),
   })
   .views(self => ({
     get openedWorkoutExercises() {
@@ -26,10 +28,17 @@ export const RootStoreModel = types
         .filter(Boolean)
     },
     get openedExerciseRecords() {
-      return self.workoutStore.getExerciseRecords(
+      return self.recordStore.getExerciseRecords(
         self.stateStore.openedExerciseGuid
       )
     },
+  }))
+  .actions(self => ({
+    initializeStores(): Promise<void>  {
+      return self.exerciseStore.fetch()
+        .then(() => self.workoutStore.fetch()
+        .then(() => self.recordStore.fetch()))
+    }
   }))
 
 /**

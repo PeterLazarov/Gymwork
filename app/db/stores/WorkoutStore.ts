@@ -21,10 +21,6 @@ import {
   WorkoutSetSnapshotIn,
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
-import {
-  ExerciseRecord,
-  calculateRecords,
-} from 'app/services/workoutRecordsCalculator'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -80,22 +76,6 @@ export const WorkoutStoreModel = types
 
       return sortedExercises.map(({ exercise }) => exercise)
     },
-
-    get allExerciseRecords(): Record<Exercise['guid'], ExerciseRecord> {
-      return calculateRecords(store.workouts)
-    },
-
-    getExerciseRecords(
-      exerciseID: Exercise['guid']
-    ): WorkoutSet[] {
-
-      const exerciseRecords = this.allExerciseRecords[exerciseID] ?? {}
-      const sorted = Object.entries(exerciseRecords)
-      .sort((a, b) => Number(a[0]) - Number(b[0]))
-      .map(entry => entry[1]); 
-
-      return sorted
-    },
   }))
   .actions(withSetPropAction)
   .actions(self => ({
@@ -133,18 +113,22 @@ export const WorkoutStoreModel = types
       })
       self.workouts.push(created)
     },
-    addSet(newSet: WorkoutSet) {
+    addSet(newSet: WorkoutSet, workoutDate: string) {
       self.rootStore.stateStore.openedWorkout?.sets.push(newSet)
+      self.rootStore.recordStore.runSetUpdatedCheck(newSet, workoutDate)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
-      const set = self.rootStore.stateStore.openedWorkout?.sets.find(
+      const deletedSet = self.rootStore.stateStore.openedWorkout?.sets.find(
         s => s.guid === setGuid
       )
-      if (set) {
-        destroy(set)
+      if (deletedSet) {
+        const { exercise } = deletedSet
+        destroy(deletedSet)
+
+        self.rootStore.recordStore.runSetDeletedRefreshCheck(deletedSet, exercise)
       }
     },
-    updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
+    updateWorkoutExerciseSet(updatedSet: WorkoutSet, workoutDate: string) {
       // TODO: fix typescript hackery
       const updated = self.rootStore.stateStore.openedWorkout?.sets.map(set =>
         set.guid === updatedSet.guid ? updatedSet : set
@@ -153,6 +137,8 @@ export const WorkoutStoreModel = types
         self.rootStore.stateStore.openedWorkout.sets =
           updated as unknown as IMSTArray<typeof WorkoutSetModel>
       }
+
+      self.rootStore.recordStore.runSetUpdatedCheck(updatedSet, workoutDate)
     },
     setWorkoutNotes(notes: string) {
       if (self.rootStore.stateStore.openedWorkout) {

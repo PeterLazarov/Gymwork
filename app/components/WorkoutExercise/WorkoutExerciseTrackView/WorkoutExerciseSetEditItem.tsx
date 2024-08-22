@@ -17,8 +17,10 @@ type Props = {
 
 const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
   const { workoutStore, openedExerciseRecords, stateStore } = useStores()
-  const isRecord = Object.values(openedExerciseRecords).some(
-    record => record.guid === set.guid
+  const isRecord = openedExerciseRecords.recordSets.some(
+    record =>
+      record.groupingValue === set.groupingValue &&
+      record.measurementValue === set.measurementValue
   )
   const color = isFocused ? colors.primary : colors.secondaryText
 

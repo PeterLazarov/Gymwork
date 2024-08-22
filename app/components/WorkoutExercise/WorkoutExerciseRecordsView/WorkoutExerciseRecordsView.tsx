@@ -1,23 +1,20 @@
 import { observer } from 'mobx-react-lite'
-import { getParentOfType } from 'mobx-state-tree'
 import React from 'react'
 import { View, ScrollView } from 'react-native'
 
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
-import { WorkoutModel, WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
-import RecordsListItem from './RecordsListItem'
+import { ExerciseRecordSet } from 'app/db/models/ExerciseRecordSet'
 import { PressableHighlight } from 'designSystem'
+import RecordsListItem from './RecordsListItem'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
   const { openedExerciseRecords, stateStore } = useStores()
 
-  // TODO extract out to action?
-  function goToDate(set: WorkoutSet) {
-    const workout = getParentOfType(set, WorkoutModel)
-    stateStore.setProp('openedDate', workout.date)
+  function goToDate(set: ExerciseRecordSet) {
+    stateStore.setProp('openedDate', set.date)
     navigate('Workout')
   }
 
@@ -30,13 +27,13 @@ const WorkoutExerciseRecordsView: React.FC = () => {
         flexGrow: 1,
       }}
     >
-      {openedExerciseRecords.length > 0 ? (
+      {openedExerciseRecords.recordSets.length > 0 ? (
         <ScrollView
           style={{
             flexBasis: 0,
           }}
         >
-          {openedExerciseRecords.map((set, i) => {
+          {openedExerciseRecords.recordSets.map((set, i) => {
             return (
               <PressableHighlight
                 key={set.guid}

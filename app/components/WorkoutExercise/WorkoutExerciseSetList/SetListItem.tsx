@@ -24,14 +24,16 @@ const SetListItem: React.FC<Props> = ({
   number,
   hideRecords = false,
 }) => {
-  const { workoutStore } = useStores()
+  const { recordStore } = useStores()
 
-  const exerciseActualRecords = exercise
-    ? workoutStore.getExerciseRecords(exercise.guid)
-    : []
+  const exerciseRecord = exercise
+    ? recordStore.getExerciseRecords(exercise.guid)
+    : null
 
-  const isRecord = exerciseActualRecords.some(
-    record => record.guid === set.guid
+  const isRecord = exerciseRecord?.recordSets.some(
+    record =>
+      record.groupingValue === set.groupingValue &&
+      record.measurementValue === set.measurementValue
   )
   const color = isFocused ? colors.primary : colors.secondaryText
   return (
