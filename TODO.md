@@ -7,3 +7,4 @@
 - add workout template support?
 - edit exercise moreIsBetter and groupBy
 - click on empty space OR back to remove focus on set
+- Add Timer superset support
