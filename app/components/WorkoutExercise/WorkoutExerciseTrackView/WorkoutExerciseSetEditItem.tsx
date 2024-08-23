@@ -67,34 +67,34 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
           />
         )}
       </View>
-      {stateStore.openedExercise!.hasRepMeasument && (
+      {stateStore.openedExercise.hasRepMeasument && (
         <SetDataLabel
           value={set.reps}
           unit={translate('reps')}
           isFocused={isFocused}
         />
       )}
-      {stateStore.openedExercise!.hasWeightMeasument && (
+      {stateStore.openedExercise.hasWeightMeasument && (
         <SetDataLabel
           value={set.weight}
           unit={set.exercise.measurements.weight!.unit}
           isFocused={isFocused}
         />
       )}
-      {stateStore.openedExercise!.hasDistanceMeasument && (
+      {stateStore.openedExercise.hasDistanceMeasument && (
         <SetDataLabel
           value={set.distance}
           unit={set.exercise.measurements.distance!.unit}
           isFocused={isFocused}
         />
       )}
-      {stateStore.openedExercise!.hasTimeMeasument && (
+      {stateStore.openedExercise.hasTimeMeasument && (
         <SetDataLabel
           value={getFormatedDuration(set.duration)}
           isFocused={isFocused}
         />
       )}
-      {stateStore.openedExercise!.measurements.rest && (
+      {stateStore.openedExercise.measurements.rest && (
         <SetDataLabel
           value={`${translate('rest')} ${getFormatedDuration(
             set.rest ?? 0,

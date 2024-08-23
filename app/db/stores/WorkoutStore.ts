@@ -131,10 +131,10 @@ export const WorkoutStoreModel = types
       self.workouts.push(created)
     },
     addSet(newSet: WorkoutSet) {
-      self.rootStore.stateStore.openedWorkout?.sets.push(newSet)
+      self.rootStore.stateStore.openedWorkout.sets.push(newSet)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
-      const set = self.rootStore.stateStore.openedWorkout?.sets.find(
+      const set = self.rootStore.stateStore.openedWorkout.sets.find(
         s => s.guid === setGuid
       )
       if (set) {
@@ -143,7 +143,7 @@ export const WorkoutStoreModel = types
     },
     updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
       // TODO: fix typescript hackery
-      const updated = self.rootStore.stateStore.openedWorkout?.sets.map(set =>
+      const updated = self.rootStore.stateStore.openedWorkout.sets.map(set =>
         set.guid === updatedSet.guid ? updatedSet : set
       )
       if (self.rootStore.stateStore.openedWorkout) {

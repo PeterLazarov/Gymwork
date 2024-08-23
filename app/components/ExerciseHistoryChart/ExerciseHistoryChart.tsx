@@ -58,7 +58,7 @@ const ExerciseHistoryChart = (props: {
   width?: number
 }) => {
   const { workoutStore, stateStore } = useStores()
-  const openedExercise = stateStore.openedExercise!
+  const openedExercise = stateStore.openedExercise
 
   const chartElRef = useRef<any>(null)
   const eChartRef = useRef<ECharts>()
@@ -134,7 +134,7 @@ const ExerciseHistoryChart = (props: {
 
   const { getChartSeries } = seriesSetup({ data: setsByDay })
 
-  const series = getChartSeries(openedExercise)!
+  const series = getChartSeries(openedExercise)
 
   const { getViewOptions, feedChartSeriesData } = chartConfig({
     series,

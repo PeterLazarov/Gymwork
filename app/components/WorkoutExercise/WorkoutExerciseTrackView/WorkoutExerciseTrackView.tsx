@@ -21,8 +21,8 @@ const WorkoutExerciseTrackView: React.FC = () => {
       const clonedSet = { exercise: exercise.guid, ...rest }
       stateStore.setProp('draftSet', clonedSet)
     } else {
-      // @ts-ignore
-      stateStore.setProp('draftSet', stateStore.openedExerciseNextSet)
+      const draftSetSnapshot = getSnapshot(stateStore.openedExerciseNextSet)
+      stateStore.setProp('draftSet', draftSetSnapshot)
     }
   }, [selectedSet])
 
@@ -36,13 +36,13 @@ const WorkoutExerciseTrackView: React.FC = () => {
       workoutStore.addSet(fromDraft)
     }
 
-    if (stateStore.openedExercise?.measurements.rest) {
+    if (stateStore.openedExercise.measurements.rest) {
       restTimer.start()
     }
   }
 
   useEffect(() => {
-    if (stateStore.openedExercise?.measurements.rest) {
+    if (stateStore.openedExercise.measurements.rest) {
       stateStore.draftSet!.setProp(
         'restMs',
         restTimer.timeElapsed.as('milliseconds')
