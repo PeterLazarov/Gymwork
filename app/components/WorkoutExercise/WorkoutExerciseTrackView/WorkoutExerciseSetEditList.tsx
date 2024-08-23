@@ -35,7 +35,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       return (
         <PressableHighlight
           style={{
-            backgroundColor: isActive ? colors.primaryLight : undefined,
+            backgroundColor: isActive ? colors.primaryLighter : undefined,
           }}
           onLongPress={() => {
             onDragStart()
@@ -51,7 +51,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
               alignItems: 'center',
               flexDirection: 'row',
               justifyContent: 'space-between',
-              paddingLeft: 10,
+              paddingLeft: isActive ? 10 : undefined,
             }}
           >
             {isActive && <Icon icon="drag-horizontal-variant" />}
