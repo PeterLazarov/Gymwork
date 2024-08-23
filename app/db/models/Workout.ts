@@ -37,10 +37,14 @@ export const WorkoutModel = types
       const firstSet = self.sets[0]
       const lastSet = self.sets.at(-1)
 
+      // Your first set takes time
+      const padding = Duration.fromDurationLike({ minutes: 1 })
+
       if (firstSet && lastSet) {
         return Duration.fromMillis(
-          lastSet.createdAt.getTime() - firstSet.createdAt.getTime()
-        )
+          lastSet.createdAt.getTime() -
+            (firstSet.createdAt.getTime() - firstSet.durationMs)
+        ).plus(padding)
       }
 
       return Duration.fromMillis(0)
