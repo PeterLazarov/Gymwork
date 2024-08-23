@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View, ScrollView } from 'react-native'
 
 import EmptyState from 'app/components/EmptyState'
@@ -12,6 +12,12 @@ import RecordsListItem from './RecordsListItem'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
   const { openedExerciseRecords, stateStore } = useStores()
+
+  const recordSets = useMemo(() => {
+    return openedExerciseRecords.recordSets.length > 0
+      ? openedExerciseRecords.recordSets.filter(record => !record.isWeakAss)
+      : []
+  }, [stateStore.openedExerciseSets, openedExerciseRecords.recordSets])
 
   function goToDate(set: ExerciseRecordSet) {
     stateStore.setProp('openedDate', set.date)
@@ -27,30 +33,28 @@ const WorkoutExerciseRecordsView: React.FC = () => {
         flexGrow: 1,
       }}
     >
-      {openedExerciseRecords.recordSets.length > 0 ? (
+      {recordSets.length > 0 ? (
         <ScrollView
           style={{
             flexBasis: 0,
           }}
         >
-          {openedExerciseRecords.recordSets
-            .filter(record => !record.isWeakAss)
-            .map((set, i) => {
-              return (
-                <PressableHighlight
-                  key={set.guid}
-                  style={{
-                    paddingVertical: 4,
-                  }}
-                  onPress={() => goToDate(set)}
-                >
-                  <RecordsListItem
-                    set={set}
-                    exercise={stateStore.openedExercise!}
-                  />
-                </PressableHighlight>
-              )
-            })}
+          {recordSets.map((set, i) => {
+            return (
+              <PressableHighlight
+                key={set.guid}
+                style={{
+                  paddingVertical: 4,
+                }}
+                onPress={() => goToDate(set)}
+              >
+                <RecordsListItem
+                  set={set}
+                  exercise={stateStore.openedExercise!}
+                />
+              </PressableHighlight>
+            )
+          })}
         </ScrollView>
       ) : (
         <EmptyState text={translate('recordsLogEmpty')} />

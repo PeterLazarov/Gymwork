@@ -47,11 +47,13 @@ export const RecordStoreModel = types
      {
       const exerciseRecords =  self.records.find(record => record.exercise.guid === exerciseID)!
 
-      // console.log('removing weak ass sets for exercise ', exerciseRecords.exercise.name)
-      // removeWeakAssRecords(exerciseRecords)
+      if (exerciseRecords.recordSets.length > 0) {
+        console.log('removing weak ass sets for exercise ', exerciseRecords.exercise.name)
+        removeWeakAssRecords(exerciseRecords)
 
-      exerciseRecords.recordSets.sort((setA, setB) => setA.groupingValue - setB.groupingValue);
-
+        exerciseRecords.recordSets.sort((setA, setB) => setA.groupingValue - setB.groupingValue);
+      }
+      
       return exerciseRecords
     },
     runSetUpdatedCheck(updatedSet: WorkoutSet, workoutDate: string) {

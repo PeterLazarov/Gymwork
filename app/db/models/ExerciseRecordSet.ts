@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { ExerciseRecord, ExerciseRecordModel } from './ExerciseRecord'
 import convert from 'convert-units'
+import { Exercise } from './Exercise'
 
 export const ExerciseRecordSetModel = types
   .model('ExerciseRecordSet')
@@ -20,6 +21,9 @@ export const ExerciseRecordSetModel = types
   .views(self => ({
     get exerciseRecord(): ExerciseRecord {
       return getParentOfType(self, ExerciseRecordModel)
+    },
+    get measurements(): Exercise['measurements'] {
+      return this.exerciseRecord.exercise.measurements
     },
     get measurementValue() {
       return self.weightMcg || self.durationMs || self.distanceMm
@@ -43,7 +47,7 @@ export const ExerciseRecordSetModel = types
       return Number(
         convert(self.weightMcg ?? 0)
           .from('mcg')
-          .to(this.exerciseRecord.exercise.measurements.weight!.unit)
+          .to(this.measurements.weight!.unit)
           .toFixed(2)
       )
     },
@@ -51,7 +55,7 @@ export const ExerciseRecordSetModel = types
       return Number(
         convert(self.distanceMm ?? 0)
           .from('mm')
-          .to(this.exerciseRecord.exercise.measurements.distance!.unit)
+          .to(this.measurements.distance!.unit)
           .toFixed(2)
       )
     },
@@ -59,7 +63,7 @@ export const ExerciseRecordSetModel = types
       return Number(
         convert(self.durationMs ?? 0)
           .from('ms')
-          .to(this.exerciseRecord.exercise.measurements.time!.unit)
+          .to(this.measurements.time!.unit)
           .toFixed(2)
       )
     },

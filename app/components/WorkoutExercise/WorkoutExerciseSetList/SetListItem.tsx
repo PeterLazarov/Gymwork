@@ -3,8 +3,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import SetDataLabel from '../SetDataLabel'
-import { useStores } from 'app/db/helpers/useStores'
-import { Exercise, WorkoutSet } from 'app/db/models'
+import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
 import { Icon, colors, fontSize } from 'designSystem'
@@ -12,6 +11,7 @@ import { Icon, colors, fontSize } from 'designSystem'
 type Props = {
   set: WorkoutSet
   exercise: Exercise
+  exerciseRecord?: ExerciseRecord
   number?: number
   isFocused?: boolean
   hideRecords?: boolean
@@ -20,16 +20,11 @@ type Props = {
 const SetListItem: React.FC<Props> = ({
   set,
   exercise,
+  exerciseRecord,
   isFocused,
   number,
   hideRecords = false,
 }) => {
-  const { recordStore } = useStores()
-
-  const exerciseRecord = exercise
-    ? recordStore.getExerciseRecords(exercise.guid)
-    : null
-
   const isRecord = exerciseRecord?.recordSets.some(
     record =>
       record.groupingValue === set.groupingValue &&

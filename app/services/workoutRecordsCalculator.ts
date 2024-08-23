@@ -21,7 +21,7 @@ export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void =
       lastRecord.guid !== record.guid &&
       isFirstRecordBetterThanSecond(lastRecord ,record)
     ) {
-      console.log('weak ass', record.reps, record.weight)
+      console.log('weak ass', record.groupingValue, record.measurementValue)
       const weakAssRecord = exerciseAllRecords.recordSets.find(set => set.guid === record.guid)
       weakAssRecord?.setProp('isWeakAss', true)
       // exerciseAllRecords.recordSets.remove(record)
