@@ -3,13 +3,12 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import SetDataLabel from '../SetDataLabel'
-import { Exercise } from 'app/db/models'
+import { Exercise, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
-import { ExerciseRecordSet } from 'app/db/models/ExerciseRecordSet'
 
 type Props = {
-  set: ExerciseRecordSet
+  set: WorkoutSet
   exercise: Exercise
 }
 

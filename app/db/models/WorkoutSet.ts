@@ -12,7 +12,8 @@ export const WorkoutSetModel = types
     guid: types.optional(types.identifier, () => uuidv4()),
     exercise: types.reference(ExerciseModel),
     isWarmup: false,
-
+    date: '',
+    isWeakAss: false,
     reps: 0,
 
     // The smallest unit that can convert to both metric and imperial without fractions is the microgram (μg)
@@ -87,9 +88,12 @@ export const WorkoutSetModel = types
       const groupingIsMoreBetter = self.exercise.measurements[self.exercise.groupRecordsBy]!.moreIsBetter
 
       const isTied = self.measurementValue === otherSet.measurementValue
-      const tieBreak = groupingIsMoreBetter ? self.groupingValue > otherSet.groupingValue : self.groupingValue < otherSet.groupingValue
+      
+      const measurementDiff = self.measurementValue - otherSet.measurementValue
+      const groupingDiff = self.groupingValue - otherSet.groupingValue
 
-      const isMeasurementMore = isMoreBetter ? self.measurementValue > otherSet.measurementValue : self.measurementValue < otherSet.measurementValue
+      const tieBreak = groupingIsMoreBetter ? groupingDiff > 0 : groupingDiff < 0
+      const isMeasurementMore = isMoreBetter ? measurementDiff > 0 : measurementDiff < 0
       
       return isMeasurementMore || (isTied && tieBreak)
     }

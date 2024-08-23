@@ -113,9 +113,9 @@ export const WorkoutStoreModel = types
       })
       self.workouts.push(created)
     },
-    addSet(newSet: WorkoutSet, workoutDate: string) {
+    addSet(newSet: WorkoutSet) {
       self.rootStore.stateStore.openedWorkout?.sets.push(newSet)
-      self.rootStore.recordStore.runSetUpdatedCheck(newSet, workoutDate)
+      self.rootStore.recordStore.runSetUpdatedCheck(newSet)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
       const deletedSet = self.rootStore.stateStore.openedWorkout?.sets.find(
@@ -125,11 +125,13 @@ export const WorkoutStoreModel = types
         const { exercise } = deletedSet
         destroy(deletedSet)
 
-        self.rootStore.recordStore.runSetDeletedRefreshCheck(deletedSet, exercise)
+        self.rootStore.recordStore.runSetGroupingRecordRefreshCheck(deletedSet, exercise)
       }
     },
-    updateWorkoutExerciseSet(updatedSet: WorkoutSet, workoutDate: string) {
+    updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
       // TODO: fix typescript hackery
+      const oldSet = self.rootStore.stateStore.openedWorkout?.sets.find(set => set.guid === updatedSet.guid)!
+      
       const updated = self.rootStore.stateStore.openedWorkout?.sets.map(set =>
         set.guid === updatedSet.guid ? updatedSet : set
       )
@@ -138,7 +140,11 @@ export const WorkoutStoreModel = types
           updated as unknown as IMSTArray<typeof WorkoutSetModel>
       }
 
-      self.rootStore.recordStore.runSetUpdatedCheck(updatedSet, workoutDate)
+      self.rootStore.recordStore.runSetGroupingRecordRefreshCheck(oldSet, oldSet.exercise)
+
+      if (updatedSet.groupingValue !== oldSet.groupingValue) {
+        self.rootStore.recordStore.runSetUpdatedCheck(updatedSet)
+      }
     },
     setWorkoutNotes(notes: string) {
       if (self.rootStore.stateStore.openedWorkout) {

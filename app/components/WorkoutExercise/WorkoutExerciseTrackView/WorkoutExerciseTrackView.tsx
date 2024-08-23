@@ -33,8 +33,9 @@ const WorkoutExerciseTrackView: React.FC = () => {
       const fromDraft = WorkoutSetModel.create({
         ...draftCopy,
         exercise: stateStore.openedExerciseGuid,
+        date: stateStore.openedDate,
       })
-      workoutStore.addSet(fromDraft, stateStore.openedDate)
+      workoutStore.addSet(fromDraft)
     }
   }
 
@@ -43,9 +44,10 @@ const WorkoutExerciseTrackView: React.FC = () => {
       ...getSnapshot(stateStore.draftSet!),
       exercise: selectedSet?.exercise.guid!,
       guid: selectedSet!.guid,
+      date: selectedSet!.date,
     })
 
-    workoutStore.updateWorkoutExerciseSet(updatedSet, stateStore.openedDate)
+    workoutStore.updateWorkoutExerciseSet(updatedSet)
 
     setSelectedSet(null)
   }

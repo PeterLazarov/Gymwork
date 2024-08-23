@@ -4,14 +4,14 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { ExerciseModel } from './Exercise'
-import { ExerciseRecordSetModel } from './ExerciseRecordSet'
+import { WorkoutSetModel } from './WorkoutSet'
 
 export const ExerciseRecordModel = types
   .model('ExerciseRecord')
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
     exercise: types.reference(ExerciseModel),
-    recordSets: types.array(ExerciseRecordSetModel),
+    recordSets: types.array(WorkoutSetModel),
   })
   .actions(withSetPropAction)
 

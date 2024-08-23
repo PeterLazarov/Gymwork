@@ -6,9 +6,9 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
-import { ExerciseRecordSet } from 'app/db/models/ExerciseRecordSet'
 import { PressableHighlight } from 'designSystem'
 import RecordsListItem from './RecordsListItem'
+import { WorkoutSet } from 'app/db/models'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
   const { stateStore } = useStores()
@@ -22,7 +22,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
     //   : []
   }, [stateStore.openedExerciseSets])
 
-  function goToDate(set: ExerciseRecordSet) {
+  function goToDate(set: WorkoutSet) {
     stateStore.setProp('openedDate', set.date)
     navigate('Workout')
   }

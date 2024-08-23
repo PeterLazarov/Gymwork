@@ -15,7 +15,7 @@ const cardioExerciseID = exerciseSeedData
   .findIndex(e => e.muscles.includes('cardio'))
   .toString()
 
-const generateRandomExercises = () => {
+const generateRandomExercises = (date: string) => {
   return Array.from({
     length: between(3, 8),
   })
@@ -28,11 +28,12 @@ const generateRandomExercises = () => {
         weightMcg: convert(between(8, 40) * weightIncrementKg)
           .from('kg')
           .to('mcg'),
+        date,
       }))
     })
 }
 
-const generateSets = (): WorkoutSetSnapshotIn[] => {
+const generateSets = (date: string): WorkoutSetSnapshotIn[] => {
   const benchSets: WorkoutSetSnapshotIn[] = Array.from({
     length: between(3, 5),
   }).map((_, i) => {
@@ -44,6 +45,7 @@ const generateSets = (): WorkoutSetSnapshotIn[] => {
       reps: between(3, 12),
       weightMcg,
       isWarmup: i === 0,
+      date
     }
   })
 
@@ -57,21 +59,24 @@ const generateSets = (): WorkoutSetSnapshotIn[] => {
       durationMs: convert(km * between(4, 7) * 60)
         .from('min')
         .to('ms'),
+      date
     } as WorkoutSetSnapshotIn
   })
 
-  return generateRandomExercises()
+  return generateRandomExercises(date)
     .concat(benchSets, cardioSets)
     .reverse()
 }
 const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
   length: numberOfWorkouts,
 }).map((_, i): WorkoutSnapshotIn => {
+  const date = today
+    .minus({ days: i + i * Math.ceil(Math.random() * 2) })
+    .toISODate()!
+
   return {
-    date: today
-      .minus({ days: i + i * Math.ceil(Math.random() * 2) })
-      .toISODate()!,
-    sets: generateSets(),
+    date,
+    sets: generateSets(date),
   }
 })
 

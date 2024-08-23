@@ -1,14 +1,19 @@
 import { destroy, getSnapshot } from "mobx-state-tree"
 
-import { ExerciseRecord, ExerciseRecordSnapshotIn, Workout, WorkoutSet } from "app/db/models"
-import { ExerciseRecordSet, ExerciseRecordSetModel, ExerciseRecordSetSnapshotIn } from "app/db/models/ExerciseRecordSet"
+import { 
+  ExerciseRecord, 
+  ExerciseRecordSnapshotIn, 
+  Workout, 
+  WorkoutSet, 
+  WorkoutSetSnapshotIn
+} from "app/db/models"
 import { checkSetAndAddRecord } from "app/db/seeds/exercise-records-seed-generator"
 
 export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void => {
   const groupingRecordSetMap = exerciseAllRecords.recordSets.reduce((acc, set) => { 
     acc[set.groupingValue] = set 
     return acc
-  }, {} as Record<number, ExerciseRecordSet>)
+  }, {} as Record<number, WorkoutSet>)
 
   const groupingsDescending = Object.keys(groupingRecordSetMap)
     .map(Number) 
@@ -21,7 +26,7 @@ export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void =
     
     if (
       lastRecord.guid !== record.guid &&
-      isFirstRecordBetterThanSecond(lastRecord ,record)
+      lastRecord.isBetterThan(record)
     ) {
       const weakAssRecord = exerciseAllRecords.recordSets.find(set => set.guid === record.guid)
       weakAssRecord?.setProp('isWeakAss', true)
@@ -45,7 +50,7 @@ export const getGroupingRecordsForExercise = (
 
   const sortedWorkouts = workouts.slice().sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
-  let untouchedRecords: ExerciseRecordSetSnapshotIn[] = []
+  let untouchedRecords: WorkoutSetSnapshotIn[] = []
   oldExerciseRecords.recordSets.forEach(recordSet => {
     if (recordSet.groupingValue !== groupingToRefresh) {
       untouchedRecords.push(getSnapshot(recordSet))
@@ -58,10 +63,8 @@ export const getGroupingRecordsForExercise = (
 
   sortedWorkouts.forEach(workout => {
     workout.sets.forEach(set => {
-      if (set.exercise.guid === oldExerciseRecords.exercise.guid) {
-        if (set.groupingValue === groupingToRefresh) {
-          checkSetAndAddRecord(record, set, workout.date)
-        }
+      if (set.exercise.guid === oldExerciseRecords.exercise.guid && set.groupingValue === groupingToRefresh) {
+        checkSetAndAddRecord(record, set)
       }
     })
   })
@@ -73,74 +76,35 @@ export const isCurrentRecord = (
   record: ExerciseRecord, 
   set: WorkoutSet, 
 ) => {
-  const currentRecord = record.recordSets.find(set => set.groupingValue === set.groupingValue)
+  const currentRecord = record.recordSets.find(record => record.groupingValue === set.groupingValue)
 
-  return currentRecord && set.groupingValue === currentRecord.groupingValue && set.measurementValue === currentRecord.measurementValue
+  return currentRecord?.guid === set.guid
 }
 
 export const isNewRecord = (
-  recordSets: ExerciseRecordSet[], 
+  recordSets: WorkoutSet[], 
   set: WorkoutSet, 
 ) => {
-  const currentRecord = recordSets.find(set => set.groupingValue === set.groupingValue)
-
-  return !currentRecord || isNewSetBetterThanCurrent(set, currentRecord)
+  const currentRecord = recordSets.find(record => record.groupingValue === set.groupingValue)
+console.log(set.measurementValue - (currentRecord?.measurementValue || 0))
+  return !currentRecord || set.isBetterThan(currentRecord)
 }
 
 
 export const addToRecords = (
-  records: ExerciseRecordSet[], 
-  set: WorkoutSet, 
-  date: string
-): ExerciseRecordSet[] => {
-  const currentRecord = records!.find(record => record.groupingValue === set.groupingValue)
-  const updatedSet = ExerciseRecordSetModel.create({ 
-    date, 
-    weightMcg: set.weightMcg, 
-    distanceMm: set.distanceMm,
-    durationMs: set.durationMs,
-    reps: set.reps
-  })
+  records: WorkoutSet[], 
+  newRecord: WorkoutSet, 
+): WorkoutSet[] => {
+  const currentRecord = records!.find(record => record.groupingValue === newRecord.groupingValue)
 
   const recordSets = records!.slice()
   if (currentRecord) {
     const index = recordSets.indexOf(currentRecord)
-    recordSets[index] = updatedSet
+    recordSets[index] = newRecord
     destroy(currentRecord)
   } else {
-    recordSets.push(updatedSet)
+    recordSets.push(newRecord)
   }
 
   return recordSets
-}
-
-const isFirstRecordBetterThanSecond = (firstRecord: ExerciseRecordSet, secondRecord: ExerciseRecordSet) => {
-  const { exercise } = firstRecord.exerciseRecord
-  const isMoreBetter = exercise.measurements[exercise.measuredBy]!.moreIsBetter
-  const groupingIsMoreBetter = exercise.measurements[exercise.groupRecordsBy]!.moreIsBetter
-
-  const isTied = secondRecord.measurementValue === firstRecord.measurementValue
-
-  const measurementDiff = firstRecord.measurementValue - secondRecord.measurementValue
-  const groupingDiff = firstRecord.groupingValue - secondRecord.groupingValue
-
-  const tieBreak = groupingIsMoreBetter ? groupingDiff > 0 : groupingDiff < 0
-  const isMeasurementMore = isMoreBetter ? measurementDiff > 0 : measurementDiff < 0
-  
-  return isMeasurementMore || (isTied && tieBreak)
-}
-
-const isNewSetBetterThanCurrent = (newSet: WorkoutSet, currentSet: ExerciseRecordSet) => {
-  const isMoreBetter = newSet.exercise.measurements[newSet.exercise.measuredBy]!.moreIsBetter
-  const groupingIsMoreBetter = newSet.exercise.measurements[newSet.exercise.groupRecordsBy]!.moreIsBetter
-
-  const isTied = currentSet.measurementValue === newSet.measurementValue
-
-  const measurementDiff = newSet.measurementValue - currentSet.measurementValue
-  const groupingDiff = newSet.groupingValue - currentSet.groupingValue
-
-  const tieBreak = groupingIsMoreBetter ? groupingDiff > 0 : groupingDiff < 0
-  const isMeasurementMore = isMoreBetter ? measurementDiff > 0 : measurementDiff < 0
-  
-  return isMeasurementMore || (isTied && tieBreak)
 }

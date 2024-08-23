@@ -1,5 +1,11 @@
-import { Exercise, ExerciseRecordSnapshotIn, Workout, WorkoutSet } from "app/db/models"
-import { ExerciseRecordSetSnapshotIn } from "app/db/models/ExerciseRecordSet"
+import { 
+  Exercise, 
+  ExerciseRecordSnapshotIn, 
+  Workout, 
+  WorkoutSet, 
+  WorkoutSetSnapshotIn 
+} from "app/db/models"
+import { getSnapshot } from "mobx-state-tree"
 
 export const getRecords = (workouts: Workout[]): ExerciseRecordSnapshotIn[] => {
   const records: ExerciseRecordSnapshotIn[] = []
@@ -16,7 +22,7 @@ export const getRecords = (workouts: Workout[]): ExerciseRecordSnapshotIn[] => {
         records.push(record)
       }
 
-      checkSetAndAddRecord(record, set, workout.date)
+      checkSetAndAddRecord(record, set)
     })
   })
 
@@ -34,7 +40,7 @@ export const getRecordsForExercise = (
   sortedWorkouts.forEach(workout => {
     workout.sets.forEach(set => {
       if (set.exercise.guid === exercise.guid) {
-        checkSetAndAddRecord(record, set, workout.date)
+        checkSetAndAddRecord(record, set)
       }
     })
   })
@@ -45,48 +51,40 @@ export const getRecordsForExercise = (
 export const checkSetAndAddRecord = (
   record: ExerciseRecordSnapshotIn, 
   set: WorkoutSet, 
-  date: string
 ) => {
   const grouping = getDataFieldForKey(set.exercise.groupRecordsBy)
   const currentRecord = record.recordSets!.find(s => s[grouping] === set.groupingValue)
   const isRecord = !currentRecord || isNewSetBetterThanCurrent(set, currentRecord)
 
-  console.log({isRecord})
   if (isRecord) {
-    const updatedSet = { 
-      date, 
-      weightMcg: set.weightMcg, 
-      distanceMm: set.distanceMm,
-      durationMs: set.durationMs,
-      reps: set.reps,
-    }
+    const newRecord = getSnapshot(set)
 
     if (currentRecord) {
       const newRecords = record.recordSets!.slice()
-      newRecords[newRecords.indexOf(currentRecord)] = updatedSet
+      newRecords[newRecords.indexOf(currentRecord)] = newRecord
 
       record.recordSets = newRecords
     } else {
       const newRecords = record.recordSets!.slice()
 
-      newRecords.push(updatedSet)
+      newRecords.push(newRecord)
 
       record.recordSets = newRecords
     }
   }
 }
 
-const getDataFieldForKey = (key: string): keyof ExerciseRecordSetSnapshotIn => {
+const getDataFieldForKey = (key: string): keyof WorkoutSetSnapshotIn => {
   const dataFieldsMap = {
     weight: 'weightMcg',
     time: 'durationMs',
     reps: 'reps',
     distance: 'distanceMm',
   }
-  return dataFieldsMap[key as keyof typeof dataFieldsMap] as keyof ExerciseRecordSetSnapshotIn
+  return dataFieldsMap[key as keyof typeof dataFieldsMap] as keyof WorkoutSetSnapshotIn
 }
 
-const isNewSetBetterThanCurrent = (newSet: WorkoutSet, currentSet: ExerciseRecordSetSnapshotIn) => {
+const isNewSetBetterThanCurrent = (newSet: WorkoutSet, currentSet: WorkoutSetSnapshotIn) => {
   const isMoreBetter = newSet.exercise.measurements[newSet.exercise.measuredBy]!.moreIsBetter
   const groupingIsMoreBetter = newSet.exercise.measurements[newSet.exercise.groupRecordsBy]!.moreIsBetter
 

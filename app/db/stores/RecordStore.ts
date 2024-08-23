@@ -57,18 +57,19 @@ export const RecordStoreModel = types
 
       return exerciseRecords
     },
-    runSetUpdatedCheck(updatedSet: WorkoutSet, workoutDate: string) {
+    runSetUpdatedCheck(updatedSet: WorkoutSet) {
       const records = this.getExerciseRecords(updatedSet.exercise.guid)
 
-      if (isNewRecord(records.recordSets, updatedSet)) {
-        const updatedRecords = addToRecords(records.recordSets, updatedSet, workoutDate)
+      const isNewRecordBool = isNewRecord(records.recordSets, updatedSet)
+      if (isNewRecordBool) {
+        const updatedRecords = addToRecords(records.recordSets, updatedSet)
        
         const recordSnapshots = updatedRecords.map(record => getSnapshot(record))
 
         records.setProp('recordSets', recordSnapshots)
       }
     },
-    runSetDeletedRefreshCheck(deletedSet: WorkoutSet, exercise: Exercise) {
+    runSetGroupingRecordRefreshCheck(deletedSet: WorkoutSet, exercise: Exercise) {
       const records = this.getExerciseRecords(exercise.guid)
       const isRecordBool = isCurrentRecord(records, deletedSet)
 
