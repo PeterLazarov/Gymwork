@@ -3,7 +3,6 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import SetDataLabel from '../SetDataLabel'
-import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
