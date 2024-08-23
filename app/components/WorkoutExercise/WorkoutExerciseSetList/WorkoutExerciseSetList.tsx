@@ -12,7 +12,7 @@ type Props = {
 
 const WorkoutExerciseSetList: React.FC<Props> = ({ sets, exercise }) => {
   const { stateStore, recordStore } = useStores()
-  const exerciseToUse = exercise || stateStore.openedExercise!
+  const exerciseToUse = exercise || stateStore.openedExercise
 
   const exerciseRecord = useMemo(() => {
     return exercise

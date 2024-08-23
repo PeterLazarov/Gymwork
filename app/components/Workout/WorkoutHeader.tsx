@@ -28,7 +28,7 @@ const WorkoutHeader: React.FC = () => {
 
   const deleteWorkout = () => {
     setMenuOpen(false)
-    workoutStore.removeWorkout(stateStore.openedWorkout!)
+    workoutStore.removeWorkout(stateStore.openedWorkout)
   }
 
   return (

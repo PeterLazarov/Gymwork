@@ -54,16 +54,16 @@ const WorkoutFeedbackPage: React.FC = () => {
           {translate('howWasWorkout')}
         </Text>
         <FeedbackPicker
-          selected={stateStore.openedWorkout!.feeling}
+          selected={stateStore.openedWorkout.feeling}
           onChange={feeling =>
-            stateStore.openedWorkout!.setProp('feeling', feeling)
+            stateStore.openedWorkout.setProp('feeling', feeling)
           }
         />
         <ScrollView>
           <TextInput
-            value={stateStore.openedWorkout?.notes}
+            value={stateStore.openedWorkout.notes}
             onChangeText={text =>
-              stateStore.openedWorkout!.setProp('notes', text)
+              stateStore.openedWorkout.setProp('notes', text)
             }
             multiline
             placeholder={translate('enterComments')}

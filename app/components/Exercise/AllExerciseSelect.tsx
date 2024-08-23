@@ -19,7 +19,6 @@ const AllExerciseSelect: React.FC<Props> = ({ onSelect }) => {
   const { exerciseStore } = useStores()
 
   const [filterString, setFilterString] = useState('')
-  // const [filterMuscle, setFilterMuscle] = useState('')
 
   const groupedExercises = useMemo(
     () => groupBy<Exercise>(exerciseStore.exercises, 'muscles'),
@@ -31,9 +30,21 @@ const AllExerciseSelect: React.FC<Props> = ({ onSelect }) => {
       return exerciseStore.exercises
     }
 
-    return exerciseStore.exercises.filter(e =>
-      e.name.toLowerCase().includes(filterString.toLowerCase())
-    )
+    return exerciseStore.exercises
+      .filter((e: Exercise) => {
+        const exName = e.name.toLowerCase()
+        const filterWords = filterString
+          .toLowerCase()
+          .split(' ')
+          .filter(Boolean)
+
+        return filterWords.every(
+          word =>
+            exName.includes(word) ||
+            (filterWords.length > 1 && e.muscles.includes(word))
+        )
+      })
+      .sort((a, b) => a.name.localeCompare(b.name))
   }, [filterString, exerciseStore.exercises])
 
   return (

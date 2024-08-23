@@ -40,16 +40,16 @@ export const StateStoreModel = types
     get recordStore(): RecordStore {
       return this.rootStore.recordStore
     },
-    get openedExercise(): Exercise | undefined {
+    get openedExercise(): Exercise {
       return this.exerciseStore.exercises.find(
         e => e.guid === self.openedExerciseGuid
-      )
+      )!
     },
-    get openedWorkout(): Workout | undefined {
-      return this.workoutStore.getWorkoutForDate(self.openedDate)
+    get openedWorkout(): Workout {
+      return this.workoutStore.getWorkoutForDate(self.openedDate)!
     },
     get isOpenedWorkoutToday() {
-      return this.openedWorkout?.date === today.toISODate()!
+      return this.openedWorkout.date === today.toISODate()
     },
     get exercisesPerformed(): Exercise[] {
       return Object.keys(this.workoutStore.exerciseWorkouts)
@@ -58,7 +58,7 @@ export const StateStoreModel = types
     },
     get openedExerciseSets(): WorkoutSet[] {
       const exerciseSets =
-        this.openedWorkout?.sets.filter(
+        this.openedWorkout.sets.filter(
           e => e.exercise.guid === self.openedExerciseGuid
         ) ?? []
 
@@ -77,7 +77,7 @@ export const StateStoreModel = types
     },
     get openedExerciseSet(): WorkoutSet {
       const exerciseSets =
-        this.openedWorkout?.sets.filter(
+        this.openedWorkout.sets.filter(
           e => e.exercise.guid === self.openedExerciseGuid
         ) ?? []
 
@@ -110,10 +110,10 @@ export const StateStoreModel = types
   .actions(self => ({
     /** Made to work with drag and drop */
     reorderOpenedExerciseSets(from: number, to: number) {
-      const indexFromAllSets = self.openedWorkout?.sets.indexOf(
+      const indexFromAllSets = self.openedWorkout.sets.indexOf(
         self.openedExerciseSets[from]
       )
-      const indexToAllSets = self.openedWorkout?.sets.indexOf(
+      const indexToAllSets = self.openedWorkout.sets.indexOf(
         self.openedExerciseSets[to]
       )
 
@@ -122,14 +122,13 @@ export const StateStoreModel = types
         return
       }
 
-      const item = self.openedWorkout?.sets[indexFromAllSets]!
-      const reorderedSets = self
-        .openedWorkout!.sets.toSpliced(indexFromAllSets, 1)
+      const item = self.openedWorkout.sets[indexFromAllSets]!
+      const reorderedSets: WorkoutSet[] = self
+        .openedWorkout.sets.toSpliced(indexFromAllSets, 1)
         .toSpliced(indexToAllSets, 0, item)!
 
-      // TODO check type
-      // @ts-ignore
-      self.openedWorkout!.setProp('sets', reorderedSets)
+      const reorderedSetsSnapshots = reorderedSets.map(set => getSnapshot(set))
+      self.openedWorkout.setProp('sets', reorderedSetsSnapshots)
     },
     setOpenedExercise(exercise: Exercise | null) {
       self.openedExerciseGuid = exercise?.guid || ''

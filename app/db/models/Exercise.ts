@@ -174,7 +174,10 @@ export const ExerciseModel = types
     guid: types.optional(types.identifier, () => uuidv4()),
     name: '',
     muscles: types.array(types.string),
-    measurements: types.optional(ExerciseMeasurementModel, () => ({})),
+    measurements: types.optional(ExerciseMeasurementModel, () => ({
+      weight: measurementDefaults.weight,
+      reps: measurementDefaults.reps,
+    })),
     isFavorite: false,
   })
   .views(exercise => ({

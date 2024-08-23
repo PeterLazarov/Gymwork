@@ -119,11 +119,11 @@ export const WorkoutStoreModel = types
       self.workouts.push(created)
     },
     addSet(newSet: WorkoutSet) {
-      self.rootStore.stateStore.openedWorkout?.sets.push(newSet)
+      self.rootStore.stateStore.openedWorkout.sets.push(newSet)
       self.rootStore.recordStore.runSetUpdatedCheck(newSet)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
-      const deletedSet = self.rootStore.stateStore.openedWorkout?.sets.find(
+      const deletedSet = self.rootStore.stateStore.openedWorkout.sets.find(
         s => s.guid === setGuid
       )
       if (deletedSet) {
@@ -137,7 +137,7 @@ export const WorkoutStoreModel = types
       let oldSet: WorkoutSet;
       const updatedSets: WorkoutSet[] = [];
       
-      self.rootStore.stateStore.openedWorkout!.sets.forEach(set => {
+      self.rootStore.stateStore.openedWorkout.sets.forEach(set => {
         if (set.guid === updatedSetData.guid) {
           oldSet = set;
           updatedSets.push(updatedSetData);
@@ -151,8 +151,8 @@ export const WorkoutStoreModel = types
 
       const updatedSetsSnapshots = updatedSets!.map(set => getSnapshot(set))
       
-      self.rootStore.stateStore.openedWorkout!.setProp('sets', updatedSetsSnapshots)
-      const updatedSet = self.rootStore.stateStore.openedWorkout!.sets.find(set => set.guid === updatedSetData.guid)!
+      self.rootStore.stateStore.openedWorkout.setProp('sets', updatedSetsSnapshots)
+      const updatedSet = self.rootStore.stateStore.openedWorkout.sets.find(set => set.guid === updatedSetData.guid)!
 
       if (isOldSetRecord) {
         const refreshedRecords = getGroupingRecordsForExercise(oldGroupingValue, records, self.sortedWorkouts)
