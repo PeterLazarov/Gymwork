@@ -40,13 +40,13 @@ export const RecordStoreModel = types
       const allWorkouts = self.rootStore.workoutStore.workouts
       const records = getRecords( allWorkouts)
 
-      self.records.push(...records)
+      self.setProp('records', records)
     },
     getExerciseRecords(
       exerciseID: Exercise['guid']
     ): ExerciseRecord
      {
-      const exerciseRecords =  self.records.find(record => record.exercise.guid === exerciseID)!
+      const exerciseRecords = self.records.find(record => record.exercise.guid === exerciseID)!
 
       if (exerciseRecords.recordSets.length > 0) {
         console.log('removing weak ass sets for exercise ', exerciseRecords.exercise.name)
@@ -74,8 +74,8 @@ export const RecordStoreModel = types
       const isRecordBool = isCurrentRecord(records, deletedSet)
 
       if (isRecordBool) {
-        const allWorkouts = self.rootStore.workoutStore.workouts
-        const refreshedRecords = getGroupingRecordsForExercise(deletedSet.groupingValue, records, allWorkouts)
+        const sortedWorkouts = self.rootStore.workoutStore.sortedWorkouts
+        const refreshedRecords = getGroupingRecordsForExercise(deletedSet.groupingValue, records, sortedWorkouts)
         records.setProp('recordSets', refreshedRecords.recordSets)
       }
     }

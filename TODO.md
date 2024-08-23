@@ -16,5 +16,4 @@
 - weak ass records should be removed for cardio
 - fix warning after record set delete
 - weak ass to strong ass change doesn't happen 
-- handle when you edit a record into a non record or a record with a new grouping
 

@@ -44,19 +44,14 @@ export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void =
 export const getGroupingRecordsForExercise = (
   groupingToRefresh: number,
   oldExerciseRecords: ExerciseRecord, 
-  workouts: Workout[]
+  sortedWorkouts: Workout[]
 ): ExerciseRecordSnapshotIn => {
   const record: ExerciseRecordSnapshotIn = { exercise: oldExerciseRecords.exercise.guid, recordSets: [] }
-
-  const sortedWorkouts = workouts.slice().sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
   let untouchedRecords: WorkoutSetSnapshotIn[] = []
   oldExerciseRecords.recordSets.forEach(recordSet => {
     if (recordSet.groupingValue !== groupingToRefresh) {
       untouchedRecords.push(getSnapshot(recordSet))
-    }
-    else {
-      destroy(recordSet)
     }
   })
   record.recordSets = untouchedRecords

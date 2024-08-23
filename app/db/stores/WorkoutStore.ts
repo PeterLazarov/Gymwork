@@ -1,10 +1,10 @@
 import {
-  IMSTArray,
   Instance,
   SnapshotOut,
   types,
   destroy,
   getParent,
+  getSnapshot,
 } from 'mobx-state-tree'
 
 import { RootStore } from './RootStore'
@@ -13,7 +13,6 @@ import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 import workoutSeedData from 'app/db/seeds/workout-seed-data'
 import {
   WorkoutSet,
-  WorkoutSetModel,
   WorkoutModel,
   WorkoutSnapshotIn,
   Exercise,
@@ -21,6 +20,7 @@ import {
   WorkoutSetSnapshotIn,
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
+import { getGroupingRecordsForExercise, isCurrentRecord } from 'app/services/workoutRecordsCalculator'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -30,6 +30,11 @@ export const WorkoutStoreModel = types
   .views(store => ({
     get rootStore(): RootStore {
       return getParent(store) as RootStore
+    },
+    get sortedWorkouts(): Workout[] {
+      return store.workouts.slice().sort((a, b) => 
+        new Date(a.date).getTime() - new Date(b.date).getTime()
+      )
     },
     getWorkoutForDate(date: string): Workout | undefined {
       const [workout] = store.workouts.filter(w => w.date === date)
@@ -128,21 +133,33 @@ export const WorkoutStoreModel = types
         self.rootStore.recordStore.runSetGroupingRecordRefreshCheck(deletedSet, exercise)
       }
     },
-    updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
-      // TODO: fix typescript hackery
-      const oldSet = self.rootStore.stateStore.openedWorkout?.sets.find(set => set.guid === updatedSet.guid)!
+    updateWorkoutExerciseSet(updatedSetData: WorkoutSet) {
+      let oldSet: WorkoutSet;
+      const updatedSets: WorkoutSet[] = [];
       
-      const updated = self.rootStore.stateStore.openedWorkout?.sets.map(set =>
-        set.guid === updatedSet.guid ? updatedSet : set
-      )
-      if (self.rootStore.stateStore.openedWorkout) {
-        self.rootStore.stateStore.openedWorkout.sets =
-          updated as unknown as IMSTArray<typeof WorkoutSetModel>
+      self.rootStore.stateStore.openedWorkout!.sets.forEach(set => {
+        if (set.guid === updatedSetData.guid) {
+          oldSet = set;
+          updatedSets.push(updatedSetData);
+        } else {
+          updatedSets.push(set);
+        }
+      });
+      const records = self.rootStore.recordStore.getExerciseRecords(oldSet!.exercise.guid)
+      const isOldSetRecord = isCurrentRecord(records, oldSet!)
+      const oldGroupingValue = oldSet!.groupingValue
+
+      const updatedSetsSnapshots = updatedSets!.map(set => getSnapshot(set))
+      
+      self.rootStore.stateStore.openedWorkout!.setProp('sets', updatedSetsSnapshots)
+      const updatedSet = self.rootStore.stateStore.openedWorkout!.sets.find(set => set.guid === updatedSetData.guid)!
+
+      if (isOldSetRecord) {
+        const refreshedRecords = getGroupingRecordsForExercise(oldGroupingValue, records, self.sortedWorkouts)
+        records.setProp('recordSets', refreshedRecords.recordSets)
       }
 
-      self.rootStore.recordStore.runSetGroupingRecordRefreshCheck(oldSet, oldSet.exercise)
-
-      if (updatedSet.groupingValue !== oldSet.groupingValue) {
+      if (!isOldSetRecord || updatedSet.groupingValue !== oldGroupingValue) {
         self.rootStore.recordStore.runSetUpdatedCheck(updatedSet)
       }
     },
