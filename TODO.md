@@ -7,6 +7,7 @@
 - add workout template support?
 - edit exercise moreIsBetter and groupBy
 - click on empty space OR back to remove focus on set
+- Add Timer superset support
 - fix weak sets being chosen for records on seeding (after seeding it's okay)
 - recalculate records only for the grouping of deleted set
 - ExerciseRecordSet model need to be rethought
