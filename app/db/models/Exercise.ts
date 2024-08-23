@@ -47,7 +47,6 @@ export const measurementDefaults = {
   },
   rest: {
     unit: measurementUnits.time.s,
-    step: 30,
   },
 }
 
@@ -155,7 +154,6 @@ export const ExerciseMeasurementModel = types
             'restUnit',
             Object.values(measurementUnits.rest)
           ),
-          step: 30,
         })
         .actions(withSetPropAction)
     ),

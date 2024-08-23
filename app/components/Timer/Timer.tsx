@@ -65,7 +65,7 @@ const Timer = forwardRef((_, ref) => {
 
         <NumberInput
           style={{ flexGrow: 1, textAlign: 'center' }}
-          value={restTimer.timeElapsed.as('seconds')}
+          value={Math.round(restTimer.timeElapsed.as('seconds'))}
           onChange={seconds => {
             restTimer.stop()
             restTimer.setTimeElapsed(Duration.fromDurationLike({ seconds }))
