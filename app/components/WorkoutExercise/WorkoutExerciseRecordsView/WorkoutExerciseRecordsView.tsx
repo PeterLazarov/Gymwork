@@ -33,22 +33,24 @@ const WorkoutExerciseRecordsView: React.FC = () => {
             flexBasis: 0,
           }}
         >
-          {openedExerciseRecords.recordSets.map((set, i) => {
-            return (
-              <PressableHighlight
-                key={set.guid}
-                style={{
-                  paddingVertical: 4,
-                }}
-                onPress={() => goToDate(set)}
-              >
-                <RecordsListItem
-                  set={set}
-                  exercise={stateStore.openedExercise!}
-                />
-              </PressableHighlight>
-            )
-          })}
+          {openedExerciseRecords.recordSets
+            .filter(record => !record.isWeakAss)
+            .map((set, i) => {
+              return (
+                <PressableHighlight
+                  key={set.guid}
+                  style={{
+                    paddingVertical: 4,
+                  }}
+                  onPress={() => goToDate(set)}
+                >
+                  <RecordsListItem
+                    set={set}
+                    exercise={stateStore.openedExercise!}
+                  />
+                </PressableHighlight>
+              )
+            })}
         </ScrollView>
       ) : (
         <EmptyState text={translate('recordsLogEmpty')} />

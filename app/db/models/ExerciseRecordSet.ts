@@ -14,7 +14,8 @@ export const ExerciseRecordSetModel = types
     weightMcg: 0,
     distanceMm: 0, 
     durationMs: 0,
-    date: ''
+    date: '',
+    isWeakAss: false
   })
   .views(self => ({
     get exerciseRecord(): ExerciseRecord {

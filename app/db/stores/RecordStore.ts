@@ -9,7 +9,7 @@ import * as storage from 'app/utils/storage'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 import { Exercise, ExerciseRecordModel, ExerciseRecordSnapshotIn, ExerciseRecord, WorkoutSet } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
-import { addToRecords, getRecordsForExercise, isCurrentRecord, isNewRecord } from 'app/services/workoutRecordsCalculator'
+import { addToRecords, getRecordsForExercise, isCurrentRecord, isNewRecord, removeWeakAssRecords } from 'app/services/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
 
 export const RecordStoreModel = types
@@ -45,10 +45,17 @@ export const RecordStoreModel = types
       exerciseID: Exercise['guid']
     ): ExerciseRecord
      {
-      return self.records.find(record => record.exercise.guid === exerciseID)!
+      const exerciseRecords =  self.records.find(record => record.exercise.guid === exerciseID)!
+
+      // console.log('removing weak ass sets for exercise ', exerciseRecords.exercise.name)
+      // removeWeakAssRecords(exerciseRecords)
+
+      exerciseRecords.recordSets.sort((setA, setB) => setA.groupingValue - setB.groupingValue);
+
+      return exerciseRecords
     },
     runSetUpdatedCheck(updatedSet: WorkoutSet, workoutDate: string) {
-      const records = self.rootStore.recordStore.getExerciseRecords(updatedSet.exercise.guid)
+      const records = this.getExerciseRecords(updatedSet.exercise.guid)
 
       if (isNewRecord(records.recordSets, updatedSet)) {
         const updatedRecords = addToRecords(records.recordSets, updatedSet, workoutDate)
