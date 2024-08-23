@@ -19,9 +19,9 @@ type Props = {
   onClose: () => void
 }
 const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
-  const { stop, setDuration } = useTimer()
+  const { stop, setDuration, duration } = useTimer()
 
-  const [timerSecs, setTimerSecs] = useState(0)
+  const [timerSecs, setTimerSecs] = useState(duration.as('seconds'))
 
   function onConfirm() {
     setDuration(Duration.fromDurationLike({ seconds: timerSecs }))
