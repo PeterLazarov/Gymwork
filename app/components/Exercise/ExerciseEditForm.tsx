@@ -23,8 +23,15 @@ type Props = {
   exercise: Exercise
   onUpdate: (updated: Exercise, isValid: boolean) => void
 }
+
+type distanceUnits =
+  (typeof measurementUnits.distance)[keyof typeof measurementUnits.distance]
+type weightUnits =
+  (typeof measurementUnits.weight)[keyof typeof measurementUnits.weight]
+
 // TODO? Exercise measurement types should only be additive
 // Otherwise they're destructive?
+
 const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   const { exerciseStore } = useStores()
 
@@ -93,17 +100,17 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
     onFormChange()
   }
 
-  function setDistanceType(unit: string) {
+  function setDistanceType(unit: distanceUnits) {
     edittedExercise.measurements.setProp('distance', {
-      ...edittedExercise.measurements.distance,
+      ...edittedExercise.measurements.distance!,
       unit,
     })
     onFormChange()
   }
 
-  function setWeightType(unit: string) {
+  function setWeightType(unit: weightUnits) {
     edittedExercise.measurements.setProp('weight', {
-      ...edittedExercise.measurements.weight,
+      ...edittedExercise.measurements.weight!,
       unit,
     })
     onFormChange()
@@ -168,7 +175,9 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
             options={Object.values(measurementUnits.distance)}
             headerText={translate('unit')}
             value={edittedExercise.measurements.distance?.unit}
-            onChange={distanceUnit => setDistanceType(distanceUnit)}
+            onChange={distanceUnit =>
+              setDistanceType(distanceUnit as distanceUnits)
+            }
             label={translate('unit')}
           />
         </>
@@ -180,7 +189,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
             options={Object.values(measurementUnits.weight)}
             headerText={translate('unit')}
             value={edittedExercise.measurements.weight?.unit}
-            onChange={unit => setWeightType(unit)}
+            onChange={unit => setWeightType(unit as weightUnits)}
             label={translate('unit')}
           />
           <NumberInput

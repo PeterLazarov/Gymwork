@@ -7,14 +7,13 @@ import WorkoutExerciseHistoryView from 'app/components/WorkoutExercise/WorkoutEx
 import WorkoutExerciseRecordsView from 'app/components/WorkoutExercise/WorkoutExerciseRecordsView'
 import WorkoutExerciseTrackView from 'app/components/WorkoutExercise/WorkoutExerciseTrackView'
 import WorkoutExerciseChartView from 'app/components/WorkoutExercise/WorkoutExerciseChartView'
-import Timer from 'app/components/Timer/Timer'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
 
 const WorkoutExercisePage: React.FC = () => {
-  const { timeStore, stateStore } = useStores()
+  const { stateStore } = useStores()
 
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -95,11 +94,7 @@ const WorkoutExercisePage: React.FC = () => {
         </Menu>
       </Header>
 
-      <SwipeTabs tabsConfig={tabs}>
-        {timeStore.stopwatchValue !== '' && stateStore.isOpenedWorkoutToday && (
-          <Timer />
-        )}
-      </SwipeTabs>
+      <SwipeTabs tabsConfig={tabs}></SwipeTabs>
     </View>
   )
 }

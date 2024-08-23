@@ -85,14 +85,11 @@ export const WorkoutStoreModel = types
       return calculateRecords(store.workouts)
     },
 
-    getExerciseRecords(
-      exerciseID: Exercise['guid']
-    ): WorkoutSet[] {
-
+    getExerciseRecords(exerciseID: Exercise['guid']): WorkoutSet[] {
       const exerciseRecords = this.allExerciseRecords[exerciseID] ?? {}
       const sorted = Object.entries(exerciseRecords)
-      .sort((a, b) => Number(a[0]) - Number(b[0]))
-      .map(entry => entry[1]); 
+        .sort((a, b) => Number(a[0]) - Number(b[0]))
+        .map(entry => entry[1])
 
       return sorted
     },
@@ -161,6 +158,9 @@ export const WorkoutStoreModel = types
     },
     setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {
       set.isWarmup = value
+    },
+    removeWorkout(workout: Workout) {
+      destroy(workout)
     },
   }))
 

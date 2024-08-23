@@ -1,7 +1,7 @@
 import React, { ReactNode, useRef, useState } from 'react'
 import { Keyboard, View } from 'react-native'
 
-import TabHeader from './TabHeaderPanel'
+import TabHeaderPanel from './TabHeaderPanel'
 import { TabConfig, TabStyles } from './types'
 import HorizontalScreenList from '../HorizontalScreenList'
 import {
@@ -55,7 +55,7 @@ const SwipeTabs: React.FC<Props> = ({
 
   return (
     <View style={{ flex: 1 }}>
-      <TabHeader
+      <TabHeaderPanel
         style={style?.header}
         tabsConfig={tabsConfig}
         currentIndex={currentIndex}

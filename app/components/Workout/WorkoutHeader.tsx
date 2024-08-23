@@ -2,16 +2,15 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { Menu } from 'react-native-paper'
 
-import WorkoutHeaderTimerButtons from '../Timer/TimerButtons'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { useShare } from 'app/utils/useShare'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, colors } from 'designSystem'
+import { getSnapshot } from 'mobx-state-tree'
 
 const WorkoutHeader: React.FC = () => {
-  const { stateStore } = useStores()
-  const { workoutStore } = useStores()
+  const { stateStore, workoutStore } = useStores()
 
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -23,14 +22,19 @@ const WorkoutHeader: React.FC = () => {
 
   const exportData = () => {
     setMenuOpen(false)
-    share(workoutStore)
+
+    share(getSnapshot(workoutStore)) // TODO fix
+  }
+
+  const deleteWorkout = () => {
+    setMenuOpen(false)
+    workoutStore.removeWorkout(stateStore.openedWorkout!)
   }
 
   return (
     <Header>
       <Header.Title title="Gymwork" />
 
-      {stateStore.isOpenedWorkoutToday && <WorkoutHeaderTimerButtons />}
       <IconButton
         onPress={openCalendar}
         underlay="darker"
@@ -60,6 +64,10 @@ const WorkoutHeader: React.FC = () => {
         <Menu.Item
           onPress={exportData}
           title={translate('exportData')}
+        />
+        <Menu.Item
+          onPress={deleteWorkout}
+          title={translate('removeWorkout')}
         />
       </Menu>
     </Header>

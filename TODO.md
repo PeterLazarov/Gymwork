@@ -8,3 +8,5 @@
 - edit exercise moreIsBetter and groupBy
 - click on empty space OR back to remove focus on set
 - Add Timer superset support
+- reasonable seed data rest periods & createdAt
+- timer superset support

@@ -9,9 +9,7 @@ import {
 
 import { ExerciseStore } from './ExerciseStore'
 import { RootStore } from './RootStore'
-import { TimeStore } from './TimeStore'
 import { WorkoutStore } from './WorkoutStore'
-import { getFormatedDuration } from '../../utils/time'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { Exercise, Workout, WorkoutSet, WorkoutSetModel } from '../models'
 
@@ -26,26 +24,17 @@ export const StateStoreModel = types
   .props({
     openedExerciseGuid: '',
     openedDate: types.optional(types.string, today.toISODate()!),
-    timerDurationSecs: 120,
     draftSet: types.maybe(WorkoutSetModel),
   })
   .views(self => ({
     get rootStore(): RootStore {
       return getParent(self) as RootStore
     },
-    get timeStore(): TimeStore {
-      return this.rootStore.timeStore
-    },
     get exerciseStore(): ExerciseStore {
       return this.rootStore.exerciseStore
     },
     get workoutStore(): WorkoutStore {
       return this.rootStore.workoutStore
-    },
-    get timerValue() {
-      return this.timeStore.timerCountdownValue !== ''
-        ? this.timeStore.timerCountdownValue
-        : getFormatedDuration(self.timerDurationSecs, true)
     },
     get openedExercise(): Exercise | undefined {
       return this.exerciseStore.exercises.find(
@@ -151,9 +140,6 @@ export const StateStoreModel = types
     decrementCurrentDate() {
       const luxonDate = DateTime.fromISO(self.openedDate)
       self.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
-    },
-    setTimerDuration(timerSeconds: number) {
-      self.timerDurationSecs = timerSeconds
     },
   }))
 

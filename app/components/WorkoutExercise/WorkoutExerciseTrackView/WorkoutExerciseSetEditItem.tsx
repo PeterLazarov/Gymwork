@@ -40,8 +40,9 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingRight: 10,
+        paddingHorizontal: 10,
         paddingVertical: 1,
+        backgroundColor: isFocused ? colors.primaryLighter : undefined,
       }}
     >
       <View
@@ -90,6 +91,15 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
       {stateStore.openedExercise!.hasTimeMeasument && (
         <SetDataLabel
           value={getFormatedDuration(set.duration)}
+          isFocused={isFocused}
+        />
+      )}
+      {stateStore.openedExercise!.measurements.rest && (
+        <SetDataLabel
+          value={`${translate('rest')} ${getFormatedDuration(
+            set.rest ?? 0,
+            true
+          )}`}
           isFocused={isFocused}
         />
       )}

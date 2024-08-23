@@ -27,6 +27,7 @@ const IoniconsIcons = [
   'stop',
   'play',
   'settings-outline',
+  'refresh-outline',
 ] as const satisfies ReadonlyArray<keyof typeof Ionicons.glyphMap>
 type IonicIcon = (typeof IoniconsIcons)[number]
 

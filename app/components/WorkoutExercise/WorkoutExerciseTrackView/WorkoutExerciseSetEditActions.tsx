@@ -14,23 +14,31 @@ export const WorkoutExerciseSetEditActions: React.FC<
 > = ({ mode, onAdd, onRemove, onUpdate }) => {
   return (
     <View style={{ flexDirection: 'row', gap: 4 }}>
-      <Button
-        variant="primary"
-        onPress={mode === 'edit' ? onUpdate : onAdd}
-        style={{ flex: 1 }}
-      >
-        <ButtonText variant="primary">
-          {mode === 'edit' ? translate('updateSet') : translate('addSet')}
-        </ButtonText>
-      </Button>
-      {mode === 'edit' && (
+      {mode === 'add' ? (
         <Button
-          variant="critical"
-          onPress={onRemove}
+          variant="primary"
+          onPress={onAdd}
           style={{ flex: 1 }}
         >
-          <ButtonText variant="critical">{translate('remove')}</ButtonText>
+          <ButtonText variant="primary">{translate('completeSet')}</ButtonText>
         </Button>
+      ) : (
+        <>
+          <Button
+            variant="primary"
+            onPress={onUpdate}
+            style={{ flex: 1 }}
+          >
+            <ButtonText variant="primary">{translate('updateSet')}</ButtonText>
+          </Button>
+          <Button
+            variant="critical"
+            onPress={onRemove}
+            style={{ flex: 1 }}
+          >
+            <ButtonText variant="critical">{translate('remove')}</ButtonText>
+          </Button>
+        </>
       )}
     </View>
   )
