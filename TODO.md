@@ -13,4 +13,5 @@
 - ExerciseRecordSet model need to be rethought
 - If a record set is repeated on the same day all copies are shown as records
 - "workoutRecordsCalculator" uses functions from "exercise-records-seed-generator". This should be refactored
-- weak ass records should be removed
+- weak ass records should be removed for cardio
+- fix warning after record set delete
