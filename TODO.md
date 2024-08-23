@@ -10,3 +10,4 @@
 - Add Timer superset support
 - reasonable seed data rest periods & createdAt
 - timer superset support
+- timer configurable duration based on exercise
