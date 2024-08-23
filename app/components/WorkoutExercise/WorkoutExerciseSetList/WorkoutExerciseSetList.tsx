@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import SetListItem from './SetListItem'
 import { useStores } from 'app/db/helpers/useStores'
@@ -11,8 +11,13 @@ type Props = {
 }
 
 const WorkoutExerciseSetList: React.FC<Props> = ({ sets, exercise }) => {
-  const { stateStore } = useStores()
+  const { stateStore, workoutStore } = useStores()
   const exerciseToUse = exercise || stateStore.openedExercise!
+
+  const exerciseActualRecords = useMemo(
+    () => (exercise ? workoutStore.getExerciseRecords(exerciseToUse.guid) : []),
+    [exerciseToUse.guid]
+  )
 
   return (
     <>
@@ -22,6 +27,7 @@ const WorkoutExerciseSetList: React.FC<Props> = ({ sets, exercise }) => {
           set={set}
           exercise={exerciseToUse}
           number={i + 1}
+          records={exerciseActualRecords}
         />
       ))}
     </>

@@ -15,6 +15,7 @@ type Props = {
   number?: number
   isFocused?: boolean
   hideRecords?: boolean
+  records: WorkoutSet[]
 }
 
 const SetListItem: React.FC<Props> = ({
@@ -23,16 +24,9 @@ const SetListItem: React.FC<Props> = ({
   isFocused,
   number,
   hideRecords = false,
+  records,
 }) => {
-  const { workoutStore } = useStores()
-
-  const exerciseActualRecords = exercise
-    ? workoutStore.getExerciseRecords(exercise.guid)
-    : []
-
-  const isRecord = exerciseActualRecords.some(
-    record => record.guid === set.guid
-  )
+  const isRecord = records.some(record => record.guid === set.guid)
   const color = isFocused ? colors.primary : colors.secondaryText
   return (
     <View
