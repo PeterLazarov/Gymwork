@@ -1,26 +1,31 @@
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { forwardRef, useMemo, useState } from 'react'
+import { View } from 'react-native'
 import { Duration } from 'luxon'
 
 import TimerEditModal from '../TimerEditModal'
-import { useStores } from 'app/db/helpers/useStores'
 import useTimer from 'app/db/stores/useTimer'
-import { IconButton, Icon, colors, fontSize } from 'designSystem'
+import { IconButton, Icon, colors } from 'designSystem'
+import NumberInput from '../NumberInput'
+import { AnimatedCircularProgress } from 'react-native-circular-progress'
 
-const Timer: React.FC = () => {
-  const { timeStore, stateStore } = useStores()
+const Timer = forwardRef((_, ref) => {
   const restTimer = useTimer()
+  const percentTimeLeft = useMemo(() => {
+    if (restTimer.duration.toMillis() === 0) {
+      return 0
+    }
+
+    const percentage =
+      Math.min(
+        restTimer.timeElapsed.toMillis() / restTimer.duration.toMillis(),
+        1
+      ) * 100
+
+    return percentage
+  }, [restTimer.duration, restTimer.inCountdownMode, restTimer.timeLeft])
 
   const [settingDialogOpen, setSettingDialogOpen] = useState(false)
-
-  function onPlayPress() {
-    // if (!timeStore.timerRunning) {
-    restTimer.start(
-      Duration.fromObject({ seconds: stateStore.timerDurationSecs })
-    )
-    // }
-  }
 
   function onSettingsPress() {
     setSettingDialogOpen(true)
@@ -36,28 +41,39 @@ const Timer: React.FC = () => {
           gap: 4,
         }}
       >
-        <IconButton onPress={onPlayPress}>
-          <Icon icon="weight-lifter" />
-        </IconButton>
-        <IconButton onPress={restTimer.stop}>
-          <Icon icon="pause-circle" />
-        </IconButton>
-        <View style={styles.timerPanel}>
-          <Text style={{ fontSize: fontSize.xs }}>
-            <Text style={{ fontWeight: 'bold' }}>W</Text>:{' '}
-            {timeStore.stopwatchValue}
-          </Text>
-          <Text style={{ fontSize: fontSize.xs }}>
-            <Text style={{ fontWeight: 'bold', marginRight: 2 }}>R</Text>:{' '}
-            {restTimer.timeLeft}
-          </Text>
-        </View>
+        <AnimatedCircularProgress
+          size={48}
+          width={2}
+          fill={percentTimeLeft}
+          rotation={0}
+          tintColor={colors.primary}
+        >
+          {_ => (
+            <View>
+              {restTimer.isRunning ? (
+                <IconButton onPress={restTimer.stop}>
+                  <Icon icon="stop" />
+                </IconButton>
+              ) : (
+                <IconButton onPress={restTimer.resume}>
+                  <Icon icon="play" />
+                </IconButton>
+              )}
+            </View>
+          )}
+        </AnimatedCircularProgress>
+
+        <NumberInput
+          style={{ flexGrow: 1, textAlign: 'center' }}
+          value={restTimer.timeElapsed.as('seconds')}
+          onChange={seconds => {
+            restTimer.stop()
+            restTimer.setTimeElapsed(Duration.fromDurationLike({ seconds }))
+          }}
+          ref={ref}
+        />
         <IconButton onPress={onSettingsPress}>
           <Icon icon="settings-outline" />
-        </IconButton>
-
-        <IconButton onPress={restTimer.clear}>
-          <Icon icon="timer-off" />
         </IconButton>
       </View>
       <TimerEditModal
@@ -68,22 +84,6 @@ const Timer: React.FC = () => {
       />
     </>
   )
-}
-
-const styles = StyleSheet.create({
-  timerPanel: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.primaryLighter,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    marginBottom: 4,
-    width: 140,
-    alignSelf: 'center',
-  },
 })
 
 export default observer(Timer)

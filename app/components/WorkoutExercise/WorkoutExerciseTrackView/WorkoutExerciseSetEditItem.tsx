@@ -93,6 +93,15 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
           isFocused={isFocused}
         />
       )}
+      {stateStore.openedExercise!.measurements.rest && (
+        <SetDataLabel
+          value={`${translate('rest')} ${getFormatedDuration(
+            set.rest ?? 0,
+            true
+          )}`}
+          isFocused={isFocused}
+        />
+      )}
     </View>
   )
 }

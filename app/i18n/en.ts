@@ -3,7 +3,9 @@ const en = {
   addExercise: 'Add exercise',
   selectExercise: 'Select exercise',
   copyWorkout: 'Copy workout',
-  addSet: 'Add set',
+  completeSet: 'Complete set',
+  startRest: 'Start rest',
+  endRest: 'End rest',
   search: 'Search',
   reps: 'reps',
   weight: 'weight',
@@ -45,6 +47,8 @@ const en = {
   distanceMeasurementSettings: 'Distance Measurement Settings',
   weightMeasurementSettings: 'Weight Measurement Settings',
   unit: 'Unit',
+  rest: 'Rest',
+  removeWorkout: 'Remove workout',
 }
 
 export default en

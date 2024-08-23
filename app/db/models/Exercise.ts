@@ -39,6 +39,7 @@ export const measurementDefaults = {
   weight: {
     unit: measurementUnits.weight.kg,
     moreIsBetter: true,
+    step: 2.5,
   },
   distance: {
     unit: measurementUnits.distance.m,
@@ -46,7 +47,7 @@ export const measurementDefaults = {
   },
   rest: {
     unit: measurementUnits.time.s,
-    minAutorecordDurationSeconds: 30,
+    step: 30,
   },
 }
 
@@ -154,7 +155,7 @@ export const ExerciseMeasurementModel = types
             'restUnit',
             Object.values(measurementUnits.rest)
           ),
-          minAutorecordDurationSeconds: types.number,
+          step: 30,
         })
         .actions(withSetPropAction)
     ),
@@ -164,9 +165,10 @@ export const ExerciseMeasurementModel = types
 export type FilterStrings<T> = T extends string ? T : never
 
 type nonMetricFields = 'rest'
-export type measurementName = Exclude<FilterStrings<
-  keyof SnapshotOut<typeof ExerciseMeasurementModel>
->, nonMetricFields>
+export type measurementName = Exclude<
+  FilterStrings<keyof SnapshotOut<typeof ExerciseMeasurementModel>>,
+  nonMetricFields
+>
 
 export const ExerciseModel = types
   .model('Exercise')

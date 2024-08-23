@@ -90,9 +90,10 @@ const CalendarPage: React.FC = () => {
   const monthsDiff = activeDate.diff(monthBeforeFirstWorkout, 'month').months
   const minFutureMonths = 2
   const defaultMonthsToRender = 12
-  const monthsToRender = Math.max(
-    monthsDiff + minFutureMonths,
-    defaultMonthsToRender
+
+  // ! must be a whole number
+  const monthsToRender = Math.ceil(
+    Math.max(monthsDiff + minFutureMonths, defaultMonthsToRender)
   )
 
   return (

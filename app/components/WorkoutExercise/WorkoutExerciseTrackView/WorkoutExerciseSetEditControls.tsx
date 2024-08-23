@@ -11,6 +11,7 @@ import {
 import manageInputFocus from 'app/utils/inputFocus'
 import convert from 'convert-units'
 import { observer } from 'mobx-react-lite'
+import Timer from 'app/components/Timer/Timer'
 
 type Props = {
   value: WorkoutSet
@@ -22,6 +23,7 @@ const WorkoutExerciseSetEditControls: React.FC<Props> = ({
   onSubmit,
 }) => {
   // TODO add more input options
+  const input0 = useRef<TextInput>(null)
   const input1 = useRef<TextInput>(null)
   const input2 = useRef<TextInput>(null)
   const input3 = useRef<TextInput>(null)
@@ -32,6 +34,14 @@ const WorkoutExerciseSetEditControls: React.FC<Props> = ({
   return (
     <>
       <View style={{ gap: 16, padding: 16 }}>
+        {value.exercise?.measurements.rest && (
+          <>
+            <SetEditPanelSection text={translate('rest')}>
+              <Timer ref={input0} />
+            </SetEditPanelSection>
+          </>
+        )}
+
         {value.exercise?.hasRepMeasument && (
           <SetEditPanelSection text={translate('reps')}>
             <IncrementNumericEditor

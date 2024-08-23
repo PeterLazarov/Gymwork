@@ -27,6 +27,7 @@ export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
 import * as SystemUI from 'expo-system-ui'
 import { colors } from 'designSystem'
+import useTimer, { TimerContext } from './db/stores/useTimer'
 SystemUI.setBackgroundColorAsync(colors.secondary)
 
 function App() {
@@ -35,6 +36,8 @@ function App() {
     onNavigationStateChange,
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
+
+  const timer = useTimer()
 
   const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
 
@@ -58,18 +61,20 @@ function App() {
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <KeyboardAvoiderProvider>
         <DBStoreInitializer>
-          <PaperProvider>
-            <Portal.Host>
-              <ErrorBoundary catchErrors={Config.catchErrors}>
-                <GestureHandlerRootView style={{ flex: 1 }}>
-                  <AppNavigator
-                    initialState={initialNavigationState}
-                    onStateChange={onNavigationStateChange}
-                  />
-                </GestureHandlerRootView>
-              </ErrorBoundary>
-            </Portal.Host>
-          </PaperProvider>
+          <TimerContext.Provider value={timer}>
+            <PaperProvider>
+              <Portal.Host>
+                <ErrorBoundary catchErrors={Config.catchErrors}>
+                  <GestureHandlerRootView style={{ flex: 1 }}>
+                    <AppNavigator
+                      initialState={initialNavigationState}
+                      onStateChange={onNavigationStateChange}
+                    />
+                  </GestureHandlerRootView>
+                </ErrorBoundary>
+              </Portal.Host>
+            </PaperProvider>
+          </TimerContext.Provider>
         </DBStoreInitializer>
       </KeyboardAvoiderProvider>
     </SafeAreaProvider>
