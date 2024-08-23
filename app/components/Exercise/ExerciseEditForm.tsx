@@ -140,7 +140,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           selectedValues={edittedExercise.muscles}
           onSelect={onMusclesChange}
           containerStyle={{ flex: 1 }}
-          headerText="Muscle areas"
+          headerText={translate('muscleAreas')}
           error={musclesError !== ''}
         />
         <IconButton

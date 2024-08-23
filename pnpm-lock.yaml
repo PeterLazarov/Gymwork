@@ -220,6 +220,9 @@ devDependencies:
   '@types/i18n-js':
     specifier: 3.8.2
     version: 3.8.2
+  '@types/lodash':
+    specifier: ^4.17.7
+    version: 4.17.7
   '@types/luxon':
     specifier: ^3.3.2
     version: 3.4.2
@@ -3618,6 +3621,10 @@ packages:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
       '@types/node': 22.3.0
+    dev: true
+
+  /@types/lodash@4.17.7:
+    resolution: {integrity: sha512-8wTvZawATi/lsmNu10/j2hk1KEP0IvjubqPE3cu1Xz7xfXXt5oCq3SNUz4fMIP4XGF9Ky+Ue2tBA3hcS7LSBlA==}
     dev: true
 
   /@types/luxon@3.4.2:
