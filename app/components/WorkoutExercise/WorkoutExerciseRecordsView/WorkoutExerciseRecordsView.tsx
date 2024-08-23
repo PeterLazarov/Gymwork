@@ -11,13 +11,16 @@ import { PressableHighlight } from 'designSystem'
 import RecordsListItem from './RecordsListItem'
 
 const WorkoutExerciseRecordsView: React.FC = () => {
-  const { openedExerciseRecords, stateStore } = useStores()
+  const { stateStore } = useStores()
 
   const recordSets = useMemo(() => {
-    return openedExerciseRecords.recordSets.length > 0
-      ? openedExerciseRecords.recordSets.filter(record => !record.isWeakAss)
-      : []
-  }, [stateStore.openedExerciseSets, openedExerciseRecords.recordSets])
+    const openedExerciseRecords = stateStore.getOpenedExerciseRecords()
+
+    return openedExerciseRecords.recordSets
+    // return openedExerciseRecords.recordSets.length > 0
+    //   ? openedExerciseRecords.recordSets.filter(record => !record.isWeakAss)
+    //   : []
+  }, [stateStore.openedExerciseSets])
 
   function goToDate(set: ExerciseRecordSet) {
     stateStore.setProp('openedDate', set.date)

@@ -2,6 +2,7 @@ import {
   Instance,
   SnapshotOut,
   getParent,
+  getSnapshot,
   types,
 } from 'mobx-state-tree'
 
@@ -9,7 +10,7 @@ import * as storage from 'app/utils/storage'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 import { Exercise, ExerciseRecordModel, ExerciseRecordSnapshotIn, ExerciseRecord, WorkoutSet } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
-import { addToRecords, getRecordsForExercise, isCurrentRecord, isNewRecord, removeWeakAssRecords } from 'app/services/workoutRecordsCalculator'
+import { addToRecords, getGroupingRecordsForExercise, isCurrentRecord, isNewRecord, removeWeakAssRecords } from 'app/services/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
 
 export const RecordStoreModel = types
@@ -53,7 +54,7 @@ export const RecordStoreModel = types
 
         exerciseRecords.recordSets.sort((setA, setB) => setA.groupingValue - setB.groupingValue);
       }
-      
+
       return exerciseRecords
     },
     runSetUpdatedCheck(updatedSet: WorkoutSet, workoutDate: string) {
@@ -62,7 +63,9 @@ export const RecordStoreModel = types
       if (isNewRecord(records.recordSets, updatedSet)) {
         const updatedRecords = addToRecords(records.recordSets, updatedSet, workoutDate)
        
-        records.setProp('recordSets', updatedRecords)
+        const recordSnapshots = updatedRecords.map(record => getSnapshot(record))
+
+        records.setProp('recordSets', recordSnapshots)
       }
     },
     runSetDeletedRefreshCheck(deletedSet: WorkoutSet, exercise: Exercise) {
@@ -71,13 +74,12 @@ export const RecordStoreModel = types
 
       if (isRecordBool) {
         const allWorkouts = self.rootStore.workoutStore.workouts
-        // TODO: recalculate records only for the grouping of deleted set
-        const refreshedRecords = getRecordsForExercise(exercise, allWorkouts)
+        const refreshedRecords = getGroupingRecordsForExercise(deletedSet.groupingValue, records, allWorkouts)
         records.setProp('recordSets', refreshedRecords.recordSets)
       }
     }
   }))
 
-export interface WorkoutStore extends Instance<typeof RecordStoreModel> {}
-export interface WorkoutStoreSnapshot
+export interface RecordStore extends Instance<typeof RecordStoreModel> {}
+export interface RecordStoreSnapshot
   extends SnapshotOut<typeof RecordStoreModel> {}

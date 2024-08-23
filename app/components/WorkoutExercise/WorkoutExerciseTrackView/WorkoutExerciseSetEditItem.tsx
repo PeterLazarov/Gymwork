@@ -3,25 +3,27 @@ import React from 'react'
 import { View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { WorkoutSet } from 'app/db/models'
+import { ExerciseRecord, WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { colors, Icon } from 'designSystem'
+import { isCurrentRecord } from 'app/services/workoutRecordsCalculator'
 import { getFormatedDuration } from 'app/utils/time'
+import { colors, Icon } from 'designSystem'
 import SetWarmupButton from './SetWarmupButton'
 import SetDataLabel from '../SetDataLabel'
 
 type Props = {
   set: WorkoutSet
+  openedExerciseRecords: ExerciseRecord
   isFocused?: boolean
 }
 
-const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
-  const { workoutStore, openedExerciseRecords, stateStore } = useStores()
-  const isRecord = openedExerciseRecords.recordSets.some(
-    record =>
-      record.groupingValue === set.groupingValue &&
-      record.measurementValue === set.measurementValue
-  )
+const WorkoutExerciseSetEditItem: React.FC<Props> = ({
+  set,
+  openedExerciseRecords,
+  isFocused,
+}) => {
+  const { workoutStore, stateStore } = useStores()
+  const isRecord = isCurrentRecord(openedExerciseRecords, set)
   const color = isFocused ? colors.primary : colors.secondaryText
 
   function calcWorkSetNumber() {

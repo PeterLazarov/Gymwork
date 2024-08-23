@@ -1,5 +1,7 @@
-import { Exercise, ExerciseRecord, ExerciseRecordSnapshotIn, Workout, WorkoutSet } from "app/db/models"
-import { ExerciseRecordSet, ExerciseRecordSetModel } from "app/db/models/ExerciseRecordSet"
+import { destroy, getSnapshot } from "mobx-state-tree"
+
+import { ExerciseRecord, ExerciseRecordSnapshotIn, Workout, WorkoutSet } from "app/db/models"
+import { ExerciseRecordSet, ExerciseRecordSetModel, ExerciseRecordSetSnapshotIn } from "app/db/models/ExerciseRecordSet"
 import { checkSetAndAddRecord } from "app/db/seeds/exercise-records-seed-generator"
 
 export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void => {
@@ -21,10 +23,8 @@ export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void =
       lastRecord.guid !== record.guid &&
       isFirstRecordBetterThanSecond(lastRecord ,record)
     ) {
-      console.log('weak ass', record.groupingValue, record.measurementValue)
       const weakAssRecord = exerciseAllRecords.recordSets.find(set => set.guid === record.guid)
       weakAssRecord?.setProp('isWeakAss', true)
-      // exerciseAllRecords.recordSets.remove(record)
     } else {
       const strongAssRecord = exerciseAllRecords.recordSets.find(set => set.guid === lastRecord.guid)
       strongAssRecord?.setProp('isWeakAss', false)
@@ -36,18 +36,32 @@ export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void =
 }
 
 
-export const getRecordsForExercise = (
-  exercise: Exercise, 
+export const getGroupingRecordsForExercise = (
+  groupingToRefresh: number,
+  oldExerciseRecords: ExerciseRecord, 
   workouts: Workout[]
 ): ExerciseRecordSnapshotIn => {
-  const record: ExerciseRecordSnapshotIn = { exercise: exercise.guid, recordSets: [] }
+  const record: ExerciseRecordSnapshotIn = { exercise: oldExerciseRecords.exercise.guid, recordSets: [] }
 
   const sortedWorkouts = workouts.slice().sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
+  let untouchedRecords: ExerciseRecordSetSnapshotIn[] = []
+  oldExerciseRecords.recordSets.forEach(recordSet => {
+    if (recordSet.groupingValue !== groupingToRefresh) {
+      untouchedRecords.push(getSnapshot(recordSet))
+    }
+    else {
+      destroy(recordSet)
+    }
+  })
+  record.recordSets = untouchedRecords
+
   sortedWorkouts.forEach(workout => {
     workout.sets.forEach(set => {
-      if (set.exercise.guid === exercise.guid) {
-        checkSetAndAddRecord(record, set, workout.date)
+      if (set.exercise.guid === oldExerciseRecords.exercise.guid) {
+        if (set.groupingValue === groupingToRefresh) {
+          checkSetAndAddRecord(record, set, workout.date)
+        }
       }
     })
   })
@@ -79,7 +93,7 @@ export const addToRecords = (
   set: WorkoutSet, 
   date: string
 ): ExerciseRecordSet[] => {
-  const currentRecord = records!.find(set => set.groupingValue === set.groupingValue)
+  const currentRecord = records!.find(record => record.groupingValue === set.groupingValue)
   const updatedSet = ExerciseRecordSetModel.create({ 
     date, 
     weightMcg: set.weightMcg, 
@@ -92,6 +106,7 @@ export const addToRecords = (
   if (currentRecord) {
     const index = recordSets.indexOf(currentRecord)
     recordSets[index] = updatedSet
+    destroy(currentRecord)
   } else {
     recordSets.push(updatedSet)
   }

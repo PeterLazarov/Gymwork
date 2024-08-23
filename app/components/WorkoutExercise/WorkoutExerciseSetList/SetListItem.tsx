@@ -4,6 +4,7 @@ import { View, Text } from 'react-native'
 
 import SetDataLabel from '../SetDataLabel'
 import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
+import { isCurrentRecord } from 'app/services/workoutRecordsCalculator'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
 import { Icon, colors, fontSize } from 'designSystem'
@@ -25,11 +26,8 @@ const SetListItem: React.FC<Props> = ({
   number,
   hideRecords = false,
 }) => {
-  const isRecord = exerciseRecord?.recordSets.some(
-    record =>
-      record.groupingValue === set.groupingValue &&
-      record.measurementValue === set.measurementValue
-  )
+  const isRecord = exerciseRecord ? isCurrentRecord(exerciseRecord, set) : false
+
   const color = isFocused ? colors.primary : colors.secondaryText
   return (
     <View

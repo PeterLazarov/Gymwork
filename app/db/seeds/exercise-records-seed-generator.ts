@@ -53,7 +53,13 @@ export const checkSetAndAddRecord = (
 
   console.log({isRecord})
   if (isRecord) {
-    const updatedSet = { date, ...set }
+    const updatedSet = { 
+      date, 
+      weightMcg: set.weightMcg, 
+      distanceMm: set.distanceMm,
+      durationMs: set.durationMs,
+      reps: set.reps,
+    }
 
     if (currentRecord) {
       const newRecords = record.recordSets!.slice()

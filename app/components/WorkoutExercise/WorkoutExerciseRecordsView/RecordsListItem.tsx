@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
 import SetDataLabel from '../SetDataLabel'
 import { Exercise } from 'app/db/models'
@@ -25,6 +25,7 @@ const RecordsListItem: React.FC<Props> = ({ set, exercise }) => {
         height: 24,
       }}
     >
+      {set.isWeakAss && <Text>W</Text>}
       {exercise.hasRepMeasument && (
         <SetDataLabel
           value={set.reps}

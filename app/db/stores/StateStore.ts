@@ -11,6 +11,7 @@ import { ExerciseStore } from './ExerciseStore'
 import { RootStore } from './RootStore'
 import { TimeStore } from './TimeStore'
 import { WorkoutStore } from './WorkoutStore'
+import { RecordStore } from './RecordStore'
 import { getFormatedDuration } from '../../utils/time'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { Exercise, Workout, WorkoutSet, WorkoutSetModel } from '../models'
@@ -41,6 +42,9 @@ export const StateStoreModel = types
     },
     get workoutStore(): WorkoutStore {
       return this.rootStore.workoutStore
+    },
+    get recordStore(): RecordStore {
+      return this.rootStore.recordStore
     },
     get timerValue() {
       return this.timeStore.timerCountdownValue !== ''
@@ -154,6 +158,11 @@ export const StateStoreModel = types
     },
     setTimerDuration(timerSeconds: number) {
       self.timerDurationSecs = timerSeconds
+    },
+    getOpenedExerciseRecords() {
+      return self.recordStore.getExerciseRecords(
+        self.openedExerciseGuid
+      )
     },
   }))
 

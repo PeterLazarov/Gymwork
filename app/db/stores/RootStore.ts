@@ -27,11 +27,6 @@ export const RootStoreModel = types
         .map(id => self.exerciseStore.exercises.find(e => e.guid === id))
         .filter(Boolean)
     },
-    get openedExerciseRecords() {
-      return self.recordStore.getExerciseRecords(
-        self.stateStore.openedExerciseGuid
-      )
-    },
   }))
   .actions(self => ({
     initializeStores(): Promise<void>  {

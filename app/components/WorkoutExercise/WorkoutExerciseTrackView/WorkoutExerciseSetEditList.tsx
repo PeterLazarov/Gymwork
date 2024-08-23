@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { View } from 'react-native'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
@@ -20,6 +20,10 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   setSelectedSet,
 }) => {
   const { stateStore } = useStores()
+
+  const openedExerciseRecords = useMemo(() => {
+    return stateStore.getOpenedExerciseRecords()
+  }, [stateStore.openedExerciseSets])
 
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
@@ -58,6 +62,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
 
             <WorkoutExerciseSetEditItem
               set={item}
+              openedExerciseRecords={openedExerciseRecords}
               isFocused={selectedSet?.guid === item.guid}
             />
           </View>
