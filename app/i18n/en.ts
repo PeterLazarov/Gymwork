@@ -49,6 +49,7 @@ const en = {
   unit: 'Unit',
   rest: 'Rest',
   removeWorkout: 'Remove workout',
+  muscleAreas: 'Muscle areas',
 }
 
 export default en

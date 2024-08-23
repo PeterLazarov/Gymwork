@@ -10,6 +10,7 @@ import {
   ExerciseSnapshotIn,
   measurementDefaults,
 } from '../models'
+import { startCase } from 'lodash'
 
 export const ExerciseStoreModel = types
   .model('ExerciseStore')
@@ -56,6 +57,8 @@ export const ExerciseStoreModel = types
   .views(store => ({
     get muscleOptions() {
       return uniqueValues(store.exercises.flatMap(e => e.muscles))
+        .map(name => startCase(name))
+        .sort()
     },
     get favoriteExercises() {
       return store.exercises.filter(e => e.isFavorite)
