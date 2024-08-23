@@ -266,15 +266,16 @@
   {
     "name": "Barbell Bench Press - Medium Grip",
     "muscles": ["chest"],
-    "measurementType": ["reps", "weight"],
+    "measurementType": ["reps", "weight", "rest"],
     "weightIncrement": 2.5,
     "isFavorite": true
   },
   {
     "name": "Barbell Curl",
     "muscles": ["biceps"],
-    "measurementType": ["reps", "weight"],
-    "weightIncrement": 2.5
+    "measurementType": ["reps", "weight", "rest"],
+    "weightIncrement": 2.5,
+    "isFavorite": true
   },
   {
     "name": "Barbell Curls Lying Against An Incline",
@@ -323,7 +324,7 @@
     "muscles": ["chest"],
     "weightIncrement": 2.5,
     "isFavorite": true,
-    "measurementType": ["reps", "weight"]
+    "measurementType": ["reps", "weight", "rest"]
   },
   {
     "name": "Barbell Incline Shoulder Raise",

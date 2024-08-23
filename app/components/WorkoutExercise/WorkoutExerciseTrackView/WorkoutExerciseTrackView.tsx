@@ -8,9 +8,11 @@ import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet, WorkoutSetModel } from 'app/db/models'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { WorkoutExerciseSetEditActions } from './WorkoutExerciseSetEditActions'
+import useTimer from 'app/db/stores/useTimer'
 
 const WorkoutExerciseTrackView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
+  const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
   useEffect(() => {
@@ -24,9 +26,6 @@ const WorkoutExerciseTrackView: React.FC = () => {
     }
   }, [selectedSet])
 
-  function handleSubmit() {
-    // TODO
-  }
   function handleAdd() {
     if (stateStore.draftSet) {
       const { guid, ...draftCopy } = stateStore.draftSet
@@ -37,7 +36,20 @@ const WorkoutExerciseTrackView: React.FC = () => {
       })
       workoutStore.addSet(fromDraft)
     }
+
+    if (stateStore.openedExercise?.measurements.rest) {
+      restTimer.start()
+    }
   }
+
+  useEffect(() => {
+    if (stateStore.openedExercise?.measurements.rest) {
+      stateStore.draftSet!.setProp(
+        'restMs',
+        restTimer.timeElapsed.as('milliseconds')
+      )
+    }
+  }, [restTimer.timeElapsed, stateStore.openedExercise])
 
   function handleUpdate() {
     const updatedSet = WorkoutSetModel.create({
@@ -61,7 +73,6 @@ const WorkoutExerciseTrackView: React.FC = () => {
       avoidMode="focused-input"
       style={{
         borderRadius: 8,
-        gap: 24,
         flexDirection: 'column',
         flexGrow: 1,
         display: 'flex',
@@ -75,7 +86,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
       {stateStore.draftSet && (
         <WorkoutExerciseSetEditControls
           value={stateStore.draftSet}
-          onSubmit={handleSubmit}
+          onSubmit={handleAdd}
         />
       )}
 

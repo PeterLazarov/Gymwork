@@ -23,6 +23,10 @@ export const WorkoutSetModel = types
 
     // The smallest unit that works without fractions & is used widely - ms
     durationMs: 0, // default is ms
+
+    restMs: 0,
+
+    createdAt: types.optional(types.Date, () => Date.now()),
   })
   .views(set => ({
     // TODO redo?
@@ -68,6 +72,14 @@ export const WorkoutSetModel = types
           .toFixed(2)
       )
     },
+    get rest() {
+      return Number(
+        convert(set.restMs ?? 0)
+          .from('ms')
+          .to(set.exercise.measurements.rest!.unit)
+          .toFixed(2)
+      )
+    },
   }))
   .actions(withSetPropAction)
   .actions(self => ({
@@ -83,9 +95,14 @@ export const WorkoutSetModel = types
     setDuration(value: number, unit = self.exercise.measurements.time?.unit!) {
       self.setProp('durationMs', convert(value).from(unit).to('ms'))
     },
+    setRest(value: number, unit = self.exercise.measurements.rest?.unit!) {
+      self.setProp('restMs', convert(value).from(unit).to('ms'))
+    },
     isBetterThan(otherSet: WorkoutSet) {
-      const isMoreBetter = self.exercise.measurements[self.exercise.measuredBy]!.moreIsBetter
-      const groupingIsMoreBetter = self.exercise.measurements[self.exercise.groupRecordsBy]!.moreIsBetter
+      const isMoreBetter =
+        self.exercise.measurements[self.exercise.measuredBy]!.moreIsBetter
+      const groupingIsMoreBetter =
+        self.exercise.measurements[self.exercise.groupRecordsBy]!.moreIsBetter
 
       const isTied = self.measurementValue === otherSet.measurementValue
       
@@ -96,7 +113,7 @@ export const WorkoutSetModel = types
       const isMeasurementMore = isMoreBetter ? measurementDiff > 0 : measurementDiff < 0
       
       return isMeasurementMore || (isTied && tieBreak)
-    }
+    },
   }))
 
 export interface WorkoutSet extends Instance<typeof WorkoutSetModel> {}

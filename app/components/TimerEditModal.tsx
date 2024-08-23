@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { View, Text } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
-import { useStores } from 'app/db/helpers/useStores'
 import {
   Button,
   ButtonText,
@@ -12,18 +11,20 @@ import {
   fontSize,
 } from 'designSystem'
 import { translate } from 'app/i18n'
+import useTimer from 'app/db/stores/useTimer'
+import { Duration } from 'luxon'
 
 type Props = {
   open: boolean
   onClose: () => void
 }
 const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
-  const { stateStore, timeStore } = useStores()
+  const { setDuration, duration } = useTimer()
 
-  const [timerSecs, setTimerSecs] = useState(stateStore.timerDurationSecs)
+  const [timerSecs, setTimerSecs] = useState(duration.as('seconds'))
+
   function onConfirm() {
-    stateStore.setTimerDuration(timerSecs)
-    timeStore.stopTimer()
+    setDuration(Duration.fromDurationLike({ seconds: timerSecs }))
     onClose()
   }
 

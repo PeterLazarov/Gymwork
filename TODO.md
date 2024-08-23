@@ -8,9 +8,13 @@
 - edit exercise moreIsBetter and groupBy
 - click on empty space OR back to remove focus on set
 - Add Timer superset support
+- reasonable seed data rest periods & createdAt
+- timer superset support
+- timer configurable duration based on exercise
 
 - "workoutRecordsCalculator" uses functions from "exercise-records-seed-generator". This should be refactored
 - weak ass records should be removed for cardio
 - fix warning after record set delete
 - weak ass to strong ass change doesn't happen 
 - handle when you edit a record into a non record or a record with a new grouping
+

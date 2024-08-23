@@ -154,6 +154,9 @@ export const WorkoutStoreModel = types
     setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {
       set.isWarmup = value
     },
+    removeWorkout(workout: Workout) {
+      destroy(workout)
+    },
   }))
 
 export interface WorkoutStore extends Instance<typeof WorkoutStoreModel> {}

@@ -27,7 +27,6 @@ const SetListItem: React.FC<Props> = ({
   hideRecords = false,
 }) => {
   const isRecord = exerciseRecord ? isCurrentRecord(exerciseRecord, set) : false
-
   const color = isFocused ? colors.primary : colors.secondaryText
   return (
     <View
@@ -84,6 +83,9 @@ const SetListItem: React.FC<Props> = ({
       )}
       {exercise.hasTimeMeasument && (
         <SetDataLabel value={getFormatedDuration(set.duration)} />
+      )}
+      {exercise.measurements.rest && (
+        <SetDataLabel value={getFormatedDuration(set.rest)} />
       )}
     </View>
   )

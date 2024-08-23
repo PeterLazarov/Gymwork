@@ -15,7 +15,9 @@ const WorkoutExerciseSetList: React.FC<Props> = ({ sets, exercise }) => {
   const exerciseToUse = exercise || stateStore.openedExercise!
 
   const exerciseRecord = useMemo(() => {
-    return exercise ? recordStore.getExerciseRecords(exercise.guid) : undefined
+    return exercise
+      ? recordStore.getExerciseRecords(exerciseToUse.guid)
+      : undefined
   }, [recordStore.records])
 
   return (
