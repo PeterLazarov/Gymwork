@@ -14,7 +14,6 @@
 - add special set from StrengthLog
 
 - records seed sometimes fails to select the strongest set
-- "workoutRecordsCalculator" uses functions from "exercise-records-seed-generator". This should be refactored
 - weak ass records should be removed for cardio
 - fix warning after record set delete
 
