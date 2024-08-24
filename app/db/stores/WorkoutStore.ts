@@ -1,10 +1,10 @@
 import {
-  IMSTArray,
   Instance,
   SnapshotOut,
   types,
   destroy,
   getParent,
+  getSnapshot,
 } from 'mobx-state-tree'
 
 import { RootStore } from './RootStore'
@@ -13,7 +13,6 @@ import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 import workoutSeedData from 'app/db/seeds/workout-seed-data'
 import {
   WorkoutSet,
-  WorkoutSetModel,
   WorkoutModel,
   WorkoutSnapshotIn,
   Exercise,
@@ -139,16 +138,6 @@ export const WorkoutStoreModel = types
       )
       if (set) {
         destroy(set)
-      }
-    },
-    updateWorkoutExerciseSet(updatedSet: WorkoutSet) {
-      // TODO: fix typescript hackery
-      const updated = self.rootStore.stateStore.openedWorkout.sets.map(set =>
-        set.guid === updatedSet.guid ? updatedSet : set
-      )
-      if (self.rootStore.stateStore.openedWorkout) {
-        self.rootStore.stateStore.openedWorkout.sets =
-          updated as unknown as IMSTArray<typeof WorkoutSetModel>
       }
     },
     setWorkoutNotes(notes: string) {
