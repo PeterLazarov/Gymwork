@@ -149,7 +149,7 @@ export const WorkoutStoreModel = types
       const isOldSetRecord = isCurrentRecord(records, oldSet!)
       const oldGroupingValue = oldSet!.groupingValue
 
-      const updatedSetsSnapshots = updatedSets!.map(set => getSnapshot(set))
+      const updatedSetsSnapshots = updatedSets.map(set => getSnapshot(set))
       
       self.rootStore.stateStore.openedWorkout.setProp('sets', updatedSetsSnapshots)
       const updatedSet = self.rootStore.stateStore.openedWorkout.sets.find(set => set.guid === updatedSetData.guid)!

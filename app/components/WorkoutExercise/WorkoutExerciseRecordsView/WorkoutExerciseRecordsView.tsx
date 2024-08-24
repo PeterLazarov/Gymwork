@@ -15,12 +15,8 @@ const WorkoutExerciseRecordsView: React.FC = () => {
 
   const recordSets = useMemo(() => {
     const openedExerciseRecords = stateStore.getOpenedExerciseRecords()
-
     return openedExerciseRecords.recordSets
-    // return openedExerciseRecords.recordSets.length > 0
-    //   ? openedExerciseRecords.recordSets.filter(record => !record.isWeakAss)
-    //   : []
-  }, [stateStore.openedExerciseSets])
+  }, [JSON.stringify(stateStore.openedExerciseSets)])
 
   function goToDate(set: WorkoutSet) {
     stateStore.setProp('openedDate', set.date)

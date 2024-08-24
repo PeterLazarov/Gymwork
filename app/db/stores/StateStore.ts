@@ -12,7 +12,7 @@ import { RootStore } from './RootStore'
 import { WorkoutStore } from './WorkoutStore'
 import { RecordStore } from './RecordStore'
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import { Exercise, Workout, WorkoutSet, WorkoutSetModel } from '../models'
+import { Exercise, ExerciseRecord, Workout, WorkoutSet, WorkoutSetModel } from '../models'
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -83,7 +83,11 @@ export const StateStoreModel = types
 
       return exerciseSets[exerciseSets.length - 1]
     },
-
+    get openedExerciseRecords(): ExerciseRecord {
+      return this.recordStore.getExerciseRecords(
+        self.openedExerciseGuid
+      )
+    },
     get openedExerciseWorkSets(): WorkoutSet[] {
       return this.openedExerciseSets.filter(s => !s.isWarmup)
     },
