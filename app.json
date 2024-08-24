@@ -7,9 +7,9 @@
     "scheme": "gymwork",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/app-icon-all.png",
+    "icon": "./assets/logo.png",
     "splash": {
-      "image": "./assets/images/splash-logo-all.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#191015"
     },
@@ -20,34 +20,34 @@
     "jsEngine": "hermes",
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "icon": "./assets/images/app-icon-android-legacy.png",
+      "icon": "./assets/logo.png",
       "package": "com.gymwork",
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
       },
       "splash": {
-        "image": "./assets/images/splash-logo-android-universal.png",
+        "image": "./assets/logo.png",
         "resizeMode": "contain",
         "backgroundColor": "#191015"
       }
     },
     "ios": {
-      "icon": "./assets/images/app-icon-ios.png",
+      "icon": "./assets/logo.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.gymwork",
       "splash": {
-        "image": "./assets/images/splash-logo-ios-mobile.png",
-        "tabletImage": "./assets/images/splash-logo-ios-tablet.png",
+        "image": "./assets/logo.png",
+        "tabletImage": "./assets/logo.png",
         "resizeMode": "contain",
         "backgroundColor": "#191015"
       }
     },
     "web": {
-      "favicon": "./assets/images/app-icon-web-favicon.png",
+      "favicon": "./assets/logo.png",
       "splash": {
-        "image": "./assets/images/splash-logo-web.png",
+        "image": "./assets/logo.png",
         "resizeMode": "contain",
         "backgroundColor": "#191015"
       },
