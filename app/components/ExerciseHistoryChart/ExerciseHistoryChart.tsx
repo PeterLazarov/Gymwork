@@ -186,13 +186,13 @@ const ExerciseHistoryChart = (props: {
     }
 
     return () => eChartRef.current?.dispose()
-  }, [props.view])
+  }, [props.view, props.width, props.height])
 
   useEffect(() => {
     eChartRef.current?.setOption({
       series: feedChartSeriesData(setsByDay),
     })
-  }, [props.view, workoutStore.workouts])
+  }, [props.view, workoutStore.workouts, props.width, props.height])
 
   // TODO does not highlight set in question
   function linkToWorkoutDate() {
@@ -204,13 +204,16 @@ const ExerciseHistoryChart = (props: {
     <>
       <View
         style={{
-          height: height - 50,
+          height: height ? height - 48 : undefined,
           width,
         }}
       >
         {/* Select exercise */}
         {/* Select view */}
-        <SvgChart ref={chartElRef} />
+        <SvgChart
+          ref={chartElRef}
+          useRNGH
+        />
         {/* <Button
           disabled={!selectedDate}
           onPress={handleBtnPress}

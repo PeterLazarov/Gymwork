@@ -24,19 +24,24 @@ const WorkoutExerciseChartView: React.FC = () => {
   return (
     <View
       style={{
-        margin: 16,
-        borderRadius: 8,
-        gap: 24,
+        marginTop: 16,
         flexDirection: 'column',
+        justifyContent: 'space-between',
         display: 'flex',
         flexGrow: 1,
       }}
     >
-      <ExerciseHistoryChart
-        view={activeView}
-        height={250}
-        width={Dimensions.get('window').width}
-      />
+      <View
+        style={{
+          alignItems: 'center',
+        }}
+      >
+        <ExerciseHistoryChart
+          view={activeView}
+          height={Dimensions.get('window').height - 192}
+          width={Dimensions.get('window').width - 32}
+        />
+      </View>
 
       <ToggleGroupButton
         buttons={toggleViewButtons}
