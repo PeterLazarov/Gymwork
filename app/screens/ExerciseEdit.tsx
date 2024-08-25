@@ -57,7 +57,7 @@ const ExerciseEditPage: React.FC = () => {
               color={colors.primaryText}
             />
           </IconButton>
-          <Header.Title title={translate('updateExercise')} />
+          <Header.Title title={translate('editExercise')} />
           <IconButton
             onPress={onComplete}
             disabled={!formValid}
