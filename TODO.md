@@ -15,5 +15,5 @@
 
 - records seed sometimes fails to select the strongest set
 - weak ass records should be removed for cardio
-- fix warning after record set delete
+- fix warning after record set change
 
