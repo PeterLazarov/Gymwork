@@ -33,7 +33,7 @@ const WorkoutExerciseSetEditControls: React.FC<Props> = ({
 
   return (
     <>
-      <View style={{ gap: 16, padding: 16 }}>
+      <View style={{ gap: 8 }}>
         {value.exercise?.measurements.rest && (
           <>
             <SetEditPanelSection text={translate('rest')}>

@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { ExerciseModel } from './Exercise'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import convert from 'convert-units'
+import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction'
 
 export const WorkoutSetModel = types
   .model('WorkoutSet')
@@ -82,6 +83,7 @@ export const WorkoutSetModel = types
     },
   }))
   .actions(withSetPropAction)
+  .actions(withMergeUpdateAction)
   .actions(self => ({
     setWeight(value: number, unit = self.exercise.measurements.weight?.unit!) {
       self.setProp('weightMcg', convert(value).from(unit).to('mcg'))

@@ -40,16 +40,16 @@ export const StateStoreModel = types
     get recordStore(): RecordStore {
       return this.rootStore.recordStore
     },
-    get openedExercise(): Exercise {
+    get openedExercise(): Exercise | undefined {
       return this.exerciseStore.exercises.find(
         e => e.guid === self.openedExerciseGuid
       )!
     },
-    get openedWorkout(): Workout {
-      return this.workoutStore.getWorkoutForDate(self.openedDate)!
+    get openedWorkout(): Workout | undefined {
+      return this.workoutStore.getWorkoutForDate(self.openedDate)
     },
     get isOpenedWorkoutToday() {
-      return this.openedWorkout.date === today.toISODate()
+      return this.openedWorkout?.date === today.toISODate()
     },
     get exercisesPerformed(): Exercise[] {
       return Object.keys(this.workoutStore.exerciseWorkouts)
@@ -58,26 +58,20 @@ export const StateStoreModel = types
     },
     get openedExerciseSets(): WorkoutSet[] {
       const exerciseSets =
-        this.openedWorkout.sets.filter(
+        this.openedWorkout?.sets.filter(
           e => e.exercise.guid === self.openedExerciseGuid
         ) ?? []
 
       return exerciseSets
     },
-    get openedExerciseNextSet(): WorkoutSet {
-      const lastSet = this.openedExerciseSets.at(-1)
 
-      if (!lastSet)
-        return WorkoutSetModel.create({
-          exercise: self.openedExerciseGuid,
-        })
-
-      const { guid, ...rest } = getSnapshot(lastSet)
-      return WorkoutSetModel.create(rest)
+    get openedExerciseLastSet(): WorkoutSet | undefined {
+      return this.openedExerciseSets.at(-1)
     },
-    get openedExerciseSet(): WorkoutSet {
+
+    get openedExerciseSet(): WorkoutSet | undefined {
       const exerciseSets =
-        this.openedWorkout.sets.filter(
+        this.openedWorkout?.sets.filter(
           e => e.exercise.guid === self.openedExerciseGuid
         ) ?? []
 
@@ -92,7 +86,7 @@ export const StateStoreModel = types
       return this.openedExerciseSets.filter(s => !s.isWarmup)
     },
 
-    get firstWorkout(): Workout {
+    get firstWorkout(): Workout | undefined {
       return this.workoutStore.workouts[this.workoutStore.workouts.length - 1]
     },
 
@@ -114,6 +108,9 @@ export const StateStoreModel = types
   .actions(self => ({
     /** Made to work with drag and drop */
     reorderOpenedExerciseSets(from: number, to: number) {
+      if (!self.openedWorkout) {
+        return
+      }
       const indexFromAllSets = self.openedWorkout.sets.indexOf(
         self.openedExerciseSets[from]
       )
@@ -127,11 +124,15 @@ export const StateStoreModel = types
       }
 
       const item = self.openedWorkout.sets[indexFromAllSets]!
-      const reorderedSets: WorkoutSet[] = self
-        .openedWorkout.sets.toSpliced(indexFromAllSets, 1)
-        .toSpliced(indexToAllSets, 0, item)!
+      const reorderedSets =
+        self.openedWorkout.sets
+          // @ts-ignore
+          .toSpliced(indexFromAllSets, 1)
+          .toSpliced(indexToAllSets, 0, item) ?? []
 
-      const reorderedSetsSnapshots = reorderedSets.map(set => getSnapshot(set))
+      const reorderedSetsSnapshots = reorderedSets.map((set: WorkoutSet) =>
+        getSnapshot(set)
+      )
       self.openedWorkout.setProp('sets', reorderedSetsSnapshots)
     },
     setOpenedExercise(exercise: Exercise | null) {

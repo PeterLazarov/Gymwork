@@ -27,8 +27,8 @@ const ToggleGroupButton: React.FC<Props> = ({
             setActiveIndex(index)
             button.onPress()
           }}
-          style={{ flex: 1, borderRadius: 6 }}
-          size="small"
+          style={{ flex: 1 }}
+          // size="small"
         >
           <ButtonText variant={index === activeIndex ? 'primary' : 'secondary'}>
             {button.text}
