@@ -122,9 +122,11 @@ export const WorkoutStoreModel = types
       self.rootStore.recordStore.runSetUpdatedCheck(newSet)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
-      const deletedSet = self.rootStore.stateStore.openedWorkout!.sets.find(
+      const openedWorkout = self.rootStore.stateStore.openedWorkout!
+      const deletedSetIndex = openedWorkout.sets.findIndex(
         s => s.guid === setGuid
       )
+      const deletedSet = openedWorkout.sets[deletedSetIndex]
       if (deletedSet) {
         const { exercise } = deletedSet
 
@@ -132,7 +134,7 @@ export const WorkoutStoreModel = types
         const isRecordBool = isCurrentRecord(records, deletedSet)
 
         const deletedSetSnapshot = getSnapshot(deletedSet)
-        destroy(deletedSet)
+        openedWorkout.sets.splice(deletedSetIndex, 1)
 
         if (isRecordBool) {
           const grouping = getDataFieldForKey(exercise.groupRecordsBy)
