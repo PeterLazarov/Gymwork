@@ -23,21 +23,19 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
 }) => {
   const { stateStore, workoutStore } = useStores()
 
-  const openedExerciseRecords = useMemo(() => {
-    return stateStore.getOpenedExerciseRecords()
-  }, [stateStore.openedExerciseSets])
-
   const setRecordFlagMap = useMemo(
     () =>
-      computed(() =>
-        stateStore.openedExerciseSets.reduce((acc, set) => {
+      computed(() => {
+        const openedExerciseRecords = stateStore.getOpenedExerciseRecords()
+
+        return stateStore.openedExerciseSets.reduce((acc, set) => {
           const isSetRecord = isCurrentRecord(openedExerciseRecords, set)
           acc[set.guid] = isSetRecord
 
           return acc
         }, {} as Record<string, boolean>)
-      ),
-    [openedExerciseRecords]
+      }),
+    [stateStore.openedExerciseSets]
   ).get()
 
   function toggleSelectedSet(set: WorkoutSet) {
@@ -86,7 +84,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
         </PressableHighlight>
       )
     },
-    [selectedSet]
+    [selectedSet, setRecordFlagMap]
   )
 
   const ITEM_HEIGHT = 62

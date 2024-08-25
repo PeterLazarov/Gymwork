@@ -27,7 +27,7 @@ const WorkoutExerciseSetList: React.FC<Props> = ({ sets, exercise }) => {
           return acc
         }, {} as Record<string, boolean>)
       }),
-    [exerciseToUse]
+    [sets]
   ).get()
 
   return (
