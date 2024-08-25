@@ -6,7 +6,9 @@ import {
   WorkoutSetSnapshotIn
 } from "app/db/models"
 
+let weakassCounter = 1
 export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void => {
+  console.log('weakassCounter', weakassCounter++)
   const groupingRecordSetMap = exerciseAllRecords.recordSets.reduce((acc, set) => { 
     acc[set.groupingValue] = set 
     return acc
@@ -37,10 +39,12 @@ export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void =
 
 }
 
+let currentRecondCounter = 1
 export const isCurrentRecord = (
   record: ExerciseRecord, 
   set: WorkoutSet, 
-) => {
+  ) => {
+  console.log('currentRecondCounter', currentRecondCounter++)
   const currentRecord = record.recordSets.find(record => record.groupingValue === set.groupingValue)
 
   return currentRecord?.guid === set.guid
