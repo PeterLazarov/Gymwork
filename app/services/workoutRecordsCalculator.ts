@@ -3,7 +3,6 @@ import { destroy, getSnapshot } from "mobx-state-tree"
 import { 
   ExerciseRecord, 
   ExerciseRecordSnapshotIn, 
-  Workout, 
   WorkoutSet, 
   WorkoutSetSnapshotIn
 } from "app/db/models"
@@ -39,32 +38,6 @@ export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void =
 
 }
 
-export const getGroupingRecordsForExercise = (
-  groupingToRefresh: number,
-  oldExerciseRecords: ExerciseRecord, 
-  sortedWorkouts: Workout[]
-): ExerciseRecordSnapshotIn => {
-  const record: ExerciseRecordSnapshotIn = { exercise: oldExerciseRecords.exercise.guid, recordSets: [] }
-
-  let untouchedRecords: WorkoutSetSnapshotIn[] = []
-  oldExerciseRecords.recordSets.forEach(recordSet => {
-    if (recordSet.groupingValue !== groupingToRefresh) {
-      untouchedRecords.push(getSnapshot(recordSet))
-    }
-  })
-  record.recordSets = untouchedRecords
-
-  sortedWorkouts.forEach(workout => {
-    workout.sets.forEach(set => {
-      if (set.exercise.guid === oldExerciseRecords.exercise.guid && set.groupingValue === groupingToRefresh) {
-        updateSnapshotRecordIfNecessary(record, set)
-      }
-    })
-  })
-
-  return record
-}
-
 export const isCurrentRecord = (
   record: ExerciseRecord, 
   set: WorkoutSet, 
@@ -93,19 +66,21 @@ console.log(set.measurementValue - (currentRecord?.measurementValue || 0))
   return !currentRecord || set.isBetterThan(currentRecord)
 }
 
-export const addToRecords = (
+export const updateRecordsWithLatestBest = (
   records: WorkoutSet[], 
   newRecord: WorkoutSet, 
-): WorkoutSet[] => {
-  const currentRecord = records!.find(record => record.groupingValue === newRecord.groupingValue)
+): WorkoutSetSnapshotIn[] => {
+  const currentRecord = records.find(record => record.groupingValue === newRecord.groupingValue)
 
-  const recordSets = records!.slice()
+  const recordSets = records.map(record => getSnapshot(record))
+  const newRecordSnapshot = getSnapshot(newRecord)
+  
   if (currentRecord) {
-    const index = recordSets.indexOf(currentRecord)
-    recordSets[index] = newRecord
+    const index = records.indexOf(currentRecord)
+    recordSets[index] = newRecordSnapshot
     destroy(currentRecord)
   } else {
-    recordSets.push(newRecord)
+    recordSets.push(newRecordSnapshot)
   }
 
   return recordSets

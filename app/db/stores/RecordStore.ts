@@ -13,17 +13,15 @@ import {
   ExerciseRecordModel, 
   ExerciseRecordSnapshotIn, 
   ExerciseRecord, 
-  WorkoutSet, 
-  WorkoutSetSnapshotIn 
+  WorkoutSet,
+  WorkoutSetSnapshotIn, 
 } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
 import { 
-  addToRecords,
-  getDataFieldForKey, 
-  getGroupingRecordsForExercise, 
+  updateRecordsWithLatestBest,
   isNewRecord,
-  isSnapshotCurrentRecord,
-  removeWeakAssRecords
+  removeWeakAssRecords,
+  updateSnapshotRecordIfNecessary
 } from 'app/services/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
 
@@ -76,23 +74,35 @@ export const RecordStoreModel = types
 
       const isNewRecordBool = isNewRecord(records.recordSets, updatedSet)
       if (isNewRecordBool) {
-        const updatedRecords = addToRecords(records.recordSets, updatedSet)
+        const updatedRecords = updateRecordsWithLatestBest(records.recordSets, updatedSet)
        
-        const recordSnapshots = updatedRecords.map(record => getSnapshot(record))
-
-        records.setProp('recordSets', recordSnapshots)
+        records.setProp('recordSets', updatedRecords)
       }
     },
-    runSetGroupingRecordRefreshCheck(deletedSetSnapshot: WorkoutSetSnapshotIn, exercise: Exercise) {
-      const records = this.getExerciseRecords(exercise.guid)
-      const isRecordBool = isSnapshotCurrentRecord(records, deletedSetSnapshot)
+    recalculateGroupingRecordsForExercise (
+      groupingToRefresh: number,
+      oldExerciseRecords: ExerciseRecord, 
+    ) {
+      const record: ExerciseRecordSnapshotIn = { exercise: oldExerciseRecords.exercise.guid, recordSets: [] }
 
-      if (isRecordBool) {
-        const grouping = getDataFieldForKey(exercise.groupRecordsBy)
-        const sortedWorkouts = self.rootStore.workoutStore.sortedWorkouts
-        const refreshedRecords = getGroupingRecordsForExercise(deletedSetSnapshot[grouping], records, sortedWorkouts)
-        records.setProp('recordSets', refreshedRecords.recordSets)
-      }
+      let untouchedRecords: WorkoutSetSnapshotIn[] = []
+      oldExerciseRecords.recordSets.forEach(recordSet => {
+        if (recordSet.groupingValue !== groupingToRefresh) {
+          untouchedRecords.push(getSnapshot(recordSet))
+        }
+      })
+      record.recordSets = untouchedRecords
+
+      const sortedWorkouts = self.rootStore.workoutStore.sortedWorkouts
+      sortedWorkouts.forEach(workout => {
+        workout.sets.forEach(set => {
+          if (set.exercise.guid === oldExerciseRecords.exercise.guid && set.groupingValue === groupingToRefresh) {
+            updateSnapshotRecordIfNecessary(record, set)
+          }
+        })
+      })
+
+      oldExerciseRecords.setProp('recordSets', record.recordSets)
     }
   }))
 

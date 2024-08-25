@@ -20,7 +20,7 @@ import {
   WorkoutSetSnapshotIn,
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
-import { getGroupingRecordsForExercise, isCurrentRecord } from 'app/services/workoutRecordsCalculator'
+import { getDataFieldForKey, isCurrentRecord } from 'app/services/workoutRecordsCalculator'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -128,10 +128,17 @@ export const WorkoutStoreModel = types
       )
       if (deletedSet) {
         const { exercise } = deletedSet
+
+        const records = self.rootStore.recordStore.getExerciseRecords(exercise.guid)
+        const isRecordBool = isCurrentRecord(records, deletedSet)
+
         const deletedSetSnapshot = getSnapshot(deletedSet)
         destroy(deletedSet)
 
-        self.rootStore.recordStore.runSetGroupingRecordRefreshCheck(deletedSetSnapshot, exercise)
+        if (isRecordBool) {
+          const grouping = getDataFieldForKey(exercise.groupRecordsBy)
+          self.rootStore.recordStore.recalculateGroupingRecordsForExercise(deletedSetSnapshot[grouping], records)
+        }
       }
     },
     updateWorkoutExerciseSet(updatedSetData: WorkoutSet) {
@@ -156,8 +163,7 @@ export const WorkoutStoreModel = types
       const updatedSet = self.rootStore.stateStore.openedWorkout!.sets.find(set => set.guid === updatedSetData.guid)!
 
       if (isOldSetRecord) {
-        const refreshedRecords = getGroupingRecordsForExercise(oldGroupingValue, records, self.sortedWorkouts)
-        records.setProp('recordSets', refreshedRecords.recordSets)
+        self.rootStore.recordStore.recalculateGroupingRecordsForExercise(oldGroupingValue, records)
       }
 
       if (!isOldSetRecord || updatedSet.groupingValue !== oldGroupingValue) {
