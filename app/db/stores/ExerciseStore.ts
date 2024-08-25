@@ -56,9 +56,23 @@ export const ExerciseStoreModel = types
   }))
   .views(store => ({
     get muscleOptions() {
-      return uniqueValues(store.exercises.flatMap(e => e.muscles))
-        .map(name => startCase(name))
-        .sort()
+      return uniqueValues(store.exercises.flatMap(e => e.muscles)).sort()
+    },
+    get exercisesByMuscle() {
+      const acc = Object.fromEntries(
+        this.muscleOptions.map(muscle => [muscle, [] as Exercise[]])
+      )
+
+      store.exercises
+        .slice()
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach(exercise => {
+          exercise.muscles.forEach(muscle => {
+            acc[muscle].push(exercise)
+          })
+        })
+
+      return acc
     },
     get favoriteExercises() {
       return store.exercises.filter(e => e.isFavorite)
