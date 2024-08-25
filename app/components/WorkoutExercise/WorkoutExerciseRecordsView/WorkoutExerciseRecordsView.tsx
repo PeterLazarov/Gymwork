@@ -49,7 +49,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
               >
                 <RecordsListItem
                   set={set}
-                  exercise={stateStore.openedExercise}
+                  exercise={stateStore.openedExercise!}
                 />
               </PressableHighlight>
             )

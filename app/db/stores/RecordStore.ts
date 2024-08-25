@@ -8,9 +8,23 @@ import {
 
 import * as storage from 'app/utils/storage'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
-import { Exercise, ExerciseRecordModel, ExerciseRecordSnapshotIn, ExerciseRecord, WorkoutSet } from 'app/db/models'
+import { 
+  Exercise, 
+  ExerciseRecordModel, 
+  ExerciseRecordSnapshotIn, 
+  ExerciseRecord, 
+  WorkoutSet, 
+  WorkoutSetSnapshotIn 
+} from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
-import { addToRecords, getGroupingRecordsForExercise, isCurrentRecord, isNewRecord, removeWeakAssRecords } from 'app/services/workoutRecordsCalculator'
+import { 
+  addToRecords,
+  getDataFieldForKey, 
+  getGroupingRecordsForExercise, 
+  isNewRecord,
+  isSnapshotCurrentRecord,
+  removeWeakAssRecords
+} from 'app/services/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
 
 export const RecordStoreModel = types
@@ -69,13 +83,14 @@ export const RecordStoreModel = types
         records.setProp('recordSets', recordSnapshots)
       }
     },
-    runSetGroupingRecordRefreshCheck(deletedSet: WorkoutSet, exercise: Exercise) {
+    runSetGroupingRecordRefreshCheck(deletedSetSnapshot: WorkoutSetSnapshotIn, exercise: Exercise) {
       const records = this.getExerciseRecords(exercise.guid)
-      const isRecordBool = isCurrentRecord(records, deletedSet)
+      const isRecordBool = isSnapshotCurrentRecord(records, deletedSetSnapshot)
 
       if (isRecordBool) {
+        const grouping = getDataFieldForKey(exercise.groupRecordsBy)
         const sortedWorkouts = self.rootStore.workoutStore.sortedWorkouts
-        const refreshedRecords = getGroupingRecordsForExercise(deletedSet.groupingValue, records, sortedWorkouts)
+        const refreshedRecords = getGroupingRecordsForExercise(deletedSetSnapshot[grouping], records, sortedWorkouts)
         records.setProp('recordSets', refreshedRecords.recordSets)
       }
     }

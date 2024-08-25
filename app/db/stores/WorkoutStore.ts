@@ -128,9 +128,10 @@ export const WorkoutStoreModel = types
       )
       if (deletedSet) {
         const { exercise } = deletedSet
+        const deletedSetSnapshot = getSnapshot(deletedSet)
         destroy(deletedSet)
 
-        self.rootStore.recordStore.runSetGroupingRecordRefreshCheck(deletedSet, exercise)
+        self.rootStore.recordStore.runSetGroupingRecordRefreshCheck(deletedSetSnapshot, exercise)
       }
     },
     updateWorkoutExerciseSet(updatedSetData: WorkoutSet) {

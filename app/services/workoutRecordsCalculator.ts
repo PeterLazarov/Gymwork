@@ -74,6 +74,16 @@ export const isCurrentRecord = (
   return currentRecord?.guid === set.guid
 }
 
+export const isSnapshotCurrentRecord = (
+  record: ExerciseRecord, 
+  setSnapshot: WorkoutSetSnapshotIn, 
+) => {
+  const grouping = getDataFieldForKey(record.exercise.groupRecordsBy)
+  const currentRecord = record.recordSets.find(record => record.groupingValue === setSnapshot[grouping])
+
+  return currentRecord?.guid === setSnapshot.guid
+}
+
 export const isNewRecord = (
   recordSets: WorkoutSet[], 
   set: WorkoutSet, 
@@ -123,7 +133,7 @@ export const updateSnapshotRecordIfNecessary = (
   }
 };
 
-const getDataFieldForKey = (key: string): keyof WorkoutSetSnapshotIn => {
+export const getDataFieldForKey = (key: string): keyof WorkoutSetSnapshotIn => {
   const dataFieldsMap = {
     weight: 'weightMcg',
     time: 'durationMs',
