@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
-import React, { useCallback } from 'react'
-import { View } from 'react-native'
+import React, { useCallback, useRef } from 'react'
+import { FlatList, View } from 'react-native'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
@@ -85,8 +85,10 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
     stateStore.reorderOpenedExerciseSets(from, to)
   }
 
+  const dragListRef = useRef<FlatList>(null)
+
   return (
-    <View style={{ flex: 1, padding: 16 }}>
+    <View style={{ flex: 1 }}>
       <DragList
         data={stateStore.openedExerciseSets}
         renderItem={renderItem}
@@ -94,6 +96,10 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
         getItemLayout={getItemLayout}
         onReordered={handleReorder}
         ItemSeparatorComponent={() => <Divider orientation="horizontal" />}
+        ref={dragListRef}
+        onContentSizeChange={() =>
+          dragListRef.current?.scrollToEnd({ animated: true })
+        }
       />
 
       {stateStore.openedExerciseSets.length === 0 && (

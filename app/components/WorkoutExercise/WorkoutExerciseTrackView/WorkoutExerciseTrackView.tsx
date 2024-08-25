@@ -36,13 +36,13 @@ const WorkoutExerciseTrackView: React.FC = () => {
       workoutStore.addSet(fromDraft)
     }
 
-    if (stateStore.openedExercise.measurements.rest) {
+    if (stateStore.openedExercise?.measurements.rest) {
       restTimer.start()
     }
   }
 
   useEffect(() => {
-    if (stateStore.openedExercise.measurements.rest) {
+    if (stateStore.openedExercise?.measurements.rest) {
       stateStore.draftSet!.setProp(
         'restMs',
         restTimer.timeElapsed.as('milliseconds')
@@ -65,9 +65,10 @@ const WorkoutExerciseTrackView: React.FC = () => {
     <KeyboardAvoiderView
       avoidMode="focused-input"
       style={{
-        borderRadius: 8,
         flexDirection: 'column',
         flexGrow: 1,
+        gap: 8,
+        padding: 8,
         display: 'flex',
       }}
     >

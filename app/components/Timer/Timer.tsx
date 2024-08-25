@@ -39,6 +39,7 @@ const Timer = forwardRef((_, ref) => {
           justifyContent: 'center',
           alignItems: 'center',
           gap: 4,
+          paddingHorizontal: 4,
         }}
       >
         <AnimatedCircularProgress
@@ -72,7 +73,10 @@ const Timer = forwardRef((_, ref) => {
           }}
           ref={ref}
         />
-        <IconButton onPress={onSettingsPress}>
+        <IconButton
+          onPress={onSettingsPress}
+          style={{ width: 48, aspectRatio: 1 }}
+        >
           <Icon icon="settings-outline" />
         </IconButton>
       </View>
