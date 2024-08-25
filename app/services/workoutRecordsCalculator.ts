@@ -2,7 +2,6 @@ import { destroy, getSnapshot } from "mobx-state-tree"
 
 import { 
   ExerciseRecord, 
-  ExerciseRecordSnapshotIn, 
   WorkoutSet, 
   WorkoutSetSnapshotIn
 } from "app/db/models"
@@ -47,16 +46,6 @@ export const isCurrentRecord = (
   return currentRecord?.guid === set.guid
 }
 
-export const isSnapshotCurrentRecord = (
-  record: ExerciseRecord, 
-  setSnapshot: WorkoutSetSnapshotIn, 
-) => {
-  const grouping = getDataFieldForKey(record.exercise.groupRecordsBy)
-  const currentRecord = record.recordSets.find(record => record.groupingValue === setSnapshot[grouping])
-
-  return currentRecord?.guid === setSnapshot.guid
-}
-
 export const isNewRecord = (
   recordSets: WorkoutSet[], 
   set: WorkoutSet, 
@@ -86,26 +75,25 @@ export const updateRecordsWithLatestBest = (
   return recordSets
 }
 
-export const updateSnapshotRecordIfNecessary = (
-  record: ExerciseRecordSnapshotIn, 
-  set: WorkoutSet
-) => {
-  const newRecord = getSnapshot(set);
-  const grouping = getDataFieldForKey(set.exercise.groupRecordsBy);
-  const currentRecordIndex = record.recordSets!.findIndex(s => s[grouping] === set.groupingValue);
+export const updateRecordsIfNecessary = (
+  recordSets: WorkoutSet[], 
+  setToCompare: WorkoutSet
+): WorkoutSet[] => {
+  const grouping = getDataFieldForKey(setToCompare.exercise.groupRecordsBy);
+  const currentRecordIndex = recordSets!.findIndex(s => s[grouping] === setToCompare.groupingValue);
 
+  let updatedRecords = recordSets
   if (currentRecordIndex !== -1) {
-    const currentRecord = record.recordSets![currentRecordIndex];
-    if (isNewSetBetterThanCurrent(set, currentRecord)) {
-      record.recordSets = [
-        ...record.recordSets!.slice(0, currentRecordIndex),
-        newRecord,
-        ...record.recordSets!.slice(currentRecordIndex + 1)
-      ];
+    const currentRecord = updatedRecords[currentRecordIndex];
+    if (setToCompare.isBetterThan(currentRecord)) {
+      updatedRecords.splice(currentRecordIndex, 1, setToCompare);
     }
   } else {
-    record.recordSets = [...record.recordSets!, newRecord];
+    updatedRecords.push(setToCompare);
+
   }
+
+  return updatedRecords
 };
 
 export const getDataFieldForKey = (key: string): keyof WorkoutSetSnapshotIn => {
@@ -116,24 +104,4 @@ export const getDataFieldForKey = (key: string): keyof WorkoutSetSnapshotIn => {
     distance: 'distanceMm',
   }
   return dataFieldsMap[key as keyof typeof dataFieldsMap] as keyof WorkoutSetSnapshotIn
-}
-
-
-const isNewSetBetterThanCurrent = (newSet: WorkoutSet, currentSet: WorkoutSetSnapshotIn) => {
-  const isMoreBetter = newSet.exercise.measurements[newSet.exercise.measuredBy]!.moreIsBetter
-  const groupingIsMoreBetter = newSet.exercise.measurements[newSet.exercise.groupRecordsBy]!.moreIsBetter
-
-  const measurement = getDataFieldForKey(newSet.exercise.measuredBy)
-  const grouping = getDataFieldForKey(newSet.exercise.groupRecordsBy)
-
-  const isTied = currentSet[measurement] === newSet.measurementValue
-
-  const measurementDiff = newSet.measurementValue - currentSet[measurement]
-  const groupingDiff = newSet.groupingValue - currentSet[grouping]
-
-  const tieBreak = groupingIsMoreBetter ? groupingDiff > 0 : groupingDiff < 0
-  const isMeasurementMore = isMoreBetter ? measurementDiff > 0 : measurementDiff < 0
-
-  console.log({ measurementDiff, current: currentSet[measurement], newGrouping: newSet.groupingValue, oldGrouping: currentSet[grouping], new:  newSet.measurementValue, isMoreBetter, isMeasurementMore})
-  return isMeasurementMore || (isTied && tieBreak)
 }
