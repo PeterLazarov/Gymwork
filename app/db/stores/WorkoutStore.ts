@@ -130,10 +130,10 @@ export const WorkoutStoreModel = types
       self.workouts.push(created)
     },
     addSet(newSet: WorkoutSet) {
-      self.rootStore.stateStore.openedWorkout.sets.push(newSet)
+      self.rootStore.stateStore.openedWorkout?.sets.push(newSet)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
-      const set = self.rootStore.stateStore.openedWorkout.sets.find(
+      const set = self.rootStore.stateStore.openedWorkout?.sets.find(
         s => s.guid === setGuid
       )
       if (set) {
