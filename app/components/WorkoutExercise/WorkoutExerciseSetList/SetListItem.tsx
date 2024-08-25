@@ -1,10 +1,8 @@
-import { computed } from 'mobx'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { View, Text } from 'react-native'
 
 import SetDataLabel from '../SetDataLabel'
-import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
-import { isCurrentRecord } from 'app/services/workoutRecordsCalculator'
+import { Exercise, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
 import { Icon, colors, fontSize } from 'designSystem'
@@ -12,29 +10,22 @@ import { Icon, colors, fontSize } from 'designSystem'
 type Props = {
   set: WorkoutSet
   exercise: Exercise
-  exerciseRecord?: ExerciseRecord
   number?: number
   isFocused?: boolean
+  isRecord?: boolean
   hideRecords?: boolean
 }
 
 const SetListItem: React.FC<Props> = ({
   set,
   exercise,
-  exerciseRecord,
   isFocused,
+  isRecord,
   number,
   hideRecords = false,
 }) => {
-  const isRecord = useMemo(
-    () =>
-      computed(() =>
-        exerciseRecord ? isCurrentRecord(exerciseRecord, set) : false
-      ),
-    [exerciseRecord]
-  ).get()
-
   const color = isFocused ? colors.primary : colors.secondaryText
+
   return (
     <View
       style={{
