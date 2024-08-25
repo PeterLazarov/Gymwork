@@ -19,7 +19,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   selectedSet,
   setSelectedSet,
 }) => {
-  const { stateStore } = useStores()
+  const { stateStore, workoutStore } = useStores()
 
   const openedExerciseRecords = useMemo(() => {
     return stateStore.getOpenedExerciseRecords()
@@ -64,6 +64,8 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
               set={item}
               openedExerciseRecords={openedExerciseRecords}
               isFocused={selectedSet?.guid === item.guid}
+              calcWorkSetNumber={calcWorkSetNumber}
+              toggleSetWarmup={toggleSetWarmup}
             />
           </View>
         </PressableHighlight>
@@ -71,6 +73,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
     },
     [selectedSet]
   )
+
   const ITEM_HEIGHT = 62
   const getItemLayout = (
     data: ArrayLike<WorkoutSet> | null | undefined,
@@ -92,6 +95,14 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
 
   const dragListRef = useRef<FlatList>(null)
 
+  function calcWorkSetNumber(set: WorkoutSet) {
+    const workArrayIndex = stateStore.openedExerciseWorkSets.indexOf(set)
+    return workArrayIndex + 1
+  }
+
+  function toggleSetWarmup(set: WorkoutSet) {
+    workoutStore.setWorkoutSetWarmup(set, !set.isWarmup)
+  }
   return (
     <>
       <DragList

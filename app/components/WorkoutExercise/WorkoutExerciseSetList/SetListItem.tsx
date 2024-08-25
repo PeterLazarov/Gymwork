@@ -1,5 +1,4 @@
 import { computed } from 'mobx'
-import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import { View, Text } from 'react-native'
 
@@ -32,8 +31,9 @@ const SetListItem: React.FC<Props> = ({
       computed(() =>
         exerciseRecord ? isCurrentRecord(exerciseRecord, set) : false
       ),
-    [exerciseRecord, set]
+    [exerciseRecord]
   ).get()
+
   const color = isFocused ? colors.primary : colors.secondaryText
   return (
     <View
@@ -98,4 +98,4 @@ const SetListItem: React.FC<Props> = ({
   )
 }
 
-export default observer(SetListItem)
+export default SetListItem
