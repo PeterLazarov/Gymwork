@@ -7,7 +7,6 @@ import ExerciseAcordionList from './ExerciseAcordionList'
 import ExerciseList from './ExerciseList'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
-import { groupBy } from 'app/utils/array'
 import { translate } from 'app/i18n'
 
 const noop = () => {}
@@ -19,11 +18,6 @@ const AllExerciseSelect: React.FC<Props> = ({ onSelect }) => {
   const { exerciseStore } = useStores()
 
   const [filterString, setFilterString] = useState('')
-
-  const groupedExercises = useMemo(
-    () => groupBy<Exercise>(exerciseStore.exercises, 'muscles'),
-    [exerciseStore.exercises]
-  )
 
   const filteredExercises = useMemo(() => {
     if (!filterString) {
@@ -58,7 +52,7 @@ const AllExerciseSelect: React.FC<Props> = ({ onSelect }) => {
       <ScrollView style={{ display: 'flex', flexDirection: 'column' }}>
         {filterString === '' && (
           <ExerciseAcordionList
-            exercises={groupedExercises}
+            exercises={exerciseStore.exercisesByMuscle}
             onSelect={onSelect ?? noop}
           />
         )}

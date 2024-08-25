@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import { getSnapshot } from 'mobx-state-tree'
+import { View } from 'react-native'
 
 import WorkoutExerciseSetEditList from './WorkoutExerciseSetEditList'
 import WorkoutExerciseSetEditControls from './WorkoutExerciseSetEditControls'
@@ -78,20 +79,23 @@ const WorkoutExerciseTrackView: React.FC = () => {
         flexDirection: 'column',
         flexGrow: 1,
         gap: 8,
-        padding: 8,
         display: 'flex',
       }}
     >
-      <WorkoutExerciseSetEditList
-        selectedSet={selectedSet}
-        setSelectedSet={setSelectedSet}
-      />
+      <View style={{ padding: 8, flex: 1 }}>
+        <WorkoutExerciseSetEditList
+          selectedSet={selectedSet}
+          setSelectedSet={setSelectedSet}
+        />
+      </View>
 
       {stateStore.draftSet && (
-        <WorkoutExerciseSetEditControls
-          value={stateStore.draftSet}
-          onSubmit={handleAdd}
-        />
+        <View style={{ paddingHorizontal: 8 }}>
+          <WorkoutExerciseSetEditControls
+            value={stateStore.draftSet}
+            onSubmit={handleAdd}
+          />
+        </View>
       )}
 
       <WorkoutExerciseSetEditActions

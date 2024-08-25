@@ -32,6 +32,7 @@ const SelectedLabel: React.FC<Props> = ({
       style={{
         fontSize: fontSize.sm,
         color: colors.primary,
+        textTransform: 'capitalize',
       }}
     >
       {selection}

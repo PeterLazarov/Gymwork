@@ -11,7 +11,9 @@
 - reasonable seed data rest periods & createdAt
 - timer configurable duration based on exercise
 - add special set from StrengthLog
-- better visualize weak ass records or hide them again 
-- should we order workout by date on addition 
-- newly created exericse is not rendered immedeately in accordeon
+- better visualize weak ass records or hide them again
+- should we order workout by date on addition
+- On exercise screen, oldest exercise at the top + scroll to bottom
+- On jump to record set, scroll to set + highlight
+- Exercise card on android has a very thick bordeer on press
 - make it more visible that a workout has comments
