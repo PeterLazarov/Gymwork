@@ -13,3 +13,4 @@
 - timer configurable duration based on exercise
 - add special set from StrengthLog
 - better visualize weak ass records or hide them again 
+- should we order workout by date on addition 

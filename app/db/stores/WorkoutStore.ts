@@ -140,33 +140,23 @@ export const WorkoutStoreModel = types
         }
       }
     },
-    updateWorkoutExerciseSet(updatedSetData: WorkoutSet) {
-      let oldSet: WorkoutSet;
-      const updatedSets: WorkoutSet[] = [];
-      
-      self.rootStore.stateStore.openedWorkout!.sets.forEach(set => {
-        if (set.guid === updatedSetData.guid) {
-          oldSet = set;
-          updatedSets.push(updatedSetData);
-        } else {
-          updatedSets.push(set);
-        }
-      });
-      const records = self.rootStore.recordStore.getExerciseRecords(oldSet!.exercise.guid)
-      const isOldSetRecord = isCurrentRecord(records, oldSet!)
-      const oldGroupingValue = oldSet!.groupingValue
+    updateSet(updatedSetData: WorkoutSetSnapshotIn) {
+      const setToUpdate = self.rootStore.stateStore.openedWorkout!.sets.find(set => {
+        return set.guid === updatedSetData.guid
+      })!
 
-      const updatedSetsSnapshots = updatedSets.map(set => getSnapshot(set))
+      const records = self.rootStore.recordStore.getExerciseRecords(setToUpdate!.exercise.guid)
+      const isOldSetRecord = isCurrentRecord(records, setToUpdate!)
+      const oldGroupingValue = setToUpdate!.groupingValue
       
-      self.rootStore.stateStore.openedWorkout!.setProp('sets', updatedSetsSnapshots)
-      const updatedSet = self.rootStore.stateStore.openedWorkout!.sets.find(set => set.guid === updatedSetData.guid)!
+      setToUpdate.mergeUpdate(updatedSetData)
 
       if (isOldSetRecord) {
         self.rootStore.recordStore.recalculateGroupingRecordsForExercise(oldGroupingValue, records)
       }
 
-      if (!isOldSetRecord || updatedSet.groupingValue !== oldGroupingValue) {
-        self.rootStore.recordStore.runSetUpdatedCheck(updatedSet)
+      if (!isOldSetRecord || setToUpdate.groupingValue !== oldGroupingValue) {
+        self.rootStore.recordStore.runSetUpdatedCheck(setToUpdate)
       }
     },
     setWorkoutNotes(notes: string) {

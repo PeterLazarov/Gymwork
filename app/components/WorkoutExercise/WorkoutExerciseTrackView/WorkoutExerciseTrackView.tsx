@@ -55,14 +55,14 @@ const WorkoutExerciseTrackView: React.FC = () => {
   }, [restTimer.timeElapsed, stateStore.openedExercise])
 
   function handleUpdate() {
-    const updatedSet = WorkoutSetModel.create({
+    const updatedSet = {
       ...getSnapshot(stateStore.draftSet!),
       exercise: selectedSet?.exercise.guid!,
       guid: selectedSet!.guid,
       date: selectedSet!.date,
-    })
+    }
 
-    workoutStore.updateWorkoutExerciseSet(updatedSet)
+    workoutStore.updateSet(updatedSet)
 
     setSelectedSet(null)
   }
