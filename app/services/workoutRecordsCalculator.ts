@@ -51,7 +51,6 @@ export const isNewRecord = (
   set: WorkoutSet, 
 ) => {
   const currentRecord = recordSets.find(record => record.groupingValue === set.groupingValue)
-console.log(set.measurementValue - (currentRecord?.measurementValue || 0))
   return !currentRecord || set.isBetterThan(currentRecord)
 }
 

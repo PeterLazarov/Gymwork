@@ -57,7 +57,6 @@ export const WorkoutStoreModel = types
       }, {} as Record<Exercise['guid'], Workout[]>)
     },
 
-    // TODO: not used anywhere
     /** @returns all sets performed ever */
     get exerciseHistory(): Record<Exercise['guid'], WorkoutSet[]> {
       return Object.fromEntries(
