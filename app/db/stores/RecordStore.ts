@@ -61,7 +61,6 @@ export const RecordStoreModel = types
       const exerciseRecords = self.records.find(record => record.exercise.guid === exerciseID)!
 
       if (exerciseRecords.recordSets.length > 0) {
-        console.log('removing weak ass sets for exercise ', exerciseRecords.exercise.name)
         removeWeakAssRecords(exerciseRecords)
 
         exerciseRecords.recordSets.sort((setA, setB) => setA.groupingValue - setB.groupingValue);

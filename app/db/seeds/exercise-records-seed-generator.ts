@@ -1,46 +1,44 @@
 import { 
-  Exercise, 
   ExerciseRecordSnapshotIn, 
-  Workout, 
+  Workout,
+  WorkoutSet,
+  WorkoutSetSnapshotIn, 
 } from "app/db/models"
-import { updateSnapshotRecordIfNecessary } from "app/services/workoutRecordsCalculator"
+import { getSnapshot } from "mobx-state-tree";
 
 export const getRecords = (workouts: Workout[]): ExerciseRecordSnapshotIn[] => {
-  const records: ExerciseRecordSnapshotIn[] = []
+  const records: ExerciseRecordSnapshotIn[] = [];
+  
+  // Group sets by exercise and grouping value
+  const groupedSets: { [key: string]: WorkoutSet[] } = {};
 
-  const sortedWorkouts = workouts.slice().sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-
-  sortedWorkouts.forEach(workout => {
+  workouts.forEach(workout => {
     workout.sets.forEach(set => {
-      let record = records.find(r => r.exercise === set.exercise.guid)
-
-      if (!record) {
-        record = { exercise: set.exercise.guid, recordSets: [] }
-        records.push(record)
+      const key = `${set.exercise.guid}-${set.groupingValue}`;
+      if (!groupedSets[key]) {
+        groupedSets[key] = [];
       }
+      groupedSets[key].push(set);
+    });
+  });
 
-      updateSnapshotRecordIfNecessary(record, set)
-    })
-  })
+  // Process each group to find the best set
+  Object.keys(groupedSets).forEach(key => {
+    const sets = groupedSets[key];
+    const bestSet = sets.reduce((best, current) => {
+      return current.isBetterThan(best) ? current : best;
+    });
 
-  return records
-}
+    // Update or add the best set to the records
+    let record = records.find(r => r.exercise === bestSet.exercise.guid);
+    if (!record) {
+      record = { exercise: bestSet.exercise.guid, recordSets: [] };
+      records.push(record);
+    }
 
-export const getRecordsForExercise = (
-  exercise: Exercise, 
-  workouts: Workout[]
-): ExerciseRecordSnapshotIn => {
-  const record: ExerciseRecordSnapshotIn = { exercise: exercise.guid, recordSets: [] }
+    const newRecord: WorkoutSetSnapshotIn = getSnapshot(bestSet);
+    record.recordSets! = [ ...record.recordSets!, newRecord];
+  });
 
-  const sortedWorkouts = workouts.slice().sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-
-  sortedWorkouts.forEach(workout => {
-    workout.sets.forEach(set => {
-      if (set.exercise.guid === exercise.guid) {
-        updateSnapshotRecordIfNecessary(record, set)
-      }
-    })
-  })
-
-  return record
-}
+  return records;
+};

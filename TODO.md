@@ -13,6 +13,4 @@
 - timer configurable duration based on exercise
 - add special set from StrengthLog
 
-- records seed sometimes fails to select the strongest set
 - fix warning after record set change
-
