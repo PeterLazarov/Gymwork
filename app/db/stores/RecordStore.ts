@@ -27,7 +27,7 @@ import { RootStore } from './RootStore'
 export const RecordStoreModel = types
   .model('RecordStore')
   .props({
-    records: types.map(ExerciseRecordModel),
+    records: types.array(ExerciseRecordModel),
   })
   .views( store => ({
       get rootStore(): RootStore {
@@ -41,9 +41,7 @@ export const RecordStoreModel = types
       const records = await storage.load<ExerciseRecordSnapshotIn[]>('records')
 
       if (records && records?.length > 0) {
-        records.forEach(record => {
-          self.records.put(record)
-        });
+        self.setProp('records', records)
       } else {
         await this.seed()
       }
@@ -53,29 +51,16 @@ export const RecordStoreModel = types
       const allWorkouts = self.rootStore.workoutStore.workouts
       const records = getRecords( allWorkouts)
 
-      records.forEach(record => {
-        self.records.put(record)
-      });
+      self.setProp('records', records)
     },
     getExerciseRecords(
       exerciseID: Exercise['guid']
     ): ExerciseRecord
      {
-      let exerciseRecords = null
-      const hasRecord = self.records.has(exerciseID)
+      const exerciseRecords = self.records.find(record => record.exercise.guid === exerciseID)!
 
-      if (hasRecord) {
-        exerciseRecords = self.records.get(exerciseID)!
-        if (exerciseRecords.recordSets.length > 0) {
-          removeWeakAssRecords(exerciseRecords)
-        }
-      }
-      else {
-        exerciseRecords = ExerciseRecordModel.create({
-          exercise: exerciseID,
-          recordSets: []
-        })
-        self.records.put(exerciseRecords)
+      if (exerciseRecords.recordSets.length > 0) {
+        removeWeakAssRecords(exerciseRecords)
       }
 
       return exerciseRecords
