@@ -9,8 +9,9 @@
 - click on empty space OR back to remove focus on set
 - Add Timer superset support
 - reasonable seed data rest periods & createdAt
-- timer superset support
 - timer configurable duration based on exercise
 - add special set from StrengthLog
 - better visualize weak ass records or hide them again 
 - should we order workout by date on addition 
+- newly created exericse is not rendered immedeately in accordeon
+- make it more visible that a workout has comments
