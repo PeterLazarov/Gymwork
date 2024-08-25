@@ -1,5 +1,4 @@
 import { DateTime } from 'luxon'
-import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View, Text } from 'react-native'
 
@@ -26,4 +25,4 @@ const WorkoutExerciseHistoryListItem: React.FC<Props> = ({ date, sets }) => {
   )
 }
 
-export default observer(WorkoutExerciseHistoryListItem)
+export default WorkoutExerciseHistoryListItem

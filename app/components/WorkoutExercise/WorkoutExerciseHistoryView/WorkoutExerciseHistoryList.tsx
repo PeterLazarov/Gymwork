@@ -1,32 +1,18 @@
-import { observer } from 'mobx-react-lite'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import { FlatList, ListRenderItemInfo } from 'react-native'
 
 import WorkoutExerciseHistoryListItem from './WorkoutExerciseHistoryListItem'
-import { useStores } from 'app/db/helpers/useStores'
 import { Workout } from 'app/db/models'
 
 type Props = {
   workouts: Workout[]
 }
 const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
-  const { stateStore } = useStores()
-
-  const exerciseFilteredWorkouts = useMemo(
-    () =>
-      workouts.map(workout => ({
-        ...workout,
-        sets: workout.sets.filter(
-          e => e.exercise.guid === stateStore.openedExerciseGuid
-        ),
-      })) as Workout[],
-    [workouts]
-  )
-
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<Workout>) => {
       return (
         <WorkoutExerciseHistoryListItem
+          key={item.guid}
           date={item.date}
           sets={item.sets}
         />
@@ -55,7 +41,7 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
   return (
     <FlatList
       style={{ flex: 1 }}
-      data={exerciseFilteredWorkouts}
+      data={workouts}
       renderItem={renderItem}
       keyExtractor={(w, i) => `${w.date}_${i}`}
       getItemLayout={getItemLayout}
@@ -64,4 +50,4 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
   )
 }
 
-export default observer(WorkoutExerciseHistoryList)
+export default WorkoutExerciseHistoryList
