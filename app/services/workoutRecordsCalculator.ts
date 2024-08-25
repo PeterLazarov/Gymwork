@@ -26,10 +26,10 @@ export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void =
       lastRecord.isBetterThan(record)
     ) {
       const weakAssRecord = exerciseAllRecords.recordSets.find(set => set.guid === record.guid)
-      weakAssRecord?.setProp('isWeakAss', true)
+      weakAssRecord?.setProp('isWeakAssRecord', true)
     } else {
       const strongAssRecord = exerciseAllRecords.recordSets.find(set => set.guid === lastRecord.guid)
-      strongAssRecord?.setProp('isWeakAss', false)
+      strongAssRecord?.setProp('isWeakAssRecord', false)
 
       lastRecord = record
     }

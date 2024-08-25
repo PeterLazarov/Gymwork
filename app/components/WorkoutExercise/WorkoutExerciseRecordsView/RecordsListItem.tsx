@@ -24,7 +24,7 @@ const RecordsListItem: React.FC<Props> = ({ set, exercise }) => {
         height: 24,
       }}
     >
-      {set.isWeakAss && <Text>W</Text>}
+      {set.isWeakAssRecord && <Text>W</Text>}
       {exercise.hasRepMeasument && (
         <SetDataLabel
           value={set.reps}

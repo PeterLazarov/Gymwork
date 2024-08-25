@@ -14,7 +14,7 @@ export const WorkoutSetModel = types
     exercise: types.reference(ExerciseModel),
     isWarmup: false,
     date: '',
-    isWeakAss: false,
+    isWeakAssRecord: false,
     reps: 0,
 
     // The smallest unit that can convert to both metric and imperial without fractions is the microgram (μg)

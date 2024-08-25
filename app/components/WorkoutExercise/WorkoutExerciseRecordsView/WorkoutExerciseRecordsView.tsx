@@ -1,3 +1,4 @@
+import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import { View, ScrollView } from 'react-native'
@@ -13,13 +14,17 @@ import { WorkoutSet } from 'app/db/models'
 const WorkoutExerciseRecordsView: React.FC = () => {
   const { stateStore } = useStores()
 
-  const recordSets = useMemo(() => {
-    const openedExerciseRecords = stateStore.getOpenedExerciseRecords()
-    const copyRecords = openedExerciseRecords.recordSets.slice()
-    return copyRecords.sort(
-      (setA, setB) => setA.groupingValue - setB.groupingValue
-    )
-  }, [JSON.stringify(stateStore.openedExerciseSets)])
+  const recordSets = useMemo(
+    () =>
+      computed(() => {
+        const openedExerciseRecords = stateStore.getOpenedExerciseRecords()
+        const copyRecords = openedExerciseRecords.recordSets.slice()
+        return copyRecords.sort(
+          (setA, setB) => setA.groupingValue - setB.groupingValue
+        )
+      }),
+    [stateStore.openedExerciseSets]
+  ).get()
 
   function goToDate(set: WorkoutSet) {
     stateStore.setProp('openedDate', set.date)

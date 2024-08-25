@@ -1,5 +1,6 @@
+import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
@@ -23,7 +24,10 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
   isFocused,
 }) => {
   const { workoutStore, stateStore } = useStores()
-  const isRecord = isCurrentRecord(openedExerciseRecords, set)
+  const isRecord = useMemo(
+    () => computed(() => isCurrentRecord(openedExerciseRecords, set)),
+    [openedExerciseRecords, set]
+  ).get()
   const color = isFocused ? colors.primary : colors.secondaryText
 
   function calcWorkSetNumber() {

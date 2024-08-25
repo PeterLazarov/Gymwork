@@ -1,5 +1,6 @@
+import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View, Text } from 'react-native'
 
 import SetDataLabel from '../SetDataLabel'
@@ -26,7 +27,13 @@ const SetListItem: React.FC<Props> = ({
   number,
   hideRecords = false,
 }) => {
-  const isRecord = exerciseRecord ? isCurrentRecord(exerciseRecord, set) : false
+  const isRecord = useMemo(
+    () =>
+      computed(() =>
+        exerciseRecord ? isCurrentRecord(exerciseRecord, set) : false
+      ),
+    [exerciseRecord, set]
+  ).get()
   const color = isFocused ? colors.primary : colors.secondaryText
   return (
     <View
