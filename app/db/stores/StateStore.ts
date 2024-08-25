@@ -60,18 +60,11 @@ export const StateStoreModel = types
 
       return exerciseSets
     },
-    get openedExerciseNextSet(): WorkoutSet {
-      const lastSet = this.openedExerciseSets.at(-1)
 
-      if (!lastSet) {
-        return WorkoutSetModel.create({
-          exercise: self.openedExerciseGuid,
-        })
-      }
-
-      const { guid, ...rest } = getSnapshot(lastSet)
-      return WorkoutSetModel.create(rest)
+    get openedExerciseLastSet(): WorkoutSet | undefined {
+      return this.openedExerciseSets.at(-1)
     },
+
     get openedExerciseSet(): WorkoutSet | undefined {
       const exerciseSets =
         this.openedWorkout?.sets.filter(

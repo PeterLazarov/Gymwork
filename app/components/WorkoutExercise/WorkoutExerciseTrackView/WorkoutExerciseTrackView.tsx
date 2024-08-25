@@ -16,13 +16,16 @@ const WorkoutExerciseTrackView: React.FC = () => {
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
   useEffect(() => {
-    if (selectedSet) {
-      const { guid, exercise, ...rest } = selectedSet
-      const clonedSet = { exercise: exercise.guid, ...rest }
-      stateStore.setProp('draftSet', clonedSet)
+    const setToClone = selectedSet || stateStore.openedExerciseLastSet
+
+    if (setToClone) {
+      const { guid, exercise, ...rest } = setToClone
+      stateStore.setProp('draftSet', { exercise: exercise.guid, ...rest })
     } else {
-      const draftSetSnapshot = getSnapshot(stateStore.openedExerciseNextSet)
-      stateStore.setProp('draftSet', draftSetSnapshot)
+      stateStore.setProp('draftSet', {
+        exercise: stateStore.openedExerciseGuid,
+        reps: stateStore.openedExercise?.hasRepMeasument ? 10 : undefined,
+      })
     }
   }, [selectedSet])
 
