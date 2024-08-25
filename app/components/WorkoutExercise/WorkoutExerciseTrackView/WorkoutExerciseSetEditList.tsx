@@ -10,7 +10,6 @@ import { colors, Divider, Icon, PressableHighlight } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
-import { isCurrentRecord } from 'app/services/workoutRecordsCalculator'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -23,17 +22,10 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
 }) => {
   const { stateStore, workoutStore } = useStores()
 
-  const setRecordFlagMap = useMemo(
+  const openedExerciseRecords = useMemo(
     () =>
       computed(() => {
-        const openedExerciseRecords = stateStore.getOpenedExerciseRecords()
-
-        return stateStore.openedExerciseSets.reduce((acc, set) => {
-          const isSetRecord = isCurrentRecord(openedExerciseRecords, set)
-          acc[set.guid] = isSetRecord
-
-          return acc
-        }, {} as Record<string, boolean>)
+        return stateStore.getOpenedExerciseRecords()
       }),
     [stateStore.openedExerciseSets]
   ).get()
@@ -49,6 +41,9 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       onDragEnd,
       isActive,
     }: DragListRenderItemInfo<WorkoutSet>) => {
+      const isRecord = openedExerciseRecords.recordSetsMap.hasOwnProperty(
+        item.guid
+      )
       return (
         <PressableHighlight
           style={{
@@ -76,7 +71,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
             <WorkoutExerciseSetEditItem
               set={item}
               isFocused={selectedSet?.guid === item.guid}
-              isRecord={setRecordFlagMap[item.guid]}
+              isRecord={isRecord}
               calcWorkSetNumber={calcWorkSetNumber}
               toggleSetWarmup={toggleSetWarmup}
             />
@@ -84,7 +79,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
         </PressableHighlight>
       )
     },
-    [selectedSet, setRecordFlagMap]
+    [selectedSet, openedExerciseRecords.recordSetsMap]
   )
 
   const ITEM_HEIGHT = 62

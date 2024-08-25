@@ -20,7 +20,7 @@ import {
   WorkoutSetSnapshotIn,
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
-import { getDataFieldForKey, isCurrentRecord } from 'app/services/workoutRecordsCalculator'
+import { getDataFieldForKey } from 'app/services/workoutRecordsCalculator'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -131,7 +131,7 @@ export const WorkoutStoreModel = types
         const { exercise } = deletedSet
 
         const records = self.rootStore.recordStore.getExerciseRecords(exercise.guid)
-        const isRecordBool = isCurrentRecord(records, deletedSet)
+        const isRecordBool = records.recordSetsMap.hasOwnProperty(deletedSet.guid)
 
         const deletedSetSnapshot = getSnapshot(deletedSet)
         openedWorkout.sets.splice(deletedSetIndex, 1)
@@ -148,7 +148,7 @@ export const WorkoutStoreModel = types
       })!
 
       const records = self.rootStore.recordStore.getExerciseRecords(setToUpdate!.exercise.guid)
-      const isOldSetRecord = isCurrentRecord(records, setToUpdate!)
+      const isOldSetRecord = records.recordSetsMap.hasOwnProperty(setToUpdate.guid)
       const oldGroupingValue = setToUpdate!.groupingValue
       
       setToUpdate.mergeUpdate(updatedSetData)

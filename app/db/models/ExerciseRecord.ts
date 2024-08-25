@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { ExerciseModel } from './Exercise'
-import { WorkoutSetModel } from './WorkoutSet'
+import { WorkoutSet, WorkoutSetModel } from './WorkoutSet'
 
 export const ExerciseRecordModel = types
   .model('ExerciseRecord')
@@ -13,6 +13,16 @@ export const ExerciseRecordModel = types
     exercise: types.reference(ExerciseModel),
     recordSets: types.array(WorkoutSetModel),
   })
+  .views(self => ({
+    get recordSetsMap () {
+      const map: Record<string, WorkoutSet> = {};
+
+      self.recordSets.forEach(record => {
+        map[record.guid] = record;
+      });
+      return map
+    }
+  }))
   .actions(withSetPropAction)
 
 export interface ExerciseRecord extends Instance<typeof ExerciseRecordModel> {}
