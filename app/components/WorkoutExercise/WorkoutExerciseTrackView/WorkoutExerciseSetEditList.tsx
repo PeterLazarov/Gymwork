@@ -93,7 +93,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   const dragListRef = useRef<FlatList>(null)
 
   return (
-    <View style={{ flex: 1 }}>
+    <>
       <DragList
         data={stateStore.openedExerciseSets}
         renderItem={renderItem}
@@ -110,7 +110,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       {stateStore.openedExerciseSets.length === 0 && (
         <EmptyState text={translate('noSetsEntered')} />
       )}
-    </View>
+    </>
   )
 }
 

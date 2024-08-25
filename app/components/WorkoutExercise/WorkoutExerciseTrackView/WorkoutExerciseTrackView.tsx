@@ -9,6 +9,7 @@ import { WorkoutSet, WorkoutSetModel } from 'app/db/models'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { WorkoutExerciseSetEditActions } from './WorkoutExerciseSetEditActions'
 import useTimer from 'app/db/stores/useTimer'
+import { View } from 'react-native'
 
 const WorkoutExerciseTrackView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
@@ -78,20 +79,23 @@ const WorkoutExerciseTrackView: React.FC = () => {
         flexDirection: 'column',
         flexGrow: 1,
         gap: 8,
-        padding: 8,
         display: 'flex',
       }}
     >
-      <WorkoutExerciseSetEditList
-        selectedSet={selectedSet}
-        setSelectedSet={setSelectedSet}
-      />
+      <View style={{ padding: 8, flex: 1 }}>
+        <WorkoutExerciseSetEditList
+          selectedSet={selectedSet}
+          setSelectedSet={setSelectedSet}
+        />
+      </View>
 
       {stateStore.draftSet && (
-        <WorkoutExerciseSetEditControls
-          value={stateStore.draftSet}
-          onSubmit={handleAdd}
-        />
+        <View style={{ paddingHorizontal: 8 }}>
+          <WorkoutExerciseSetEditControls
+            value={stateStore.draftSet}
+            onSubmit={handleAdd}
+          />
+        </View>
       )}
 
       <WorkoutExerciseSetEditActions
