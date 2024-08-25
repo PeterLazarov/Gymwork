@@ -61,8 +61,6 @@ export const RecordStoreModel = types
 
       if (exerciseRecords.recordSets.length > 0) {
         removeWeakAssRecords(exerciseRecords)
-
-        exerciseRecords.recordSets.sort((setA, setB) => setA.groupingValue - setB.groupingValue);
       }
 
       return exerciseRecords

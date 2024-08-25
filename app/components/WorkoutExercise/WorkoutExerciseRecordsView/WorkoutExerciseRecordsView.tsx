@@ -15,7 +15,10 @@ const WorkoutExerciseRecordsView: React.FC = () => {
 
   const recordSets = useMemo(() => {
     const openedExerciseRecords = stateStore.getOpenedExerciseRecords()
-    return openedExerciseRecords.recordSets
+    const copyRecords = openedExerciseRecords.recordSets.slice()
+    return copyRecords.sort(
+      (setA, setB) => setA.groupingValue - setB.groupingValue
+    )
   }, [JSON.stringify(stateStore.openedExerciseSets)])
 
   function goToDate(set: WorkoutSet) {

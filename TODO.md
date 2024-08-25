@@ -12,5 +12,3 @@
 - timer superset support
 - timer configurable duration based on exercise
 - add special set from StrengthLog
-
-- fix warning after record set change
