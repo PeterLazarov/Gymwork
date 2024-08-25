@@ -1,10 +1,8 @@
-import { computed } from 'mobx'
-import React, { useMemo } from 'react'
+import React from 'react'
 import { View } from 'react-native'
 
-import { ExerciseRecord, WorkoutSet } from 'app/db/models'
+import { WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { isCurrentRecord } from 'app/services/workoutRecordsCalculator'
 import { getFormatedDuration } from 'app/utils/time'
 import { colors, Icon } from 'designSystem'
 import SetWarmupButton from './SetWarmupButton'
@@ -12,7 +10,7 @@ import SetDataLabel from '../SetDataLabel'
 
 type Props = {
   set: WorkoutSet
-  openedExerciseRecords: ExerciseRecord
+  isRecord?: boolean
   isFocused?: boolean
   calcWorkSetNumber: (set: WorkoutSet) => number
   toggleSetWarmup: (set: WorkoutSet) => void
@@ -20,15 +18,11 @@ type Props = {
 
 const WorkoutExerciseSetEditItem: React.FC<Props> = ({
   set,
-  openedExerciseRecords,
+  isRecord,
   isFocused,
   calcWorkSetNumber,
   toggleSetWarmup,
 }) => {
-  const isRecord = useMemo(
-    () => computed(() => isCurrentRecord(openedExerciseRecords, set)),
-    [openedExerciseRecords]
-  ).get()
   const color = isFocused ? colors.primary : colors.secondaryText
 
   const number = set.isWarmup ? undefined : calcWorkSetNumber(set)

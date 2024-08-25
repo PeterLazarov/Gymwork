@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { FlatList, View } from 'react-native'
+import { computed } from 'mobx'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
@@ -9,6 +10,7 @@ import { colors, Divider, Icon, PressableHighlight } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
+import { isCurrentRecord } from 'app/services/workoutRecordsCalculator'
 
 type Props = {
   selectedSet: WorkoutSet | null
@@ -24,6 +26,19 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   const openedExerciseRecords = useMemo(() => {
     return stateStore.getOpenedExerciseRecords()
   }, [stateStore.openedExerciseSets])
+
+  const setRecordFlagMap = useMemo(
+    () =>
+      computed(() =>
+        stateStore.openedExerciseSets.reduce((acc, set) => {
+          const isSetRecord = isCurrentRecord(openedExerciseRecords, set)
+          acc[set.guid] = isSetRecord
+
+          return acc
+        }, {} as Record<string, boolean>)
+      ),
+    [openedExerciseRecords]
+  ).get()
 
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
@@ -62,8 +77,8 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
 
             <WorkoutExerciseSetEditItem
               set={item}
-              openedExerciseRecords={openedExerciseRecords}
               isFocused={selectedSet?.guid === item.guid}
+              isRecord={setRecordFlagMap[item.guid]}
               calcWorkSetNumber={calcWorkSetNumber}
               toggleSetWarmup={toggleSetWarmup}
             />

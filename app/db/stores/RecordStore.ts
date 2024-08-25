@@ -57,10 +57,19 @@ export const RecordStoreModel = types
       exerciseID: Exercise['guid']
     ): ExerciseRecord
      {
-      const exerciseRecords = self.records.find(record => record.exercise.guid === exerciseID)!
+      let exerciseRecords = self.records.find(record => record.exercise.guid === exerciseID)
 
-      if (exerciseRecords.recordSets.length > 0) {
-        removeWeakAssRecords(exerciseRecords)
+      if (exerciseRecords) {
+        if (exerciseRecords.recordSets.length > 0) {
+          removeWeakAssRecords(exerciseRecords)
+        }
+      }
+      else {
+        exerciseRecords = ExerciseRecordModel.create({
+          exercise: exerciseID,
+          recordSets: []
+        })
+        self.records.push(exerciseRecords)
       }
 
       return exerciseRecords

@@ -1,16 +1,15 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
-import exerciseSeedData from '../seeds/exercises-seed-data.json'
-import { uniqueValues } from '../../../app/utils/array'
-import * as storage from '../../../app/utils/storage'
-import { withSetPropAction } from '../helpers/withSetPropAction'
+import exerciseSeedData from 'app/db/seeds/exercises-seed-data.json'
+import { uniqueValues } from 'app/utils/array'
+import * as storage from 'app/utils/storage'
 import {
   Exercise,
   ExerciseModel,
   ExerciseSnapshotIn,
   measurementDefaults,
-} from '../models'
-import { startCase } from 'lodash'
+} from 'app/db/models'
+import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 
 export const ExerciseStoreModel = types
   .model('ExerciseStore')
