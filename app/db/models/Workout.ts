@@ -9,7 +9,7 @@ import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import { Exercise } from './Exercise'
-import { WorkoutSetModel } from './WorkoutSet'
+import { WorkoutSet, WorkoutSetModel } from './WorkoutSet'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { Duration } from 'luxon'
 
@@ -31,6 +31,17 @@ export const WorkoutModel = types
         new Set<Exercise>()
       )
       return [...uniqueExercises]
+    },
+    get exerciseSetsMap() {
+      const map: Record<string, WorkoutSet[]> = {};
+
+      self.sets.forEach(set => {
+        if (!map.hasOwnProperty(set.exercise.guid)) {
+          map[set.exercise.guid] = []
+        }
+        map[set.exercise.guid].push(set)
+      });
+      return map
     },
     /** Only usable for completed workouts */
     get inferredDuration(): Duration {

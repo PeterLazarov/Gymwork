@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Card } from 'react-native-paper'
 
 import WorkoutExerciseSetList from './WorkoutExerciseSetList'
@@ -7,7 +7,6 @@ import { Exercise, Workout } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { colors } from 'designSystem'
 import { observer } from 'mobx-react-lite'
-import { computed } from 'mobx'
 import { TouchableOpacity } from 'react-native'
 
 type Props = {
@@ -17,10 +16,6 @@ type Props = {
 
 const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
   const { stateStore } = useStores()
-
-  const sets = useMemo(() => {
-    return computed(() => workout.sets.filter(set => set.exercise === exercise))
-  }, [workout, workout.sets, exercise]).get()
 
   function onLinkPress() {
     stateStore.setOpenedExercise(exercise)
@@ -42,7 +37,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
         />
         <Card.Content>
           <WorkoutExerciseSetList
-            sets={sets}
+            sets={workout.exerciseSetsMap[exercise.guid]}
             exercise={exercise}
           />
         </Card.Content>
