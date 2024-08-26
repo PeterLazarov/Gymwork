@@ -16,8 +16,10 @@ const DBStoreInitializer: React.FC<Props> = ({ children }) => {
   const [render, setRender] = useState(false)
 
   useEffect(() => {
+    const now = Date.now()
     promise.then(() => {
       setRender(true)
+      console.log(`Time to render: ${((Date.now() - now) / 1000).toFixed(2)}s`)
     })
   }, [])
 

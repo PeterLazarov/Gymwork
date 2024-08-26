@@ -8,6 +8,7 @@ import { useShare } from 'app/utils/useShare'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, colors } from 'designSystem'
 import { getSnapshot } from 'mobx-state-tree'
+import useBenchmark from 'app/utils/useBenchmark'
 
 const WorkoutHeader: React.FC = () => {
   const { stateStore, workoutStore } = useStores()
@@ -30,6 +31,8 @@ const WorkoutHeader: React.FC = () => {
     setMenuOpen(false)
     workoutStore.removeWorkout(stateStore.openedWorkout)
   }
+
+  const { performBenchmark } = useBenchmark()
 
   return (
     <Header>
@@ -68,6 +71,10 @@ const WorkoutHeader: React.FC = () => {
         <Menu.Item
           onPress={deleteWorkout}
           title={translate('removeWorkout')}
+        />
+        <Menu.Item
+          onPress={performBenchmark}
+          title={'Perform benchmark'}
         />
       </Menu>
     </Header>

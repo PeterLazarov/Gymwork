@@ -19,8 +19,8 @@ const DayControl = () => {
       ? luxonDate.toRelativeCalendar({ unit: 'days' })!
       : luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
-  const isEarliestDate = stateStore.openedDate === stateStore.earliestDayVisible
-  const isLastDate = stateStore.openedDate === stateStore.lastDayVisible
+  const isEarliestDate = stateStore.openedDate === stateStore.firstRenderedDate
+  const isLastDate = stateStore.openedDate === stateStore.lastRenderedDate
 
   return (
     <>

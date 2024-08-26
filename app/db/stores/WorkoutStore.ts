@@ -31,11 +31,6 @@ export const WorkoutStoreModel = types
     get rootStore(): RootStore {
       return getParent(store) as RootStore
     },
-    get sortedWorkouts(): Workout[] {
-      return store.workouts.slice().sort((a, b) => 
-        new Date(a.date).getTime() - new Date(b.date).getTime()
-      )
-    },
     getWorkoutForDate(date: string): Workout | undefined {
       const [workout] = store.workouts.filter(w => w.date === date)
       return workout
@@ -76,6 +71,17 @@ export const WorkoutStoreModel = types
         .slice(0, 10)
 
       return sortedExercises.map(({ exercise }) => exercise)
+    },
+
+    get sortedWorkouts(): Workout[] {
+      return store.workouts.slice().sort((a, b) => (a.date > b.date ? 1 : -1))
+    },
+    get firstWorkout(): Workout | undefined {
+      console.log({ sorted: this.sortedWorkouts })
+      return this.sortedWorkouts[0]
+    },
+    get lastWorkout(): Workout | undefined {
+      return this.sortedWorkouts.at(-1)
     },
   }))
   .actions(withSetPropAction)

@@ -19,7 +19,6 @@ const en = {
   confirm: 'Confirm',
   editRestTimer: 'Edit Rest Timer',
   createExercise: 'Create exercise',
-  updateExercise: 'Update exercise',
   editExercise: 'Edit exercise',
   showGraph: 'Show graph',
   hideGraph: 'Hide graph',

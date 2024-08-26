@@ -38,12 +38,9 @@ const CalendarPage: React.FC = () => {
     [workoutStore.workouts, stateStore.openedDate, stateStore.openedWorkout]
   )
 
-  const monthBeforeFirstWorkout = useMemo(
-    () =>
-      DateTime.fromISO(
-        stateStore.firstWorkout?.date ?? new Date().toISOString()
-      ).minus({ month: 1 }),
-    []
+  const startingMonth = useMemo(
+    () => DateTime.fromISO(stateStore.firstRenderedDate).minus({ month: 1 }),
+    [stateStore.firstRenderedDate]
   )
 
   const lastDayOfNextMonth = useMemo(
@@ -87,14 +84,14 @@ const CalendarPage: React.FC = () => {
     }
   }
 
-  const monthsDiff = activeDate.diff(monthBeforeFirstWorkout, 'month').months
-  const minFutureMonths = 2
-  const defaultMonthsToRender = 12
-
   // ! must be a whole number
-  const monthsToRender = Math.ceil(
-    Math.max(monthsDiff + minFutureMonths, defaultMonthsToRender)
-  )
+  const monthsToRender = useMemo(() => {
+    const start = DateTime.fromISO(stateStore.firstRenderedDate)
+    const end = DateTime.fromISO(stateStore.lastRenderedDate)
+    const diff = end.diff(start)
+    console.log({ diff: diff.as('months') })
+    return Math.ceil(diff.as('months'))
+  }, [])
 
   return (
     <>
@@ -126,7 +123,7 @@ const CalendarPage: React.FC = () => {
             handleCalendarDayPress(date)
           }}
           startDate={activeDate.toJSDate()}
-          startingMonth={monthBeforeFirstWorkout.toISO()!}
+          startingMonth={startingMonth.toISO()!}
           endDate={lastDayOfNextMonth}
           markedDays={markedDates}
           numberOfMonths={monthsToRender}
