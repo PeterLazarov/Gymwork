@@ -4,7 +4,6 @@ import {
   types,
   destroy,
   getParent,
-  getSnapshot,
 } from 'mobx-state-tree'
 
 import { RootStore } from './RootStore'
@@ -91,6 +90,17 @@ export const WorkoutStoreModel = types
         .map(entry => entry[1])
 
       return sorted
+    },
+
+    get sortedWorkouts(): Workout[] {
+      return store.workouts.slice().sort((a, b) => (a.date > b.date ? 1 : -1))
+    },
+    get firstWorkout(): Workout | undefined {
+      console.log({ sorted: this.sortedWorkouts })
+      return this.sortedWorkouts[0]
+    },
+    get lastWorkout(): Workout | undefined {
+      return this.sortedWorkouts.at(-1)
     },
   }))
   .actions(withSetPropAction)
