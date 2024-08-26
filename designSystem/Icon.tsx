@@ -20,6 +20,7 @@ const IoniconsIcons = [
   'calendar-sharp',
   'trophy',
   'chatbox-ellipses',
+  'chatbox-ellipses-outline',
   'copy-outline',
   'pencil',
   'checkmark',

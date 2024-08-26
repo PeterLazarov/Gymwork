@@ -95,10 +95,10 @@ const WorkoutControlButtons: React.FC<Props> = () => {
           >
             <Icon
               color={colors.primaryText}
-              icon="chatbox-ellipses"
+              icon={hasNotes ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'}
             />
             <ButtonText variant="primary">
-              {hasNotes ? 'View comment' : 'Add comment'}
+              {translate(hasNotes ? 'viewComment' : 'addComment')}
             </ButtonText>
           </Button>
         </>

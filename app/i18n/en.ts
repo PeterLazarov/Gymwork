@@ -49,6 +49,8 @@ const en = {
   rest: 'Rest',
   removeWorkout: 'Remove workout',
   muscleAreas: 'Muscle areas',
+  viewComment: 'View comment',
+  addComment: 'Add comment'
 }
 
 export default en
