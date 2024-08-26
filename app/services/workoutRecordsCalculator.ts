@@ -39,22 +39,11 @@ export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void =
 
 }
 
-let currentRecondCounter = 1
-export const isCurrentRecord = (
-  record: ExerciseRecord, 
-  set: WorkoutSet, 
-  ) => {
-  console.log('currentRecondCounter', currentRecondCounter++)
-  const currentRecord = record.recordSets.find(record => record.groupingValue === set.groupingValue)
-
-  return currentRecord?.guid === set.guid
-}
-
 export const isNewRecord = (
-  recordSets: WorkoutSet[], 
+  records: ExerciseRecord, 
   set: WorkoutSet, 
 ) => {
-  const currentRecord = recordSets.find(record => record.groupingValue === set.groupingValue)
+  const currentRecord = records.groupingRecordMap[set.groupingValue]
   return !currentRecord || set.isBetterThan(currentRecord)
 }
 

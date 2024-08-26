@@ -78,9 +78,9 @@ export const RecordStoreModel = types
       return exerciseRecords
     },
     runSetUpdatedCheck(updatedSet: WorkoutSet) {
-      const records = this.getExerciseRecords(updatedSet.exercise.guid)
+      const records = self.exerciseRecordsMap[updatedSet.exercise.guid]
 
-      const isNewRecordBool = isNewRecord(records.recordSets, updatedSet)
+      const isNewRecordBool = isNewRecord(records, updatedSet)
       if (isNewRecordBool) {
         const updatedRecords = updateRecordsWithLatestBest(
           records.recordSets,

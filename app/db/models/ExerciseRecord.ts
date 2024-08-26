@@ -21,6 +21,14 @@ export const ExerciseRecordModel = types
         map[record.guid] = record;
       });
       return map
+    },
+    get groupingRecordMap () {
+      const map: Record<string, WorkoutSet> = {};
+
+      self.recordSets.forEach(record => {
+        map[record.groupingValue] = record;
+      });
+      return map
     }
   }))
   .actions(withSetPropAction)
