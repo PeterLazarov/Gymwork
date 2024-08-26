@@ -9,19 +9,14 @@ import {
 let weakassCounter = 1
 export const removeWeakAssRecords = (exerciseAllRecords: ExerciseRecord): void => {
   console.log('weakassCounter', weakassCounter++)
-  const groupingRecordSetMap = exerciseAllRecords.recordSets.reduce((acc, set) => { 
-    acc[set.groupingValue] = set 
-    return acc
-  }, {} as Record<number, WorkoutSet>)
-
-  const groupingsDescending = Object.keys(groupingRecordSetMap)
+  const groupingsDescending = Object.keys(exerciseAllRecords.groupingRecordMap)
     .map(Number) 
     .sort((a, b) => b - a);
   
-  let lastRecord = groupingRecordSetMap[groupingsDescending[0]]
+  let lastRecord = exerciseAllRecords.groupingRecordMap[groupingsDescending[0]]
 
   for (const grouping of groupingsDescending) {
-    const record = groupingRecordSetMap[grouping]
+    const record = exerciseAllRecords.groupingRecordMap[grouping]
     
     if (
       lastRecord.guid !== record.guid &&
