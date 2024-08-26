@@ -33,6 +33,14 @@ export const RecordStoreModel = types
       get rootStore(): RootStore {
         return getParent(store) as RootStore
       },
+      get exerciseRecordsMap() {
+        const map: Record<string, ExerciseRecord> = {};
+
+        store.records.forEach(record => {
+          map[record.exercise.guid] = record;
+        });
+        return map
+      }
     })
   )
   .actions(withSetPropAction)
@@ -58,7 +66,7 @@ export const RecordStoreModel = types
     ): ExerciseRecord
      {
       console.log('exerciseRecordsCount', exerciseRecordsCount++)
-      let exerciseRecords = self.records.find(record => record.exercise.guid === exerciseID)
+      let exerciseRecords = self.exerciseRecordsMap[exerciseID]
 
       if (exerciseRecords) {
         if (exerciseRecords.recordSets.length > 0) {
