@@ -1,36 +1,29 @@
-import { observer } from 'mobx-react-lite'
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import SetListItem from './SetListItem'
-import { useStores } from 'app/db/helpers/useStores'
-import { Exercise, WorkoutSet } from 'app/db/models'
-import { computed } from 'mobx'
+import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
 
 type Props = {
   sets: WorkoutSet[]
-  exercise?: Exercise
+  exercise: Exercise
+  records?: ExerciseRecord
 }
 
-const WorkoutExerciseSetList: React.FC<Props> = ({ sets, exercise }) => {
-  const { stateStore, recordStore } = useStores()
-  const exerciseToUse = exercise || stateStore.openedExercise!
-
-  const exerciseRecords = useMemo(
-    () =>
-      computed(() => {
-        return recordStore.getExerciseRecords(exerciseToUse.guid)
-      }),
-    [sets]
-  ).get()
-
+const WorkoutExerciseSetList: React.FC<Props> = ({
+  sets,
+  exercise,
+  records,
+}) => {
   return (
     <>
       {sets.map((set, i) => (
         <SetListItem
           key={set.guid}
           set={set}
-          exercise={exerciseToUse}
-          isRecord={exerciseRecords.recordSetsMap.hasOwnProperty(set.guid)}
+          exercise={exercise!}
+          isRecord={
+            records ? records.recordSetsMap.hasOwnProperty(set.guid) : false
+          }
           number={i + 1}
         />
       ))}
@@ -38,4 +31,4 @@ const WorkoutExerciseSetList: React.FC<Props> = ({ sets, exercise }) => {
   )
 }
 
-export default observer(WorkoutExerciseSetList)
+export default WorkoutExerciseSetList

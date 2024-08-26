@@ -6,7 +6,6 @@ import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, Workout } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { colors } from 'designSystem'
-import { observer } from 'mobx-react-lite'
 import { TouchableOpacity } from 'react-native'
 
 type Props = {
@@ -46,4 +45,4 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
   )
 }
 
-export default observer(WorkoutExerciseCard)
+export default WorkoutExerciseCard

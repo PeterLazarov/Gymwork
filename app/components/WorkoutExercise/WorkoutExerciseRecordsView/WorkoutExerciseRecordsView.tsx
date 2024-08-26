@@ -17,7 +17,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
   const recordSets = useMemo(
     () =>
       computed(() => {
-        const openedExerciseRecords = stateStore.getOpenedExerciseRecords()
+        const openedExerciseRecords = stateStore.openedExerciseRecords
         const copyRecords = openedExerciseRecords.recordSets.slice()
         return copyRecords.sort(
           (setA, setB) => setA.groupingValue - setB.groupingValue

@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import exerciseSeedData from './exercises-seed-data.json'
 import { WorkoutSetSnapshotIn, WorkoutSnapshotIn } from '../models'
 import convert from 'convert-units'
-const numberOfWorkouts = 40
+const numberOfWorkouts = 100
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
 const weightIncrementKg = 2.5
 
@@ -18,19 +18,18 @@ const cardioExerciseID = exerciseSeedData
 const generateRandomExercises = (date: string) => {
   return Array.from({
     length: between(3, 8),
+  }).flatMap((_, i): WorkoutSetSnapshotIn[] => {
+    const exercise = String(between(0, 100))
+    return Array.from({ length: between(2, 5) }).map((_, i) => ({
+      exercise,
+      isWarmup: i === 0,
+      reps: between(3, 12),
+      weightMcg: convert(between(8, 40) * weightIncrementKg)
+        .from('kg')
+        .to('mcg'),
+      date,
+    }))
   })
-    .flatMap((_, i): WorkoutSetSnapshotIn[] => {
-      const exercise = String(between(0, 100))
-      return Array.from({ length: between(2, 5) }).map((_, i) => ({
-        exercise,
-        isWarmup: i === 0,
-        reps: between(3, 12),
-        weightMcg: convert(between(8, 40) * weightIncrementKg)
-          .from('kg')
-          .to('mcg'),
-        date,
-      }))
-    })
 }
 
 const generateSets = (date: string): WorkoutSetSnapshotIn[] => {
@@ -73,13 +72,11 @@ const generateSets = (date: string): WorkoutSetSnapshotIn[] => {
         .from('min')
         .to('ms'),
       createdAt: workoutStart.plus({ minutes: i * 10 }).toJSDate(),
-      date
+      date,
     } as WorkoutSetSnapshotIn
   })
 
-  return generateRandomExercises(date)
-    .concat(benchSets, cardioSets)
-    .reverse()
+  return generateRandomExercises(date).concat(benchSets, cardioSets).reverse()
 }
 const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
   length: numberOfWorkouts,

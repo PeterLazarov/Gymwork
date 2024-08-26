@@ -2,12 +2,18 @@ import React, { useCallback } from 'react'
 import { FlatList, ListRenderItemInfo } from 'react-native'
 
 import WorkoutExerciseHistoryListItem from './WorkoutExerciseHistoryListItem'
-import { Workout } from 'app/db/models'
+import { Exercise, ExerciseRecord, Workout } from 'app/db/models'
 
 type Props = {
   workouts: Workout[]
+  records: ExerciseRecord
+  exercise: Exercise
 }
-const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
+const WorkoutExerciseHistoryList: React.FC<Props> = ({
+  workouts,
+  records,
+  exercise,
+}) => {
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<Workout>) => {
       return (
@@ -15,10 +21,12 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
           key={item.guid}
           date={item.date}
           sets={item.sets}
+          records={records}
+          exercise={exercise}
         />
       )
     },
-    []
+    [records]
   )
   const ITEM_SET_HEIGHT = 20
   const getItemLayout = (

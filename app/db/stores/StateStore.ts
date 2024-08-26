@@ -12,7 +12,13 @@ import { RootStore } from './RootStore'
 import { WorkoutStore } from './WorkoutStore'
 import { RecordStore } from './RecordStore'
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import { Exercise, ExerciseRecord, Workout, WorkoutSet, WorkoutSetModel } from '../models'
+import {
+  Exercise,
+  ExerciseRecord,
+  Workout,
+  WorkoutSet,
+  WorkoutSetModel,
+} from '../models'
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -78,9 +84,7 @@ export const StateStoreModel = types
       return exerciseSets[exerciseSets.length - 1]
     },
     get openedExerciseRecords(): ExerciseRecord {
-      return this.recordStore.getExerciseRecords(
-        self.openedExerciseGuid
-      )
+      return this.recordStore.getExerciseRecords(self.openedExerciseGuid)
     },
     get openedExerciseWorkSets(): WorkoutSet[] {
       return this.openedExerciseSets.filter(s => !s.isWarmup)
@@ -155,11 +159,13 @@ export const StateStoreModel = types
       const luxonDate = DateTime.fromISO(self.openedDate)
       self.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
     },
-    getOpenedExerciseRecords() {
-      return self.recordStore.getExerciseRecords(
-        self.openedExerciseGuid
-      )
-    },
+    // getOpenedExerciseRecords() {
+    //   console.log("openedExerciseRecords")
+
+    //   return self.recordStore.getExerciseRecords(
+    //     self.openedExerciseGuid
+    //   )
+    // },
   }))
 
 export interface StateStore extends Instance<typeof StateStoreModel> {}

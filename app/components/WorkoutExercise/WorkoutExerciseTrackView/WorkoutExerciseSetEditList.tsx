@@ -25,7 +25,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   const openedExerciseRecords = useMemo(
     () =>
       computed(() => {
-        return stateStore.getOpenedExerciseRecords()
+        return stateStore.openedExerciseRecords
       }),
     [stateStore.openedExerciseSets]
   ).get()

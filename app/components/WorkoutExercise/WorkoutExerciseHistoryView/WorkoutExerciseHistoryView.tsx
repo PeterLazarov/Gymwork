@@ -11,6 +11,8 @@ import { Workout } from 'app/db/models'
 const WorkoutExerciseHistoryView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
 
+  stateStore.openedExerciseRecords
+
   const workoutsContained =
     workoutStore.exerciseWorkoutsMap[stateStore.openedExerciseGuid]
 
@@ -34,8 +36,12 @@ const WorkoutExerciseHistoryView: React.FC = () => {
         flexGrow: 1,
       }}
     >
-      {workoutsContained?.length > 0 ? (
-        <WorkoutExerciseHistoryList workouts={exerciseFilteredWorkouts} />
+      {stateStore.openedExercise && workoutsContained?.length > 0 ? (
+        <WorkoutExerciseHistoryList
+          workouts={exerciseFilteredWorkouts}
+          records={stateStore.openedExerciseRecords}
+          exercise={stateStore.openedExercise}
+        />
       ) : (
         <EmptyState text={translate('historyLogEmpty')} />
       )}

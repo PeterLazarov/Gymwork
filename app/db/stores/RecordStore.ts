@@ -8,19 +8,19 @@ import {
 
 import * as storage from 'app/utils/storage'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
-import { 
-  Exercise, 
-  ExerciseRecordModel, 
-  ExerciseRecordSnapshotIn, 
-  ExerciseRecord, 
+import {
+  Exercise,
+  ExerciseRecordModel,
+  ExerciseRecordSnapshotIn,
+  ExerciseRecord,
   WorkoutSet,
 } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
-import { 
+import {
   updateRecordsWithLatestBest,
   isNewRecord,
   removeWeakAssRecords,
-  updateRecordsIfNecessary
+  updateRecordsIfNecessary,
 } from 'app/services/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
 
@@ -29,20 +29,19 @@ export const RecordStoreModel = types
   .props({
     records: types.array(ExerciseRecordModel),
   })
-  .views( store => ({
-      get rootStore(): RootStore {
-        return getParent(store) as RootStore
-      },
-      get exerciseRecordsMap() {
-        const map: Record<Exercise['guid'], ExerciseRecord> = {};
+  .views(store => ({
+    get rootStore(): RootStore {
+      return getParent(store) as RootStore
+    },
+    get exerciseRecordsMap() {
+      const map: Record<Exercise['guid'], ExerciseRecord> = {}
 
-        store.records.forEach(record => {
-          map[record.exercise.guid] = record;
-        });
-        return map
-      }
-    })
-  )
+      store.records.forEach(record => {
+        map[record.exercise.guid] = record
+      })
+      return map
+    },
+  }))
   .actions(withSetPropAction)
   .actions(self => ({
     async fetch() {
@@ -57,25 +56,21 @@ export const RecordStoreModel = types
     async seed() {
       console.log('seeding records')
       const allWorkouts = self.rootStore.workoutStore.workouts
-      const records = getRecords( allWorkouts)
+      const records = getRecords(allWorkouts)
 
       self.setProp('records', records)
     },
-    getExerciseRecords(
-      exerciseID: Exercise['guid']
-    ): ExerciseRecord
-     {
+    getExerciseRecords(exerciseID: Exercise['guid']): ExerciseRecord {
       let exerciseRecords = self.exerciseRecordsMap[exerciseID]
 
       if (exerciseRecords) {
         if (exerciseRecords.recordSets.length > 0) {
           removeWeakAssRecords(exerciseRecords)
         }
-      }
-      else {
+      } else {
         exerciseRecords = ExerciseRecordModel.create({
           exercise: exerciseID,
-          recordSets: []
+          recordSets: [],
         })
         self.records.push(exerciseRecords)
       }
@@ -87,14 +82,17 @@ export const RecordStoreModel = types
 
       const isNewRecordBool = isNewRecord(records.recordSets, updatedSet)
       if (isNewRecordBool) {
-        const updatedRecords = updateRecordsWithLatestBest(records.recordSets, updatedSet)
-       
+        const updatedRecords = updateRecordsWithLatestBest(
+          records.recordSets,
+          updatedSet
+        )
+
         records.setProp('recordSets', updatedRecords)
       }
     },
-    recalculateGroupingRecordsForExercise (
+    recalculateGroupingRecordsForExercise(
       groupingToRefresh: number,
-      oldExerciseRecords: ExerciseRecord, 
+      oldExerciseRecords: ExerciseRecord
     ) {
       let refreshedRecords = oldExerciseRecords.recordSets.filter(recordSet => {
         return recordSet.groupingValue !== groupingToRefresh
@@ -102,7 +100,8 @@ export const RecordStoreModel = types
 
       const sortedWorkouts = self.rootStore.workoutStore.sortedWorkouts
       sortedWorkouts.forEach(workout => {
-        const exerciseSets = workout.exerciseSetsMap[oldExerciseRecords.exercise.guid]
+        const exerciseSets =
+          workout.exerciseSetsMap[oldExerciseRecords.exercise.guid]
 
         exerciseSets.forEach(set => {
           if (set.groupingValue === groupingToRefresh) {
@@ -111,9 +110,11 @@ export const RecordStoreModel = types
         })
       })
 
-      const refreshedRecordSnapshots = refreshedRecords.map(record => getSnapshot(record))
+      const refreshedRecordSnapshots = refreshedRecords.map(record =>
+        getSnapshot(record)
+      )
       oldExerciseRecords.setProp('recordSets', refreshedRecordSnapshots)
-    }
+    },
   }))
 
 export interface RecordStore extends Instance<typeof RecordStoreModel> {}
