@@ -24,9 +24,7 @@ export const WorkoutModel = types
   })
   .views(self => ({
     get exercises(): Exercise[] {
-      // ! TODO
       const uniqueExercises = self.sets.reduce(
-        // ! accessing set.exercise breaks everything?
         (acc, set) => acc.add(set.exercise),
         new Set<Exercise>()
       )
@@ -60,17 +58,6 @@ export const WorkoutModel = types
 
       return Duration.fromMillis(0)
     },
-    // get exercises(): unknown[] {
-    //   const uniqueExercises = self.sets.reduce(
-    //     // ! accessing set.exercise breaks everything?
-    //     (acc, set) => acc.add(getIdentifier(set.exercise)),
-    //     new Set<Exercise>()
-    //   )
-
-    //   console.log({ uniqueExercises })
-
-    //   return []
-    // },
   }))
   .actions(withSetPropAction)
 
