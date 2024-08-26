@@ -10,7 +10,7 @@ const en = {
   reps: 'reps',
   weight: 'weight',
   distance: 'distance',
-  time: 'time',
+  duration: 'duration',
   updateSet: 'Update set',
   remove: 'Remove',
   calendar: 'Calendar',

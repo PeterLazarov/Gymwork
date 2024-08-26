@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import { FlatList, View } from 'react-native'
+import { computed } from 'mobx'
 
 import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
@@ -19,7 +20,15 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   selectedSet,
   setSelectedSet,
 }) => {
-  const { stateStore } = useStores()
+  const { stateStore, workoutStore } = useStores()
+
+  const openedExerciseRecords = useMemo(
+    () =>
+      computed(() => {
+        return stateStore.openedExerciseRecords
+      }),
+    [stateStore.openedExerciseSets]
+  ).get()
 
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
@@ -32,6 +41,9 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       onDragEnd,
       isActive,
     }: DragListRenderItemInfo<WorkoutSet>) => {
+      const isRecord = openedExerciseRecords.recordSetsMap.hasOwnProperty(
+        item.guid
+      )
       return (
         <PressableHighlight
           style={{
@@ -59,13 +71,17 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
             <WorkoutExerciseSetEditItem
               set={item}
               isFocused={selectedSet?.guid === item.guid}
+              isRecord={isRecord}
+              calcWorkSetNumber={calcWorkSetNumber}
+              toggleSetWarmup={toggleSetWarmup}
             />
           </View>
         </PressableHighlight>
       )
     },
-    [selectedSet]
+    [selectedSet, openedExerciseRecords.recordSetsMap]
   )
+
   const ITEM_HEIGHT = 62
   const getItemLayout = (
     data: ArrayLike<WorkoutSet> | null | undefined,
@@ -87,8 +103,16 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
 
   const dragListRef = useRef<FlatList>(null)
 
+  function calcWorkSetNumber(set: WorkoutSet) {
+    const workArrayIndex = stateStore.openedExerciseWorkSets.indexOf(set)
+    return workArrayIndex + 1
+  }
+
+  function toggleSetWarmup(set: WorkoutSet) {
+    workoutStore.setWorkoutSetWarmup(set, !set.isWarmup)
+  }
   return (
-    <View style={{ flex: 1 }}>
+    <>
       <DragList
         data={stateStore.openedExerciseSets}
         renderItem={renderItem}
@@ -105,7 +129,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       {stateStore.openedExerciseSets.length === 0 && (
         <EmptyState text={translate('noSetsEntered')} />
       )}
-    </View>
+    </>
   )
 }
 

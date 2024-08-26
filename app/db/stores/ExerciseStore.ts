@@ -1,16 +1,16 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
-import exerciseSeedData from '../seeds/exercises-seed-data.json'
-import { uniqueValues } from '../../../app/utils/array'
-import * as storage from '../../../app/utils/storage'
-import { withSetPropAction } from '../helpers/withSetPropAction'
+import exerciseSeedData from 'app/db/seeds/exercises-seed-data.json'
+import { uniqueValues } from 'app/utils/array'
+import * as storage from 'app/utils/storage'
 import {
   Exercise,
   ExerciseModel,
   ExerciseSnapshotIn,
   measurementDefaults,
-} from '../models'
-import { startCase } from 'lodash'
+} from 'app/db/models'
+import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
+import { isDev } from 'app/utils/isDev'
 
 export const ExerciseStoreModel = types
   .model('ExerciseStore')
@@ -22,7 +22,7 @@ export const ExerciseStoreModel = types
     async fetch() {
       const exercises = await storage.load<ExerciseSnapshotIn[]>('exercises')
 
-      if (exercises && exercises?.length > 0) {
+      if (exercises && exercises?.length > 0 && !isDev) {
         store.setProp('exercises', exercises)
       } else {
         await this.seed()
@@ -56,9 +56,23 @@ export const ExerciseStoreModel = types
   }))
   .views(store => ({
     get muscleOptions() {
-      return uniqueValues(store.exercises.flatMap(e => e.muscles))
-        .map(name => startCase(name))
-        .sort()
+      return uniqueValues(store.exercises.flatMap(e => e.muscles)).sort()
+    },
+    get exercisesByMuscle() {
+      const acc = Object.fromEntries(
+        this.muscleOptions.map(muscle => [muscle, [] as Exercise[]])
+      )
+
+      store.exercises
+        .slice()
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach(exercise => {
+          exercise.muscles.forEach(muscle => {
+            acc[muscle].push(exercise)
+          })
+        })
+
+      return acc
     },
     get favoriteExercises() {
       return store.exercises.filter(e => e.isFavorite)

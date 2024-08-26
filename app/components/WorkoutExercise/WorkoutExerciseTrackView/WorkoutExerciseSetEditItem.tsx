@@ -1,37 +1,31 @@
-import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 
-import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { colors, Icon } from 'designSystem'
 import { getFormatedDuration } from 'app/utils/time'
+import { colors, Icon } from 'designSystem'
 import SetWarmupButton from './SetWarmupButton'
 import SetDataLabel from '../SetDataLabel'
 
 type Props = {
   set: WorkoutSet
+  isRecord?: boolean
   isFocused?: boolean
+  calcWorkSetNumber: (set: WorkoutSet) => number
+  toggleSetWarmup: (set: WorkoutSet) => void
 }
 
-const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
-  const { workoutStore, openedExerciseRecords, stateStore } = useStores()
-  const isRecord = Object.values(openedExerciseRecords).some(
-    record => record.guid === set.guid
-  )
+const WorkoutExerciseSetEditItem: React.FC<Props> = ({
+  set,
+  isRecord,
+  isFocused,
+  calcWorkSetNumber,
+  toggleSetWarmup,
+}) => {
   const color = isFocused ? colors.primary : colors.secondaryText
 
-  function calcWorkSetNumber() {
-    const workArrayIndex = stateStore.openedExerciseWorkSets.indexOf(set)
-    return workArrayIndex + 1
-  }
-
-  const number = set.isWarmup ? undefined : calcWorkSetNumber()
-
-  function toggleSetWarmup() {
-    workoutStore.setWorkoutSetWarmup(set, !set.isWarmup)
-  }
+  const number = set.isWarmup ? undefined : calcWorkSetNumber(set)
 
   return (
     <View
@@ -56,7 +50,7 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
       >
         <SetWarmupButton
           isWarmup={set.isWarmup}
-          toggleSetWarmup={toggleSetWarmup}
+          toggleSetWarmup={() => toggleSetWarmup(set)}
           number={number}
           color={color}
         />
@@ -67,34 +61,34 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
           />
         )}
       </View>
-      {stateStore.openedExercise.hasRepMeasument && (
+      {set.exercise.hasRepMeasument && (
         <SetDataLabel
           value={set.reps}
           unit={translate('reps')}
           isFocused={isFocused}
         />
       )}
-      {stateStore.openedExercise.hasWeightMeasument && (
+      {set.exercise.hasWeightMeasument && (
         <SetDataLabel
           value={set.weight}
           unit={set.exercise.measurements.weight!.unit}
           isFocused={isFocused}
         />
       )}
-      {stateStore.openedExercise.hasDistanceMeasument && (
+      {set.exercise.hasDistanceMeasument && (
         <SetDataLabel
           value={set.distance}
           unit={set.exercise.measurements.distance!.unit}
           isFocused={isFocused}
         />
       )}
-      {stateStore.openedExercise.hasTimeMeasument && (
+      {set.exercise.hasTimeMeasument && (
         <SetDataLabel
           value={getFormatedDuration(set.duration)}
           isFocused={isFocused}
         />
       )}
-      {stateStore.openedExercise.measurements.rest && (
+      {set.exercise.measurements.rest && (
         <SetDataLabel
           value={`${translate('rest')} ${getFormatedDuration(
             set.rest ?? 0,
@@ -107,4 +101,4 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({ set, isFocused }) => {
   )
 }
 
-export default observer(WorkoutExerciseSetEditItem)
+export default WorkoutExerciseSetEditItem

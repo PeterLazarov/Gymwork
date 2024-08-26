@@ -1,17 +1,27 @@
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View } from 'react-native'
 
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import WorkoutExerciseHistoryList from './WorkoutExerciseHistoryList'
+import { Workout } from 'app/db/models'
 
 const WorkoutExerciseHistoryView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
 
   const workoutsContained =
-    workoutStore.exerciseWorkouts[stateStore.openedExerciseGuid]
+    workoutStore.exerciseWorkoutsMap[stateStore.openedExerciseGuid]
+
+  const exerciseFilteredWorkouts = useMemo(
+    () =>
+      workoutsContained.map(workout => ({
+        ...workout,
+        sets: workout.exerciseSetsMap[stateStore.openedExerciseGuid],
+      })) as Workout[],
+    [workoutsContained]
+  )
 
   return (
     <View
@@ -24,8 +34,12 @@ const WorkoutExerciseHistoryView: React.FC = () => {
         flexGrow: 1,
       }}
     >
-      {workoutsContained?.length > 0 ? (
-        <WorkoutExerciseHistoryList workouts={workoutsContained} />
+      {stateStore.openedExercise && workoutsContained?.length > 0 ? (
+        <WorkoutExerciseHistoryList
+          workouts={exerciseFilteredWorkouts}
+          records={stateStore.openedExerciseRecords}
+          exercise={stateStore.openedExercise}
+        />
       ) : (
         <EmptyState text={translate('historyLogEmpty')} />
       )}

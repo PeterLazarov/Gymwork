@@ -13,11 +13,11 @@ import { DateInput, DateTime, Interval } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import { useRef, useEffect, useState, useMemo } from 'react'
 import { Dimensions, View } from 'react-native'
+import { computed } from 'mobx'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
 import chartConfig from './chartConfig'
-import { computed } from 'mobx'
 import seriesSetup from './seriesSetup'
 
 // Docs
@@ -85,8 +85,8 @@ const ExerciseHistoryChart = (props: {
         return getPastDays(30)
       case 'ALL': {
         const range = [
-          workoutStore.exerciseWorkouts[openedExercise.guid]?.at(-1)?.date!,
-          workoutStore.exerciseWorkouts[openedExercise.guid]?.[0]?.date,
+          workoutStore.exerciseWorkoutsMap[openedExercise!.guid]?.at(-1)?.date!,
+          workoutStore.exerciseWorkoutsMap[openedExercise!.guid]?.[0]?.date,
         ] as const
 
         // TODO grey out tab when no history
@@ -126,7 +126,7 @@ const ExerciseHistoryChart = (props: {
           .flatMap(({ sets }) => sets) as WorkoutSet[]
 
         return dayExerciseSets.filter(
-          set => set.exercise.guid === openedExercise.guid
+          set => set.exercise.guid === openedExercise!.guid
         )
       })
     ).get()
@@ -134,7 +134,7 @@ const ExerciseHistoryChart = (props: {
 
   const { getChartSeries } = seriesSetup({ data: setsByDay })
 
-  const series = getChartSeries(openedExercise)
+  const series = getChartSeries(openedExercise!)
 
   const { getViewOptions, feedChartSeriesData } = chartConfig({
     series,

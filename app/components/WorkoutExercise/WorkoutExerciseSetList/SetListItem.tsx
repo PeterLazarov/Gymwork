@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View, Text } from 'react-native'
 
@@ -13,20 +12,20 @@ type Props = {
   exercise: Exercise
   number?: number
   isFocused?: boolean
+  isRecord?: boolean
   hideRecords?: boolean
-  records: WorkoutSet[]
 }
 
 const SetListItem: React.FC<Props> = ({
   set,
   exercise,
   isFocused,
+  isRecord,
   number,
   hideRecords = false,
-  records,
 }) => {
-  const isRecord = records.some(record => record.guid === set.guid)
   const color = isFocused ? colors.primary : colors.secondaryText
+
   return (
     <View
       style={{
@@ -90,4 +89,4 @@ const SetListItem: React.FC<Props> = ({
   )
 }
 
-export default observer(SetListItem)
+export default SetListItem

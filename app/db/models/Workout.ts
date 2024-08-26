@@ -9,7 +9,7 @@ import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import { Exercise } from './Exercise'
-import { WorkoutSetModel } from './WorkoutSet'
+import { WorkoutSet, WorkoutSetModel } from './WorkoutSet'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { Duration } from 'luxon'
 
@@ -24,13 +24,22 @@ export const WorkoutModel = types
   })
   .views(self => ({
     get exercises(): Exercise[] {
-      // ! TODO
       const uniqueExercises = self.sets.reduce(
-        // ! accessing set.exercise breaks everything?
         (acc, set) => acc.add(set.exercise),
         new Set<Exercise>()
       )
       return [...uniqueExercises]
+    },
+    get exerciseSetsMap() {
+      const map: Record<Exercise['guid'], WorkoutSet[]> = {};
+
+      self.sets.forEach(set => {
+        if (!map.hasOwnProperty(set.exercise.guid)) {
+          map[set.exercise.guid] = []
+        }
+        map[set.exercise.guid].push(set)
+      });
+      return map
     },
     /** Only usable for completed workouts */
     get inferredDuration(): Duration {
@@ -49,17 +58,6 @@ export const WorkoutModel = types
 
       return Duration.fromMillis(0)
     },
-    // get exercises(): unknown[] {
-    //   const uniqueExercises = self.sets.reduce(
-    //     // ! accessing set.exercise breaks everything?
-    //     (acc, set) => acc.add(getIdentifier(set.exercise)),
-    //     new Set<Exercise>()
-    //   )
-
-    //   console.log({ uniqueExercises })
-
-    //   return []
-    // },
   }))
   .actions(withSetPropAction)
 

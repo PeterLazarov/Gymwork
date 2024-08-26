@@ -1,69 +1,92 @@
-import { Exercise, Workout, WorkoutSet } from "app/db/models"
+import { destroy, getSnapshot } from 'mobx-state-tree'
 
-export type ExerciseRecord = Record<WorkoutSet['groupingValue'], WorkoutSet>
+import { ExerciseRecord, WorkoutSet, WorkoutSetSnapshotIn } from 'app/db/models'
 
-export const calculateRecords = (workouts: Workout[]): 
-  Record<Exercise['guid'], ExerciseRecord> =>  {
+let weakassCounter = 1
+export const removeWeakAssRecords = (
+  exerciseAllRecords: ExerciseRecord
+): void => {
+  console.log('weakassCounter', weakassCounter++)
+  const groupingsDescending = Object.keys(exerciseAllRecords.groupingRecordMap)
+    .map(Number)
+    .sort((a, b) => b - a)
 
-  const records = getRecords(workouts)
+  let lastRecord = exerciseAllRecords.groupingRecordMap[groupingsDescending[0]]
 
-  removeWeakAssRecords(records)
+  for (const grouping of groupingsDescending) {
+    const record = exerciseAllRecords.groupingRecordMap[grouping]
 
-  return records
-}
+    if (lastRecord.guid !== record.guid && lastRecord.isBetterThan(record)) {
+      const weakAssRecord = exerciseAllRecords.recordSets.find(
+        set => set.guid === record.guid
+      )
+      weakAssRecord?.setProp('isWeakAssRecord', true)
+    } else {
+      const strongAssRecord = exerciseAllRecords.recordSets.find(
+        set => set.guid === lastRecord.guid
+      )
+      strongAssRecord?.setProp('isWeakAssRecord', false)
 
-export const removeWeakAssRecords = (records: Record<Exercise['guid'], ExerciseRecord>): void => {
-  for (const exerciseID in records) {
-    const exerciseRecords = records[exerciseID]
-    const groupingsDescending = Object.keys(exerciseRecords)
-      .map(Number) 
-      .sort((a, b) => b - a);
-    
-    let lastRecord = exerciseRecords[groupingsDescending[0]]
-
-    for (const grouping of groupingsDescending) {
-      const record = exerciseRecords[grouping]
-      
-      if (
-        lastRecord.isBetterThan(record) &&
-        lastRecord.guid !== record.guid
-      ) {
-        delete exerciseRecords[grouping]
-      } else {
-        lastRecord = record
-      }
+      lastRecord = record
     }
   }
 }
 
-const getRecords = (workouts: Workout[]) => {
-  const records: Record<Exercise['guid'], ExerciseRecord> = {}
+export const isNewRecord = (records: ExerciseRecord, set: WorkoutSet) => {
+  const currentRecord = records.groupingRecordMap[set.groupingValue]
+  return !currentRecord || set.isBetterThan(currentRecord)
+}
 
-  const sortedWorkouts = workouts.slice().sort((w1,w2) =>  { 
-    var dateA = new Date(w1.date).getTime();
-    var dateB = new Date(w2.date).getTime();
-    return dateA - dateB;
-  })
+export const updateRecordsWithLatestBest = (
+  records: ExerciseRecord,
+  newRecord: WorkoutSet
+): WorkoutSetSnapshotIn[] => {
+  const currentRecord = records.groupingRecordMap[newRecord.groupingValue]
 
-  for (let i = 0; i < sortedWorkouts.length; i++) {
-    const workout = sortedWorkouts[i]
-    for (let j = 0; j < workout.sets.length; j++) {
-      const set = workout.sets[j]
+  const recordSets = records.recordSets.map(record => getSnapshot(record))
+  const newRecordSnapshot = getSnapshot(newRecord)
 
-      if (!records[set.exercise.guid]) {
-        records[set.exercise.guid] = {}
-      }
-
-      const exerciseRecords = records[set.exercise.guid]
-      const currentRecord = exerciseRecords[set.groupingValue]
-
-      const isRecord = !currentRecord || set.isBetterThan(currentRecord)
-      if (isRecord) {
-        exerciseRecords[set.groupingValue] = set
-      }
-    }
+  if (currentRecord) {
+    const index = records.recordSets.indexOf(currentRecord)
+    recordSets[index] = newRecordSnapshot
+    destroy(currentRecord)
+  } else {
+    recordSets.push(newRecordSnapshot)
   }
 
+  return recordSets
+}
 
-  return records
+export const updateRecordsIfNecessary = (
+  recordSets: WorkoutSet[],
+  setToCompare: WorkoutSet
+): WorkoutSet[] => {
+  const grouping = getDataFieldForKey(setToCompare.exercise.groupRecordsBy)
+  const currentRecordIndex = recordSets!.findIndex(
+    s => s[grouping] === setToCompare.groupingValue
+  )
+
+  let updatedRecords = recordSets
+  if (currentRecordIndex !== -1) {
+    const currentRecord = updatedRecords[currentRecordIndex]
+    if (setToCompare.isBetterThan(currentRecord)) {
+      updatedRecords.splice(currentRecordIndex, 1, setToCompare)
+    }
+  } else {
+    updatedRecords.push(setToCompare)
+  }
+
+  return updatedRecords
+}
+
+export const getDataFieldForKey = (key: string): keyof WorkoutSetSnapshotIn => {
+  const dataFieldsMap = {
+    weight: 'weightMcg',
+    duration: 'durationMs',
+    reps: 'reps',
+    distance: 'distanceMm',
+  }
+  return dataFieldsMap[
+    key as keyof typeof dataFieldsMap
+  ] as keyof WorkoutSetSnapshotIn
 }

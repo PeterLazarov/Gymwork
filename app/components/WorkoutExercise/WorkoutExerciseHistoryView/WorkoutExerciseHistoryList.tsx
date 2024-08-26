@@ -1,38 +1,32 @@
-import { observer } from 'mobx-react-lite'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import { FlatList, ListRenderItemInfo } from 'react-native'
 
-import WorkoutExerciseHistoryDayItem from './WorkoutExerciseHistoryListItem'
-import { useStores } from 'app/db/helpers/useStores'
-import { Workout } from 'app/db/models'
+import WorkoutExerciseHistoryListItem from './WorkoutExerciseHistoryListItem'
+import { Exercise, ExerciseRecord, Workout } from 'app/db/models'
 
 type Props = {
   workouts: Workout[]
+  records: ExerciseRecord
+  exercise: Exercise
 }
-const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
-  const { stateStore } = useStores()
-
-  const exerciseFilteredWorkouts = useMemo(
-    () =>
-      workouts.map(workout => ({
-        ...workout,
-        sets: workout.sets.filter(
-          e => e.exercise.guid === stateStore.openedExerciseGuid
-        ),
-      })) as Workout[],
-    [workouts]
-  )
-
+const WorkoutExerciseHistoryList: React.FC<Props> = ({
+  workouts,
+  records,
+  exercise,
+}) => {
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<Workout>) => {
       return (
-        <WorkoutExerciseHistoryDayItem
+        <WorkoutExerciseHistoryListItem
+          key={item.guid}
           date={item.date}
           sets={item.sets}
+          records={records}
+          exercise={exercise}
         />
       )
     },
-    []
+    [records]
   )
   const ITEM_SET_HEIGHT = 20
   const getItemLayout = (
@@ -55,7 +49,7 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
   return (
     <FlatList
       style={{ flex: 1 }}
-      data={exerciseFilteredWorkouts}
+      data={workouts}
       renderItem={renderItem}
       keyExtractor={(w, i) => `${w.date}_${i}`}
       getItemLayout={getItemLayout}
@@ -64,4 +58,4 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({ workouts }) => {
   )
 }
 
-export default observer(WorkoutExerciseHistoryList)
+export default WorkoutExerciseHistoryList

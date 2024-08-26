@@ -2,7 +2,7 @@
   {
     "name": "Threadmill",
     "muscles": ["cardio"],
-    "measurementType": ["time", "distance"],
+    "measurementType": ["duration", "distance"],
     "isFavorite": true
   },
   {
@@ -533,13 +533,13 @@
   {
     "name": "Bicycling",
     "muscles": ["quadriceps", "cardio"],
-    "measurementType": ["time", "distance"],
+    "measurementType": ["duration", "distance"],
     "weightIncrement": 2.5
   },
   {
     "name": "Bicycling, Stationary",
     "muscles": ["quadriceps", "cardio"],
-    "measurementType": ["time", "distance"],
+    "measurementType": ["duration", "distance"],
     "weightIncrement": 2.5
   },
   {
@@ -3683,7 +3683,7 @@
   {
     "name": "Running, Treadmill",
     "muscles": ["quadriceps", "cardio"],
-    "measurementType": ["time", "distance"],
+    "measurementType": ["duration", "distance"],
     "weightIncrement": 2.5
   },
   {
@@ -4925,7 +4925,7 @@
   {
     "name": "Trail Running/Walking",
     "muscles": ["quadriceps", "cardio"],
-    "measurementType": ["time", "distance"],
+    "measurementType": ["duration", "distance"],
     "weightIncrement": 2.5
   },
   {

@@ -10,8 +10,15 @@ import {
 import { ExerciseStore } from './ExerciseStore'
 import { RootStore } from './RootStore'
 import { WorkoutStore } from './WorkoutStore'
+import { RecordStore } from './RecordStore'
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import { Exercise, Workout, WorkoutSet, WorkoutSetModel } from '../models'
+import {
+  Exercise,
+  ExerciseRecord,
+  Workout,
+  WorkoutSet,
+  WorkoutSetModel,
+} from '../models'
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -36,6 +43,9 @@ export const StateStoreModel = types
     get workoutStore(): WorkoutStore {
       return this.rootStore.workoutStore
     },
+    get recordStore(): RecordStore {
+      return this.rootStore.recordStore
+    },
     get openedExercise(): Exercise | undefined {
       return this.exerciseStore.exercises.find(
         e => e.guid === self.openedExerciseGuid
@@ -48,15 +58,13 @@ export const StateStoreModel = types
       return this.openedWorkout?.date === today.toISODate()
     },
     get exercisesPerformed(): Exercise[] {
-      return Object.keys(this.workoutStore.exerciseWorkouts)
+      return Object.keys(this.workoutStore.exerciseWorkoutsMap)
         .map(id => this.exerciseStore.exercises.find(e => e.guid === id))
         .filter(Boolean)
     },
     get openedExerciseSets(): WorkoutSet[] {
       const exerciseSets =
-        this.openedWorkout?.sets.filter(
-          e => e.exercise.guid === self.openedExerciseGuid
-        ) ?? []
+        this.openedWorkout?.exerciseSetsMap[self.openedExerciseGuid] ?? []
 
       return exerciseSets
     },
@@ -73,7 +81,9 @@ export const StateStoreModel = types
 
       return exerciseSets[exerciseSets.length - 1]
     },
-
+    get openedExerciseRecords(): ExerciseRecord {
+      return this.recordStore.getExerciseRecords(self.openedExerciseGuid)
+    },
     get openedExerciseWorkSets(): WorkoutSet[] {
       return this.openedExerciseSets.filter(s => !s.isWarmup)
     },
@@ -123,7 +133,7 @@ export const StateStoreModel = types
 
       const item = self.openedWorkout.sets[indexFromAllSets]!
       const reorderedSets =
-        self?.openedWorkout?.sets
+        self.openedWorkout.sets
           // @ts-ignore
           .toSpliced(indexFromAllSets, 1)
           .toSpliced(indexToAllSets, 0, item) ?? []
@@ -147,6 +157,13 @@ export const StateStoreModel = types
       const luxonDate = DateTime.fromISO(self.openedDate)
       self.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
     },
+    // getOpenedExerciseRecords() {
+    //   console.log("openedExerciseRecords")
+
+    //   return self.recordStore.getExerciseRecords(
+    //     self.openedExerciseGuid
+    //   )
+    // },
   }))
 
 export interface StateStore extends Instance<typeof StateStoreModel> {}

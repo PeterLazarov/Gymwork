@@ -15,6 +15,23 @@ const cardioExerciseID = exerciseSeedData
   .findIndex(e => e.muscles.includes('cardio'))
   .toString()
 
+const generateRandomExercises = (date: string) => {
+  return Array.from({
+    length: between(3, 8),
+  }).flatMap((_, i): WorkoutSetSnapshotIn[] => {
+    const exercise = String(between(0, 100))
+    return Array.from({ length: between(2, 5) }).map((_, i) => ({
+      exercise,
+      isWarmup: i === 0,
+      reps: between(3, 12),
+      weightMcg: convert(between(8, 40) * weightIncrementKg)
+        .from('kg')
+        .to('mcg'),
+      date,
+    }))
+  })
+}
+
 const generateSets = (date: string): WorkoutSetSnapshotIn[] => {
   const workoutStart = DateTime.fromISO(date).set({
     hour: 8,
@@ -36,6 +53,7 @@ const generateSets = (date: string): WorkoutSetSnapshotIn[] => {
       reps: between(3, 12),
       weightMcg,
       isWarmup: i === 0,
+      date,
       restMs,
       createdAt: workoutStart
         .plus({ milliseconds: restMs * i + setDuration * i })
@@ -54,25 +72,11 @@ const generateSets = (date: string): WorkoutSetSnapshotIn[] => {
         .from('min')
         .to('ms'),
       createdAt: workoutStart.plus({ minutes: i * 10 }).toJSDate(),
+      date,
     } as WorkoutSetSnapshotIn
   })
 
-  return Array.from({
-    length: between(3, 8),
-  })
-    .flatMap((_, i): WorkoutSetSnapshotIn[] => {
-      const exercise = String(between(0, 100))
-      return Array.from({ length: between(2, 5) }).map((_, i) => ({
-        exercise,
-        isWarmup: i === 0,
-        reps: between(3, 12),
-        weightMcg: convert(between(8, 40) * weightIncrementKg)
-          .from('kg')
-          .to('mcg'),
-      }))
-    })
-    .concat(cardioSets, benchSets)
-    .reverse()
+  return generateRandomExercises(date).concat(benchSets, cardioSets).reverse()
 }
 const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
   length: numberOfWorkouts,
@@ -80,6 +84,7 @@ const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
   const date = today
     .minus({ days: i + i * Math.ceil(Math.random() * 2) })
     .toISODate()!
+
   return {
     date,
     sets: generateSets(date),
