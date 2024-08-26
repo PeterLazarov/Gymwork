@@ -36,7 +36,7 @@ export const WorkoutSetModel = types
     },
     get groupingValue() {
       switch (set.exercise.groupRecordsBy) {
-        case 'time':
+        case 'duration':
           return set.durationMs // TODO units?
         case 'reps':
           return set.reps
@@ -69,7 +69,7 @@ export const WorkoutSetModel = types
       return Number(
         convert(set.durationMs ?? 0)
           .from('ms')
-          .to(set.exercise.measurements.time!.unit)
+          .to(set.exercise.measurements.duration!.unit)
           .toFixed(2)
       )
     },
@@ -94,7 +94,10 @@ export const WorkoutSetModel = types
     ) {
       self.setProp('distanceMm', convert(value).from(unit).to('mm'))
     },
-    setDuration(value: number, unit = self.exercise.measurements.time?.unit!) {
+    setDuration(
+      value: number,
+      unit = self.exercise.measurements.duration?.unit!
+    ) {
       self.setProp('durationMs', convert(value).from(unit).to('ms'))
     },
     setRest(value: number, unit = self.exercise.measurements.rest?.unit!) {
@@ -107,13 +110,17 @@ export const WorkoutSetModel = types
         self.exercise.measurements[self.exercise.groupRecordsBy]!.moreIsBetter
 
       const isTied = self.measurementValue === otherSet.measurementValue
-      
+
       const measurementDiff = self.measurementValue - otherSet.measurementValue
       const groupingDiff = self.groupingValue - otherSet.groupingValue
 
-      const tieBreak = groupingIsMoreBetter ? groupingDiff > 0 : groupingDiff < 0
-      const isMeasurementMore = isMoreBetter ? measurementDiff > 0 : measurementDiff < 0
-      
+      const tieBreak = groupingIsMoreBetter
+        ? groupingDiff > 0
+        : groupingDiff < 0
+      const isMeasurementMore = isMoreBetter
+        ? measurementDiff > 0
+        : measurementDiff < 0
+
       return isMeasurementMore || (isTied && tieBreak)
     },
   }))

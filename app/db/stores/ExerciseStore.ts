@@ -10,6 +10,7 @@ import {
   measurementDefaults,
 } from 'app/db/models'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
+import { isDev } from 'app/utils/isDev'
 
 export const ExerciseStoreModel = types
   .model('ExerciseStore')
@@ -21,7 +22,7 @@ export const ExerciseStoreModel = types
     async fetch() {
       const exercises = await storage.load<ExerciseSnapshotIn[]>('exercises')
 
-      if (exercises && exercises?.length > 0) {
+      if (exercises && exercises?.length > 0 && !isDev) {
         store.setProp('exercises', exercises)
       } else {
         await this.seed()

@@ -85,7 +85,7 @@ const WorkoutExerciseSetEditControls: React.FC<Props> = ({
       )}
 
       {value.exercise!.hasTimeMeasument && (
-        <SetEditPanelSection text={translate('time')}>
+        <SetEditPanelSection text={translate('duration')}>
           <DurationInput
             valueSeconds={convert(value.durationMs).from('ms').to('s')}
             onUpdate={durationSeconds =>

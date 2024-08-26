@@ -6,7 +6,7 @@ import { withSetPropAction } from '../helpers/withSetPropAction'
 
 // TODO? would this be better as an enum?
 export const measurementUnits = {
-  time: {
+  duration: {
     ms: 'ms',
     s: 's',
     m: 'm',
@@ -29,8 +29,8 @@ export const measurementUnits = {
 // For example vertical jump distance could be feet
 // Running could be meters
 export const measurementDefaults = {
-  time: {
-    unit: measurementUnits.time.s,
+  duration: {
+    unit: measurementUnits.duration.s,
     moreIsBetter: false,
   },
   reps: {
@@ -46,11 +46,11 @@ export const measurementDefaults = {
     moreIsBetter: true,
   },
   rest: {
-    unit: measurementUnits.time.s,
+    unit: measurementUnits.duration.s,
   },
 }
 
-export const measurementTypes = Object.keys(measurementDefaults)
+export const measurementTypes = Object.keys(measurementDefaults).sort()
 
 // Should we group by multiple?
 const groupingCombinations: Array<{
@@ -59,21 +59,21 @@ const groupingCombinations: Array<{
 }> = [
   // { measurement: [], groupBy: '' },
   { measurement: ['weight'], groupBy: 'weight' },
-  { measurement: ['time'], groupBy: 'time' },
-  { measurement: ['time', 'weight'], groupBy: 'weight' },
+  { measurement: ['duration'], groupBy: 'duration' },
+  { measurement: ['duration', 'weight'], groupBy: 'weight' },
   { measurement: ['reps'], groupBy: 'reps' },
   { measurement: ['reps', 'weight'], groupBy: 'reps' },
-  { measurement: ['reps', 'time'], groupBy: 'time' },
-  { measurement: ['reps', 'time', 'weight'], groupBy: 'time' },
+  { measurement: ['reps', 'duration'], groupBy: 'duration' },
+  { measurement: ['reps', 'duration', 'weight'], groupBy: 'duration' },
   { measurement: ['distance'], groupBy: 'distance' },
   { measurement: ['distance', 'weight'], groupBy: 'weight' },
-  { measurement: ['distance', 'time'], groupBy: 'distance' },
-  { measurement: ['distance', 'time', 'weight'], groupBy: 'time' },
+  { measurement: ['distance', 'duration'], groupBy: 'distance' },
+  { measurement: ['distance', 'duration', 'weight'], groupBy: 'duration' },
   { measurement: ['distance', 'reps'], groupBy: 'reps' },
   { measurement: ['distance', 'reps', 'weight'], groupBy: 'reps' },
-  { measurement: ['distance', 'reps', 'time'], groupBy: 'reps' },
+  { measurement: ['distance', 'reps', 'duration'], groupBy: 'reps' },
   {
-    measurement: ['distance', 'reps', 'time', 'weight'],
+    measurement: ['distance', 'reps', 'duration', 'weight'],
     groupBy: 'reps',
   },
 ]
@@ -84,21 +84,21 @@ const measurementCombinations: Array<{
 }> = [
   // TODO: implement measureBy array for triple metrics ?
   { measurement: ['weight'], measureBy: 'weight' },
-  { measurement: ['time'], measureBy: 'time' },
-  { measurement: ['time', 'weight'], measureBy: 'time' },
+  { measurement: ['duration'], measureBy: 'duration' },
+  { measurement: ['duration', 'weight'], measureBy: 'duration' },
   { measurement: ['reps'], measureBy: 'reps' },
   { measurement: ['reps', 'weight'], measureBy: 'weight' },
-  { measurement: ['reps', 'time'], measureBy: 'reps' },
-  // { measurement: ['reps', 'time', 'weight'], measureBy: 'time' },
+  { measurement: ['reps', 'duration'], measureBy: 'reps' },
+  // { measurement: ['reps', 'duration', 'weight'], measureBy: 'duration' },
   { measurement: ['distance'], measureBy: 'distance' },
   { measurement: ['distance', 'weight'], measureBy: 'distance' },
-  { measurement: ['distance', 'time'], measureBy: 'time' },
-  // { measurement: ['distance', 'time', 'weight'], measureBy: 'time' },
+  { measurement: ['distance', 'duration'], measureBy: 'duration' },
+  // { measurement: ['distance', 'duration', 'weight'], measureBy: 'duration' },
   { measurement: ['distance', 'reps'], measureBy: 'distance' },
   // { measurement: ['distance', 'reps', 'weight'], measureBy: 'reps' },
-  // { measurement: ['distance', 'reps', 'time'], measureBy: 'reps' },
+  // { measurement: ['distance', 'reps', 'duration'], measureBy: 'reps' },
   // {
-  //   measurement: ['distance', 'reps', 'time', 'weight'],
+  //   measurement: ['distance', 'reps', 'duration', 'weight'],
   //   measureBy: 'reps',
   // },
 ]
@@ -106,12 +106,12 @@ const measurementCombinations: Array<{
 export const ExerciseMeasurementModel = types
   .model('ExerciseMeasurement')
   .props({
-    time: types.maybe(
+    duration: types.maybe(
       types
         .model({
           unit: types.enumeration(
-            'timeUnit',
-            Object.values(measurementUnits.time)
+            'durationUnit',
+            Object.values(measurementUnits.duration)
           ),
           moreIsBetter: types.boolean,
         })
@@ -201,7 +201,10 @@ export const ExerciseModel = types
 
       const combination = groupingCombinations.find(cfg => {
         if (
-          exerciseMeasurementNames.every(name => cfg.measurement.includes(name))
+          exerciseMeasurementNames
+            // TODO grouping / measurement by rest
+            .filter(m => m !== 'rest')
+            .every(name => cfg.measurement.includes(name))
         ) {
           return cfg.groupBy
         }
@@ -216,7 +219,10 @@ export const ExerciseModel = types
 
       const combination = measurementCombinations.find(cfg => {
         if (
-          exerciseMeasurementNames.every(name => cfg.measurement.includes(name))
+          exerciseMeasurementNames
+            // TODO grouping / measurement by rest
+            .filter(m => m !== 'rest')
+            .every(name => cfg.measurement.includes(name))
         ) {
           return cfg.measureBy
         }
@@ -235,10 +241,10 @@ export const ExerciseModel = types
       return this.groupRecordsBy === 'distance'
     },
     get hasTimeMeasument() {
-      return !!exercise.measurements.time
+      return !!exercise.measurements.duration
     },
     get hasTimeGrouping() {
-      return this.groupRecordsBy === 'time'
+      return this.groupRecordsBy === 'duration'
     },
   }))
   .actions(withSetPropAction)

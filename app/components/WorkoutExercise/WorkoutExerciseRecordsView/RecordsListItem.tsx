@@ -1,11 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View, Text } from 'react-native'
-
+import { View } from 'react-native'
 import SetDataLabel from '../SetDataLabel'
 import { Exercise, WorkoutSet } from 'app/db/models'
-import { getFormatedDuration } from 'app/utils/time'
-import { translate } from 'app/i18n'
 
 type Props = {
   set: WorkoutSet
@@ -13,6 +10,7 @@ type Props = {
 }
 
 const RecordsListItem: React.FC<Props> = ({ set, exercise }) => {
+  console.log({ exercise, set })
   return (
     <View
       style={{
@@ -21,37 +19,22 @@ const RecordsListItem: React.FC<Props> = ({ set, exercise }) => {
         gap: 16,
         justifyContent: 'space-around',
         alignItems: 'center',
-        height: 24,
+        height: 32,
+        flex: 1,
+        opacity: set.isWeakAssRecord ? 0.5 : 1,
       }}
     >
-      {set.isWeakAssRecord && <Text>W</Text>}
-      {exercise.hasRepMeasument && (
-        <SetDataLabel
-          value={set.reps}
-          unit={translate('reps')}
-          fontSize="md"
-        />
-      )}
-      {exercise.hasWeightMeasument && (
-        <SetDataLabel
-          value={set.weight}
-          unit={exercise.measurements.weight?.unit}
-          fontSize="md"
-        />
-      )}
-      {exercise.hasDistanceMeasument && (
-        <SetDataLabel
-          value={set.distance}
-          unit={exercise.measurements.distance?.unit}
-          fontSize="md"
-        />
-      )}
-      {exercise.hasTimeMeasument && (
-        <SetDataLabel
-          value={getFormatedDuration(set.duration)}
-          fontSize="md"
-        />
-      )}
+      <SetDataLabel
+        value={set[exercise.groupRecordsBy]}
+        unit={exercise.measurements[exercise.groupRecordsBy].unit ?? 'reps'}
+        fontSize="md"
+      />
+
+      <SetDataLabel
+        value={set[exercise.measuredBy]}
+        unit={exercise.measurements[exercise.measuredBy].unit ?? 'reps'}
+        fontSize="md"
+      />
     </View>
   )
 }
