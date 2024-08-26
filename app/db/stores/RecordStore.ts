@@ -34,7 +34,7 @@ export const RecordStoreModel = types
         return getParent(store) as RootStore
       },
       get exerciseRecordsMap() {
-        const map: Record<string, ExerciseRecord> = {};
+        const map: Record<Exercise['guid'], ExerciseRecord> = {};
 
         store.records.forEach(record => {
           map[record.exercise.guid] = record;
@@ -103,7 +103,7 @@ export const RecordStoreModel = types
       const sortedWorkouts = self.rootStore.workoutStore.sortedWorkouts
       sortedWorkouts.forEach(workout => {
         const exerciseSets = workout.exerciseSetsMap[oldExerciseRecords.exercise.guid]
-        
+
         exerciseSets.forEach(set => {
           if (set.groupingValue === groupingToRefresh) {
             refreshedRecords = updateRecordsIfNecessary(refreshedRecords, set)
