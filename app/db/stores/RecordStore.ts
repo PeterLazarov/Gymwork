@@ -102,8 +102,8 @@ export const RecordStoreModel = types
       sortedWorkouts.forEach(workout => {
         const exerciseSets =
           workout.exerciseSetsMap[oldExerciseRecords.exercise.guid]
-
-        exerciseSets.forEach(set => {
+        
+        exerciseSets?.forEach(set => {
           if (set.groupingValue === groupingToRefresh) {
             refreshedRecords = updateRecordsIfNecessary(refreshedRecords, set)
           }
