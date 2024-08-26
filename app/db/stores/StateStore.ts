@@ -17,7 +17,7 @@ const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
 
 // TODO: horiontal scrolling breaks BADLY (maybe) if the date goes outside of this range
-const datePaddingCount = 365
+const datePaddingCount = 90
 
 export const StateStoreModel = types
   .model('StateStore')
@@ -82,7 +82,7 @@ export const StateStoreModel = types
       return this.workoutStore.workouts[this.workoutStore.workouts.length - 1]
     },
 
-    get earliestDayVisible(): string {
+    get firstRenderedDate(): string {
       const from = (
         this.firstWorkout
           ? DateTime.fromISO(this.firstWorkout.date)
@@ -92,8 +92,14 @@ export const StateStoreModel = types
       return from.toISODate()!
     },
 
-    get lastDayVisible(): string {
-      return today.plus({ day: datePaddingCount }).toISODate()!
+    get lastRenderedDate(): string {
+      const nowISO = new Date().toISOString()
+      const lastWorkoutDate = this.workoutStore.lastWorkout?.date
+      const lastWorkoutOrToday =
+        lastWorkoutDate && lastWorkoutDate > nowISO ? lastWorkoutDate : nowISO
+      return DateTime.fromISO(lastWorkoutOrToday)
+        .plus({ day: datePaddingCount })
+        .toISODate()!
     },
   }))
   .actions(withSetPropAction)
