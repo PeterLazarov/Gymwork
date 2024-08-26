@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useMemo } from 'react'
+import { computed } from 'mobx'
 import { Card } from 'react-native-paper'
 
 import WorkoutExerciseSetList from './WorkoutExerciseSetList'
@@ -14,12 +15,18 @@ type Props = {
 }
 
 const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
-  const { stateStore } = useStores()
+  const { stateStore, recordStore } = useStores()
 
   function onLinkPress() {
     stateStore.setOpenedExercise(exercise)
     navigate('WorkoutExercise')
   }
+
+  const sets = workout.exerciseSetsMap[exercise.guid]
+  const exerciseRecords = useMemo(
+    () => computed(() => recordStore.getExerciseRecords(exercise.guid)),
+    [sets]
+  ).get()
 
   return (
     <TouchableOpacity onPress={onLinkPress}>
@@ -36,8 +43,9 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
         />
         <Card.Content>
           <WorkoutExerciseSetList
-            sets={workout.exerciseSetsMap[exercise.guid]}
+            sets={sets}
             exercise={exercise}
+            records={exerciseRecords}
           />
         </Card.Content>
       </Card>

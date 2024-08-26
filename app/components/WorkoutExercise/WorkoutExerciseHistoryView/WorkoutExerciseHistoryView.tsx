@@ -11,8 +11,6 @@ import { Workout } from 'app/db/models'
 const WorkoutExerciseHistoryView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
 
-  stateStore.openedExerciseRecords
-
   const workoutsContained =
     workoutStore.exerciseWorkoutsMap[stateStore.openedExerciseGuid]
 

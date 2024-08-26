@@ -6,7 +6,7 @@ import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
 type Props = {
   sets: WorkoutSet[]
   exercise: Exercise
-  records?: ExerciseRecord
+  records: ExerciseRecord
 }
 
 const WorkoutExerciseSetList: React.FC<Props> = ({
