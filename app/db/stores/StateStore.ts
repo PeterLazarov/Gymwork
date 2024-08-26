@@ -64,9 +64,7 @@ export const StateStoreModel = types
     },
     get openedExerciseSets(): WorkoutSet[] {
       const exerciseSets =
-        this.openedWorkout?.sets.filter(
-          e => e.exercise.guid === self.openedExerciseGuid
-        ) ?? []
+        this.openedWorkout?.exerciseSetsMap[self.openedExerciseGuid] ?? []
 
       return exerciseSets
     },

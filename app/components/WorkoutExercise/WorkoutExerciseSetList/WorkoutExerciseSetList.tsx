@@ -1,4 +1,5 @@
 import React from 'react'
+import { observer } from 'mobx-react-lite'
 
 import SetListItem from './SetListItem'
 import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
@@ -31,4 +32,4 @@ const WorkoutExerciseSetList: React.FC<Props> = ({
   )
 }
 
-export default WorkoutExerciseSetList
+export default observer(WorkoutExerciseSetList)

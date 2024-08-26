@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import { computed } from 'mobx'
+import { observer } from 'mobx-react-lite'
 import { Card } from 'react-native-paper'
 
 import WorkoutExerciseSetList from './WorkoutExerciseSetList'
@@ -53,4 +54,4 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
   )
 }
 
-export default WorkoutExerciseCard
+export default observer(WorkoutExerciseCard)
