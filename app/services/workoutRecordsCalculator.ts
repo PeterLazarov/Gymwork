@@ -48,16 +48,16 @@ export const isNewRecord = (
 }
 
 export const updateRecordsWithLatestBest = (
-  records: WorkoutSet[], 
+  records: ExerciseRecord, 
   newRecord: WorkoutSet, 
 ): WorkoutSetSnapshotIn[] => {
-  const currentRecord = records.find(record => record.groupingValue === newRecord.groupingValue)
+  const currentRecord = records.groupingRecordMap[newRecord.groupingValue]
 
-  const recordSets = records.map(record => getSnapshot(record))
+  const recordSets = records.recordSets.map(record => getSnapshot(record))
   const newRecordSnapshot = getSnapshot(newRecord)
   
   if (currentRecord) {
-    const index = records.indexOf(currentRecord)
+    const index = records.recordSets.indexOf(currentRecord)
     recordSets[index] = newRecordSnapshot
     destroy(currentRecord)
   } else {

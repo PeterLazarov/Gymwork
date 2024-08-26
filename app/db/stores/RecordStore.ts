@@ -83,7 +83,7 @@ export const RecordStoreModel = types
       const isNewRecordBool = isNewRecord(records, updatedSet)
       if (isNewRecordBool) {
         const updatedRecords = updateRecordsWithLatestBest(
-          records.recordSets,
+          records,
           updatedSet
         )
 
