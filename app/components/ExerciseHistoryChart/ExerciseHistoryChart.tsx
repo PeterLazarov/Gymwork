@@ -85,8 +85,8 @@ const ExerciseHistoryChart = (props: {
         return getPastDays(30)
       case 'ALL': {
         const range = [
-          workoutStore.exerciseWorkouts[openedExercise!.guid]?.at(-1)?.date!,
-          workoutStore.exerciseWorkouts[openedExercise!.guid]?.[0]?.date,
+          workoutStore.exerciseWorkoutsMap[openedExercise!.guid]?.at(-1)?.date!,
+          workoutStore.exerciseWorkoutsMap[openedExercise!.guid]?.[0]?.date,
         ] as const
 
         // TODO grey out tab when no history

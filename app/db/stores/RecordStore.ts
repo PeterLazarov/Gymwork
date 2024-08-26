@@ -23,7 +23,7 @@ import {
   updateRecordsIfNecessary
 } from 'app/services/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
-let exerciseRecordsCount = 1
+
 export const RecordStoreModel = types
   .model('RecordStore')
   .props({
@@ -65,7 +65,6 @@ export const RecordStoreModel = types
       exerciseID: Exercise['guid']
     ): ExerciseRecord
      {
-      console.log('exerciseRecordsCount', exerciseRecordsCount++)
       let exerciseRecords = self.exerciseRecordsMap[exerciseID]
 
       if (exerciseRecords) {

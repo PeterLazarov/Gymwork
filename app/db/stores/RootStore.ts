@@ -16,12 +16,10 @@ export const RootStoreModel = types
   })
   .views(self => ({
     get openedWorkoutExercises() {
-      return self.stateStore.openedWorkout
-        ? self.workoutStore.getWorkoutExercises(self.stateStore.openedWorkout)
-        : []
+      return self.stateStore.openedWorkout?.exercises || []
     },
     get exercisesPerformed(): Exercise[] {
-      return Object.keys(self.workoutStore.exerciseWorkouts)
+      return Object.keys(self.workoutStore.exerciseWorkoutsMap)
         .map(id => self.exerciseStore.exercises.find(e => e.guid === id))
         .filter(Boolean)
     },

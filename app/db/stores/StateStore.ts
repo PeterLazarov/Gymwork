@@ -52,7 +52,7 @@ export const StateStoreModel = types
       return this.openedWorkout?.date === today.toISODate()
     },
     get exercisesPerformed(): Exercise[] {
-      return Object.keys(this.workoutStore.exerciseWorkouts)
+      return Object.keys(this.workoutStore.exerciseWorkoutsMap)
         .map(id => this.exerciseStore.exercises.find(e => e.guid === id))
         .filter(Boolean)
     },

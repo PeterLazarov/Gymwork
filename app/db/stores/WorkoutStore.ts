@@ -40,13 +40,10 @@ export const WorkoutStoreModel = types
       const [workout] = store.workouts.filter(w => w.date === date)
       return workout
     },
-    getWorkoutExercises(workout: Workout): Exercise[] {
-      return workout.exercises
-    },
 
-    get exerciseWorkouts(): Record<Exercise['guid'], Workout[]> {
+    get exerciseWorkoutsMap(): Record<Exercise['guid'], Workout[]> {
       return store.workouts.reduce((acc, workout) => {
-        this.getWorkoutExercises(workout).forEach(exercise => {
+        workout.exercises.forEach(exercise => {
           if (!acc[exercise.guid]) {
             acc[exercise.guid] = []
           }
@@ -60,7 +57,7 @@ export const WorkoutStoreModel = types
     /** @returns all sets performed ever */
     get exerciseHistory(): Record<Exercise['guid'], WorkoutSet[]> {
       return Object.fromEntries(
-        Object.entries(this.exerciseWorkouts).map(([exerciseID, workouts]) => {
+        Object.entries(this.exerciseWorkoutsMap).map(([exerciseID, workouts]) => {
           const sets: WorkoutSet[] = workouts.flatMap(w =>
             w.sets.filter(({ exercise }) => exercise.guid === exerciseID)
           )

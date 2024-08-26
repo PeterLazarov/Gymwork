@@ -12,15 +12,13 @@ const WorkoutExerciseHistoryView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
 
   const workoutsContained =
-    workoutStore.exerciseWorkouts[stateStore.openedExerciseGuid]
+    workoutStore.exerciseWorkoutsMap[stateStore.openedExerciseGuid]
 
   const exerciseFilteredWorkouts = useMemo(
     () =>
       workoutsContained.map(workout => ({
         ...workout,
-        sets: workout.sets.filter(
-          e => e.exercise.guid === stateStore.openedExerciseGuid
-        ),
+        sets: workout.exerciseSetsMap[stateStore.openedExerciseGuid],
       })) as Workout[],
     [workoutsContained]
   )
