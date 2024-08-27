@@ -1,7 +1,7 @@
 import { TextInput } from 'react-native'
 
 export default function manageInputFocus(
-  inputRefs: Array<React.RefObject<TextInput>>,
+  inputRefs: React.RefObject<TextInput>[],
   handleSubmit: (ref: React.RefObject<TextInput>) => void
 ) {
   function isLastInput(currInputRef: React.RefObject<TextInput>) {

@@ -38,13 +38,13 @@ const SelectOptionsModal: React.FC<Props> = ({
           backgroundColor: colors.white,
           marginVertical: 8,
           marginHorizontal: 20,
-          maxHeight: maxHeight,
+          maxHeight,
         }}
       >
         <View
           style={{
             height: modalHeight,
-            maxHeight: maxHeight,
+            maxHeight,
           }}
         >
           <Text

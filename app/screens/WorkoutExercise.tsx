@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
 import { Menu } from 'react-native-paper'
@@ -94,11 +93,9 @@ const WorkoutExercisePage: React.FC = () => {
         </Menu>
       </Header>
 
-      {stateStore.openedExerciseGuid && (
-        <SwipeTabs tabsConfig={tabs}></SwipeTabs>
-      )}
+      {stateStore.openedExerciseGuid && <SwipeTabs tabsConfig={tabs} />}
     </View>
   )
 }
 
-export default observer(WorkoutExercisePage)
+export default WorkoutExercisePage
