@@ -29,13 +29,13 @@ const IoniconsIcons = [
   'play',
   'settings-outline',
   'refresh-outline',
-] as const satisfies ReadonlyArray<keyof typeof Ionicons.glyphMap>
+] as const satisfies readonly (keyof typeof Ionicons.glyphMap)[]
 type IonicIcon = (typeof IoniconsIcons)[number]
 
 const MCIcons = [
   'yoga',
   'drag-horizontal-variant',
-] as const satisfies ReadonlyArray<keyof typeof MaterialCommunityIcons.glyphMap>
+] as const satisfies readonly (keyof typeof MaterialCommunityIcons.glyphMap)[]
 type MCIcon = (typeof MCIcons)[number]
 
 const EntypoIcons = [
@@ -45,7 +45,7 @@ const EntypoIcons = [
   'stopwatch',
   'heart',
   'heart-outlined',
-] as const satisfies ReadonlyArray<keyof typeof Entypo.glyphMap>
+] as const satisfies readonly (keyof typeof Entypo.glyphMap)[]
 type EntypoIcon = (typeof EntypoIcons)[number]
 
 // todo: get typing of all ant design icons

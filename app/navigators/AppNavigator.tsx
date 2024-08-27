@@ -93,7 +93,7 @@ const AppStack = observer(function AppStack() {
         navigationBarColor: colors.background,
       }}
       // initialRouteName={isAuthenticated ? 'Welcome' : 'Login'}
-      initialRouteName={'Workout'}
+      initialRouteName="Workout"
     >
       {/* {isAuthenticated ? ( */}
       <>

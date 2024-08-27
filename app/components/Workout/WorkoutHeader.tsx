@@ -91,7 +91,7 @@ const WorkoutHeader: React.FC = () => {
         />
         <Menu.Item
           onPress={performBenchmark}
-          title={'Perform benchmark'}
+          title="Perform benchmark"
         />
       </Menu>
     </Header>
