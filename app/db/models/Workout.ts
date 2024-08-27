@@ -41,10 +41,16 @@ export const WorkoutModel = types
       });
       return map
     },
+    get firstSet() {
+      return self.sets[0]
+    },
+    get lastSet() {
+      return self.sets.at(-1)
+    },
     /** Only usable for completed workouts */
     get inferredDuration(): Duration {
-      const firstSet = self.sets[0]
-      const lastSet = self.sets.at(-1)
+      const firstSet = this.firstSet
+      const lastSet = this.lastSet
 
       // Your first set takes time
       const padding = Duration.fromDurationLike({ minutes: 1 })
