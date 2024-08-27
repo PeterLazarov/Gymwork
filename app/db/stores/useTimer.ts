@@ -1,9 +1,15 @@
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  createContext,
+} from 'react'
+import { Vibration } from 'react-native'
 import { Duration } from 'luxon'
-import { useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { createContext } from 'react'
 import { setDriftlessInterval, clearDriftless } from 'driftless'
 import { useStores } from '../helpers/useStores'
-import { Vibration } from 'react-native'
 
 export const TimerContext = createContext<ReturnType<typeof _useTimer>>(
   null as any
