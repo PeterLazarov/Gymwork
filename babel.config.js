@@ -1,12 +1,13 @@
 module.exports = function (api) {
-  api.cache(true)
+  api.cache(true);
   return {
-    presets: ['babel-preset-expo'],
+    presets: ["babel-preset-expo"],
     plugins: [
-      'expo-router/babel',
-      'babel-plugin-transform-typescript-metadata',
-      'react-native-reanimated/plugin',
-      'react-native-paper/babel',
+      /** react-native-reanimated web support @see https://docs.swmansion.com/react-native-reanimated/docs/guides/web-support/ */
+      "@babel/plugin-transform-export-namespace-from",
+      "babel-plugin-transform-typescript-metadata",
+      "react-native-reanimated/plugin",
+      "react-native-paper/babel",
     ],
-  }
-}
+  };
+};

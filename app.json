@@ -1,31 +1,69 @@
 {
+  "name": "Gymwork",
+  "displayName": "Gymwork",
   "expo": {
-    "scheme": "Gymwork",
     "name": "Gymwork",
     "slug": "Gymwork",
+    "scheme": "gymwork",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/logo.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#191015"
     },
+    "userInterfaceStyle": "light",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "jsEngine": "hermes",
     "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
+      "icon": "./assets/logo.png",
+      "package": "com.gymwork",
+      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/logo.png",
+        "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
+      },
+      "splash": {
+        "image": "./assets/logo.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#191015"
+      }
+    },
+    "ios": {
+      "icon": "./assets/logo.png",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gymwork",
+      "splash": {
+        "image": "./assets/logo.png",
+        "tabletImage": "./assets/logo.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#191015"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png",
+      "favicon": "./assets/logo.png",
+      "splash": {
+        "image": "./assets/logo.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#191015"
+      },
       "bundler": "metro"
     },
-    "plugins": ["expo-router"]
+    "plugins": ["expo-localization", "expo-font"],
+    "experiments": {
+      "tsconfigPaths": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4263c316-24a4-4665-a39e-38e50d2b3f17"
+      }
+    }
+  },
+  "ignite": {
+    "version": "9.8.0"
   }
 }

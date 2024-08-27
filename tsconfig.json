@@ -1,27 +1,54 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Expo",
   "compilerOptions": {
-    "allowJs": true,
-    "esModuleInterop": true,
-    "jsx": "react-native",
-    "lib": ["DOM", "ESNext"],
-    "moduleResolution": "node",
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "target": "ESNext",
-    "strict": true,
-
-    "emitDecoratorMetadata": true,
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": false
+    "jsx": "react-native",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "target": "esnext",
+    "lib": ["es2022", "dom"],
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "app/*": ["./app/*"],
+      "assets/*": ["./assets/*"]
+    }
   },
-  "exclude": [
-    "node_modules",
-    "babel.config.js",
-    "metro.config.js",
-    "jest.config.js"
+  "extends": "expo/tsconfig.base",
+  "ts-node": {
+    "compilerOptions": {
+      // compilerOptions specified here will override those declared above,
+      // but *only* in ts-node.  Useful if you want ts-node and tsc to use
+      // different options with a single tsconfig.json.
+      "module": "commonjs"
+    }
+  },
+  "include": [
+    "index.js",
+    "App.tsx",
+    "app",
+    "types",
+    "plugins",
+    "app.config.ts",
+    "app/components/Exercise",
+    "app/components/Timer",
+    "app/components/Workout",
+    "app/components/WorkoutExercise",
+    "app/components/CalendarWorkoutModal.tsx",
+    "app/components/CalendarWorkoutModalExerciseItem.tsx",
+    "app/components/ConfirmationDialog.tsx",
+    "app/components/ExerciseHistoryChart.tsx",
+    "app/components/FeedbackPicker.tsx",
+    "app/components/IncrementalButtons.tsx",
+    "app/components/TimerEditModal.tsx"
   ],
-  "extends": "expo/tsconfig.base"
+  "exclude": ["node_modules", "test/**/*"]
 }

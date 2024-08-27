@@ -1,48 +1,52 @@
 import styled from 'styled-components/native'
 
-import colors from './colors'
-
-type IconButtonProps = {
-  variant?: 'default' | 'full'
-}
+import { colors } from './tokens'
 
 type ButtonProps = {
   variant: 'primary' | 'secondary' | 'critical' | 'tertiary'
+  type?: 'filled' | 'outline'
+  disabled?: boolean
+  size?: 'default' | 'small'
 }
 
-export const IconButtonContainer = styled.TouchableOpacity<IconButtonProps>`
+const buttonVariants = {
+  primary: colors.primary,
+  secondary: colors.secondary,
+  critical: colors.critical,
+  tertiary: colors.tertiary,
+}
+const buttonSizes = {
+  small: '32px',
+  default: '48px',
+}
+export const Button = styled.TouchableOpacity<ButtonProps>`
   justify-content: center;
   align-items: center;
-  border-radius: 2px;
-  padding: 4px;
-  background: ${props =>
-    ({
-      default: colors.tertiary,
-      full: colors.iconBG,
-    })[props.variant || 'default']};
+  height: ${({ size }) => buttonSizes[size ?? 'default']};
+  gap: 6px;
+  flex-direction: row;
+  background: ${({ disabled, variant, type }) =>
+    disabled
+      ? colors.disabled
+      : type !== 'outline'
+      ? buttonVariants[variant]
+      : colors.secondary};
+  border-width: ${({ type }) => (type === 'outline' ? '2px' : 0)};
+  border-color: ${({ type, variant }) =>
+    type === 'outline' ? buttonVariants[variant] : 'transparent'};
 `
+Button.displayName = 'Button'
 
-export const ButtonContainer = styled.TouchableOpacity<ButtonProps>`
-  padding: 12px;
-  border-radius: 10px;
-  justify-content: center;
-  background: ${props =>
-    ({
-      primary: colors.primary,
-      secondary: colors.secondary,
-      critical: colors.critical,
-      tertiary: colors.tertiary,
-    })[props.variant]};
-`
-
+const buttonTextVariants = {
+  primary: colors.primaryText,
+  secondary: colors.secondaryText,
+  critical: colors.criticalText,
+  tertiary: colors.tertiaryText,
+}
 export const ButtonText = styled.Text<ButtonProps>`
   font-size: 16px;
   text-align: center;
-  color: ${props =>
-    ({
-      primary: colors.primaryText,
-      secondary: colors.secondaryText,
-      critical: colors.criticalText,
-      tertiary: colors.tertiaryText,
-    })[props.variant]};
+  color: ${({ variant, type }) =>
+    type !== 'outline' ? buttonTextVariants[variant] : buttonVariants[variant]};
 `
+ButtonText.displayName = 'ButtonText'

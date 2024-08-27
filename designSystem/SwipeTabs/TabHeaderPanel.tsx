@@ -3,10 +3,10 @@ import { View, StyleSheet } from 'react-native'
 
 import TabHeader from './TabHeader'
 import { TabConfig, TabStyles } from './types'
-import colors from '../colors'
+import { colors } from '../tokens'
 
 type Props = {
-  tabsConfig: TabConfig[]
+  tabsConfig: ReadonlyArray<TabConfig>
   style?: TabStyles['header']
   currentIndex: number
   scrollableContainer?: boolean
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingTop: 12,
     alignItems: 'center',
-    backgroundColor: colors.lightgray,
+    backgroundColor: colors.primaryLighter,
   },
 })
 

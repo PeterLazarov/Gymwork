@@ -1,10 +1,14 @@
 import styled from 'styled-components/native'
 
-import colors from './colors'
+import { colors } from './tokens'
 
-export const Divider = styled.View`
+type Props = {
+  orientation: 'horizontal' | 'vertical'
+}
+export const Divider = styled.View<Props>`
   /* flex: 1; */
-  width: 100%;
-  height: 1px;
+  width: ${props => (props.orientation === 'horizontal' ? '100%' : '1px')};
+  height: ${props => (props.orientation === 'horizontal' ? '1px' : '100%')};
   background-color: ${colors.primary};
 `
+Divider.displayName = 'Divider'

@@ -1,35 +1,41 @@
-import React from 'react'
-import { TextInput } from 'react-native'
+import React, { forwardRef } from 'react'
+import { TextInput, TextInputProps } from 'react-native'
 
-import IncrementDecrementButtons from '../components/IncrementDecrementButtons'
+import IncrementalButtons from 'app/components/IncrementalButtons'
+import NumberInput from 'app/components/NumberInput'
 
 type Props = {
   value: number
   onChange: (value: number) => void
+  onSubmit?: TextInputProps['onSubmitEditing']
   step?: number
+  returnKeyType?: TextInputProps['returnKeyType']
 }
 
-const IncrementNumericEditor: React.FC<Props> = ({ value, onChange, step }) => {
-  return (
-    <IncrementDecrementButtons
-      value={value}
-      onChange={n => onChange(Math.max(n, 0))}
-      step={step}
-    >
-      <TextInput
-        style={{ flexGrow: 1, textAlign: 'center' }}
-        inputMode="numeric"
-        multiline={false}
-        keyboardType="number-pad"
-        onChangeText={text => {
-          onChange(isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0))
+const IncrementNumericEditor = forwardRef<TextInput, Props>(
+  ({ value, onChange, step, onSubmit, returnKeyType }, ref) => {
+    return (
+      <IncrementalButtons
+        value={value}
+        onChange={n => {
+          onChange(Math.max(n, 0))
         }}
-        maxLength={3}
+        step={step}
       >
-        {value}
-      </TextInput>
-    </IncrementDecrementButtons>
-  )
-}
+        <NumberInput
+          onChange={onChange}
+          value={value}
+          onSubmit={onSubmit}
+          ref={ref}
+          returnKeyType={returnKeyType}
+          textAlign="center"
+          style={{
+            textAlign: 'center',
+          }}
+        />
+      </IncrementalButtons>
+    )
+  }
+)
 
 export default IncrementNumericEditor
