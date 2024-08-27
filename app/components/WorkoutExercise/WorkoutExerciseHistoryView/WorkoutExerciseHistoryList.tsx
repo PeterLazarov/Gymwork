@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { FlatList, ListRenderItemInfo } from 'react-native'
 
 import WorkoutExerciseHistoryListItem from './WorkoutExerciseHistoryListItem'
-import { Exercise, ExerciseRecord, Workout } from 'app/db/models'
+import { Exercise, ExerciseRecord, Workout, WorkoutSet } from 'app/db/models'
 
 type Props = {
   workouts: Workout[]
@@ -16,11 +16,12 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({
 }) => {
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<Workout>) => {
+      const sets = item.exerciseStepMap[exercise.guid].sets
       return (
         <WorkoutExerciseHistoryListItem
           key={item.guid}
           date={item.date}
-          sets={item.sets}
+          sets={sets}
           records={records}
           exercise={exercise}
         />
@@ -35,10 +36,10 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({
   ) => {
     const arr = Array.from(data!)
     const prevWorkouts = arr.slice(0, index)
-    const prevWorkoutSets = prevWorkouts.flatMap(w => w.sets)
+    const prevWorkoutSets = prevWorkouts.flatMap<WorkoutSet>(w => w.allSets)
     const item = arr[index]
     return {
-      length: (item.sets.length + 1) * ITEM_SET_HEIGHT,
+      length: (item.allSets.length + 1) * ITEM_SET_HEIGHT,
       offset:
         (prevWorkoutSets.length + prevWorkouts.length) *
         ITEM_SET_HEIGHT *

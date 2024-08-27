@@ -15,11 +15,11 @@ const WorkoutExerciseList: React.FC<Props> = ({ workout }) => {
       style={{ flex: 1 }}
       nestedScrollEnabled
     >
-      {workout.exercises.map(exercise => (
+      {workout.steps.map(step => (
         <WorkoutExerciseCard
-          key={`${workout!.date}_${exercise.guid}`}
+          key={`${workout!.date}_${step.guid}`}
           workout={workout!}
-          exercise={exercise}
+          step={step}
         />
       ))}
     </ScrollView>

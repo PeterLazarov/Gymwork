@@ -2,31 +2,30 @@ import React, { useMemo } from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { Card } from 'react-native-paper'
+import { TouchableOpacity } from 'react-native'
 
 import WorkoutExerciseSetList from './WorkoutExerciseSetList'
 import { useStores } from 'app/db/helpers/useStores'
-import { Exercise, Workout } from 'app/db/models'
+import { Workout, WorkoutStep } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { colors } from 'designSystem'
-import { TouchableOpacity } from 'react-native'
 
 type Props = {
   workout: Workout
-  exercise: Exercise
+  step: WorkoutStep
 }
 
-const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
+const WorkoutExerciseCard: React.FC<Props> = ({ workout, step }) => {
   const { stateStore, recordStore } = useStores()
 
   function onLinkPress() {
-    stateStore.setOpenedExercise(exercise)
+    stateStore.setOpenedStep(step.guid)
     navigate('WorkoutExercise')
   }
 
-  const sets = workout.exerciseSetsMap[exercise.guid]
   const exerciseRecords = useMemo(
-    () => computed(() => recordStore.getExerciseRecords(exercise.guid)),
-    [sets]
+    () => computed(() => recordStore.getExerciseRecords(step.exercise.guid)),
+    [step.sets]
   ).get()
 
   return (
@@ -38,14 +37,14 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
         }}
       >
         <Card.Title
-          title={exercise?.name}
+          title={step.exercise.name}
           titleVariant="titleMedium"
           titleStyle={{ color: colors.secondaryText }}
         />
         <Card.Content>
           <WorkoutExerciseSetList
-            sets={sets}
-            exercise={exercise}
+            sets={step.sets}
+            exercise={step.exercise}
             records={exerciseRecords}
           />
         </Card.Content>

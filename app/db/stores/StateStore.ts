@@ -18,6 +18,7 @@ import {
   Workout,
   WorkoutSet,
   WorkoutSetModel,
+  WorkoutStepModel,
 } from '../models'
 
 const now = DateTime.now()
@@ -29,7 +30,7 @@ const datePaddingCount = 90
 export const StateStoreModel = types
   .model('StateStore')
   .props({
-    openedExerciseGuid: '',
+    openedStepGuid: '',
     openedDate: types.optional(types.string, today.toISODate()!),
     draftSet: types.maybe(WorkoutSetModel),
   })
@@ -46,8 +47,8 @@ export const StateStoreModel = types
     get recordStore(): RecordStore {
       return this.rootStore.recordStore
     },
-    get openedExercise(): Exercise | undefined {
-      return this.exerciseStore.exercisesMap[self.openedExerciseGuid]
+    get openedStep() {
+      return this.openedWorkout?.stepsMap[self.openedStepGuid]
     },
     get openedWorkout(): Workout | undefined {
       return this.workoutStore.dateWorkoutMap[self.openedDate]
@@ -61,8 +62,7 @@ export const StateStoreModel = types
         .filter(Boolean)
     },
     get openedExerciseSets(): WorkoutSet[] {
-      const exerciseSets =
-        this.openedWorkout?.exerciseSetsMap[self.openedExerciseGuid] ?? []
+      const exerciseSets = this.openedStep!.sets
 
       return exerciseSets
     },
@@ -72,15 +72,12 @@ export const StateStoreModel = types
     },
 
     get openedExerciseSet(): WorkoutSet | undefined {
-      const exerciseSets =
-        this.openedWorkout?.sets.filter(
-          e => e.exercise.guid === self.openedExerciseGuid
-        ) ?? []
+      const exerciseSets = this.openedStep!.sets
 
       return exerciseSets[exerciseSets.length - 1]
     },
     get openedExerciseRecords(): ExerciseRecord {
-      return this.recordStore.getExerciseRecords(self.openedExerciseGuid)
+      return this.recordStore.getExerciseRecords(this.openedStep!.exercise.guid)
     },
     get openedExerciseWorkSets(): WorkoutSet[] {
       return this.openedExerciseSets.filter(s => !s.isWarmup)
@@ -117,32 +114,33 @@ export const StateStoreModel = types
       if (!self.openedWorkout) {
         return
       }
-      const indexFromAllSets = self.openedWorkout.sets.indexOf(
-        self.openedExerciseSets[from]
-      )
-      const indexToAllSets = self.openedWorkout.sets.indexOf(
-        self.openedExerciseSets[to]
-      )
 
-      if (!indexFromAllSets || !indexToAllSets) {
+      if (!from || !to) {
         console.warn('DnD issues?')
         return
       }
 
-      const item = self.openedWorkout.sets[indexFromAllSets]!
+      const item = self.openedStep!.sets[from]!
       const reorderedSets =
-        self.openedWorkout.sets
+        self.openedStep!.sets
           // @ts-ignore
-          .toSpliced(indexFromAllSets, 1)
-          .toSpliced(indexToAllSets, 0, item) ?? []
+          .toSpliced(from, 1)
+          .toSpliced(to, 0, item) ?? []
 
       const reorderedSetsSnapshots = reorderedSets.map((set: WorkoutSet) =>
         getSnapshot(set)
       )
-      self.openedWorkout.setProp('sets', reorderedSetsSnapshots)
+      self.openedStep!.setProp('sets', reorderedSetsSnapshots)
     },
-    setOpenedExercise(exercise: Exercise | null) {
-      self.openedExerciseGuid = exercise?.guid || ''
+    addStep(exercise: Exercise) {
+      const newStep = WorkoutStepModel.create({
+        exercise: exercise.guid,
+      })
+      self.openedWorkout?.steps.push(newStep)
+      self.openedStepGuid = newStep.guid
+    },
+    setOpenedStep(stepGuid: string | null) {
+      self.openedStepGuid = stepGuid ?? ''
     },
     setOpenedDate(date: string) {
       self.openedDate = date

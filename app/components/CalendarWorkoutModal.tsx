@@ -4,8 +4,6 @@ import { Portal, Modal } from 'react-native-paper'
 
 import CalendarWorkoutModalExerciseItem from './CalendarWorkoutModalExerciseItem'
 import { useStores } from 'app/db/helpers/useStores'
-import { WorkoutSet } from 'app/db/models'
-import { groupBy } from 'app/utils/array'
 import { Button, ButtonText, Divider, colors, fontSize } from 'designSystem'
 import { translate } from 'app/i18n'
 
@@ -28,8 +26,6 @@ const CalendarWorkoutModal: React.FC<Props> = ({
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
   const workout = workoutStore.dateWorkoutMap[workoutDate]
-  const exercises = workout ? workout.exercises : null
-  const groupedSets = workout ? groupBy(workout.sets, 'exercise.guid') : null
 
   return (
     <Portal>
@@ -57,11 +53,11 @@ const CalendarWorkoutModal: React.FC<Props> = ({
           <View style={{ flex: 1 }}>
             {workout ? (
               <ScrollView>
-                {exercises?.map(exercise => (
+                {workout.steps.map(step => (
                   <CalendarWorkoutModalExerciseItem
-                    key={exercise.guid}
-                    exercise={exercise}
-                    sets={groupedSets?.[exercise.guid] as WorkoutSet[]}
+                    key={step.guid}
+                    exercise={step.exercise}
+                    sets={step.sets}
                   />
                 ))}
               </ScrollView>

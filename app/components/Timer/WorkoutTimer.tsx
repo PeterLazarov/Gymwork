@@ -5,9 +5,7 @@ import { Text } from 'react-native'
 import { clearDriftless, setDriftlessInterval } from 'driftless'
 import { Duration } from 'luxon'
 
-export type WorkoutTimerProps = {}
-
-const WorkoutTimer: React.FC<WorkoutTimerProps> = props => {
+const WorkoutTimer: React.FC = () => {
   const { stateStore } = useStores()
 
   const workoutStart = useMemo(() => {

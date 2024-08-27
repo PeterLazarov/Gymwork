@@ -9,7 +9,6 @@
 - timer configurable duration based on exercise
 - WorkoutExerciseList superset support
 - add special set from StrengthLog
-- better visualize weak ass records or hide them again
 - should we order workout by date on addition
 - On exercise screen, oldest exercise at the top + scroll to bottom
 - On jump to record set, scroll to set + highlight

@@ -15,7 +15,7 @@ const ExerciseSelectPage: React.FC = () => {
   const { stateStore } = useStores()
 
   function handleSelectExercise(exercise: Exercise) {
-    stateStore.setOpenedExercise(exercise)
+    stateStore.addStep(exercise)
     navigate('WorkoutExercise')
   }
 

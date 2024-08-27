@@ -19,7 +19,7 @@ const WorkoutExercisePage: React.FC = () => {
 
   function onBackPress() {
     navigate('Workout')
-    stateStore.setOpenedExercise(null)
+    stateStore.setOpenedStep(null)
   }
 
   function onEditExercisePress() {
@@ -69,7 +69,7 @@ const WorkoutExercisePage: React.FC = () => {
             color={colors.primaryText}
           />
         </IconButton>
-        <Header.Title title={stateStore.openedExercise?.name || ''} />
+        <Header.Title title={stateStore.openedStep?.exercise.name || ''} />
 
         <Menu
           visible={menuOpen}
@@ -94,9 +94,7 @@ const WorkoutExercisePage: React.FC = () => {
         </Menu>
       </Header>
 
-      {stateStore.openedExerciseGuid && (
-        <SwipeTabs tabsConfig={tabs}></SwipeTabs>
-      )}
+      {stateStore.openedStepGuid && <SwipeTabs tabsConfig={tabs}></SwipeTabs>}
     </View>
   )
 }

@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 
 import exerciseSeedData from './exercises-seed-data.json'
-import { WorkoutSetSnapshotIn, WorkoutSnapshotIn } from '../models'
+import { WorkoutSetSnapshotIn, WorkoutSnapshotIn, WorkoutStepSnapshotIn } from '../models'
 import convert from 'convert-units'
 const numberOfWorkouts = 100
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
@@ -15,12 +15,19 @@ const cardioExerciseID = exerciseSeedData
   .findIndex(e => e.muscles.includes('cardio'))
   .toString()
 
+function generateStep(exercise: string, sets: WorkoutSetSnapshotIn[]) {
+  return {
+    exercise,
+    sets
+  }
+}
+
 const generateRandomExercises = (date: string) => {
   return Array.from({
     length: between(3, 8),
-  }).flatMap((_, i): WorkoutSetSnapshotIn[] => {
+  }).map((_, i): WorkoutStepSnapshotIn => {
     const exercise = String(between(0, 100))
-    return Array.from({ length: between(2, 5) }).map((_, i) => ({
+    const sets = Array.from({ length: between(2, 5) }).map((_, i) => ({
       exercise,
       isWarmup: i === 0,
       reps: between(3, 12),
@@ -29,10 +36,12 @@ const generateRandomExercises = (date: string) => {
         .to('mcg'),
       date,
     }))
+
+    return generateStep(exercise, sets)
   })
 }
 
-const generateSets = (date: string): WorkoutSetSnapshotIn[] => {
+const generateSteps = (date: string): WorkoutSetSnapshotIn[] => {
   const workoutStart = DateTime.fromISO(date).set({
     hour: 8,
     minute: 0,
@@ -60,6 +69,7 @@ const generateSets = (date: string): WorkoutSetSnapshotIn[] => {
         .toJSDate(),
     }
   })
+  const benchStep = generateStep('44', benchSets)
 
   const cardioSets = Array.from({ length: between(1, 2) }).map((_, i) => {
     const km = between(1, 3)
@@ -75,8 +85,9 @@ const generateSets = (date: string): WorkoutSetSnapshotIn[] => {
       date,
     } as WorkoutSetSnapshotIn
   })
+  const cardioStep = generateStep(cardioExerciseID, cardioSets)
 
-  return generateRandomExercises(date).concat(benchSets, cardioSets).reverse()
+  return generateRandomExercises(date).concat(benchStep, cardioStep).reverse()
 }
 const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
   length: numberOfWorkouts,
@@ -87,7 +98,7 @@ const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
 
   return {
     date,
-    sets: generateSets(date),
+    steps: generateSteps(date),
   }
 })
 

@@ -13,7 +13,7 @@ export const getRecords = (workouts: Workout[]): ExerciseRecordSnapshotIn[] => {
   const groupedSets: { [key: string]: WorkoutSet[] } = {};
 
   workouts.forEach(workout => {
-    workout.sets.forEach(set => {
+    workout.allSets.forEach(set => {
       const key = `${set.exercise.guid}-${set.groupingValue}`;
       if (!groupedSets[key]) {
         groupedSets[key] = [];
