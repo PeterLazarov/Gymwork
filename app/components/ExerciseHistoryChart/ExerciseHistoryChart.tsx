@@ -16,7 +16,6 @@ import { Dimensions, View } from 'react-native'
 import { computed } from 'mobx'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { WorkoutSet } from 'app/db/models'
 import chartConfig from './chartConfig'
 import seriesSetup from './seriesSetup'
 
@@ -121,13 +120,9 @@ const ExerciseHistoryChart = (props: {
   const setsByDay = useMemo(() => {
     return computed(() =>
       viewDays.map(date => {
-        const dayExerciseSets = workoutStore.workouts
-          .filter(workout => workout.date === date.toISODate())
-          .flatMap(({ sets }) => sets) as WorkoutSet[]
+        const workout = workoutStore.dateWorkoutMap[date.toISODate()!]
 
-        return dayExerciseSets.filter(
-          set => set.exercise.guid === openedExercise!.guid
-        )
+        return workout.exerciseSetsMap[openedExercise!.guid] || []
       })
     ).get()
   }, [viewDays, workoutStore.workouts])

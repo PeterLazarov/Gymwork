@@ -31,9 +31,13 @@ export const WorkoutStoreModel = types
     get rootStore(): RootStore {
       return getParent(store) as RootStore
     },
-    getWorkoutForDate(date: string): Workout | undefined {
-      const [workout] = store.workouts.filter(w => w.date === date)
-      return workout
+    get dateWorkoutMap() {
+      const map: Record<Workout['date'], Workout> = {}
+
+      store.workouts.forEach(workout => {
+        map[workout.date] = workout
+      })
+      return map
     },
 
     get exerciseWorkoutsMap(): Record<Exercise['guid'], Workout[]> {

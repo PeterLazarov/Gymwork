@@ -27,7 +27,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
   const luxonDate = DateTime.fromISO(workoutDate)
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
-  const workout = workoutStore.getWorkoutForDate(workoutDate)
+  const workout = workoutStore.dateWorkoutMap[workoutDate]
   const exercises = workout ? workout.exercises : null
   const groupedSets = workout ? groupBy(workout.sets, 'exercise.guid') : null
 

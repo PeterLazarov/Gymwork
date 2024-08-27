@@ -52,7 +52,7 @@ export const StateStoreModel = types
       )!
     },
     get openedWorkout(): Workout | undefined {
-      return this.workoutStore.getWorkoutForDate(self.openedDate)
+      return this.workoutStore.dateWorkoutMap[self.openedDate]
     },
     get isOpenedWorkoutToday() {
       return this.openedWorkout?.date === today.toISODate()

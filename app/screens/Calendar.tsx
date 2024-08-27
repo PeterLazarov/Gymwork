@@ -75,7 +75,7 @@ const CalendarPage: React.FC = () => {
     setOpenedWorkoutDialogDate('')
 
     if (copyWorkoutMode) {
-      const workout = workoutStore.getWorkoutForDate(openedWorkoutDialogDate)
+      const workout = workoutStore.dateWorkoutMap[openedWorkoutDialogDate]
 
       workoutStore.copyWorkout(workout!)
       navigate('Workout')

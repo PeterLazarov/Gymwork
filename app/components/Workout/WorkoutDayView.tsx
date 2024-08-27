@@ -13,7 +13,7 @@ type Props = {
 }
 const WorkoutDayView: React.FC<Props> = ({ date }) => {
   const { workoutStore } = useStores()
-  const workout = workoutStore.getWorkoutForDate(date)
+  const workout = workoutStore.dateWorkoutMap[date]
 
   return (
     <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
