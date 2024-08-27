@@ -23,6 +23,9 @@ export const measurementUnits = {
     m: 'm',
     h: 'h',
   },
+  reps: {
+    reps: 'reps'
+  }
 } as const
 
 // Default units the exercise shows for input
@@ -34,6 +37,7 @@ export const measurementDefaults = {
     moreIsBetter: false,
   },
   reps: {
+    unit: measurementUnits.reps.reps,
     moreIsBetter: true,
   },
   weight: {
@@ -120,6 +124,10 @@ export const ExerciseMeasurementModel = types
     reps: types.maybe(
       types
         .model({
+          unit: types.enumeration(
+            'reps',
+            Object.values(measurementUnits.reps)
+          ),
           moreIsBetter: types.boolean,
         })
         .actions(withSetPropAction)
@@ -160,11 +168,14 @@ export const ExerciseMeasurementModel = types
   })
   .actions(withSetPropAction)
 
+export interface ExerciseMeasurement extends Instance<typeof ExerciseMeasurementModel> {}
+export interface ExerciseMeasurementSnapshotOut extends SnapshotOut<typeof ExerciseMeasurementModel> {}
+
 export type FilterStrings<T> = T extends string ? T : never
 
 type nonMetricFields = 'rest'
 export type measurementName = Exclude<
-  FilterStrings<keyof SnapshotOut<typeof ExerciseMeasurementModel>>,
+FilterStrings<keyof ExerciseMeasurementSnapshotOut>,
   nonMetricFields
 >
 
@@ -230,6 +241,12 @@ export const ExerciseModel = types
       })
 
       return combination?.measureBy || measureByFallback
+    },
+    get groupMeasurement() {
+      return exercise.measurements[this.groupRecordsBy]!
+    },
+    get valueMeasurement() {
+      return exercise.measurements[this.measuredBy]!
     },
     get hasRepGrouping() {
       return this.groupRecordsBy === 'reps'

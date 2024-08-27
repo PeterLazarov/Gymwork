@@ -1,16 +1,14 @@
-import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
+
 import SetDataLabel from '../SetDataLabel'
-import { Exercise, WorkoutSet } from 'app/db/models'
+import { WorkoutSet } from 'app/db/models'
 
 type Props = {
   set: WorkoutSet
-  exercise: Exercise
 }
 
-const RecordsListItem: React.FC<Props> = ({ set, exercise }) => {
-  console.log({ exercise, set })
+const RecordsListItem: React.FC<Props> = ({ set }) => {
   return (
     <View
       style={{
@@ -25,18 +23,18 @@ const RecordsListItem: React.FC<Props> = ({ set, exercise }) => {
       }}
     >
       <SetDataLabel
-        value={set[exercise.groupRecordsBy]}
-        unit={exercise.measurements[exercise.groupRecordsBy].unit ?? 'reps'}
+        value={set[set.exercise.groupRecordsBy]}
+        unit={set.exercise.groupMeasurement.unit}
         fontSize="md"
       />
 
       <SetDataLabel
-        value={set[exercise.measuredBy]}
-        unit={exercise.measurements[exercise.measuredBy].unit ?? 'reps'}
+        value={set[set.exercise.measuredBy]}
+        unit={set.exercise.valueMeasurement.unit}
         fontSize="md"
       />
     </View>
   )
 }
 
-export default observer(RecordsListItem)
+export default RecordsListItem

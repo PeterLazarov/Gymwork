@@ -55,10 +55,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
                 }}
                 onPress={() => goToDate(set)}
               >
-                <RecordsListItem
-                  set={set}
-                  exercise={stateStore.openedExercise!}
-                />
+                <RecordsListItem set={set} />
               </PressableHighlight>
             )
           })}
