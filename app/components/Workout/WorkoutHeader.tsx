@@ -14,11 +14,16 @@ const WorkoutHeader: React.FC = () => {
   const { stateStore, workoutStore } = useStores()
 
   const [menuOpen, setMenuOpen] = useState(false)
-
   const share = useShare()
+
+  const hasNotes = stateStore.openedWorkout?.notes !== ''
 
   function openCalendar() {
     navigate('Calendar')
+  }
+
+  function onCommentPress() {
+    navigate('WorkoutFeedback')
   }
 
   const exportData = () => {
@@ -29,7 +34,7 @@ const WorkoutHeader: React.FC = () => {
 
   const deleteWorkout = () => {
     setMenuOpen(false)
-    workoutStore.removeWorkout(stateStore.openedWorkout)
+    workoutStore.removeWorkout(stateStore.openedWorkout!)
   }
 
   const { performBenchmark } = useBenchmark()
@@ -37,6 +42,18 @@ const WorkoutHeader: React.FC = () => {
   return (
     <Header>
       <Header.Title title="Gymwork" />
+
+      {stateStore.openedWorkout && (
+        <IconButton
+          onPress={onCommentPress}
+          underlay="darker"
+        >
+          <Icon
+            color={colors.primaryText}
+            icon={hasNotes ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'}
+          />
+        </IconButton>
+      )}
 
       <IconButton
         onPress={openCalendar}
