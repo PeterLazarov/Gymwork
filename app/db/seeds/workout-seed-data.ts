@@ -25,7 +25,7 @@ function generateStep(exercise: string, sets: WorkoutSetSnapshotIn[]) {
 const generateRandomExercises = (date: string) => {
   return Array.from({
     length: between(3, 8),
-  }).map((_): WorkoutStepSnapshotIn => {
+  }).map((): WorkoutStepSnapshotIn => {
     const exercise = String(between(0, 100))
     const sets = Array.from({ length: between(2, 5) }).map((_, i) => ({
       exercise,

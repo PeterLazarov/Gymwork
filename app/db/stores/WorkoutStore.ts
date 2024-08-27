@@ -64,8 +64,8 @@ export const WorkoutStoreModel = types
       )
     },
     get mostUsedExercises(): Exercise[] {
-      const sortedExercises = Object.entries(this.exerciseHistory)
-        .map(([exerciseId, sets]) => ({
+      const sortedExercises = Object.values(this.exerciseHistory)
+        .map((sets) => ({
           exercise: sets[0].exercise,
           count: sets.length,
         }))

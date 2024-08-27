@@ -44,7 +44,7 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
       data: xAxis,
       boundaryGap: false,
     },
-    series: Object.keys(series).map((name, i) => ({
+    series: Object.keys(series).map((name) => ({
         name,
         type: 'line',
         symbolSize,
