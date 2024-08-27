@@ -4,7 +4,6 @@ import { ExerciseStoreModel } from './ExerciseStore'
 import { StateStoreModel } from './StateStore'
 import { WorkoutStoreModel } from './WorkoutStore'
 import { RecordStoreModel } from './RecordStore'
-import { Exercise } from 'app/db/models'
 
 export const RootStoreModel = types
   .model('RootStore')
@@ -14,11 +13,6 @@ export const RootStoreModel = types
     stateStore: types.optional(StateStoreModel, {}),
     recordStore: types.optional(RecordStoreModel, {}),
   })
-  .views(self => ({
-    get openedWorkoutExercises() {
-      return self.stateStore.openedWorkout?.exercises || []
-    },
-  }))
   .actions(self => ({
     initializeStores(): Promise<void>  {
       return self.exerciseStore.fetch()
