@@ -16,15 +16,22 @@
 - Exercise card on android has a very thick bordeer on press
 - make it more visible that a workout has comments
 
-
 Performance to beat -
 100 workouts
- - open app
- - add a single record to bench
-LOG  currentRecondCounter 611 - 1 loop
-LOG  exerciseRecordsCount 145 - 1 loop
-  -> LOG  weakassCounter 145 - 3 loop
+
+- open app
+- add a single record to bench
+  LOG currentRecondCounter 611 - 1 loop
+  LOG exerciseRecordsCount 145 - 1 loop
+  -> LOG weakassCounter 145 - 3 loop
 
 TOTAL - 1191 loops
 
-   time to add set 4s\
+time to add set 4s\
+
+Ideas for set types
+Hold on exercise card to "mark?" another exercise for supersets
+"Add comment" -> "Add special set"
+! This gets into planning
+Exercise track view top swipe tabs could swipe between exercises
+Calendar theme object will be recalculated on render
