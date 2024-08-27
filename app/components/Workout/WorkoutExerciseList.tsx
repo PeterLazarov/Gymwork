@@ -18,7 +18,6 @@ const WorkoutExerciseList: React.FC<Props> = ({ workout }) => {
       {workout.steps.map(step => (
         <WorkoutExerciseCard
           key={`${workout!.date}_${step.guid}`}
-          workout={workout!}
           step={step}
         />
       ))}

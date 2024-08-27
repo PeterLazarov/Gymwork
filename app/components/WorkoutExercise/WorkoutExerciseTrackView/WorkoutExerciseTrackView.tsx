@@ -59,7 +59,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
   function handleUpdate() {
     const updatedSet = {
       ...getSnapshot(stateStore.draftSet!),
-      exercise: selectedSet?.exercise.guid!,
+      exercise: selectedSet!.exercise.guid,
       guid: selectedSet!.guid,
       date: selectedSet!.date,
     }

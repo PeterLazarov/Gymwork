@@ -13,6 +13,6 @@ export type TabStyles = {
 export type TabConfig = {
   label: string
   name: string
-  component: FunctionComponent<any>
+  component: FunctionComponent
   props?: object
 }

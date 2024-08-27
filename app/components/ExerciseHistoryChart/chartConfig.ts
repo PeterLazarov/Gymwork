@@ -29,7 +29,7 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
     yAxis: {
       type: 'value',
       min: ({ min }: { min: number}) => Math.floor(min * 0.95),
-      max: ({ max }: { max: any}) => Math.ceil(max * 1.05),
+      max: ({ max }: { max: number}) => Math.ceil(max * 1.05),
 
       // axisLabel: { formatter: '{value} KG' }, // ! breaks styling
       axisPointer: {
@@ -44,7 +44,7 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
       data: xAxis,
       boundaryGap: false,
     },
-    series: Object.keys(series).map((name, i) => ({
+    series: Object.keys(series).map(name => ({
         name: name,
         type: 'line',
         symbolSize,
@@ -59,7 +59,7 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
   const feedChartSeriesData = (data: WorkoutSet[][]) => {
     const numberOfPoints = data.filter(d => d.filter(Boolean)).flat().length
 
-    const _series = Object.values(series).map((seriesItem, i) => {
+    const _series = Object.values(series).map(seriesItem => {
       return {
         data: seriesItem.data,
         symbol: numberOfPoints > 50 ? 'none' : 'circle',

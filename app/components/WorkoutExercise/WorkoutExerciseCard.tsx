@@ -6,16 +6,15 @@ import { TouchableOpacity } from 'react-native'
 
 import WorkoutExerciseSetList from './WorkoutExerciseSetList'
 import { useStores } from 'app/db/helpers/useStores'
-import { Workout, WorkoutStep } from 'app/db/models'
+import { WorkoutStep } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { colors } from 'designSystem'
 
 type Props = {
-  workout: Workout
   step: WorkoutStep
 }
 
-const WorkoutExerciseCard: React.FC<Props> = ({ workout, step }) => {
+const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   const { stateStore, recordStore } = useStores()
 
   function onLinkPress() {

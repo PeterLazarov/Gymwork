@@ -94,7 +94,7 @@ const WorkoutExercisePage: React.FC = () => {
         </Menu>
       </Header>
 
-      {stateStore.openedStepGuid && <SwipeTabs tabsConfig={tabs}></SwipeTabs>}
+      {stateStore.openedStepGuid && <SwipeTabs tabsConfig={tabs} />}
     </View>
   )
 }

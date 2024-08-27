@@ -7,9 +7,7 @@ import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
 import { colors, Icon, Button, ButtonText } from 'designSystem'
 
-type Props = {}
-
-const WorkoutControlButtons: React.FC<Props> = () => {
+const WorkoutControlButtons: React.FC = () => {
   const { stateStore, workoutStore } = useStores()
 
   const isWorkoutStarted = !!stateStore.openedWorkout

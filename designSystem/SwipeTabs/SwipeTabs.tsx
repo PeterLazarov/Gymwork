@@ -17,7 +17,7 @@ type Props = {
   children?: ReactNode
   onTabChange?: (name: string) => void
   keyboardDismissOnScroll?: boolean
-  flatlistProps?: Partial<FlashListProps<any>>
+  flashlistProps?: Partial<FlashListProps<TabConfig>>
 }
 const SwipeTabs: React.FC<Props> = ({
   style,
@@ -26,7 +26,7 @@ const SwipeTabs: React.FC<Props> = ({
   children,
   onTabChange,
   keyboardDismissOnScroll,
-  flatlistProps: flashlistProps,
+  flashlistProps,
 }) => {
   const flashList = useRef<FlashList<TabConfig>>(null)
   const [currentIndex, setCurrentIndex] = useState(initialScrollIndex || 0)
