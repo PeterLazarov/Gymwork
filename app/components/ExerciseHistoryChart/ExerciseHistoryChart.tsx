@@ -122,7 +122,7 @@ const ExerciseHistoryChart = (props: {
       viewDays.map(date => {
         const workout = workoutStore.dateWorkoutMap[date.toISODate()!]
 
-        return workout.exerciseSetsMap[openedExercise!.guid] || []
+        return workout?.exerciseSetsMap[openedExercise!.guid] || []
       })
     ).get()
   }, [viewDays, workoutStore.workouts])

@@ -47,9 +47,7 @@ export const StateStoreModel = types
       return this.rootStore.recordStore
     },
     get openedExercise(): Exercise | undefined {
-      return this.exerciseStore.exercises.find(
-        e => e.guid === self.openedExerciseGuid
-      )!
+      return this.exerciseStore.exercisesMap[self.openedExerciseGuid]
     },
     get openedWorkout(): Workout | undefined {
       return this.workoutStore.dateWorkoutMap[self.openedDate]
@@ -59,7 +57,7 @@ export const StateStoreModel = types
     },
     get exercisesPerformed(): Exercise[] {
       return Object.keys(this.workoutStore.exerciseWorkoutsMap)
-        .map(id => this.exerciseStore.exercises.find(e => e.guid === id))
+        .map(id => this.exerciseStore.exercisesMap[id])
         .filter(Boolean)
     },
     get openedExerciseSets(): WorkoutSet[] {

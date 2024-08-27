@@ -18,11 +18,6 @@ export const RootStoreModel = types
     get openedWorkoutExercises() {
       return self.stateStore.openedWorkout?.exercises || []
     },
-    get exercisesPerformed(): Exercise[] {
-      return Object.keys(self.workoutStore.exerciseWorkoutsMap)
-        .map(id => self.exerciseStore.exercises.find(e => e.guid === id))
-        .filter(Boolean)
-    },
   }))
   .actions(self => ({
     initializeStores(): Promise<void>  {

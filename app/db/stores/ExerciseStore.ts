@@ -58,6 +58,14 @@ export const ExerciseStoreModel = types
     get muscleOptions() {
       return uniqueValues(store.exercises.flatMap(e => e.muscles)).sort()
     },
+    get exercisesMap() {
+      const map: Record<Exercise['guid'], Exercise> = {}
+
+      store.exercises.forEach(exercise => {
+        map[exercise.guid] = exercise
+      })
+      return map
+    },
     get exercisesByMuscle() {
       const acc = Object.fromEntries(
         this.muscleOptions.map(muscle => [muscle, [] as Exercise[]])

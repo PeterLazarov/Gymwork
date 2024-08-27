@@ -12,7 +12,7 @@ import { translate } from 'app/i18n'
 
 // TODO: screen is unused - remove?
 const Log = observer(() => {
-  const { exercisesPerformed } = useStores()
+  const { stateStore } = useStores()
 
   // TODO remove default
   const [exercise, setExercise] = useState<Exercise>()
@@ -54,7 +54,7 @@ const Log = observer(() => {
         <ScrollView>
           {/* TODO add a number at the end for dates performed? */}
           <ExerciseList
-            exercises={exercisesPerformed}
+            exercises={stateStore.exercisesPerformed}
             onSelect={setExercise}
           />
         </ScrollView>
