@@ -1,14 +1,12 @@
 import React, { useMemo } from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { Card } from 'react-native-paper'
-import { TouchableOpacity } from 'react-native'
 
 import WorkoutExerciseSetList from './WorkoutExerciseSetList'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
 import { navigate } from 'app/navigators'
-import { colors } from 'designSystem'
+import { Card } from 'designSystem'
 
 type Props = {
   step: WorkoutStep
@@ -28,27 +26,17 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   ).get()
 
   return (
-    <TouchableOpacity onPress={onLinkPress}>
-      <Card
-        style={{
-          margin: 16,
-          backgroundColor: colors.primaryLighter,
-        }}
-      >
-        <Card.Title
-          title={step.exercise.name}
-          titleVariant="titleMedium"
-          titleStyle={{ color: colors.secondaryText }}
+    <Card
+      onPress={onLinkPress}
+      title={step.exercise.name}
+      content={
+        <WorkoutExerciseSetList
+          sets={step.sets}
+          exercise={step.exercise}
+          records={exerciseRecords}
         />
-        <Card.Content>
-          <WorkoutExerciseSetList
-            sets={step.sets}
-            exercise={step.exercise}
-            records={exerciseRecords}
-          />
-        </Card.Content>
-      </Card>
-    </TouchableOpacity>
+      }
+    />
   )
 }
 

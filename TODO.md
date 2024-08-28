@@ -3,7 +3,7 @@
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - save workout timer in WorkoutModel. show readonly timer on old workouts
 - add workout template support?
-- edit exercise moreIsBetter and groupBy
+- edit exercise measureBy and groupBy
 - click on empty space OR back to remove focus on set
 - reasonable seed data rest periods & createdAt
 - timer configurable duration based on exercise
@@ -14,7 +14,7 @@
 - On jump to record set, scroll to set + highlight
 - Exercise card on android has a very thick bordeer on press
 - make it more visible that a workout has comments
-
+- fix duration unit change (for Set list we use hh:mm:ss format not a unit)
 
 Performance to beat -
 100 workouts

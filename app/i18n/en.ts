@@ -45,6 +45,7 @@ const en = {
   chart: 'Chart',
   distanceMeasurementSettings: 'Distance Measurement Settings',
   weightMeasurementSettings: 'Weight Measurement Settings',
+  durationMeasurementSettings: 'Duration Measurement Settings',
   unit: 'Unit',
   rest: 'Rest',
   removeWorkout: 'Remove workout',

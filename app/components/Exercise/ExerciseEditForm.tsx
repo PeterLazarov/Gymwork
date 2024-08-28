@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import { getSnapshot } from 'mobx-state-tree'
 import React, { useMemo, useState } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
@@ -12,25 +12,18 @@ import {
   measurementDefaults,
   measurementName,
   measurementTypes,
-  measurementUnits,
 } from 'app/db/models'
 
-import { Icon, Multiselect, IconButton, Select } from 'designSystem'
+import { Icon, Multiselect, IconButton } from 'designSystem'
 import { translate } from 'app/i18n'
-import NumberInput from '../NumberInput'
+import ExerciseEditFormDistanceSection from './ExerciseEditFormDistanceSection'
+import ExerciseEditFormWeightSection from './ExerciseEditFormWeightSection'
+import ExerciseEditFormDurationSection from './ExerciseEditFormDurationSection'
 
 type Props = {
   exercise: Exercise
   onUpdate: (updated: Exercise, isValid: boolean) => void
 }
-
-type distanceUnits =
-  (typeof measurementUnits.distance)[keyof typeof measurementUnits.distance]
-type weightUnits =
-  (typeof measurementUnits.weight)[keyof typeof measurementUnits.weight]
-
-// TODO? Exercise measurement types should only be additive
-// Otherwise they're destructive?
 
 const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   const { exerciseStore } = useStores()
@@ -59,20 +52,17 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
       measurementsInvalid ? 'At least one measurement type required.' : ''
     )
 
-    return !(nameInvalid || weightIncrementInvalid || musclesInvalid)
+    return !(
+      nameInvalid ||
+      weightIncrementInvalid ||
+      musclesInvalid ||
+      measurementsInvalid
+    )
   }
 
   function onFormChange() {
     const valid = runValidCheck(edittedExercise)
     onUpdate(edittedExercise, valid)
-  }
-
-  function handleWeightIncrementChange(n: number) {
-    edittedExercise.measurements.setProp('weight', {
-      ...exercise.measurements.weight!,
-      step: n,
-    })
-    onFormChange()
   }
 
   function onMusclesChange(selected: string[]) {
@@ -99,24 +89,6 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
 
     onFormChange()
   }
-
-  function setDistanceType(unit: distanceUnits) {
-    edittedExercise.measurements.setProp('distance', {
-      ...edittedExercise.measurements.distance!,
-      unit,
-    })
-    onFormChange()
-  }
-
-  function setWeightType(unit: weightUnits) {
-    edittedExercise.measurements.setProp('weight', {
-      ...edittedExercise.measurements.weight!,
-      unit,
-    })
-    onFormChange()
-  }
-
-  // TODO set time type / set weight type?
 
   return (
     <View style={{ flex: 1, gap: 8, padding: 8 }}>
@@ -168,45 +140,23 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
         error={!!measurementTypeRrror}
       />
       {edittedExercise.hasDistanceMeasument && (
-        <>
-          <Text>{translate('distanceMeasurementSettings')}</Text>
-
-          <Select
-            options={Object.values(measurementUnits.distance)}
-            headerText={translate('unit')}
-            value={edittedExercise.measurements.distance?.unit}
-            onChange={distanceUnit =>
-              setDistanceType(distanceUnit as distanceUnits)
-            }
-            label={translate('unit')}
-          />
-        </>
+        <ExerciseEditFormDistanceSection
+          measurementConfig={edittedExercise.measurements}
+          onFormChange={onFormChange}
+        />
       )}
       {edittedExercise.hasWeightMeasument && (
-        <>
-          <Text>{translate('weightMeasurementSettings')}</Text>
-          <Select
-            options={Object.values(measurementUnits.weight)}
-            headerText={translate('unit')}
-            value={edittedExercise.measurements.weight?.unit}
-            onChange={unit => setWeightType(unit as weightUnits)}
-            label={translate('unit')}
-          />
-          <NumberInput
-            value={edittedExercise.measurements.weight?.step ?? 0}
-            onChange={handleWeightIncrementChange}
-            label="Weight Increment"
-            error={weightIncError !== ''}
-          />
-          {weightIncError !== '' && (
-            <HelperText
-              type="error"
-              visible={weightIncError !== ''}
-            >
-              {weightIncError}
-            </HelperText>
-          )}
-        </>
+        <ExerciseEditFormWeightSection
+          measurementConfig={edittedExercise.measurements}
+          onFormChange={onFormChange}
+          weightIncError={weightIncError}
+        />
+      )}
+      {edittedExercise.hasTimeMeasument && (
+        <ExerciseEditFormDurationSection
+          measurementConfig={edittedExercise.measurements}
+          onFormChange={onFormChange}
+        />
       )}
     </View>
   )
