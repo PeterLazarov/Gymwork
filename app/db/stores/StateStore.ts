@@ -29,6 +29,7 @@ const datePaddingCount = 90
 export const StateStoreModel = types
   .model('StateStore')
   .props({
+    focusedExerciseGuids: types.array(types.string),
     openedExerciseGuid: '',
     openedDate: types.optional(types.string, today.toISODate()!),
     draftSet: types.maybe(WorkoutSetModel),
@@ -146,22 +147,32 @@ export const StateStoreModel = types
     },
     setOpenedDate(date: string) {
       self.openedDate = date
+      self.setProp('focusedExerciseGuids', [])
     },
     incrementCurrentDate() {
       const luxonDate = DateTime.fromISO(self.openedDate)
       self.openedDate = luxonDate.plus({ days: 1 }).toISODate()!
+      self.setProp('focusedExerciseGuids', [])
     },
     decrementCurrentDate() {
       const luxonDate = DateTime.fromISO(self.openedDate)
       self.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
+      self.setProp('focusedExerciseGuids', [])
     },
-    // getOpenedExerciseRecords() {
-    //   console.log("openedExerciseRecords")
-
-    //   return self.recordStore.getExerciseRecords(
-    //     self.openedExerciseGuid
-    //   )
-    // },
+    addFocusExercise(guid: string) {
+      self.focusedExerciseGuids.push(guid)
+    },
+    removeFocusExercise(guid: string) {
+      self.focusedExerciseGuids.remove(guid)
+    },
+    deleteSelectedExercises() {
+      self.openedWorkout?.sets.forEach(set => {
+        if (self.focusedExerciseGuids.includes(set.exercise.guid)) {
+          self.workoutStore.removeSet(set.guid)
+        }
+      })
+      self.setProp('focusedExerciseGuids', [])
+    }
   }))
 
 export interface StateStore extends Instance<typeof StateStoreModel> {}

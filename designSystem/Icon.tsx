@@ -35,6 +35,7 @@ type IonicIcon = (typeof IoniconsIcons)[number]
 const MCIcons = [
   'yoga',
   'drag-horizontal-variant',
+  'delete',
 ] as const satisfies readonly (keyof typeof MaterialCommunityIcons.glyphMap)[]
 type MCIcon = (typeof MCIcons)[number]
 

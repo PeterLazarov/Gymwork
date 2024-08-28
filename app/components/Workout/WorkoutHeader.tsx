@@ -17,6 +17,7 @@ const WorkoutHeader: React.FC = () => {
   const share = useShare()
 
   const hasNotes = stateStore.openedWorkout?.notes !== ''
+  const focusedExerciseCount = stateStore.focusedExerciseGuids.length
 
   function openCalendar() {
     navigate('Calendar')
@@ -24,6 +25,10 @@ const WorkoutHeader: React.FC = () => {
 
   function onCommentPress() {
     navigate('WorkoutFeedback')
+  }
+
+  const deleteSelectedExercises = () => {
+    stateStore.deleteSelectedExercises()
   }
 
   const exportData = () => {
@@ -41,7 +46,15 @@ const WorkoutHeader: React.FC = () => {
 
   return (
     <Header>
-      <Header.Title title="Gymwork" />
+      <Header.Title
+        title={
+          focusedExerciseCount > 0
+            ? translate('selectedExerciseNumber', {
+                number: focusedExerciseCount,
+              })
+            : 'Gymwork'
+        }
+      />
 
       {stateStore.openedWorkout && (
         <IconButton
@@ -51,6 +64,18 @@ const WorkoutHeader: React.FC = () => {
           <Icon
             color={colors.primaryText}
             icon={hasNotes ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'}
+          />
+        </IconButton>
+      )}
+
+      {focusedExerciseCount > 0 && (
+        <IconButton
+          onPress={deleteSelectedExercises}
+          underlay="darker"
+        >
+          <Icon
+            icon="delete"
+            color={colors.primaryText}
           />
         </IconButton>
       )}

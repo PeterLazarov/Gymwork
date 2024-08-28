@@ -6,7 +6,7 @@ import WorkoutExerciseSetList from './WorkoutExerciseSetList'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, Workout } from 'app/db/models'
 import { navigate } from 'app/navigators'
-import { Card } from 'designSystem'
+import { Card, colors } from 'designSystem'
 
 type Props = {
   workout: Workout
@@ -16,9 +16,19 @@ type Props = {
 const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
   const { stateStore, recordStore } = useStores()
 
-  function onLinkPress() {
+  const isSelected = stateStore.focusedExerciseGuids.includes(exercise.guid)
+
+  function onCardPress() {
     stateStore.setOpenedExercise(exercise)
     navigate('WorkoutExercise')
+  }
+
+  function onLongPress() {
+    if (isSelected) {
+      stateStore.removeFocusExercise(exercise.guid)
+    } else {
+      stateStore.addFocusExercise(exercise.guid)
+    }
   }
 
   const sets = workout.exerciseSetsMap[exercise.guid]
@@ -29,7 +39,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
 
   return (
     <Card
-      onPress={onLinkPress}
+      onPress={onCardPress}
       title={exercise?.name}
       content={
         <WorkoutExerciseSetList
@@ -37,6 +47,15 @@ const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
           exercise={exercise}
           records={exerciseRecords}
         />
+      }
+      onLongPress={onLongPress}
+      delayLongPress={500}
+      containerStyle={
+        isSelected
+          ? {
+              backgroundColor: colors.primaryLight,
+            }
+          : undefined
       }
     />
   )
