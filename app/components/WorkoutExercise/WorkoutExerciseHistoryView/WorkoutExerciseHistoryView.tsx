@@ -11,7 +11,9 @@ const WorkoutExerciseHistoryView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
 
   const workoutsContained =
-    workoutStore.exerciseWorkoutsMap[stateStore.openedStep!.exercise.guid]
+    workoutStore.exerciseWorkoutsHistoryMap[
+      stateStore.openedStep!.exercise.guid
+    ]
 
   return (
     <View

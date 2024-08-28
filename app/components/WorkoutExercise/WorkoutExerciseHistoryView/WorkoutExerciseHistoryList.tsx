@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
-import { FlatList, ListRenderItemInfo } from 'react-native'
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
 import WorkoutExerciseHistoryListItem from './WorkoutExerciseHistoryListItem'
-import { Exercise, ExerciseRecord, Workout, WorkoutSet } from 'app/db/models'
+import { Exercise, ExerciseRecord, Workout } from 'app/db/models'
 
 type Props = {
   workouts: Workout[]
@@ -16,7 +16,8 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({
 }) => {
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<Workout>) => {
-      const sets = item.exerciseStepMap[exercise.guid].sets
+      const sets = item.exerciseSetsMap[exercise.guid]
+
       return (
         <WorkoutExerciseHistoryListItem
           key={item.guid}
@@ -29,32 +30,12 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({
     },
     [records]
   )
-  const ITEM_SET_HEIGHT = 20
-  const getItemLayout = (
-    data: ArrayLike<Workout> | null | undefined,
-    index: number
-  ) => {
-    const arr = Array.from(data!)
-    const prevWorkouts = arr.slice(0, index)
-    const prevWorkoutSets = prevWorkouts.flatMap<WorkoutSet>(w => w.allSets)
-    const item = arr[index]
-    return {
-      length: (item.allSets.length + 1) * ITEM_SET_HEIGHT,
-      offset:
-        (prevWorkoutSets.length + prevWorkouts.length) *
-        ITEM_SET_HEIGHT *
-        index,
-      index,
-    }
-  }
   return (
-    <FlatList
-      style={{ flex: 1 }}
+    <FlashList
       data={workouts}
       renderItem={renderItem}
       keyExtractor={(w, i) => `${w.date}_${i}`}
-      getItemLayout={getItemLayout}
-      initialNumToRender={5}
+      estimatedItemSize={190}
     />
   )
 }
