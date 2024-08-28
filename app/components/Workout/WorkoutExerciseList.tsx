@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { ScrollView } from 'react-native'
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
-import { Workout } from 'app/db/models'
+import { Workout, WorkoutStep } from 'app/db/models'
 import WorkoutExerciseCard from '../WorkoutExercise/WorkoutExerciseCard'
 
 type Props = {
@@ -10,18 +10,19 @@ type Props = {
 }
 
 const WorkoutExerciseList: React.FC<Props> = ({ workout }) => {
+  const renderItem = ({ item }: ListRenderItemInfo<WorkoutStep>) => (
+    <WorkoutExerciseCard
+      key={`${workout!.date}_${item.guid}`}
+      step={item}
+    />
+  )
+
   return (
-    <ScrollView
-      style={{ flex: 1 }}
-      nestedScrollEnabled
-    >
-      {workout.steps.map(step => (
-        <WorkoutExerciseCard
-          key={`${workout!.date}_${step.guid}`}
-          step={step}
-        />
-      ))}
-    </ScrollView>
+    <FlashList
+      data={workout.steps}
+      renderItem={renderItem}
+      estimatedItemSize={140}
+    />
   )
 }
 export default observer(WorkoutExerciseList)
