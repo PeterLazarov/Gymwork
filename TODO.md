@@ -14,6 +14,7 @@
 - On jump to record set, scroll to set + highlight
 - make it more visible that a workout has comments
 - fix duration unit change (for Set list we use hh:mm:ss format not a unit)
+- history date sorting is wrong
 
 Performance to beat -
 100 workouts
