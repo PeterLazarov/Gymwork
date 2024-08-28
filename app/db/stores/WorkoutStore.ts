@@ -40,8 +40,8 @@ export const WorkoutStoreModel = types
       return map
     },
 
-    get exerciseWorkoutsMap(): Record<Exercise['guid'], Workout[]> {
-      return store.workouts.reduce((acc, workout) => {
+    get exerciseWorkoutsHistoryMap(): Record<Exercise['guid'], Workout[]> {
+      return this.sortedReverseWorkouts.reduce((acc, workout) => {
         workout.exercises.forEach(exercise => {
           if (!acc[exercise.guid]) {
             acc[exercise.guid] = []
@@ -54,11 +54,11 @@ export const WorkoutStoreModel = types
     },
 
     /** @returns all sets performed ever */
-    get exerciseHistory(): Record<Exercise['guid'], WorkoutSet[]> {
+    get exerciseSetsHistoryMap(): Record<Exercise['guid'], WorkoutSet[]> {
       return Object.fromEntries(
-        Object.entries(this.exerciseWorkoutsMap).map(([exerciseID, workouts]) => {
+        Object.entries(this.exerciseWorkoutsHistoryMap).map(([exerciseID, workouts]) => {
           const sets: WorkoutSet[] = workouts.flatMap(w =>
-            w.sets.filter(({ exercise }) => exercise.guid === exerciseID)
+            w.exerciseSetsMap[exerciseID]
           )
 
           return [exerciseID, sets]
@@ -66,7 +66,7 @@ export const WorkoutStoreModel = types
       )
     },
     get mostUsedExercises(): Exercise[] {
-      const sortedExercises = Object.entries(this.exerciseHistory)
+      const sortedExercises = Object.entries(this.exerciseSetsHistoryMap)
         .map(([exerciseId, sets]) => ({
           exercise: sets[0].exercise,
           count: sets.length,
@@ -79,6 +79,9 @@ export const WorkoutStoreModel = types
 
     get sortedWorkouts(): Workout[] {
       return store.workouts.slice().sort((a, b) => (a.date > b.date ? 1 : -1))
+    },
+    get sortedReverseWorkouts(): Workout[] {
+      return store.workouts.slice().sort((a, b) => (a.date < b.date ? 1 : -1))
     },
     get firstWorkout(): Workout | undefined {
       console.log({ sorted: this.sortedWorkouts })
