@@ -127,7 +127,7 @@ const ExerciseHistoryChart = (props: {
         return workout?.exerciseSetsMap[openedExercise!.guid] || []
       })
     ).get()
-  }, [viewDays, workoutStore.exerciseWorkoutsMap[openedExercise!.guid]])
+  }, [viewDays, workoutStore.workouts])
 
   const { getChartSeries } = seriesSetup({ data: setsByDay })
 
