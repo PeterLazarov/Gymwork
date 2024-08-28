@@ -51,7 +51,7 @@ const en = {
   removeWorkout: 'Remove workout',
   muscleAreas: 'Muscle areas',
   viewComment: 'View comment',
-  addComment: 'Add comment'
+  addComment: 'Add comment',
 }
 
 export default en

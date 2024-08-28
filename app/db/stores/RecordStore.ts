@@ -82,10 +82,7 @@ export const RecordStoreModel = types
 
       const isNewRecordBool = isNewRecord(records, updatedSet)
       if (isNewRecordBool) {
-        const updatedRecords = updateRecordsWithLatestBest(
-          records,
-          updatedSet
-        )
+        const updatedRecords = updateRecordsWithLatestBest(records, updatedSet)
 
         records.setProp('recordSets', updatedRecords)
       }
@@ -102,7 +99,7 @@ export const RecordStoreModel = types
       sortedWorkouts.forEach(workout => {
         const exerciseSets =
           workout.exerciseSetsMap[oldExerciseRecords.exercise.guid]
-        
+
         exerciseSets?.forEach(set => {
           if (set.groupingValue === groupingToRefresh) {
             refreshedRecords = updateRecordsIfNecessary(refreshedRecords, set)

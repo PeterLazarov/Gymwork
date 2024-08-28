@@ -56,13 +56,15 @@ export const WorkoutStoreModel = types
     /** @returns all sets performed ever */
     get exerciseSetsHistoryMap(): Record<Exercise['guid'], WorkoutSet[]> {
       return Object.fromEntries(
-        Object.entries(this.exerciseWorkoutsHistoryMap).map(([exerciseID, workouts]) => {
-          const sets: WorkoutSet[] = workouts.flatMap(w =>
-            w.exerciseSetsMap[exerciseID]
-          )
+        Object.entries(this.exerciseWorkoutsHistoryMap).map(
+          ([exerciseID, workouts]) => {
+            const sets: WorkoutSet[] = workouts.flatMap(
+              w => w.exerciseSetsMap[exerciseID]
+            )
 
-          return [exerciseID, sets]
-        })
+            return [exerciseID, sets]
+          }
+        )
       )
     },
     get mostUsedExercises(): Exercise[] {
@@ -140,31 +142,47 @@ export const WorkoutStoreModel = types
       if (deletedSet) {
         const { exercise } = deletedSet
 
-        const records = self.rootStore.recordStore.getExerciseRecords(exercise.guid)
-        const isRecordBool = records.recordSetsMap.hasOwnProperty(deletedSet.guid)
+        const records = self.rootStore.recordStore.getExerciseRecords(
+          exercise.guid
+        )
+        const isRecordBool = records.recordSetsMap.hasOwnProperty(
+          deletedSet.guid
+        )
 
         const deletedSetSnapshot = getSnapshot(deletedSet)
         openedWorkout.sets.splice(deletedSetIndex, 1)
 
         if (isRecordBool) {
           const grouping = getDataFieldForKey(exercise.groupRecordsBy)
-          self.rootStore.recordStore.recalculateGroupingRecordsForExercise(deletedSetSnapshot[grouping], records)
+          self.rootStore.recordStore.recalculateGroupingRecordsForExercise(
+            deletedSetSnapshot[grouping],
+            records
+          )
         }
       }
     },
     updateSet(updatedSetData: WorkoutSetSnapshotIn) {
-      const setToUpdate = self.rootStore.stateStore.openedWorkout!.sets.find(set => {
-        return set.guid === updatedSetData.guid
-      })!
+      const setToUpdate = self.rootStore.stateStore.openedWorkout!.sets.find(
+        set => {
+          return set.guid === updatedSetData.guid
+        }
+      )!
 
-      const records = self.rootStore.recordStore.getExerciseRecords(setToUpdate!.exercise.guid)
-      const isOldSetRecord = records.recordSetsMap.hasOwnProperty(setToUpdate.guid)
+      const records = self.rootStore.recordStore.getExerciseRecords(
+        setToUpdate!.exercise.guid
+      )
+      const isOldSetRecord = records.recordSetsMap.hasOwnProperty(
+        setToUpdate.guid
+      )
       const oldGroupingValue = setToUpdate!.groupingValue
-      
+
       setToUpdate.mergeUpdate(updatedSetData)
 
       if (isOldSetRecord) {
-        self.rootStore.recordStore.recalculateGroupingRecordsForExercise(oldGroupingValue, records)
+        self.rootStore.recordStore.recalculateGroupingRecordsForExercise(
+          oldGroupingValue,
+          records
+        )
       }
 
       if (!isOldSetRecord || setToUpdate.groupingValue !== oldGroupingValue) {

@@ -1,5 +1,5 @@
-import ExerciseHistoryChart from './ExerciseHistoryChart';
+import ExerciseHistoryChart from './ExerciseHistoryChart'
 
-export * from './ExerciseHistoryChart';
+export * from './ExerciseHistoryChart'
 
-export default ExerciseHistoryChart;
+export default ExerciseHistoryChart

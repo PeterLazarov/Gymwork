@@ -31,14 +31,14 @@ export const WorkoutModel = types
       return [...uniqueExercises]
     },
     get exerciseSetsMap() {
-      const map: Record<Exercise['guid'], WorkoutSet[]> = {};
+      const map: Record<Exercise['guid'], WorkoutSet[]> = {}
 
       self.sets.forEach(set => {
         if (!map.hasOwnProperty(set.exercise.guid)) {
           map[set.exercise.guid] = []
         }
         map[set.exercise.guid].push(set)
-      });
+      })
       return map
     },
     get firstSet() {

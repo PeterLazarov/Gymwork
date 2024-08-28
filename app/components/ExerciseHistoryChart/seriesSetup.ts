@@ -10,9 +10,9 @@ type Props = {
 const seriesSetup = ({ data }: Props) => {
   const singleMetricFormatter = (metric: keyof WorkoutSet) => {
     return data.map(
-    sets => sets?.reduce((max, set) => Math.max(max, set[metric]), 0) || null
+      sets => sets?.reduce((max, set) => Math.max(max, set[metric]), 0) || null
     )
-  }  
+  }
   const oneRepMaxFormatter = () => {
     return data.map(
       sets =>
@@ -23,7 +23,7 @@ const seriesSetup = ({ data }: Props) => {
             ),
           0
         ) || null
-      )
+    )
   }
 
   const speedFormatter = () => {
@@ -31,12 +31,10 @@ const seriesSetup = ({ data }: Props) => {
       sets =>
         sets?.reduce(
           (max, set) =>
-            Number(
-              Math.max(max, set.distance! / set.duration!).toFixed(2)
-            ),
+            Number(Math.max(max, set.distance! / set.duration!).toFixed(2)),
           0
         ) || null
-      )
+    )
   }
 
   const getChartSeries = (exercise: Exercise) => {
@@ -63,7 +61,7 @@ const seriesSetup = ({ data }: Props) => {
       if (exercise.hasTimeMeasument) {
         series.Speed = {
           data: speedFormatter(),
-          color: colorsStack.pop()!
+          color: colorsStack.pop()!,
         }
       }
     }
