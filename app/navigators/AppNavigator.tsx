@@ -46,9 +46,6 @@ import Log from 'app/screens/Log'
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
 export type AppStackParamList = {
-  // Welcome: undefined
-  // Login: undefined
-  // Demo: NavigatorScreenParams<DemoTabParamList>
   Calendar: CalendarPageParams
   ExerciseCreate: undefined
   ExerciseEdit: undefined
@@ -57,8 +54,6 @@ export type AppStackParamList = {
   WorkoutExercise: undefined
   WorkoutFeedback: undefined
   Log: undefined
-  // 🔥 Your screens go here
-  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
 export const useRouteParams = <T extends keyof AppStackParamList>(
@@ -97,20 +92,6 @@ const AppStack = observer(function AppStack() {
     >
       {/* {isAuthenticated ? ( */}
       <>
-        {/* <Stack.Screen
-            name="Welcome"
-            component={Screens.WelcomeScreen}
-          /> */}
-
-        {/* <Stack.Screen
-          name="Demo"
-          component={DemoNavigator}
-        />
-        <Stack.Screen
-          name="Demo"
-          component={DemoNavigator}
-        /> */}
-
         <Stack.Screen
           name="Calendar"
           component={Calendar}
