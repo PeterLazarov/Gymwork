@@ -6,6 +6,7 @@ import { Exercise, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
 import { Icon, colors, fontSize } from 'designSystem'
+import { observer } from 'mobx-react-lite'
 
 type Props = {
   set: WorkoutSet
@@ -70,13 +71,13 @@ const SetListItem: React.FC<Props> = ({
       {exercise.hasWeightMeasument && (
         <SetDataLabel
           value={set.weight}
-          unit={set.exercise.measurements.weight!.unit}
+          unit={exercise.measurements.weight!.unit}
         />
       )}
       {exercise.hasDistanceMeasument && (
         <SetDataLabel
           value={set.distance}
-          unit={set.exercise.measurements.distance!.unit}
+          unit={exercise.measurements.distance!.unit}
         />
       )}
       {exercise.hasTimeMeasument && (
@@ -89,4 +90,4 @@ const SetListItem: React.FC<Props> = ({
   )
 }
 
-export default SetListItem
+export default observer(SetListItem)
