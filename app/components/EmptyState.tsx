@@ -13,12 +13,14 @@ const EmptyState: React.FC<Props> = ({ text }) => (
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: 10,
+      padding: 10,
     }}
   >
     <Text
       style={{
         color: colors.gray,
         fontSize: fontSize.xl,
+        textAlign: 'center',
       }}
     >
       {text}

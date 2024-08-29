@@ -2,16 +2,13 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { Menu } from 'react-native-paper'
 
-import WorkoutExerciseHistoryView from 'app/components/WorkoutExercise/WorkoutExerciseHistoryView'
-import WorkoutExerciseRecordsView from 'app/components/WorkoutExercise/WorkoutExerciseRecordsView'
 import WorkoutExerciseTrackView from 'app/components/WorkoutExercise/WorkoutExerciseTrackView'
-import WorkoutExerciseChartView from 'app/components/WorkoutExercise/WorkoutExerciseChartView'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
-import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
+import { Header, Icon, IconButton, colors } from 'designSystem'
 
-const WorkoutExercisePage: React.FC = () => {
+const WorkoutStepPage: React.FC = () => {
   const { stateStore } = useStores()
 
   const [menuOpen, setMenuOpen] = useState(false)
@@ -25,29 +22,6 @@ const WorkoutExercisePage: React.FC = () => {
     setMenuOpen(false)
     navigate('ExerciseEdit')
   }
-
-  const tabs = [
-    {
-      label: translate('track'),
-      name: 'track',
-      component: WorkoutExerciseTrackView,
-    },
-    {
-      label: translate('history'),
-      name: 'history',
-      component: WorkoutExerciseHistoryView,
-    },
-    {
-      label: translate('records'),
-      name: 'records',
-      component: WorkoutExerciseRecordsView,
-    },
-    {
-      label: translate('chart'),
-      name: 'chart',
-      component: WorkoutExerciseChartView,
-    },
-  ]
 
   return (
     <View
@@ -93,9 +67,9 @@ const WorkoutExercisePage: React.FC = () => {
         </Menu>
       </Header>
 
-      {stateStore.openedStepGuid && <SwipeTabs tabsConfig={tabs} />}
+      <WorkoutExerciseTrackView />
     </View>
   )
 }
 
-export default WorkoutExercisePage
+export default WorkoutStepPage

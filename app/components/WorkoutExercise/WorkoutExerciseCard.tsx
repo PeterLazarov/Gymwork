@@ -22,7 +22,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
 
   function onCardPress() {
     stateStore.setOpenedStep(step.guid)
-    navigate('WorkoutExercise')
+    navigate('WorkoutStep')
   }
 
   function onLongPress() {

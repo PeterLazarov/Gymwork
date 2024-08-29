@@ -8,19 +8,18 @@ import { translate } from 'app/i18n'
 import { colors } from 'designSystem'
 import WorkoutExerciseList from './WorkoutExerciseList'
 
-type Props = {
-  date: string
-}
-const WorkoutDayView: React.FC<Props> = ({ date }) => {
-  const { workoutStore } = useStores()
-  const workout = workoutStore.dateWorkoutMap[date]
+const WorkoutDayView: React.FC = () => {
+  const { stateStore } = useStores()
+  const workout = stateStore.openedWorkout
 
   return (
     <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
       {workout ? (
         <WorkoutExerciseList workout={workout} />
       ) : (
-        <EmptyState text={translate('workoutLogEmpty') + date} />
+        <EmptyState
+          text={translate('workoutLogEmpty') + stateStore.openedDate}
+        />
       )}
     </View>
   )
