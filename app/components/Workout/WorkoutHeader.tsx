@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Menu } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
@@ -9,6 +9,7 @@ import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, colors } from 'designSystem'
 import { getSnapshot } from 'mobx-state-tree'
 import useBenchmark from 'app/utils/useBenchmark'
+import { computed } from 'mobx'
 
 const WorkoutHeader: React.FC = () => {
   const { stateStore, workoutStore } = useStores()
@@ -16,8 +17,14 @@ const WorkoutHeader: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const share = useShare()
 
-  const hasNotes = stateStore.openedWorkout?.notes !== ''
-  const focusedExerciseCount = stateStore.focusedExerciseGuids.length
+  const hasNotes = useMemo(
+    () => computed(() => stateStore.openedWorkout?.notes !== ''),
+    [stateStore.openedWorkout]
+  ).get()
+  const focusedExerciseCount = useMemo(
+    () => computed(() => stateStore.focusedExerciseGuids.length),
+    [stateStore.focusedExerciseGuids, stateStore.openedWorkout]
+  ).get()
 
   function openCalendar() {
     navigate('Calendar')

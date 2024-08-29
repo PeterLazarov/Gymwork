@@ -14,7 +14,6 @@
 - On jump to record set, scroll to set + highlight
 - make it more visible that a workout has comments
 - fix duration unit change (for Set list we use hh:mm:ss format not a unit)
-- WorkoutExerciseCard -> isSelected as useMemo with stateStore.focusedExerciseGuids breaks rerendering. Why?
 
 Performance to beat -
 100 workouts

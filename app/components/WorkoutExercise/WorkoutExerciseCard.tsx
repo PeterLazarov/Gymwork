@@ -16,7 +16,11 @@ type Props = {
 const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
   const { stateStore, recordStore } = useStores()
 
-  const isSelected = stateStore.focusedExerciseGuids.includes(exercise.guid)
+  const isSelected = useMemo(
+    () =>
+      computed(() => stateStore.focusedExerciseGuids.includes(exercise.guid)),
+    [stateStore.focusedExerciseGuids]
+  ).get()
 
   function onCardPress() {
     stateStore.setOpenedExercise(exercise)
