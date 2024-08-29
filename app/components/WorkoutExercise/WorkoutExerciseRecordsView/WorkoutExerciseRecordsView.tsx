@@ -27,7 +27,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
   ).get()
 
   function goToDate(set: WorkoutSet) {
-    stateStore.setProp('openedDate', set.date)
+    stateStore.setOpenedDate(set.date)
     navigate('Workout')
   }
 

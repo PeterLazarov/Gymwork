@@ -1,20 +1,32 @@
 import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedbackProps,
+  ViewStyle,
+} from 'react-native'
 
 import { colors, fontSize } from './tokens'
 
-type CardProps = {
+type CardProps = TouchableWithoutFeedbackProps & {
   title: string
   content: React.ReactNode
-  onPress?: () => void
+  containerStyle?: ViewStyle
 }
 
-const Card: React.FC<CardProps> = ({ title, content, onPress }) => {
+const Card: React.FC<CardProps> = ({
+  title,
+  content,
+  containerStyle = {},
+  ...otherProps
+}) => {
   return (
     <TouchableOpacity
-      style={styles.card}
-      onPress={onPress}
+      style={{ ...styles.card, ...containerStyle }}
       activeOpacity={0.5}
+      {...otherProps}
     >
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>

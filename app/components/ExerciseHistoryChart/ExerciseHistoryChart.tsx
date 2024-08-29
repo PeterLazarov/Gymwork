@@ -193,7 +193,7 @@ const ExerciseHistoryChart = (props: {
 
   // TODO does not highlight set in question
   function linkToWorkoutDate() {
-    stateStore.setProp('openedDate', selectedDate)
+    stateStore.setOpenedDate(selectedDate!)
     // navigate to workout screen
   }
 

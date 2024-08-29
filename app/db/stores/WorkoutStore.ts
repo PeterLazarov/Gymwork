@@ -21,7 +21,7 @@ import {
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
 import { getDataFieldForKey } from 'app/services/workoutRecordsCalculator'
-import { WorkoutStepSnapshotIn } from '../models/WorkoutStep'
+import { WorkoutStep, WorkoutStepSnapshotIn } from '../models/WorkoutStep'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -60,8 +60,9 @@ export const WorkoutStoreModel = types
         Object.entries(this.exerciseWorkoutsHistoryMap).map(([exerciseID, workouts]) => {
           const sets = workouts.flatMap<WorkoutSet>(w => w.exerciseSetsMap[exerciseID])
 
-          return [exerciseID, sets]
-        })
+            return [exerciseID, sets]
+          }
+        )
       )
     },
     get mostUsedExercises(): Exercise[] {
@@ -140,24 +141,31 @@ export const WorkoutStoreModel = types
       self.rootStore.stateStore.openedStep!.sets.push(newSet)
       self.rootStore.recordStore.runSetUpdatedCheck(newSet)
     },
-    removeSet(setGuid: WorkoutSet['guid']) {
-      const openedStep = self.rootStore.stateStore.openedStep!
-      const deletedSetIndex = openedStep.sets.findIndex(
+    removeSet(setGuid: WorkoutSet['guid'], step: WorkoutStep) {
+      // TODO: move this to an action for WorkoutStep model
+      const deletedSetIndex = step.sets.findIndex(
         s => s.guid === setGuid
       )
-      const deletedSet = openedStep.sets[deletedSetIndex]
+      const deletedSet = step.sets[deletedSetIndex]
       if (deletedSet) {
         const { exercise } = deletedSet
 
-        const records = self.rootStore.recordStore.getExerciseRecords(exercise.guid)
-        const isRecordBool = records.recordSetsMap.hasOwnProperty(deletedSet.guid)
+        const records = self.rootStore.recordStore.getExerciseRecords(
+          exercise.guid
+        )
+        const isRecordBool = records.recordSetsMap.hasOwnProperty(
+          deletedSet.guid
+        )
 
         const deletedSetSnapshot = getSnapshot(deletedSet)
-        openedStep.sets.splice(deletedSetIndex, 1)
+        step.sets.splice(deletedSetIndex, 1)
 
         if (isRecordBool) {
           const grouping = getDataFieldForKey(exercise.groupRecordsBy)
-          self.rootStore.recordStore.recalculateGroupingRecordsForExercise(deletedSetSnapshot[grouping], records)
+          self.rootStore.recordStore.recalculateGroupingRecordsForExercise(
+            deletedSetSnapshot[grouping],
+            records
+          )
         }
       }
     },
@@ -166,14 +174,21 @@ export const WorkoutStoreModel = types
         return set.guid === updatedSetData.guid
       })!
 
-      const records = self.rootStore.recordStore.getExerciseRecords(setToUpdate!.exercise.guid)
-      const isOldSetRecord = records.recordSetsMap.hasOwnProperty(setToUpdate.guid)
+      const records = self.rootStore.recordStore.getExerciseRecords(
+        setToUpdate!.exercise.guid
+      )
+      const isOldSetRecord = records.recordSetsMap.hasOwnProperty(
+        setToUpdate.guid
+      )
       const oldGroupingValue = setToUpdate!.groupingValue
-      
+
       setToUpdate.mergeUpdate(updatedSetData)
 
       if (isOldSetRecord) {
-        self.rootStore.recordStore.recalculateGroupingRecordsForExercise(oldGroupingValue, records)
+        self.rootStore.recordStore.recalculateGroupingRecordsForExercise(
+          oldGroupingValue,
+          records
+        )
       }
 
       if (!isOldSetRecord || setToUpdate.groupingValue !== oldGroupingValue) {

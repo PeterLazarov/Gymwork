@@ -70,7 +70,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
   }
   function handleRemove() {
     setSelectedSet(null)
-    workoutStore.removeSet(selectedSet!.guid)
+    workoutStore.removeSet(selectedSet!.guid, stateStore.openedStep!)
   }
 
   return (

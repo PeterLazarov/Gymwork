@@ -50,7 +50,7 @@ export const WorkoutModel = types
       return map
     },
     get exerciseSetsMap() {
-      const map: Record<Exercise['guid'], WorkoutSet[]> = {};
+      const map: Record<Exercise['guid'], WorkoutSet[]> = {}
 
       self.steps.forEach(step => {
         map[step.exercise.guid] = step.sets

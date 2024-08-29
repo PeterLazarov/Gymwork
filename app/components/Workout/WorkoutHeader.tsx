@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Menu } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
@@ -9,6 +9,7 @@ import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, colors } from 'designSystem'
 import { getSnapshot } from 'mobx-state-tree'
 import useBenchmark from 'app/utils/useBenchmark'
+import { computed } from 'mobx'
 
 const WorkoutHeader: React.FC = () => {
   const { stateStore, workoutStore } = useStores()
@@ -16,7 +17,14 @@ const WorkoutHeader: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const share = useShare()
 
-  const hasNotes = stateStore.openedWorkout?.notes !== ''
+  const hasNotes = useMemo(
+    () => computed(() => stateStore.openedWorkout?.notes !== ''),
+    [stateStore.openedWorkout]
+  ).get()
+  const focusedStepCount = useMemo(
+    () => computed(() => stateStore.focusedStepGuids.length),
+    [stateStore.focusedStepGuids, stateStore.openedWorkout]
+  ).get()
 
   function openCalendar() {
     navigate('Calendar')
@@ -24,6 +32,10 @@ const WorkoutHeader: React.FC = () => {
 
   function onCommentPress() {
     navigate('WorkoutFeedback')
+  }
+
+  const deleteSelectedExercises = () => {
+    stateStore.deleteSelectedExercises()
   }
 
   const exportData = () => {
@@ -41,7 +53,15 @@ const WorkoutHeader: React.FC = () => {
 
   return (
     <Header>
-      <Header.Title title="Gymwork" />
+      <Header.Title
+        title={
+          focusedStepCount > 0
+            ? translate('selectedExerciseNumber', {
+                number: focusedStepCount,
+              })
+            : 'Gymwork'
+        }
+      />
 
       {stateStore.openedWorkout && (
         <IconButton
@@ -51,6 +71,18 @@ const WorkoutHeader: React.FC = () => {
           <Icon
             color={colors.primaryText}
             icon={hasNotes ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'}
+          />
+        </IconButton>
+      )}
+
+      {focusedStepCount > 0 && (
+        <IconButton
+          onPress={deleteSelectedExercises}
+          underlay="darker"
+        >
+          <Icon
+            icon="delete"
+            color={colors.primaryText}
           />
         </IconButton>
       )}

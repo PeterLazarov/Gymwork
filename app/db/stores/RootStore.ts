@@ -14,11 +14,13 @@ export const RootStoreModel = types
     recordStore: types.optional(RecordStoreModel, {}),
   })
   .actions(self => ({
-    initializeStores(): Promise<void>  {
-      return self.exerciseStore.fetch()
-        .then(() => self.workoutStore.fetch()
-        .then(() => self.recordStore.fetch()))
-    }
+    initializeStores(): Promise<void> {
+      return self.exerciseStore
+        .fetch()
+        .then(() =>
+          self.workoutStore.fetch().then(() => self.recordStore.fetch())
+        )
+    },
   }))
 
 /**

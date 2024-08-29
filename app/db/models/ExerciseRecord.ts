@@ -14,26 +14,27 @@ export const ExerciseRecordModel = types
     recordSets: types.array(WorkoutSetModel),
   })
   .views(self => ({
-    get recordSetsMap () {
-      const map: Record<string, WorkoutSet> = {};
+    get recordSetsMap() {
+      const map: Record<string, WorkoutSet> = {}
 
       self.recordSets.forEach(record => {
-        map[record.guid] = record;
-      });
+        map[record.guid] = record
+      })
       return map
     },
-    get groupingRecordMap () {
-      const map: Record<string, WorkoutSet> = {};
+    get groupingRecordMap() {
+      const map: Record<string, WorkoutSet> = {}
 
       self.recordSets.forEach(record => {
-        map[record.groupingValue] = record;
-      });
+        map[record.groupingValue] = record
+      })
       return map
-    }
+    },
   }))
   .actions(withSetPropAction)
 
 export interface ExerciseRecord extends Instance<typeof ExerciseRecordModel> {}
 export interface ExerciseRecordSnapshotOut
   extends SnapshotOut<typeof ExerciseRecordModel> {}
-export interface ExerciseRecordSnapshotIn extends SnapshotIn<typeof ExerciseRecordModel> {}
+export interface ExerciseRecordSnapshotIn
+  extends SnapshotIn<typeof ExerciseRecordModel> {}

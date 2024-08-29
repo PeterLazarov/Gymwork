@@ -66,7 +66,6 @@ export const WorkoutSetModel = types
       )
     },
     get duration() {
-      console.log('duration view')
       return Number(
         convert(set.durationMs ?? 0)
           .from('ms')
