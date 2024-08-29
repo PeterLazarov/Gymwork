@@ -4,12 +4,12 @@ import React, { useMemo, useState } from 'react'
 import { Calendar } from 'react-native-calendario'
 import { MarkedDays } from 'react-native-month'
 
-import CalendarWorkoutModal from 'app/components/CalendarWorkoutModal'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { navigate, useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { Header, Icon, IconButton, colors, fontSize } from 'designSystem'
+import CalendarWorkoutModal from 'app/components/CalendarWorkoutModal'
 
 export type CalendarPageParams = {
   copyWorkoutMode?: boolean
@@ -71,17 +71,9 @@ const CalendarPage: React.FC = () => {
     navigate('Workout')
   }
 
-  function handleModalAction() {
+  function onModalAction() {
     setOpenedWorkoutDialogDate('')
-
-    if (copyWorkoutMode) {
-      const workout = workoutStore.dateWorkoutMap[openedWorkoutDialogDate]
-
-      workoutStore.copyWorkout(workout!)
-      navigate('Workout')
-    } else {
-      goToDay(openedWorkoutDialogDate)
-    }
+    navigate('Workout')
   }
 
   // ! must be a whole number
@@ -154,10 +146,8 @@ const CalendarPage: React.FC = () => {
           open={!!openedWorkoutDialogDate}
           workoutDate={openedWorkoutDialogDate}
           onClose={() => setOpenedWorkoutDialogDate('')}
-          action={handleModalAction}
-          actionText={translate(
-            copyWorkoutMode ? 'copyWorkout' : 'goToWorkout'
-          )}
+          calendarAction={onModalAction}
+          mode={copyWorkoutMode ? 'copy' : 'view'}
         />
       )}
     </>

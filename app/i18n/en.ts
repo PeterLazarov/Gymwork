@@ -52,7 +52,8 @@ const en = {
   muscleAreas: 'Muscle areas',
   viewComment: 'View comment',
   addComment: 'Add comment',
-  selectedExerciseNumber: '{{number}} selected'
+  selectedExerciseNumber: '{{number}} selected',
+  includeSets: 'Include sets',
 }
 
 export default en

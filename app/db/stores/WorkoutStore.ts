@@ -112,7 +112,7 @@ export const WorkoutStoreModel = types
       })
       self.workouts.push(created)
     },
-    copyWorkout(template: Workout) {
+    copyWorkout(template: Workout, includeSets: boolean) {
       const getCleanedSets = (sets: WorkoutSet[]): WorkoutSetSnapshotIn[] => {
         return sets.map(
           ({ guid, exercise, ...otherProps }) => ({
@@ -125,7 +125,7 @@ export const WorkoutStoreModel = types
       const cleanedSteps: WorkoutStepSnapshotIn[] = template.steps.map(
         ({ guid, exercise, sets, ...otherProps }) => ({
           exercise: exercise.guid,
-          sets: getCleanedSets(sets),
+          sets: includeSets ? getCleanedSets(sets) : [],
           ...otherProps,
         })
       )
