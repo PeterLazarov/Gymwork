@@ -16,8 +16,8 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   const { stateStore, recordStore } = useStores()
 
   const isSelected = useMemo(
-    () => computed(() => stateStore.focusedStepGuids.includes(step.guid)),
-    [stateStore.focusedStepGuids]
+    () => computed(() => stateStore.focusedStepGuid === step.guid),
+    [stateStore.focusedStepGuid]
   ).get()
 
   function onCardPress() {

@@ -11,10 +11,9 @@ const ExerciseStatsView: React.FC = () => {
 
   return (
     <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
-      {stateStore.focusedStepGuids.length === 1 && (
-        <EmptyState text="ExerciseStatsHere" />
-      )}
-      {stateStore.focusedStepGuids.length === 0 && (
+      {stateStore.focusedStepGuid && <EmptyState text="ExerciseStatsHere" />}
+
+      {!stateStore.focusedStepGuid && (
         <EmptyState text="Hold touch on exercise to view stats" />
       )}
     </View>
