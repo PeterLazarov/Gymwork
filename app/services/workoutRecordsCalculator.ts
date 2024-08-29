@@ -2,11 +2,9 @@ import { destroy, getSnapshot } from 'mobx-state-tree'
 
 import { ExerciseRecord, WorkoutSet, WorkoutSetSnapshotIn } from 'app/db/models'
 
-let weakassCounter = 1
 export const removeWeakAssRecords = (
   exerciseAllRecords: ExerciseRecord
 ): void => {
-  console.log('weakassCounter', weakassCounter++)
   const groupingsDescending = Object.keys(exerciseAllRecords.groupingRecordMap)
     .map(Number)
     .sort((a, b) => b - a)

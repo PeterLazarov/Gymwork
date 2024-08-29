@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import SetListItem from './SetListItem'
 import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
+import { useStores } from 'app/db/helpers/useStores'
 
 type Props = {
   sets: WorkoutSet[]
@@ -15,6 +16,8 @@ const WorkoutExerciseSetList: React.FC<Props> = ({
   exercise,
   records,
 }) => {
+  const { stateStore } = useStores()
+
   return (
     <>
       {sets.map((set, i) => (
@@ -25,6 +28,7 @@ const WorkoutExerciseSetList: React.FC<Props> = ({
           isRecord={
             records ? records.recordSetsMap.hasOwnProperty(set.guid) : false
           }
+          isFocused={stateStore.focusedSetGuid === set.guid}
           number={i + 1}
         />
       ))}

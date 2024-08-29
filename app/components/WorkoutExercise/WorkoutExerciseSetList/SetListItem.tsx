@@ -66,25 +66,34 @@ const SetListItem: React.FC<Props> = ({
         <SetDataLabel
           value={set.reps}
           unit={translate('reps')}
+          isFocused={isFocused}
         />
       )}
       {exercise.hasWeightMeasument && (
         <SetDataLabel
           value={set.weight}
           unit={exercise.measurements.weight!.unit}
+          isFocused={isFocused}
         />
       )}
       {exercise.hasDistanceMeasument && (
         <SetDataLabel
           value={set.distance}
           unit={exercise.measurements.distance!.unit}
+          isFocused={isFocused}
         />
       )}
       {exercise.hasTimeMeasument && (
-        <SetDataLabel value={getFormatedDuration(set.duration)} />
+        <SetDataLabel
+          value={getFormatedDuration(set.duration)}
+          isFocused={isFocused}
+        />
       )}
       {exercise.measurements.rest && (
-        <SetDataLabel value={getFormatedDuration(set.rest)} />
+        <SetDataLabel
+          value={getFormatedDuration(set.rest)}
+          isFocused={isFocused}
+        />
       )}
     </View>
   )

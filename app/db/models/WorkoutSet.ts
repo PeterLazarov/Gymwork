@@ -98,7 +98,6 @@ export const WorkoutSetModel = types
       value: number,
       unit = self.exercise.measurements.duration!.unit
     ) {
-      console.log('duration set')
       self.setProp('durationMs', convert(value).from(unit).to('ms'))
     },
     setRest(value: number, unit = self.exercise.measurements.rest!.unit) {

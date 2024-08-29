@@ -28,6 +28,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
 
   function goToDate(set: WorkoutSet) {
     stateStore.setOpenedDate(set.date)
+    stateStore.focusSet(set.guid)
     navigate('Workout')
   }
 

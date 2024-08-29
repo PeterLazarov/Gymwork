@@ -32,6 +32,7 @@ export const StateStoreModel = types
   .props({
     openedStepGuid: '',
     focusedStepGuids: types.array(types.string),
+    focusedSetGuid: '',
     openedDate: types.optional(types.string, today.toISODate()!),
     draftSet: types.maybe(WorkoutSetModel),
   })
@@ -144,10 +145,13 @@ export const StateStoreModel = types
     },
     setOpenedStep(stepGuid: string | null) {
       self.openedStepGuid = stepGuid ?? ''
+      self.setProp('focusedStepGuids', [])
+      self.setProp('focusedSetGuid', '')
     },
     setOpenedDate(date: string) {
       self.openedDate = date
       self.setProp('focusedStepGuids', [])
+      // self.setProp('focusedSetGuid', '')
     },
     incrementCurrentDate() {
       const luxonDate = DateTime.fromISO(self.openedDate)
@@ -158,6 +162,9 @@ export const StateStoreModel = types
       const luxonDate = DateTime.fromISO(self.openedDate)
       self.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
       self.setProp('focusedStepGuids', [])
+    },
+    focusSet(guid: string) {
+      self.setProp('focusedSetGuid', guid)
     },
     addFocusStep(guid: string) {
       self.focusedStepGuids.push(guid)

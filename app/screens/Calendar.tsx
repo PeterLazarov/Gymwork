@@ -89,7 +89,7 @@ const CalendarPage: React.FC = () => {
     const start = DateTime.fromISO(stateStore.firstRenderedDate)
     const end = DateTime.fromISO(stateStore.lastRenderedDate)
     const diff = end.diff(start)
-    console.log({ diff: diff.as('months') })
+
     return Math.ceil(diff.as('months'))
   }, [])
 

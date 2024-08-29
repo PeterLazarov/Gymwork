@@ -84,7 +84,6 @@ export const WorkoutStoreModel = types
       return store.workouts.slice().sort((a, b) => (a.date < b.date ? 1 : -1))
     },
     get firstWorkout(): Workout | undefined {
-      console.log({ sorted: this.sortedWorkouts })
       return this.sortedWorkouts[0]
     },
     get lastWorkout(): Workout | undefined {

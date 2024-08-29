@@ -11,7 +11,7 @@
 - add special set from StrengthLog
 - should we order workout by date on addition
 - On exercise screen, oldest exercise at the top + scroll to bottom
-- On jump to record set, scroll to set + highlight
+- On jump to record set, scroll to set
 - make it more visible that a workout has comments
 - fix duration unit change (for Set list we use hh:mm:ss format not a unit)
 - Distance editor add unit control (unit control is there only for entry of value, Does not change exercise measurement unit)
