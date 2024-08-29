@@ -19,7 +19,10 @@ function WorkoutHorizontalList() {
   }, [])
 
   function onScreenChange(index: number) {
-    stateStore.setOpenedDate(dates[index])
+    const newDate = dates[index]
+    if (stateStore.openedDate !== newDate) {
+      stateStore.setOpenedDate(newDate)
+    }
   }
 
   const renderItem = ({ item, index }: ListRenderItemInfo<string>) => {

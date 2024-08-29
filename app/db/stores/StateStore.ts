@@ -151,7 +151,7 @@ export const StateStoreModel = types
     setOpenedDate(date: string) {
       self.openedDate = date
       self.setProp('focusedStepGuids', [])
-      // self.setProp('focusedSetGuid', '')
+      self.setProp('focusedSetGuid', '')
     },
     incrementCurrentDate() {
       const luxonDate = DateTime.fromISO(self.openedDate)
