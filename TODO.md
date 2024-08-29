@@ -15,6 +15,7 @@
 - make it more visible that a workout has comments
 - fix duration unit change (for Set list we use hh:mm:ss format not a unit)
 - Distance editor add unit control (unit control is there only for entry of value, Does not change exercise measurement unit)
+- WorkoutExerciseList -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 
 Performance to beat -
 100 workouts

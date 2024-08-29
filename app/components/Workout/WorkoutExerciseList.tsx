@@ -11,16 +11,14 @@ type Props = {
 
 const WorkoutExerciseList: React.FC<Props> = ({ workout }) => {
   const renderItem = ({ item }: ListRenderItemInfo<WorkoutStep>) => (
-    <WorkoutExerciseCard
-      key={`${workout!.date}_${item.guid}`}
-      step={item}
-    />
+    <WorkoutExerciseCard step={item} />
   )
 
   return (
     <FlashList
-      data={workout.steps}
+      data={workout.steps.slice()}
       renderItem={renderItem}
+      keyExtractor={item => `${workout!.date}_${item.guid}`}
       estimatedItemSize={140}
     />
   )
