@@ -26,7 +26,7 @@ export const WorkoutModel = types
   .views(self => ({
     get exercises(): Exercise[] {
       const uniqueExercises = self.steps.reduce(
-        (acc, step) => acc.add(step.sets[0].exercise),
+        (acc, step) => acc.add(step.exercise),
         new Set<Exercise>()
       )
       return [...uniqueExercises]

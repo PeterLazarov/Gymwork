@@ -137,7 +137,9 @@ export const StateStoreModel = types
       const newStep = WorkoutStepModel.create({
         exercise: exercise.guid,
       })
-      self.openedWorkout?.steps.push(newStep)
+      const updatedSteps = [...(self.openedWorkout?.steps || []), newStep]
+        .map(step => getSnapshot(step))
+      self.openedWorkout?.setProp('steps',updatedSteps)
       self.openedStepGuid = newStep.guid
     },
     setOpenedStep(stepGuid: string | null) {
