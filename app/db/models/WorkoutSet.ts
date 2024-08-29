@@ -85,23 +85,23 @@ export const WorkoutSetModel = types
   .actions(withSetPropAction)
   .actions(withMergeUpdateAction)
   .actions(self => ({
-    setWeight(value: number, unit = self.exercise.measurements.weight?.unit!) {
+    setWeight(value: number, unit = self.exercise.measurements.weight!.unit) {
       self.setProp('weightMcg', convert(value).from(unit).to('mcg'))
     },
     setDistance(
       value: number,
-      unit = self.exercise.measurements.distance?.unit!
+      unit = self.exercise.measurements.distance!.unit
     ) {
       self.setProp('distanceMm', convert(value).from(unit).to('mm'))
     },
     setDuration(
       value: number,
-      unit = self.exercise.measurements.duration?.unit!
+      unit = self.exercise.measurements.duration!.unit
     ) {
       console.log('duration set')
       self.setProp('durationMs', convert(value).from(unit).to('ms'))
     },
-    setRest(value: number, unit = self.exercise.measurements.rest?.unit!) {
+    setRest(value: number, unit = self.exercise.measurements.rest!.unit) {
       self.setProp('restMs', convert(value).from(unit).to('ms'))
     },
     isBetterThan(otherSet: WorkoutSet) {

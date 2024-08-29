@@ -59,7 +59,7 @@ const WorkoutExerciseSetEditControls: React.FC<Props> = ({
           <IncrementNumericEditor
             value={value.weight}
             onChange={weight => value.setWeight(weight)}
-            step={value.exercise!.measurements.weight?.step!}
+            step={value.exercise!.measurements.weight!.step}
             onSubmit={() => onHandleSubmit(input2)}
             ref={input2}
             returnKeyType={isLastInput(input2) ? 'default' : 'next'}
@@ -72,7 +72,7 @@ const WorkoutExerciseSetEditControls: React.FC<Props> = ({
           <DistanceEditor
             value={value.distance}
             onChange={distance => value.setDistance(distance)}
-            unit={value.exercise!.measurements.distance?.unit!}
+            unit={value.exercise!.measurements.distance!.unit}
             // TODO REDO
             // onUnitChange={distanceUnit =>
             //   onChange({ ...value, distanceUnit })

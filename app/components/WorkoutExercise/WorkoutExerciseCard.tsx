@@ -4,51 +4,48 @@ import { observer } from 'mobx-react-lite'
 
 import WorkoutExerciseSetList from './WorkoutExerciseSetList'
 import { useStores } from 'app/db/helpers/useStores'
-import { Exercise, Workout } from 'app/db/models'
+import { WorkoutStep } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { Card, colors } from 'designSystem'
 
 type Props = {
-  workout: Workout
-  exercise: Exercise
+  step: WorkoutStep
 }
 
-const WorkoutExerciseCard: React.FC<Props> = ({ workout, exercise }) => {
+const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   const { stateStore, recordStore } = useStores()
 
   const isSelected = useMemo(
-    () =>
-      computed(() => stateStore.focusedExerciseGuids.includes(exercise.guid)),
-    [stateStore.focusedExerciseGuids]
+    () => computed(() => stateStore.focusedStepGuids.includes(step.guid)),
+    [stateStore.focusedStepGuids]
   ).get()
 
   function onCardPress() {
-    stateStore.setOpenedExercise(exercise)
+    stateStore.setOpenedStep(step.guid)
     navigate('WorkoutExercise')
   }
 
   function onLongPress() {
     if (isSelected) {
-      stateStore.removeFocusExercise(exercise.guid)
+      stateStore.removeFocusStep(step.guid)
     } else {
-      stateStore.addFocusExercise(exercise.guid)
+      stateStore.addFocusStep(step.guid)
     }
   }
 
-  const sets = workout.exerciseSetsMap[exercise.guid]
   const exerciseRecords = useMemo(
-    () => computed(() => recordStore.getExerciseRecords(exercise.guid)),
-    [sets]
+    () => computed(() => recordStore.getExerciseRecords(step.exercise.guid)),
+    [step.sets]
   ).get()
 
   return (
     <Card
       onPress={onCardPress}
-      title={exercise?.name}
+      title={step.exercise.name}
       content={
         <WorkoutExerciseSetList
-          sets={sets}
-          exercise={exercise}
+          sets={step.sets}
+          exercise={step.exercise}
           records={exerciseRecords}
         />
       }

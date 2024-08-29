@@ -16,6 +16,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
   const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
+  const { exercise } = stateStore.openedStep!
   useEffect(() => {
     const setToClone = selectedSet || stateStore.openedExerciseLastSet
 
@@ -24,8 +25,8 @@ const WorkoutExerciseTrackView: React.FC = () => {
       stateStore.setProp('draftSet', { exercise: exercise.guid, ...rest })
     } else {
       stateStore.setProp('draftSet', {
-        exercise: stateStore.openedExerciseGuid,
-        reps: stateStore.openedExercise?.hasRepMeasument ? 10 : undefined,
+        exercise: exercise.guid,
+        reps: exercise.hasRepMeasument ? 10 : undefined,
       })
     }
   }, [selectedSet])
@@ -35,30 +36,30 @@ const WorkoutExerciseTrackView: React.FC = () => {
       const { guid, ...draftCopy } = stateStore.draftSet
       const fromDraft = WorkoutSetModel.create({
         ...draftCopy,
-        exercise: stateStore.openedExerciseGuid,
+        exercise: exercise.guid,
         date: stateStore.openedDate,
       })
       workoutStore.addSet(fromDraft)
     }
 
-    if (stateStore.openedExercise?.measurements.rest) {
+    if (exercise.measurements.rest) {
       restTimer.start()
     }
   }
 
   useEffect(() => {
-    if (stateStore.openedExercise?.measurements.rest) {
+    if (exercise.measurements.rest) {
       stateStore.draftSet!.setProp(
         'restMs',
         restTimer.timeElapsed.as('milliseconds')
       )
     }
-  }, [restTimer.timeElapsed, stateStore.openedExercise])
+  }, [restTimer.timeElapsed, exercise])
 
   function handleUpdate() {
     const updatedSet = {
       ...getSnapshot(stateStore.draftSet!),
-      exercise: selectedSet?.exercise.guid!,
+      exercise: selectedSet!.exercise.guid,
       guid: selectedSet!.guid,
       date: selectedSet!.date,
     }
@@ -69,7 +70,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
   }
   function handleRemove() {
     setSelectedSet(null)
-    workoutStore.removeSet(selectedSet!.guid)
+    workoutStore.removeSet(selectedSet!.guid, stateStore.openedStep!)
   }
 
   return (

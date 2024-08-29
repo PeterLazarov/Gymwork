@@ -11,7 +11,9 @@ const WorkoutExerciseHistoryView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
 
   const workoutsContained =
-    workoutStore.exerciseWorkoutsHistoryMap[stateStore.openedExerciseGuid]
+    workoutStore.exerciseWorkoutsHistoryMap[
+      stateStore.openedStep!.exercise.guid
+    ]
 
   return (
     <View
@@ -24,11 +26,11 @@ const WorkoutExerciseHistoryView: React.FC = () => {
         flexGrow: 1,
       }}
     >
-      {stateStore.openedExercise && workoutsContained?.length > 0 ? (
+      {stateStore.openedStep && workoutsContained.length > 0 ? (
         <WorkoutExerciseHistoryList
           workouts={workoutsContained}
           records={stateStore.openedExerciseRecords}
-          exercise={stateStore.openedExercise}
+          exercise={stateStore.openedStep.exercise}
         />
       ) : (
         <EmptyState text={translate('historyLogEmpty')} />

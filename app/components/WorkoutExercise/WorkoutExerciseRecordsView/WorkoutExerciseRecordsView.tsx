@@ -46,7 +46,7 @@ const WorkoutExerciseRecordsView: React.FC = () => {
             flexBasis: 0,
           }}
         >
-          {recordSets.map((set, i) => {
+          {recordSets.map(set => {
             return (
               <PressableHighlight
                 key={set.guid}

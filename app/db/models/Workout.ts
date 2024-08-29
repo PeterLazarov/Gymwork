@@ -9,9 +9,10 @@ import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import { Exercise } from './Exercise'
-import { WorkoutSet, WorkoutSetModel } from './WorkoutSet'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { Duration } from 'luxon'
+import { WorkoutStep, WorkoutStepModel } from './WorkoutStep'
+import { WorkoutSet } from './WorkoutSet'
 
 export const WorkoutModel = types
   .model('Workout')
@@ -19,33 +20,51 @@ export const WorkoutModel = types
     guid: types.optional(types.identifier, () => uuidv4()),
     date: '',
     notes: '',
-    sets: types.array(WorkoutSetModel),
+    steps: types.array(WorkoutStepModel),
     feeling: 'neutral',
   })
   .views(self => ({
     get exercises(): Exercise[] {
-      const uniqueExercises = self.sets.reduce(
-        (acc, set) => acc.add(set.exercise),
+      const uniqueExercises = self.steps.reduce(
+        (acc, step) => acc.add(step.sets[0].exercise),
         new Set<Exercise>()
       )
       return [...uniqueExercises]
     },
+    get stepsMap() {
+      const map: Record<WorkoutStep['guid'], WorkoutStep> = {};
+
+      self.steps.forEach(step => {
+        map[step.guid] = step
+      });
+
+      return map
+    },
+    get exerciseStepMap() {
+      const map: Record<Exercise['guid'], WorkoutStep> = {};
+
+      self.steps.forEach(step => {
+        map[step.exercise.guid] = step
+      });
+
+      return map
+    },
     get exerciseSetsMap() {
       const map: Record<Exercise['guid'], WorkoutSet[]> = {}
 
-      self.sets.forEach(set => {
-        if (!map.hasOwnProperty(set.exercise.guid)) {
-          map[set.exercise.guid] = []
-        }
-        map[set.exercise.guid].push(set)
-      })
+      self.steps.forEach(step => {
+        map[step.exercise.guid] = step.sets
+      });
       return map
     },
+    get allSets() {
+      return self.steps.flatMap<WorkoutSet>(step => step.sets)
+    },
     get firstSet() {
-      return self.sets[0]
+      return this.allSets[0]
     },
     get lastSet() {
-      return self.sets.at(-1)
+      return this.allSets.at(-1)
     },
     /** Only usable for completed workouts */
     get inferredDuration(): Duration {

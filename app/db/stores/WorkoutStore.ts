@@ -21,6 +21,7 @@ import {
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
 import { getDataFieldForKey } from 'app/services/workoutRecordsCalculator'
+import { WorkoutStep, WorkoutStepSnapshotIn } from '../models/WorkoutStep'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -56,11 +57,8 @@ export const WorkoutStoreModel = types
     /** @returns all sets performed ever */
     get exerciseSetsHistoryMap(): Record<Exercise['guid'], WorkoutSet[]> {
       return Object.fromEntries(
-        Object.entries(this.exerciseWorkoutsHistoryMap).map(
-          ([exerciseID, workouts]) => {
-            const sets: WorkoutSet[] = workouts.flatMap(
-              w => w.exerciseSetsMap[exerciseID]
-            )
+        Object.entries(this.exerciseWorkoutsHistoryMap).map(([exerciseID, workouts]) => {
+          const sets = workouts.flatMap<WorkoutSet>(w => w.exerciseSetsMap[exerciseID])
 
             return [exerciseID, sets]
           }
@@ -68,8 +66,8 @@ export const WorkoutStoreModel = types
       )
     },
     get mostUsedExercises(): Exercise[] {
-      const sortedExercises = Object.entries(this.exerciseSetsHistoryMap)
-        .map(([exerciseId, sets]) => ({
+      const sortedExercises = Object.values(this.exerciseSetsHistoryMap)
+        .map((sets) => ({
           exercise: sets[0].exercise,
           count: sets.length,
         }))
@@ -116,29 +114,39 @@ export const WorkoutStoreModel = types
       self.workouts.push(created)
     },
     copyWorkout(template: Workout) {
-      const cleanedSets: WorkoutSetSnapshotIn[] = template.sets.map(
-        ({ guid, exercise, ...otherProps }) => ({
+      const getCleanedSets = (sets: WorkoutSet[]): WorkoutSetSnapshotIn[] => {
+        return sets.map(
+          ({ guid, exercise, ...otherProps }) => ({
+            exercise: exercise.guid,
+            ...otherProps,
+          })
+        )
+      }
+
+      const cleanedSteps: WorkoutStepSnapshotIn[] = template.steps.map(
+        ({ guid, exercise, sets, ...otherProps }) => ({
           exercise: exercise.guid,
+          sets: getCleanedSets(sets),
           ...otherProps,
         })
       )
 
       const created = WorkoutModel.create({
         date: self.rootStore.stateStore.openedDate,
-        sets: cleanedSets,
+        steps: cleanedSteps,
       })
       self.workouts.push(created)
     },
     addSet(newSet: WorkoutSet) {
-      self.rootStore.stateStore.openedWorkout!.sets.push(newSet)
+      self.rootStore.stateStore.openedStep!.sets.push(newSet)
       self.rootStore.recordStore.runSetUpdatedCheck(newSet)
     },
-    removeSet(setGuid: WorkoutSet['guid']) {
-      const openedWorkout = self.rootStore.stateStore.openedWorkout!
-      const deletedSetIndex = openedWorkout.sets.findIndex(
+    removeSet(setGuid: WorkoutSet['guid'], step: WorkoutStep) {
+      // TODO: move this to an action for WorkoutStep model
+      const deletedSetIndex = step.sets.findIndex(
         s => s.guid === setGuid
       )
-      const deletedSet = openedWorkout.sets[deletedSetIndex]
+      const deletedSet = step.sets[deletedSetIndex]
       if (deletedSet) {
         const { exercise } = deletedSet
 
@@ -150,7 +158,7 @@ export const WorkoutStoreModel = types
         )
 
         const deletedSetSnapshot = getSnapshot(deletedSet)
-        openedWorkout.sets.splice(deletedSetIndex, 1)
+        step.sets.splice(deletedSetIndex, 1)
 
         if (isRecordBool) {
           const grouping = getDataFieldForKey(exercise.groupRecordsBy)
@@ -162,11 +170,9 @@ export const WorkoutStoreModel = types
       }
     },
     updateSet(updatedSetData: WorkoutSetSnapshotIn) {
-      const setToUpdate = self.rootStore.stateStore.openedWorkout!.sets.find(
-        set => {
-          return set.guid === updatedSetData.guid
-        }
-      )!
+      const setToUpdate = self.rootStore.stateStore.openedStep!.sets.find(set => {
+        return set.guid === updatedSetData.guid
+      })!
 
       const records = self.rootStore.recordStore.getExerciseRecords(
         setToUpdate!.exercise.guid

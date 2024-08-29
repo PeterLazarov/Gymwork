@@ -66,7 +66,7 @@ export const updateRecordsIfNecessary = (
     s => s[grouping] === setToCompare.groupingValue
   )
 
-  let updatedRecords = recordSets
+  const updatedRecords = recordSets
   if (currentRecordIndex !== -1) {
     const currentRecord = updatedRecords[currentRecordIndex]
     if (setToCompare.isBetterThan(currentRecord)) {

@@ -30,7 +30,6 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({
     },
     [records]
   )
-
   return (
     <FlashList
       data={workouts}

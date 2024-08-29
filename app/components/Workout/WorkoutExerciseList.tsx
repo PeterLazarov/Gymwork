@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
-import { Exercise, Workout } from 'app/db/models'
+import { Workout, WorkoutStep } from 'app/db/models'
 import WorkoutExerciseCard from '../WorkoutExercise/WorkoutExerciseCard'
 
 type Props = {
@@ -10,17 +10,16 @@ type Props = {
 }
 
 const WorkoutExerciseList: React.FC<Props> = ({ workout }) => {
-  const renderItem = ({ item }: ListRenderItemInfo<Exercise>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<WorkoutStep>) => (
     <WorkoutExerciseCard
       key={`${workout!.date}_${item.guid}`}
-      workout={workout!}
-      exercise={item}
+      step={item}
     />
   )
 
   return (
     <FlashList
-      data={workout.exercises}
+      data={workout.steps}
       renderItem={renderItem}
       estimatedItemSize={140}
     />
