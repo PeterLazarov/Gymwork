@@ -14,15 +14,22 @@
 - On jump to record set, scroll to set + highlight
 - make it more visible that a workout has comments
 - fix duration unit change (for Set list we use hh:mm:ss format not a unit)
+- Distance editor add unit control (unit control is there only for entry of value, Does not change exercise measurement unit)
 
 Performance to beat -
 100 workouts
- - open app
- - add a single record to bench
-LOG  currentRecondCounter 611 - 1 loop
-LOG  exerciseRecordsCount 145 - 1 loop
-  -> LOG  weakassCounter 145 - 3 loop
+
+- open app
+- add a single record to bench
+  LOG currentRecondCounter 611 - 1 loop
+  LOG exerciseRecordsCount 145 - 1 loop
+  -> LOG weakassCounter 145 - 3 loop
 
 TOTAL - 1191 loops
 
-   time to add set 4s\
+time to add set 4s\
+
+Save workout (with or without sets)
+Workout duration + see in chart/history
+Better comment UI
+Workout programs
