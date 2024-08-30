@@ -7,21 +7,25 @@ import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { colors } from 'designSystem'
 import WorkoutExerciseList from './WorkoutExerciseList'
+import DayControl from './DayControl'
 
 const WorkoutDayView: React.FC = () => {
   const { stateStore } = useStores()
   const workout = stateStore.openedWorkout
 
   return (
-    <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
-      {workout ? (
-        <WorkoutExerciseList workout={workout} />
-      ) : (
-        <EmptyState
-          text={translate('workoutLogEmpty') + stateStore.openedDate}
-        />
-      )}
-    </View>
+    <>
+      <DayControl />
+      <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
+        {workout ? (
+          <WorkoutExerciseList workout={workout} />
+        ) : (
+          <EmptyState
+            text={translate('workoutLogEmpty') + stateStore.openedDate}
+          />
+        )}
+      </View>
+    </>
   )
 }
 

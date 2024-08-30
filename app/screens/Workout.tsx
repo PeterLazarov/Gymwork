@@ -4,7 +4,6 @@ import { View } from 'react-native'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
-import DayControl from 'app/components/Workout/DayControl'
 import WorkoutControlButtons from 'app/components/Workout/WorkoutControlButtons'
 import WorkoutHeader from 'app/components/Workout/WorkoutHeader'
 import WorkoutExerciseStatsView from 'app/components/ExerciseStats/ExerciseStatsView'
@@ -39,7 +38,6 @@ const WorkoutPage: React.FC = () => {
   return (
     <EmptyLayout>
       <WorkoutHeader />
-      <DayControl />
       <View style={{ flex: 1 }}>
         <HorizontalScreenList
           ref={flashList}
