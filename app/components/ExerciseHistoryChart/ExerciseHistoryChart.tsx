@@ -18,6 +18,7 @@ import { computed } from 'mobx'
 import { useStores } from 'app/db/helpers/useStores'
 import chartConfig from './chartConfig'
 import seriesSetup from './seriesSetup'
+import { Exercise } from 'app/db/models'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -50,14 +51,19 @@ export const CHART_VIEWS = {
 export type CHART_VIEW_KEY = keyof typeof CHART_VIEWS
 export type CHART_VIEW = (typeof CHART_VIEWS)[CHART_VIEW_KEY]
 
-// Component usage
-const ExerciseHistoryChart = (props: {
+type Props = {
   view: CHART_VIEW
   height?: number
   width?: number
+  exercise: Exercise
+}
+const ExerciseHistoryChart: React.FC<Props> = ({
+  view,
+  height,
+  width,
+  exercise,
 }) => {
   const { workoutStore, stateStore } = useStores()
-  const openedExercise = stateStore.openedStep!.exercise
 
   const chartElRef = useRef<any>(null)
   const eChartRef = useRef<ECharts>()
@@ -70,24 +76,22 @@ const ExerciseHistoryChart = (props: {
           '7D': 15,
           ALL: 5,
         } satisfies Record<CHART_VIEW, number>
-      )[props.view]),
-    [props.view]
+      )[view]),
+    [view]
   )
 
   const viewDays: DateTime[] = useMemo(() => {
     const fallback = getPastDays(1)
 
-    switch (props.view) {
+    switch (view) {
       case '7D':
         return getPastDays(7)
       case '30D':
         return getPastDays(30)
       case 'ALL': {
         const range = [
-          workoutStore.exerciseWorkoutsHistoryMap[openedExercise!.guid].at(-1)!
-            .date,
-          workoutStore.exerciseWorkoutsHistoryMap[openedExercise!.guid][0]!
-            .date,
+          workoutStore.exerciseWorkoutsHistoryMap[exercise.guid].at(-1)!.date,
+          workoutStore.exerciseWorkoutsHistoryMap[exercise.guid][0]!.date,
         ] as const
 
         // TODO grey out tab when no history
@@ -111,37 +115,37 @@ const ExerciseHistoryChart = (props: {
     }
 
     return fallback
-  }, [props.view])
+  }, [view])
 
   const xAxis = useMemo(() => {
-    return props.view === '7D'
+    return view === '7D'
       ? viewDays.map(d => d.toFormat('EEE'))
       : viewDays.map(d => d.toFormat('dd LLL'))
-  }, [props.view])
+  }, [view])
 
   const setsByDay = useMemo(() => {
     return computed(() =>
       viewDays.map(date => {
         const workout = workoutStore.dateWorkoutMap[date.toISODate()!]
 
-        return workout?.exerciseSetsMap[openedExercise!.guid] || []
+        return workout?.exerciseSetsMap[exercise.guid] || []
       })
     ).get()
   }, [viewDays, workoutStore.workouts])
 
   const { getChartSeries } = seriesSetup({ data: setsByDay })
 
-  const series = getChartSeries(openedExercise!)
+  const series = getChartSeries(exercise)
 
   const { getViewOptions, feedChartSeriesData } = chartConfig({
     series,
     symbolSize,
     xAxis,
   })
-  const height = useMemo(() => props.height ?? 400, [props.height])
-  const width = useMemo(
-    () => props.width ?? Dimensions.get('window').width,
-    [props.width]
+  const chartHeight = useMemo(() => height ?? 400, [height])
+  const chartWidth = useMemo(
+    () => width ?? Dimensions.get('window').width,
+    [width]
   )
 
   const onHighlight = (data: unknown) => {
@@ -183,13 +187,13 @@ const ExerciseHistoryChart = (props: {
     }
 
     return () => eChartRef.current?.dispose()
-  }, [props.view, props.width, props.height])
+  }, [view, width, height])
 
   useEffect(() => {
     eChartRef.current?.setOption({
       series: feedChartSeriesData(setsByDay),
     })
-  }, [props.view, workoutStore.workouts, props.width, props.height])
+  }, [view, workoutStore.workouts, width, height])
 
   // TODO does not highlight set in question
   function linkToWorkoutDate() {
@@ -201,8 +205,8 @@ const ExerciseHistoryChart = (props: {
     <>
       <View
         style={{
-          height: height ? height - 48 : undefined,
-          width,
+          height: chartHeight ? chartHeight - 48 : undefined,
+          width: chartWidth,
         }}
       >
         {/* Select exercise */}

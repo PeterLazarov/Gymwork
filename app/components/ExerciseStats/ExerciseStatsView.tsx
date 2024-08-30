@@ -8,6 +8,7 @@ import EmptyState from '../EmptyState'
 import ExerciseRecordStats from './ExerciseRecordStats'
 import ExerciseHistoryStats from './ExerciseHistoryStats'
 import { translate } from 'app/i18n'
+import ExerciseChartStats from './ExerciseChartStats'
 
 const ExerciseStatsView: React.FC = () => {
   const { stateStore } = useStores()
@@ -24,6 +25,11 @@ const ExerciseStatsView: React.FC = () => {
       name: 'history',
       label: translate('history'),
       component: ExerciseHistoryStats,
+    },
+    {
+      name: 'chart',
+      label: translate('chart'),
+      component: ExerciseChartStats,
     },
   ]
 

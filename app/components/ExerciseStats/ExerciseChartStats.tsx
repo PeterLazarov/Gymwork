@@ -8,8 +8,10 @@ import ExerciseHistoryChart, {
   CHART_VIEWS,
   CHART_VIEW_KEY,
 } from 'app/components/ExerciseHistoryChart'
+import { useStores } from 'app/db/helpers/useStores'
 
-const WorkoutExerciseChartView: React.FC = () => {
+const ExerciseChartStats: React.FC = () => {
+  const { stateStore } = useStores()
   const [activeView, setActiveView] = useState<CHART_VIEW>(
     Object.keys(CHART_VIEWS)[0] as CHART_VIEW_KEY
   )
@@ -38,8 +40,9 @@ const WorkoutExerciseChartView: React.FC = () => {
       >
         <ExerciseHistoryChart
           view={activeView}
-          height={Dimensions.get('window').height - 192}
+          height={Dimensions.get('window').height - 280}
           width={Dimensions.get('window').width - 32}
+          exercise={stateStore.focusedStep!.exercise}
         />
       </View>
 
@@ -51,4 +54,4 @@ const WorkoutExerciseChartView: React.FC = () => {
   )
 }
 
-export default observer(WorkoutExerciseChartView)
+export default observer(ExerciseChartStats)
