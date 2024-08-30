@@ -24,7 +24,9 @@ const ExerciseStatsView: React.FC = () => {
     {
       name: 'history',
       label: translate('history'),
-      component: ExerciseHistoryStats,
+      component: () => (
+        <ExerciseHistoryStats exercise={stateStore.focusedStep?.exercise} />
+      ),
     },
     {
       name: 'chart',

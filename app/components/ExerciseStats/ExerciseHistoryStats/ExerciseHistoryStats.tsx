@@ -6,16 +6,17 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import WorkoutExerciseHistoryList from './ExerciseHistoryList'
+import { Exercise } from 'app/db/models'
 
-const ExerciseHistoryView: React.FC = () => {
-  const { workoutStore, stateStore, recordStore } = useStores()
+type Props = {
+  exercise?: Exercise
+}
+const ExerciseHistoryView: React.FC<Props> = ({ exercise }) => {
+  const { workoutStore, recordStore } = useStores()
 
-  const workoutsContained =
-    workoutStore.exerciseWorkoutsHistoryMap[
-      stateStore.focusedStep!.exercise.guid
-    ]
-  const focusedExerciseRecords =
-    recordStore.exerciseRecordsMap[stateStore.focusedStep!.exercise.guid]
+  const workoutsContained = exercise
+    ? workoutStore.exerciseWorkoutsHistoryMap[exercise.guid]
+    : []
 
   return (
     <View
@@ -28,11 +29,11 @@ const ExerciseHistoryView: React.FC = () => {
         flexGrow: 1,
       }}
     >
-      {stateStore.focusedStep && workoutsContained.length > 0 ? (
+      {exercise && workoutsContained.length > 0 ? (
         <WorkoutExerciseHistoryList
           workouts={workoutsContained}
-          records={focusedExerciseRecords}
-          exercise={stateStore.focusedStep.exercise}
+          records={recordStore.exerciseRecordsMap[exercise.guid]}
+          exercise={exercise}
         />
       ) : (
         <EmptyState text={translate('historyLogEmpty')} />

@@ -3,10 +3,11 @@ import { View } from 'react-native'
 import { Menu } from 'react-native-paper'
 
 import WorkoutExerciseTrackView from 'app/components/WorkoutExercise/WorkoutExerciseTrackView'
+import ExerciseHistoryStats from 'app/components/ExerciseStats/ExerciseHistoryStats'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
-import { Header, Icon, IconButton, colors } from 'designSystem'
+import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
 
 const WorkoutStepPage: React.FC = () => {
   const { stateStore } = useStores()
@@ -22,6 +23,21 @@ const WorkoutStepPage: React.FC = () => {
     setMenuOpen(false)
     navigate('ExerciseEdit')
   }
+
+  const tabs = [
+    {
+      label: translate('track'),
+      name: 'track',
+      component: WorkoutExerciseTrackView,
+    },
+    {
+      label: translate('history'),
+      name: 'history',
+      component: () => (
+        <ExerciseHistoryStats exercise={stateStore.openedStep!.exercise} />
+      ),
+    },
+  ]
 
   return (
     <View
@@ -67,7 +83,7 @@ const WorkoutStepPage: React.FC = () => {
         </Menu>
       </Header>
 
-      <WorkoutExerciseTrackView />
+      <SwipeTabs tabsConfig={tabs} />
     </View>
   )
 }
