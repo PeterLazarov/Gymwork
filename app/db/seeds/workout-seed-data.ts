@@ -45,6 +45,16 @@ const generateRandomExercises = (date: string) => {
   })
 }
 
+const testStep: WorkoutStepSnapshotIn = {
+  type: 'superset',
+  sets: [
+    { exercise: '44', reps: 8, weightMcg: convert(80).from('kg').to('mcg') },
+    { exercise: '295', reps: 8, weightMcg: convert(80).from('kg').to('mcg') },
+    { exercise: '44', reps: 8, weightMcg: convert(80).from('kg').to('mcg') },
+    { exercise: '295', reps: 8, weightMcg: convert(80).from('kg').to('mcg') },
+  ],
+}
+
 const generateSteps = (date: string): WorkoutStepSnapshotIn[] => {
   const workoutStart = DateTime.fromISO(date).set({
     hour: 8,
@@ -91,7 +101,9 @@ const generateSteps = (date: string): WorkoutStepSnapshotIn[] => {
   })
   const cardioStep = generateStep(cardioSets)
 
-  return generateRandomExercises(date).concat(benchStep, cardioStep).reverse()
+  return generateRandomExercises(date)
+    .concat(benchStep, cardioStep, testStep)
+    .reverse()
 }
 const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
   length: numberOfWorkouts,
