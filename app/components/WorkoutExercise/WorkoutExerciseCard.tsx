@@ -34,7 +34,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   }
 
   const exerciseRecords = useMemo(
-    () => computed(() => recordStore.getExerciseRecords(step.exercise.guid)),
+    () => computed(() => recordStore.exerciseRecordsMap[step.exercise.guid]),
     [step.sets]
   ).get()
 
