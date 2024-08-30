@@ -157,7 +157,7 @@ export const StateStoreModel = types
     focusStep(guid: string) {
       self.focusedStepGuid = guid
     },
-    removeFocusStep(guid: string) {
+    removeFocusStep() {
       self.focusedStepGuid = ''
     },
     deleteSelectedExercises() {
