@@ -166,6 +166,8 @@ export const StateStoreModel = types
       sets?.forEach(set => {
         self.workoutStore.removeSet(set.guid, step)
       })
+      const reamainingSteps = self.openedWorkout!.steps.filter(s => s.guid !== step.guid)
+      self.openedWorkout!.setProp('steps', reamainingSteps.map(s => getSnapshot(s)))
 
       self.setProp('focusedStepGuid', '')
     },
