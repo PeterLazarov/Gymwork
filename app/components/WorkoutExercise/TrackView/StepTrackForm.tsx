@@ -29,7 +29,7 @@ const StepTrackForm: React.FC = () => {
         reps: exercise.hasRepMeasument ? 10 : undefined,
       })
     }
-  }, [selectedSet])
+  }, [selectedSet, exercise])
 
   function handleAdd() {
     if (stateStore.draftSet) {
