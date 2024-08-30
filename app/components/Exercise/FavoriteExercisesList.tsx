@@ -6,10 +6,8 @@ import ExerciseList from './ExerciseList'
 import EmptyState from '../EmptyState'
 import { translate } from 'app/i18n'
 
-const noop = () => {}
-
 type Props = {
-  onSelect?: (exercise: Exercise) => void
+  onSelect: (exercise: Exercise) => void
 }
 const FavoriteExercisesList: React.FC<Props> = ({ onSelect }) => {
   const { exerciseStore } = useStores()
@@ -19,7 +17,7 @@ const FavoriteExercisesList: React.FC<Props> = ({ onSelect }) => {
       {exerciseStore.favoriteExercises.length > 0 && (
         <ExerciseList
           exercises={exerciseStore.favoriteExercises}
-          onSelect={onSelect ?? noop}
+          onSelect={onSelect}
         />
       )}
       {exerciseStore.favoriteExercises.length === 0 && (
