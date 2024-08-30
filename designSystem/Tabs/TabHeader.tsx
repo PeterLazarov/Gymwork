@@ -24,7 +24,7 @@ const TabHeader: React.FC<Props> = ({
   const isActive = index === currentIndex
 
   const sizes = {
-    md: 40,
+    md: 42,
     lg: 52,
   }
 
