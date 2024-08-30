@@ -8,22 +8,25 @@ import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
 import { PressableHighlight } from 'designSystem'
-import RecordsListItem from './RecordsListItem'
 import { WorkoutSet } from 'app/db/models'
+import RecordsListItem from './RecordsListItem'
 
-const WorkoutExerciseRecordsView: React.FC = () => {
-  const { stateStore } = useStores()
+const ExerciseRecordsView: React.FC = () => {
+  const { stateStore, recordStore } = useStores()
+
+  const focusedStep = stateStore.focusedStep!
+  const focusedExerciseRecords =
+    recordStore.exerciseRecordsMap[focusedStep.exercise.guid]
 
   const recordSets = useMemo(
     () =>
       computed(() => {
-        const openedExerciseRecords = stateStore.openedExerciseRecords
-        const copyRecords = openedExerciseRecords.recordSets.slice()
+        const copyRecords = focusedExerciseRecords.recordSets.slice()
         return copyRecords.sort(
           (setA, setB) => setA.groupingValue - setB.groupingValue
         )
       }),
-    [stateStore.openedExerciseSets]
+    [focusedExerciseRecords]
   ).get()
 
   function goToDate(set: WorkoutSet) {
@@ -68,4 +71,4 @@ const WorkoutExerciseRecordsView: React.FC = () => {
   )
 }
 
-export default observer(WorkoutExerciseRecordsView)
+export default observer(ExerciseRecordsView)

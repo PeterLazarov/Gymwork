@@ -52,6 +52,9 @@ export const StateStoreModel = types
     get openedStep() {
       return this.openedWorkout?.stepsMap[self.openedStepGuid]
     },
+    get focusedStep() {
+      return this.openedWorkout?.stepsMap[self.focusedStepGuid]
+    },
     get openedWorkout(): Workout | undefined {
       return this.workoutStore.dateWorkoutMap[self.openedDate]
     },

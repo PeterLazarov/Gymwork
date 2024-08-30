@@ -1,8 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
 
-import SetDataLabel from '../SetDataLabel'
 import { WorkoutSet } from 'app/db/models'
+import SetDataLabel from 'app/components/WorkoutExercise/SetDataLabel'
 
 type Props = {
   set: WorkoutSet
