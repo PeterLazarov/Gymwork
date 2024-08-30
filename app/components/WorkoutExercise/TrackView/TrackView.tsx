@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { getSnapshot } from 'mobx-state-tree'
 import { View } from 'react-native'
 
-import SetEditList from './SetEditItemList'
+import SetEditList from './SetEditList'
 import SetEditControls from './SetEditControls'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet, WorkoutSetModel } from 'app/db/models'
@@ -16,9 +16,9 @@ const TrackView: React.FC = () => {
   const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
-  const { exercise } = stateStore.openedStep!
+  const { exercise } = stateStore.focusedStep!
   useEffect(() => {
-    const setToClone = selectedSet || stateStore.openedStepLastSet
+    const setToClone = selectedSet || stateStore.focusedStepLastSet
 
     if (setToClone) {
       const { guid, exercise, ...rest } = setToClone
@@ -70,7 +70,7 @@ const TrackView: React.FC = () => {
   }
   function handleRemove() {
     setSelectedSet(null)
-    workoutStore.removeSet(selectedSet!.guid, stateStore.openedStep!)
+    workoutStore.removeSet(selectedSet!.guid, stateStore.focusedStep!)
   }
 
   return (

@@ -16,7 +16,6 @@ const WorkoutStepScreen: React.FC = () => {
 
   function onBackPress() {
     navigate('Workout')
-    stateStore.setOpenedStep(null)
   }
 
   function onEditExercisePress() {
@@ -34,7 +33,7 @@ const WorkoutStepScreen: React.FC = () => {
       label: translate('history'),
       name: 'history',
       component: () => (
-        <ExerciseHistoryStats exercise={stateStore.openedStep!.exercise} />
+        <ExerciseHistoryStats exercise={stateStore.focusedStep!.exercise} />
       ),
     },
   ]
@@ -58,7 +57,7 @@ const WorkoutStepScreen: React.FC = () => {
             color={colors.primaryText}
           />
         </IconButton>
-        <Header.Title title={stateStore.openedStep?.exercise.name || ''} />
+        <Header.Title title={stateStore.focusedStep?.exercise.name || ''} />
 
         <Menu
           visible={menuOpen}

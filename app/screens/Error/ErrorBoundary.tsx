@@ -1,5 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react'
-import { ErrorDetailsScreen } from './ErrorDetails'
+import { ErrorDetails } from './ErrorDetails'
 
 interface Props {
   children: ReactNode
@@ -66,7 +66,7 @@ export class ErrorBoundary extends Component<Props, State> {
   // Render an error UI if there's an error; otherwise, render children
   render() {
     return this.isEnabled() && this.state.error ? (
-      <ErrorDetailsScreen
+      <ErrorDetails
         onReset={this.resetError}
         error={this.state.error}
         errorInfo={this.state.errorInfo}

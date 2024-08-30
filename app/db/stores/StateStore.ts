@@ -30,7 +30,6 @@ const datePaddingCount = 90
 export const StateStoreModel = types
   .model('StateStore')
   .props({
-    openedStepGuid: '',
     focusedStepGuid: '',
     focusedSetGuid: '',
     openedDate: types.optional(types.string, today.toISODate()!),
@@ -49,9 +48,6 @@ export const StateStoreModel = types
     get recordStore(): RecordStore {
       return this.rootStore.recordStore
     },
-    get openedStep() {
-      return this.openedWorkout?.stepsMap[self.openedStepGuid]
-    },
     get focusedStep() {
       return this.openedWorkout?.stepsMap[self.focusedStepGuid]
     },
@@ -66,19 +62,19 @@ export const StateStoreModel = types
         .map(id => this.exerciseStore.exercisesMap[id])
         .filter(Boolean)
     },
-    get openedStepSets(): WorkoutSet[] {
-      const exerciseSets = this.openedStep!.sets
+    get focusedStepSets(): WorkoutSet[] {
+      const exerciseSets = this.focusedStep!.sets
 
       return exerciseSets
     },
-    get openedStepLastSet(): WorkoutSet | undefined {
-      return this.openedStepSets.at(-1)
+    get focusedStepLastSet(): WorkoutSet | undefined {
+      return this.focusedStepSets.at(-1)
     },
-    get openedExerciseRecords(): ExerciseRecord {
-      return this.recordStore.getExerciseRecords(this.openedStep!.exercise.guid)
+    get focusedExerciseRecords(): ExerciseRecord {
+      return this.recordStore.getExerciseRecords(this.focusedStep!.exercise.guid)
     },
-    get openedStepWorkSets(): WorkoutSet[] {
-      return this.openedStepSets.filter(s => !s.isWarmup)
+    get focusedStepWorkSets(): WorkoutSet[] {
+      return this.focusedStepSets.filter(s => !s.isWarmup)
     },
 
     get firstWorkout(): Workout | undefined {
@@ -118,17 +114,17 @@ export const StateStoreModel = types
         return
       }
 
-      const item = self.openedStep!.sets[from]!
+      const item = self.focusedStep!.sets[from]!
       const reorderedSets =
         self
-          .openedStep!.sets // @ts-ignore
+          .focusedStep!.sets // @ts-ignore
           .toSpliced(from, 1)
           .toSpliced(to, 0, item) ?? []
 
       const reorderedSetsSnapshots = reorderedSets.map((set: WorkoutSet) =>
         getSnapshot(set)
       )
-      self.openedStep!.setProp('sets', reorderedSetsSnapshots)
+      self.focusedStep!.setProp('sets', reorderedSetsSnapshots)
     },
     addStep(exercise: Exercise) {
       const newStep = WorkoutStepModel.create({
@@ -138,12 +134,6 @@ export const StateStoreModel = types
         step => getSnapshot(step)
       )
       self.openedWorkout?.setProp('steps', updatedSteps)
-      self.openedStepGuid = newStep.guid
-    },
-    setOpenedStep(stepGuid: string | null) {
-      self.openedStepGuid = stepGuid ?? ''
-      self.setProp('focusedStepGuid', '')
-      self.setProp('focusedSetGuid', '')
     },
     setOpenedDate(date: string) {
       self.openedDate = date

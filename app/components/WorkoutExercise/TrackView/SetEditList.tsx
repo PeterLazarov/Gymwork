@@ -29,7 +29,9 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
       isActive,
     }: DragListRenderItemInfo<WorkoutSet>) => {
       const isRecord =
-        stateStore.openedExerciseRecords.recordSetsMap.hasOwnProperty(item.guid)
+        stateStore.focusedExerciseRecords.recordSetsMap.hasOwnProperty(
+          item.guid
+        )
 
       return (
         <PressableHighlight
@@ -66,7 +68,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
         </PressableHighlight>
       )
     },
-    [selectedSet, stateStore.openedExerciseRecords.recordSetsMap]
+    [selectedSet, stateStore.focusedExerciseRecords.recordSetsMap]
   )
 
   const ITEM_HEIGHT = 62
@@ -91,7 +93,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
   const dragListRef = useRef<FlatList>(null)
 
   function calcWorkSetNumber(set: WorkoutSet) {
-    const workArrayIndex = stateStore.openedStepWorkSets.indexOf(set)
+    const workArrayIndex = stateStore.focusedStepWorkSets.indexOf(set)
     return workArrayIndex + 1
   }
 
@@ -101,7 +103,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
   return (
     <>
       <DragList
-        data={stateStore.openedStepSets}
+        data={stateStore.focusedStepSets}
         renderItem={renderItem}
         keyExtractor={set => set.guid}
         getItemLayout={getItemLayout}
@@ -113,7 +115,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
         }
       />
 
-      {stateStore.openedStepSets.length === 0 && (
+      {stateStore.focusedStepSets.length === 0 && (
         <EmptyState text={translate('noSetsEntered')} />
       )}
     </>
