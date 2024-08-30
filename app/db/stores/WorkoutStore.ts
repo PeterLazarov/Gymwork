@@ -137,7 +137,7 @@ export const WorkoutStoreModel = types
       self.workouts.push(created)
     },
     addSet(newSet: WorkoutSet) {
-      self.rootStore.stateStore.openedStep!.sets.push(newSet)
+      self.rootStore.stateStore.focusedStep!.sets.push(newSet)
       self.rootStore.recordStore.runSetUpdatedCheck(newSet)
     },
     removeSet(setGuid: WorkoutSet['guid'], step: WorkoutStep) {
@@ -169,7 +169,7 @@ export const WorkoutStoreModel = types
       }
     },
     updateSet(updatedSetData: WorkoutSetSnapshotIn) {
-      const setToUpdate = self.rootStore.stateStore.openedStep!.sets.find(set => {
+      const setToUpdate = self.rootStore.stateStore.focusedStep!.sets.find(set => {
         return set.guid === updatedSetData.guid
       })!
 

@@ -32,7 +32,7 @@ export default function useBenchmark() {
 
     // open bench press
     stateStore.setProp('openedExerciseGuid', '44')
-    navigate('WorkoutStep')
+    navigate('Workout', { navigateToIndex: 2})
 
     await delay(1000)
 

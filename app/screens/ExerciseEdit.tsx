@@ -21,7 +21,7 @@ import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 const ExerciseEditScreen: React.FC = () => {
   const { stateStore, exerciseStore } = useStores()
 
-  const [exercise, setExercise] = useState(stateStore.openedStep!.exercise)
+  const [exercise, setExercise] = useState(stateStore.focusedStep!.exercise)
   const [formValid, setFormValid] = useState(false)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 

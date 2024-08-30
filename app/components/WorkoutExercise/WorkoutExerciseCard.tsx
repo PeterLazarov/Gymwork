@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite'
 import WorkoutSetList from './WorkoutExerciseSetList'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
-import { navigate } from 'app/navigators'
 import { Card, colors } from 'designSystem'
 
 type Props = {
@@ -20,13 +19,8 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   ).get()
 
   function onCardPress() {
-    stateStore.setOpenedStep(step.guid)
-    navigate('WorkoutStep')
-  }
-
-  function onLongPress() {
     if (isSelected) {
-      stateStore.removeFocusStep(step.guid)
+      stateStore.removeFocusStep()
     } else {
       stateStore.focusStep(step.guid)
     }
@@ -47,8 +41,6 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
           records={exerciseRecords}
         />
       }
-      onLongPress={onLongPress}
-      delayLongPress={500}
       containerStyle={
         isSelected
           ? {

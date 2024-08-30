@@ -8,6 +8,7 @@ import { translate } from 'app/i18n'
 import { colors } from 'designSystem'
 import WorkoutStepList from './WorkoutStepList'
 import DayControl from './DayControl'
+import WorkoutControlButtons from './WorkoutControlButtons'
 
 const WorkoutDayView: React.FC = () => {
   const { stateStore } = useStores()
@@ -25,6 +26,7 @@ const WorkoutDayView: React.FC = () => {
           />
         )}
       </View>
+      <WorkoutControlButtons />
     </>
   )
 }
