@@ -11,7 +11,7 @@ import { PressableHighlight } from 'designSystem'
 import { WorkoutSet } from 'app/db/models'
 import RecordsListItem from './RecordsListItem'
 
-const ExerciseRecordsView: React.FC = () => {
+const ExerciseRecordStats: React.FC = () => {
   const { stateStore, recordStore } = useStores()
 
   const focusedStep = stateStore.focusedStep!
@@ -71,4 +71,4 @@ const ExerciseRecordsView: React.FC = () => {
   )
 }
 
-export default observer(ExerciseRecordsView)
+export default observer(ExerciseRecordStats)

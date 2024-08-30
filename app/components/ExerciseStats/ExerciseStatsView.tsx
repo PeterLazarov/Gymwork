@@ -2,19 +2,36 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 
-import { colors } from 'designSystem'
+import { Tabs, colors } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
 import EmptyState from '../EmptyState'
-import ExerciseRecordsView from './ExerciseRecordsView'
+import ExerciseRecordStats from './ExerciseRecordStats'
+import ExerciseHistoryStats from './ExerciseHistoryStats'
+import { translate } from 'app/i18n'
 
 const ExerciseStatsView: React.FC = () => {
   const { stateStore } = useStores()
 
+  const hasFocusedStep = !!stateStore.focusedStep
+
+  const tabs = [
+    {
+      name: 'records',
+      label: translate('records'),
+      component: ExerciseRecordStats,
+    },
+    {
+      name: 'history',
+      label: translate('history'),
+      component: ExerciseHistoryStats,
+    },
+  ]
+
   return (
     <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
-      {stateStore.focusedStepGuid && <ExerciseRecordsView />}
+      {hasFocusedStep && <Tabs tabsConfig={tabs} />}
 
-      {!stateStore.focusedStepGuid && (
+      {!hasFocusedStep && (
         <EmptyState text="Hold touch on exercise to view stats" />
       )}
     </View>

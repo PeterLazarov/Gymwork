@@ -2,9 +2,9 @@ import { DateTime } from 'luxon'
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import WorkoutExerciseSetList from '../WorkoutExerciseSetList'
 import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
 import { Divider, fontSize } from 'designSystem'
+import WorkoutExerciseSetList from 'app/components/WorkoutExercise/WorkoutExerciseSetList'
 
 type Props = {
   date: string

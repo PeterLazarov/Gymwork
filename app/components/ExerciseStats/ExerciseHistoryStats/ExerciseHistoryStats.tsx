@@ -5,15 +5,17 @@ import { View } from 'react-native'
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import WorkoutExerciseHistoryList from './WorkoutExerciseHistoryList'
+import WorkoutExerciseHistoryList from './ExerciseHistoryList'
 
-const WorkoutExerciseHistoryView: React.FC = () => {
-  const { workoutStore, stateStore } = useStores()
+const ExerciseHistoryView: React.FC = () => {
+  const { workoutStore, stateStore, recordStore } = useStores()
 
   const workoutsContained =
     workoutStore.exerciseWorkoutsHistoryMap[
-      stateStore.openedStep!.exercise.guid
+      stateStore.focusedStep!.exercise.guid
     ]
+  const focusedExerciseRecords =
+    recordStore.exerciseRecordsMap[stateStore.focusedStep!.exercise.guid]
 
   return (
     <View
@@ -26,11 +28,11 @@ const WorkoutExerciseHistoryView: React.FC = () => {
         flexGrow: 1,
       }}
     >
-      {stateStore.openedStep && workoutsContained.length > 0 ? (
+      {stateStore.focusedStep && workoutsContained.length > 0 ? (
         <WorkoutExerciseHistoryList
           workouts={workoutsContained}
-          records={stateStore.openedExerciseRecords}
-          exercise={stateStore.openedStep.exercise}
+          records={focusedExerciseRecords}
+          exercise={stateStore.focusedStep.exercise}
         />
       ) : (
         <EmptyState text={translate('historyLogEmpty')} />
@@ -39,4 +41,4 @@ const WorkoutExerciseHistoryView: React.FC = () => {
   )
 }
 
-export default observer(WorkoutExerciseHistoryView)
+export default observer(ExerciseHistoryView)
