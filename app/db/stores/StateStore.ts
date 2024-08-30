@@ -134,6 +134,7 @@ export const StateStoreModel = types
         step => getSnapshot(step)
       )
       self.openedWorkout?.setProp('steps', updatedSteps)
+      self.setProp('focusedStepGuid', newStep.guid)
     },
     setOpenedDate(date: string) {
       self.openedDate = date
