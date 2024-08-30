@@ -4,10 +4,10 @@ import { View } from 'react-native'
 
 import { Tabs, colors } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
+import { translate } from 'app/i18n'
 import EmptyState from '../EmptyState'
 import ExerciseRecordStats from './ExerciseRecordStats'
 import ExerciseHistoryStats from './ExerciseHistoryStats'
-import { translate } from 'app/i18n'
 import ExerciseChartStats from './ExerciseChartStats'
 
 const ExerciseStatsView: React.FC = () => {
@@ -42,7 +42,9 @@ const ExerciseStatsView: React.FC = () => {
         />
       )}
 
-      {!hasFocusedStep && <EmptyState text="Select exercise to view stats" />}
+      {!hasFocusedStep && (
+        <EmptyState text={translate('selectExerciseForStats')} />
+      )}
     </View>
   )
 }

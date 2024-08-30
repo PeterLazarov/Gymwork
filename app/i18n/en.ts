@@ -54,6 +54,8 @@ const en = {
   addComment: 'Add comment',
   selectedExerciseNumber: '{{number}} selected',
   includeSets: 'Include sets',
+  selectExerciseForStats: 'Select exercise to view stats',
+  selectExerciseForEdit: 'Select exercise to log your work',
 }
 
 export default en

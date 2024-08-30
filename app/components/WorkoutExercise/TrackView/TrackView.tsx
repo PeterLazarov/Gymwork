@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 
+import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import StepTrackForm from './StepTrackForm'
-import EmptyState from 'app/components/EmptyState'
+import { translate } from 'app/i18n'
 
 const TrackView: React.FC = () => {
   const { stateStore } = useStores()
@@ -14,7 +15,7 @@ const TrackView: React.FC = () => {
     <>
       {hasFocusedStep && <StepTrackForm />}
       {!hasFocusedStep && (
-        <EmptyState text="Select exercise to log your work" />
+        <EmptyState text={translate('selectExerciseForEdit')} />
       )}
     </>
   )
