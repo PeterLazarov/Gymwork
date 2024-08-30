@@ -15,14 +15,13 @@ type Props = {
 const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   const { stateStore, recordStore } = useStores()
 
-  const isSelected = useMemo(
-    () => computed(() => stateStore.focusedStepGuids.includes(step.guid)),
-    [stateStore.focusedStepGuids]
+  const isSelected = computed(
+    () => stateStore.focusedStepGuid === step.guid
   ).get()
 
   function onCardPress() {
     stateStore.setOpenedStep(step.guid)
-    navigate('WorkoutExercise')
+    navigate('WorkoutStep')
   }
 
   function onLongPress() {
@@ -34,7 +33,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   }
 
   const exerciseRecords = useMemo(
-    () => computed(() => recordStore.getExerciseRecords(step.exercise.guid)),
+    () => computed(() => recordStore.exerciseRecordsMap[step.exercise.guid]),
     [step.sets]
   ).get()
 

@@ -31,7 +31,7 @@ export const StateStoreModel = types
   .model('StateStore')
   .props({
     openedStepGuid: '',
-    focusedStepGuids: types.array(types.string),
+    focusedStepGuid: '',
     focusedSetGuid: '',
     openedDate: types.optional(types.string, today.toISODate()!),
     draftSet: types.maybe(WorkoutSetModel),
@@ -51,6 +51,9 @@ export const StateStoreModel = types
     },
     get openedStep() {
       return this.openedWorkout?.stepsMap[self.openedStepGuid]
+    },
+    get focusedStep() {
+      return this.openedWorkout?.stepsMap[self.focusedStepGuid]
     },
     get openedWorkout(): Workout | undefined {
       return this.workoutStore.dateWorkoutMap[self.openedDate]
@@ -145,42 +148,41 @@ export const StateStoreModel = types
     },
     setOpenedStep(stepGuid: string | null) {
       self.openedStepGuid = stepGuid ?? ''
-      self.setProp('focusedStepGuids', [])
+      self.setProp('focusedStepGuid', '')
       self.setProp('focusedSetGuid', '')
     },
     setOpenedDate(date: string) {
       self.openedDate = date
-      self.setProp('focusedStepGuids', [])
+      self.setProp('focusedStepGuid', '')
       self.setProp('focusedSetGuid', '')
     },
     incrementCurrentDate() {
       const luxonDate = DateTime.fromISO(self.openedDate)
       self.openedDate = luxonDate.plus({ days: 1 }).toISODate()!
-      self.setProp('focusedStepGuids', [])
+      self.setProp('focusedStepGuid', '')
     },
     decrementCurrentDate() {
       const luxonDate = DateTime.fromISO(self.openedDate)
       self.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
-      self.setProp('focusedStepGuids', [])
+      self.setProp('focusedStepGuid', '')
     },
     focusSet(guid: string) {
       self.setProp('focusedSetGuid', guid)
     },
     addFocusStep(guid: string) {
-      self.focusedStepGuids.push(guid)
+      self.focusedStepGuid = guid
     },
     removeFocusStep(guid: string) {
-      self.focusedStepGuids.remove(guid)
+      self.focusedStepGuid = ''
     },
     deleteSelectedExercises() {
-      self.focusedStepGuids.forEach(stepGuid => {
-        const step = self.openedWorkout!.stepsMap[stepGuid]
-        const sets = step.sets
-        sets?.forEach(set => {
-          self.workoutStore.removeSet(set.guid, step)
-        })
+      const step = self.openedWorkout!.stepsMap[self.focusedStepGuid]
+      const sets = step.sets
+      sets?.forEach(set => {
+        self.workoutStore.removeSet(set.guid, step)
       })
-      self.setProp('focusedStepGuids', [])
+      
+      self.setProp('focusedStepGuid', '')
     }
   }))
 

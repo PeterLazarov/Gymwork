@@ -10,7 +10,7 @@ import {
 type LockedProps = 'onScroll' | 'getItemLayout' | 'horizontal'
 
 type Props = Omit<FlashListProps<any>, LockedProps> & {
-  onScreenChange: (index: number) => void
+  onScreenChange?: (index: number) => void
 }
 
 const viewabilityConfig: ViewabilityConfig = {
@@ -36,7 +36,7 @@ const HorizontalScreenList = forwardRef<FlashList<any>, Props>(
     }) {
       const index = info?.viewableItems[0]?.index
       if (typeof index === 'number' && index >= 0) {
-        onScreenChange(index)
+        onScreenChange?.(index)
       }
     },
     [])

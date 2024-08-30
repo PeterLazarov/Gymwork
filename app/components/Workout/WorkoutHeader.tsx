@@ -21,10 +21,6 @@ const WorkoutHeader: React.FC = () => {
     () => computed(() => stateStore.openedWorkout?.notes !== ''),
     [stateStore.openedWorkout]
   ).get()
-  const focusedStepCount = useMemo(
-    () => computed(() => stateStore.focusedStepGuids.length),
-    [stateStore.focusedStepGuids, stateStore.openedWorkout]
-  ).get()
 
   function openCalendar() {
     navigate('Calendar')
@@ -53,15 +49,7 @@ const WorkoutHeader: React.FC = () => {
 
   return (
     <Header>
-      <Header.Title
-        title={
-          focusedStepCount > 0
-            ? translate('selectedExerciseNumber', {
-                number: focusedStepCount,
-              })
-            : 'Gymwork'
-        }
-      />
+      <Header.Title title={'Gymwork'} />
 
       {stateStore.openedWorkout && (
         <IconButton
@@ -75,7 +63,7 @@ const WorkoutHeader: React.FC = () => {
         </IconButton>
       )}
 
-      {focusedStepCount > 0 && (
+      {stateStore.focusedStepGuid && (
         <IconButton
           onPress={deleteSelectedExercises}
           underlay="darker"

@@ -27,7 +27,7 @@ import Workout from 'app/screens/Workout'
 import ExerciseSelect from 'app/screens/ExerciseSelect'
 import ExerciseCreate from 'app/screens/ExerciseCreate'
 import ExerciseEdit from 'app/screens/ExerciseEdit'
-import WorkoutExercise from 'app/screens/WorkoutExercise'
+import WorkoutStep from 'app/screens/WorkoutStep'
 import WorkoutFeedback from 'app/screens/WorkoutFeedback'
 import Calendar, { CalendarPageParams } from 'app/screens/Calendar'
 import Log from 'app/screens/Log'
@@ -51,7 +51,7 @@ export type AppStackParamList = {
   ExerciseEdit: undefined
   ExerciseSelect: undefined
   Workout: undefined
-  WorkoutExercise: undefined
+  WorkoutStep: undefined
   WorkoutFeedback: undefined
   Log: undefined
 }
@@ -113,8 +113,8 @@ const AppStack = observer(function AppStack() {
           component={Workout}
         />
         <Stack.Screen
-          name="WorkoutExercise"
-          component={WorkoutExercise}
+          name="WorkoutStep"
+          component={WorkoutStep}
         />
         <Stack.Screen
           name="WorkoutFeedback"
