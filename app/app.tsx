@@ -21,7 +21,7 @@ import { useInitialRootStore } from './db/helpers/useStores'
 import { AppNavigator, useNavigationPersistence } from './navigators'
 import './utils/ignoreWarnings'
 import * as storage from './utils/storage'
-import { ErrorBoundary } from './screens/ErrorScreen/ErrorBoundary'
+import { ErrorBoundary } from './screens/Error/ErrorBoundary'
 import { customFontsToLoad } from './theme'
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 

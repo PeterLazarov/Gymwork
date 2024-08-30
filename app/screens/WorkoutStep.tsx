@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { Menu } from 'react-native-paper'
 
-import WorkoutExerciseTrackView from 'app/components/WorkoutExercise/WorkoutExerciseTrackView'
+import TrackView from 'app/components/WorkoutExercise/TrackView'
 import ExerciseHistoryStats from 'app/components/ExerciseStats/ExerciseHistoryStats'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
 
-const WorkoutStepPage: React.FC = () => {
+const WorkoutStepScreen: React.FC = () => {
   const { stateStore } = useStores()
 
   const [menuOpen, setMenuOpen] = useState(false)
@@ -28,7 +28,7 @@ const WorkoutStepPage: React.FC = () => {
     {
       label: translate('track'),
       name: 'track',
-      component: WorkoutExerciseTrackView,
+      component: TrackView,
     },
     {
       label: translate('history'),
@@ -88,4 +88,4 @@ const WorkoutStepPage: React.FC = () => {
   )
 }
 
-export default WorkoutStepPage
+export default WorkoutStepScreen

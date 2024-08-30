@@ -2,16 +2,19 @@ import { translate } from 'app/i18n'
 import { ButtonText, Button } from 'designSystem'
 import { View } from 'react-native'
 
-export type WorkoutExerciseSetEditActionsProps = {
+export type SetEditActionsProps = {
   mode: 'edit' | 'add'
   onUpdate(): void
   onAdd(): void
   onRemove(): void
 }
 
-export const WorkoutExerciseSetEditActions: React.FC<
-  WorkoutExerciseSetEditActionsProps
-> = ({ mode, onAdd, onRemove, onUpdate }) => {
+export const SetEditActions: React.FC<SetEditActionsProps> = ({
+  mode,
+  onAdd,
+  onRemove,
+  onUpdate,
+}) => {
   return (
     <View style={{ flexDirection: 'row', gap: 4 }}>
       {mode === 'add' ? (

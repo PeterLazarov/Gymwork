@@ -3,22 +3,22 @@ import React, { useEffect, useState } from 'react'
 import { getSnapshot } from 'mobx-state-tree'
 import { View } from 'react-native'
 
-import WorkoutExerciseSetEditList from './WorkoutExerciseSetEditList'
-import WorkoutExerciseSetEditControls from './WorkoutExerciseSetEditControls'
+import SetEditList from './SetEditItemList'
+import SetEditControls from './SetEditControls'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet, WorkoutSetModel } from 'app/db/models'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
-import { WorkoutExerciseSetEditActions } from './WorkoutExerciseSetEditActions'
+import { SetEditActions } from './SetEditActions'
 import useTimer from 'app/db/stores/useTimer'
 
-const WorkoutExerciseTrackView: React.FC = () => {
+const TrackView: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
   const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
   const { exercise } = stateStore.openedStep!
   useEffect(() => {
-    const setToClone = selectedSet || stateStore.openedExerciseLastSet
+    const setToClone = selectedSet || stateStore.openedStepLastSet
 
     if (setToClone) {
       const { guid, exercise, ...rest } = setToClone
@@ -84,7 +84,7 @@ const WorkoutExerciseTrackView: React.FC = () => {
       }}
     >
       <View style={{ padding: 8, flex: 1 }}>
-        <WorkoutExerciseSetEditList
+        <SetEditList
           selectedSet={selectedSet}
           setSelectedSet={setSelectedSet}
         />
@@ -92,14 +92,14 @@ const WorkoutExerciseTrackView: React.FC = () => {
 
       {stateStore.draftSet && (
         <View style={{ paddingHorizontal: 8 }}>
-          <WorkoutExerciseSetEditControls
+          <SetEditControls
             value={stateStore.draftSet}
             onSubmit={handleAdd}
           />
         </View>
       )}
 
-      <WorkoutExerciseSetEditActions
+      <SetEditActions
         mode={selectedSet ? 'edit' : 'add'}
         onAdd={handleAdd}
         onUpdate={handleUpdate}
@@ -109,4 +109,4 @@ const WorkoutExerciseTrackView: React.FC = () => {
   )
 }
 
-export default observer(WorkoutExerciseTrackView)
+export default observer(TrackView)

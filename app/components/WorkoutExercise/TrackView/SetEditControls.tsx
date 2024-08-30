@@ -13,12 +13,12 @@ import convert from 'convert-units'
 import { observer } from 'mobx-react-lite'
 import Timer from 'app/components/Timer/Timer'
 
-type Props = {
+export type SetEditControlsProps = {
   value: WorkoutSet
   onSubmit(): void
 }
 
-const WorkoutExerciseSetEditControls: React.FC<Props> = ({
+const SetEditControls: React.FC<SetEditControlsProps> = ({
   value,
   onSubmit,
 }) => {
@@ -100,4 +100,4 @@ const WorkoutExerciseSetEditControls: React.FC<Props> = ({
   )
 }
 
-export default observer(WorkoutExerciseSetEditControls)
+export default observer(SetEditControls)

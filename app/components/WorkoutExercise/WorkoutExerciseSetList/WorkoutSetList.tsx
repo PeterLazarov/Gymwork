@@ -2,20 +2,15 @@ import React from 'react'
 import { observer } from 'mobx-react-lite'
 
 import SetListItem from './SetListItem'
-import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
+import { ExerciseRecord, WorkoutSet } from 'app/db/models'
 import { useStores } from 'app/db/helpers/useStores'
 
 type Props = {
   sets: WorkoutSet[]
-  exercise: Exercise
-  records: ExerciseRecord
+  records?: ExerciseRecord
 }
 
-const WorkoutExerciseSetList: React.FC<Props> = ({
-  sets,
-  exercise,
-  records,
-}) => {
+const WorkoutSetList: React.FC<Props> = ({ sets, records }) => {
   const { stateStore } = useStores()
 
   return (
@@ -24,7 +19,7 @@ const WorkoutExerciseSetList: React.FC<Props> = ({
         <SetListItem
           key={set.guid}
           set={set}
-          exercise={exercise!}
+          exercise={set.exercise!}
           isRecord={
             records ? records.recordSetsMap.hasOwnProperty(set.guid) : false
           }
@@ -36,4 +31,4 @@ const WorkoutExerciseSetList: React.FC<Props> = ({
   )
 }
 
-export default observer(WorkoutExerciseSetList)
+export default observer(WorkoutSetList)

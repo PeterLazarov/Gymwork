@@ -14,7 +14,7 @@ const noop = () => {}
 type Props = {
   onSelect?: (exercise: Exercise) => void
 }
-const AllExerciseSelect: React.FC<Props> = ({ onSelect }) => {
+const AllExercisesList: React.FC<Props> = ({ onSelect }) => {
   const { exerciseStore } = useStores()
 
   const [filterString, setFilterString] = useState('')
@@ -67,4 +67,4 @@ const AllExerciseSelect: React.FC<Props> = ({ onSelect }) => {
   )
 }
 
-export default observer(AllExerciseSelect)
+export default observer(AllExercisesList)

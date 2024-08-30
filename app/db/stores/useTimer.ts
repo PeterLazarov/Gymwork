@@ -102,21 +102,21 @@ export default function useTimer() {
   const timer = ctx || _useTimer()
 
   // TODO replace this with superset support
-  const lastExercise = useRef(stateStore.openedExerciseGuid)
+  const lastExercise = useRef(stateStore.openedStepGuid)
   useEffect(() => {
     if (!lastExercise.current) {
-      lastExercise.current = stateStore.openedExerciseGuid
+      lastExercise.current = stateStore.openedStepGuid
       return
     }
 
     if (
-      stateStore.openedExerciseGuid &&
-      stateStore.openedExerciseGuid !== lastExercise.current
+      stateStore.openedStepGuid &&
+      stateStore.openedStepGuid !== lastExercise.current
     ) {
-      lastExercise.current = stateStore.openedExerciseGuid
+      lastExercise.current = stateStore.openedStepGuid
       timer.clear()
     }
-  }, [stateStore.openedExerciseGuid])
+  }, [stateStore.openedStepGuid])
 
   return timer
 }

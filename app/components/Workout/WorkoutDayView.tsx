@@ -6,7 +6,7 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { colors } from 'designSystem'
-import WorkoutExerciseList from './WorkoutExerciseList'
+import WorkoutStepList from './WorkoutStepList'
 import DayControl from './DayControl'
 
 const WorkoutDayView: React.FC = () => {
@@ -18,7 +18,7 @@ const WorkoutDayView: React.FC = () => {
       <DayControl />
       <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
         {workout ? (
-          <WorkoutExerciseList workout={workout} />
+          <WorkoutStepList workout={workout} />
         ) : (
           <EmptyState
             text={translate('workoutLogEmpty') + stateStore.openedDate}

@@ -18,7 +18,7 @@ import {
 } from 'designSystem'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
-const ExerciseEditPage: React.FC = () => {
+const ExerciseEditScreen: React.FC = () => {
   const { stateStore, exerciseStore } = useStores()
 
   const [exercise, setExercise] = useState(stateStore.openedStep!.exercise)
@@ -97,4 +97,4 @@ const ExerciseEditPage: React.FC = () => {
     </>
   )
 }
-export default observer(ExerciseEditPage)
+export default observer(ExerciseEditScreen)

@@ -1,3 +1,3 @@
-import WorkoutExerciseSetList from './WorkoutExerciseSetList'
+import WorkoutSetList from './WorkoutSetList'
 
-export default WorkoutExerciseSetList
+export default WorkoutSetList

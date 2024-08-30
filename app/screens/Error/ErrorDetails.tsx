@@ -15,7 +15,7 @@ export interface ErrorDetailsProps {
  * @param {ErrorDetailsProps} props - The props for the `ErrorDetails` component.
  * @returns {JSX.Element} The rendered `ErrorDetails` component.
  */
-export function ErrorDetails(props: ErrorDetailsProps) {
+export function ErrorDetails(props: ErrorDetailsProps): JSX.Element {
   return (
     <View style={{ flex: 1, marginTop: 20 }}>
       <ScrollView

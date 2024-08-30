@@ -11,10 +11,10 @@ import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { Header, Icon, IconButton, colors, fontSize } from 'designSystem'
 import CalendarWorkoutModal from 'app/components/CalendarWorkoutModal'
 
-export type CalendarPageParams = {
+export type CalendarScreenParams = {
   copyWorkoutMode?: boolean
 }
-const CalendarPage: React.FC = () => {
+const CalendarScreen: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
 
   const { copyWorkoutMode } = useRouteParams('Calendar')
@@ -154,4 +154,4 @@ const CalendarPage: React.FC = () => {
   )
 }
 
-export default observer(CalendarPage)
+export default observer(CalendarScreen)

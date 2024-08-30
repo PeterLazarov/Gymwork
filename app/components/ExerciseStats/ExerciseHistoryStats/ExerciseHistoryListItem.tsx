@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 
 import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
 import { Divider, fontSize } from 'designSystem'
-import WorkoutExerciseSetList from 'app/components/WorkoutExercise/WorkoutExerciseSetList'
+import WorkoutSetList from 'app/components/WorkoutExercise/WorkoutExerciseSetList'
 
 type Props = {
   date: string
@@ -12,12 +12,7 @@ type Props = {
   records: ExerciseRecord
   exercise: Exercise
 }
-const WorkoutExerciseHistoryListItem: React.FC<Props> = ({
-  date,
-  sets,
-  records,
-  exercise,
-}) => {
+const ExerciseHistoryListItem: React.FC<Props> = ({ date, sets, records }) => {
   return (
     <View
       style={{ gap: 8, marginBottom: 12 }}
@@ -27,13 +22,12 @@ const WorkoutExerciseHistoryListItem: React.FC<Props> = ({
         {DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}
       </Text>
       <Divider orientation="horizontal" />
-      <WorkoutExerciseSetList
+      <WorkoutSetList
         sets={sets}
         records={records}
-        exercise={exercise}
       />
     </View>
   )
 }
 
-export default WorkoutExerciseHistoryListItem
+export default ExerciseHistoryListItem

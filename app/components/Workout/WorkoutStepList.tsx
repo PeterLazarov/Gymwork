@@ -9,7 +9,7 @@ type Props = {
   workout: Workout
 }
 
-const WorkoutExerciseList: React.FC<Props> = ({ workout }) => {
+const WorkoutStepList: React.FC<Props> = ({ workout }) => {
   const renderItem = ({ item }: ListRenderItemInfo<WorkoutStep>) => (
     <WorkoutExerciseCard step={item} />
   )
@@ -23,4 +23,4 @@ const WorkoutExerciseList: React.FC<Props> = ({ workout }) => {
     />
   )
 }
-export default observer(WorkoutExerciseList)
+export default observer(WorkoutStepList)

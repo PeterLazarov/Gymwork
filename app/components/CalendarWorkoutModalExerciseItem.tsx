@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 
-import WorkoutExerciseSetReadOnlyList from './WorkoutExercise/WorkoutExerciseSetList/WorkoutExerciseSetList'
+import WorkoutExerciseSetReadOnlyList from './WorkoutExercise/WorkoutExerciseSetList/WorkoutSetList'
 import { Exercise, WorkoutSet } from 'app/db/models'
 import { fontSize } from 'designSystem'
 
@@ -24,10 +24,7 @@ const CalendarWorkoutModalExerciseItem: React.FC<Props> = ({
       >
         {exercise.name}
       </Text>
-      <WorkoutExerciseSetReadOnlyList
-        exercise={exercise}
-        sets={sets}
-      />
+      <WorkoutExerciseSetReadOnlyList sets={sets} />
     </View>
   )
 }

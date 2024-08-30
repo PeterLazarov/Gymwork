@@ -1,9 +1,7 @@
 import { observer } from 'mobx-react-lite'
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { FlatList, View } from 'react-native'
-import { computed } from 'mobx'
-
-import WorkoutExerciseSetEditItem from './WorkoutExerciseSetEditItem'
+import SetEditItem from './SetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
 import { colors, Divider, Icon, PressableHighlight } from 'designSystem'
@@ -16,19 +14,8 @@ type Props = {
   setSelectedSet: (set: WorkoutSet | null) => void
 }
 
-const WorkoutExerciseSetEditList: React.FC<Props> = ({
-  selectedSet,
-  setSelectedSet,
-}) => {
+const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
   const { stateStore, workoutStore } = useStores()
-
-  const openedExerciseRecords = useMemo(
-    () =>
-      computed(() => {
-        return stateStore.openedExerciseRecords
-      }),
-    [stateStore.openedExerciseSets]
-  ).get()
 
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
@@ -41,9 +28,9 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
       onDragEnd,
       isActive,
     }: DragListRenderItemInfo<WorkoutSet>) => {
-      const isRecord = openedExerciseRecords.recordSetsMap.hasOwnProperty(
-        item.guid
-      )
+      const isRecord =
+        stateStore.openedExerciseRecords.recordSetsMap.hasOwnProperty(item.guid)
+
       return (
         <PressableHighlight
           style={{
@@ -68,7 +55,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
           >
             {isActive && <Icon icon="drag-horizontal-variant" />}
 
-            <WorkoutExerciseSetEditItem
+            <SetEditItem
               set={item}
               isFocused={selectedSet?.guid === item.guid}
               isRecord={isRecord}
@@ -79,7 +66,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
         </PressableHighlight>
       )
     },
-    [selectedSet, openedExerciseRecords.recordSetsMap]
+    [selectedSet, stateStore.openedExerciseRecords.recordSetsMap]
   )
 
   const ITEM_HEIGHT = 62
@@ -104,7 +91,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   const dragListRef = useRef<FlatList>(null)
 
   function calcWorkSetNumber(set: WorkoutSet) {
-    const workArrayIndex = stateStore.openedExerciseWorkSets.indexOf(set)
+    const workArrayIndex = stateStore.openedStepWorkSets.indexOf(set)
     return workArrayIndex + 1
   }
 
@@ -114,7 +101,7 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
   return (
     <>
       <DragList
-        data={stateStore.openedExerciseSets}
+        data={stateStore.openedStepSets}
         renderItem={renderItem}
         keyExtractor={set => set.guid}
         getItemLayout={getItemLayout}
@@ -126,11 +113,11 @@ const WorkoutExerciseSetEditList: React.FC<Props> = ({
         }
       />
 
-      {stateStore.openedExerciseSets.length === 0 && (
+      {stateStore.openedStepSets.length === 0 && (
         <EmptyState text={translate('noSetsEntered')} />
       )}
     </>
   )
 }
 
-export default observer(WorkoutExerciseSetEditList)
+export default observer(SetEditList)

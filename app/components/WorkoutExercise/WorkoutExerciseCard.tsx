@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import WorkoutExerciseSetList from './WorkoutExerciseSetList'
+import WorkoutSetList from './WorkoutExerciseSetList'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
 import { navigate } from 'app/navigators'
@@ -28,7 +28,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
     if (isSelected) {
       stateStore.removeFocusStep(step.guid)
     } else {
-      stateStore.addFocusStep(step.guid)
+      stateStore.focusStep(step.guid)
     }
   }
 
@@ -42,9 +42,8 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
       onPress={onCardPress}
       title={step.exercise.name}
       content={
-        <WorkoutExerciseSetList
+        <WorkoutSetList
           sets={step.sets}
-          exercise={step.exercise}
           records={exerciseRecords}
         />
       }

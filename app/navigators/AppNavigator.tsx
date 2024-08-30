@@ -18,19 +18,16 @@ import {
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { useColorScheme } from 'react-native'
-// import * as Screens from 'app/screens'
 import Config from '../config'
-// import { useStores } from '../models'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 import { colors } from 'app/theme'
 import Workout from 'app/screens/Workout'
 import ExerciseSelect from 'app/screens/ExerciseSelect'
-import ExerciseCreate from 'app/screens/ExerciseCreate'
+import ExerciseCreateScreen from 'app/screens/ExerciseCreate'
 import ExerciseEdit from 'app/screens/ExerciseEdit'
 import WorkoutStep from 'app/screens/WorkoutStep'
 import WorkoutFeedback from 'app/screens/WorkoutFeedback'
-import Calendar, { CalendarPageParams } from 'app/screens/Calendar'
-import Log from 'app/screens/Log'
+import Calendar, { CalendarScreenParams } from 'app/screens/Calendar'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -46,14 +43,13 @@ import Log from 'app/screens/Log'
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
 export type AppStackParamList = {
-  Calendar: CalendarPageParams
+  Calendar: CalendarScreenParams
   ExerciseCreate: undefined
   ExerciseEdit: undefined
   ExerciseSelect: undefined
   Workout: undefined
   WorkoutStep: undefined
   WorkoutFeedback: undefined
-  Log: undefined
 }
 
 export const useRouteParams = <T extends keyof AppStackParamList>(
@@ -98,7 +94,7 @@ const AppStack = observer(function AppStack() {
         />
         <Stack.Screen
           name="ExerciseCreate"
-          component={ExerciseCreate}
+          component={ExerciseCreateScreen}
         />
         <Stack.Screen
           name="ExerciseEdit"
@@ -119,10 +115,6 @@ const AppStack = observer(function AppStack() {
         <Stack.Screen
           name="WorkoutFeedback"
           component={WorkoutFeedback}
-        />
-        <Stack.Screen
-          name="Log"
-          component={Log}
         />
       </>
       {/* ) : (

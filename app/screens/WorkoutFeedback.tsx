@@ -19,7 +19,7 @@ import {
 } from 'designSystem'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
-const WorkoutFeedbackPage: React.FC = () => {
+const WorkoutFeedbackScreen: React.FC = () => {
   const { stateStore } = useStores()
 
   function onBackPress() {
@@ -86,4 +86,4 @@ const WorkoutFeedbackPage: React.FC = () => {
     </EmptyLayout>
   )
 }
-export default observer(WorkoutFeedbackPage)
+export default observer(WorkoutFeedbackScreen)

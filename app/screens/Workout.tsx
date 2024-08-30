@@ -16,7 +16,7 @@ type Screen = {
   component: FunctionComponent
 }
 
-const WorkoutPage: React.FC = () => {
+const WorkoutPageScreen: React.FC = () => {
   const { stateStore } = useStores()
   const flashList = useRef<FlashList<Screen>>(null)
 
@@ -50,4 +50,4 @@ const WorkoutPage: React.FC = () => {
     </EmptyLayout>
   )
 }
-export default observer(WorkoutPage)
+export default observer(WorkoutPageScreen)

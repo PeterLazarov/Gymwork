@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
-import WorkoutExerciseHistoryListItem from './ExerciseHistoryListItem'
+import ExerciseHistoryListItem from './ExerciseHistoryListItem'
 import { Exercise, ExerciseRecord, Workout } from 'app/db/models'
 
 type Props = {
@@ -19,7 +19,7 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({
       const sets = item.exerciseSetsMap[exercise.guid]
 
       return (
-        <WorkoutExerciseHistoryListItem
+        <ExerciseHistoryListItem
           key={item.guid}
           date={item.date}
           sets={sets}

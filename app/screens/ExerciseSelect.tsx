@@ -1,17 +1,18 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 
-import AllExerciseSelect from 'app/components/Exercise/AllExerciseSelect'
-import FavoriteExerciseSelect from 'app/components/Exercise/FavoriteExercisesList'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
+
 import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
+import FavoriteExercisesList from 'app/components/Exercise/FavoriteExercisesList'
+import AllExercisesList from 'app/components/Exercise/AllExercisesList'
 import MostUsedExercisesList from 'app/components/Exercise/MostUsedExercisesList'
 
-const ExerciseSelectPage: React.FC = () => {
+const ExerciseSelectScreen: React.FC = () => {
   const { stateStore } = useStores()
 
   function handleSelectExercise(exercise: Exercise) {
@@ -31,7 +32,7 @@ const ExerciseSelectPage: React.FC = () => {
     {
       label: translate('favorite'),
       name: 'tabFavorite',
-      component: FavoriteExerciseSelect,
+      component: FavoriteExercisesList,
       props: { onSelect: handleSelectExercise },
     },
     {
@@ -43,7 +44,7 @@ const ExerciseSelectPage: React.FC = () => {
     {
       label: translate('allExercises'),
       name: 'tabAll',
-      component: AllExerciseSelect,
+      component: AllExercisesList,
       props: { onSelect: handleSelectExercise },
     },
   ]
@@ -76,4 +77,4 @@ const ExerciseSelectPage: React.FC = () => {
     </EmptyLayout>
   )
 }
-export default observer(ExerciseSelectPage)
+export default observer(ExerciseSelectScreen)

@@ -18,7 +18,7 @@ import {
   colors,
 } from 'designSystem'
 
-const ExerciseCreate: React.FC = () => {
+const ExerciseCreateScreen: React.FC = () => {
   const { exerciseStore } = useStores()
 
   const [exercise, setExercise] = useState(ExerciseModel.create())
@@ -93,4 +93,4 @@ const ExerciseCreate: React.FC = () => {
     </>
   )
 }
-export default observer(ExerciseCreate)
+export default observer(ExerciseCreateScreen)

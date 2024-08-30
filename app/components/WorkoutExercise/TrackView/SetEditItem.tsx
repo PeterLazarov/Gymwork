@@ -16,7 +16,7 @@ type Props = {
   toggleSetWarmup: (set: WorkoutSet) => void
 }
 
-const WorkoutExerciseSetEditItem: React.FC<Props> = ({
+const SetEditItem: React.FC<Props> = ({
   set,
   isRecord,
   isFocused,
@@ -101,4 +101,4 @@ const WorkoutExerciseSetEditItem: React.FC<Props> = ({
   )
 }
 
-export default WorkoutExerciseSetEditItem
+export default SetEditItem

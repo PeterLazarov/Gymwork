@@ -66,26 +66,19 @@ export const StateStoreModel = types
         .map(id => this.exerciseStore.exercisesMap[id])
         .filter(Boolean)
     },
-    get openedExerciseSets(): WorkoutSet[] {
+    get openedStepSets(): WorkoutSet[] {
       const exerciseSets = this.openedStep!.sets
 
       return exerciseSets
     },
-
-    get openedExerciseLastSet(): WorkoutSet | undefined {
-      return this.openedExerciseSets.at(-1)
-    },
-
-    get openedExerciseSet(): WorkoutSet | undefined {
-      const exerciseSets = this.openedStep!.sets
-
-      return exerciseSets[exerciseSets.length - 1]
+    get openedStepLastSet(): WorkoutSet | undefined {
+      return this.openedStepSets.at(-1)
     },
     get openedExerciseRecords(): ExerciseRecord {
       return this.recordStore.getExerciseRecords(this.openedStep!.exercise.guid)
     },
-    get openedExerciseWorkSets(): WorkoutSet[] {
-      return this.openedExerciseSets.filter(s => !s.isWarmup)
+    get openedStepWorkSets(): WorkoutSet[] {
+      return this.openedStepSets.filter(s => !s.isWarmup)
     },
 
     get firstWorkout(): Workout | undefined {
@@ -127,8 +120,8 @@ export const StateStoreModel = types
 
       const item = self.openedStep!.sets[from]!
       const reorderedSets =
-        self.openedStep!.sets
-          // @ts-ignore
+        self
+          .openedStep!.sets // @ts-ignore
           .toSpliced(from, 1)
           .toSpliced(to, 0, item) ?? []
 
@@ -141,9 +134,10 @@ export const StateStoreModel = types
       const newStep = WorkoutStepModel.create({
         exercise: exercise.guid,
       })
-      const updatedSteps = [...(self.openedWorkout?.steps || []), newStep]
-        .map(step => getSnapshot(step))
-      self.openedWorkout?.setProp('steps',updatedSteps)
+      const updatedSteps = [...(self.openedWorkout?.steps || []), newStep].map(
+        step => getSnapshot(step)
+      )
+      self.openedWorkout?.setProp('steps', updatedSteps)
       self.openedStepGuid = newStep.guid
     },
     setOpenedStep(stepGuid: string | null) {
@@ -169,7 +163,7 @@ export const StateStoreModel = types
     focusSet(guid: string) {
       self.setProp('focusedSetGuid', guid)
     },
-    addFocusStep(guid: string) {
+    focusStep(guid: string) {
       self.focusedStepGuid = guid
     },
     removeFocusStep(guid: string) {
@@ -181,9 +175,9 @@ export const StateStoreModel = types
       sets?.forEach(set => {
         self.workoutStore.removeSet(set.guid, step)
       })
-      
+
       self.setProp('focusedStepGuid', '')
-    }
+    },
   }))
 
 export interface StateStore extends Instance<typeof StateStoreModel> {}
