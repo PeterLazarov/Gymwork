@@ -132,6 +132,7 @@ export const StateStoreModel = types
     },
     addStep(exercise: Exercise) {
       const newStep = WorkoutStepModel.create({
+        type: 'staightsets',
         exercise: exercise.guid,
       })
       const updatedSteps = [...(self.openedWorkout?.steps || []), newStep].map(

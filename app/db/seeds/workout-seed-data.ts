@@ -19,8 +19,9 @@ const cardioExerciseID = exerciseSeedData
   .findIndex(e => e.muscles.includes('cardio'))
   .toString()
 
-function generateStep(sets: WorkoutSetSnapshotIn[]) {
+function generateStep(sets: WorkoutSetSnapshotIn[]): WorkoutStepSnapshotIn {
   return {
+    type: 'staightsets',
     sets,
   }
 }
