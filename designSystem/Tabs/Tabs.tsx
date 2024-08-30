@@ -9,12 +9,14 @@ type Props = {
   tabsConfig: TabConfig[]
   initialActiveIndex?: number
   onTabChange?: (name: string) => void
+  headerSize?: 'md' | 'lg'
 }
 const Tabs: React.FC<Props> = ({
   style,
   tabsConfig,
   initialActiveIndex = 0,
   onTabChange,
+  headerSize = 'md',
 }) => {
   const [activeIndex, setActiveIndex] = useState(initialActiveIndex)
   const ActiveTabComponent = useMemo(
@@ -37,6 +39,7 @@ const Tabs: React.FC<Props> = ({
         tabsConfig={tabsConfig}
         currentIndex={activeIndex}
         onHeaderPress={onTabPress}
+        headerSize={headerSize}
       />
       <ActiveTabComponent />
     </View>

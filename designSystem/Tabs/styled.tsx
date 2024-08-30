@@ -11,6 +11,7 @@ export const TabHeaderTouchable = styled.TouchableOpacity`
   padding-right: 5px;
   flex: 1;
   align-items: center;
+  justify-content: center;
 `
 TabHeaderTouchable.displayName = 'TabHeaderTouchable'
 

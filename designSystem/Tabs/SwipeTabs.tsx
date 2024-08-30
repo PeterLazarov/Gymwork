@@ -18,6 +18,7 @@ type Props = {
   onTabChange?: (name: string) => void
   keyboardDismissOnScroll?: boolean
   flashlistProps?: Partial<FlashListProps<TabConfig>>
+  headerSize?: 'md' | 'lg'
 }
 const SwipeTabs: React.FC<Props> = ({
   style,
@@ -27,6 +28,7 @@ const SwipeTabs: React.FC<Props> = ({
   onTabChange,
   keyboardDismissOnScroll,
   flashlistProps,
+  headerSize = 'md',
 }) => {
   const flashList = useRef<FlashList<TabConfig>>(null)
   const [currentIndex, setCurrentIndex] = useState(initialScrollIndex || 0)
@@ -60,6 +62,7 @@ const SwipeTabs: React.FC<Props> = ({
         tabsConfig={tabsConfig}
         currentIndex={currentIndex}
         onHeaderPress={onTabPress}
+        headerSize={headerSize}
       />
       {children}
       <HorizontalScreenList

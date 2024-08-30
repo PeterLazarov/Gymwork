@@ -37,7 +37,12 @@ const ExerciseStatsView: React.FC = () => {
 
   return (
     <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
-      {hasFocusedStep && <Tabs tabsConfig={tabs} />}
+      {hasFocusedStep && (
+        <Tabs
+          tabsConfig={tabs}
+          headerSize="lg"
+        />
+      )}
 
       {!hasFocusedStep && (
         <EmptyState text="Hold touch on exercise to view stats" />
