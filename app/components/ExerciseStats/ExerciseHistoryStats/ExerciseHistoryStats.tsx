@@ -6,14 +6,11 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import WorkoutExerciseHistoryList from './ExerciseHistoryList'
-import { Exercise } from 'app/db/models'
 
-type Props = {
-  exercise?: Exercise
-}
-const ExerciseHistoryView: React.FC<Props> = ({ exercise }) => {
-  const { workoutStore, recordStore } = useStores()
+const ExerciseHistoryView: React.FC = () => {
+  const { stateStore, workoutStore, recordStore } = useStores()
 
+  const exercise = stateStore.focusedStep?.exercise
   const workoutsContained = exercise
     ? workoutStore.exerciseWorkoutsHistoryMap[exercise.guid]
     : []
