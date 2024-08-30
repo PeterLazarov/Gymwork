@@ -1,7 +1,11 @@
 import { DateTime } from 'luxon'
 
 import exerciseSeedData from './exercises-seed-data.json'
-import { WorkoutSetSnapshotIn, WorkoutSnapshotIn, WorkoutStepSnapshotIn } from '../models'
+import {
+  WorkoutSetSnapshotIn,
+  WorkoutSnapshotIn,
+  WorkoutStepSnapshotIn,
+} from '../models'
 import convert from 'convert-units'
 const numberOfWorkouts = 100
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
@@ -15,10 +19,9 @@ const cardioExerciseID = exerciseSeedData
   .findIndex(e => e.muscles.includes('cardio'))
   .toString()
 
-function generateStep(exercise: string, sets: WorkoutSetSnapshotIn[]) {
+function generateStep(sets: WorkoutSetSnapshotIn[]) {
   return {
-    exercise,
-    sets
+    sets,
   }
 }
 
@@ -37,11 +40,11 @@ const generateRandomExercises = (date: string) => {
       date,
     }))
 
-    return generateStep(exercise, sets)
+    return generateStep(sets)
   })
 }
 
-const generateSteps = (date: string): WorkoutSetSnapshotIn[] => {
+const generateSteps = (date: string): WorkoutStepSnapshotIn[] => {
   const workoutStart = DateTime.fromISO(date).set({
     hour: 8,
     minute: 0,
@@ -69,7 +72,7 @@ const generateSteps = (date: string): WorkoutSetSnapshotIn[] => {
         .toJSDate(),
     }
   })
-  const benchStep = generateStep('44', benchSets)
+  const benchStep = generateStep(benchSets)
 
   const cardioSets = Array.from({ length: between(1, 2) }).map((_, i) => {
     const km = between(1, 3)
@@ -85,7 +88,7 @@ const generateSteps = (date: string): WorkoutSetSnapshotIn[] => {
       date,
     } as WorkoutSetSnapshotIn
   })
-  const cardioStep = generateStep(cardioExerciseID, cardioSets)
+  const cardioStep = generateStep(cardioSets)
 
   return generateRandomExercises(date).concat(benchStep, cardioStep).reverse()
 }
