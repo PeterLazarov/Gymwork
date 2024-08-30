@@ -17,7 +17,7 @@ const ExerciseSelectScreen: React.FC = () => {
 
   function handleSelectExercise(exercise: Exercise) {
     stateStore.addStep(exercise)
-    navigate('WorkoutStep')
+    navigate('Workout')
   }
 
   function onBackPress() {

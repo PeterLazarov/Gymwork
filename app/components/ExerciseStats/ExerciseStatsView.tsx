@@ -44,9 +44,7 @@ const ExerciseStatsView: React.FC = () => {
         />
       )}
 
-      {!hasFocusedStep && (
-        <EmptyState text="Hold touch on exercise to view stats" />
-      )}
+      {!hasFocusedStep && <EmptyState text="Select exercise to view stats" />}
     </View>
   )
 }
