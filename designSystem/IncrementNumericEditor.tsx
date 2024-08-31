@@ -23,6 +23,7 @@ const IncrementNumericEditor = forwardRef<TextInput, Props>(
         step={step}
       >
         <NumberInput
+          dense
           onChange={onChange}
           value={value}
           onSubmit={onSubmit}

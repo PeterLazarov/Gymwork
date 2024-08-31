@@ -17,7 +17,7 @@ const IncrementalButtons: React.FC<Props> = ({
 }) => {
   const btnStyle: StyleProp<ViewStyle> = {
     backgroundColor: colors.primaryLight,
-    padding: 4,
+    padding: 7,
     justifyContent: 'center',
     alignItems: 'center',
     aspectRatio: 1,
@@ -39,7 +39,7 @@ const IncrementalButtons: React.FC<Props> = ({
           color={colors.iconText}
         />
       </PressableHighlight>
-      <View style={{ flexGrow: 1 }}>{children}</View>
+      <View style={{ flexGrow: 1, paddingHorizontal: 4 }}>{children}</View>
       <PressableHighlight
         onPress={() => onChange(value + (step ?? 1))}
         style={btnStyle}
