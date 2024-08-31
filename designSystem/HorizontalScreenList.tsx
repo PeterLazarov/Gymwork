@@ -7,11 +7,14 @@ import { useSharedValue } from 'react-native-reanimated'
 import { forwardRef } from 'react'
 
 type LockedProps = 'width' | 'mode' | 'vertical' | 'modeConfig'
-type Props = Omit<TCarouselProps, LockedProps> & {
+export type HorizontalScreenListProps = Omit<TCarouselProps, LockedProps> & {
   onScreenChange?: (index: number) => void
 }
 
-const HorizontalScreenList = forwardRef<ICarouselInstance, Props>(
+const HorizontalScreenList = forwardRef<
+  ICarouselInstance,
+  HorizontalScreenListProps
+>(
   (
     {
       onScreenChange,

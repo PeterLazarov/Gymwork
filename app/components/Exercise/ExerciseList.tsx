@@ -3,23 +3,29 @@ import React from 'react'
 
 import ExerciseListItem from './ExerciseListItem'
 import { Exercise } from 'app/db/models'
-import { ScrollView } from 'react-native'
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
 type Props = {
   exercises: Exercise[]
   onSelect: (exercise: Exercise) => void
 }
 const ExerciseList: React.FC<Props> = ({ exercises, onSelect }) => {
+  const renderItem = ({ item }: ListRenderItemInfo<Exercise>) => {
+    return (
+      <ExerciseListItem
+        exercise={item}
+        onSelect={onSelect}
+      />
+    )
+  }
+
   return (
-    <ScrollView>
-      {exercises.map(exercise => (
-        <ExerciseListItem
-          key={exercise.guid}
-          exercise={exercise}
-          onSelect={onSelect}
-        />
-      ))}
-    </ScrollView>
+    <FlashList
+      data={exercises}
+      renderItem={renderItem}
+      keyExtractor={exercise => exercise.guid}
+      estimatedItemSize={69}
+    />
   )
 }
 

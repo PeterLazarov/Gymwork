@@ -1,43 +1,41 @@
 import React, { ReactNode, useRef, useState } from 'react'
-import {
-  FlatList,
-  FlatListProps,
-  Keyboard,
-  ListRenderItemInfo,
-  View,
-} from 'react-native'
+import { FlatListProps, Keyboard, ListRenderItemInfo, View } from 'react-native'
+import type { ICarouselInstance } from 'react-native-reanimated-carousel'
+import { CarouselRenderItem } from 'react-native-reanimated-carousel'
 
 import TabHeaderPanel from './TabHeaderPanel'
 import { TabConfig, TabStyles } from './types'
-import HorizontalScreenList from '../HorizontalScreenList'
+import HorizontalScreenList, {
+  HorizontalScreenListProps,
+} from '../HorizontalScreenList'
 
 type Props = {
   style?: TabStyles
   tabsConfig: TabConfig[]
-  initialScrollIndex?: number
+  defaultIndex?: number
   children?: ReactNode
   onTabChange?: (name: string) => void
   keyboardDismissOnScroll?: boolean
-  flashlistProps?: Partial<FlatListProps<TabConfig>>
+  screenlistProps?: Partial<HorizontalScreenListProps>
   headerSize?: 'md' | 'lg'
 }
 const SwipeTabs: React.FC<Props> = ({
   style,
   tabsConfig,
-  initialScrollIndex,
+  defaultIndex,
   children,
   onTabChange,
   keyboardDismissOnScroll,
-  flashlistProps,
+  screenlistProps,
   headerSize = 'md',
 }) => {
-  const flashList = useRef<FlatList<TabConfig>>(null)
-  const [currentIndex, setCurrentIndex] = useState(initialScrollIndex || 0)
+  const tabsList = useRef<ICarouselInstance>(null)
+  const [currentIndex, setCurrentIndex] = useState(defaultIndex || 0)
 
   const onTabPress = (index: number) => {
     if (keyboardDismissOnScroll) Keyboard.dismiss()
 
-    flashList.current?.scrollToIndex({ index })
+    tabsList.current?.scrollTo({ index })
   }
 
   const onScreenChange = (index: number) => {
@@ -46,10 +44,10 @@ const SwipeTabs: React.FC<Props> = ({
     onTabChange?.(tab)
   }
 
-  const renderItem = ({
+  const renderItem: CarouselRenderItem<TabConfig> = ({
     item: { component: Component, props = {} },
     index,
-  }: ListRenderItemInfo<TabConfig>) => (
+  }) => (
     <Component
       {...props}
       key={index}
@@ -67,12 +65,12 @@ const SwipeTabs: React.FC<Props> = ({
       />
       {children}
       <HorizontalScreenList
-        ref={flashList}
+        ref={tabsList}
         onScreenChange={onScreenChange}
         data={tabsConfig}
         renderItem={renderItem}
-        initialScrollIndex={initialScrollIndex}
-        {...flashlistProps}
+        defaultIndex={defaultIndex}
+        {...screenlistProps}
       />
     </View>
   )

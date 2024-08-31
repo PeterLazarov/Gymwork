@@ -19,7 +19,6 @@
 - optimise calendar rendering
 - grouping / measurement by rest
 - fix Speed chart miscalculation
-- use normal speed units
 
 Performance to beat -
 100 workouts
