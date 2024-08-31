@@ -1,6 +1,4 @@
-import { destroy, getSnapshot } from 'mobx-state-tree'
-
-import { ExerciseRecord, WorkoutSet, WorkoutSetSnapshotIn } from 'app/db/models'
+import { ExerciseRecord, WorkoutSetSnapshotIn } from 'app/db/models'
 
 export const removeWeakAssRecords = (
   exerciseAllRecords: ExerciseRecord
@@ -28,53 +26,6 @@ export const removeWeakAssRecords = (
       lastRecord = record
     }
   }
-}
-
-export const isNewRecord = (records: ExerciseRecord, set: WorkoutSet) => {
-  const currentRecord = records.groupingRecordMap[set.groupingValue]
-  return !currentRecord || set.isBetterThan(currentRecord)
-}
-
-export const updateRecordsWithLatestBest = (
-  records: ExerciseRecord,
-  newRecord: WorkoutSet
-): WorkoutSetSnapshotIn[] => {
-  const currentRecord = records.groupingRecordMap[newRecord.groupingValue]
-
-  const recordSets = records.recordSets.map(record => getSnapshot(record))
-  const newRecordSnapshot = getSnapshot(newRecord)
-
-  if (currentRecord) {
-    const index = records.recordSets.indexOf(currentRecord)
-    recordSets[index] = newRecordSnapshot
-    destroy(currentRecord)
-  } else {
-    recordSets.push(newRecordSnapshot)
-  }
-
-  return recordSets
-}
-
-export const updateRecordsIfNecessary = (
-  recordSets: WorkoutSet[],
-  setToCompare: WorkoutSet
-): WorkoutSet[] => {
-  const grouping = getDataFieldForKey(setToCompare.exercise.groupRecordsBy)
-  const currentRecordIndex = recordSets!.findIndex(
-    s => s[grouping] === setToCompare.groupingValue
-  )
-
-  const updatedRecords = recordSets
-  if (currentRecordIndex !== -1) {
-    const currentRecord = updatedRecords[currentRecordIndex]
-    if (setToCompare.isBetterThan(currentRecord)) {
-      updatedRecords.splice(currentRecordIndex, 1, setToCompare)
-    }
-  } else {
-    updatedRecords.push(setToCompare)
-  }
-
-  return updatedRecords
 }
 
 export const getDataFieldForKey = (key: string): keyof WorkoutSetSnapshotIn => {

@@ -1,9 +1,9 @@
-import { Instance, SnapshotIn, SnapshotOut, getParent, getSnapshot, types } from 'mobx-state-tree'
+import { Instance, SnapshotIn, SnapshotOut, getParentOfType, getSnapshot, types } from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
-import { RootStore } from 'app/db/stores/RootStore'
+import { RootStoreModel } from 'app/db/stores/RootStore'
 import { ExerciseModel } from './Exercise'
 import { WorkoutSet, WorkoutSetModel, WorkoutSetSnapshotIn } from './WorkoutSet'
 import { RecordStore } from '../stores/RecordStore'
@@ -18,8 +18,7 @@ export const WorkoutStepModel = types
   })
   .views(step => ({
     get recordStore(): RecordStore {
-      const rootStore = getParent(step) as RootStore
-
+      const rootStore = getParentOfType(step, RootStoreModel)
       return rootStore.recordStore
     },
     get exerciseRecords() {
@@ -52,9 +51,8 @@ export const WorkoutStepModel = types
 
         if (isRecordBool) {
           const grouping = getDataFieldForKey(exercise.groupRecordsBy)
-          step.recordStore.recalculateGroupingRecordsForExercise(
-            deletedSetSnapshot[grouping],
-            records
+          records.recalculateGroupingRecords(
+            deletedSetSnapshot[grouping]
           )
         }
       }
@@ -73,9 +71,8 @@ export const WorkoutStepModel = types
       setToUpdate.mergeUpdate(updatedSetData)
 
       if (isOldSetRecord) {
-        step.recordStore.recalculateGroupingRecordsForExercise(
-          oldGroupingValue,
-          records
+        records.recalculateGroupingRecords(
+          oldGroupingValue
         )
       }
 

@@ -116,12 +116,6 @@ export const StateStoreModel = types
       self.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
       self.setProp('focusedStepGuid', '')
     },
-    focusSet(guid: string) {
-      self.setProp('focusedSetGuid', guid)
-    },
-    setFocusStep(guid: string) {
-      self.focusedStepGuid = guid
-    },
   }))
 
 export interface StateStore extends Instance<typeof StateStoreModel> {}

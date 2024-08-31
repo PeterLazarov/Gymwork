@@ -2,7 +2,6 @@ import {
   Instance,
   SnapshotOut,
   getParent,
-  getSnapshot,
   types,
 } from 'mobx-state-tree'
 
@@ -17,10 +16,7 @@ import {
 } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
 import {
-  updateRecordsWithLatestBest,
-  isNewRecord,
   removeWeakAssRecords,
-  updateRecordsIfNecessary,
 } from 'app/services/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
 
@@ -80,37 +76,10 @@ export const RecordStoreModel = types
     runSetUpdatedCheck(updatedSet: WorkoutSet) {
       const records = self.exerciseRecordsMap[updatedSet.exercise.guid]
 
-      const isNewRecordBool = isNewRecord(records, updatedSet)
+      const isNewRecordBool = records.isNewRecord(updatedSet)
       if (isNewRecordBool) {
-        const updatedRecords = updateRecordsWithLatestBest(records, updatedSet)
-
-        records.setProp('recordSets', updatedRecords)
+        records.setNewRecord(updatedSet)
       }
-    },
-    recalculateGroupingRecordsForExercise(
-      groupingToRefresh: number,
-      oldExerciseRecords: ExerciseRecord
-    ) {
-      let refreshedRecords = oldExerciseRecords.recordSets.filter(recordSet => {
-        return recordSet.groupingValue !== groupingToRefresh
-      })
-
-      const sortedWorkouts = self.rootStore.workoutStore.sortedWorkouts
-      sortedWorkouts.forEach(workout => {
-        const exerciseSets =
-          workout.exerciseSetsMap[oldExerciseRecords.exercise.guid]
-
-        exerciseSets?.forEach(set => {
-          if (set.groupingValue === groupingToRefresh) {
-            refreshedRecords = updateRecordsIfNecessary(refreshedRecords, set)
-          }
-        })
-      })
-
-      const refreshedRecordSnapshots = refreshedRecords.map(record =>
-        getSnapshot(record)
-      )
-      oldExerciseRecords.setProp('recordSets', refreshedRecordSnapshots)
     },
   }))
 

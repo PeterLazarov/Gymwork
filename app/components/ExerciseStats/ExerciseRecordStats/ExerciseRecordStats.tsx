@@ -31,7 +31,7 @@ const ExerciseRecordStats: React.FC = () => {
 
   function goToDate(set: WorkoutSet) {
     stateStore.setOpenedDate(set.date)
-    stateStore.focusSet(set.guid)
+    stateStore.setProp('focusedSetGuid', set.guid)
     navigate('Workout')
   }
 
