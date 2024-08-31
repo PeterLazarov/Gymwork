@@ -33,7 +33,7 @@ export default function useBenchmark() {
     // open bench press
     const benchPress = exerciseStore.exercisesMap['44']
     const newStep = stateStore.openedWorkout!.addStep(benchPress)
-    stateStore.setProp('focusedStepGuid', newStep.guid)
+    stateStore.setFocusedStep(newStep.guid)
 
     await delay(1000)
 
