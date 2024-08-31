@@ -30,10 +30,6 @@ const WorkoutHeader: React.FC = () => {
     navigate('WorkoutFeedback')
   }
 
-  const deleteSelectedExercises = () => {
-    stateStore.deleteSelectedExercises()
-  }
-
   const exportData = () => {
     setMenuOpen(false)
 
@@ -59,18 +55,6 @@ const WorkoutHeader: React.FC = () => {
           <Icon
             color={colors.primaryText}
             icon={hasNotes ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'}
-          />
-        </IconButton>
-      )}
-
-      {stateStore.focusedStepGuid && (
-        <IconButton
-          onPress={deleteSelectedExercises}
-          underlay="darker"
-        >
-          <Icon
-            icon="delete"
-            color={colors.primaryText}
           />
         </IconButton>
       )}
