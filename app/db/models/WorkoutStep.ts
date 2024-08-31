@@ -1,4 +1,11 @@
-import { Instance, SnapshotIn, SnapshotOut, getParentOfType, getSnapshot, types } from 'mobx-state-tree'
+import {
+  Instance,
+  SnapshotIn,
+  SnapshotOut,
+  getParentOfType,
+  getSnapshot,
+  types,
+} from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -14,7 +21,7 @@ export const WorkoutStepModel = types
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
     sets: types.array(WorkoutSetModel),
-    exercise: types.reference(ExerciseModel)
+    exercise: types.reference(ExerciseModel),
   })
   .views(step => ({
     get recordStore(): RecordStore {
@@ -22,10 +29,8 @@ export const WorkoutStepModel = types
       return rootStore.recordStore
     },
     get exerciseRecords() {
-      return this.recordStore.getExerciseRecords(
-        step.exercise.guid
-      )
-    }
+      return this.recordStore.getExerciseRecords(step.exercise.guid)
+    },
   }))
   .actions(withSetPropAction)
   .actions(step => ({
@@ -34,9 +39,7 @@ export const WorkoutStepModel = types
       step.recordStore.runSetUpdatedCheck(newSet)
     },
     removeSet(setGuid: WorkoutSet['guid']) {
-      const deletedSetIndex = step.sets.findIndex(
-        s => s.guid === setGuid
-      )
+      const deletedSetIndex = step.sets.findIndex(s => s.guid === setGuid)
       const deletedSet = step.sets[deletedSetIndex]
       if (deletedSet) {
         const { exercise } = deletedSet
@@ -51,9 +54,7 @@ export const WorkoutStepModel = types
 
         if (isRecordBool) {
           const grouping = getDataFieldForKey(exercise.groupRecordsBy)
-          records.recalculateGroupingRecords(
-            deletedSetSnapshot[grouping]
-          )
+          records.recalculateGroupingRecords(deletedSetSnapshot[grouping])
         }
       }
     },
@@ -71,9 +72,7 @@ export const WorkoutStepModel = types
       setToUpdate.mergeUpdate(updatedSetData)
 
       if (isOldSetRecord) {
-        records.recalculateGroupingRecords(
-          oldGroupingValue
-        )
+        records.recalculateGroupingRecords(oldGroupingValue)
       }
 
       if (!isOldSetRecord || setToUpdate.groupingValue !== oldGroupingValue) {

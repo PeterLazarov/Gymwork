@@ -3,7 +3,11 @@ import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import { ExerciseMeasurementModel, measurementDefaults, measurementName } from './ExerciseMeasurement'
+import {
+  ExerciseMeasurementModel,
+  measurementDefaults,
+  measurementName,
+} from './ExerciseMeasurement'
 
 // Should we group by multiple?
 const groupingCombinations: Array<{
@@ -89,8 +93,7 @@ export const ExerciseModel = types
 
       const combination = groupingCombinations.find(cfg => {
         if (
-          exerciseMeasurementNames
-            .every(name => cfg.measurement.includes(name))
+          exerciseMeasurementNames.every(name => cfg.measurement.includes(name))
         ) {
           return cfg.groupBy
         }
@@ -105,8 +108,7 @@ export const ExerciseModel = types
 
       const combination = measurementCombinations.find(cfg => {
         if (
-          exerciseMeasurementNames
-            .every(name => cfg.measurement.includes(name))
+          exerciseMeasurementNames.every(name => cfg.measurement.includes(name))
         ) {
           return cfg.measureBy
         }

@@ -1,9 +1,4 @@
-import {
-  Instance,
-  SnapshotOut,
-  getParent,
-  types,
-} from 'mobx-state-tree'
+import { Instance, SnapshotOut, getParent, types } from 'mobx-state-tree'
 
 import * as storage from 'app/utils/storage'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
@@ -15,9 +10,7 @@ import {
   WorkoutSet,
 } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
-import {
-  removeWeakAssRecords,
-} from 'app/services/workoutRecordsCalculator'
+import { removeWeakAssRecords } from 'app/services/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
 
 export const RecordStoreModel = types

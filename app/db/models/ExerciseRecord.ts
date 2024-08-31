@@ -1,4 +1,12 @@
-import { Instance, SnapshotIn, SnapshotOut, destroy, getParentOfType, getSnapshot, types } from 'mobx-state-tree'
+import {
+  Instance,
+  SnapshotIn,
+  SnapshotOut,
+  destroy,
+  getParentOfType,
+  getSnapshot,
+  types,
+} from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -45,9 +53,12 @@ export const ExerciseRecordModel = types
       return !currentRecord || set.isBetterThan(currentRecord)
     },
     setNewRecord(newRecord: WorkoutSet) {
-      const currentRecord = exerciseRecords.groupingRecordMap[newRecord.groupingValue]
+      const currentRecord =
+        exerciseRecords.groupingRecordMap[newRecord.groupingValue]
 
-      const recordSets = exerciseRecords.recordSets.map(record => getSnapshot(record))
+      const recordSets = exerciseRecords.recordSets.map(record =>
+        getSnapshot(record)
+      )
       const newRecordSnapshot = getSnapshot(newRecord)
 
       if (currentRecord) {
@@ -60,16 +71,18 @@ export const ExerciseRecordModel = types
 
       exerciseRecords.setProp('recordSets', recordSets)
     },
-    recalculateGroupingRecords(
-      groupingToRefresh: number
-    ) {
+    recalculateGroupingRecords(groupingToRefresh: number) {
       let refreshedRecords = exerciseRecords.recordSets.filter(recordSet => {
         return recordSet.groupingValue !== groupingToRefresh
       })
-      
-      const grouping = getDataFieldForKey(exerciseRecords.exercise.groupRecordsBy)
+
+      const grouping = getDataFieldForKey(
+        exerciseRecords.exercise.groupRecordsBy
+      )
       const exerciseSets =
-      exerciseRecords.workoutStore.exerciseSetsHistoryMap[exerciseRecords.exercise.guid] || []
+        exerciseRecords.workoutStore.exerciseSetsHistoryMap[
+          exerciseRecords.exercise.guid
+        ] || []
 
       exerciseSets.forEach(set => {
         if (set.groupingValue === groupingToRefresh) {
@@ -79,7 +92,7 @@ export const ExerciseRecordModel = types
           if (currentRecordIndex !== -1) {
             const currentRecord = refreshedRecords[currentRecordIndex]
             if (set.isBetterThan(currentRecord)) {
-              refreshedRecords[currentRecordIndex] = set;
+              refreshedRecords[currentRecordIndex] = set
             }
           } else {
             refreshedRecords.push(set)

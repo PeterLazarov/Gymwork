@@ -55,8 +55,11 @@ export const WorkoutStoreModel = types
     /** @returns all sets performed ever */
     get exerciseSetsHistoryMap(): Record<Exercise['guid'], WorkoutSet[]> {
       return Object.fromEntries(
-        Object.entries(this.exerciseWorkoutsHistoryMap).map(([exerciseID, workouts]) => {
-          const sets = workouts.flatMap<WorkoutSet>(w => w.exerciseSetsMap[exerciseID])
+        Object.entries(this.exerciseWorkoutsHistoryMap).map(
+          ([exerciseID, workouts]) => {
+            const sets = workouts.flatMap<WorkoutSet>(
+              w => w.exerciseSetsMap[exerciseID]
+            )
 
             return [exerciseID, sets]
           }
@@ -65,7 +68,7 @@ export const WorkoutStoreModel = types
     },
     get mostUsedExercises(): Exercise[] {
       const sortedExercises = Object.values(this.exerciseSetsHistoryMap)
-        .map((sets) => ({
+        .map(sets => ({
           exercise: sets[0].exercise,
           count: sets.length,
         }))
@@ -112,12 +115,10 @@ export const WorkoutStoreModel = types
     },
     copyWorkout(template: Workout, includeSets: boolean) {
       const getCleanedSets = (sets: WorkoutSet[]): WorkoutSetSnapshotIn[] => {
-        return sets.map(
-          ({ guid, exercise, ...otherProps }) => ({
-            exercise: exercise.guid,
-            ...otherProps,
-          })
-        )
+        return sets.map(({ guid, exercise, ...otherProps }) => ({
+          exercise: exercise.guid,
+          ...otherProps,
+        }))
       }
 
       const cleanedSteps: WorkoutStepSnapshotIn[] = template.steps.map(

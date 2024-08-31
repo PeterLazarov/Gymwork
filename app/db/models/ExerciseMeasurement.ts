@@ -27,7 +27,8 @@ export const measurementUnits = {
   },
 } as const
 
-export type DistanceUnit = (typeof measurementUnits.distance)[keyof typeof measurementUnits.distance]
+export type DistanceUnit =
+  (typeof measurementUnits.distance)[keyof typeof measurementUnits.distance]
 // Default units the exercise shows for input
 // For example vertical jump distance could be feet
 // Running could be meters

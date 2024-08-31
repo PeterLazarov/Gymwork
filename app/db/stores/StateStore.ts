@@ -1,10 +1,5 @@
 import { DateTime } from 'luxon'
-import {
-  Instance,
-  SnapshotOut,
-  types,
-  getParent,
-} from 'mobx-state-tree'
+import { Instance, SnapshotOut, types, getParent } from 'mobx-state-tree'
 
 import { ExerciseStore } from './ExerciseStore'
 import { RootStore } from './RootStore'
@@ -69,7 +64,9 @@ export const StateStoreModel = types
       return this.focusedStepSets.at(-1)
     },
     get focusedExerciseRecords(): ExerciseRecord {
-      return this.recordStore.getExerciseRecords(this.focusedStep!.exercise.guid)
+      return this.recordStore.getExerciseRecords(
+        this.focusedStep!.exercise.guid
+      )
     },
     get focusedStepWorkSets(): WorkoutSet[] {
       return this.focusedStepSets.filter(s => !s.isWarmup)

@@ -33,20 +33,20 @@ export const WorkoutModel = types
       return [...uniqueExercises]
     },
     get stepsMap() {
-      const map: Record<WorkoutStep['guid'], WorkoutStep> = {};
+      const map: Record<WorkoutStep['guid'], WorkoutStep> = {}
 
       self.steps.forEach(step => {
         map[step.guid] = step
-      });
+      })
 
       return map
     },
     get exerciseStepMap() {
-      const map: Record<Exercise['guid'], WorkoutStep> = {};
+      const map: Record<Exercise['guid'], WorkoutStep> = {}
 
       self.steps.forEach(step => {
         map[step.exercise.guid] = step
-      });
+      })
 
       return map
     },
@@ -55,7 +55,7 @@ export const WorkoutModel = types
 
       self.steps.forEach(step => {
         map[step.exercise.guid] = step.sets
-      });
+      })
       return map
     },
     get allSets() {
@@ -91,8 +91,8 @@ export const WorkoutModel = types
       const newStep = WorkoutStepModel.create({
         exercise: exercise.guid,
       })
-      const updatedSteps = [...(workout.steps || []), newStep].map(
-        step => getSnapshot(step)
+      const updatedSteps = [...(workout.steps || []), newStep].map(step =>
+        getSnapshot(step)
       )
       workout.setProp('steps', updatedSteps)
       return newStep
@@ -104,7 +104,10 @@ export const WorkoutModel = types
         step.removeSet(set.guid)
       })
       const remainingSteps = workout.steps.filter(s => s.guid !== step.guid)
-      workout.setProp('steps', remainingSteps.map(s => getSnapshot(s)))
+      workout.setProp(
+        'steps',
+        remainingSteps.map(s => getSnapshot(s))
+      )
     },
   }))
 
