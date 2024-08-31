@@ -11,6 +11,7 @@ export default {
   criticalText: 'white',
   tertiaryText: 'black',
   tealDark: '#008080',
+  tomato: '#FF6347',
   red: '#F44336',
   green: '#4CAF50',
   yellow: '#FFEB3B',

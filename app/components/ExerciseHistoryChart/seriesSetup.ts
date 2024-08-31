@@ -39,30 +39,41 @@ const seriesSetup = ({ data }: Props) => {
 
   const getChartSeries = (exercise: Exercise) => {
     const series: Record<string, SeriesItem> = {}
-    const colorsStack = [colors.tealDark, colors.primary]
+    const colorsStack = [colors.tomato, colors.tealDark, colors.primary]
 
-    if (exercise.hasWeightMeasument) {
+    if (exercise.measurements.weight) {
       series.Weight = {
         data: singleMetricFormatter('weight'),
         color: colorsStack.pop()!,
+        initiallySelected: true,
       }
-      if (exercise.hasRepMeasument) {
+      if (exercise.measurements.reps) {
         series['Predicted 1RM'] = {
           data: oneRepMaxFormatter(),
           color: colorsStack.pop()!,
+          initiallySelected: true,
         }
       }
     }
-    if (exercise.hasDistanceMeasument) {
+    if (exercise.measurements.distance) {
       series.Distance = {
         data: singleMetricFormatter('distance'),
         color: colorsStack.pop()!,
+        initiallySelected: true,
       }
-      if (exercise.hasTimeMeasument) {
+      if (exercise.measurements.duration) {
         series.Speed = {
           data: speedFormatter(),
           color: colorsStack.pop()!,
+          initiallySelected: false,
         }
+      }
+    }
+    if (exercise.measurements.rest) {
+      series.Rest = {
+        data: singleMetricFormatter('rest'),
+        color: colorsStack.pop()!,
+        initiallySelected: false,
       }
     }
 

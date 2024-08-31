@@ -6,6 +6,7 @@ import { WorkoutSet } from 'app/db/models'
 export type SeriesItem = {
   data: Array<number | null>
   color: string
+  initiallySelected: boolean
 }
 type ChartConfigParams = {
   series: Record<string, SeriesItem>
@@ -23,7 +24,7 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
     legend: {
       data: Object.keys(series), // the .name of series[number]
       selected: Object.keys(series).reduce((obj, curr) =>
-        Object.assign({ [curr]: true })
+        Object.assign({ [curr]: series[curr].initiallySelected })
       ),
     },
     yAxis: {
