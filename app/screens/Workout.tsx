@@ -1,5 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { FunctionComponent, useEffect, useRef } from 'react'
+import type { ICarouselInstance } from 'react-native-reanimated-carousel'
+import { CarouselRenderItem } from 'react-native-reanimated-carousel'
 
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import WorkoutHeader from 'app/components/Workout/WorkoutHeader'
@@ -9,7 +11,6 @@ import TrackView from 'app/components/WorkoutExercise/TrackView'
 import { useStores } from 'app/db/helpers/useStores'
 import StepHeader from 'app/components/WorkoutStep/StepHeader'
 import { HorizontalScreenList } from 'designSystem'
-import { FlatList, ListRenderItemInfo } from 'react-native'
 
 type Screen = {
   name: string
@@ -18,9 +19,9 @@ type Screen = {
 
 const WorkoutPageScreen: React.FC = () => {
   const { stateStore } = useStores()
-  const screenList = useRef<FlatList<Screen>>(null)
+  const screenList = useRef<ICarouselInstance>(null)
 
-  const screens: readonly Screen[] = [
+  const screens: Screen[] = [
     { name: 'Stats', component: WorkoutExerciseStatsView },
     { name: 'Workout', component: WorkoutDayView },
     { name: 'Edit', component: TrackView },
@@ -32,17 +33,17 @@ const WorkoutPageScreen: React.FC = () => {
     const shouldNavigate = !!stateStore.focusedStep
 
     if (shouldNavigate) {
-      screenList.current?.scrollToIndex({
+      screenList.current?.scrollTo({
         animated: true,
         index: editScreenIndex,
       })
     }
   }, [stateStore.openedDate, stateStore.focusedStepGuid])
 
-  const renderItem = ({
-    item: { component: Component },
-  }: ListRenderItemInfo<Screen>) => {
-    return <Component />
+  const renderItem: CarouselRenderItem<Screen> = ({
+    item: { name, component: Component },
+  }) => {
+    return <Component key={name} />
   }
 
   return (
@@ -54,8 +55,7 @@ const WorkoutPageScreen: React.FC = () => {
         ref={screenList}
         data={screens}
         renderItem={renderItem}
-        initialScrollIndex={workoutScreenIndex}
-        keyExtractor={item => item.name}
+        defaultIndex={workoutScreenIndex}
       />
     </EmptyLayout>
   )

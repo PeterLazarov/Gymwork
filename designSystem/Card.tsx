@@ -1,16 +1,13 @@
 import React from 'react'
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedbackProps,
-  ViewStyle,
-} from 'react-native'
+import { StyleSheet, View, Text, ViewStyle } from 'react-native'
 
 import { colors, fontSize } from './tokens'
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedbackProps,
+} from 'react-native-gesture-handler'
 
-type CardProps = TouchableWithoutFeedbackProps & {
+type CardProps = Omit<TouchableWithoutFeedbackProps, 'containerStyle'> & {
   title: string
   content: React.ReactNode
   containerStyle?: ViewStyle

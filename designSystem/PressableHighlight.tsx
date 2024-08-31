@@ -1,7 +1,10 @@
 import React from 'react'
-import { TouchableHighlight, TouchableHighlightProps } from 'react-native'
 
 import { colors } from './tokens'
+import {
+  TouchableHighlight,
+  TouchableHighlightProps,
+} from 'react-native-gesture-handler'
 
 type Props = TouchableHighlightProps & {
   underlay?: 'default' | 'darker'

@@ -1,75 +1,44 @@
-import React, { forwardRef, useCallback } from 'react'
-import {
-  useWindowDimensions,
-  FlatList,
-  FlatListProps,
-  View,
-  ViewabilityConfig,
-  ViewToken,
-} from 'react-native'
+import * as React from 'react'
+import type { ICarouselInstance } from 'react-native-reanimated-carousel'
+import Carousel, { TCarouselProps } from 'react-native-reanimated-carousel'
 
-type LockedProps = 'onScroll' | 'getItemLayout' | 'horizontal'
+import { View, useWindowDimensions } from 'react-native'
+import { useSharedValue } from 'react-native-reanimated'
+import { forwardRef } from 'react'
 
-type Props = Omit<FlatListProps<any>, LockedProps> & {
+type LockedProps = 'width' | 'mode' | 'vertical' | 'modeConfig'
+type Props = Omit<TCarouselProps, LockedProps> & {
   onScreenChange?: (index: number) => void
 }
 
-const viewabilityConfig: ViewabilityConfig = {
-  itemVisiblePercentThreshold: 100,
-}
-
-const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
+const HorizontalScreenList = forwardRef<ICarouselInstance, Props>(
   (
     {
       onScreenChange,
-      initialScrollIndex,
+      defaultIndex = 0,
       renderItem: externalRenderItem,
       ...rest
     },
     ref
   ) => {
-    const width = useWindowDimensions().width
-
-    const handleViewChange = useCallback(function (info: {
-      viewableItems: ViewToken[]
-      changed: ViewToken[]
-    }) {
-      const index = info?.viewableItems[0]?.index
-      if (typeof index === 'number' && index >= 0) {
-        onScreenChange?.(index)
-      }
-    },
-    [])
-
-    const renderItem = (props: any) => (
-      <View style={{ width, flex: 1 }}>{externalRenderItem!(props)}</View>
-    )
-
-    const getItemLayout = (
-      data: ArrayLike<any> | null | undefined,
-      index: number
-    ) => ({
-      length: width,
-      offset: width * index,
-      index,
-    })
+    const windowWidth = useWindowDimensions().width
+    const scrollOffsetValue = useSharedValue<number>(0)
 
     return (
-      <FlatList
+      <Carousel
+        width={windowWidth}
+        loop
         ref={ref}
-        style={{
-          flex: 1,
-        }}
-        showsHorizontalScrollIndicator={false}
-        viewabilityConfig={viewabilityConfig}
-        onViewableItemsChanged={handleViewChange}
+        defaultScrollOffsetValue={scrollOffsetValue}
+        style={{ flex: 1 }}
+        defaultIndex={defaultIndex}
         pagingEnabled
-        keyExtractor={(item, index) => String(index)}
-        getItemLayout={getItemLayout}
-        renderItem={renderItem}
-        horizontal
-        snapToAlignment="center"
-        initialScrollIndex={initialScrollIndex}
+        onSnapToItem={onScreenChange}
+        renderItem={props => (
+          <View style={{ width: windowWidth, flex: 1 }}>
+            {externalRenderItem(props)}
+          </View>
+        )}
         {...rest}
       />
     )

@@ -20,8 +20,6 @@
 - grouping / measurement by rest
 - fix Speed chart miscalculation
 - use normal speed units
-- make workout horizontal scroll as carousel
-
 
 Performance to beat -
 100 workouts
