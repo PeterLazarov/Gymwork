@@ -6,6 +6,7 @@ import WorkoutSetList from './WorkoutExerciseSetList'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
 import { Card, colors } from 'designSystem'
+import { isAlive } from 'mobx-state-tree'
 
 type Props = {
   step: WorkoutStep
@@ -14,10 +15,9 @@ type Props = {
 const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   const { stateStore, recordStore } = useStores()
 
-  const isSelected = useMemo(
-    () => stateStore.focusedStepGuid === step.guid,
-    [stateStore.focusedStepGuid === step.guid]
-  )
+  const isSelected = computed(
+    () => isAlive(step) && stateStore.focusedStepGuid === step.guid
+  ).get()
 
   function onCardPress() {
     if (isSelected) {
