@@ -17,6 +17,8 @@
 - fix duration unit change (for Set list we use hh:mm:ss format not a unit)
 - WorkoutExerciseList -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 - optimise calendar rendering
+- grouping / measurement by rest
+
 
 Performance to beat -
 100 workouts

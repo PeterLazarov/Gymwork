@@ -1,4 +1,5 @@
 export * from './Exercise'
+export * from './ExerciseMeasurement'
 export * from './ExerciseRecord'
 export * from './Workout'
 export * from './WorkoutSet'
