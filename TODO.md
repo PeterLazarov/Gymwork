@@ -18,6 +18,8 @@
 - WorkoutExerciseList -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 - optimise calendar rendering
 - grouping / measurement by rest
+- fix Speed chart miscalculation
+- use normal speed units
 
 
 Performance to beat -
