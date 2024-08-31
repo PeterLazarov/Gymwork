@@ -1,6 +1,12 @@
 import { oneRepMaxEpley } from 'fitness-calc'
 
-import { Exercise, WorkoutSet } from 'app/db/models'
+import {
+  DistanceUnit,
+  Exercise,
+  WorkoutSet,
+  isImperialDistance,
+  measurementUnits,
+} from 'app/db/models'
 import { colors } from 'designSystem'
 import { SeriesItem } from './chartConfig'
 
@@ -26,12 +32,11 @@ const seriesSetup = ({ data }: Props) => {
     )
   }
 
-  const speedFormatter = () => {
+  const speedFormatter = (distanceUnit: DistanceUnit) => {
     return data.map(
       sets =>
         sets?.reduce(
-          (max, set) =>
-            Number(Math.max(max, set.distance! / set.duration!).toFixed(2)),
+          (max, set) => Number(Math.max(max, set.speed).toFixed(2)),
           0
         ) || null
     )
@@ -58,17 +63,23 @@ const seriesSetup = ({ data }: Props) => {
       }
     }
     if (exercise.measurements?.distance) {
-      const distanceUnit = exercise.measurements.distance.unit
       series.Distance = {
         data: singleMetricFormatter('distance'),
         color: colorsStack.pop()!,
         initiallySelected: true,
-        unit: distanceUnit,
+        unit: exercise.measurements.distance.unit,
       }
       if (exercise.measurements?.duration) {
-        const durationUnit = exercise.measurements.duration.unit
+        const isImperial = isImperialDistance(
+          exercise.measurements.distance.unit
+        )
+        const distanceUnit = isImperial
+          ? measurementUnits.distance.mile
+          : measurementUnits.distance.km
+        const durationUnit = measurementUnits.duration.h
+
         series.Speed = {
-          data: speedFormatter(),
+          data: speedFormatter(distanceUnit),
           color: colorsStack.pop()!,
           initiallySelected: false,
           unit: `${distanceUnit}/${durationUnit}`,
@@ -76,7 +87,7 @@ const seriesSetup = ({ data }: Props) => {
       }
     }
     if (exercise.measurements?.duration) {
-      series.Time = {
+      series.Duration = {
         data: singleMetricFormatter('duration'),
         color: colorsStack.pop()!,
         initiallySelected: false,

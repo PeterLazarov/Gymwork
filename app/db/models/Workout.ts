@@ -88,13 +88,11 @@ export const WorkoutModel = types
   .actions(withSetPropAction)
   .actions(workout => ({
     addStep(exercise: Exercise) {
-      const updatedSteps = (workout.steps || []).map(step =>
-        getSnapshot(step)
-      )
+      const updatedSteps = (workout.steps || []).map(step => getSnapshot(step))
       updatedSteps.push({
         exercise: exercise.guid,
         sets: [],
-        guid: uuidv4()
+        guid: uuidv4(),
       })
       workout.setProp('steps', updatedSteps)
       return workout.steps.at(-1)!

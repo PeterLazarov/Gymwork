@@ -29,6 +29,14 @@ export const measurementUnits = {
 
 export type DistanceUnit =
   (typeof measurementUnits.distance)[keyof typeof measurementUnits.distance]
+
+export const isImperialDistance = (distanceUnit: DistanceUnit) => {
+  const imperialMetrics: DistanceUnit[] = [
+    measurementUnits.distance.ft,
+    measurementUnits.distance.mile,
+  ]
+  return imperialMetrics.includes(distanceUnit)
+}
 // Default units the exercise shows for input
 // For example vertical jump distance could be feet
 // Running could be meters

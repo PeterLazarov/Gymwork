@@ -20,9 +20,9 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
     tooltip: {
       // allows you to point at random and mark dots
       trigger: 'axis',
-      axisPointer: { 
+      axisPointer: {
         type: 'cross',
-        snap: true, 
+        snap: true,
       }, // Pointer gains access and highlight
       confine: true,
     },
@@ -70,8 +70,9 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
         symbol: numberOfPoints > 50 ? 'none' : 'circle',
         itemStyle: { color: seriesItem.color },
         tooltip: {
-          valueFormatter: (value: string) => value ? `${value} ${seriesItem.unit}` : '-'
-        }
+          valueFormatter: (value: string) =>
+            value ? `${value} ${seriesItem.unit}` : '-',
+        },
       }
     })
 

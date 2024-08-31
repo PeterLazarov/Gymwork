@@ -6,6 +6,7 @@ import { ExerciseModel } from './Exercise'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import convert from 'convert-units'
 import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction'
+import { isImperialDistance, measurementUnits } from './ExerciseMeasurement'
 
 export const WorkoutSetModel = types
   .model('WorkoutSet')
@@ -80,6 +81,20 @@ export const WorkoutSetModel = types
           .to(set.exercise.measurements.rest!.unit)
           .toFixed(2)
       )
+    },
+    get speed() {
+      const isImperial = isImperialDistance(
+        set.exercise.measurements.distance!.unit
+      )
+      const distanceUnit = isImperial
+        ? measurementUnits.distance.mile
+        : measurementUnits.distance.km
+
+      const duration = convert(set.durationMs)
+        .from(measurementUnits.duration.ms)
+        .to(measurementUnits.duration.h)
+      const distance = convert(set.distanceMm).from('mm').to(distanceUnit)
+      return distance / duration
     },
   }))
   .actions(withSetPropAction)
