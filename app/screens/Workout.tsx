@@ -30,15 +30,17 @@ const WorkoutPageScreen: React.FC = () => {
   const editScreenIndex = 2
 
   useEffect(() => {
-    const shouldNavigate = !!stateStore.focusedStep
+    const hasFocusedStep = !!stateStore.focusedStep
 
-    if (shouldNavigate) {
-      screenList.current?.scrollTo({
-        animated: true,
-        index: editScreenIndex,
-      })
-    }
-  }, [stateStore.openedDate, stateStore.focusedStepGuid])
+    screenList.current?.scrollTo({
+      animated: true,
+      index: hasFocusedStep ? editScreenIndex : workoutScreenIndex,
+    })
+  }, [
+    stateStore.openedDate,
+    stateStore.focusedStepGuid,
+    stateStore.focusedSetGuid,
+  ])
 
   const renderItem: CarouselRenderItem<Screen> = ({
     item: { name, component: Component },
