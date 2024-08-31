@@ -19,7 +19,11 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
     tooltip: {
       // allows you to point at random and mark dots
       trigger: 'axis',
-      axisPointer: { type: 'cross' }, // Pointer gains access and highlight
+      axisPointer: { 
+        type: 'cross',
+        snap: true, 
+      }, // Pointer gains access and highlight
+      confine: true,
     },
     legend: {
       data: Object.keys(series), // the .name of series[number]
