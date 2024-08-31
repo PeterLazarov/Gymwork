@@ -17,7 +17,7 @@ const ExerciseSelectScreen: React.FC = () => {
 
   function handleSelectExercise(exercise: Exercise) {
     const newStep = stateStore.openedWorkout!.addStep(exercise)
-    stateStore.setProp('focusedStepGuid', newStep.guid)
+    stateStore.setFocusedStep(newStep.guid)
   }
 
   function onBackPress() {

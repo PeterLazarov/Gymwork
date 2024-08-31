@@ -20,7 +20,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   ).get()
 
   function onCardPress() {
-    stateStore.setProp('focusedStepGuid', isSelected ? '' : step.guid)
+    stateStore.setFocusedStep(isSelected ? '' : step.guid)
   }
 
   const exerciseRecords = useMemo(

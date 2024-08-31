@@ -100,19 +100,22 @@ export const StateStoreModel = types
   .actions(self => ({
     setOpenedDate(date: string) {
       self.openedDate = date
-      self.setProp('focusedStepGuid', '')
-      self.setProp('focusedSetGuid', '')
+      this.setFocusedStep( '')
     },
     incrementCurrentDate() {
       const luxonDate = DateTime.fromISO(self.openedDate)
       self.openedDate = luxonDate.plus({ days: 1 }).toISODate()!
-      self.setProp('focusedStepGuid', '')
+      this.setFocusedStep( '')
     },
     decrementCurrentDate() {
       const luxonDate = DateTime.fromISO(self.openedDate)
       self.openedDate = luxonDate.minus({ days: 1 }).toISODate()!
-      self.setProp('focusedStepGuid', '')
+      this.setFocusedStep( '')
     },
+    setFocusedStep(stepGuid: string) {
+      self.focusedStepGuid = stepGuid
+      self.focusedSetGuid = ''
+    }
   }))
 
 export interface StateStore extends Instance<typeof StateStoreModel> {}
