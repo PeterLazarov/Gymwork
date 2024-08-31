@@ -20,11 +20,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   ).get()
 
   function onCardPress() {
-    if (isSelected) {
-      stateStore.removeFocusStep()
-    } else {
-      stateStore.focusStep(step.guid)
-    }
+    stateStore.setFocusStep(isSelected ? '' : step.guid)
   }
 
   const exerciseRecords = useMemo(

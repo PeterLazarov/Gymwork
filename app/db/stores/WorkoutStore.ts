@@ -4,7 +4,6 @@ import {
   types,
   destroy,
   getParent,
-  getSnapshot,
 } from 'mobx-state-tree'
 
 import { RootStore } from './RootStore'
@@ -20,8 +19,7 @@ import {
   WorkoutSetSnapshotIn,
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
-import { getDataFieldForKey } from 'app/services/workoutRecordsCalculator'
-import { WorkoutStep, WorkoutStepSnapshotIn } from '../models/WorkoutStep'
+import { WorkoutStepSnapshotIn } from '../models/WorkoutStep'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -135,72 +133,6 @@ export const WorkoutStoreModel = types
         steps: cleanedSteps,
       })
       self.workouts.push(created)
-    },
-    addSet(newSet: WorkoutSet) {
-      self.rootStore.stateStore.focusedStep!.sets.push(newSet)
-      self.rootStore.recordStore.runSetUpdatedCheck(newSet)
-    },
-    removeSet(setGuid: WorkoutSet['guid'], step: WorkoutStep) {
-      // TODO: move this to an action for WorkoutStep model
-      const deletedSetIndex = step.sets.findIndex(
-        s => s.guid === setGuid
-      )
-      const deletedSet = step.sets[deletedSetIndex]
-      if (deletedSet) {
-        const { exercise } = deletedSet
-
-        const records = self.rootStore.recordStore.getExerciseRecords(
-          exercise.guid
-        )
-        const isRecordBool = records.recordSetsMap.hasOwnProperty(
-          deletedSet.guid
-        )
-
-        const deletedSetSnapshot = getSnapshot(deletedSet)
-        step.sets.splice(deletedSetIndex, 1)
-
-        if (isRecordBool) {
-          const grouping = getDataFieldForKey(exercise.groupRecordsBy)
-          self.rootStore.recordStore.recalculateGroupingRecordsForExercise(
-            deletedSetSnapshot[grouping],
-            records
-          )
-        }
-      }
-    },
-    updateSet(updatedSetData: WorkoutSetSnapshotIn) {
-      const setToUpdate = self.rootStore.stateStore.focusedStep!.sets.find(set => {
-        return set.guid === updatedSetData.guid
-      })!
-
-      const records = self.rootStore.recordStore.getExerciseRecords(
-        setToUpdate!.exercise.guid
-      )
-      const isOldSetRecord = records.recordSetsMap.hasOwnProperty(
-        setToUpdate.guid
-      )
-      const oldGroupingValue = setToUpdate!.groupingValue
-
-      setToUpdate.mergeUpdate(updatedSetData)
-
-      if (isOldSetRecord) {
-        self.rootStore.recordStore.recalculateGroupingRecordsForExercise(
-          oldGroupingValue,
-          records
-        )
-      }
-
-      if (!isOldSetRecord || setToUpdate.groupingValue !== oldGroupingValue) {
-        self.rootStore.recordStore.runSetUpdatedCheck(setToUpdate)
-      }
-    },
-    setWorkoutNotes(notes: string) {
-      if (self.rootStore.stateStore.openedWorkout) {
-        self.rootStore.stateStore.openedWorkout.notes = notes
-      }
-    },
-    setWorkoutSetWarmup(set: WorkoutSet, value: boolean) {
-      set.isWarmup = value
     },
     removeWorkout(workout: Workout) {
       destroy(workout)

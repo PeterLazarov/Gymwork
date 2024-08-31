@@ -1,10 +1,13 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
+import { Instance, SnapshotIn, SnapshotOut, getParent, getSnapshot, types } from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import { withSetPropAction } from '../helpers/withSetPropAction'
-import { WorkoutSetModel } from './WorkoutSet'
+import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
+import { RootStore } from 'app/db/stores/RootStore'
 import { ExerciseModel } from './Exercise'
+import { WorkoutSet, WorkoutSetModel, WorkoutSetSnapshotIn } from './WorkoutSet'
+import { RecordStore } from '../stores/RecordStore'
+import { getDataFieldForKey } from 'app/services/workoutRecordsCalculator'
 
 export const WorkoutStepModel = types
   .model('WorkoutStep')
@@ -13,7 +16,92 @@ export const WorkoutStepModel = types
     sets: types.array(WorkoutSetModel),
     exercise: types.reference(ExerciseModel)
   })
+  .views(step => ({
+    get recordStore(): RecordStore {
+      const rootStore = getParent(step) as RootStore
+
+      return rootStore.recordStore
+    },
+    get exerciseRecords() {
+      return this.recordStore.getExerciseRecords(
+        step.exercise.guid
+      )
+    }
+  }))
   .actions(withSetPropAction)
+  .actions(step => ({
+    addSet(newSet: WorkoutSet) {
+      step.sets.push(newSet)
+      step.recordStore.runSetUpdatedCheck(newSet)
+    },
+    removeSet(setGuid: WorkoutSet['guid']) {
+      const deletedSetIndex = step.sets.findIndex(
+        s => s.guid === setGuid
+      )
+      const deletedSet = step.sets[deletedSetIndex]
+      if (deletedSet) {
+        const { exercise } = deletedSet
+
+        const records = step.exerciseRecords
+        const isRecordBool = records.recordSetsMap.hasOwnProperty(
+          deletedSet.guid
+        )
+
+        const deletedSetSnapshot = getSnapshot(deletedSet)
+        step.sets.splice(deletedSetIndex, 1)
+
+        if (isRecordBool) {
+          const grouping = getDataFieldForKey(exercise.groupRecordsBy)
+          step.recordStore.recalculateGroupingRecordsForExercise(
+            deletedSetSnapshot[grouping],
+            records
+          )
+        }
+      }
+    },
+    updateSet(updatedSetData: WorkoutSetSnapshotIn) {
+      const setToUpdate = step.sets.find(set => {
+        return set.guid === updatedSetData.guid
+      })!
+
+      const records = step.exerciseRecords
+      const isOldSetRecord = records.recordSetsMap.hasOwnProperty(
+        setToUpdate.guid
+      )
+      const oldGroupingValue = setToUpdate!.groupingValue
+
+      setToUpdate.mergeUpdate(updatedSetData)
+
+      if (isOldSetRecord) {
+        step.recordStore.recalculateGroupingRecordsForExercise(
+          oldGroupingValue,
+          records
+        )
+      }
+
+      if (!isOldSetRecord || setToUpdate.groupingValue !== oldGroupingValue) {
+        step.recordStore.runSetUpdatedCheck(setToUpdate)
+      }
+    },
+    /** Made to work with drag and drop */
+    reorderSets(from: number, to: number) {
+      if (!from || !to) {
+        console.warn('DnD issues?')
+        return
+      }
+
+      const item = step.sets[from]!
+      const reorderedSets =
+        step.sets // @ts-ignore
+          .toSpliced(from, 1)
+          .toSpliced(to, 0, item) ?? []
+
+      const reorderedSetsSnapshots = reorderedSets.map((set: WorkoutSet) =>
+        getSnapshot(set)
+      )
+      step.setProp('sets', reorderedSetsSnapshots)
+    },
+  }))
 
 export interface WorkoutStep extends Instance<typeof WorkoutStepModel> {}
 export interface WorkoutStepSnapshotOut

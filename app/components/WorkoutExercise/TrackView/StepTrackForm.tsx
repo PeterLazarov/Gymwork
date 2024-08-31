@@ -12,7 +12,7 @@ import { SetEditActions } from './SetEditActions'
 import useTimer from 'app/db/stores/useTimer'
 
 const StepTrackForm: React.FC = () => {
-  const { workoutStore, stateStore } = useStores()
+  const { stateStore } = useStores()
   const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
@@ -39,7 +39,7 @@ const StepTrackForm: React.FC = () => {
         exercise: exercise.guid,
         date: stateStore.openedDate,
       })
-      workoutStore.addSet(fromDraft)
+      stateStore.focusedStep!.addSet(fromDraft)
     }
 
     if (exercise.measurements.rest) {
@@ -64,13 +64,13 @@ const StepTrackForm: React.FC = () => {
       date: selectedSet!.date,
     }
 
-    workoutStore.updateSet(updatedSet)
+    stateStore.focusedStep!.updateSet(updatedSet)
 
     setSelectedSet(null)
   }
   function handleRemove() {
     setSelectedSet(null)
-    workoutStore.removeSet(selectedSet!.guid, stateStore.focusedStep!)
+    stateStore.focusedStep!.removeSet(selectedSet!.guid)
   }
 
   return (

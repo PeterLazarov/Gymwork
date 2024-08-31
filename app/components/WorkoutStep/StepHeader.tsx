@@ -13,7 +13,8 @@ const StepHeader: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const deleteSelectedExercises = () => {
-    stateStore.deleteSelectedExercises()
+    stateStore.openedWorkout!.removeStep(stateStore.focusedStep!)
+    stateStore.setProp('focusedStepGuid', '')
   }
 
   function onEditExercisePress() {

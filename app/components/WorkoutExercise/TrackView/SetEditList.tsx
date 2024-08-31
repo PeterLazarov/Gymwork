@@ -15,7 +15,7 @@ type Props = {
 }
 
 const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
-  const { stateStore, workoutStore } = useStores()
+  const { stateStore } = useStores()
 
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
@@ -87,7 +87,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
     from,
     to
   ) => {
-    stateStore.reorderOpenedExerciseSets(from, to)
+    stateStore.focusedStep!.reorderSets(from, to)
   }
 
   const dragListRef = useRef<FlatList>(null)
@@ -98,7 +98,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
   }
 
   function toggleSetWarmup(set: WorkoutSet) {
-    workoutStore.setWorkoutSetWarmup(set, !set.isWarmup)
+    set.setProp('isWarmup', !set.isWarmup)
   }
   return (
     <>

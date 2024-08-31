@@ -14,7 +14,7 @@ const delay = (wait: number) =>
 const delaysInFunction = 2000
 
 export default function useBenchmark() {
-  const { stateStore, workoutStore } = useStores()
+  const { stateStore, workoutStore, exerciseStore } = useStores()
 
   async function performBenchmark() {
     const startingTime = Date.now()
@@ -31,8 +31,9 @@ export default function useBenchmark() {
     }
 
     // open bench press
-    stateStore.setProp('openedExerciseGuid', '44')
-    navigate('Workout', { navigateToIndex: 2})
+    const benchPress = exerciseStore.exercisesMap['44']
+    const newStep = stateStore.openedWorkout!.addStep(benchPress)
+    stateStore.setFocusStep(newStep.guid)
 
     await delay(1000)
 
@@ -42,7 +43,7 @@ export default function useBenchmark() {
     })
     set.setWeight(100 + execution, 'kg')
     set.setProp('reps', 12)
-    workoutStore.addSet(set)
+    newStep.addSet(set)
 
     navigate('Workout')
 

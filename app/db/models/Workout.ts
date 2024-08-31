@@ -2,6 +2,7 @@ import {
   Instance,
   SnapshotIn,
   SnapshotOut,
+  getSnapshot,
   types,
   // getIdentifier,
 } from 'mobx-state-tree'
@@ -85,6 +86,27 @@ export const WorkoutModel = types
     },
   }))
   .actions(withSetPropAction)
+  .actions(workout => ({
+    addStep(exercise: Exercise) {
+      const newStep = WorkoutStepModel.create({
+        exercise: exercise.guid,
+      })
+      const updatedSteps = [...(workout.steps || []), newStep].map(
+        step => getSnapshot(step)
+      )
+      workout.setProp('steps', updatedSteps)
+      return newStep
+    },
+
+    removeStep(step: WorkoutStep) {
+      const sets = step.sets
+      sets?.forEach(set => {
+        step.removeSet(set.guid)
+      })
+      const remainingSteps = workout.steps.filter(s => s.guid !== step.guid)
+      workout.setProp('steps', remainingSteps.map(s => getSnapshot(s)))
+    },
+  }))
 
 export interface Workout extends Instance<typeof WorkoutModel> {}
 export interface WorkoutSnapshotOut extends SnapshotOut<typeof WorkoutModel> {}

@@ -4,7 +4,6 @@ import {
   SnapshotOut,
   types,
   getParent,
-  getSnapshot,
 } from 'mobx-state-tree'
 
 import { ExerciseStore } from './ExerciseStore'
@@ -18,7 +17,6 @@ import {
   Workout,
   WorkoutSet,
   WorkoutSetModel,
-  WorkoutStepModel,
 } from '../models'
 
 const now = DateTime.now()
@@ -103,39 +101,6 @@ export const StateStoreModel = types
   }))
   .actions(withSetPropAction)
   .actions(self => ({
-    /** Made to work with drag and drop */
-    reorderOpenedExerciseSets(from: number, to: number) {
-      if (!self.openedWorkout) {
-        return
-      }
-
-      if (!from || !to) {
-        console.warn('DnD issues?')
-        return
-      }
-
-      const item = self.focusedStep!.sets[from]!
-      const reorderedSets =
-        self
-          .focusedStep!.sets // @ts-ignore
-          .toSpliced(from, 1)
-          .toSpliced(to, 0, item) ?? []
-
-      const reorderedSetsSnapshots = reorderedSets.map((set: WorkoutSet) =>
-        getSnapshot(set)
-      )
-      self.focusedStep!.setProp('sets', reorderedSetsSnapshots)
-    },
-    addStep(exercise: Exercise) {
-      const newStep = WorkoutStepModel.create({
-        exercise: exercise.guid,
-      })
-      const updatedSteps = [...(self.openedWorkout?.steps || []), newStep].map(
-        step => getSnapshot(step)
-      )
-      self.openedWorkout?.setProp('steps', updatedSteps)
-      self.setProp('focusedStepGuid', newStep.guid)
-    },
     setOpenedDate(date: string) {
       self.openedDate = date
       self.setProp('focusedStepGuid', '')
@@ -154,22 +119,8 @@ export const StateStoreModel = types
     focusSet(guid: string) {
       self.setProp('focusedSetGuid', guid)
     },
-    focusStep(guid: string) {
+    setFocusStep(guid: string) {
       self.focusedStepGuid = guid
-    },
-    removeFocusStep() {
-      self.focusedStepGuid = ''
-    },
-    deleteSelectedExercises() {
-      const step = self.openedWorkout!.stepsMap[self.focusedStepGuid]
-      const sets = step.sets
-      sets?.forEach(set => {
-        self.workoutStore.removeSet(set.guid, step)
-      })
-      const reamainingSteps = self.openedWorkout!.steps.filter(s => s.guid !== step.guid)
-      self.openedWorkout!.setProp('steps', reamainingSteps.map(s => getSnapshot(s)))
-
-      self.setProp('focusedStepGuid', '')
     },
   }))
 
