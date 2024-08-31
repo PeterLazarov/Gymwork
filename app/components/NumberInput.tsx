@@ -1,4 +1,5 @@
 import React, { forwardRef, useEffect, useState } from 'react'
+import { TextInput as TextInputRN } from 'react-native'
 import { TextInput, TextInputProps } from 'react-native-paper'
 
 type _NumberInputProps = {
@@ -12,14 +13,14 @@ type _NumberInputProps = {
   maxLength?: number
 }
 
-type NumberInputProps = _NumberInputProps &
+export type NumberInputProps = _NumberInputProps &
   Omit<TextInputProps, keyof _NumberInputProps>
 
 const defaultMaxDigits = 4
 const defaultMaxDecimals = 2
 const defaultMaxLength = defaultMaxDigits + defaultMaxDecimals + 1
 
-const NumberInput = forwardRef<typeof TextInput, NumberInputProps>(
+const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
   (
     {
       value,

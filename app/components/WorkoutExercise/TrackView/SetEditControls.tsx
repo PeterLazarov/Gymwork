@@ -73,10 +73,6 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
             value={value.distance}
             onChange={distance => value.setDistance(distance)}
             unit={value.exercise!.measurements.distance!.unit}
-            // TODO REDO
-            // onUnitChange={distanceUnit =>
-            //   onChange({ ...value, distanceUnit })
-            // }
             onSubmitEditing={() => onHandleSubmit(input3)}
             ref={input3}
             returnKeyType={isLastInput(input3) ? 'default' : 'next'}

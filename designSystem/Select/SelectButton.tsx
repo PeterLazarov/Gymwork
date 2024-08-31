@@ -17,21 +17,18 @@ const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
         style={{
           backgroundColor: colors.primaryLighter,
           paddingHorizontal: 15,
-          paddingVertical: 12,
+          paddingVertical: label ? 9 : 17,
           flexDirection: 'row',
           justifyContent: 'space-between',
           borderTopStartRadius: 4,
           borderTopEndRadius: 4,
           borderBottomWidth: 0.3,
-          // borderBottomColor: ,
           alignItems: 'center',
-          // gap: 4,
         }}
       >
         <View
           style={{
             flexDirection: 'column',
-            // gap: 4,
           }}
         >
           {label && (

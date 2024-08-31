@@ -15,7 +15,6 @@
 - make it more visible that a workout has comments
 - add some kind of historical comments view (swipe left from comments screen?)
 - fix duration unit change (for Set list we use hh:mm:ss format not a unit)
-- Distance editor add unit control (unit control is there only for entry of value, Does not change exercise measurement unit)
 - WorkoutExerciseList -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 - optimise calendar rendering
 

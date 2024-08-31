@@ -1,48 +1,45 @@
-import { forwardRef } from 'react'
-import { TextInput, TextInputProps, View } from 'react-native'
+import { forwardRef, useState } from 'react'
+import { TextInput, View } from 'react-native'
 import { Select } from './Select'
-import { measurementUnits } from 'app/db/models'
+import { DistanceUnit, measurementUnits } from 'app/db/models'
+import NumberInput, { NumberInputProps } from 'app/components/NumberInput'
+import convert from 'convert-units'
 
 type _Props = {
   value: number
-  unit: string
+  unit: DistanceUnit
   onChange: (selected: number) => void
-  // onUnitChange: (unit: string) => void
 }
-export type DistanceEditorProps = _Props & Omit<TextInputProps, keyof _Props>
+export type DistanceEditorProps = _Props & Omit<NumberInputProps, keyof _Props>
 
 const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(
-  (
-    {
-      value,
-      unit,
-      onChange,
-      // onUnitChange,
+  ({ value, unit, onChange, ...rest }, ref) => {
+    const [internalUnit, setInternalUnit] = useState<DistanceUnit>(unit)
 
-      ...rest
-    },
-    ref
-  ) => {
+    const formattedDistance = convert(value).from(unit).to(internalUnit)
+
+    function onChangeInternal(distance: number) {
+      const standardizedValue = convert(distance).from(internalUnit).to(unit)
+
+      onChange(standardizedValue)
+    }
+
     return (
       <View style={{ flexDirection: 'row', gap: 24 }}>
-        <TextInput
-          value={`${value}`}
+        <NumberInput
+          value={formattedDistance}
           style={{ textAlign: 'center', flex: 1.5 }}
-          inputMode="numeric"
-          keyboardType="number-pad"
-          onChangeText={text => {
-            onChange(isNaN(+text) ? 0 : +Math.max(+text, 0).toFixed(0))
-          }}
+          onChange={onChangeInternal}
           maxLength={5}
           ref={ref}
           {...rest}
         />
-        {/* <Select
+        <Select
           options={Object.values(measurementUnits.distance)}
-          value={unit}
-          onChange={onUnitChange}
-          containerStyle={{ flex: 1 }}
-        /> */}
+          value={internalUnit}
+          onChange={unit => setInternalUnit(unit as DistanceUnit)}
+          containerStyle={{ height: 'auto' }}
+        />
       </View>
     )
   }
