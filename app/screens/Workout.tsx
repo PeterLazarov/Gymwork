@@ -1,7 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
-import { View } from 'react-native'
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
+import React, { FunctionComponent, useEffect, useRef } from 'react'
 
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import WorkoutHeader from 'app/components/Workout/WorkoutHeader'
@@ -11,6 +9,7 @@ import TrackView from 'app/components/WorkoutExercise/TrackView'
 import { useStores } from 'app/db/helpers/useStores'
 import StepHeader from 'app/components/WorkoutStep/StepHeader'
 import { HorizontalScreenList } from 'designSystem'
+import { FlatList, ListRenderItemInfo } from 'react-native'
 
 type Screen = {
   name: string
@@ -19,24 +18,26 @@ type Screen = {
 
 const WorkoutPageScreen: React.FC = () => {
   const { stateStore } = useStores()
-  const flashList = useRef<FlashList<Screen>>(null)
-  const [activeIndex, setActiveIndex] = useState(1)
+  const screenList = useRef<FlatList<Screen>>(null)
 
-  useEffect(() => {
-    const navigateToIndex = stateStore.focusedStep ? 2 : 1
-
-    flashList.current?.scrollToIndex({
-      animated: true,
-      index: navigateToIndex,
-    })
-    setActiveIndex(navigateToIndex)
-  }, [stateStore.openedDate, stateStore.focusedStepGuid])
-
-  const screens: Screen[] = [
+  const screens: readonly Screen[] = [
     { name: 'Stats', component: WorkoutExerciseStatsView },
     { name: 'Workout', component: WorkoutDayView },
     { name: 'Edit', component: TrackView },
   ]
+  const workoutScreenIndex = 1
+  const editScreenIndex = 2
+
+  useEffect(() => {
+    const shouldNavigate = !!stateStore.focusedStep
+
+    if (shouldNavigate) {
+      screenList.current?.scrollToIndex({
+        animated: true,
+        index: editScreenIndex,
+      })
+    }
+  }, [stateStore.openedDate, stateStore.focusedStepGuid])
 
   const renderItem = ({
     item: { component: Component },
@@ -46,19 +47,16 @@ const WorkoutPageScreen: React.FC = () => {
 
   return (
     <EmptyLayout>
-      {screens[activeIndex].name === 'Stats' && <StepHeader />}
-      {screens[activeIndex].name === 'Workout' && <WorkoutHeader />}
-      {screens[activeIndex].name === 'Edit' && <StepHeader />}
+      {stateStore.focusedStep && <StepHeader />}
+      {!stateStore.focusedStep && <WorkoutHeader />}
 
-      <View style={{ flex: 1 }}>
-        <HorizontalScreenList
-          ref={flashList}
-          data={screens}
-          renderItem={renderItem}
-          initialScrollIndex={1}
-          keyExtractor={item => item.name}
-        />
-      </View>
+      <HorizontalScreenList
+        ref={screenList}
+        data={screens}
+        renderItem={renderItem}
+        initialScrollIndex={workoutScreenIndex}
+        keyExtractor={item => item.name}
+      />
     </EmptyLayout>
   )
 }
