@@ -7,6 +7,7 @@ export type SeriesItem = {
   data: Array<number | null>
   color: string
   initiallySelected: boolean
+  unit: string
 }
 type ChartConfigParams = {
   series: Record<string, SeriesItem>
@@ -68,6 +69,9 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
         data: seriesItem.data,
         symbol: numberOfPoints > 50 ? 'none' : 'circle',
         itemStyle: { color: seriesItem.color },
+        tooltip: {
+          valueFormatter: (value: string) => value ? `${value} ${seriesItem.unit}` : '-'
+        }
       }
     })
 

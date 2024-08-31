@@ -41,39 +41,54 @@ const seriesSetup = ({ data }: Props) => {
     const series: Record<string, SeriesItem> = {}
     const colorsStack = [colors.tomato, colors.tealDark, colors.primary]
 
-    if (exercise.measurements.weight) {
+    if (exercise.measurements?.weight) {
       series.Weight = {
         data: singleMetricFormatter('weight'),
         color: colorsStack.pop()!,
         initiallySelected: true,
+        unit: exercise.measurements.weight.unit,
       }
-      if (exercise.measurements.reps) {
+      if (exercise.measurements?.reps) {
         series['Predicted 1RM'] = {
           data: oneRepMaxFormatter(),
           color: colorsStack.pop()!,
           initiallySelected: true,
+          unit: exercise.measurements.weight.unit,
         }
       }
     }
-    if (exercise.measurements.distance) {
+    if (exercise.measurements?.distance) {
+      const distanceUnit = exercise.measurements.distance.unit
       series.Distance = {
         data: singleMetricFormatter('distance'),
         color: colorsStack.pop()!,
         initiallySelected: true,
+        unit: distanceUnit,
       }
-      if (exercise.measurements.duration) {
+      if (exercise.measurements?.duration) {
+        const durationUnit = exercise.measurements.duration.unit
         series.Speed = {
           data: speedFormatter(),
           color: colorsStack.pop()!,
           initiallySelected: false,
+          unit: `${distanceUnit}/${durationUnit}`,
         }
       }
     }
-    if (exercise.measurements.rest) {
+    if (exercise.measurements?.duration) {
+      series.Time = {
+        data: singleMetricFormatter('duration'),
+        color: colorsStack.pop()!,
+        initiallySelected: false,
+        unit: exercise.measurements.duration.unit,
+      }
+    }
+    if (exercise.measurements?.rest) {
       series.Rest = {
         data: singleMetricFormatter('rest'),
         color: colorsStack.pop()!,
         initiallySelected: false,
+        unit: exercise.measurements.rest.unit,
       }
     }
 
