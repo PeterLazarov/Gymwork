@@ -72,7 +72,7 @@ export const ExerciseRecordModel = types
       exerciseRecords.setProp('recordSets', recordSets)
     },
     recalculateGroupingRecords(groupingToRefresh: number) {
-      let refreshedRecords = exerciseRecords.recordSets.filter(recordSet => {
+      const refreshedRecords = exerciseRecords.recordSets.filter(recordSet => {
         return recordSet.groupingValue !== groupingToRefresh
       })
 

@@ -1,5 +1,5 @@
 import React, { ReactNode, useRef, useState } from 'react'
-import { FlatListProps, Keyboard, ListRenderItemInfo, View } from 'react-native'
+import { Keyboard, View } from 'react-native'
 import type { ICarouselInstance } from 'react-native-reanimated-carousel'
 import { CarouselRenderItem } from 'react-native-reanimated-carousel'
 

@@ -10,7 +10,7 @@ export type TabStyles = {
   }
 }
 
-export type TabConfig<T = {}> = {
+export type TabConfig<T = object> = {
   label: string
   name: string
   component: FunctionComponent<T>

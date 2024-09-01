@@ -67,15 +67,21 @@ export const WorkoutStoreModel = types
       )
     },
     get mostUsedExercises(): Exercise[] {
-      const sortedExercises = Object.values(this.exerciseSetsHistoryMap)
-        .map(sets => ({
-          exercise: sets[0].exercise,
-          count: sets.length,
-        }))
-        .sort((a, b) => b.count - a.count)
-        .slice(0, 10)
+      const exercisesArray = Object.values(this.exerciseSetsHistoryMap);
+      const exerciseCounts: {exercise: Exercise, count: number}[] = [];
 
-      return sortedExercises.map(({ exercise }) => exercise)
+      exercisesArray.forEach(sets => {
+        if (sets.length > 0) {
+          exerciseCounts.push({
+            exercise: sets[0].exercise,
+            count: sets.length
+          });
+        }
+      });
+
+      exerciseCounts.sort((a, b) => b.count - a.count);
+
+      return exerciseCounts.slice(0, 10).map(({ exercise }) => exercise);
     },
 
     get sortedWorkouts(): Workout[] {

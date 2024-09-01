@@ -21,7 +21,7 @@ const ExerciseRecordStats: React.FC = () => {
   const recordSets = useMemo(
     () =>
       computed(() => {
-        const copyRecords = focusedExerciseRecords?.recordSets.slice()
+        const copyRecords = focusedExerciseRecords?.recordSets.slice() || []
         return copyRecords.sort(
           (setA, setB) => setA.groupingValue - setB.groupingValue
         )
