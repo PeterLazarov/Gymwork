@@ -18,7 +18,7 @@ const EmptyState: React.FC<Props> = ({ text }) => (
   >
     <Text
       style={{
-        color: colors.gray,
+        color: colors.neutralDark,
         fontSize: fontSize.xl,
         textAlign: 'center',
       }}

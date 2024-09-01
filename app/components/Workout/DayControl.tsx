@@ -54,7 +54,10 @@ const DayControl = () => {
           <Icon icon="chevron-forward" />
         </IconButton>
       </View>
-      <Divider orientation="horizontal" />
+      <Divider
+        orientation="horizontal"
+        variant="primary"
+      />
     </>
   )
 }

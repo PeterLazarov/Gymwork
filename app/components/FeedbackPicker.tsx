@@ -43,13 +43,13 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           <Icon
             icon="emoji-sad"
             size="large"
-            color={sadSelected ? colors.red : colors.gray}
+            color={sadSelected ? colors.red : colors.neutralDark}
           />
         </IconButton>
         <Text
           style={{
             fontSize: fontSize.sm,
-            color: sadSelected ? colors.red : colors.gray,
+            color: sadSelected ? colors.red : colors.neutralDark,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
@@ -72,13 +72,13 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           <Icon
             icon="emoji-neutral"
             size="large"
-            color={neutralSelected ? colors.yellow : colors.gray}
+            color={neutralSelected ? colors.yellow : colors.neutralDark}
           />
         </IconButton>
         <Text
           style={{
             fontSize: fontSize.sm,
-            color: neutralSelected ? colors.yellow : colors.gray,
+            color: neutralSelected ? colors.yellow : colors.neutralDark,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
@@ -101,13 +101,13 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           <Icon
             icon="emoji-happy"
             size="large"
-            color={happySelected ? colors.green : colors.gray}
+            color={happySelected ? colors.green : colors.neutralDark}
           />
         </IconButton>
         <Text
           style={{
             fontSize: fontSize.sm,
-            color: happySelected ? colors.green : colors.gray,
+            color: happySelected ? colors.green : colors.neutralDark,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >

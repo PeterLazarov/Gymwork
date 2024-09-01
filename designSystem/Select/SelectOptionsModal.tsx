@@ -56,7 +56,10 @@ const SelectOptionsModal: React.FC<Props> = ({
           >
             {header}
           </Text>
-          <Divider orientation="horizontal" />
+          <Divider
+            orientation="horizontal"
+            variant="primary"
+          />
           <View style={{ flex: 1 }}>
             <ScrollView>
               {options.map((option, index) => (
@@ -72,7 +75,10 @@ const SelectOptionsModal: React.FC<Props> = ({
           </View>
           {!hideButton && (
             <>
-              <Divider orientation="horizontal" />
+              <Divider
+                orientation="horizontal"
+                variant="primary"
+              />
               <View style={{ flexDirection: 'row' }}>
                 <Button
                   variant="primary"

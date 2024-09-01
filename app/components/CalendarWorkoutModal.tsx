@@ -70,7 +70,10 @@ const CalendarWorkoutModal: React.FC<Props> = ({
           >
             {label}
           </Text>
-          <Divider orientation="horizontal" />
+          <Divider
+            orientation="horizontal"
+            variant="primary"
+          />
           <View style={{ flex: 1 }}>
             <ScrollView>
               {workout.steps.map(step => (
@@ -101,7 +104,10 @@ const CalendarWorkoutModal: React.FC<Props> = ({
               </View>
             )}
           </View>
-          <Divider orientation="horizontal" />
+          <Divider
+            orientation="horizontal"
+            variant="primary"
+          />
           <View style={{ flexDirection: 'row' }}>
             <Button
               variant="tertiary"

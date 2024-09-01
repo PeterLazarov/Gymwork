@@ -44,7 +44,7 @@ const seriesSetup = ({ data }: Props) => {
 
   const getChartSeries = (exercise: Exercise) => {
     const series: Record<string, SeriesItem> = {}
-    const colorsStack = [colors.tomato, colors.tealDark, colors.primary]
+    const colorsStack = [colors.tealDark, colors.secondary, colors.primary]
 
     if (exercise.measurements?.weight) {
       series.Weight = {

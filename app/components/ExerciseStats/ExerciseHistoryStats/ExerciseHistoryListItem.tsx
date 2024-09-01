@@ -21,7 +21,10 @@ const ExerciseHistoryListItem: React.FC<Props> = ({ date, sets, records }) => {
       <Text style={{ fontSize: fontSize.md, textAlign: 'center' }}>
         {DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}
       </Text>
-      <Divider orientation="horizontal" />
+      <Divider
+        orientation="horizontal"
+        variant="primary"
+      />
       <WorkoutSetList
         sets={sets}
         records={records}

@@ -23,7 +23,7 @@ const SetEditItem: React.FC<Props> = ({
   calcWorkSetNumber,
   toggleSetWarmup,
 }) => {
-  const color = isFocused ? colors.primary : colors.secondaryText
+  const color = colors.neutralText
 
   const number = set.isWarmup ? undefined : calcWorkSetNumber(set)
 
@@ -36,7 +36,7 @@ const SetEditItem: React.FC<Props> = ({
         justifyContent: 'space-around',
         paddingHorizontal: 10,
         paddingVertical: 1,
-        backgroundColor: isFocused ? colors.primaryLighter : undefined,
+        backgroundColor: isFocused ? colors.secondaryLighter : undefined,
       }}
     >
       <View
@@ -57,7 +57,7 @@ const SetEditItem: React.FC<Props> = ({
         {isRecord && (
           <Icon
             icon="trophy"
-            color={colors.primary}
+            color={colors.secondary}
           />
         )}
       </View>
@@ -65,28 +65,22 @@ const SetEditItem: React.FC<Props> = ({
         <SetDataLabel
           value={set.reps}
           unit={translate('reps')}
-          isFocused={isFocused}
         />
       )}
       {set.exercise.hasWeightMeasument && (
         <SetDataLabel
           value={set.weight}
           unit={set.exercise.measurements.weight!.unit}
-          isFocused={isFocused}
         />
       )}
       {set.exercise.hasDistanceMeasument && (
         <SetDataLabel
           value={set.distance}
           unit={set.exercise.measurements.distance!.unit}
-          isFocused={isFocused}
         />
       )}
       {set.exercise.hasTimeMeasument && (
-        <SetDataLabel
-          value={getFormatedDuration(set.duration)}
-          isFocused={isFocused}
-        />
+        <SetDataLabel value={getFormatedDuration(set.duration)} />
       )}
       {set.exercise.measurements.rest && (
         <SetDataLabel
@@ -94,7 +88,6 @@ const SetEditItem: React.FC<Props> = ({
             set.rest ?? 0,
             true
           )}`}
-          isFocused={isFocused}
         />
       )}
     </View>

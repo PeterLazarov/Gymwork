@@ -27,7 +27,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
   }
 
   return (
-    <EmptyLayout style={{ backgroundColor: colors.lightgray }}>
+    <EmptyLayout style={{ backgroundColor: colors.neutral }}>
       <Header>
         <IconButton
           onPress={onBackPress}

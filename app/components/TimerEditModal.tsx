@@ -48,7 +48,10 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
         >
           {translate('editRestTimer')}
         </Text>
-        <Divider orientation="horizontal" />
+        <Divider
+          orientation="horizontal"
+          variant="primary"
+        />
         <View style={{ paddingVertical: 16 }}>
           <DurationInput
             valueSeconds={timerSecs}

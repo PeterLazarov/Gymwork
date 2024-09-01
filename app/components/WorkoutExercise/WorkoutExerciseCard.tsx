@@ -41,7 +41,7 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
       containerStyle={
         isSelected
           ? {
-              backgroundColor: colors.primaryLight,
+              backgroundColor: colors.secondaryLighter,
             }
           : undefined
       }

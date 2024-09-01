@@ -10,9 +10,9 @@ interface Props {
 const ToggleSwitch: React.FC<Props> = ({ value, onValueChange }) => {
   return (
     <Switch
-      trackColor={{ false: colors.gray, true: colors.primaryLighter }}
+      trackColor={{ false: colors.neutralDark, true: colors.primaryLighter }}
       thumbColor={value ? colors.primary : colors.primaryLighter}
-      ios_backgroundColor={colors.gray}
+      ios_backgroundColor={colors.neutralDark}
       onValueChange={onValueChange}
       value={value}
     />

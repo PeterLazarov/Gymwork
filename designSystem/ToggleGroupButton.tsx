@@ -21,7 +21,7 @@ const ToggleGroupButton: React.FC<Props> = ({
     <View style={{ flexDirection: 'row', gap: 4 }}>
       {buttons.map((button, index) => (
         <Button
-          variant={index === activeIndex ? 'primary' : 'secondary'}
+          variant={index === activeIndex ? 'primary' : 'neutral'}
           key={index}
           onPress={() => {
             setActiveIndex(index)
@@ -30,7 +30,7 @@ const ToggleGroupButton: React.FC<Props> = ({
           style={{ flex: 1 }}
           // size="small"
         >
-          <ButtonText variant={index === activeIndex ? 'primary' : 'secondary'}>
+          <ButtonText variant={index === activeIndex ? 'primary' : 'neutral'}>
             {button.text}
           </ButtonText>
         </Button>

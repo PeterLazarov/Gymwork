@@ -20,7 +20,10 @@ const SetEditPanelSection: React.FC<Props> = ({ text, children }) => {
         >
           {text}
         </Text>
-        <Divider orientation="horizontal" />
+        <Divider
+          orientation="horizontal"
+          variant="primary"
+        />
       </View>
       {children}
     </View>

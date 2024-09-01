@@ -36,7 +36,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
       return (
         <PressableHighlight
           style={{
-            backgroundColor: isActive ? colors.primaryLighter : undefined,
+            backgroundColor: isActive ? colors.secondaryLighter : undefined,
           }}
           onLongPress={() => {
             onDragStart()
@@ -108,7 +108,12 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
         keyExtractor={set => set.guid}
         getItemLayout={getItemLayout}
         onReordered={handleReorder}
-        ItemSeparatorComponent={() => <Divider orientation="horizontal" />}
+        ItemSeparatorComponent={() => (
+          <Divider
+            orientation="horizontal"
+            variant="secondary"
+          />
+        )}
         ref={dragListRef}
         onContentSizeChange={() =>
           dragListRef.current?.scrollToEnd({ animated: true })

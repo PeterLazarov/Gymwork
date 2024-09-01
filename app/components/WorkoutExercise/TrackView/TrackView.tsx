@@ -14,7 +14,7 @@ const TrackView: React.FC = () => {
   const hasFocusedStep = !!stateStore.focusedStep
 
   return (
-    <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
+    <View style={{ backgroundColor: colors.neutral, flex: 1 }}>
       {hasFocusedStep && <StepTrackForm />}
       {!hasFocusedStep && (
         <EmptyState text={translate('selectExerciseForEdit')} />

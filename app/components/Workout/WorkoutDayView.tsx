@@ -17,13 +17,11 @@ const WorkoutDayView: React.FC = () => {
   return (
     <>
       <DayControl />
-      <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
+      <View style={{ backgroundColor: colors.neutral, flex: 1 }}>
         {workout ? (
           <WorkoutStepList workout={workout} />
         ) : (
-          <EmptyState
-            text={translate('workoutLogEmpty') + stateStore.openedDate}
-          />
+          <EmptyState text={translate('workoutLogEmpty')} />
         )}
       </View>
       <WorkoutControlButtons />

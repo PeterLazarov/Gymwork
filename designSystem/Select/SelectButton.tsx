@@ -44,7 +44,7 @@ const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
           <Text
             style={{
               fontSize: fontSize.md,
-              color: error ? colors.critical : colors.secondaryText,
+              color: error ? colors.critical : colors.neutralText,
             }}
           >
             {text}

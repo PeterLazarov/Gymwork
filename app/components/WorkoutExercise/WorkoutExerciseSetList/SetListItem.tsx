@@ -25,7 +25,7 @@ const SetListItem: React.FC<Props> = ({
   number,
   hideRecords = false,
 }) => {
-  const color = isFocused ? colors.primary : colors.secondaryText
+  const color = isFocused ? colors.secondary : colors.neutralText
 
   return (
     <View
@@ -53,11 +53,16 @@ const SetListItem: React.FC<Props> = ({
               {number}.{' '}
             </Text>
           )}
-          {set.isWarmup && <Icon icon="yoga" />}
+          {set.isWarmup && (
+            <Icon
+              icon="yoga"
+              color={color}
+            />
+          )}
           {isRecord && (
             <Icon
               icon="trophy"
-              color={colors.primary}
+              color={colors.secondary}
             />
           )}
         </View>

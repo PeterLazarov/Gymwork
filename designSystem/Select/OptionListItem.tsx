@@ -31,7 +31,7 @@ const OptionListItem: React.FC<Props> = ({
       {showDivider && (
         <Divider
           orientation="horizontal"
-          style={{ backgroundColor: colors.secondary }}
+          style={{ backgroundColor: colors.neutral }}
         />
       )}
       <PressableHighlight
@@ -43,7 +43,7 @@ const OptionListItem: React.FC<Props> = ({
             fontSize: fontSize.md,
             color: selectedValues.includes(value)
               ? colors.primary
-              : colors.secondaryText,
+              : colors.neutralText,
           }}
         >
           {label}
