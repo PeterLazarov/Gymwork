@@ -1,4 +1,4 @@
-const colorSchemas = {
+export const colorSchemas = {
   purple: { default: '#764abc', light: '#AB9FCF', lighter: '#E7E0EC' },
   coral: { default: '#FF6F61', light: '#FF9D8D', lighter: '#FFCCC7' },
   green: { default: '#4CAF50', light: '#8BC68A', lighter: '#C8E6CB' },
@@ -12,7 +12,7 @@ const colorSchemas = {
   amber: { default: '#FFC107', light: '#FFD54F', lighter: '#FFECB3' },
 }
 
-export default {
+export const colors = {
   primary: colorSchemas.purple.default,
   primaryLight: colorSchemas.purple.light,
   primaryLighter: colorSchemas.purple.lighter,
@@ -32,9 +32,6 @@ export default {
   criticalText: 'white',
   tertiaryText: 'black',
   tealDark: '#008080',
-  red: '#F44336',
-  green: '#4CAF50',
-  yellow: '#FFEB3B',
   disabled: '#C0C0C0',
   white: '#ffffff',
 }

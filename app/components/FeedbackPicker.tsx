@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { Platform, View, Text } from 'react-native'
 
-import { Icon, IconButton, colors, fontSize } from 'designSystem'
+import { Icon, IconButton, colorSchemas, colors, fontSize } from 'designSystem'
 
 type Props = {
   selected?: string
@@ -43,13 +43,17 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           <Icon
             icon="emoji-sad"
             size="large"
-            color={sadSelected ? colors.red : colors.neutralDark}
+            color={
+              sadSelected ? colorSchemas.coral.default : colors.neutralDark
+            }
           />
         </IconButton>
         <Text
           style={{
             fontSize: fontSize.sm,
-            color: sadSelected ? colors.red : colors.neutralDark,
+            color: sadSelected
+              ? colorSchemas.coral.default
+              : colors.neutralDark,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
@@ -72,13 +76,17 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           <Icon
             icon="emoji-neutral"
             size="large"
-            color={neutralSelected ? colors.yellow : colors.neutralDark}
+            color={
+              neutralSelected ? colorSchemas.amber.default : colors.neutralDark
+            }
           />
         </IconButton>
         <Text
           style={{
             fontSize: fontSize.sm,
-            color: neutralSelected ? colors.yellow : colors.neutralDark,
+            color: neutralSelected
+              ? colorSchemas.amber.default
+              : colors.neutralDark,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
@@ -101,13 +109,17 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           <Icon
             icon="emoji-happy"
             size="large"
-            color={happySelected ? colors.green : colors.neutralDark}
+            color={
+              happySelected ? colorSchemas.green.default : colors.neutralDark
+            }
           />
         </IconButton>
         <Text
           style={{
             fontSize: fontSize.sm,
-            color: happySelected ? colors.green : colors.neutralDark,
+            color: happySelected
+              ? colorSchemas.green.default
+              : colors.neutralDark,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
