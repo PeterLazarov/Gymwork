@@ -11,7 +11,6 @@ type Props = {
   currentIndex: number
   scrollableContainer?: boolean
   onHeaderPress: (index: number) => void
-  size: 'md' | 'lg'
 }
 const TabHeader: React.FC<Props> = ({
   index,
@@ -19,22 +18,15 @@ const TabHeader: React.FC<Props> = ({
   style,
   currentIndex,
   onHeaderPress,
-  size,
 }) => {
   const isActive = index === currentIndex
 
-  const sizes = {
-    md: 42,
-    lg: 52,
-  }
-
   return (
-    <View style={{ flex: 1, height: sizes[size] }}>
+    <View style={{ flex: 1, height: 52 }}>
       <TabHeaderTouchable onPress={() => onHeaderPress(index)}>
         <TabLabel
           isActive={isActive}
           style={isActive ? style?.activeLabel : style?.label}
-          // size={size}
         >
           {item.label}
         </TabLabel>

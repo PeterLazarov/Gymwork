@@ -17,7 +17,6 @@ type Props = {
   onTabChange?: (name: string) => void
   keyboardDismissOnScroll?: boolean
   screenlistProps?: Partial<HorizontalScreenListProps>
-  headerSize?: 'md' | 'lg'
 }
 const SwipeTabs: React.FC<Props> = ({
   style,
@@ -27,7 +26,6 @@ const SwipeTabs: React.FC<Props> = ({
   onTabChange,
   keyboardDismissOnScroll,
   screenlistProps,
-  headerSize = 'md',
 }) => {
   const tabsList = useRef<ICarouselInstance>(null)
   const [currentIndex, setCurrentIndex] = useState(defaultIndex || 0)
@@ -61,7 +59,6 @@ const SwipeTabs: React.FC<Props> = ({
         tabsConfig={tabsConfig}
         currentIndex={currentIndex}
         onHeaderPress={onTabPress}
-        headerSize={headerSize}
       />
       {children}
       <HorizontalScreenList

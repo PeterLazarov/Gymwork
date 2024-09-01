@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import { colors } from '../tokens'
+import { colors, fontSize } from '../tokens'
 
 type TabLabelProps = {
   isActive: boolean
@@ -18,7 +18,7 @@ TabHeaderTouchable.displayName = 'TabHeaderTouchable'
 export const TabLabel = styled.Text<TabLabelProps>`
   color: ${({ isActive }) =>
     isActive ? colors.secondary : colors.neutralDark};
-  font-size: 16px;
+  font-size: ${`${fontSize.md}px`};
 `
 TabLabel.displayName = 'TabLabel'
 

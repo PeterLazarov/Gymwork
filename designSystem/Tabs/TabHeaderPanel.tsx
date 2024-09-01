@@ -11,20 +11,13 @@ type Props = {
   currentIndex: number
   scrollableContainer?: boolean
   onHeaderPress: (index: number) => void
-  headerSize?: 'md' | 'lg'
 }
-const TabHeaderPanel: React.FC<Props> = ({
-  tabsConfig,
-  style,
-  headerSize = 'md',
-  ...rest
-}) => {
+const TabHeaderPanel: React.FC<Props> = ({ tabsConfig, style, ...rest }) => {
   return (
     <View style={styles.container}>
       {tabsConfig.length &&
         tabsConfig.map((item, index) => (
           <TabHeader
-            size={headerSize}
             key={index}
             index={index}
             item={item}
