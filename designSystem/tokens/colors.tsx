@@ -7,7 +7,7 @@ export const colorSchemas = {
   indigo: { default: '#3F51B5', light: '#7986CB', lighter: '#C5CAE9' },
   blue: { default: '#2196F3', light: '#64B5F6', lighter: '#BBDEFB' },
   lightBlue: { default: '#03A9F4', light: '#4FC3F7', lighter: '#B3E5FC' },
-  teal: { default: '#009688', light: '#4DB6AC', lighter: '#B2DFDB' },
+  teal: { default: '#008080', light: '#4DB6AC', lighter: '#B2DFDB' },
   pink: { default: '#E91E63', light: '#F06292', lighter: '#F8BBD0' },
   amber: { default: '#FFC107', light: '#FFD54F', lighter: '#FFECB3' },
 }
@@ -31,7 +31,6 @@ export const colors = {
   iconText: 'white',
   criticalText: 'white',
   tertiaryText: 'black',
-  tealDark: '#008080',
   disabled: '#C0C0C0',
   white: '#ffffff',
 }

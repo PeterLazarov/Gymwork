@@ -7,7 +7,7 @@ import {
   isImperialDistance,
   measurementUnits,
 } from 'app/db/models'
-import { colors } from 'designSystem'
+import { colorSchemas } from 'designSystem'
 import { SeriesItem } from './chartConfig'
 
 type Props = {
@@ -44,7 +44,12 @@ const seriesSetup = ({ data }: Props) => {
 
   const getChartSeries = (exercise: Exercise) => {
     const series: Record<string, SeriesItem> = {}
-    const colorsStack = [colors.tealDark, colors.secondary, colors.primary]
+    const colorsStack = [
+      colorSchemas.gold.default,
+      colorSchemas.blue.default,
+      colorSchemas.coral.default,
+      colorSchemas.purple.default
+    ]
 
     if (exercise.measurements?.weight) {
       series.Weight = {
