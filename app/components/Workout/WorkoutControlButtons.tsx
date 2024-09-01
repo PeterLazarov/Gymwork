@@ -56,7 +56,7 @@ const WorkoutControlButtons: React.FC = () => {
             <ButtonText variant="primary">{translate('newWorkout')}</ButtonText>
           </Button>
           <Button
-            variant="primary"
+            variant="secondary"
             onPress={copyPrevWorkout}
             style={{ flex: 1 }}
           >
@@ -64,7 +64,7 @@ const WorkoutControlButtons: React.FC = () => {
               color={colors.primaryText}
               icon="copy-outline"
             />
-            <ButtonText variant="primary">
+            <ButtonText variant="secondary">
               {translate('copyWorkout')}
             </ButtonText>
           </Button>
@@ -87,7 +87,7 @@ const WorkoutControlButtons: React.FC = () => {
           </Button>
 
           <Button
-            variant="primary"
+            variant="secondary"
             onPress={onCommentPress}
             style={{ flex: 1 }}
           >
@@ -95,7 +95,7 @@ const WorkoutControlButtons: React.FC = () => {
               color={colors.primaryText}
               icon={hasNotes ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'}
             />
-            <ButtonText variant="primary">
+            <ButtonText variant="secondary">
               {translate(hasNotes ? 'viewComment' : 'addComment')}
             </ButtonText>
           </Button>
