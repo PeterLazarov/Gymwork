@@ -25,7 +25,9 @@ const ExerciseSelectScreen: React.FC = () => {
   }
 
   function onAddExercisePress() {
-    navigate('ExerciseCreate')
+    navigate('ExerciseEdit', {
+      createMode: true,
+    })
   }
 
   type ItemProps = { onSelect: (exercise: Exercise) => void }

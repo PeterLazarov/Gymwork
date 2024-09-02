@@ -33,10 +33,6 @@ const TemplateSelectScreen: React.FC = () => {
     navigate('Workout')
   }
 
-  function onAddExercisePress() {
-    navigate('ExerciseCreate')
-  }
-
   return (
     <>
       <EmptyLayout>
@@ -51,16 +47,6 @@ const TemplateSelectScreen: React.FC = () => {
             />
           </IconButton>
           <Header.Title title={translate('selectTemplate')} />
-          <IconButton
-            onPress={onAddExercisePress}
-            underlay="darker"
-          >
-            <Icon
-              icon="add"
-              size="large"
-              color={colors.primaryText}
-            />
-          </IconButton>
         </Header>
 
         <TemplateList

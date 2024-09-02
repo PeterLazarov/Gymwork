@@ -17,8 +17,9 @@ import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 import { colors } from 'app/theme'
 import Workout from 'app/screens/Workout'
 import ExerciseSelect from 'app/screens/ExerciseSelect'
-import ExerciseCreateScreen from 'app/screens/ExerciseCreate'
-import ExerciseEdit from 'app/screens/ExerciseEdit'
+import ExerciseEdit, {
+  ExerciseEditScreenParams,
+} from 'app/screens/ExerciseEdit'
 import WorkoutFeedback from 'app/screens/WorkoutFeedback'
 import Calendar, { CalendarScreenParams } from 'app/screens/Calendar'
 import SaveTemplate from 'app/screens/SaveTemplate'
@@ -32,8 +33,7 @@ import TemplateSelect from 'app/screens/TemplateSelect'
  */
 export type AppStackParamList = {
   Calendar: CalendarScreenParams
-  ExerciseCreate: undefined
-  ExerciseEdit: undefined
+  ExerciseEdit: ExerciseEditScreenParams
   ExerciseSelect: undefined
   Workout: undefined
   WorkoutFeedback: undefined
@@ -80,10 +80,6 @@ const AppStack = observer(function AppStack() {
         <Stack.Screen
           name="Calendar"
           component={Calendar}
-        />
-        <Stack.Screen
-          name="ExerciseCreate"
-          component={ExerciseCreateScreen}
         />
         <Stack.Screen
           name="ExerciseEdit"
