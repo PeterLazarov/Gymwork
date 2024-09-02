@@ -14,18 +14,10 @@ const WorkoutControlButtons: React.FC = () => {
   const hasNotes = stateStore.openedWorkout?.notes !== ''
 
   function onAddExercisePress() {
+    if (!isWorkoutStarted) {
+      workoutStore.createWorkout()
+    }
     navigate('ExerciseSelect')
-  }
-
-  function createWorkout() {
-    workoutStore.createWorkout()
-    navigate('ExerciseSelect')
-  }
-
-  function copyPrevWorkout() {
-    navigate('Calendar', {
-      copyWorkoutMode: true,
-    })
   }
 
   function onCommentPress() {
@@ -42,64 +34,31 @@ const WorkoutControlButtons: React.FC = () => {
         justifyContent: 'center',
       }}
     >
-      {!isWorkoutStarted && (
-        <>
-          <Button
-            variant="primary"
-            onPress={createWorkout}
-            style={{ flex: 1 }}
-          >
-            <Icon
-              color={colors.primaryText}
-              icon="add"
-            />
-            <ButtonText variant="primary">{translate('newWorkout')}</ButtonText>
-          </Button>
-          <Button
-            variant="primary"
-            onPress={copyPrevWorkout}
-            style={{ flex: 1 }}
-          >
-            <Icon
-              color={colors.primaryText}
-              icon="copy-outline"
-            />
-            <ButtonText variant="primary">
-              {translate('copyWorkout')}
-            </ButtonText>
-          </Button>
-        </>
-      )}
+      <Button
+        variant="primary"
+        onPress={onAddExercisePress}
+        style={{ flex: 1 }}
+      >
+        <Icon
+          color={colors.primaryText}
+          icon="add"
+        />
+        <ButtonText variant="primary">{translate('addExercise')}</ButtonText>
+      </Button>
       {isWorkoutStarted && (
-        <>
-          <Button
-            variant="primary"
-            onPress={onAddExercisePress}
-            style={{ flex: 1 }}
-          >
-            <Icon
-              color={colors.primaryText}
-              icon="add"
-            />
-            <ButtonText variant="primary">
-              {translate('addExercise')}
-            </ButtonText>
-          </Button>
-
-          <Button
-            variant="primary"
-            onPress={onCommentPress}
-            style={{ flex: 1 }}
-          >
-            <Icon
-              color={colors.primaryText}
-              icon={hasNotes ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'}
-            />
-            <ButtonText variant="primary">
-              {translate(hasNotes ? 'viewComment' : 'addComment')}
-            </ButtonText>
-          </Button>
-        </>
+        <Button
+          variant="primary"
+          onPress={onCommentPress}
+          style={{ flex: 1 }}
+        >
+          <Icon
+            color={colors.primaryText}
+            icon={hasNotes ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'}
+          />
+          <ButtonText variant="primary">
+            {translate(hasNotes ? 'viewComment' : 'addComment')}
+          </ButtonText>
+        </Button>
       )}
     </View>
   )

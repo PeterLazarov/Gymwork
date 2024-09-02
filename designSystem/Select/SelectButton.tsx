@@ -50,12 +50,11 @@ const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
             {text}
           </Text>
         </View>
-        <View style={{ marginLeft: 4 }}>
-          <Icon
-            icon="chevron-down"
-            size="small"
-          />
-        </View>
+        <Icon
+          icon="chevron-down"
+          size="small"
+          style={{ marginLeft: 4 }}
+        />
       </View>
     </TouchableWithoutFeedback>
   )

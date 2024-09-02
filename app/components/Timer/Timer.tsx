@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { forwardRef, useMemo, useState } from 'react'
-import { View } from 'react-native'
+import { TextInput, View } from 'react-native'
 import { Duration } from 'luxon'
 
 import TimerEditModal from '../TimerEditModal'
@@ -9,7 +9,7 @@ import { IconButton, Icon, colors } from 'designSystem'
 import NumberInput from '../NumberInput'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
 
-const Timer = forwardRef((_, ref) => {
+const Timer = forwardRef<TextInput>((_, ref) => {
   const restTimer = useTimer()
   const percentTimeLeft = useMemo(() => {
     if (restTimer.duration.toMillis() === 0) {

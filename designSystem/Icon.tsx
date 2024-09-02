@@ -1,4 +1,5 @@
 import { Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { StyleProp, TextStyle } from 'react-native'
 
 const iconSizes = {
   small: 16,
@@ -54,12 +55,14 @@ type Props = {
   icon: IonicIcon | MCIcon | EntypoIcon
   size?: keyof typeof iconSizes
   color?: string
+  style?: StyleProp<TextStyle>
 }
 
 export const Icon: React.FC<Props> = ({
   icon,
   size = 'default',
   color = 'black',
+  style,
 }) => {
   return (
     <>
@@ -68,6 +71,7 @@ export const Icon: React.FC<Props> = ({
           name={icon as IonicIcon}
           size={iconSizes[size]}
           color={color}
+          style={style}
         />
       )}
       {MCIcons.includes(icon) && (
@@ -75,6 +79,7 @@ export const Icon: React.FC<Props> = ({
           name={icon as MCIcon}
           size={iconSizes[size]}
           color={color}
+          style={style}
         />
       )}
       {EntypoIcons.includes(icon) && (
@@ -82,6 +87,7 @@ export const Icon: React.FC<Props> = ({
           name={icon as EntypoIcon}
           size={iconSizes[size]}
           color={color}
+          style={style}
         />
       )}
     </>
