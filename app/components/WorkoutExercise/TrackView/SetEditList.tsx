@@ -93,7 +93,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
   const dragListRef = useRef<FlatList>(null)
 
   function calcWorkSetNumber(set: WorkoutSet) {
-    const workArrayIndex = stateStore.focusedStepWorkSets.indexOf(set)
+    const workArrayIndex = stateStore.focusedStep!.workSets.indexOf(set)
     return workArrayIndex + 1
   }
 
@@ -103,7 +103,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
   return (
     <>
       <DragList
-        data={stateStore.focusedStepSets}
+        data={stateStore.focusedStep!.sets}
         renderItem={renderItem}
         keyExtractor={set => set.guid}
         getItemLayout={getItemLayout}
@@ -115,7 +115,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
         }
       />
 
-      {stateStore.focusedStepSets.length === 0 && (
+      {stateStore.focusedStep!.sets.length === 0 && (
         <EmptyState text={translate('noSetsEntered')} />
       )}
     </>

@@ -7,7 +7,7 @@ import {
   WorkoutStepSnapshotIn,
 } from '../models'
 import convert from 'convert-units'
-const numberOfWorkouts = 1
+const numberOfWorkouts = 20
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
 const weightIncrementKg = 2.5
 

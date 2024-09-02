@@ -18,7 +18,7 @@ const StepTrackForm: React.FC = () => {
 
   const { exercise } = stateStore.focusedStep!
   useEffect(() => {
-    const setToClone = selectedSet || stateStore.focusedStepLastSet
+    const setToClone = selectedSet || stateStore.focusedStep!.lastSet
 
     if (setToClone) {
       const { guid, exercise, ...rest } = setToClone
