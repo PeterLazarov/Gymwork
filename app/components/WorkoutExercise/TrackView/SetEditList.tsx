@@ -111,7 +111,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
         ItemSeparatorComponent={() => (
           <Divider
             orientation="horizontal"
-            variant="secondary"
+            variant="neutralDark"
           />
         )}
         ref={dragListRef}

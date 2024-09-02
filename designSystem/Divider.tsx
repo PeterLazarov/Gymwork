@@ -4,13 +4,14 @@ import { colors } from './tokens'
 
 type Props = {
   orientation: 'horizontal' | 'vertical'
-  variant: 'primary' | 'secondary' | 'neutral'
+  variant: 'primary' | 'secondary' | 'neutral' | 'neutralDark'
 }
 
 const variants = {
   primary: colors.primary,
   secondary: colors.secondary,
   neutral: colors.neutral,
+  neutralDark: colors.neutralDark,
 }
 export const Divider = styled.View<Props>`
   /* flex: 1; */
