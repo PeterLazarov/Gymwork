@@ -28,7 +28,7 @@ const CalendarScreen: React.FC = () => {
         }
         acc[curr.date].dots = [
           {
-            color: colors.secondary,
+            color: colors.accent,
             selectedColor: colors.secondaryText,
           },
         ]
@@ -121,14 +121,14 @@ const CalendarScreen: React.FC = () => {
           numberOfMonths={monthsToRender}
           theme={{
             startDateContainerStyle: {
-              backgroundColor: colors.secondary,
+              backgroundColor: colors.accent,
               aspectRatio: 1,
             },
             dayContainerStyle: {
               backgroundColor: colors.neutralLighter,
             },
             todayContainerStyle: {
-              backgroundColor: colors.secondaryLighter,
+              backgroundColor: colors.accentLight,
               aspectRatio: 1,
               borderRadius: 50,
             },

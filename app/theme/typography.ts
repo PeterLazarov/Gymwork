@@ -63,7 +63,7 @@ export const typography = {
   /**
    * An alternate font used for perhaps titles and stuff.
    */
-  secondary: Platform.select({
+  accent: Platform.select({
     ios: fonts.helveticaNeue,
     android: fonts.sansSerif,
   }),

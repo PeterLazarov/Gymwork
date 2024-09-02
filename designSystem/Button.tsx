@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import { colors } from './tokens'
 
 type ButtonProps = {
-  variant: 'primary' | 'secondary' | 'critical' | 'tertiary'
+  variant: 'primary' | 'accent' | 'neutral' | 'critical' | 'tertiary'
   type?: 'filled' | 'outline'
   disabled?: boolean
   size?: 'default' | 'small'
@@ -11,7 +11,8 @@ type ButtonProps = {
 
 const buttonVariants = {
   primary: colors.primary,
-  secondary: colors.secondary,
+  accent: colors.accent,
+  neutral: colors.neutral,
   critical: colors.critical,
   tertiary: colors.tertiary,
 }
@@ -39,7 +40,8 @@ Button.displayName = 'Button'
 
 const buttonTextVariants = {
   primary: colors.primaryText,
-  secondary: colors.secondaryText,
+  accent: colors.secondaryText,
+  neutral: colors.neutralText,
   critical: colors.criticalText,
   tertiary: colors.tertiaryText,
 }

@@ -25,7 +25,7 @@ const SetListItem: React.FC<Props> = ({
   number,
   hideRecords = false,
 }) => {
-  const color = isFocused ? colors.secondary : colors.neutralText
+  const color = isFocused ? colors.accent : colors.neutralText
 
   return (
     <View
@@ -62,7 +62,7 @@ const SetListItem: React.FC<Props> = ({
           {isRecord && (
             <Icon
               icon="trophy"
-              color={colors.secondary}
+              color={colors.accent}
             />
           )}
         </View>

@@ -16,7 +16,7 @@ export const SetEditActions: React.FC<SetEditActionsProps> = ({
   onUpdate,
 }) => {
   return (
-    <View style={{ flexDirection: 'row', gap: 4 }}>
+    <View style={{ flexDirection: 'row', gap: 2 }}>
       {mode === 'add' ? (
         <Button
           variant="primary"

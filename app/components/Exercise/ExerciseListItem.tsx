@@ -43,7 +43,7 @@ const ExerciseListItem: React.FC<Props> = ({ exercise, onSelect }) => {
         >
           <Icon
             icon={heartIcon}
-            color={colors.secondary}
+            color={colors.accent}
           />
         </IconButton>
       </View>

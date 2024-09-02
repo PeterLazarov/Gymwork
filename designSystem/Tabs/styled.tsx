@@ -16,8 +16,7 @@ export const TabHeaderTouchable = styled.TouchableOpacity`
 TabHeaderTouchable.displayName = 'TabHeaderTouchable'
 
 export const TabLabel = styled.Text<TabLabelProps>`
-  color: ${({ isActive }) =>
-    isActive ? colors.secondary : colors.neutralDark};
+  color: ${({ isActive }) => (isActive ? colors.accent : colors.neutralDark)};
   font-size: ${`${fontSize.md}px`};
 `
 TabLabel.displayName = 'TabLabel'
@@ -26,6 +25,6 @@ export const ActiveIndicator = styled.View`
   margin-left: 10px;
   margin-right: 10px;
   border-bottom-width: 2px;
-  border-color: ${colors.secondary};
+  border-color: ${colors.accent};
 `
 ActiveIndicator.displayName = 'ActiveIndicator'

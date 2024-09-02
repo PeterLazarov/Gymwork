@@ -36,7 +36,7 @@ const SetEditItem: React.FC<Props> = ({
         justifyContent: 'space-around',
         paddingHorizontal: 10,
         paddingVertical: 1,
-        backgroundColor: isFocused ? colors.secondaryLighter : undefined,
+        backgroundColor: isFocused ? colors.neutralLight : undefined,
       }}
     >
       <View
@@ -57,7 +57,7 @@ const SetEditItem: React.FC<Props> = ({
         {isRecord && (
           <Icon
             icon="trophy"
-            color={colors.secondary}
+            color={colors.accent}
           />
         )}
       </View>

@@ -53,7 +53,7 @@ export const colors = {
    */
   text: palette.neutral800,
   /**
-   * Secondary text information.
+   * accent text information.
    */
   textDim: palette.neutral600,
   /**

@@ -29,7 +29,7 @@ const SetDataLabel: React.FC<Props> = ({
       <Text
         style={{
           fontWeight: 'bold',
-          color: isFocused ? colors.secondary : colors.neutralText,
+          color: isFocused ? colors.accent : colors.neutralText,
           fontSize: fontSize ? fontSizeToken[fontSize] : fontSizeToken.xs,
         }}
       >
@@ -38,7 +38,7 @@ const SetDataLabel: React.FC<Props> = ({
       {unit && (
         <Text
           style={{
-            color: isFocused ? colors.secondary : colors.neutralDark,
+            color: isFocused ? colors.accent : colors.neutralDark,
             fontSize: fontSize ? fontSizeToken[fontSize] : fontSizeToken.xs,
           }}
         >

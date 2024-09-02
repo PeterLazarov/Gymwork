@@ -30,7 +30,7 @@ const WorkoutControlButtons: React.FC = () => {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 1,
+        gap: 2,
         justifyContent: 'center',
       }}
     >
@@ -47,7 +47,7 @@ const WorkoutControlButtons: React.FC = () => {
       </Button>
       {isWorkoutStarted && (
         <Button
-          variant="secondary"
+          variant="primary"
           onPress={onCommentPress}
           style={{ flex: 1 }}
         >
@@ -55,7 +55,7 @@ const WorkoutControlButtons: React.FC = () => {
             color={colors.primaryText}
             icon={hasNotes ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'}
           />
-          <ButtonText variant="secondary">
+          <ButtonText variant="primary">
             {translate(hasNotes ? 'viewComment' : 'addComment')}
           </ButtonText>
         </Button>
