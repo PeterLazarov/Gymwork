@@ -62,6 +62,7 @@ const en = {
   useTemplate: 'Use template',
   selectTemplate: 'Select template',
   templateWillBeDeleted: 'Template will be deleted.',
+  exercises: 'Exercises',
 }
 
 export default en

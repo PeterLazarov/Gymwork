@@ -9,8 +9,9 @@ import { useStores } from 'app/db/helpers/useStores'
 type Props = {
   onSelect: (template: WorkoutTemplate) => void
   onDelete: (template: WorkoutTemplate) => void
+  onEdit: (template: WorkoutTemplate) => void
 }
-const TemplateList: React.FC<Props> = ({ onSelect, onDelete }) => {
+const TemplateList: React.FC<Props> = ({ onSelect, onDelete, onEdit }) => {
   const { workoutStore } = useStores()
   const templates = workoutStore.workoutTemplates
 
@@ -20,6 +21,7 @@ const TemplateList: React.FC<Props> = ({ onSelect, onDelete }) => {
         template={item}
         onSelect={onSelect}
         onDelete={onDelete}
+        onEdit={onEdit}
       />
     )
   }

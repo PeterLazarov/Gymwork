@@ -6,7 +6,7 @@ import ConfirmationDialog from 'app/components/ConfirmationDialog'
 import EditTemplateForm from 'app/components/WorkoutTemplate/EditTemplateForm'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutTemplate, WorkoutTemplateModel } from 'app/db/models'
-import { goBack } from 'app/navigators'
+import { goBack, useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { translate } from 'app/i18n'
 import {
@@ -18,10 +18,16 @@ import {
   colors,
 } from 'designSystem'
 
-const SaveWorkoutScreen: React.FC = () => {
+export type SaveTemplateScreenParams = {
+  edittingTemplate?: WorkoutTemplate
+}
+const SaveTemplateScreen: React.FC = () => {
   const { workoutStore } = useStores()
+  const { edittingTemplate } = useRouteParams('SaveTemplate')
 
-  const [template, setTemplate] = useState(WorkoutTemplateModel.create())
+  const [template, setTemplate] = useState(
+    edittingTemplate || WorkoutTemplateModel.create()
+  )
   const [formValid, setFormValid] = useState(false)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
@@ -40,7 +46,10 @@ const SaveWorkoutScreen: React.FC = () => {
   }
 
   function onComplete() {
-    workoutStore.saveWorkoutTemplate(template.name)
+    if (edittingTemplate) {
+    } else {
+      workoutStore.saveWorkoutTemplate(template.name)
+    }
     goBack()
   }
 
@@ -93,4 +102,4 @@ const SaveWorkoutScreen: React.FC = () => {
     </>
   )
 }
-export default observer(SaveWorkoutScreen)
+export default observer(SaveTemplateScreen)

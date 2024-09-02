@@ -1,8 +1,11 @@
-import { WorkoutTemplate } from 'app/db/models'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
+
+import { WorkoutTemplate } from 'app/db/models'
+import { translate } from 'app/i18n'
+import { colors, fontSize } from 'designSystem'
 
 type Props = {
   template: WorkoutTemplate
@@ -41,6 +44,33 @@ const ExerciseEditForm: React.FC<Props> = ({ template, onUpdate }) => {
         >
           {nameError}
         </HelperText>
+      )}
+      {template.steps.length > 0 && (
+        <>
+          <Text style={{ fontSize: fontSize.lg }}>
+            {translate('exercises')}
+          </Text>
+          <View
+            style={{
+              borderWidth: 1,
+              borderColor: colors.gray,
+              borderRadius: 8,
+              padding: 10,
+              gap: 5,
+            }}
+          >
+            {template.steps.map(step => (
+              <Text
+                key={step.guid}
+                style={{
+                  fontSize: fontSize.md,
+                }}
+              >
+                {step.exercise.name}
+              </Text>
+            ))}
+          </View>
+        </>
       )}
     </View>
   )

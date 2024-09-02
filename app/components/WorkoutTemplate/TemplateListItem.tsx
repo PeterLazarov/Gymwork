@@ -9,11 +9,13 @@ type Props = {
   template: WorkoutTemplate
   onSelect: (template: WorkoutTemplate) => void
   onDelete: (template: WorkoutTemplate) => void
+  onEdit: (template: WorkoutTemplate) => void
 }
 const ExerciseListItem: React.FC<Props> = ({
   template,
   onSelect,
   onDelete,
+  onEdit,
 }) => {
   return (
     <PressableHighlight onPress={() => onSelect(template)}>
@@ -34,6 +36,9 @@ const ExerciseListItem: React.FC<Props> = ({
         >
           {template.name}
         </Text>
+        <IconButton onPress={() => onEdit(template)}>
+          <Icon icon="pencil" />
+        </IconButton>
         <IconButton onPress={() => onDelete(template)}>
           <Icon icon="delete" />
         </IconButton>

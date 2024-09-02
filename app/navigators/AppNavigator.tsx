@@ -22,7 +22,9 @@ import ExerciseEdit, {
 } from 'app/screens/ExerciseEdit'
 import WorkoutFeedback from 'app/screens/WorkoutFeedback'
 import Calendar, { CalendarScreenParams } from 'app/screens/Calendar'
-import SaveTemplate from 'app/screens/SaveTemplate'
+import SaveTemplate, {
+  SaveTemplateScreenParams,
+} from 'app/screens/SaveTemplate'
 import TemplateSelect from 'app/screens/TemplateSelect'
 
 /**
@@ -37,7 +39,7 @@ export type AppStackParamList = {
   ExerciseSelect: undefined
   Workout: undefined
   WorkoutFeedback: undefined
-  SaveTemplate: undefined
+  SaveTemplate: SaveTemplateScreenParams
   TemplateSelect: undefined
 }
 

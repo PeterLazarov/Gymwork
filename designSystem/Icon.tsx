@@ -22,7 +22,6 @@ const IoniconsIcons = [
   'chatbox-ellipses',
   'chatbox-ellipses-outline',
   'copy-outline',
-  'pencil',
   'checkmark',
   'pause-outline',
   'stop',
@@ -37,6 +36,7 @@ const MCIcons = [
   'yoga',
   'drag-horizontal-variant',
   'delete',
+  'pencil',
 ] as const satisfies readonly (keyof typeof MaterialCommunityIcons.glyphMap)[]
 type MCIcon = (typeof MCIcons)[number]
 

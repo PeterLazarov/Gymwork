@@ -3,6 +3,7 @@ import {
   SnapshotOut,
   types,
   getParent,
+  getSnapshot,
 } from 'mobx-state-tree'
 
 import { RootStore } from './RootStore'
@@ -183,6 +184,12 @@ export const WorkoutStoreModel = types
     },
     removeTemplate(template: WorkoutTemplate) {
       self.workoutTemplates.remove(template)
+    },
+    editTemplate(updated: WorkoutTemplate) {
+      const mappedArray = self.workoutTemplates.map(t =>
+        getSnapshot(t.guid === updated.guid ? updated : t)
+      )
+      self.setProp('workoutTemplates', mappedArray)
     },
   }))
 

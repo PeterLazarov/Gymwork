@@ -21,9 +21,14 @@ const TemplateSelectScreen: React.FC = () => {
     navigate('Workout')
   }
 
+  function handleEdit(template: WorkoutTemplate) {
+    navigate('SaveTemplate', { edittingTemplate: template })
+  }
+
   function handleDelete(template: WorkoutTemplate) {
     setTemplateToDelete(template)
   }
+
   function deleteTemplate() {
     workoutStore.removeTemplate(templateToDelete!)
     setTemplateToDelete(null)
@@ -52,6 +57,7 @@ const TemplateSelectScreen: React.FC = () => {
         <TemplateList
           onSelect={handleSelect}
           onDelete={handleDelete}
+          onEdit={handleEdit}
         />
       </EmptyLayout>
 
