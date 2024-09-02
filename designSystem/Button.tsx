@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import { colors } from './tokens'
 
 type ButtonProps = {
-  variant: 'primary' | 'secondary' | 'neutral' | 'critical' | 'tertiary'
+  variant: 'primary' | 'secondary' | 'critical' | 'tertiary'
   type?: 'filled' | 'outline'
   disabled?: boolean
   size?: 'default' | 'small'
@@ -12,7 +12,6 @@ type ButtonProps = {
 const buttonVariants = {
   primary: colors.primary,
   secondary: colors.secondary,
-  neutral: colors.neutral,
   critical: colors.critical,
   tertiary: colors.tertiary,
 }
@@ -31,7 +30,7 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
       ? colors.disabled
       : type !== 'outline'
       ? buttonVariants[variant]
-      : colors.neutral};
+      : colors.neutralLight};
   border-width: ${({ type }) => (type === 'outline' ? '2px' : 0)};
   border-color: ${({ type, variant }) =>
     type === 'outline' ? buttonVariants[variant] : 'transparent'};
@@ -41,7 +40,6 @@ Button.displayName = 'Button'
 const buttonTextVariants = {
   primary: colors.primaryText,
   secondary: colors.secondaryText,
-  neutral: colors.neutralText,
   critical: colors.criticalText,
   tertiary: colors.tertiaryText,
 }

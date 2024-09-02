@@ -125,7 +125,7 @@ const CalendarScreen: React.FC = () => {
               aspectRatio: 1,
             },
             dayContainerStyle: {
-              backgroundColor: colors.neutral,
+              backgroundColor: colors.neutralLighter,
             },
             todayContainerStyle: {
               backgroundColor: colors.secondaryLighter,

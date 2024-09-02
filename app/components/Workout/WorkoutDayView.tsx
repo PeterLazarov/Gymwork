@@ -3,7 +3,6 @@ import { View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { colors } from 'designSystem'
 import WorkoutStepList from './WorkoutStepList'
 import DayControl from './DayControl'
 import WorkoutControlButtons from './WorkoutControlButtons'
@@ -16,7 +15,7 @@ const WorkoutDayView: React.FC = () => {
   return (
     <>
       <DayControl duration={workout?.duration} />
-      <View style={{ backgroundColor: colors.neutral, flex: 1 }}>
+      <View style={{ flex: 1 }}>
         {workout ? (
           <WorkoutStepList workout={workout} />
         ) : (

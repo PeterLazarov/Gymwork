@@ -32,7 +32,6 @@ const OptionListItem: React.FC<Props> = ({
         <Divider
           orientation="horizontal"
           variant="neutral"
-          style={{ backgroundColor: colors.neutral }}
         />
       )}
       <PressableHighlight

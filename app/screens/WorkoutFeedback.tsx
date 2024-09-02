@@ -27,7 +27,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
   }
 
   return (
-    <EmptyLayout style={{ backgroundColor: colors.neutral }}>
+    <EmptyLayout>
       <Header>
         <IconButton
           onPress={onBackPress}
@@ -54,16 +54,16 @@ const WorkoutFeedbackScreen: React.FC = () => {
           {translate('howWasWorkout')}
         </Text>
         <FeedbackPicker
-          selected={stateStore.openedWorkout.feeling}
+          selected={stateStore.openedWorkout!.feeling}
           onChange={feeling =>
-            stateStore.openedWorkout.setProp('feeling', feeling)
+            stateStore.openedWorkout!.setProp('feeling', feeling)
           }
         />
         <ScrollView>
           <TextInput
-            value={stateStore.openedWorkout.notes}
+            value={stateStore.openedWorkout!.notes}
             onChangeText={text =>
-              stateStore.openedWorkout.setProp('notes', text)
+              stateStore.openedWorkout!.setProp('notes', text)
             }
             multiline
             placeholder={translate('enterComments')}

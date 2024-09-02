@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
 
-import { Tabs, colors } from 'designSystem'
+import { Tabs } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import EmptyState from '../EmptyState'
@@ -34,7 +34,7 @@ const ExerciseStatsView: React.FC = () => {
   ]
 
   return (
-    <View style={{ backgroundColor: colors.neutral, flex: 1 }}>
+    <View style={{ flex: 1 }}>
       {hasFocusedStep && <Tabs tabsConfig={tabs} />}
 
       {!hasFocusedStep && (
