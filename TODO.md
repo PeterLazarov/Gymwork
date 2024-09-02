@@ -19,6 +19,7 @@
 - optimise calendar rendering
 - grouping / measurement by rest
 - fix Speed chart miscalculation
+- add "exhaution / RPE / RIR" and was painful swipe button
 
 Performance to beat -
 100 workouts
