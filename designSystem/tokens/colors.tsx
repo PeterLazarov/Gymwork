@@ -17,9 +17,9 @@ export const colors = {
   primaryLight: colorSchemas.purple.light,
   primaryLighter: colorSchemas.purple.lighter,
 
-  secondary: colorSchemas.darkGreen.default,
-  secondaryLight: colorSchemas.darkGreen.light,
-  secondaryLighter: colorSchemas.darkGreen.lighter,
+  secondary: colorSchemas.coral.default,
+  secondaryLight: colorSchemas.coral.light,
+  secondaryLighter: colorSchemas.coral.lighter,
 
   neutralDark: '#626262',
   neutral: '#F7F3F9',
