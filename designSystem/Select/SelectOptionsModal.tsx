@@ -58,7 +58,7 @@ const SelectOptionsModal: React.FC<Props> = ({
           </Text>
           <Divider
             orientation="horizontal"
-            variant="primary"
+            variant="secondary"
           />
           <View style={{ flex: 1 }}>
             <ScrollView>
@@ -74,21 +74,15 @@ const SelectOptionsModal: React.FC<Props> = ({
             </ScrollView>
           </View>
           {!hideButton && (
-            <>
-              <Divider
-                orientation="horizontal"
-                variant="primary"
-              />
-              <View style={{ flexDirection: 'row' }}>
-                <Button
-                  variant="primary"
-                  style={{ flex: 1 }}
-                  onPress={onClose}
-                >
-                  <ButtonText variant="primary">{translate('done')}</ButtonText>
-                </Button>
-              </View>
-            </>
+            <View style={{ flexDirection: 'row' }}>
+              <Button
+                variant="secondary"
+                style={{ flex: 1 }}
+                onPress={onClose}
+              >
+                <ButtonText variant="secondary">{translate('done')}</ButtonText>
+              </Button>
+            </View>
           )}
         </View>
       </Modal>

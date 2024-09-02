@@ -31,19 +31,24 @@ const OptionListItem: React.FC<Props> = ({
       {showDivider && (
         <Divider
           orientation="horizontal"
+          variant="neutral"
           style={{ backgroundColor: colors.neutral }}
         />
       )}
       <PressableHighlight
-        style={{ paddingHorizontal: 10, paddingVertical: 15 }}
+        style={{
+          paddingHorizontal: 10,
+          paddingVertical: 15,
+          backgroundColor: selectedValues.includes(value)
+            ? colors.secondaryLighter
+            : colors.white,
+        }}
         onPress={() => onSelect(option)}
       >
         <Text
           style={{
             fontSize: fontSize.md,
-            color: selectedValues.includes(value)
-              ? colors.primary
-              : colors.neutralText,
+            color: colors.neutralText,
           }}
         >
           {label}
