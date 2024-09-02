@@ -62,18 +62,18 @@ function App() {
       <KeyboardAvoiderProvider>
         <DBStoreInitializer>
           <TimerContext.Provider value={timer}>
-            <PaperProvider>
+            <GestureHandlerRootView style={{ flex: 1 }}>
               <Portal.Host>
                 <ErrorBoundary catchErrors={Config.catchErrors}>
-                  <GestureHandlerRootView style={{ flex: 1 }}>
+                  <PaperProvider>
                     <AppNavigator
                       initialState={initialNavigationState}
                       onStateChange={onNavigationStateChange}
                     />
-                  </GestureHandlerRootView>
+                  </PaperProvider>
                 </ErrorBoundary>
               </Portal.Host>
-            </PaperProvider>
+            </GestureHandlerRootView>
           </TimerContext.Provider>
         </DBStoreInitializer>
       </KeyboardAvoiderProvider>

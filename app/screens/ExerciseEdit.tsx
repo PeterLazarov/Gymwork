@@ -1,11 +1,12 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
+import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 import ConfirmationDialog from 'app/components/ConfirmationDialog'
 import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
 import { useStores } from 'app/db/helpers/useStores'
-import { Exercise } from 'app/db/models'
-import { goBack } from 'app/navigators'
+import { Exercise, ExerciseModel } from 'app/db/models'
+import { goBack, useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { translate } from 'app/i18n'
 import {
@@ -16,12 +17,17 @@ import {
   IconButton,
   colors,
 } from 'designSystem'
-import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
+export type ExerciseEditScreenParams = {
+  createMode?: boolean
+}
 const ExerciseEditScreen: React.FC = () => {
   const { stateStore, exerciseStore } = useStores()
 
-  const [exercise, setExercise] = useState(stateStore.focusedStep!.exercise)
+  const { createMode } = useRouteParams('ExerciseEdit')
+  const [exercise, setExercise] = useState(
+    createMode ? ExerciseModel.create() : stateStore.focusedStep!.exercise
+  )
   const [formValid, setFormValid] = useState(false)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
@@ -40,7 +46,11 @@ const ExerciseEditScreen: React.FC = () => {
   }
 
   function onComplete() {
-    exerciseStore.editExercise(exercise)
+    if (createMode) {
+      exerciseStore.createExercise(exercise)
+    } else {
+      exerciseStore.editExercise(exercise)
+    }
     goBack()
   }
 
@@ -57,7 +67,9 @@ const ExerciseEditScreen: React.FC = () => {
               color={colors.primaryText}
             />
           </IconButton>
-          <Header.Title title={translate('editExercise')} />
+          <Header.Title
+            title={translate(createMode ? 'createExercise' : 'editExercise')}
+          />
           <IconButton
             onPress={onComplete}
             disabled={!formValid}

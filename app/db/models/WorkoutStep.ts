@@ -31,6 +31,12 @@ export const WorkoutStepModel = types
     get exerciseRecords() {
       return this.recordStore.getExerciseRecords(step.exercise.guid)
     },
+    get lastSet() {
+      return step.sets.at(-1)
+    },
+    get workSets() {
+      return step.sets.filter(s => !s.isWarmup)
+    }
   }))
   .actions(withSetPropAction)
   .actions(step => ({

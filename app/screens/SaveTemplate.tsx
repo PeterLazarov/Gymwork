@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 import ConfirmationDialog from 'app/components/ConfirmationDialog'
-import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
+import EditTemplateForm from 'app/components/WorkoutTemplate/EditTemplateForm'
 import { useStores } from 'app/db/helpers/useStores'
-import { Exercise, ExerciseModel } from 'app/db/models'
-import { goBack } from 'app/navigators'
+import { WorkoutTemplate, WorkoutTemplateModel } from 'app/db/models'
+import { goBack, useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { translate } from 'app/i18n'
 import {
@@ -18,10 +18,16 @@ import {
   colors,
 } from 'designSystem'
 
-const ExerciseCreateScreen: React.FC = () => {
-  const { exerciseStore } = useStores()
+export type SaveTemplateScreenParams = {
+  edittingTemplate?: WorkoutTemplate
+}
+const SaveTemplateScreen: React.FC = () => {
+  const { workoutStore } = useStores()
+  const { edittingTemplate } = useRouteParams('SaveTemplate')
 
-  const [exercise, setExercise] = useState(ExerciseModel.create())
+  const [template, setTemplate] = useState(
+    edittingTemplate || WorkoutTemplateModel.create()
+  )
   const [formValid, setFormValid] = useState(false)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
@@ -34,13 +40,16 @@ const ExerciseCreateScreen: React.FC = () => {
     goBack()
   }
 
-  function onUpdate(updated: Exercise, isValid: boolean) {
-    setExercise(updated)
+  function onUpdate(updated: WorkoutTemplate, isValid: boolean) {
+    setTemplate(updated)
     setFormValid(isValid)
   }
 
   function onComplete() {
-    exerciseStore.createExercise(exercise)
+    if (edittingTemplate) {
+    } else {
+      workoutStore.saveWorkoutTemplate(template.name)
+    }
     goBack()
   }
 
@@ -54,7 +63,7 @@ const ExerciseCreateScreen: React.FC = () => {
               color={colors.primaryText}
             />
           </IconButton>
-          <Header.Title title={translate('createExercise')} />
+          <Header.Title title={translate('saveTemplate')} />
           <IconButton
             onPress={onComplete}
             disabled={!formValid}
@@ -70,8 +79,8 @@ const ExerciseCreateScreen: React.FC = () => {
           avoidMode="focused-input"
           style={{ flex: 1, overflow: 'hidden' }}
         >
-          <ExerciseEditForm
-            exercise={exercise}
+          <EditTemplateForm
+            template={template}
             onUpdate={onUpdate}
           />
 
@@ -86,11 +95,11 @@ const ExerciseCreateScreen: React.FC = () => {
       </EmptyLayout>
       <ConfirmationDialog
         open={confirmDialogOpen}
-        message={translate('changesWillBeLost')}
+        message={translate('workoutWillNotBeSaved')}
         onClose={() => setConfirmDialogOpen(false)}
         onConfirm={onBackConfirmed}
       />
     </>
   )
 }
-export default observer(ExerciseCreateScreen)
+export default observer(SaveTemplateScreen)

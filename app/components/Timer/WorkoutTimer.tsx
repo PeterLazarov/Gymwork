@@ -14,7 +14,7 @@ const WorkoutTimer: React.FC = () => {
 
   // TODO sets need to be added on the same day to count
   const [workoutMaybeEnd, setWorkoutMaybeEnd] = useState<Date | undefined>(
-    stateStore.isOpenedWorkoutToday
+    stateStore.openedWorkout?.isToday
       ? new Date()
       : stateStore.openedWorkout?.lastSet?.createdAt
   )
@@ -38,7 +38,7 @@ const WorkoutTimer: React.FC = () => {
   useEffect(() => {
     cleanup()
 
-    if (stateStore.isOpenedWorkoutToday) {
+    if (stateStore.openedWorkout?.isToday) {
       handle.current = setDriftlessInterval(() => {
         // 30m have passed i.e. workout has probably ended, snap back to last set
         const halfHourPassed =

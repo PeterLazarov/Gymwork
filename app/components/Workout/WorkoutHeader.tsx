@@ -30,6 +30,11 @@ const WorkoutHeader: React.FC = () => {
     navigate('WorkoutFeedback')
   }
 
+  function saveTemplate() {
+    setMenuOpen(false)
+    navigate('SaveTemplate')
+  }
+
   const exportData = () => {
     setMenuOpen(false)
 
@@ -85,6 +90,10 @@ const WorkoutHeader: React.FC = () => {
           </IconButton>
         }
       >
+        <Menu.Item
+          onPress={saveTemplate}
+          title={translate('saveAsTemplate')}
+        />
         <Menu.Item
           onPress={exportData}
           title={translate('exportData')}

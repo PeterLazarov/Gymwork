@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite'
 import React from 'react'
 
 import ExerciseListItem from './ExerciseListItem'
@@ -29,4 +28,4 @@ const ExerciseList: React.FC<Props> = ({ exercises, onSelect }) => {
   )
 }
 
-export default observer(ExerciseList)
+export default ExerciseList

@@ -2,8 +2,8 @@ import {
   Instance,
   SnapshotOut,
   types,
-  destroy,
   getParent,
+  getSnapshot,
 } from 'mobx-state-tree'
 
 import { RootStore } from './RootStore'
@@ -17,14 +17,18 @@ import {
   Exercise,
   Workout,
   WorkoutSetSnapshotIn,
+  WorkoutTemplateModel,
+  WorkoutTemplateSnapshotIn,
+  WorkoutStepSnapshotIn,
+  WorkoutTemplate,
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
-import { WorkoutStepSnapshotIn } from '../models/WorkoutStep'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
   .props({
     workouts: types.array(WorkoutModel),
+    workoutTemplates: types.array(WorkoutTemplateModel),
   })
   .views(store => ({
     get rootStore(): RootStore {
@@ -101,7 +105,11 @@ export const WorkoutStoreModel = types
   .actions(self => ({
     async fetch() {
       const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
-
+      const workoutTemplates = await storage.load<WorkoutTemplateSnapshotIn[]>('workoutTemplates')
+      
+      if (workoutTemplates && workoutTemplates?.length > 0) {
+        self.setProp('workoutTemplates', workoutTemplates)
+      }
       if (workouts && workouts?.length > 0 && isDev) {
         self.setProp('workouts', workouts)
       } else {
@@ -116,6 +124,19 @@ export const WorkoutStoreModel = types
     createWorkout() {
       const created = WorkoutModel.create({
         date: self.rootStore.stateStore.openedDate,
+      })
+      self.workouts.push(created)
+    },
+    createWorkoutFromTemplate(template: WorkoutTemplate) {
+      const cleanedSteps: WorkoutStepSnapshotIn[] = template.steps.map(
+        ({ exercise }) => ({
+          exercise: exercise.guid,
+          sets: [],
+        })
+      )
+      const created = WorkoutModel.create({
+        date: self.rootStore.stateStore.openedDate,
+        steps: cleanedSteps
       })
       self.workouts.push(created)
     },
@@ -141,8 +162,34 @@ export const WorkoutStoreModel = types
       })
       self.workouts.push(created)
     },
+    saveWorkoutTemplate(name: string) {
+      const template = self.rootStore.stateStore.openedWorkout!
+
+      const cleanedSteps: WorkoutStepSnapshotIn[] = template.steps.map(
+        ({ guid, exercise, sets, ...otherProps }) => ({
+          exercise: exercise.guid,
+          sets: [],
+          ...otherProps,
+        })
+      )
+
+      const created = WorkoutTemplateModel.create({
+        name,
+        steps: cleanedSteps,
+      })
+      self.workoutTemplates.push(created)
+    },
     removeWorkout(workout: Workout) {
-      destroy(workout)
+      self.workouts.remove(workout)
+    },
+    removeTemplate(template: WorkoutTemplate) {
+      self.workoutTemplates.remove(template)
+    },
+    editTemplate(updated: WorkoutTemplate) {
+      const mappedArray = self.workoutTemplates.map(t =>
+        getSnapshot(t.guid === updated.guid ? updated : t)
+      )
+      self.setProp('workoutTemplates', mappedArray)
     },
   }))
 

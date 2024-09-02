@@ -10,7 +10,6 @@ import {
   Exercise,
   ExerciseRecord,
   Workout,
-  WorkoutSet,
   WorkoutSetModel,
 } from '../models'
 
@@ -47,31 +46,16 @@ export const StateStoreModel = types
     get openedWorkout(): Workout | undefined {
       return this.workoutStore.dateWorkoutMap[self.openedDate]
     },
-    get isOpenedWorkoutToday() {
-      return this.openedWorkout?.date === today.toISODate()
-    },
     get exercisesPerformed(): Exercise[] {
       return Object.keys(this.workoutStore.exerciseWorkoutsHistoryMap)
         .map(id => this.exerciseStore.exercisesMap[id])
         .filter(Boolean)
-    },
-    get focusedStepSets(): WorkoutSet[] {
-      const exerciseSets = this.focusedStep!.sets
-
-      return exerciseSets
-    },
-    get focusedStepLastSet(): WorkoutSet | undefined {
-      return this.focusedStepSets.at(-1)
     },
     get focusedExerciseRecords(): ExerciseRecord {
       return this.recordStore.getExerciseRecords(
         this.focusedStep!.exercise.guid
       )
     },
-    get focusedStepWorkSets(): WorkoutSet[] {
-      return this.focusedStepSets.filter(s => !s.isWarmup)
-    },
-
     get firstWorkout(): Workout | undefined {
       return this.workoutStore.workouts[this.workoutStore.workouts.length - 1]
     },

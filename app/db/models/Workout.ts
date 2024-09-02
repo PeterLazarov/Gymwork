@@ -11,9 +11,11 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { Exercise } from './Exercise'
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import { Duration } from 'luxon'
+import { DateTime, Duration } from 'luxon'
 import { WorkoutStep, WorkoutStepModel } from './WorkoutStep'
 import { WorkoutSet } from './WorkoutSet'
+
+const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
 
 export const WorkoutModel = types
   .model('Workout')
@@ -67,8 +69,7 @@ export const WorkoutModel = types
     get lastSet() {
       return this.allSets.at(-1)
     },
-    /** Only usable for completed workouts */
-    get inferredDuration(): Duration {
+    get inferredHistoricalDuration(): Duration {
       const firstSet = this.firstSet
       const lastSet = this.lastSet
 
@@ -84,6 +85,12 @@ export const WorkoutModel = types
 
       return Duration.fromMillis(0)
     },
+    get duration(): string {
+      return this.isToday ? '': this.inferredHistoricalDuration.toFormat('hh:mm')
+    },
+    get isToday() {
+      return self.date === today.toISODate()
+    }
   }))
   .actions(withSetPropAction)
   .actions(workout => ({

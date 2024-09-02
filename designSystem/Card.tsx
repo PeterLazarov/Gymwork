@@ -8,7 +8,7 @@ import {
 } from 'react-native-gesture-handler'
 
 type CardProps = Omit<TouchableWithoutFeedbackProps, 'containerStyle'> & {
-  title: string
+  title?: string
   content: React.ReactNode
   containerStyle?: ViewStyle
 }
@@ -26,7 +26,7 @@ const Card: React.FC<CardProps> = ({
       {...otherProps}
     >
       <View style={styles.content}>
-        <Text style={styles.title}>{title}</Text>
+        {title && <Text style={styles.title}>{title}</Text>}
         <View>{content}</View>
       </View>
     </TouchableOpacity>

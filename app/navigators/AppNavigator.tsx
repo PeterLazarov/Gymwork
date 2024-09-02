@@ -1,9 +1,3 @@
-/**
- * The app navigator (formerly "AppNavigator" and "MainNavigator") is used for the primary
- * navigation flows of your app.
- * Generally speaking, it will contain an auth flow (registration, login, forgot password)
- * and a "main" flow which the user will use once logged in.
- */
 import {
   DarkTheme,
   DefaultTheme,
@@ -23,31 +17,30 @@ import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 import { colors } from 'app/theme'
 import Workout from 'app/screens/Workout'
 import ExerciseSelect from 'app/screens/ExerciseSelect'
-import ExerciseCreateScreen from 'app/screens/ExerciseCreate'
-import ExerciseEdit from 'app/screens/ExerciseEdit'
+import ExerciseEdit, {
+  ExerciseEditScreenParams,
+} from 'app/screens/ExerciseEdit'
 import WorkoutFeedback from 'app/screens/WorkoutFeedback'
 import Calendar, { CalendarScreenParams } from 'app/screens/Calendar'
+import SaveTemplate, {
+  SaveTemplateScreenParams,
+} from 'app/screens/SaveTemplate'
+import TemplateSelect from 'app/screens/TemplateSelect'
 
 /**
- * This type allows TypeScript to know what routes are defined in this navigator
- * as well as what properties (if any) they might take when navigating to them.
- *
- * If no params are allowed, pass through `undefined`. Generally speaking, we
- * recommend using your MobX-State-Tree store(s) to keep application state
- * rather than passing state through navigation params.
- *
- * For more information, see this documentation:
+ * Documentation:
  *   https://reactnavigation.org/docs/params/
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
 export type AppStackParamList = {
   Calendar: CalendarScreenParams
-  ExerciseCreate: undefined
-  ExerciseEdit: undefined
+  ExerciseEdit: ExerciseEditScreenParams
   ExerciseSelect: undefined
   Workout: undefined
   WorkoutFeedback: undefined
+  SaveTemplate: SaveTemplateScreenParams
+  TemplateSelect: undefined
 }
 
 export const useRouteParams = <T extends keyof AppStackParamList>(
@@ -91,10 +84,6 @@ const AppStack = observer(function AppStack() {
           component={Calendar}
         />
         <Stack.Screen
-          name="ExerciseCreate"
-          component={ExerciseCreateScreen}
-        />
-        <Stack.Screen
           name="ExerciseEdit"
           component={ExerciseEdit}
         />
@@ -109,6 +98,14 @@ const AppStack = observer(function AppStack() {
         <Stack.Screen
           name="WorkoutFeedback"
           component={WorkoutFeedback}
+        />
+        <Stack.Screen
+          name="SaveTemplate"
+          component={SaveTemplate}
+        />
+        <Stack.Screen
+          name="TemplateSelect"
+          component={TemplateSelect}
         />
       </>
       {/* ) : (
