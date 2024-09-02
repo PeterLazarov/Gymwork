@@ -61,6 +61,7 @@ const en = {
   workoutWillNotBeSaved: 'Workout will not be saved.',
   useTemplate: 'Use template',
   selectTemplate: 'Select template',
+  templateWillBeDeleted: 'Template will be deleted.',
 }
 
 export default en

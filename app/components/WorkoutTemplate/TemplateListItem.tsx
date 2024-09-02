@@ -3,13 +3,18 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import { WorkoutTemplate } from 'app/db/models'
-import { PressableHighlight, fontSize } from 'designSystem'
+import { Icon, IconButton, PressableHighlight, fontSize } from 'designSystem'
 
 type Props = {
   template: WorkoutTemplate
   onSelect: (template: WorkoutTemplate) => void
+  onDelete: (template: WorkoutTemplate) => void
 }
-const ExerciseListItem: React.FC<Props> = ({ template, onSelect }) => {
+const ExerciseListItem: React.FC<Props> = ({
+  template,
+  onSelect,
+  onDelete,
+}) => {
   return (
     <PressableHighlight onPress={() => onSelect(template)}>
       <View
@@ -19,7 +24,7 @@ const ExerciseListItem: React.FC<Props> = ({ template, onSelect }) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          paddingVertical: 15,
+          paddingVertical: 10,
           paddingHorizontal: 15,
         }}
       >
@@ -29,6 +34,9 @@ const ExerciseListItem: React.FC<Props> = ({ template, onSelect }) => {
         >
           {template.name}
         </Text>
+        <IconButton onPress={() => onDelete(template)}>
+          <Icon icon="delete" />
+        </IconButton>
       </View>
     </PressableHighlight>
   )
