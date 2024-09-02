@@ -16,7 +16,7 @@ const WorkoutDayView: React.FC = () => {
 
   return (
     <>
-      <DayControl />
+      <DayControl duration={workout?.duration} />
       <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
         {workout ? (
           <WorkoutStepList workout={workout} />

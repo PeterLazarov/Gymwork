@@ -69,7 +69,7 @@ export const WorkoutModel = types
     get lastSet() {
       return this.allSets.at(-1)
     },
-    get inferredDuration(): Duration {
+    get inferredHistoricalDuration(): Duration {
       const firstSet = this.firstSet
       const lastSet = this.lastSet
 
@@ -84,6 +84,9 @@ export const WorkoutModel = types
       }
 
       return Duration.fromMillis(0)
+    },
+    get duration(): string {
+      return this.isToday ? '': this.inferredHistoricalDuration.toFormat('hh:mm')
     },
     get isToday() {
       return self.date === today.toISODate()
