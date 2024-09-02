@@ -37,8 +37,7 @@ const ExerciseListItem: React.FC<Props> = ({ exercise, onSelect }) => {
           {exercise.name}
         </Text>
         <IconButton
-          onPress={e => {
-            e.stopPropagation()
+          onPress={() => {
             exercise.setProp('isFavorite', !exercise.isFavorite)
           }}
         >

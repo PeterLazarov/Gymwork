@@ -56,6 +56,11 @@ const en = {
   includeSets: 'Include sets',
   selectExerciseForStats: 'Select exercise to view stats',
   selectExerciseForEdit: 'Select exercise to log your work',
+  saveAsTemplate: 'Save as template',
+  saveTemplate: 'Save template',
+  workoutWillNotBeSaved: 'Workout will not be saved.',
+  useTemplate: 'Use template',
+  selectTemplate: 'Select template',
 }
 
 export default en

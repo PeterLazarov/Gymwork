@@ -10,11 +10,16 @@ import EmptyState from '../EmptyState'
 const WorkoutEmptyState: React.FC = () => {
   const { workoutStore } = useStores()
   const hasWorkouts = workoutStore.workouts.length > 0
+  const hasTemplates = workoutStore.workoutTemplates.length > 0
 
   function copyWorkout() {
     navigate('Calendar', {
       copyWorkoutMode: true,
     })
+  }
+
+  function useTemplate() {
+    navigate('TemplateSelect')
   }
 
   return (
@@ -31,6 +36,23 @@ const WorkoutEmptyState: React.FC = () => {
               />
               <Text style={{ fontSize: fontSize.md }}>
                 {translate('copyWorkout')}
+              </Text>
+            </View>
+          }
+        />
+      )}
+      {hasTemplates && (
+        <Card
+          containerStyle={{ paddingHorizontal: 8 }}
+          onPress={useTemplate}
+          content={
+            <View style={{ alignItems: 'center' }}>
+              <Icon
+                icon="download-outline"
+                style={{ paddingBottom: 10 }}
+              />
+              <Text style={{ fontSize: fontSize.md }}>
+                {translate('useTemplate')}
               </Text>
             </View>
           }

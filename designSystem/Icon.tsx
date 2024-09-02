@@ -17,7 +17,6 @@ const IoniconsIcons = [
   'remove',
   'close',
   'ellipsis-vertical',
-  // 'md-calendar-sharp',
   'calendar-sharp',
   'trophy',
   'chatbox-ellipses',
@@ -30,6 +29,7 @@ const IoniconsIcons = [
   'play',
   'settings-outline',
   'refresh-outline',
+  'download-outline',
 ] as const satisfies readonly (keyof typeof Ionicons.glyphMap)[]
 type IonicIcon = (typeof IoniconsIcons)[number]
 

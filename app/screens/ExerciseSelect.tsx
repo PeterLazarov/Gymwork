@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite'
 import React from 'react'
 
 import { useStores } from 'app/db/helpers/useStores'
@@ -79,4 +78,4 @@ const ExerciseSelectScreen: React.FC = () => {
     </EmptyLayout>
   )
 }
-export default observer(ExerciseSelectScreen)
+export default ExerciseSelectScreen

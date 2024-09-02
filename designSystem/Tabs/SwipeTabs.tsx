@@ -35,6 +35,7 @@ const SwipeTabs: React.FC<Props> = ({
   const onTabPress = (index: number) => {
     if (keyboardDismissOnScroll) Keyboard.dismiss()
 
+    setCurrentIndex(index)
     tabsList.current?.scrollTo({ index })
   }
 
