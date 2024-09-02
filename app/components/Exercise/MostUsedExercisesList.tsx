@@ -9,7 +9,7 @@ import { translate } from 'app/i18n'
 const noop = () => {}
 
 type Props = {
-  onSelect?: (exercise: Exercise) => void
+  onSelect: (exercise: Exercise) => void
 }
 const MostUsedExercisesList: React.FC<Props> = ({ onSelect }) => {
   const { workoutStore } = useStores()

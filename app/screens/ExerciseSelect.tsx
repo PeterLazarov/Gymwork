@@ -5,12 +5,12 @@ import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
-
-import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import FavoriteExercisesList from 'app/components/Exercise/FavoriteExercisesList'
 import AllExercisesList from 'app/components/Exercise/AllExercisesList'
 import MostUsedExercisesList from 'app/components/Exercise/MostUsedExercisesList'
+import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
+import { TabConfig } from 'designSystem/Tabs/types'
 
 const ExerciseSelectScreen: React.FC = () => {
   const { stateStore } = useStores()
@@ -29,7 +29,8 @@ const ExerciseSelectScreen: React.FC = () => {
     navigate('ExerciseCreate')
   }
 
-  const tabsConfig = [
+  type ItemProps = { onSelect: (exercise: Exercise) => void }
+  const tabsConfig: TabConfig<ItemProps>[] = [
     {
       label: translate('favorite'),
       name: 'tabFavorite',

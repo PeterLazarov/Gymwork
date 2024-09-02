@@ -11,7 +11,7 @@ import HorizontalScreenList, {
 
 type Props = {
   style?: TabStyles
-  tabsConfig: TabConfig[]
+  tabsConfig: TabConfig<any>[]
   defaultIndex?: number
   children?: ReactNode
   onTabChange?: (name: string) => void
@@ -44,7 +44,7 @@ const SwipeTabs: React.FC<Props> = ({
     onTabChange?.(tab)
   }
 
-  const renderItem: CarouselRenderItem<TabConfig> = ({
+  const renderItem: CarouselRenderItem<TabConfig<any>> = ({
     item: { component: Component, props = {} },
     index,
   }) => (
