@@ -20,6 +20,7 @@ import {
   fontSize,
 } from 'designSystem'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
+import { Workout } from 'app/db/models'
 
 const WorkoutFeedbackScreen: React.FC = () => {
   const { stateStore } = useStores()
@@ -66,7 +67,9 @@ const WorkoutFeedbackScreen: React.FC = () => {
         </Text>
         <FeedbackPicker
           selected={workout.feeling}
-          onChange={feeling => workout.setProp('feeling', feeling)}
+          onChange={feeling =>
+            workout.setProp('feeling', feeling as Workout['feeling'])
+          }
         />
         <Text
           style={{
@@ -74,7 +77,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
             textAlign: 'center',
           }}
         >
-          {`${translate('exhaustion')} - ${workout.exhaustion}`}
+          {translate('exhaustionOutOf10', { level: workout.exhaustion })}
         </Text>
         <MultiSlider
           values={[workout.exhaustion]}
@@ -100,7 +103,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
               fontSize: fontSize.md,
             }}
           >
-            {translate('experincedPain')}
+            {translate('experiencedPain')}
           </Text>
           <ToggleSwitch
             variant="critical"

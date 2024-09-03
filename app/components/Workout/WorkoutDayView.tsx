@@ -8,6 +8,7 @@ import WorkoutStepList from './WorkoutStepList'
 import DayControl from './DayControl'
 import WorkoutControlButtons from './WorkoutControlButtons'
 import WorkoutEmptyState from './WorkoutEmptyState'
+import WorkoutCommentsCard from './WorkoutCommentsCard'
 
 const WorkoutDayView: React.FC = () => {
   const { stateStore } = useStores()
@@ -18,7 +19,10 @@ const WorkoutDayView: React.FC = () => {
       <DayControl duration={workout?.duration} />
       <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
         {workout ? (
-          <WorkoutStepList workout={workout} />
+          <>
+            {workout.hasComments && <WorkoutCommentsCard />}
+            <WorkoutStepList workout={workout} />
+          </>
         ) : (
           <WorkoutEmptyState />
         )}

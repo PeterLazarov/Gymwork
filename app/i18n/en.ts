@@ -63,9 +63,9 @@ const en = {
   selectTemplate: 'Select template',
   templateWillBeDeleted: 'Template will be deleted.',
   exercises: 'Exercises',
-  experincedPain: 'Experienced pain',
-  wasPainTriggered: 'Was pain triggered?',
+  experiencedPain: 'Experienced pain',
   exhaustion: 'Exhaustion (1-10)',
+  exhaustionOutOf10: 'Exhaustion {{level}} / 10',
 }
 
 export default en

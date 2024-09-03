@@ -17,6 +17,12 @@ import { WorkoutSet } from './WorkoutSet'
 
 const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
 
+const feelings = {
+  sad: 'sad',
+  neutral: 'neutral',
+  happy: 'happy'
+} as const
+
 export const WorkoutModel = types
   .model('Workout')
   .props({
@@ -24,7 +30,10 @@ export const WorkoutModel = types
     date: '',
     steps: types.array(WorkoutStepModel),
     notes: '',
-    feeling: 'neutral',
+    feeling: types.optional(types.enumeration(
+      'feeling',
+      Object.values(feelings)
+    ), () => feelings.neutral),
     exhaustion: 1,
     experiencedPain: false
   })
@@ -92,6 +101,13 @@ export const WorkoutModel = types
     },
     get isToday() {
       return self.date === today.toISODate()
+    },
+    get hasComments() {
+      const hasNotes = self.notes !== ''
+      const hasExhaustion = self.exhaustion !== 1
+      const hasPain = self.experiencedPain
+
+      return hasNotes || hasExhaustion || hasPain
     }
   }))
   .actions(withSetPropAction)
