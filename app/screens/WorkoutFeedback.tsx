@@ -15,6 +15,7 @@ import {
   Header,
   Icon,
   IconButton,
+  ToggleSwitch,
   colors,
   fontSize,
 } from 'designSystem'
@@ -22,6 +23,7 @@ import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 const WorkoutFeedbackScreen: React.FC = () => {
   const { stateStore } = useStores()
+  const workout = stateStore.openedWorkout!
 
   const screenWidth = Dimensions.get('window').width
 
@@ -63,28 +65,21 @@ const WorkoutFeedbackScreen: React.FC = () => {
           {translate('howWasWorkout')}
         </Text>
         <FeedbackPicker
-          selected={stateStore.openedWorkout!.feeling}
-          onChange={feeling =>
-            stateStore.openedWorkout!.setProp('feeling', feeling)
-          }
+          selected={workout.feeling}
+          onChange={feeling => workout.setProp('feeling', feeling)}
         />
-
         <Text
           style={{
             fontSize: fontSize.md,
             textAlign: 'center',
           }}
         >
-          {`${translate('exhaustion')} - ${
-            stateStore.openedWorkout!.exhaustion
-          }`}
+          {`${translate('exhaustion')} - ${workout.exhaustion}`}
         </Text>
         <MultiSlider
-          values={[stateStore.openedWorkout!.exhaustion]}
+          values={[workout.exhaustion]}
           sliderLength={screenWidth - 40}
-          onValuesChange={([value]) =>
-            stateStore.openedWorkout!.setProp('exhaustion', value)
-          }
+          onValuesChange={([value]) => workout.setProp('exhaustion', value)}
           min={1}
           max={10}
           snapped
@@ -92,11 +87,30 @@ const WorkoutFeedbackScreen: React.FC = () => {
             backgroundColor: colors.primary,
           }}
         />
+
+        <View
+          style={{
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+          }}
+        >
+          <Text
+            style={{
+              fontSize: fontSize.md,
+            }}
+          >
+            {translate('experincedPain')}
+          </Text>
+          <ToggleSwitch
+            variant="critical"
+            value={workout.experiencedPain}
+            onValueChange={value => workout.setProp('experiencedPain', value)}
+          />
+        </View>
         <TextInput
-          value={stateStore.openedWorkout!.notes}
-          onChangeText={text =>
-            stateStore.openedWorkout!.setProp('notes', text)
-          }
+          value={workout.notes}
+          onChangeText={text => workout.setProp('notes', text)}
           multiline
           placeholder={translate('enterComments')}
           style={{

@@ -25,7 +25,8 @@ export const WorkoutModel = types
     steps: types.array(WorkoutStepModel),
     notes: '',
     feeling: 'neutral',
-    exhaustion: 1
+    exhaustion: 1,
+    experiencedPain: false
   })
   .views(self => ({
     get exercises(): Exercise[] {
