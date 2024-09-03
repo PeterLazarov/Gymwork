@@ -98,6 +98,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
                   {translate('includeSets')}
                 </Text>
                 <ToggleSwitch
+                  variant="primary"
                   value={includeSets}
                   onValueChange={setIncludeSets}
                 />

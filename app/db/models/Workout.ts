@@ -17,14 +17,25 @@ import { WorkoutSet } from './WorkoutSet'
 
 const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
 
+const feelings = {
+  sad: 'sad',
+  neutral: 'neutral',
+  happy: 'happy'
+} as const
+
 export const WorkoutModel = types
   .model('Workout')
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
     date: '',
-    notes: '',
     steps: types.array(WorkoutStepModel),
-    feeling: 'neutral',
+    notes: '',
+    feeling: types.optional(types.enumeration(
+      'feeling',
+      Object.values(feelings)
+    ), () => feelings.neutral),
+    exhaustion: 1,
+    experiencedPain: false
   })
   .views(self => ({
     get exercises(): Exercise[] {
@@ -90,6 +101,13 @@ export const WorkoutModel = types
     },
     get isToday() {
       return self.date === today.toISODate()
+    },
+    get hasComments() {
+      const hasNotes = self.notes !== ''
+      const hasExhaustion = self.exhaustion !== 1
+      const hasPain = self.experiencedPain
+
+      return hasNotes || hasExhaustion || hasPain
     }
   }))
   .actions(withSetPropAction)

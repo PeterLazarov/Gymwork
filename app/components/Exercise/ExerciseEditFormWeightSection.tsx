@@ -51,6 +51,7 @@ const ExerciseEditFormWeightSection: React.FC<Props> = ({
       >
         <Text style={{ fontSize: fontSize.md }}>More is better</Text>
         <ToggleSwitch
+          variant="primary"
           value={weightMeasurement.moreIsBetter}
           onValueChange={toggleMoreIsBetter}
         />

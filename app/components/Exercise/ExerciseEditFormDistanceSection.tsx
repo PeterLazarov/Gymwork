@@ -44,6 +44,7 @@ const ExerciseEditFormDistanceSection: React.FC<Props> = ({
       >
         <Text style={{ fontSize: fontSize.md }}>More is better</Text>
         <ToggleSwitch
+          variant="primary"
           value={distanceMeasurement.moreIsBetter}
           onValueChange={toggleMoreIsBetter}
         />
