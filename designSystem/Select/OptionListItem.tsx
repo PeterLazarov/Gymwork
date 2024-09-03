@@ -40,7 +40,7 @@ const OptionListItem: React.FC<Props> = ({
           paddingVertical: 15,
           backgroundColor: selectedValues.includes(value)
             ? colors.accentLighter
-            : colors.white,
+            : colors.neutralLightest,
         }}
         onPress={() => onSelect(option)}
       >

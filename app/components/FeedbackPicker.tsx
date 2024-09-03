@@ -32,7 +32,7 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: sadSelected ? colors.white : 'transparent',
+          backgroundColor: sadSelected ? colors.neutralLightest : 'transparent',
           borderRadius: 8,
           padding: 8,
         }}
@@ -44,17 +44,13 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           <Icon
             icon="emoji-sad"
             size="large"
-            color={
-              sadSelected ? colorSchemas.coral.default : colors.neutralDark
-            }
+            color={sadSelected ? colorSchemas.coral.hue600 : colors.neutralDark}
           />
         </IconButton>
         <Text
           style={{
             fontSize: fontSize.sm,
-            color: sadSelected
-              ? colorSchemas.coral.default
-              : colors.neutralDark,
+            color: sadSelected ? colorSchemas.coral.hue600 : colors.neutralDark,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
@@ -65,7 +61,9 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: neutralSelected ? colors.white : 'transparent',
+          backgroundColor: neutralSelected
+            ? colors.neutralLightest
+            : 'transparent',
           borderRadius: 8,
           padding: 8,
         }}
@@ -78,7 +76,7 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
             icon="emoji-neutral"
             size="large"
             color={
-              neutralSelected ? colorSchemas.amber.default : colors.neutralDark
+              neutralSelected ? colorSchemas.amber.hue600 : colors.neutralDark
             }
           />
         </IconButton>
@@ -86,7 +84,7 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           style={{
             fontSize: fontSize.sm,
             color: neutralSelected
-              ? colorSchemas.amber.default
+              ? colorSchemas.amber.hue600
               : colors.neutralDark,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
@@ -98,7 +96,9 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: happySelected ? colors.white : 'transparent',
+          backgroundColor: happySelected
+            ? colors.neutralLightest
+            : 'transparent',
           borderRadius: 8,
           padding: 8,
         }}
@@ -111,7 +111,7 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
             icon="emoji-happy"
             size="large"
             color={
-              happySelected ? colorSchemas.green.default : colors.neutralDark
+              happySelected ? colorSchemas.green.hue600 : colors.neutralDark
             }
           />
         </IconButton>
@@ -119,7 +119,7 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           style={{
             fontSize: fontSize.sm,
             color: happySelected
-              ? colorSchemas.green.default
+              ? colorSchemas.green.hue600
               : colors.neutralDark,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}

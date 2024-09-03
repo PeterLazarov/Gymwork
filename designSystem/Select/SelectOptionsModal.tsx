@@ -35,7 +35,7 @@ const SelectOptionsModal: React.FC<Props> = ({
         visible={open}
         onDismiss={onClose}
         contentContainerStyle={{
-          backgroundColor: colors.white,
+          backgroundColor: colors.neutralLightest,
           marginVertical: 8,
           marginHorizontal: 20,
           maxHeight,

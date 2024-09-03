@@ -26,9 +26,9 @@ const WorkoutCommentsCard: React.FC = () => {
   } as const
 
   const feelingColor = {
-    sad: colorSchemas.coral.default,
-    neutral: colorSchemas.amber.default,
-    happy: colorSchemas.green.default,
+    sad: colorSchemas.coral.hue600,
+    neutral: colorSchemas.amber.hue600,
+    happy: colorSchemas.green.hue600,
   } as const
   return (
     <Card

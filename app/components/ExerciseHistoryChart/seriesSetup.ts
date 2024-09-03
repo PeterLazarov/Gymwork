@@ -45,10 +45,10 @@ const seriesSetup = ({ data }: Props) => {
   const getChartSeries = (exercise: Exercise) => {
     const series: Record<string, SeriesItem> = {}
     const colorsStack = [
-      colorSchemas.gold.default,
-      colorSchemas.blue.default,
-      colorSchemas.coral.default,
-      colorSchemas.purple.default
+      colorSchemas.gold.hue600,
+      colorSchemas.blue.hue600,
+      colorSchemas.coral.hue600,
+      colorSchemas.purple.hue600
     ]
 
     if (exercise.measurements?.weight) {
