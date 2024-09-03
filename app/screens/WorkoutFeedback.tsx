@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { ScrollView, View, Text } from 'react-native'
+import { View, Text, Dimensions } from 'react-native'
 import { TextInput } from 'react-native-paper'
+import MultiSlider from '@ptomasroos/react-native-multi-slider'
 
 import FeedbackPicker from 'app/components/FeedbackPicker'
 import { useStores } from 'app/db/helpers/useStores'
@@ -21,6 +22,8 @@ import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 const WorkoutFeedbackScreen: React.FC = () => {
   const { stateStore } = useStores()
+
+  const screenWidth = Dimensions.get('window').width
 
   function onBackPress() {
     navigate('Workout')
@@ -43,7 +46,13 @@ const WorkoutFeedbackScreen: React.FC = () => {
 
       <KeyboardAvoiderView
         avoidMode="focused-input"
-        style={{ padding: 8, gap: 16, flex: 1 }}
+        style={{
+          padding: 8,
+          gap: 16,
+          flex: 1,
+          width: '100%',
+          alignItems: 'center',
+        }}
       >
         <Text
           style={{
@@ -54,21 +63,46 @@ const WorkoutFeedbackScreen: React.FC = () => {
           {translate('howWasWorkout')}
         </Text>
         <FeedbackPicker
-          selected={stateStore.openedWorkout.feeling}
+          selected={stateStore.openedWorkout!.feeling}
           onChange={feeling =>
-            stateStore.openedWorkout.setProp('feeling', feeling)
+            stateStore.openedWorkout!.setProp('feeling', feeling)
           }
         />
-        <ScrollView>
-          <TextInput
-            value={stateStore.openedWorkout.notes}
-            onChangeText={text =>
-              stateStore.openedWorkout.setProp('notes', text)
-            }
-            multiline
-            placeholder={translate('enterComments')}
-          />
-        </ScrollView>
+
+        <Text
+          style={{
+            fontSize: fontSize.md,
+            textAlign: 'center',
+          }}
+        >
+          {`${translate('exhaustion')} - ${
+            stateStore.openedWorkout!.exhaustion
+          }`}
+        </Text>
+        <MultiSlider
+          values={[stateStore.openedWorkout!.exhaustion]}
+          sliderLength={screenWidth - 40}
+          onValuesChange={([value]) =>
+            stateStore.openedWorkout!.setProp('exhaustion', value)
+          }
+          min={1}
+          max={10}
+          snapped
+          selectedStyle={{
+            backgroundColor: colors.primary,
+          }}
+        />
+        <TextInput
+          value={stateStore.openedWorkout!.notes}
+          onChangeText={text =>
+            stateStore.openedWorkout!.setProp('notes', text)
+          }
+          multiline
+          placeholder={translate('enterComments')}
+          style={{
+            width: '100%',
+          }}
+        />
       </KeyboardAvoiderView>
 
       <View

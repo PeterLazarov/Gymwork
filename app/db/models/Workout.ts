@@ -22,9 +22,10 @@ export const WorkoutModel = types
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
     date: '',
-    notes: '',
     steps: types.array(WorkoutStepModel),
+    notes: '',
     feeling: 'neutral',
+    exhaustion: 1
   })
   .views(self => ({
     get exercises(): Exercise[] {

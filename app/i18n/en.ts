@@ -63,6 +63,7 @@ const en = {
   selectTemplate: 'Select template',
   templateWillBeDeleted: 'Template will be deleted.',
   exercises: 'Exercises',
+  exhaustion: 'Exhaustion (1-10)',
 }
 
 export default en

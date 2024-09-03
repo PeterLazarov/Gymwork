@@ -24,6 +24,7 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
     <View
       style={{
         flexDirection: 'row',
+        width: '100%',
         justifyContent: 'space-around',
       }}
     >
