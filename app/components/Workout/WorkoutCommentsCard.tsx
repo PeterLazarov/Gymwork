@@ -5,7 +5,7 @@ import { View, Text } from 'react-native'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
-import { Card, Icon, colorSchemas, fontSize } from 'designSystem'
+import { Card, Icon, colorSchemas, colors, fontSize } from 'designSystem'
 
 const WorkoutCommentsCard: React.FC = () => {
   const { stateStore } = useStores()
@@ -64,7 +64,7 @@ const WorkoutCommentsCard: React.FC = () => {
             </>
           )}
           {!hasComments && (
-            <Text style={{ fontSize: fontSize.sm, color: colors.gray }}>
+            <Text style={{ fontSize: fontSize.sm, color: colors.neutralDark }}>
               {translate('addComments')}
             </Text>
           )}
