@@ -20,7 +20,7 @@ const WorkoutDayView: React.FC = () => {
       <View style={{ backgroundColor: colors.lightgray, flex: 1 }}>
         {workout ? (
           <>
-            {workout.hasComments && <WorkoutCommentsCard />}
+            {stateStore.showCommentsCard && <WorkoutCommentsCard />}
             <WorkoutStepList workout={workout} />
           </>
         ) : (

@@ -64,8 +64,10 @@ const en = {
   templateWillBeDeleted: 'Template will be deleted.',
   exercises: 'Exercises',
   experiencedPain: 'Experienced pain',
-  exhaustion: 'Exhaustion (1-10)',
   exhaustionOutOf10: 'Exhaustion {{level}} / 10',
+  addComments: 'Add comments ...',
+  hideCommentsCard: 'Hide comments card',
+  showCommentsCard: 'Show comments card',
 }
 
 export default en
