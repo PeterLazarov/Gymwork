@@ -14,6 +14,7 @@ const WorkoutCommentsCard: React.FC = () => {
   const hasNotes = workout.notes !== ''
   const hasExhaustion = workout.exhaustion !== 1
   const hasPain = workout.experiencedPain
+  const hasComments = hasNotes || hasExhaustion || hasPain
 
   function onPress() {
     navigate('WorkoutFeedback')
@@ -35,27 +36,38 @@ const WorkoutCommentsCard: React.FC = () => {
       onPress={onPress}
       content={
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <View style={{ flex: 1 }}>
-            {hasNotes && (
-              <Text style={{ fontSize: fontSize.sm }}>{workout.notes}</Text>
-            )}
-            {hasExhaustion && (
-              <Text style={{ fontSize: fontSize.sm }}>
-                {translate('exhaustionOutOf10', { level: workout.exhaustion })}
-              </Text>
-            )}
-            {hasPain && (
-              <Text style={{ fontSize: fontSize.sm }}>
-                {translate('experiencedPain')}
-              </Text>
-            )}
-          </View>
+          {hasComments && (
+            <>
+              <View style={{ flex: 1 }}>
+                {hasNotes && (
+                  <Text style={{ fontSize: fontSize.sm }}>{workout.notes}</Text>
+                )}
+                {hasExhaustion && (
+                  <Text style={{ fontSize: fontSize.sm }}>
+                    {translate('exhaustionOutOf10', {
+                      level: workout.exhaustion,
+                    })}
+                  </Text>
+                )}
+                {hasPain && (
+                  <Text style={{ fontSize: fontSize.sm }}>
+                    {translate('experiencedPain')}
+                  </Text>
+                )}
+              </View>
 
-          <Icon
-            icon={feelingIcon[workout.feeling]}
-            size="large"
-            color={feelingColor[workout.feeling]}
-          />
+              <Icon
+                icon={feelingIcon[workout.feeling]}
+                size="large"
+                color={feelingColor[workout.feeling]}
+              />
+            </>
+          )}
+          {!hasComments && (
+            <Text style={{ fontSize: fontSize.sm, color: colors.gray }}>
+              {translate('addComments')}
+            </Text>
+          )}
         </View>
       }
     />

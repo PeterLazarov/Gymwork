@@ -65,6 +65,9 @@ const en = {
   exercises: 'Exercises',
   experiencedPain: 'Experienced pain',
   exhaustionOutOf10: 'Exhaustion {{level}} / 10',
+  addComments: 'Add comments ...',
+  hideCommentsCard: 'Hide comments card',
+  showCommentsCard: 'Show comments card',
 }
 
 export default en

@@ -14,12 +14,13 @@ import { computed } from 'mobx'
 const WorkoutHeader: React.FC = () => {
   const { stateStore, workoutStore } = useStores()
 
+  const { openedWorkout, showCommentsCard } = stateStore
   const [menuOpen, setMenuOpen] = useState(false)
   const share = useShare()
 
   const hasNotes = useMemo(
-    () => computed(() => stateStore.openedWorkout?.notes !== ''),
-    [stateStore.openedWorkout]
+    () => computed(() => openedWorkout?.notes !== ''),
+    [openedWorkout]
   ).get()
 
   function openCalendar() {
@@ -35,6 +36,11 @@ const WorkoutHeader: React.FC = () => {
     navigate('SaveTemplate')
   }
 
+  function toggleCommentsCard() {
+    setMenuOpen(false)
+    stateStore.setProp('showCommentsCard', !showCommentsCard)
+  }
+
   const exportData = () => {
     setMenuOpen(false)
 
@@ -43,7 +49,7 @@ const WorkoutHeader: React.FC = () => {
 
   const deleteWorkout = () => {
     setMenuOpen(false)
-    workoutStore.removeWorkout(stateStore.openedWorkout!)
+    workoutStore.removeWorkout(openedWorkout!)
   }
 
   const { performBenchmark } = useBenchmark()
@@ -52,7 +58,7 @@ const WorkoutHeader: React.FC = () => {
     <Header>
       <Header.Title title={'Gymwork'} />
 
-      {stateStore.openedWorkout && (
+      {openedWorkout && (
         <IconButton
           onPress={onCommentPress}
           underlay="darker"
@@ -93,6 +99,12 @@ const WorkoutHeader: React.FC = () => {
         <Menu.Item
           onPress={saveTemplate}
           title={translate('saveAsTemplate')}
+        />
+        <Menu.Item
+          onPress={toggleCommentsCard}
+          title={translate(
+            showCommentsCard ? 'hideCommentsCard' : 'showCommentsCard'
+          )}
         />
         <Menu.Item
           onPress={exportData}

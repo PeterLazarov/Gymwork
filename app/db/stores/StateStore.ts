@@ -26,6 +26,7 @@ export const StateStoreModel = types
     focusedSetGuid: '',
     openedDate: types.optional(types.string, today.toISODate()!),
     draftSet: types.maybe(WorkoutSetModel),
+    showCommentsCard: true
   })
   .views(self => ({
     get rootStore(): RootStore {
