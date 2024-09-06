@@ -5,9 +5,9 @@ export const colors = {
   primaryLight: colorSchemas.purple.hue300,
   primaryLighter: colorSchemas.purple.hue100,
 
-  accent: colorSchemas.amber.hue600,
-  accentLight: colorSchemas.amber.hue300,
-  accentLighter: colorSchemas.amber.hue200,
+  accent: colorSchemas.coral.hue600,
+  accentLight: colorSchemas.coral.hue300,
+  accentLighter: colorSchemas.coral.hue200,
 
   neutralDark: colorSchemas.neutral.hue900,
   neutral: colorSchemas.neutral.hue700,
