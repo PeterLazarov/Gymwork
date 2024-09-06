@@ -1,19 +1,24 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
 
 import { WorkoutStep, WorkoutTemplate } from 'app/db/models'
-import { translate } from 'app/i18n'
-import { colors, fontSize } from 'designSystem'
+import TemplateStepsList from './TemplateStepsList'
 
 type Props = {
   template: WorkoutTemplate
   steps: WorkoutStep[]
   onUpdate: (template: WorkoutTemplate, isValid: boolean) => void
+  onUpdateSteps: (steps: WorkoutStep[]) => void
 }
 
-const ExerciseEditForm: React.FC<Props> = ({ template, steps, onUpdate }) => {
+const ExerciseEditForm: React.FC<Props> = ({
+  template,
+  steps,
+  onUpdate,
+  onUpdateSteps,
+}) => {
   const [nameError, setNameError] = useState('')
 
   function runValidCheck(data: WorkoutTemplate) {
@@ -25,9 +30,14 @@ const ExerciseEditForm: React.FC<Props> = ({ template, steps, onUpdate }) => {
   }
 
   function onNameChange(value: string) {
-    template.setProp('name', value)
-    const valid = runValidCheck(template)
-    onUpdate(template, valid)
+    const updated = { ...template, name: value }
+    const valid = runValidCheck(updated)
+    onUpdate(updated, valid)
+  }
+
+  function onStepRemove(step: WorkoutStep) {
+    const filtered = steps.filter(s => s.guid !== step.guid)
+    onUpdateSteps(filtered)
   }
 
   return (
@@ -47,31 +57,10 @@ const ExerciseEditForm: React.FC<Props> = ({ template, steps, onUpdate }) => {
         </HelperText>
       )}
       {steps.length > 0 && (
-        <>
-          <Text style={{ fontSize: fontSize.lg }}>
-            {translate('exercises')}
-          </Text>
-          <View
-            style={{
-              borderWidth: 1,
-              borderColor: colors.neutralDark,
-              borderRadius: 8,
-              padding: 10,
-              gap: 5,
-            }}
-          >
-            {steps.map(step => (
-              <Text
-                key={step.guid}
-                style={{
-                  fontSize: fontSize.md,
-                }}
-              >
-                {step.exercise.name}
-              </Text>
-            ))}
-          </View>
-        </>
+        <TemplateStepsList
+          steps={steps}
+          onStepRemove={onStepRemove}
+        />
       )}
     </View>
   )

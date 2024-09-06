@@ -3,7 +3,6 @@ import {
   SnapshotOut,
   types,
   getParent,
-  getSnapshot,
 } from 'mobx-state-tree'
 
 import { RootStore } from './RootStore'
@@ -21,6 +20,7 @@ import {
   WorkoutTemplateSnapshotIn,
   WorkoutStepSnapshotIn,
   WorkoutTemplate,
+  WorkoutStep,
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
 
@@ -162,10 +162,8 @@ export const WorkoutStoreModel = types
       })
       self.workouts.push(created)
     },
-    saveWorkoutTemplate(name: string) {
-      const template = self.rootStore.stateStore.openedWorkout!
-
-      const cleanedSteps: WorkoutStepSnapshotIn[] = template.steps.map(
+    saveWorkoutTemplate(name: string, templateSteps: WorkoutStep[]) {
+      const cleanedSteps: WorkoutStepSnapshotIn[] = templateSteps.map(
         ({ guid, exercise, sets, ...otherProps }) => ({
           exercise: exercise.guid,
           sets: [],
@@ -184,12 +182,6 @@ export const WorkoutStoreModel = types
     },
     removeTemplate(template: WorkoutTemplate) {
       self.workoutTemplates.remove(template)
-    },
-    editTemplate(updated: WorkoutTemplate) {
-      const mappedArray = self.workoutTemplates.map(t =>
-        getSnapshot(t.guid === updated.guid ? updated : t)
-      )
-      self.setProp('workoutTemplates', mappedArray)
     },
   }))
 

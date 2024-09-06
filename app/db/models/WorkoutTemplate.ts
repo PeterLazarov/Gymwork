@@ -9,6 +9,7 @@ import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from '../helpers/withSetPropAction'
+import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction'
 import { WorkoutStepModel } from './WorkoutStep'
 
 
@@ -20,6 +21,7 @@ export const WorkoutTemplateModel = types
     steps: types.array(WorkoutStepModel),
   })
   .actions(withSetPropAction)
+  .actions(withMergeUpdateAction)
 
 export interface WorkoutTemplate extends Instance<typeof WorkoutTemplateModel> {}
 export interface WorkoutTemplateSnapshotOut extends SnapshotOut<typeof WorkoutTemplateModel> {}

@@ -1,11 +1,16 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
+import { getSnapshot } from 'mobx-state-tree'
 
 import ConfirmationDialog from 'app/components/ConfirmationDialog'
 import EditTemplateForm from 'app/components/WorkoutTemplate/EditTemplateForm'
 import { useStores } from 'app/db/helpers/useStores'
-import { WorkoutTemplate, WorkoutTemplateModel } from 'app/db/models'
+import {
+  WorkoutStep,
+  WorkoutTemplate,
+  WorkoutTemplateModel,
+} from 'app/db/models'
 import { goBack, useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import { translate } from 'app/i18n'
@@ -25,12 +30,13 @@ const SaveTemplateScreen: React.FC = () => {
   const { workoutStore, stateStore } = useStores()
   const { edittingTemplate } = useRouteParams('SaveTemplate')
 
-  const [template, setTemplate] = useState(
-    edittingTemplate || WorkoutTemplateModel.create()
+  const [template, setTemplate] = useState<WorkoutTemplate>(
+    edittingTemplate ? { ...edittingTemplate } : WorkoutTemplateModel.create()
   )
-  const templateSteps =
+  const [templateSteps, setTemplateSteps] = useState<WorkoutStep[]>(
     edittingTemplate?.steps || stateStore.openedWorkout!.steps
-  const [formValid, setFormValid] = useState(false)
+  )
+  const [formValid, setFormValid] = useState(true)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
   function onBackPress() {
@@ -49,8 +55,12 @@ const SaveTemplateScreen: React.FC = () => {
 
   function onComplete() {
     if (edittingTemplate) {
+      edittingTemplate.mergeUpdate({
+        ...template,
+        steps: templateSteps.map(step => getSnapshot(step)),
+      })
     } else {
-      workoutStore.saveWorkoutTemplate(template.name)
+      workoutStore.saveWorkoutTemplate(template.name, templateSteps)
     }
     goBack()
   }
@@ -84,6 +94,7 @@ const SaveTemplateScreen: React.FC = () => {
           <EditTemplateForm
             template={template}
             steps={templateSteps}
+            onUpdateSteps={steps => setTemplateSteps(steps)}
             onUpdate={onUpdate}
           />
 
