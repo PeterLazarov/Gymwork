@@ -29,6 +29,9 @@ dependencies:
   '@good-react-native/keyboard-avoider':
     specifier: ^1.1.4
     version: 1.1.4(react-native-reanimated@3.10.1)(react-native-uuid@2.0.2)(react-native@0.74.5)(react@18.2.0)
+  '@ptomasroos/react-native-multi-slider':
+    specifier: ^2.2.2
+    version: 2.2.2(react-native@0.74.5)(react@18.2.0)
   '@react-native-async-storage/async-storage':
     specifier: 1.23.1
     version: 1.23.1(react-native@0.74.5)
@@ -86,6 +89,12 @@ dependencies:
   expo-constants:
     specifier: ~16.0.2
     version: 16.0.2(expo@51.0.28)
+  expo-document-picker:
+    specifier: ^12.0.2
+    version: 12.0.2(expo@51.0.28)
+  expo-file-system:
+    specifier: ^17.0.1
+    version: 17.0.1(expo@51.0.28)
   expo-font:
     specifier: ~12.0.5
     version: 12.0.9(expo@51.0.28)
@@ -2852,6 +2861,16 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@ptomasroos/react-native-multi-slider@2.2.2(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-HWyCnRD3Z3SbHK2FLWYmBBqd1B4iXipeKv1+AK0FoY/CElEDTEixHE8hN60TsqxalPrznn798LE2Q4tHuCiyaA==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+    dependencies:
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
+    dev: false
 
   /@react-native-async-storage/async-storage@1.23.1(react-native@0.74.5):
     resolution: {integrity: sha512-Qd2kQ3yi6Y3+AcUlrHxSLlnBvpdCEMVGFlVBneVOjaFaPU61g1huc38g339ysXspwY1QZA2aNhrk/KlHGO+ewA==}
@@ -6637,6 +6656,14 @@ packages:
       expo: 51.0.28(@babel/core@7.25.2)(@babel/preset-env@7.25.3)
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /expo-document-picker@12.0.2(expo@51.0.28):
+    resolution: {integrity: sha512-tmwuRWoCPv6SmNDSMEWcttMBJ95k8/g5sMWnHdmvOx0UKp0pFXP8FI+55HKtQpo6k2+118MkdDDhQSwKqASVAw==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 51.0.28(@babel/core@7.25.2)(@babel/preset-env@7.25.3)
     dev: false
 
   /expo-file-system@17.0.1(expo@51.0.28):

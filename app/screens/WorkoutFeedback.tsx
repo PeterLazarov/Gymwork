@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View, Text, Dimensions } from 'react-native'
 import { TextInput } from 'react-native-paper'
-import MultiSlider from '@ptomasroos/react-native-multi-slider'
 
 import FeedbackPicker from 'app/components/FeedbackPicker'
 import { useStores } from 'app/db/helpers/useStores'
@@ -15,6 +14,7 @@ import {
   Header,
   Icon,
   IconButton,
+  Slider,
   ToggleSwitch,
   colors,
   fontSize,
@@ -79,16 +79,13 @@ const WorkoutFeedbackScreen: React.FC = () => {
         >
           {translate('exhaustionOutOf10', { level: workout.exhaustion })}
         </Text>
-        <MultiSlider
+        <Slider
           values={[workout.exhaustion]}
           sliderLength={screenWidth - 40}
           onValuesChange={([value]) => workout.setProp('exhaustion', value)}
           min={1}
           max={10}
           snapped
-          selectedStyle={{
-            backgroundColor: colors.primary,
-          }}
         />
 
         <View
