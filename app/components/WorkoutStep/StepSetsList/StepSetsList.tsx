@@ -10,7 +10,7 @@ type Props = {
   records?: ExerciseRecord
 }
 
-const WorkoutSetList: React.FC<Props> = ({ sets, records }) => {
+const StepSetsList: React.FC<Props> = ({ sets, records }) => {
   const { stateStore } = useStores()
 
   return (
@@ -31,4 +31,4 @@ const WorkoutSetList: React.FC<Props> = ({ sets, records }) => {
   )
 }
 
-export default observer(WorkoutSetList)
+export default observer(StepSetsList)

@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 
-import WorkoutExerciseSetReadOnlyList from './WorkoutExercise/WorkoutExerciseSetList/WorkoutSetList'
+import WorkoutExerciseSetReadOnlyList from './WorkoutStep/StepSetsList/StepSetsList'
 import { Exercise, WorkoutSet } from 'app/db/models'
 import { fontSize } from 'designSystem'
 

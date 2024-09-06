@@ -110,9 +110,9 @@ export const WorkoutStoreModel = types
       if (workoutTemplates && workoutTemplates?.length > 0) {
         self.setProp('workoutTemplates', workoutTemplates)
       }
-      if (workouts && workouts?.length > 0 && isDev) {
+      if (workouts && workouts?.length > 0) {
         self.setProp('workouts', workouts)
-      } else {
+      } else if (isDev) {
         await this.seed()
       }
     },

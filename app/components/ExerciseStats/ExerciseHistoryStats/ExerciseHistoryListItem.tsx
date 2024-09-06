@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 
 import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
 import { Divider, fontSize } from 'designSystem'
-import WorkoutSetList from 'app/components/WorkoutExercise/WorkoutExerciseSetList'
+import StepSetsList from 'app/components/WorkoutStep/StepSetsList'
 
 type Props = {
   date: string
@@ -25,7 +25,7 @@ const ExerciseHistoryListItem: React.FC<Props> = ({ date, sets, records }) => {
         orientation="horizontal"
         variant="primary"
       />
-      <WorkoutSetList
+      <StepSetsList
         sets={sets}
         records={records}
       />

@@ -3,7 +3,7 @@ import React from 'react'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
 import { Workout, WorkoutStep } from 'app/db/models'
-import WorkoutExerciseCard from '../WorkoutExercise/WorkoutExerciseCard'
+import WorkoutStepCard from '../WorkoutStep/WorkoutStepCard'
 
 type Props = {
   workout: Workout
@@ -11,7 +11,7 @@ type Props = {
 
 const WorkoutStepList: React.FC<Props> = ({ workout }) => {
   const renderItem = ({ item }: ListRenderItemInfo<WorkoutStep>) => (
-    <WorkoutExerciseCard step={item} />
+    <WorkoutStepCard step={item} />
   )
 
   return (

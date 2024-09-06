@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import WorkoutSetList from './WorkoutExerciseSetList'
+import WorkoutSetList from './StepSetsList'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
 import { Card, colors } from 'designSystem'
@@ -12,7 +12,7 @@ type Props = {
   step: WorkoutStep
 }
 
-const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
+const WorkoutStepCard: React.FC<Props> = ({ step }) => {
   const { stateStore, recordStore } = useStores()
 
   const isSelected = computed(
@@ -45,4 +45,4 @@ const WorkoutExerciseCard: React.FC<Props> = ({ step }) => {
   )
 }
 
-export default observer(WorkoutExerciseCard)
+export default observer(WorkoutStepCard)

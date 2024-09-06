@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 
 import { WorkoutSet } from 'app/db/models'
-import SetDataLabel from 'app/components/WorkoutExercise/SetDataLabel'
+import SetDataLabel from 'app/components/WorkoutStep/SetDataLabel'
 
 type Props = {
   set: WorkoutSet
