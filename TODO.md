@@ -17,6 +17,8 @@
 - optimise calendar rendering
 - grouping / measurement by rest
 - fix Speed chart miscalculation
+- template steps list editting
+- how to delete exercises
 
 Performance to beat -
 100 workouts

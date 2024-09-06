@@ -22,12 +22,14 @@ export type SaveTemplateScreenParams = {
   edittingTemplate?: WorkoutTemplate
 }
 const SaveTemplateScreen: React.FC = () => {
-  const { workoutStore } = useStores()
+  const { workoutStore, stateStore } = useStores()
   const { edittingTemplate } = useRouteParams('SaveTemplate')
 
   const [template, setTemplate] = useState(
     edittingTemplate || WorkoutTemplateModel.create()
   )
+  const templateSteps =
+    edittingTemplate?.steps || stateStore.openedWorkout!.steps
   const [formValid, setFormValid] = useState(false)
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
@@ -81,6 +83,7 @@ const SaveTemplateScreen: React.FC = () => {
         >
           <EditTemplateForm
             template={template}
+            steps={templateSteps}
             onUpdate={onUpdate}
           />
 

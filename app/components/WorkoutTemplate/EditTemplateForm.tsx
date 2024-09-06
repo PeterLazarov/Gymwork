@@ -3,16 +3,17 @@ import React, { useState } from 'react'
 import { View, Text } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
 
-import { WorkoutTemplate } from 'app/db/models'
+import { WorkoutStep, WorkoutTemplate } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { colors, fontSize } from 'designSystem'
 
 type Props = {
   template: WorkoutTemplate
+  steps: WorkoutStep[]
   onUpdate: (template: WorkoutTemplate, isValid: boolean) => void
 }
 
-const ExerciseEditForm: React.FC<Props> = ({ template, onUpdate }) => {
+const ExerciseEditForm: React.FC<Props> = ({ template, steps, onUpdate }) => {
   const [nameError, setNameError] = useState('')
 
   function runValidCheck(data: WorkoutTemplate) {
@@ -45,7 +46,7 @@ const ExerciseEditForm: React.FC<Props> = ({ template, onUpdate }) => {
           {nameError}
         </HelperText>
       )}
-      {template.steps.length > 0 && (
+      {steps.length > 0 && (
         <>
           <Text style={{ fontSize: fontSize.lg }}>
             {translate('exercises')}
@@ -59,7 +60,7 @@ const ExerciseEditForm: React.FC<Props> = ({ template, onUpdate }) => {
               gap: 5,
             }}
           >
-            {template.steps.map(step => (
+            {steps.map(step => (
               <Text
                 key={step.guid}
                 style={{
