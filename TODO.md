@@ -11,7 +11,6 @@
 - should we order workout by date on addition
 - On exercise screen, oldest exercise at the top + scroll to bottom
 - On jump to record set, scroll to set
-- make it more visible that a workout has comments
 - improve and rearrange feedback UI
 - add some kind of historical comments view (swipe left from comments screen?)
 - fix duration unit change (for Set list we use hh:mm:ss format not a unit)
@@ -19,6 +18,7 @@
 - optimise calendar rendering
 - grouping / measurement by rest
 - fix Speed chart miscalculation
+- day view scroll on android
 
 Performance to beat -
 100 workouts
