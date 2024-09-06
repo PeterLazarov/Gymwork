@@ -35,8 +35,9 @@ const generateRandomExercises = (date: string, workoutTime: DateTime) => {
     const exercise = String(between(0, 100))
     const restMs = i > 0 ? rest : 0
     workoutTime = workoutTime.plus({ milliseconds: restMs * i + setDuration * i })
-
-    const sets = Array.from({ length: between(2, 5) }).map((_, i) => ({
+    
+    console.log(workoutTime.toFormat('hh:mm'))
+    const sets: WorkoutSetSnapshotIn[] = Array.from({ length: between(2, 5) }).map((_, i) => ({
       exercise,
       isWarmup: i === 0,
       reps: between(3, 12),
@@ -67,6 +68,7 @@ const generateSteps = (date: string): WorkoutStepSnapshotIn[] => {
 
     const restMs = i > 0 ? rest : 0
     workoutTime = workoutTime.plus({ milliseconds: restMs * i + setDuration * i })
+    console.log(workoutTime.toFormat('hh:mm'))
 
     return {
       exercise: '44', // Лежанка
@@ -80,20 +82,24 @@ const generateSteps = (date: string): WorkoutStepSnapshotIn[] => {
   })
   const benchStep = generateStep('44', benchSets)
 
-  const cardioSets = Array.from({ length: between(1, 2) }).map((_, i) => {
+  const cardioSets: WorkoutSetSnapshotIn[] = Array.from({ 
+    length: between(1, 2) 
+  }).map((_, i) => {
     const km = between(1, 3)
     // const weight = between(0, 10) // not supported yet?
-    workoutTime = workoutTime.plus({ minutes: km * 6 })
+    const duration = km * between(4, 7)
+    workoutTime = workoutTime.plus({ minutes: km * duration })
+    console.log(workoutTime.toFormat('hh:mm'))
 
     return {
       exercise: cardioExerciseID,
       distanceMm: convert(km).from('km').to('mm'),
-      durationMs: convert(km * between(4, 7))
+      durationMs: convert(duration)
         .from('min')
         .to('ms'),
-        createdAt: workoutTime.toMillis(),
+      createdAt: workoutTime.toMillis(),
       date,
-    } as WorkoutSetSnapshotIn
+    }
   })
   const cardioStep = generateStep(cardioExerciseID, cardioSets)
 
