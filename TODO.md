@@ -18,7 +18,6 @@
 - optimise calendar rendering
 - grouping / measurement by rest
 - fix Speed chart miscalculation
-- day view scroll on android
 
 Performance to beat -
 100 workouts

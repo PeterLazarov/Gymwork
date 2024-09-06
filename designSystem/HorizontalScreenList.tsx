@@ -37,6 +37,10 @@ const HorizontalScreenList = forwardRef<
         defaultIndex={defaultIndex}
         pagingEnabled
         onSnapToItem={onScreenChange}
+        panGestureHandlerProps={{
+          // fixes android nested scrolling -> https://github.com/dohooo/react-native-reanimated-carousel/issues/125
+          activeOffsetX: [-20, 20],
+        }}
         renderItem={props => (
           <View style={{ width: windowWidth, flex: 1 }}>
             {externalRenderItem(props)}
