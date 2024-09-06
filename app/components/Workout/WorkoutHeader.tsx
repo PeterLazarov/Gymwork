@@ -4,7 +4,7 @@ import { Menu } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
-import { useShare } from 'app/utils/useShare'
+import { useExport } from 'app/utils/useExport'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, colors } from 'designSystem'
 import { getSnapshot } from 'mobx-state-tree'
@@ -16,7 +16,7 @@ const WorkoutHeader: React.FC = () => {
 
   const { openedWorkout, showCommentsCard } = stateStore
   const [menuOpen, setMenuOpen] = useState(false)
-  const share = useShare()
+  const { exportWorkouts, restoreWorkouts } = useExport()
 
   const hasNotes = useMemo(
     () => computed(() => openedWorkout?.notes !== ''),
@@ -44,7 +44,15 @@ const WorkoutHeader: React.FC = () => {
   const exportData = () => {
     setMenuOpen(false)
 
-    share(getSnapshot(workoutStore)) // TODO fix
+    exportWorkouts(getSnapshot(workoutStore))
+  }
+
+  const restoreData = async () => {
+    setMenuOpen(false)
+
+    const result = await restoreWorkouts()
+    workoutStore.setProp('workouts', result?.workouts)
+    workoutStore.setProp('workoutTemplates', result?.workoutTemplates)
   }
 
   const deleteWorkout = () => {
@@ -109,6 +117,10 @@ const WorkoutHeader: React.FC = () => {
         <Menu.Item
           onPress={exportData}
           title={translate('exportData')}
+        />
+        <Menu.Item
+          onPress={restoreData}
+          title={translate('restoreData')}
         />
         <Menu.Item
           onPress={deleteWorkout}

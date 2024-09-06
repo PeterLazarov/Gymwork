@@ -34,6 +34,7 @@ const en = {
   recordsLogEmpty: 'Records Log Empty',
   workoutLogEmpty: 'Workout Log Empty',
   exportData: 'Export data',
+  restoreData: 'Restore data',
   noWorkoutsEntered: 'No workouts entered yet',
   noFavoriteExercises: 'No favorite exercises set',
   favorite: 'Favorite',

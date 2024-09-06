@@ -1,5 +1,4 @@
 - in 'Update exercice' screen muscle areas plus icon is not implemented
-- fix error when export data in android simulator
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - workout timer for today's workout
 - edit exercise measureBy and groupBy
