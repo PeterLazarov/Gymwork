@@ -2,7 +2,6 @@
 - fix error when export data in android simulator
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - workout timer for today's workout
-- add workout template support?
 - edit exercise measureBy and groupBy
 - click on empty space OR back to remove focus on set
 - reasonable seed data rest periods & createdAt
