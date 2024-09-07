@@ -1,19 +1,18 @@
-- in 'Update exercice' screen muscle areas plus icon is not implemented
+- Update exercice screen -> muscle areas plus icon is not implemented
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
-- workout timer for today's workout
+- Timer
+  - workout timer for today's workout
+  - configurable duration based on exercise
 - edit exercise measureBy and groupBy
-- click on empty space OR back to remove focus on set
+- step stack view -> click on empty space OR back to remove focus on set
 - reasonable seed data rest periods & createdAt
-- timer configurable duration based on exercise
-- WorkoutExerciseList superset support
-- add special set from StrengthLog
-- should we order workout by date on addition
-- On exercise screen, oldest exercise at the top + scroll to bottom
+- superset support
+- On exercise screen scroll to bottom
 - On jump to record set, scroll to set
 - improve and rearrange feedback UI
 - add some kind of historical comments view (swipe left from comments screen?)
 - fix duration unit change (for Set list we use hh:mm:ss format not a unit)
-- WorkoutExerciseList -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
+- Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 - optimise calendar rendering
 - grouping / measurement by rest
 - fix Speed chart miscalculation
