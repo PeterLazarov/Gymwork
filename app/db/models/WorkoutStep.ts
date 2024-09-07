@@ -26,7 +26,7 @@ export const WorkoutStepModel = types
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
     sets: types.array(WorkoutSetModel),
-    exercise: types.reference(ExerciseModel),
+    exercises: types.array(types.reference(ExerciseModel)),
     type: types.enumeration(Object.values(stepType))
   })
   .views(step => ({
@@ -35,13 +35,16 @@ export const WorkoutStepModel = types
       return rootStore.recordStore
     },
     get exerciseRecords() {
-      return this.recordStore.getExerciseRecords(step.exercise.guid)
+      return this.recordStore.getExerciseRecords(this.exercise!.guid)
     },
     get lastSet() {
       return step.sets.at(-1)
     },
     get workSets() {
       return step.sets.filter(s => !s.isWarmup)
+    },
+    get exercise() {
+      return step.exercises[0]
     }
   }))
   .actions(withSetPropAction)

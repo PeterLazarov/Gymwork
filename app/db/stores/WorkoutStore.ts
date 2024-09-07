@@ -129,9 +129,9 @@ export const WorkoutStoreModel = types
     },
     createWorkoutFromTemplate(template: WorkoutTemplate) {
       const cleanedSteps: WorkoutStepSnapshotIn[] = template.steps.map(
-        ({ exercise, type }) => ({
+        ({ exercises, type }) => ({
           type,
-          exercise: exercise.guid,
+          exercises: exercises.map(e => e.guid),
           sets: [],
         })
       )
@@ -150,8 +150,8 @@ export const WorkoutStoreModel = types
       }
 
       const cleanedSteps: WorkoutStepSnapshotIn[] = template.steps.map(
-        ({ guid, exercise, sets, ...otherProps }) => ({
-          exercise: exercise.guid,
+        ({ guid, exercises, sets, ...otherProps }) => ({
+          exercises: exercises.map(e=>e.guid),
           sets: includeSets ? getCleanedSets(sets) : [],
           ...otherProps,
         })
@@ -165,8 +165,8 @@ export const WorkoutStoreModel = types
     },
     saveWorkoutTemplate(name: string, templateSteps: WorkoutStep[]) {
       const cleanedSteps: WorkoutStepSnapshotIn[] = templateSteps.map(
-        ({ guid, exercise, sets, ...otherProps }) => ({
-          exercise: exercise.guid,
+        ({ guid, exercises, sets, ...otherProps }) => ({
+          exercises: exercises.map(e=>e.guid),
           sets: [],
           ...otherProps,
         })

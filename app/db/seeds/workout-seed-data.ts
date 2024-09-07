@@ -23,7 +23,7 @@ const cardioExerciseID = exerciseSeedData
 
 function generateStep(exercise: string, sets: WorkoutSetSnapshotIn[]): WorkoutStepSnapshotIn {
   return {
-    exercise,
+    exercises: [exercise],
     sets,
     type: 'straightSet'
   }
