@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View, Dimensions } from 'react-native'
 
@@ -42,7 +41,7 @@ const ExerciseChartStats: React.FC = () => {
           view={activeView}
           height={Dimensions.get('window').height - 280}
           width={Dimensions.get('window').width - 32}
-          exercise={stateStore.focusedStep!.exercise}
+          exercise={stateStore.focusedStepExercise!}
         />
       </View>
 
@@ -54,4 +53,4 @@ const ExerciseChartStats: React.FC = () => {
   )
 }
 
-export default observer(ExerciseChartStats)
+export default ExerciseChartStats

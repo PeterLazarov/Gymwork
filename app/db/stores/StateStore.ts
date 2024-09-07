@@ -46,6 +46,11 @@ export const StateStoreModel = types
       const focusedStep = this.openedWorkout?.stepsMap[self.focusedStepGuid]
       return focusedStep
     },
+    get focusedStepExercise() {
+      return this.focusedStep?.type === 'straightSet'
+        ? this.focusedStep.exercise
+        : this.supersetStepOpenedExercise
+    },
     get supersetStepOpenedExercise() {
       return this.focusedStep?.exercises[self.supersetStepopenedExerciseIndex!]
     },

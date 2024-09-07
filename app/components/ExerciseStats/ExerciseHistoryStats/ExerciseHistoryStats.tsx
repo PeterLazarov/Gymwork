@@ -10,7 +10,7 @@ import WorkoutExerciseHistoryList from './ExerciseHistoryList'
 const ExerciseHistoryView: React.FC = () => {
   const { stateStore, workoutStore, recordStore } = useStores()
 
-  const exercise = stateStore.focusedStep?.exercise
+  const exercise = stateStore.focusedStepExercise
   const workoutsContained = exercise
     ? workoutStore.exerciseWorkoutsHistoryMap[exercise.guid]
     : []

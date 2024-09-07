@@ -14,9 +14,8 @@ import RecordsListItem from './RecordsListItem'
 const ExerciseRecordStats: React.FC = () => {
   const { stateStore, recordStore } = useStores()
 
-  const focusedStep = stateStore.focusedStep!
-  const focusedExerciseRecords =
-    recordStore.exerciseRecordsMap[focusedStep?.exercise.guid]
+  const exercise = stateStore.focusedStepExercise!
+  const focusedExerciseRecords = recordStore.exerciseRecordsMap[exercise.guid]
 
   const recordSets = useMemo(
     () =>
@@ -26,7 +25,7 @@ const ExerciseRecordStats: React.FC = () => {
           (setA, setB) => setA.groupingValue - setB.groupingValue
         )
       }),
-    [focusedExerciseRecords]
+    [focusedExerciseRecords, exercise]
   ).get()
 
   function goToDate(set: WorkoutSet) {

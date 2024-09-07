@@ -1,22 +1,17 @@
 import React from 'react'
 import { View } from 'react-native'
+import { observer } from 'mobx-react-lite'
 
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import StepExerciseForm from './StepExerciseForm'
 import ExerciseControl from '../ExerciseControl'
-import { observer } from 'mobx-react-lite'
 
 const TrackView: React.FC = () => {
   const { stateStore } = useStores()
 
   const hasFocusedStep = !!stateStore.focusedStep
-
-  const exercise =
-    stateStore.focusedStep?.type === 'straightSet'
-      ? stateStore.focusedStep.exercise
-      : stateStore.supersetStepOpenedExercise
 
   return (
     <>
@@ -32,7 +27,7 @@ const TrackView: React.FC = () => {
           )}
           <StepExerciseForm
             step={stateStore.focusedStep}
-            exercise={exercise!}
+            exercise={stateStore.focusedStepExercise!}
           />
         </View>
       )}

@@ -9,6 +9,7 @@ import EmptyState from '../EmptyState'
 import ExerciseRecordStats from './ExerciseRecordStats'
 import ExerciseHistoryStats from './ExerciseHistoryStats'
 import ExerciseChartStats from './ExerciseChartStats'
+import ExerciseControl from '../WorkoutStep/ExerciseControl'
 
 const ExerciseStatsView: React.FC = () => {
   const { stateStore } = useStores()
@@ -34,13 +35,25 @@ const ExerciseStatsView: React.FC = () => {
   ]
 
   return (
-    <View style={{ flex: 1 }}>
-      {hasFocusedStep && <Tabs tabsConfig={tabs} />}
+    <>
+      {hasFocusedStep && (
+        <View style={{ flex: 1 }}>
+          {stateStore.focusedStep.type === 'superSet' && (
+            <ExerciseControl
+              step={stateStore.focusedStep}
+              onExerciseChange={index => {
+                stateStore.setProp('supersetStepopenedExerciseIndex', index)
+              }}
+            />
+          )}
+          <Tabs tabsConfig={tabs} />
+        </View>
+      )}
 
       {!hasFocusedStep && (
         <EmptyState text={translate('selectExerciseForStats')} />
       )}
-    </View>
+    </>
   )
 }
 
