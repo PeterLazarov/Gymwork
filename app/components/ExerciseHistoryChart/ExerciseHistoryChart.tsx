@@ -115,13 +115,13 @@ const ExerciseHistoryChart: React.FC<Props> = ({
     }
 
     return fallback
-  }, [view])
+  }, [view, exercise])
 
   const xAxis = useMemo(() => {
     return view === '7D'
       ? viewDays.map(d => d.toFormat('EEE'))
       : viewDays.map(d => d.toFormat('dd LLL'))
-  }, [view])
+  }, [view, exercise])
 
   const setsByDay = useMemo(() => {
     return computed(() =>
@@ -131,7 +131,7 @@ const ExerciseHistoryChart: React.FC<Props> = ({
         return workout?.exerciseSetsMap[exercise.guid] || []
       })
     ).get()
-  }, [viewDays, workoutStore.workouts])
+  }, [exercise, viewDays, workoutStore.workouts])
 
   const { getChartSeries } = seriesSetup({ data: setsByDay })
 
@@ -187,13 +187,13 @@ const ExerciseHistoryChart: React.FC<Props> = ({
     }
 
     return () => eChartRef.current?.dispose()
-  }, [view, width, height])
+  }, [exercise, view, width, height])
 
   useEffect(() => {
     eChartRef.current?.setOption({
       series: feedChartSeriesData(setsByDay),
     })
-  }, [view, workoutStore.workouts, width, height])
+  }, [exercise, view, workoutStore.workouts, width, height])
 
   // TODO does not highlight set in question
   function linkToWorkoutDate() {
