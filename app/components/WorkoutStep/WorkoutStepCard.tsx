@@ -28,10 +28,15 @@ const WorkoutStepCard: React.FC<Props> = ({ step }) => {
     [step.sets]
   ).get()
 
+  const title =
+    step.type === 'straightSet'
+      ? step.exercise.name
+      : step.exercises.map(e => e.name).join('\n')
+
   return (
     <Card
       onPress={onCardPress}
-      title={step.exercise.name}
+      title={title}
       content={
         <WorkoutSetList
           sets={step.sets}
