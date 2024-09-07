@@ -16,12 +16,18 @@ import { WorkoutSet, WorkoutSetModel, WorkoutSetSnapshotIn } from './WorkoutSet'
 import { RecordStore } from '../stores/RecordStore'
 import { getDataFieldForKey } from 'app/services/workoutRecordsCalculator'
 
+const stepType = {
+  straightSet: 'straightSet',
+  superSet: 'superSet'
+} as const
+
 export const WorkoutStepModel = types
   .model('WorkoutStep')
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
     sets: types.array(WorkoutSetModel),
     exercise: types.reference(ExerciseModel),
+    type: types.enumeration(Object.values(stepType))
   })
   .views(step => ({
     get recordStore(): RecordStore {

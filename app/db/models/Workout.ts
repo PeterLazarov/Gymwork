@@ -112,12 +112,13 @@ export const WorkoutModel = types
   }))
   .actions(withSetPropAction)
   .actions(workout => ({
-    addStep(exercise: Exercise) {
+    addStep(exercise: Exercise, type: WorkoutStep['type']) {
       const updatedSteps = (workout.steps || []).map(step => getSnapshot(step))
       updatedSteps.push({
         exercise: exercise.guid,
         sets: [],
         guid: uuidv4(),
+        type
       })
       workout.setProp('steps', updatedSteps)
       return workout.steps.at(-1)!

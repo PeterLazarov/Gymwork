@@ -129,7 +129,8 @@ export const WorkoutStoreModel = types
     },
     createWorkoutFromTemplate(template: WorkoutTemplate) {
       const cleanedSteps: WorkoutStepSnapshotIn[] = template.steps.map(
-        ({ exercise }) => ({
+        ({ exercise, type }) => ({
+          type,
           exercise: exercise.guid,
           sets: [],
         })
