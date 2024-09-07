@@ -39,8 +39,8 @@ export const WorkoutModel = types
   })
   .views(self => ({
     get exercises(): Exercise[] {
-      const uniqueExercises = self.steps.reduce(
-        (acc, step) => acc.add(step.exercise),
+      const uniqueExercises = self.steps.flatMap<Exercise>(s => s.exercises).reduce(
+        (acc, exercise) => acc.add(exercise),
         new Set<Exercise>()
       )
       return [...uniqueExercises]
@@ -58,7 +58,9 @@ export const WorkoutModel = types
       const map: Record<Exercise['guid'], WorkoutStep> = {}
 
       self.steps.forEach(step => {
-        map[step.exercise.guid] = step
+        step.exercises.forEach(exercise => {
+          map[exercise.guid] = step
+        })
       })
 
       return map
@@ -67,7 +69,9 @@ export const WorkoutModel = types
       const map: Record<Exercise['guid'], WorkoutSet[]> = {}
 
       self.steps.forEach(step => {
-        map[step.exercise.guid] = step.sets
+        step.exercises.forEach(exercise => {
+          map[exercise.guid] = step.exerciseSetsMap[exercise.guid]
+        })
       })
       return map
     },

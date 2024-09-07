@@ -22,6 +22,7 @@
 - template steps list editting
 - how to delete exercises
 - auto swipe right on step focus happens unintended 
+- exerciseStepMap and exerciseSetsMap don't handle multiple steps with same exercise
 
 Performance to beat -
 100 workouts
