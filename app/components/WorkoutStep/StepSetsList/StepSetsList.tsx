@@ -8,13 +8,22 @@ import { useStores } from 'app/db/helpers/useStores'
 type Props = {
   step: WorkoutStep
   records?: ExerciseRecord
+  splitSupersets?: boolean
 }
 
-const StepSetsList: React.FC<Props> = ({ step, records }) => {
+const StepSetsList: React.FC<Props> = ({
+  step,
+  records,
+  splitSupersets = false,
+}) => {
   const { stateStore } = useStores()
 
+  const sets = splitSupersets
+    ? step.exerciseSetsMap[records!.exercise.guid]
+    : step.sets
+
   const getLetterForSet = (set: WorkoutSet) => {
-    if (step.type === 'straightSet') return
+    if (step.type === 'straightSet' || splitSupersets) return
 
     return step.exerciseLettering[set.exercise.guid]
   }
@@ -31,7 +40,7 @@ const StepSetsList: React.FC<Props> = ({ step, records }) => {
 
   return (
     <>
-      {step.sets.map((set, i) => (
+      {sets.map((set, i) => (
         <SetListItem
           key={set.guid}
           set={set}

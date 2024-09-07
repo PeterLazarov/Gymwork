@@ -28,6 +28,7 @@ const ExerciseHistoryListItem: React.FC<Props> = ({ date, step, records }) => {
       <StepSetsList
         step={step}
         records={records}
+        splitSupersets
       />
     </View>
   )
