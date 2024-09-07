@@ -19,6 +19,7 @@
 - fix Speed chart miscalculation
 - template steps list editting
 - how to delete exercises
+- auto swipe right on step focus happens unintended 
 
 Performance to beat -
 100 workouts
