@@ -8,8 +8,9 @@
 - reasonable seed data rest periods & createdAt
 - superset
   - adding
-  - updating
+  - improve track rerendering
   - stats
+  - fix records for second exercise
 - On exercise screen scroll to bottom
 - On jump to record set, scroll to set
 - improve and rearrange feedback UI

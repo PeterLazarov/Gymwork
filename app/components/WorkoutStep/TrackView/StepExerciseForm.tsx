@@ -6,19 +6,25 @@ import { View } from 'react-native'
 import SetEditList from './SetEditList'
 import SetEditControls from './SetEditControls'
 import { useStores } from 'app/db/helpers/useStores'
-import { Exercise, WorkoutSet, WorkoutSetModel } from 'app/db/models'
+import {
+  Exercise,
+  WorkoutSet,
+  WorkoutSetModel,
+  WorkoutStep,
+} from 'app/db/models'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { SetEditActions } from './SetEditActions'
 import useTimer from 'app/db/stores/useTimer'
 
 type Props = {
   exercise: Exercise
+  step: WorkoutStep
 }
-const StepExerciseForm: React.FC<Props> = ({ exercise }) => {
+const StepExerciseForm: React.FC<Props> = ({ exercise, step }) => {
   const { stateStore } = useStores()
   const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
-  const step = stateStore.focusedStep!
+
   useEffect(() => {
     const setToClone = selectedSet || step.lastSet
 
@@ -74,6 +80,8 @@ const StepExerciseForm: React.FC<Props> = ({ exercise }) => {
     setSelectedSet(null)
     step.removeSet(selectedSet!.guid)
   }
+
+  console.log('StepExerciseForm render for', exercise.name)
 
   return (
     <KeyboardAvoiderView

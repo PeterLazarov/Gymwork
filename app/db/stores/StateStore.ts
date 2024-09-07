@@ -24,6 +24,7 @@ export const StateStoreModel = types
   .props({
     focusedStepGuid: '',
     focusedSetGuid: '',
+    supersetStepopenedExerciseIndex: types.maybe(types.number),
     openedDate: types.optional(types.string, today.toISODate()!),
     draftSet: types.maybe(WorkoutSetModel),
     showCommentsCard: true
@@ -42,7 +43,11 @@ export const StateStoreModel = types
       return this.rootStore.recordStore
     },
     get focusedStep() {
-      return this.openedWorkout?.stepsMap[self.focusedStepGuid]
+      const focusedStep = this.openedWorkout?.stepsMap[self.focusedStepGuid]
+      return focusedStep
+    },
+    get supersetStepOpenedExercise() {
+      return this.focusedStep?.exercises[self.supersetStepopenedExerciseIndex!]
     },
     get openedWorkout(): Workout | undefined {
       return this.workoutStore.dateWorkoutMap[self.openedDate]
@@ -100,6 +105,9 @@ export const StateStoreModel = types
     setFocusedStep(stepGuid: string) {
       self.focusedStepGuid = stepGuid
       self.focusedSetGuid = ''
+
+      const focusedStep = self.openedWorkout?.stepsMap[self.focusedStepGuid]
+      self.supersetStepopenedExerciseIndex = focusedStep?.type === 'superSet' ? 0 : undefined
     },
   }))
 
