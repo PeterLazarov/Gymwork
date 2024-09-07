@@ -10,11 +10,16 @@ import { translate } from 'app/i18n'
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
 
 type Props = {
+  sets: WorkoutSet[]
   selectedSet: WorkoutSet | null
   setSelectedSet: (set: WorkoutSet | null) => void
 }
 
-const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
+const SetEditList: React.FC<Props> = ({
+  sets,
+  selectedSet,
+  setSelectedSet,
+}) => {
   const { stateStore } = useStores()
 
   function toggleSelectedSet(set: WorkoutSet) {
@@ -103,7 +108,7 @@ const SetEditList: React.FC<Props> = ({ selectedSet, setSelectedSet }) => {
   return (
     <>
       <DragList
-        data={stateStore.focusedStep!.sets}
+        data={sets}
         renderItem={renderItem}
         keyExtractor={set => set.guid}
         getItemLayout={getItemLayout}

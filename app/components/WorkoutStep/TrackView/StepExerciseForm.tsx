@@ -6,19 +6,21 @@ import { View } from 'react-native'
 import SetEditList from './SetEditList'
 import SetEditControls from './SetEditControls'
 import { useStores } from 'app/db/helpers/useStores'
-import { WorkoutSet, WorkoutSetModel } from 'app/db/models'
+import { Exercise, WorkoutSet, WorkoutSetModel } from 'app/db/models'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { SetEditActions } from './SetEditActions'
 import useTimer from 'app/db/stores/useTimer'
 
-const StepTrackForm: React.FC = () => {
+type Props = {
+  exercise: Exercise
+}
+const StepExerciseForm: React.FC<Props> = ({ exercise }) => {
   const { stateStore } = useStores()
   const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
-
-  const { exercise } = stateStore.focusedStep!
+  const step = stateStore.focusedStep!
   useEffect(() => {
-    const setToClone = selectedSet || stateStore.focusedStep!.lastSet
+    const setToClone = selectedSet || step.lastSet
 
     if (setToClone) {
       const { guid, exercise, ...rest } = setToClone
@@ -39,7 +41,7 @@ const StepTrackForm: React.FC = () => {
         exercise: exercise.guid,
         date: stateStore.openedDate,
       })
-      stateStore.focusedStep!.addSet(fromDraft)
+      step.addSet(fromDraft)
     }
 
     if (exercise.measurements.rest) {
@@ -64,13 +66,13 @@ const StepTrackForm: React.FC = () => {
       date: selectedSet!.date,
     }
 
-    stateStore.focusedStep!.updateSet(updatedSet)
+    step.updateSet(updatedSet)
 
     setSelectedSet(null)
   }
   function handleRemove() {
     setSelectedSet(null)
-    stateStore.focusedStep!.removeSet(selectedSet!.guid)
+    step.removeSet(selectedSet!.guid)
   }
 
   return (
@@ -85,6 +87,7 @@ const StepTrackForm: React.FC = () => {
     >
       <View style={{ padding: 8, flex: 1 }}>
         <SetEditList
+          sets={step.exerciseSetsMap[exercise.guid]}
           selectedSet={selectedSet}
           setSelectedSet={setSelectedSet}
         />
@@ -109,4 +112,4 @@ const StepTrackForm: React.FC = () => {
   )
 }
 
-export default observer(StepTrackForm)
+export default observer(StepExerciseForm)
