@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import WorkoutSetList from './StepSetsList'
+import StepSetsList from './StepSetsList'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
 import { Card, colors } from 'designSystem'
@@ -31,15 +31,17 @@ const WorkoutStepCard: React.FC<Props> = ({ step }) => {
   const title =
     step.type === 'straightSet'
       ? step.exercise.name
-      : step.exercises.map(e => e.name).join('\n')
+      : step.exercises
+          .map(e => `${step.exerciseLettering[e.guid]}. ${e.name}`)
+          .join('\n')
 
   return (
     <Card
       onPress={onCardPress}
       title={title}
       content={
-        <WorkoutSetList
-          sets={step.sets}
+        <StepSetsList
+          step={step}
           records={exerciseRecords}
         />
       }

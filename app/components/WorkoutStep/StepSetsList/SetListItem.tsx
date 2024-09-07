@@ -12,6 +12,7 @@ type Props = {
   set: WorkoutSet
   exercise: Exercise
   number?: number
+  letter?: string
   isFocused?: boolean
   isRecord?: boolean
   hideRecords?: boolean
@@ -23,6 +24,7 @@ const SetListItem: React.FC<Props> = ({
   isFocused,
   isRecord,
   number,
+  letter,
   hideRecords = false,
 }) => {
   const color = isFocused ? colors.accent : colors.neutralText
@@ -47,10 +49,10 @@ const SetListItem: React.FC<Props> = ({
                 color,
                 fontWeight: 'bold',
                 marginLeft: 8,
+                marginRight: 4,
               }}
             >
-              {/* TODO: remove space */}
-              {number}.{' '}
+              {number}.
             </Text>
           )}
           {set.isWarmup && (
@@ -59,10 +61,25 @@ const SetListItem: React.FC<Props> = ({
               color={color}
             />
           )}
+          {letter && (
+            <Text
+              style={{
+                fontSize: fontSize.sm,
+                color,
+                fontWeight: 'bold',
+                marginLeft: 4,
+              }}
+            >
+              {letter}
+            </Text>
+          )}
           {isRecord && (
             <Icon
               icon="trophy"
               color={colors.accent}
+              style={{
+                marginLeft: 4,
+              }}
             />
           )}
         </View>

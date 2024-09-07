@@ -11,10 +11,11 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 import { RootStoreModel } from 'app/db/stores/RootStore'
-import { ExerciseModel } from './Exercise'
+import { Exercise, ExerciseModel } from './Exercise'
 import { WorkoutSet, WorkoutSetModel, WorkoutSetSnapshotIn } from './WorkoutSet'
 import { RecordStore } from '../stores/RecordStore'
 import { getDataFieldForKey } from 'app/services/workoutRecordsCalculator'
+import { alphabeticNumbering } from 'app/utils/string'
 
 const stepType = {
   straightSet: 'straightSet',
@@ -45,6 +46,21 @@ export const WorkoutStepModel = types
     },
     get exercise() {
       return step.exercises[0]
+    },
+    get exerciseSetsMap() {
+      return step.sets.reduce((map, set) => {
+        if(!map[set.exercise.guid]) {
+          map[set.exercise.guid] = []
+        }
+        map[set.exercise.guid].push(set)
+        return map;
+      }, {} as Record<Exercise['guid'], WorkoutSet[]>) ;
+    },
+    get exerciseLettering(): Record<Exercise['guid'], string> {
+      return step.exercises.reduce((map, e, i) => {
+        map[e.guid] = alphabeticNumbering(i)
+        return map;
+      }, {} as Record<Exercise['guid'], string>) ;
     }
   }))
   .actions(withSetPropAction)

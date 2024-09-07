@@ -2,17 +2,17 @@ import { DateTime } from 'luxon'
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import { Exercise, ExerciseRecord, WorkoutSet } from 'app/db/models'
+import { Exercise, ExerciseRecord, WorkoutStep } from 'app/db/models'
 import { Divider, fontSize } from 'designSystem'
 import StepSetsList from 'app/components/WorkoutStep/StepSetsList'
 
 type Props = {
   date: string
-  sets: WorkoutSet[]
+  step: WorkoutStep
   records: ExerciseRecord
   exercise: Exercise
 }
-const ExerciseHistoryListItem: React.FC<Props> = ({ date, sets, records }) => {
+const ExerciseHistoryListItem: React.FC<Props> = ({ date, step, records }) => {
   return (
     <View
       style={{ gap: 8, marginBottom: 12 }}
@@ -26,7 +26,7 @@ const ExerciseHistoryListItem: React.FC<Props> = ({ date, sets, records }) => {
         variant="primary"
       />
       <StepSetsList
-        sets={sets}
+        step={step}
         records={records}
       />
     </View>

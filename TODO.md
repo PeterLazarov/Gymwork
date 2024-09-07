@@ -6,7 +6,10 @@
 - edit exercise measureBy and groupBy
 - step stack view -> click on empty space OR back to remove focus on set
 - reasonable seed data rest periods & createdAt
-- superset support
+- superset
+  - adding
+  - updating
+  - stats
 - On exercise screen scroll to bottom
 - On jump to record set, scroll to set
 - improve and rearrange feedback UI

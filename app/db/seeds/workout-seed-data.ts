@@ -112,7 +112,7 @@ function generateWorkout (date: string) {
 
   function generateSupersetStep(date: string) {
     const sets: WorkoutSetSnapshotIn[] = Array.from({ 
-      length: between(1, 2) * 2 
+      length: between(2, 3) * 2 
     }).map((_, i) => {
       const weightMcg = convert(between(8, 40) * weightIncrementKg)
       .from('kg')

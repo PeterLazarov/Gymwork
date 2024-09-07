@@ -16,13 +16,13 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({
 }) => {
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<Workout>) => {
-      const sets = item.exerciseSetsMap[exercise.guid]
+      const step = item.exerciseStepMap[exercise.guid]
 
       return (
         <ExerciseHistoryListItem
           key={item.guid}
           date={item.date}
-          sets={sets}
+          step={step}
           records={records}
           exercise={exercise}
         />

@@ -2,20 +2,36 @@ import React from 'react'
 import { observer } from 'mobx-react-lite'
 
 import SetListItem from './SetListItem'
-import { ExerciseRecord, WorkoutSet } from 'app/db/models'
+import { ExerciseRecord, WorkoutSet, WorkoutStep } from 'app/db/models'
 import { useStores } from 'app/db/helpers/useStores'
 
 type Props = {
-  sets: WorkoutSet[]
+  step: WorkoutStep
   records?: ExerciseRecord
 }
 
-const StepSetsList: React.FC<Props> = ({ sets, records }) => {
+const StepSetsList: React.FC<Props> = ({ step, records }) => {
   const { stateStore } = useStores()
+
+  const getLetterForSet = (set: WorkoutSet) => {
+    if (step.type === 'straightSet') return
+
+    return step.exerciseLettering[set.exercise.guid]
+  }
+  const getNumberForSet = (set: WorkoutSet) => {
+    if (set.isWarmup) return
+
+    if (step.type === 'straightSet') return step.workSets.indexOf(set) + 1
+
+    const workSets = step.exerciseSetsMap[set.exercise.guid].filter(
+      s => !s.isWarmup
+    )
+    return workSets.indexOf(set) + 1
+  }
 
   return (
     <>
-      {sets.map((set, i) => (
+      {step.sets.map((set, i) => (
         <SetListItem
           key={set.guid}
           set={set}
@@ -24,7 +40,8 @@ const StepSetsList: React.FC<Props> = ({ sets, records }) => {
             records ? records.recordSetsMap.hasOwnProperty(set.guid) : false
           }
           isFocused={stateStore.focusedSetGuid === set.guid}
-          number={i + 1}
+          number={getNumberForSet(set)}
+          letter={getLetterForSet(set)}
         />
       ))}
     </>
