@@ -23,6 +23,8 @@
 - how to delete exercises
 - auto swipe right on step focus happens unintended 
 - exerciseStepMap and exerciseSetsMap don't handle multiple steps with same exercise
+- IncrementNumericEditor remove unselected border bottom
+- revert swipe screens
 
 Performance to beat -
 100 workouts

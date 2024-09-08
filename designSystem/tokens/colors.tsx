@@ -11,7 +11,7 @@ export const colors = {
 
   neutralDark: colorSchemas.neutral.hue900,
   neutral: colorSchemas.neutral.hue700,
-  neutralLight: colorSchemas.neutral.hue600,
+  neutralLight: colorSchemas.neutral.hue500,
   neutralLighter: colorSchemas.neutral.hue300,
   neutralLightest: colorSchemas.neutral.hue100,
 

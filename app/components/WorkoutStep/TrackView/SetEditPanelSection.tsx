@@ -16,13 +16,14 @@ const SetEditPanelSection: React.FC<Props> = ({ text, children }) => {
           style={{
             fontSize: fontSize.xs,
             textTransform: 'uppercase',
+            marginVertical: 4,
           }}
         >
           {text}
         </Text>
         <Divider
           orientation="horizontal"
-          variant="primary"
+          variant="neutral"
         />
       </View>
       {children}

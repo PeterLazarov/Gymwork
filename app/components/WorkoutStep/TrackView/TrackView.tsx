@@ -7,6 +7,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import StepExerciseForm from './StepExerciseForm'
 import ExerciseControl from '../ExerciseControl'
+import { colors } from 'designSystem'
 
 const TrackView: React.FC = () => {
   const { stateStore } = useStores()
@@ -16,7 +17,7 @@ const TrackView: React.FC = () => {
   return (
     <>
       {hasFocusedStep && (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: colors.neutralLightest }}>
           {stateStore.focusedStep.type === 'superSet' && (
             <ExerciseControl
               step={stateStore.focusedStep}

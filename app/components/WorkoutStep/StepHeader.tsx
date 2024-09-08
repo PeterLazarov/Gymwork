@@ -25,41 +25,37 @@ const StepHeader: React.FC = () => {
   return (
     <Header>
       <Header.Title
-        title={stateStore.focusedStep?.exercise.name || 'Gymwork'}
+        title={stateStore.focusedStep?.name || 'Gymwork'}
+        numberOfLines={1}
       />
 
       {stateStore.focusedStepGuid && (
-        <IconButton
-          onPress={deleteSelectedExercises}
-          underlay="darker"
+        <Menu
+          visible={menuOpen}
+          onDismiss={() => setMenuOpen(false)}
+          anchorPosition="bottom"
+          anchor={
+            <IconButton
+              onPress={() => setMenuOpen(true)}
+              underlay="darker"
+            >
+              <Icon
+                icon="ellipsis-vertical"
+                color={colors.primaryText}
+              />
+            </IconButton>
+          }
         >
-          <Icon
-            icon="delete"
-            color={colors.primaryText}
+          <Menu.Item
+            onPress={onEditExercisePress}
+            title={translate('editExercise')}
           />
-        </IconButton>
+          <Menu.Item
+            onPress={deleteSelectedExercises}
+            title={translate('removeExercise')}
+          />
+        </Menu>
       )}
-      <Menu
-        visible={menuOpen}
-        onDismiss={() => setMenuOpen(false)}
-        anchorPosition="bottom"
-        anchor={
-          <IconButton
-            onPress={() => setMenuOpen(true)}
-            underlay="darker"
-          >
-            <Icon
-              icon="ellipsis-vertical"
-              color={colors.primaryText}
-            />
-          </IconButton>
-        }
-      >
-        <Menu.Item
-          onPress={onEditExercisePress}
-          title={translate('editExercise')}
-        />
-      </Menu>
     </Header>
   )
 }

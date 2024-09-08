@@ -61,6 +61,9 @@ export const WorkoutStepModel = types
         map[e.guid] = alphabeticNumbering(i)
         return map;
       }, {} as Record<Exercise['guid'], string>) ;
+    },
+    get name() {
+      return step.type === 'straightSet' ? this.exercise.name : 'Superset'
     }
   }))
   .actions(withSetPropAction)

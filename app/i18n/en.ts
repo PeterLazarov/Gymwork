@@ -20,6 +20,7 @@ const en = {
   editRestTimer: 'Edit Rest Timer',
   createExercise: 'Create exercise',
   editExercise: 'Edit exercise',
+  removeExercise: 'Remove exercise',
   showGraph: 'Show graph',
   hideGraph: 'Hide graph',
   changesWillBeLost: 'Any changes made will be lost.',

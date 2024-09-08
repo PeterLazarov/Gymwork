@@ -46,7 +46,7 @@ const WorkoutStepCard: React.FC<Props> = ({ step }) => {
         />
       }
       containerStyle={{
-        backgroundColor: isSelected ? colors.neutral : colors.neutralLighter,
+        backgroundColor: isSelected ? colors.neutral : colors.neutralLightest,
       }}
     />
   )

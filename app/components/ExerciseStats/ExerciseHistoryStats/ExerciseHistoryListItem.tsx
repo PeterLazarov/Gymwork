@@ -3,7 +3,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import { Exercise, ExerciseRecord, WorkoutStep } from 'app/db/models'
-import { Divider, fontSize } from 'designSystem'
+import { Divider, fontSize, colors } from 'designSystem'
 import StepSetsList from 'app/components/WorkoutStep/StepSetsList'
 
 type Props = {
@@ -15,7 +15,14 @@ type Props = {
 const ExerciseHistoryListItem: React.FC<Props> = ({ date, step, records }) => {
   return (
     <View
-      style={{ gap: 8, marginBottom: 12 }}
+      style={{
+        gap: 8,
+        marginBottom: 12,
+        borderRadius: 8,
+        borderColor: colors.neutral,
+        borderWidth: 1,
+        padding: 4,
+      }}
       key={date}
     >
       <Text style={{ fontSize: fontSize.md, textAlign: 'center' }}>
@@ -23,7 +30,7 @@ const ExerciseHistoryListItem: React.FC<Props> = ({ date, step, records }) => {
       </Text>
       <Divider
         orientation="horizontal"
-        variant="primary"
+        variant="neutral"
       />
       <StepSetsList
         step={step}

@@ -5,7 +5,7 @@ import { Text, TouchableOpacity, View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { capitalize } from 'app/utils/string'
-import { Divider, Icon, IconButton, colors, fontSize } from 'designSystem'
+import { Icon, IconButton, boxShadows, colors, fontSize } from 'designSystem'
 import { navigate } from 'app/navigators'
 
 type Props = {
@@ -27,42 +27,35 @@ const DayControl: React.FC<Props> = ({ duration }) => {
   const isLastDate = stateStore.openedDate === stateStore.lastRenderedDate
 
   return (
-    <>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: colors.primaryLighter,
-          padding: 4,
-        }}
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.neutralLightest,
+        padding: 4,
+        ...boxShadows.default,
+      }}
+    >
+      <IconButton
+        onPress={stateStore.decrementCurrentDate}
+        disabled={isEarliestDate}
       >
-        <IconButton
-          onPress={stateStore.decrementCurrentDate}
-          disabled={isEarliestDate}
-          underlay="darker"
-        >
-          <Icon icon="chevron-back" />
-        </IconButton>
-        <TouchableOpacity
-          onPress={() => navigate('Calendar')}
-          style={{ flex: 1 }}
-        >
-          <Text style={{ fontSize: fontSize.lg }}>{capitalize(label)}</Text>
-        </TouchableOpacity>
-        <IconButton
-          onPress={stateStore.incrementCurrentDate}
-          underlay="darker"
-          disabled={isLastDate}
-        >
-          <Icon icon="chevron-forward" />
-        </IconButton>
-      </View>
-      <Divider
-        orientation="horizontal"
-        variant="primary"
-      />
-    </>
+        <Icon icon="chevron-back" />
+      </IconButton>
+      <TouchableOpacity
+        onPress={() => navigate('Calendar')}
+        style={{ flex: 1 }}
+      >
+        <Text style={{ fontSize: fontSize.lg }}>{capitalize(label)}</Text>
+      </TouchableOpacity>
+      <IconButton
+        onPress={stateStore.incrementCurrentDate}
+        disabled={isLastDate}
+      >
+        <Icon icon="chevron-forward" />
+      </IconButton>
+    </View>
   )
 }
 

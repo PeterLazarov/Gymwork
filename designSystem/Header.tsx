@@ -1,4 +1,4 @@
-import { View, Text, ViewProps } from 'react-native'
+import { View, Text, ViewProps, TextProps } from 'react-native'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 
 import { colors, fontSize } from './tokens'
@@ -27,10 +27,14 @@ Header.displayName = 'Header'
 
 type HeaderTitleProps = {
   title: string
+  numberOfLines?: TextProps['numberOfLines']
 }
-const HeaderTitle: React.FC<HeaderTitleProps> = ({ title }) => (
+const HeaderTitle: React.FC<HeaderTitleProps> = ({ title, numberOfLines }) => (
   <View style={{ marginLeft: 10, alignItems: 'flex-start', flex: 1 }}>
-    <Text style={{ color: colors.primaryText, fontSize: fontSize.lg }}>
+    <Text
+      style={{ color: colors.primaryText, fontSize: fontSize.lg }}
+      numberOfLines={numberOfLines}
+    >
       {title}
     </Text>
   </View>
