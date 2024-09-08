@@ -7,7 +7,7 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
-import { PressableHighlight } from 'designSystem'
+import { PressableHighlight, colors } from 'designSystem'
 import { WorkoutSet } from 'app/db/models'
 import RecordsListItem from './RecordsListItem'
 
@@ -41,6 +41,7 @@ const ExerciseRecordStats: React.FC = () => {
         borderRadius: 8,
         display: 'flex',
         flexGrow: 1,
+        backgroundColor: colors.neutralLight,
       }}
     >
       {recordSets.length > 0 ? (

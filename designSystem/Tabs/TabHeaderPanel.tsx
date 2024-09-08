@@ -6,7 +6,7 @@ import { TabConfig, TabStyles } from './types'
 import { colors } from '../tokens'
 
 type Props = {
-  tabsConfig: readonly TabConfig[]
+  tabsConfig: readonly TabConfig<any>[]
   style?: TabStyles['header']
   currentIndex: number
   scrollableContainer?: boolean
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: colors.primaryLighter,
+    backgroundColor: colors.neutralLightest,
   },
 })
 

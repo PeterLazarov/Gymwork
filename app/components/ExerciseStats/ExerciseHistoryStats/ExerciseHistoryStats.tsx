@@ -6,6 +6,7 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import WorkoutExerciseHistoryList from './ExerciseHistoryList'
+import { colors } from 'designSystem'
 
 const ExerciseHistoryView: React.FC = () => {
   const { stateStore, workoutStore, recordStore } = useStores()
@@ -18,12 +19,12 @@ const ExerciseHistoryView: React.FC = () => {
   return (
     <View
       style={{
-        margin: 16,
-        borderRadius: 8,
+        padding: 16,
         gap: 24,
         flexDirection: 'column',
         display: 'flex',
         flexGrow: 1,
+        backgroundColor: colors.neutralLight,
       }}
     >
       {exercise && workoutsContained.length > 0 ? (

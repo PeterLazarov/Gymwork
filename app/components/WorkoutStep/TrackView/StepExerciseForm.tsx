@@ -15,6 +15,7 @@ import {
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { SetEditActions } from './SetEditActions'
 import useTimer from 'app/db/stores/useTimer'
+import { colors } from 'designSystem'
 
 type Props = {
   exercise: Exercise
@@ -91,6 +92,7 @@ const StepExerciseForm: React.FC<Props> = ({ exercise, step }) => {
         flexGrow: 1,
         gap: 8,
         display: 'flex',
+        backgroundColor: colors.neutralLight,
       }}
     >
       <View style={{ padding: 8, flex: 1 }}>

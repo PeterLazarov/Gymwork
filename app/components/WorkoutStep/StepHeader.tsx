@@ -22,8 +22,21 @@ const StepHeader: React.FC = () => {
     navigate('ExerciseEdit')
   }
 
+  function goBack() {
+    stateStore.setProp('focusedStepGuid', '')
+  }
+
   return (
     <Header>
+      <IconButton
+        onPress={goBack}
+        underlay="darker"
+      >
+        <Icon
+          color={colors.primaryText}
+          icon="chevron-back"
+        />
+      </IconButton>
       <Header.Title
         title={stateStore.focusedStep?.name || 'Gymwork'}
         numberOfLines={1}
