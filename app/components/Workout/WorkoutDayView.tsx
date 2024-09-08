@@ -5,9 +5,9 @@ import { observer } from 'mobx-react-lite'
 import { useStores } from 'app/db/helpers/useStores'
 import WorkoutStepList from './WorkoutStepList'
 import DayControl from './DayControl'
-import WorkoutControlButtons from './WorkoutControlButtons'
 import WorkoutEmptyState from './WorkoutEmptyState'
 import WorkoutCommentsCard from './WorkoutCommentsCard'
+import AddStepMenu from './AddStepMenu'
 
 const WorkoutDayView: React.FC = () => {
   const { stateStore } = useStores()
@@ -26,7 +26,7 @@ const WorkoutDayView: React.FC = () => {
           <WorkoutEmptyState />
         )}
       </View>
-      <WorkoutControlButtons />
+      <AddStepMenu />
     </>
   )
 }

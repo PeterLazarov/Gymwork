@@ -1,6 +1,7 @@
 const en = {
   newWorkout: 'New workout',
   addExercise: 'Add exercise',
+  addSuperset: 'Add superset',
   selectExercise: 'Select exercise',
   copyWorkout: 'Copy workout',
   completeSet: 'Complete set',
