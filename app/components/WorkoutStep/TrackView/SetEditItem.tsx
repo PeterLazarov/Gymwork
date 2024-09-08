@@ -36,7 +36,7 @@ const SetEditItem: React.FC<Props> = ({
         justifyContent: 'space-around',
         paddingHorizontal: 10,
         paddingVertical: 1,
-        backgroundColor: isFocused ? colors.neutralLight : undefined,
+        backgroundColor: isFocused ? colors.neutral : undefined,
       }}
     >
       <View
