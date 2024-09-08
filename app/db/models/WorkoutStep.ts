@@ -19,7 +19,7 @@ import { alphabeticNumbering } from 'app/utils/string'
 
 const stepType = {
   straightSet: 'straightSet',
-  superSet: 'superSet'
+  superSet: 'superSet',
 } as const
 
 export const WorkoutStepModel = types
@@ -28,7 +28,7 @@ export const WorkoutStepModel = types
     guid: types.optional(types.identifier, () => uuidv4()),
     sets: types.array(WorkoutSetModel),
     exercises: types.array(types.reference(ExerciseModel)),
-    type: types.enumeration(Object.values(stepType))
+    type: types.enumeration(Object.values(stepType)),
   })
   .views(step => ({
     get recordStore(): RecordStore {
@@ -49,22 +49,22 @@ export const WorkoutStepModel = types
     },
     get exerciseSetsMap() {
       return step.sets.reduce((map, set) => {
-        if(!map[set.exercise.guid]) {
+        if (!map[set.exercise.guid]) {
           map[set.exercise.guid] = []
         }
         map[set.exercise.guid].push(set)
-        return map;
-      }, {} as Record<Exercise['guid'], WorkoutSet[]>) ;
+        return map
+      }, {} as Record<Exercise['guid'], WorkoutSet[]>)
     },
     get exerciseLettering(): Record<Exercise['guid'], string> {
       return step.exercises.reduce((map, e, i) => {
         map[e.guid] = alphabeticNumbering(i)
-        return map;
-      }, {} as Record<Exercise['guid'], string>) ;
+        return map
+      }, {} as Record<Exercise['guid'], string>)
     },
     get name() {
       return step.type === 'straightSet' ? this.exercise.name : 'Superset'
-    }
+    },
   }))
   .actions(withSetPropAction)
   .actions(step => ({

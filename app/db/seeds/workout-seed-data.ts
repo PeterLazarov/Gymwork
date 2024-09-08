@@ -21,15 +21,18 @@ const cardioExerciseID = exerciseSeedData
   .findIndex(e => e.muscles.includes('cardio'))
   .toString()
 
-function generateStep(exercises: string[], sets: WorkoutSetSnapshotIn[]): WorkoutStepSnapshotIn {
+function generateStep(
+  exercises: string[],
+  sets: WorkoutSetSnapshotIn[]
+): WorkoutStepSnapshotIn {
   return {
     exercises,
     sets,
-    type: exercises.length > 1 ? 'superSet' : 'straightSet' 
+    type: exercises.length > 1 ? 'superSet' : 'straightSet',
   }
 }
 
-function generateWorkout (date: string) {
+function generateWorkout(date: string) {
   let workoutTime = DateTime.fromISO(date).set({
     hour: 8,
     minute: 0,
@@ -42,10 +45,14 @@ function generateWorkout (date: string) {
     }).map((_, i): WorkoutStepSnapshotIn => {
       const exercise = String(between(0, 100))
       const restMs = i > 0 ? rest : 0
-      workoutTime = workoutTime.plus({ milliseconds: restMs * i + setDuration * i })
-      
+      workoutTime = workoutTime.plus({
+        milliseconds: restMs * i + setDuration * i,
+      })
+
       console.log(workoutTime.toFormat('hh:mm'))
-      const sets: WorkoutSetSnapshotIn[] = Array.from({ length: between(2, 5) }).map((_, i) => ({
+      const sets: WorkoutSetSnapshotIn[] = Array.from({
+        length: between(2, 5),
+      }).map((_, i) => ({
         exercise,
         isWarmup: i === 0,
         reps: between(3, 12),
@@ -67,11 +74,13 @@ function generateWorkout (date: string) {
       const weightMcg = convert(between(8, 40) * weightIncrementKg)
         .from('kg')
         .to('mcg')
-  
+
       const restMs = i > 0 ? rest : 0
-      workoutTime = workoutTime.plus({ milliseconds: restMs * i + setDuration * i })
+      workoutTime = workoutTime.plus({
+        milliseconds: restMs * i + setDuration * i,
+      })
       console.log(workoutTime.toFormat('hh:mm'))
-  
+
       return {
         exercise: '44',
         reps: between(3, 12),
@@ -85,10 +94,10 @@ function generateWorkout (date: string) {
 
     return generateStep(['44'], benchSets)
   }
-  
+
   function generateCardioStep(date: string) {
-    const cardioSets: WorkoutSetSnapshotIn[] = Array.from({ 
-      length: between(1, 2) 
+    const cardioSets: WorkoutSetSnapshotIn[] = Array.from({
+      length: between(1, 2),
     }).map((_, i) => {
       const km = between(1, 3)
       // const weight = between(0, 10) // not supported yet?
@@ -99,9 +108,7 @@ function generateWorkout (date: string) {
       return {
         exercise: cardioExerciseID,
         distanceMm: convert(km).from('km').to('mm'),
-        durationMs: convert(duration)
-          .from('min')
-          .to('ms'),
+        durationMs: convert(duration).from('min').to('ms'),
         createdAt: workoutTime.toMillis(),
         date,
       }
@@ -111,15 +118,17 @@ function generateWorkout (date: string) {
   }
 
   function generateSupersetStep(date: string) {
-    const sets: WorkoutSetSnapshotIn[] = Array.from({ 
-      length: between(2, 3) * 2 
+    const sets: WorkoutSetSnapshotIn[] = Array.from({
+      length: between(2, 3) * 2,
     }).map((_, i) => {
       const weightMcg = convert(between(8, 40) * weightIncrementKg)
-      .from('kg')
-      .to('mcg')
+        .from('kg')
+        .to('mcg')
 
       const restMs = i > 0 ? rest : 0
-      workoutTime = workoutTime.plus({ milliseconds: restMs * i + setDuration * i })
+      workoutTime = workoutTime.plus({
+        milliseconds: restMs * i + setDuration * i,
+      })
       console.log(workoutTime.toFormat('hh:mm'))
 
       return {
@@ -143,7 +152,9 @@ function generateWorkout (date: string) {
 
     const supersetStep = generateSupersetStep(date)
 
-    return generateRandomExercises(date).concat(benchStep, cardioStep, supersetStep).reverse()
+    return generateRandomExercises(date)
+      .concat(benchStep, cardioStep, supersetStep)
+      .reverse()
   }
 
   return {
@@ -162,4 +173,3 @@ const workoutSeedData: WorkoutSnapshotIn[] = Array.from({
 })
 
 export default workoutSeedData
-

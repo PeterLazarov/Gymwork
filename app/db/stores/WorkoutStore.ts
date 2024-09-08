@@ -1,9 +1,4 @@
-import {
-  Instance,
-  SnapshotOut,
-  types,
-  getParent,
-} from 'mobx-state-tree'
+import { Instance, SnapshotOut, types, getParent } from 'mobx-state-tree'
 
 import { RootStore } from './RootStore'
 import * as storage from 'app/utils/storage'
@@ -71,21 +66,21 @@ export const WorkoutStoreModel = types
       )
     },
     get mostUsedExercises(): Exercise[] {
-      const exercisesArray = Object.values(this.exerciseSetsHistoryMap);
-      const exerciseCounts: {exercise: Exercise, count: number}[] = [];
+      const exercisesArray = Object.values(this.exerciseSetsHistoryMap)
+      const exerciseCounts: { exercise: Exercise; count: number }[] = []
 
       exercisesArray.forEach(sets => {
         if (sets.length > 0) {
           exerciseCounts.push({
             exercise: sets[0].exercise,
-            count: sets.length
-          });
+            count: sets.length,
+          })
         }
-      });
+      })
 
-      exerciseCounts.sort((a, b) => b.count - a.count);
+      exerciseCounts.sort((a, b) => b.count - a.count)
 
-      return exerciseCounts.slice(0, 10).map(({ exercise }) => exercise);
+      return exerciseCounts.slice(0, 10).map(({ exercise }) => exercise)
     },
 
     get sortedWorkouts(): Workout[] {
@@ -105,8 +100,10 @@ export const WorkoutStoreModel = types
   .actions(self => ({
     async fetch() {
       const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
-      const workoutTemplates = await storage.load<WorkoutTemplateSnapshotIn[]>('workoutTemplates')
-      
+      const workoutTemplates = await storage.load<WorkoutTemplateSnapshotIn[]>(
+        'workoutTemplates'
+      )
+
       if (workoutTemplates && workoutTemplates?.length > 0) {
         self.setProp('workoutTemplates', workoutTemplates)
       }
@@ -137,7 +134,7 @@ export const WorkoutStoreModel = types
       )
       const created = WorkoutModel.create({
         date: self.rootStore.stateStore.openedDate,
-        steps: cleanedSteps
+        steps: cleanedSteps,
       })
       self.workouts.push(created)
     },
@@ -151,7 +148,7 @@ export const WorkoutStoreModel = types
 
       const cleanedSteps: WorkoutStepSnapshotIn[] = template.steps.map(
         ({ guid, exercises, sets, ...otherProps }) => ({
-          exercises: exercises.map(e=>e.guid),
+          exercises: exercises.map(e => e.guid),
           sets: includeSets ? getCleanedSets(sets) : [],
           ...otherProps,
         })
@@ -166,7 +163,7 @@ export const WorkoutStoreModel = types
     saveWorkoutTemplate(name: string, templateSteps: WorkoutStep[]) {
       const cleanedSteps: WorkoutStepSnapshotIn[] = templateSteps.map(
         ({ guid, exercises, sets, ...otherProps }) => ({
-          exercises: exercises.map(e=>e.guid),
+          exercises: exercises.map(e => e.guid),
           sets: [],
           ...otherProps,
         })

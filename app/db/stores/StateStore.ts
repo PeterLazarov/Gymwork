@@ -6,12 +6,7 @@ import { RootStore } from './RootStore'
 import { WorkoutStore } from './WorkoutStore'
 import { RecordStore } from './RecordStore'
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import {
-  Exercise,
-  ExerciseRecord,
-  Workout,
-  WorkoutSetModel,
-} from '../models'
+import { Exercise, ExerciseRecord, Workout, WorkoutSetModel } from '../models'
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -27,7 +22,7 @@ export const StateStoreModel = types
     supersetStepopenedExerciseIndex: types.maybe(types.number),
     openedDate: types.optional(types.string, today.toISODate()!),
     draftSet: types.maybe(WorkoutSetModel),
-    showCommentsCard: true
+    showCommentsCard: true,
   })
   .views(self => ({
     get rootStore(): RootStore {
@@ -112,7 +107,8 @@ export const StateStoreModel = types
       self.focusedSetGuid = ''
 
       const focusedStep = self.openedWorkout?.stepsMap[self.focusedStepGuid]
-      self.supersetStepopenedExerciseIndex = focusedStep?.type === 'superSet' ? 0 : undefined
+      self.supersetStepopenedExerciseIndex =
+        focusedStep?.type === 'superSet' ? 0 : undefined
     },
   }))
 

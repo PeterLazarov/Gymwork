@@ -1,7 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { FunctionComponent, useEffect, useRef } from 'react'
-import type { ICarouselInstance } from 'react-native-reanimated-carousel'
-import { CarouselRenderItem } from 'react-native-reanimated-carousel'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import WorkoutHeader from 'app/components/Workout/WorkoutHeader'
@@ -10,54 +8,67 @@ import WorkoutDayView from 'app/components/Workout/WorkoutDayView'
 import TrackView from 'app/components/WorkoutStep/TrackView'
 import { useStores } from 'app/db/helpers/useStores'
 import StepHeader from 'app/components/WorkoutStep/StepHeader'
-import { HorizontalScreenList } from 'designSystem'
-
-type Screen = {
-  name: string
-  component: FunctionComponent
-}
+import { Icon, boxShadows, colors } from 'designSystem'
+import { BottomNavigation } from 'react-native-paper'
 
 const WorkoutPageScreen: React.FC = () => {
   const { stateStore } = useStores()
-  const screenList = useRef<ICarouselInstance>(null)
 
-  const screens: Screen[] = [
-    { name: 'Stats', component: WorkoutExerciseStatsView },
-    { name: 'Workout', component: WorkoutDayView },
-    { name: 'Edit', component: TrackView },
-  ]
   const workoutScreenIndex = 1
   const editScreenIndex = 2
+  const [index, setIndex] = useState(workoutScreenIndex)
 
   useEffect(() => {
     const hasFocusedStep = !!stateStore.focusedStep
 
-    screenList.current?.scrollTo({
-      animated: true,
-      index: hasFocusedStep ? editScreenIndex : workoutScreenIndex,
-    })
+    const newIndex = hasFocusedStep ? editScreenIndex : workoutScreenIndex
+    setIndex(newIndex)
   }, [
     stateStore.openedDate,
     stateStore.focusedStepGuid,
     stateStore.focusedSetGuid,
   ])
 
-  const renderItem: CarouselRenderItem<Screen> = ({
-    item: { name, component: Component },
-  }) => {
-    return <Component key={name} />
-  }
+  const routes = useMemo(
+    () => [
+      {
+        key: 'stats',
+        title: 'Stats',
+        focusedIcon: () => <Icon icon="analytics" />,
+      },
+      {
+        key: 'workout',
+        title: 'Workout',
+        focusedIcon: () => <Icon icon="dumbbell" />,
+      },
+      {
+        key: 'track',
+        title: 'Track',
+        focusedIcon: () => <Icon icon="clipboard-plus-outline" />,
+      },
+    ],
+    []
+  )
+  const renderScene = BottomNavigation.SceneMap({
+    stats: WorkoutExerciseStatsView,
+    workout: WorkoutDayView,
+    track: TrackView,
+  })
 
   return (
     <EmptyLayout>
       {stateStore.focusedStep && <StepHeader />}
       {!stateStore.focusedStep && <WorkoutHeader />}
 
-      <HorizontalScreenList
-        ref={screenList}
-        data={screens}
-        renderItem={renderItem}
-        defaultIndex={workoutScreenIndex}
+      <BottomNavigation
+        navigationState={{ index, routes }}
+        onIndexChange={setIndex}
+        renderScene={renderScene}
+        barStyle={{
+          backgroundColor: colors.neutralLight,
+          ...boxShadows.lg,
+        }}
+        activeIndicatorStyle={{ backgroundColor: colors.primaryLight }}
       />
     </EmptyLayout>
   )

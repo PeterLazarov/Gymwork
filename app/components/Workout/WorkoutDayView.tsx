@@ -8,6 +8,7 @@ import DayControl from './DayControl'
 import WorkoutEmptyState from './WorkoutEmptyState'
 import WorkoutCommentsCard from './WorkoutCommentsCard'
 import AddStepMenu from './AddStepMenu'
+import { colors } from 'designSystem'
 
 const WorkoutDayView: React.FC = () => {
   const { stateStore } = useStores()
@@ -16,7 +17,7 @@ const WorkoutDayView: React.FC = () => {
   return (
     <>
       <DayControl duration={workout?.duration} />
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: colors.neutralLight }}>
         {workout ? (
           <>
             {stateStore.showCommentsCard && <WorkoutCommentsCard />}

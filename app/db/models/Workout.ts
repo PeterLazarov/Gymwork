@@ -20,7 +20,7 @@ const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
 const feelings = {
   sad: 'sad',
   neutral: 'neutral',
-  happy: 'happy'
+  happy: 'happy',
 } as const
 
 export const WorkoutModel = types
@@ -30,19 +30,18 @@ export const WorkoutModel = types
     date: '',
     steps: types.array(WorkoutStepModel),
     notes: '',
-    feeling: types.optional(types.enumeration(
-      'feeling',
-      Object.values(feelings)
-    ), () => feelings.neutral),
+    feeling: types.optional(
+      types.enumeration('feeling', Object.values(feelings)),
+      () => feelings.neutral
+    ),
     exhaustion: 1,
-    experiencedPain: false
+    experiencedPain: false,
   })
   .views(self => ({
     get exercises(): Exercise[] {
-      const uniqueExercises = self.steps.flatMap<Exercise>(s => s.exercises).reduce(
-        (acc, exercise) => acc.add(exercise),
-        new Set<Exercise>()
-      )
+      const uniqueExercises = self.steps
+        .flatMap<Exercise>(s => s.exercises)
+        .reduce((acc, exercise) => acc.add(exercise), new Set<Exercise>())
       return [...uniqueExercises]
     },
     get stepsMap() {
@@ -101,7 +100,9 @@ export const WorkoutModel = types
       return Duration.fromMillis(0)
     },
     get duration(): string {
-      return this.isToday ? '': this.inferredHistoricalDuration.toFormat('hh:mm')
+      return this.isToday
+        ? ''
+        : this.inferredHistoricalDuration.toFormat('hh:mm')
     },
     get isToday() {
       return self.date === today.toISODate()
@@ -112,7 +113,7 @@ export const WorkoutModel = types
       const hasPain = self.experiencedPain
 
       return hasNotes || hasExhaustion || hasPain
-    }
+    },
   }))
   .actions(withSetPropAction)
   .actions(workout => ({
@@ -122,7 +123,7 @@ export const WorkoutModel = types
         exercises: exercises.map(e => e.guid),
         sets: [],
         guid: uuidv4(),
-        type
+        type,
       })
       workout.setProp('steps', updatedSteps)
       return workout.steps.at(-1)!

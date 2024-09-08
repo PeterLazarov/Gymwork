@@ -48,7 +48,7 @@ const seriesSetup = ({ data }: Props) => {
       colorSchemas.gold.hue600,
       colorSchemas.blue.hue600,
       colorSchemas.coral.hue600,
-      colorSchemas.purple.hue600
+      colorSchemas.purple.hue600,
     ]
 
     if (exercise.measurements?.weight) {

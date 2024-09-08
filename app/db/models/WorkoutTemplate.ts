@@ -12,7 +12,6 @@ import { withSetPropAction } from '../helpers/withSetPropAction'
 import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction'
 import { WorkoutStepModel } from './WorkoutStep'
 
-
 export const WorkoutTemplateModel = types
   .model('WorkoutTemplate')
   .props({
@@ -23,6 +22,9 @@ export const WorkoutTemplateModel = types
   .actions(withSetPropAction)
   .actions(withMergeUpdateAction)
 
-export interface WorkoutTemplate extends Instance<typeof WorkoutTemplateModel> {}
-export interface WorkoutTemplateSnapshotOut extends SnapshotOut<typeof WorkoutTemplateModel> {}
-export interface WorkoutTemplateSnapshotIn extends SnapshotIn<typeof WorkoutTemplateModel> {}
+export interface WorkoutTemplate
+  extends Instance<typeof WorkoutTemplateModel> {}
+export interface WorkoutTemplateSnapshotOut
+  extends SnapshotOut<typeof WorkoutTemplateModel> {}
+export interface WorkoutTemplateSnapshotIn
+  extends SnapshotIn<typeof WorkoutTemplateModel> {}
