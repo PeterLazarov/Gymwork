@@ -19,24 +19,27 @@ const ExerciseHistoryListItem: React.FC<Props> = ({ date, step, records }) => {
         gap: 8,
         marginBottom: 12,
         borderRadius: 8,
-        borderColor: colors.neutral,
+        borderColor: colors.neutralDark,
         borderWidth: 1,
-        padding: 4,
       }}
       key={date}
     >
-      <Text style={{ fontSize: fontSize.md, textAlign: 'center' }}>
+      <Text
+        style={{ fontSize: fontSize.md, textAlign: 'center', paddingTop: 4 }}
+      >
         {DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}
       </Text>
       <Divider
         orientation="horizontal"
         variant="neutral"
       />
-      <StepSetsList
-        step={step}
-        records={records}
-        splitSupersets
-      />
+      <View style={{ padding: 4 }}>
+        <StepSetsList
+          step={step}
+          records={records}
+          splitSupersets
+        />
+      </View>
     </View>
   )
 }

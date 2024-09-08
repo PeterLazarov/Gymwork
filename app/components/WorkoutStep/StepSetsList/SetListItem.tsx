@@ -27,7 +27,7 @@ const SetListItem: React.FC<Props> = ({
   letter,
   hideRecords = false,
 }) => {
-  const color = isFocused ? colors.accent : colors.neutralText
+  const color = isFocused ? colors.accent : colors.neutralDarkest
 
   return (
     <View

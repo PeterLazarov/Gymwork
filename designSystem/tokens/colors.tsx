@@ -9,7 +9,9 @@ export const colors = {
   accentLight: colorSchemas.coral.hue300,
   accentLighter: colorSchemas.coral.hue200,
 
-  neutralDark: colorSchemas.neutral.hue900,
+  neutralDarkest: colorSchemas.black,
+  neutralDarker: colorSchemas.neutral.hue900,
+  neutralDark: colorSchemas.neutral.hue800,
   neutral: colorSchemas.neutral.hue700,
   neutralLight: colorSchemas.neutral.hue500,
   neutralLighter: colorSchemas.neutral.hue300,

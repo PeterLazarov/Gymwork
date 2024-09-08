@@ -12,9 +12,9 @@ const ToggleSwitch: React.FC<Props> = ({ value, onValueChange, variant }) => {
   const thumbActiveColor = colors[variant]
   return (
     <Switch
-      trackColor={{ false: colors.neutralDark, true: colors.primaryLighter }}
+      trackColor={{ false: colors.neutralDarker, true: colors.primaryLighter }}
       thumbColor={value ? thumbActiveColor : colors.primaryLighter}
-      ios_backgroundColor={colors.neutralDark}
+      ios_backgroundColor={colors.neutralDarker}
       onValueChange={onValueChange}
       value={value}
     />

@@ -44,13 +44,17 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
           <Icon
             icon="emoji-sad"
             size="large"
-            color={sadSelected ? colorSchemas.coral.hue600 : colors.neutralDark}
+            color={
+              sadSelected ? colorSchemas.coral.hue600 : colors.neutralDarker
+            }
           />
         </IconButton>
         <Text
           style={{
             fontSize: fontSize.sm,
-            color: sadSelected ? colorSchemas.coral.hue600 : colors.neutralDark,
+            color: sadSelected
+              ? colorSchemas.coral.hue600
+              : colors.neutralDarker,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
@@ -76,7 +80,7 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
             icon="emoji-neutral"
             size="large"
             color={
-              neutralSelected ? colorSchemas.amber.hue600 : colors.neutralDark
+              neutralSelected ? colorSchemas.amber.hue600 : colors.neutralDarker
             }
           />
         </IconButton>
@@ -85,7 +89,7 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
             fontSize: fontSize.sm,
             color: neutralSelected
               ? colorSchemas.amber.hue600
-              : colors.neutralDark,
+              : colors.neutralDarker,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >
@@ -111,7 +115,7 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
             icon="emoji-happy"
             size="large"
             color={
-              happySelected ? colorSchemas.green.hue600 : colors.neutralDark
+              happySelected ? colorSchemas.green.hue600 : colors.neutralDarker
             }
           />
         </IconButton>
@@ -120,7 +124,7 @@ const FeedbackPicker: React.FC<Props> = ({ selected, onChange }) => {
             fontSize: fontSize.sm,
             color: happySelected
               ? colorSchemas.green.hue600
-              : colors.neutralDark,
+              : colors.neutralDarker,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
           }}
         >

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { FAB } from 'react-native-paper'
 import { Divider, PressableHighlight, colors, fontSize } from 'designSystem'
@@ -60,7 +60,7 @@ const AddStepMenu = () => {
           }}
         >
           {options.map((option, i) => (
-            <>
+            <Fragment key={option.text}>
               {i !== 0 && (
                 <Divider
                   orientation="horizontal"
@@ -68,7 +68,6 @@ const AddStepMenu = () => {
                 />
               )}
               <PressableHighlight
-                key={option.text}
                 onPress={() => {
                   setVisible(false)
                   option.action()
@@ -85,7 +84,7 @@ const AddStepMenu = () => {
                   {option.text}
                 </Text>
               </PressableHighlight>
-            </>
+            </Fragment>
           ))}
         </View>
       </BottomDrawer>

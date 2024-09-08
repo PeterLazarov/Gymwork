@@ -10,7 +10,7 @@ type Props = {
 const variants = {
   primary: colors.primary,
   accent: colors.accent,
-  neutral: colors.neutral,
+  neutral: colors.neutralDark,
 }
 export const Divider = styled.View<Props>`
   /* flex: 1; */

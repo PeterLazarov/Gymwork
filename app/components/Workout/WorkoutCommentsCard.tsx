@@ -64,7 +64,9 @@ const WorkoutCommentsCard: React.FC = () => {
             </>
           )}
           {!hasComments && (
-            <Text style={{ fontSize: fontSize.sm, color: colors.neutralDark }}>
+            <Text
+              style={{ fontSize: fontSize.sm, color: colors.neutralDarker }}
+            >
               {translate('addComments')}
             </Text>
           )}

@@ -16,7 +16,7 @@ export const TabHeaderTouchable = styled.TouchableOpacity`
 TabHeaderTouchable.displayName = 'TabHeaderTouchable'
 
 export const TabLabel = styled.Text<TabLabelProps>`
-  color: ${({ isActive }) => (isActive ? colors.accent : colors.neutralDark)};
+  color: ${({ isActive }) => (isActive ? colors.accent : colors.neutralDarker)};
   font-size: ${`${fontSize.md}px`};
 `
 TabLabel.displayName = 'TabLabel'
