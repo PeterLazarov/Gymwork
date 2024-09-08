@@ -16,7 +16,7 @@ type Props = {
 }
 
 const SetEditList: React.FC<Props> = ({
-  sets,
+  sets = [],
   selectedSet,
   setSelectedSet,
 }) => {

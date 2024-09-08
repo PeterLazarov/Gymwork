@@ -12,9 +12,12 @@ import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
 import { TabConfig } from 'designSystem/Tabs/types'
 
 const ExerciseSelectScreen: React.FC = () => {
-  const { stateStore } = useStores()
+  const { stateStore, workoutStore } = useStores()
 
   function handleSelectExercise(exercise: Exercise) {
+    if (!stateStore.openedWorkout) {
+      workoutStore.createWorkout()
+    }
     const newStep = stateStore.openedWorkout!.addStep([exercise], 'straightSet')
     stateStore.setFocusedStep(newStep.guid)
     navigate('Workout')
