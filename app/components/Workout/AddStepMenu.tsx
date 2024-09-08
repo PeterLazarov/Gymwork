@@ -5,9 +5,11 @@ import { Divider, PressableHighlight, colors, fontSize } from 'designSystem'
 import BottomDrawer from 'designSystem/BottomDrawer'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
+import { useStores } from 'app/db/helpers/useStores'
 
 const AddStepMenu = () => {
   const [visible, setVisible] = useState(false)
+  const { stateStore } = useStores()
 
   function expand() {
     setVisible(true)
@@ -22,11 +24,15 @@ const AddStepMenu = () => {
       text: translate('addSuperset'),
       action: () => navigate('ExerciseSelect'),
     },
-    {
+  ]
+
+  if (stateStore.openedWorkout) {
+    options.push({
       text: translate('addComment'),
       action: () => navigate('WorkoutFeedback'),
-    },
-  ]
+    })
+  }
+  const height = options.length * 50
 
   return (
     <View
@@ -37,12 +43,22 @@ const AddStepMenu = () => {
     >
       <BottomDrawer
         visible={visible}
-        height={150}
+        height={height}
         onCollapse={() => {
           setVisible(false)
         }}
       >
-        <View style={styles.bottomDrawer}>
+        <View
+          style={{
+            padding: 20,
+            width: '100%',
+            height,
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            backgroundColor: colors.neutralLighter,
+          }}
+        >
           {options.map((option, i) => (
             <>
               {i !== 0 && (
@@ -84,15 +100,6 @@ const AddStepMenu = () => {
 }
 
 const styles = StyleSheet.create({
-  bottomDrawer: {
-    padding: 20,
-    width: '100%',
-    height: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    backgroundColor: colors.neutralLighter,
-  },
   fab: {
     position: 'absolute',
     margin: 16,
