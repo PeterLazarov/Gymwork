@@ -1,13 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback, useRef } from 'react'
-import { FlatList, View } from 'react-native'
+import { FlatList, Pressable, View } from 'react-native'
+import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
+
 import SetEditItem from './SetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
 import { colors, Divider, Icon, PressableHighlight } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
-import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
 
 type Props = {
   sets: WorkoutSet[]
@@ -45,13 +46,12 @@ const SetEditList: React.FC<Props> = ({
           style={{
             backgroundColor: isActive ? colors.neutralLight : undefined,
           }}
-          onLongPress={() => {
-            onDragStart()
+          onLongPress={onDragStart}
+          onPressOut={onDragEnd}
+          onPress={e => {
+            e.preventDefault()
+            toggleSelectedSet(item)
           }}
-          onPressOut={() => {
-            onDragEnd()
-          }}
-          onPress={() => toggleSelectedSet(item)}
         >
           <View
             style={{
@@ -110,7 +110,10 @@ const SetEditList: React.FC<Props> = ({
     set.setProp('isWarmup', !set.isWarmup)
   }
   return (
-    <>
+    <Pressable
+      style={{ flex: 1, padding: 8 }}
+      onPress={() => setSelectedSet(null)}
+    >
       <DragList
         data={sets.slice()}
         renderItem={renderItem}
@@ -132,7 +135,7 @@ const SetEditList: React.FC<Props> = ({
       {stateStore.focusedStep!.sets.length === 0 && (
         <EmptyState text={translate('noSetsEntered')} />
       )}
-    </>
+    </Pressable>
   )
 }
 

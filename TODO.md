@@ -8,7 +8,6 @@
   - how to delete exercises
   - swipe tabs are confused on header press 
 - TrackView
-  - click on empty space OR back to remove focus on set
   - rerender list immeadtely after set warmup change
   - scroll to bottom of sets 
   - fix whole form rerender for timer

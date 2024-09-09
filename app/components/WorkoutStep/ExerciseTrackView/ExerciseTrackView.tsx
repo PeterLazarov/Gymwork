@@ -99,13 +99,11 @@ const ExerciseTrackView: React.FC = () => {
         backgroundColor: colors.neutralLighter,
       }}
     >
-      <View style={{ padding: 8, flex: 1 }}>
-        <SetEditList
-          sets={step.exerciseSetsMap[focusedExercise.guid]}
-          selectedSet={selectedSet}
-          setSelectedSet={setSelectedSet}
-        />
-      </View>
+      <SetEditList
+        sets={step.exerciseSetsMap[focusedExercise.guid]}
+        selectedSet={selectedSet}
+        setSelectedSet={setSelectedSet}
+      />
 
       {stateStore.draftSet && (
         <View style={{ paddingHorizontal: 8 }}>
