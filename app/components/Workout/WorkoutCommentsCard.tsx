@@ -4,7 +4,6 @@ import { View, Text } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
-import { translate } from 'app/i18n'
 import { Card, Icon, colorSchemas, fontSize } from 'designSystem'
 
 const WorkoutCommentsCard: React.FC = () => {
@@ -12,8 +11,6 @@ const WorkoutCommentsCard: React.FC = () => {
   const workout = stateStore.openedWorkout!
 
   const hasNotes = workout.notes !== ''
-  const hasExhaustion = workout.exhaustion !== 1
-  const hasPain = workout.experiencedPain
 
   function onPress() {
     navigate('WorkoutFeedback')
@@ -21,8 +18,14 @@ const WorkoutCommentsCard: React.FC = () => {
 
   const feelingIcon = {
     sad: 'emoji-sad',
-    neutral: 'emoji-neutral',
-    happy: 'emoji-happy',
+    neutral: 'emoji-happy',
+    happy: 'grin-stars',
+  } as const
+
+  const painIcon = {
+    pain: 'alert-decagram-outline',
+    discomfort: 'warning-outline',
+    noPain: 'check',
   } as const
 
   const feelingColor = {
@@ -30,29 +33,28 @@ const WorkoutCommentsCard: React.FC = () => {
     neutral: colorSchemas.amber.hue600,
     happy: colorSchemas.green.hue600,
   } as const
+  const painColor = {
+    pain: colorSchemas.coral.hue600,
+    discomfort: colorSchemas.amber.hue600,
+    noPain: colorSchemas.green.hue600,
+  } as const
+
   return (
     <Card
       onPress={onPress}
       content={
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
           <View style={{ flex: 1 }}>
             {hasNotes && (
               <Text style={{ fontSize: fontSize.sm }}>{workout.notes}</Text>
             )}
-            {hasExhaustion && (
-              <Text style={{ fontSize: fontSize.sm }}>
-                {translate('exhaustionOutOf10', {
-                  level: workout.exhaustion,
-                })}
-              </Text>
-            )}
-            {hasPain && (
-              <Text style={{ fontSize: fontSize.sm }}>
-                {translate('experiencedPain')}
-              </Text>
-            )}
           </View>
 
+          <Icon
+            icon={painIcon[workout.pain]}
+            size="large"
+            color={painColor[workout.pain]}
+          />
           <Icon
             icon={feelingIcon[workout.feeling]}
             size="large"

@@ -22,6 +22,16 @@ const feelings = {
   neutral: 'neutral',
   happy: 'happy',
 } as const
+const painOptions = {
+  pain: 'pain',
+  discomfort: 'discomfort',
+  noPain: 'noPain',
+} as const
+const intensityOptions = {
+  easy: 'easy',
+  standard: 'standard',
+  intense: 'intense',
+} as const
 
 export const WorkoutModel = types
   .model('Workout')
@@ -34,8 +44,14 @@ export const WorkoutModel = types
       types.enumeration('feeling', Object.values(feelings)),
       () => feelings.neutral
     ),
-    exhaustion: 1,
-    experiencedPain: false,
+    pain: types.optional(
+      types.enumeration('pain', Object.values(painOptions)),
+      () => painOptions.noPain
+    ),
+    intensity: types.optional(
+      types.enumeration('intensity', Object.values(intensityOptions)),
+      () => intensityOptions.standard
+    ),
   })
   .views(self => ({
     get exercises(): Exercise[] {
@@ -113,10 +129,11 @@ export const WorkoutModel = types
     },
     get hasComments() {
       const hasNotes = self.notes !== ''
-      const hasExhaustion = self.exhaustion !== 1
-      const hasPain = self.experiencedPain
+      const hasIntensity = self.intensity !== 'standard'
+      const hasPain = self.pain !== 'noPain'
+      const hasFeeling = self.feeling !== 'neutral'
 
-      return hasNotes || hasExhaustion || hasPain
+      return hasNotes || hasIntensity || hasPain || hasFeeling
     },
   }))
   .actions(withSetPropAction)

@@ -1,9 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View, Text, Dimensions } from 'react-native'
+import { View, Text } from 'react-native'
 import { TextInput } from 'react-native-paper'
 
-import FeedbackPicker from 'app/components/FeedbackPicker'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
@@ -12,10 +11,10 @@ import {
   Button,
   ButtonText,
   Header,
+  FeedbackPicker,
   Icon,
   IconButton,
-  Slider,
-  ToggleSwitch,
+  colorSchemas,
   colors,
   fontSize,
 } from 'designSystem'
@@ -26,12 +25,75 @@ const WorkoutFeedbackScreen: React.FC = () => {
   const { stateStore } = useStores()
   const workout = stateStore.openedWorkout!
 
-  const screenWidth = Dimensions.get('window').width
-
   function onBackPress() {
     navigate('Workout')
   }
 
+  const workoutOptions = [
+    {
+      icon: 'emoji-sad',
+      label: 'Bad',
+      color: colorSchemas.coral.hue600,
+      value: 'sad',
+    },
+    {
+      icon: 'emoji-happy',
+      label: 'Good',
+      color: colorSchemas.amber.hue600,
+      value: 'neutral',
+    },
+    {
+      icon: 'grin-stars',
+      label: 'Great',
+      color: colorSchemas.green.hue600,
+      value: 'happy',
+    },
+  ]
+
+  const painOptions = [
+    {
+      icon: 'alert-decagram-outline',
+      label: 'Pain',
+      color: colorSchemas.coral.hue600,
+      value: 'pain',
+    },
+    {
+      icon: 'warning-outline',
+      label: 'Discomfort',
+      color: colorSchemas.amber.hue600,
+      value: 'discomfort',
+    },
+    {
+      icon: 'check',
+      label: 'No pain',
+      color: colorSchemas.green.hue600,
+      value: 'noPain',
+    },
+  ]
+  const exhaustionOptions = [
+    {
+      icon: 'sleep',
+      // icon: 'star-outline',
+      // icon: 'speedometer-slow',
+      label: 'Easy',
+      color: colorSchemas.coral.hue600,
+      value: 'easy',
+    },
+    {
+      icon: 'star',
+      // icon: 'speedometer-medium',
+      label: 'Standard',
+      color: colorSchemas.amber.hue600,
+      value: 'standard',
+    },
+    {
+      icon: 'flame',
+      // icon: 'speedometer',
+      label: 'Intense',
+      color: colorSchemas.green.hue600,
+      value: 'intense',
+    },
+  ]
   return (
     <EmptyLayout>
       <Header>
@@ -60,54 +122,44 @@ const WorkoutFeedbackScreen: React.FC = () => {
         <Text
           style={{
             fontSize: fontSize.md,
-            textAlign: 'center',
           }}
         >
           {translate('howWasWorkout')}
         </Text>
         <FeedbackPicker
           selected={workout.feeling}
-          onChange={feeling =>
-            workout.setProp('feeling', feeling as Workout['feeling'])
+          onChange={value =>
+            workout.setProp('feeling', value as Workout['feeling'])
           }
+          options={workoutOptions}
         />
         <Text
           style={{
             fontSize: fontSize.md,
-            textAlign: 'center',
           }}
         >
-          {translate('exhaustionOutOf10', { level: workout.exhaustion })}
+          {translate('experiencedPain')}
         </Text>
-        <Slider
-          values={[workout.exhaustion]}
-          sliderLength={screenWidth - 40}
-          onValuesChange={([value]) => workout.setProp('exhaustion', value)}
-          min={1}
-          max={10}
-          snapped
+        <FeedbackPicker
+          selected={workout.pain}
+          onChange={value => workout.setProp('pain', value as Workout['pain'])}
+          options={painOptions}
         />
-
-        <View
+        <Text
           style={{
-            width: '100%',
-            flexDirection: 'row',
-            justifyContent: 'space-around',
+            fontSize: fontSize.md,
           }}
         >
-          <Text
-            style={{
-              fontSize: fontSize.md,
-            }}
-          >
-            {translate('experiencedPain')}
-          </Text>
-          <ToggleSwitch
-            variant="critical"
-            value={workout.experiencedPain}
-            onValueChange={value => workout.setProp('experiencedPain', value)}
-          />
-        </View>
+          {translate('intensity')}
+        </Text>
+
+        <FeedbackPicker
+          selected={workout.intensity}
+          onChange={value =>
+            workout.setProp('intensity', value as Workout['intensity'])
+          }
+          options={exhaustionOptions}
+        />
         <TextInput
           value={workout.notes}
           onChangeText={text => workout.setProp('notes', text)}
