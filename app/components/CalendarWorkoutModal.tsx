@@ -80,7 +80,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
                 <CalendarWorkoutModalExerciseItem
                   key={step.guid}
                   exercise={step.exercise}
-                  sets={step.sets}
+                  step={step}
                 />
               ))}
             </ScrollView>
