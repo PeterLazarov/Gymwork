@@ -7,7 +7,7 @@ export const colors = {
 
   accent: colorSchemas.coral.hue600,
   accentLight: colorSchemas.coral.hue300,
-  accentLighter: colorSchemas.coral.hue200,
+  accentLightest: colorSchemas.coral.hue100,
 
   neutralDarkest: colorSchemas.black,
   neutralDarker: colorSchemas.neutral.hue900,

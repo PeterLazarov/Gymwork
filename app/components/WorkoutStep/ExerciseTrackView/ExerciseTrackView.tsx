@@ -18,46 +18,56 @@ const ExerciseTrackView: React.FC = () => {
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
   const step = stateStore.focusedStep!
-  const exercise = stateStore.focusedExercise!
+  const focusedExercise = stateStore.focusedExercise!
 
   useEffect(() => {
-    const setToClone = selectedSet || step.lastSet
+    if (selectedSet && focusedExercise.guid !== selectedSet.exercise.guid) {
+      setSelectedSet(null)
+    }
+  }, [focusedExercise])
+
+  useEffect(() => {
+    const lastSet = step.exerciseSetsMap[focusedExercise.guid].at(-1)
+    const setToClone = selectedSet || lastSet
 
     if (setToClone) {
       const { guid, exercise, ...rest } = setToClone
-      stateStore.setProp('draftSet', { exercise: exercise.guid, ...rest })
+      stateStore.setProp('draftSet', {
+        exercise: focusedExercise.guid,
+        ...rest,
+      })
     } else {
       stateStore.setProp('draftSet', {
-        exercise: exercise.guid,
-        reps: exercise.hasRepMeasument ? 10 : undefined,
+        exercise: focusedExercise.guid,
+        reps: focusedExercise.hasRepMeasument ? 10 : undefined,
       })
     }
-  }, [selectedSet, exercise])
+  }, [selectedSet, focusedExercise])
+
+  useEffect(() => {
+    if (focusedExercise.measurements.rest) {
+      stateStore.draftSet!.setProp(
+        'restMs',
+        restTimer.timeElapsed.as('milliseconds')
+      )
+    }
+  }, [restTimer.timeElapsed, focusedExercise])
 
   function handleAdd() {
     if (stateStore.draftSet) {
       const { guid, ...draftCopy } = stateStore.draftSet
       const fromDraft = WorkoutSetModel.create({
         ...draftCopy,
-        exercise: exercise.guid,
+        exercise: focusedExercise.guid,
         date: stateStore.openedDate,
       })
       step.addSet(fromDraft)
     }
 
-    if (exercise.measurements.rest) {
+    if (focusedExercise.measurements.rest) {
       restTimer.start()
     }
   }
-
-  useEffect(() => {
-    if (exercise.measurements.rest) {
-      stateStore.draftSet!.setProp(
-        'restMs',
-        restTimer.timeElapsed.as('milliseconds')
-      )
-    }
-  }, [restTimer.timeElapsed, exercise])
 
   function handleUpdate() {
     const updatedSet = {
@@ -76,7 +86,7 @@ const ExerciseTrackView: React.FC = () => {
     step.removeSet(selectedSet!.guid)
   }
 
-  console.log('StepExerciseForm render for', exercise.name)
+  console.log('StepExerciseForm render for', focusedExercise.name)
 
   return (
     <KeyboardAvoiderView
@@ -91,7 +101,7 @@ const ExerciseTrackView: React.FC = () => {
     >
       <View style={{ padding: 8, flex: 1 }}>
         <SetEditList
-          sets={step.exerciseSetsMap[exercise.guid]}
+          sets={step.exerciseSetsMap[focusedExercise.guid]}
           selectedSet={selectedSet}
           setSelectedSet={setSelectedSet}
         />

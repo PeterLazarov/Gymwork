@@ -16,7 +16,6 @@
   - improve track rerendering
   - fix records for second exercise
   - rerender chart on exercise change
-  - have draft set for all exercises not jsut the first one
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - reasonable seed data rest periods & createdAt
 - On jump to record set, scroll to set
