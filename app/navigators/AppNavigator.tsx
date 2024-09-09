@@ -28,6 +28,7 @@ import SaveTemplate, {
   SaveTemplateScreenParams,
 } from 'app/screens/SaveTemplate'
 import TemplateSelect from 'app/screens/TemplateSelect'
+import WorkoutStep from 'app/screens/WorkoutStep'
 
 /**
  * Documentation:
@@ -40,6 +41,7 @@ export type AppStackParamList = {
   ExerciseEdit: ExerciseEditScreenParams
   ExerciseSelect: ExerciseSelectScreenParams
   Workout: undefined
+  WorkoutStep: undefined
   WorkoutFeedback: undefined
   SaveTemplate: SaveTemplateScreenParams
   TemplateSelect: undefined
@@ -96,6 +98,10 @@ const AppStack = observer(function AppStack() {
         <Stack.Screen
           name="Workout"
           component={Workout}
+        />
+        <Stack.Screen
+          name="WorkoutStep"
+          component={WorkoutStep}
         />
         <Stack.Screen
           name="WorkoutFeedback"

@@ -7,6 +7,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
 import { Card, colors } from 'designSystem'
 import { isAlive } from 'mobx-state-tree'
+import { navigate } from 'app/navigators'
 
 type Props = {
   step: WorkoutStep
@@ -21,6 +22,7 @@ const WorkoutStepCard: React.FC<Props> = ({ step }) => {
 
   function onCardPress() {
     stateStore.setFocusedStep(isSelected ? '' : step.guid)
+    navigate('WorkoutStep')
   }
 
   const exerciseRecords = useMemo(

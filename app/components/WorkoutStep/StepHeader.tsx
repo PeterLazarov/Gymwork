@@ -24,6 +24,7 @@ const StepHeader: React.FC = () => {
 
   function goBack() {
     stateStore.setProp('focusedStepGuid', '')
+    navigate('Workout')
   }
 
   return (
