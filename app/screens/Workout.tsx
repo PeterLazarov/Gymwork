@@ -65,7 +65,7 @@ const WorkoutPageScreen: React.FC = () => {
         onIndexChange={setIndex}
         renderScene={renderScene}
         barStyle={{
-          backgroundColor: colors.neutralLight,
+          backgroundColor: colors.neutralLightest,
           ...boxShadows.lg,
         }}
         activeIndicatorStyle={{ backgroundColor: colors.primaryLight }}

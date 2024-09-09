@@ -1,8 +1,9 @@
+import { forwardRef, useRef } from 'react'
+import { View, Text, TextInput as TextInputRN } from 'react-native'
+
 import NumberInput from 'app/components/NumberInput'
 import manageInputFocus from 'app/utils/inputFocus'
 import { fontSize } from 'designSystem'
-import { forwardRef, useRef } from 'react'
-import { View, Text, TextInput as TextInputRN } from 'react-native'
 
 type Props = {
   valueSeconds: number

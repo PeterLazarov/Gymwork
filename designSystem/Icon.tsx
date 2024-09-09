@@ -54,14 +54,14 @@ const EntypoIcons = [
 type EntypoIcon = (typeof EntypoIcons)[number]
 
 // todo: get typing of all ant design icons
-type Props = {
+type IconProps = {
   icon: IonicIcon | MCIcon | EntypoIcon
   size?: keyof typeof iconSizes
   color?: string
   style?: StyleProp<TextStyle>
 }
 
-export const Icon: React.FC<Props> = ({
+export const Icon: React.FC<IconProps> = ({
   icon,
   size = 'default',
   color = 'black',

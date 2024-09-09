@@ -14,8 +14,13 @@ import {
 type Props = {
   exercise: Exercise
   onSelect: (exercise: Exercise) => void
+  isSelected: boolean
 }
-const ExerciseListItem: React.FC<Props> = ({ exercise, onSelect }) => {
+const ExerciseListItem: React.FC<Props> = ({
+  exercise,
+  onSelect,
+  isSelected,
+}) => {
   const heartIcon = exercise.isFavorite ? 'heart' : 'heart-outlined'
 
   return (
@@ -28,6 +33,7 @@ const ExerciseListItem: React.FC<Props> = ({ exercise, onSelect }) => {
           justifyContent: 'space-between',
           alignItems: 'center',
           padding: 10,
+          backgroundColor: isSelected ? colors.neutral : colors.neutralLight,
         }}
       >
         <Text

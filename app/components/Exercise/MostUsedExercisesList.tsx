@@ -10,8 +10,12 @@ const noop = () => {}
 
 type Props = {
   onSelect: (exercise: Exercise) => void
+  selectedExercises: Exercise[]
 }
-const MostUsedExercisesList: React.FC<Props> = ({ onSelect }) => {
+const MostUsedExercisesList: React.FC<Props> = ({
+  onSelect,
+  selectedExercises,
+}) => {
   const { workoutStore } = useStores()
 
   return (
@@ -20,6 +24,7 @@ const MostUsedExercisesList: React.FC<Props> = ({ onSelect }) => {
         <ExerciseList
           exercises={workoutStore.mostUsedExercises}
           onSelect={onSelect ?? noop}
+          selectedExercises={selectedExercises}
         />
       )}
       {workoutStore.mostUsedExercises.length === 0 && (

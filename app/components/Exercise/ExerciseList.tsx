@@ -7,13 +7,19 @@ import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 type Props = {
   exercises: Exercise[]
   onSelect: (exercise: Exercise) => void
+  selectedExercises: Exercise[]
 }
-const ExerciseList: React.FC<Props> = ({ exercises, onSelect }) => {
+const ExerciseList: React.FC<Props> = ({
+  exercises,
+  onSelect,
+  selectedExercises,
+}) => {
   const renderItem = ({ item }: ListRenderItemInfo<Exercise>) => {
     return (
       <ExerciseListItem
         exercise={item}
         onSelect={onSelect}
+        isSelected={selectedExercises.includes(item)}
       />
     )
   }

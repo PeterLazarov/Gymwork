@@ -13,8 +13,9 @@ const noop = () => {}
 
 type Props = {
   onSelect: (exercise: Exercise) => void
+  selectedExercises: Exercise[]
 }
-const AllExercisesList: React.FC<Props> = ({ onSelect }) => {
+const AllExercisesList: React.FC<Props> = ({ onSelect, selectedExercises }) => {
   const { exerciseStore } = useStores()
 
   const [filterString, setFilterString] = useState('')
@@ -54,12 +55,14 @@ const AllExercisesList: React.FC<Props> = ({ onSelect }) => {
           <ExerciseAcordionList
             exercises={exerciseStore.exercisesByMuscle}
             onSelect={onSelect ?? noop}
+            selectedExercises={selectedExercises}
           />
         )}
         {filterString !== '' && (
           <ExerciseList
             exercises={filteredExercises}
             onSelect={onSelect ?? noop}
+            selectedExercises={selectedExercises}
           />
         )}
       </ScrollView>

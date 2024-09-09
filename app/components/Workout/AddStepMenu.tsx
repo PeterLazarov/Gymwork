@@ -1,8 +1,13 @@
 import React, { Fragment, useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { FAB } from 'react-native-paper'
-import { Divider, PressableHighlight, colors, fontSize } from 'designSystem'
-import BottomDrawer from 'designSystem/BottomDrawer'
+import { View, Text } from 'react-native'
+import {
+  BottomDrawer,
+  Divider,
+  FAB,
+  PressableHighlight,
+  colors,
+  fontSize,
+} from 'designSystem'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
 import { useStores } from 'app/db/helpers/useStores'
@@ -18,11 +23,17 @@ const AddStepMenu = () => {
   const options = [
     {
       text: translate('addExercise'),
-      action: () => navigate('ExerciseSelect'),
+      action: () =>
+        navigate('ExerciseSelect', {
+          selectMode: 'straightSet',
+        }),
     },
     {
       text: translate('addSuperset'),
-      action: () => navigate('ExerciseSelect'),
+      action: () =>
+        navigate('ExerciseSelect', {
+          selectMode: 'superSet',
+        }),
     },
   ]
 
@@ -90,23 +101,10 @@ const AddStepMenu = () => {
       </BottomDrawer>
       <FAB
         icon="plus"
-        style={styles.fab}
-        color={colors.primaryText}
         onPress={expand}
       />
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 'auto',
-    left: 'auto',
-    bottom: 0,
-    backgroundColor: colors.primary,
-  },
-})
 
 export default AddStepMenu

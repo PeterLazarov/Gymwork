@@ -8,8 +8,12 @@ import { translate } from 'app/i18n'
 
 type Props = {
   onSelect: (exercise: Exercise) => void
+  selectedExercises: Exercise[]
 }
-const FavoriteExercisesList: React.FC<Props> = ({ onSelect }) => {
+const FavoriteExercisesList: React.FC<Props> = ({
+  onSelect,
+  selectedExercises,
+}) => {
   const { exerciseStore } = useStores()
 
   return (
@@ -18,6 +22,7 @@ const FavoriteExercisesList: React.FC<Props> = ({ onSelect }) => {
         <ExerciseList
           exercises={exerciseStore.favoriteExercises}
           onSelect={onSelect}
+          selectedExercises={selectedExercises}
         />
       )}
       {exerciseStore.favoriteExercises.length === 0 && (

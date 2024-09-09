@@ -9,8 +9,13 @@ import { capitalize } from 'app/utils/string'
 type Props = {
   exercises: Record<string, Exercise[]>
   onSelect: (exercise: Exercise) => void
+  selectedExercises: Exercise[]
 }
-const ExerciseAcordionList: React.FC<Props> = ({ exercises, onSelect }) => {
+const ExerciseAcordionList: React.FC<Props> = ({
+  exercises,
+  onSelect,
+  selectedExercises,
+}) => {
   return (
     <>
       {Object.keys(exercises).map(group => (
@@ -23,6 +28,7 @@ const ExerciseAcordionList: React.FC<Props> = ({ exercises, onSelect }) => {
               key={exercise.guid}
               exercise={exercise}
               onSelect={onSelect}
+              isSelected={selectedExercises.includes(exercise)}
             />
           ))}
         </List.Accordion>

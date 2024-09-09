@@ -16,7 +16,9 @@ import Config from '../config'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 import { colors } from 'app/theme'
 import Workout from 'app/screens/Workout'
-import ExerciseSelect from 'app/screens/ExerciseSelect'
+import ExerciseSelect, {
+  ExerciseSelectScreenParams,
+} from 'app/screens/ExerciseSelect'
 import ExerciseEdit, {
   ExerciseEditScreenParams,
 } from 'app/screens/ExerciseEdit'
@@ -36,7 +38,7 @@ import TemplateSelect from 'app/screens/TemplateSelect'
 export type AppStackParamList = {
   Calendar: CalendarScreenParams
   ExerciseEdit: ExerciseEditScreenParams
-  ExerciseSelect: undefined
+  ExerciseSelect: ExerciseSelectScreenParams
   Workout: undefined
   WorkoutFeedback: undefined
   SaveTemplate: SaveTemplateScreenParams
