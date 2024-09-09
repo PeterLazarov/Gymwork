@@ -38,8 +38,8 @@ const MCIcons = [
   'delete',
   'pencil',
   'dumbbell',
-  'notebook-edit-outline',
   'clipboard-plus-outline',
+  'history',
 ] as const satisfies readonly (keyof typeof MaterialCommunityIcons.glyphMap)[]
 type MCIcon = (typeof MCIcons)[number]
 
