@@ -23,11 +23,15 @@ const ExerciseSelectScreen: React.FC = () => {
 
   function toggleSelectedExercise(exercise: Exercise) {
     if (!selectedExercises.includes(exercise)) {
-      setSelectedExercises([...selectedExercises, exercise])
+      setSelectedExercises(oldVal => {
+        const newSelected = [...oldVal, exercise]
+        return newSelected
+      })
     } else {
-      setSelectedExercises(
-        selectedExercises.filter(e => e.guid !== exercise.guid)
-      )
+      setSelectedExercises(oldVal => {
+        const newSelected = oldVal.filter(e => e.guid !== exercise.guid)
+        return newSelected
+      })
     }
   }
 
@@ -77,7 +81,7 @@ const ExerciseSelectScreen: React.FC = () => {
       props,
     },
   ]
-  console.log(selectedExercises)
+
   return (
     <EmptyLayout>
       <View style={{ flex: 1, alignItems: 'center' }}>

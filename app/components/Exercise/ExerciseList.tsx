@@ -26,7 +26,7 @@ const ExerciseList: React.FC<Props> = ({
 
   return (
     <FlashList
-      data={exercises}
+      data={exercises.slice()}
       renderItem={renderItem}
       keyExtractor={exercise => exercise.guid}
       estimatedItemSize={69}
