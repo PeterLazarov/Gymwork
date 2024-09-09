@@ -125,7 +125,8 @@ const CalendarScreen: React.FC = () => {
               aspectRatio: 1,
             },
             dayContainerStyle: {
-              backgroundColor: colors.neutralLighter,
+              backgroundColor: 'transparent',
+              aspectRatio: 1,
             },
             todayContainerStyle: {
               backgroundColor: colors.accentLight,
@@ -137,7 +138,7 @@ const CalendarScreen: React.FC = () => {
             },
           }}
           disableRange
-          monthHeight={370}
+          monthHeight={460}
           firstDayMonday
         />
       </EmptyLayout>
