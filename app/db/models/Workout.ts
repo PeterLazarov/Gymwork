@@ -53,12 +53,15 @@ export const WorkoutModel = types
 
       return map
     },
-    get exerciseStepMap() {
-      const map: Record<Exercise['guid'], WorkoutStep> = {}
+    get exerciseStepsMap() {
+      const map: Record<Exercise['guid'], WorkoutStep[]> = {}
 
       self.steps.forEach(step => {
         step.exercises.forEach(exercise => {
-          map[exercise.guid] = step
+          if (!map[exercise.guid]) {
+            map[exercise.guid] = []
+          }
+          map[exercise.guid].push(step)
         })
       })
 
@@ -69,7 +72,10 @@ export const WorkoutModel = types
 
       self.steps.forEach(step => {
         step.exercises.forEach(exercise => {
-          map[exercise.guid] = step.exerciseSetsMap[exercise.guid]
+          if (!map[exercise.guid]) {
+            map[exercise.guid] = []
+          }
+          map[exercise.guid].push(...step.exerciseSetsMap[exercise.guid])
         })
       })
       return map

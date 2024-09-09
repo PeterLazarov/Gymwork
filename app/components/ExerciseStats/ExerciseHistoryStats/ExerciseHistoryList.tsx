@@ -1,8 +1,15 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
 import ExerciseHistoryListItem from './ExerciseHistoryListItem'
-import { Exercise, ExerciseRecord, Workout } from 'app/db/models'
+import {
+  Exercise,
+  ExerciseRecord,
+  Workout,
+  WorkoutModel,
+  WorkoutStep,
+} from 'app/db/models'
+import { getParentOfType } from 'mobx-state-tree'
 
 type Props = {
   workouts: Workout[]
@@ -15,14 +22,14 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({
   exercise,
 }) => {
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<Workout>) => {
-      const step = item.exerciseStepMap[exercise.guid]
+    ({ item }: ListRenderItemInfo<WorkoutStep>) => {
+      const workout = getParentOfType(item, WorkoutModel)
 
       return (
         <ExerciseHistoryListItem
           key={item.guid}
-          date={item.date}
-          step={step}
+          date={workout.date}
+          step={item}
           records={records}
           exercise={exercise}
         />
@@ -30,11 +37,16 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({
     },
     [records]
   )
+
+  const steps = useMemo(() => {
+    return workouts.flatMap(w => w.exerciseStepsMap[exercise.guid])
+  }, [workouts])
+
   return (
     <FlashList
-      data={workouts}
+      data={steps}
       renderItem={renderItem}
-      keyExtractor={(w, i) => `${w.date}_${i}`}
+      keyExtractor={(s, i) => `${s.guid}_${i}`}
       estimatedItemSize={190}
     />
   )

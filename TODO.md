@@ -24,7 +24,6 @@
 - fix Speed chart miscalculation
 - template steps list editting
 - how to delete exercises
-- exerciseStepMap and exerciseSetsMap don't handle multiple steps with same exercise
 - IncrementNumericEditor remove unselected border bottom
 - revert swipe screens
 - swipe tab are messy ion header press 
