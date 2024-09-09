@@ -10,7 +10,6 @@
 - TrackView
   - click on empty space OR back to remove focus on set
   - rerender list immeadtely after set warmup change
-  - IncrementNumericEditor remove unselected border bottom
   - scroll to bottom of sets 
 - superset
   - improve track rerendering

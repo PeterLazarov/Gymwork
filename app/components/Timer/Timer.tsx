@@ -65,6 +65,7 @@ const Timer = forwardRef<TextInput>((_, ref) => {
         </AnimatedCircularProgress>
 
         <NumberInput
+          dense
           style={{ flexGrow: 1, textAlign: 'center' }}
           value={Math.round(restTimer.timeElapsed.as('seconds'))}
           onChange={seconds => {

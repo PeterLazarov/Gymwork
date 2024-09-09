@@ -34,11 +34,9 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
   return (
     <View style={{ gap: 8 }}>
       {value.exercise?.measurements.rest && (
-        <>
-          <SetEditPanelSection text={translate('rest')}>
-            <Timer ref={input0} />
-          </SetEditPanelSection>
-        </>
+        <SetEditPanelSection text={translate('rest')}>
+          <Timer ref={input0} />
+        </SetEditPanelSection>
       )}
 
       {value.exercise?.hasRepMeasument && (

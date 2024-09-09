@@ -1,3 +1,4 @@
+import { colors } from 'designSystem'
 import React, { forwardRef, useEffect, useState } from 'react'
 import { TextInput as TextInputRN } from 'react-native'
 import { TextInput, TextInputProps } from 'react-native-paper'
@@ -25,6 +26,7 @@ const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
     {
       value,
       onChange,
+      style,
 
       maxDigits = defaultMaxDigits,
       maxDecimals = defaultMaxDecimals,
@@ -50,6 +52,10 @@ const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
         multiline={false}
         keyboardType="decimal-pad"
         ref={ref}
+        style={[{ borderWidth: 0 }, style]}
+        contentStyle={{ borderWidth: 0 }}
+        underlineStyle={{ borderWidth: 0 }}
+        underlineColor={colors.tertiary}
         onChangeText={text => {
           const asNum = Number(text)
           if (isNaN(asNum)) {
