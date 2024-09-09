@@ -11,7 +11,7 @@ import { colors } from 'designSystem'
 const ExerciseHistoryView: React.FC = () => {
   const { stateStore, workoutStore, recordStore } = useStores()
 
-  const exercise = stateStore.focusedStepExercise
+  const exercise = stateStore.focusedExercise
   const workoutsContained = exercise
     ? workoutStore.exerciseWorkoutsHistoryMap[exercise.guid]
     : []

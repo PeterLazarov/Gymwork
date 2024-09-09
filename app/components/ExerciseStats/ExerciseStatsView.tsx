@@ -42,7 +42,10 @@ const ExerciseStatsView: React.FC = () => {
             <ExerciseControl
               step={stateStore.focusedStep}
               onExerciseChange={index => {
-                stateStore.setProp('supersetStepopenedExerciseIndex', index)
+                stateStore.setProp(
+                  'focusedExerciseGuid',
+                  stateStore.focusedStep?.exercises[index].guid
+                )
               }}
             />
           )}

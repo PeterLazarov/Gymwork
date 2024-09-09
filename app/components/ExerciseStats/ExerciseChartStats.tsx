@@ -41,7 +41,7 @@ const ExerciseChartStats: React.FC = () => {
           view={activeView}
           height={Dimensions.get('window').height - 280}
           width={Dimensions.get('window').width - 32}
-          exercise={stateStore.focusedStepExercise!}
+          exercise={stateStore.focusedExercise!}
         />
       </View>
 
