@@ -10,11 +10,14 @@
   - improve track rerendering
   - fix records for second exercise
   - rerender chart on exercise change
+  - have draft set for all exercises not jsut the first one
 - On exercise screen scroll to bottom
 - On jump to record set, scroll to set
 - improve and rearrange feedback UI
 - add some kind of historical comments view (swipe left from comments screen?)
-- fix duration unit change (for Set list we use hh:mm:ss format not a unit)
+- Duration unit 
+  - fix duration unit change (for Set list we use hh:mm:ss format not a unit)
+  - remove duration unit change
 - Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 - optimise calendar rendering
 - grouping / measurement by rest
@@ -25,6 +28,7 @@
 - IncrementNumericEditor remove unselected border bottom
 - revert swipe screens
 - swipe tab are messy ion header press 
+- Alphabetically nubmer supersets if multiple in same workout?
 
 Performance to beat -
 100 workouts

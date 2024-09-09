@@ -19,12 +19,13 @@ const ExerciseHistoryView: React.FC = () => {
   return (
     <View
       style={{
-        padding: 16,
+        paddingTop: 16,
+        paddingHorizontal: 16,
         gap: 24,
         flexDirection: 'column',
         display: 'flex',
         flexGrow: 1,
-        backgroundColor: colors.neutralLight,
+        backgroundColor: colors.neutralLighter,
       }}
     >
       {exercise && workoutsContained.length > 0 ? (

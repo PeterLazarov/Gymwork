@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Dimensions } from 'react-native'
 
-import { ToggleGroupButton } from 'designSystem'
+import { ToggleGroupButton, colors } from 'designSystem'
 import ExerciseHistoryChart, {
   CHART_VIEW,
   CHART_VIEWS,
@@ -30,6 +30,7 @@ const ExerciseChartStats: React.FC = () => {
         justifyContent: 'space-between',
         display: 'flex',
         flexGrow: 1,
+        backgroundColor: colors.neutralLighter,
       }}
     >
       <View

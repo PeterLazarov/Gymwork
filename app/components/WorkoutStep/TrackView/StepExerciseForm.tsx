@@ -92,7 +92,7 @@ const StepExerciseForm: React.FC<Props> = ({ exercise, step }) => {
         flexGrow: 1,
         gap: 8,
         display: 'flex',
-        backgroundColor: colors.neutralLight,
+        backgroundColor: colors.neutralLighter,
       }}
     >
       <View style={{ padding: 8, flex: 1 }}>
