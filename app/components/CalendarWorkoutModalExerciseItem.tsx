@@ -1,16 +1,16 @@
 import { View, Text } from 'react-native'
 
 import WorkoutExerciseSetReadOnlyList from './WorkoutStep/StepSetsList/StepSetsList'
-import { Exercise, WorkoutSet } from 'app/db/models'
+import { Exercise, WorkoutStep } from 'app/db/models'
 import { fontSize } from 'designSystem'
 
 type Props = {
   exercise: Exercise
-  sets: WorkoutSet[]
+  step: WorkoutStep
 }
 const CalendarWorkoutModalExerciseItem: React.FC<Props> = ({
   exercise,
-  sets,
+  step,
 }) => {
   return (
     <View style={{ padding: 8 }}>
@@ -24,7 +24,7 @@ const CalendarWorkoutModalExerciseItem: React.FC<Props> = ({
       >
         {exercise.name}
       </Text>
-      <WorkoutExerciseSetReadOnlyList sets={sets} />
+      <WorkoutExerciseSetReadOnlyList step={step} />
     </View>
   )
 }

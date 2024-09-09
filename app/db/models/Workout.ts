@@ -99,10 +99,8 @@ export const WorkoutModel = types
 
       return Duration.fromMillis(0)
     },
-    get duration(): string {
-      return this.isToday
-        ? ''
-        : this.inferredHistoricalDuration.toFormat('hh:mm')
+    get duration(): Duration | null {
+      return this.isToday ? null : this.inferredHistoricalDuration
     },
     get isToday() {
       return self.date === today.toISODate()
