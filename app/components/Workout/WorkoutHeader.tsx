@@ -1,15 +1,14 @@
 import { observer } from 'mobx-react-lite'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { Menu } from 'react-native-paper'
+import { getSnapshot } from 'mobx-state-tree'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { useExport } from 'app/utils/useExport'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, colors } from 'designSystem'
-import { getSnapshot } from 'mobx-state-tree'
 import useBenchmark from 'app/utils/useBenchmark'
-import { computed } from 'mobx'
 
 const WorkoutHeader: React.FC = () => {
   const { stateStore, workoutStore } = useStores()
@@ -18,17 +17,8 @@ const WorkoutHeader: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { exportWorkouts, restoreWorkouts } = useExport()
 
-  const hasNotes = useMemo(
-    () => computed(() => openedWorkout?.notes !== ''),
-    [openedWorkout]
-  ).get()
-
   function openCalendar() {
     navigate('Calendar')
-  }
-
-  function onCommentPress() {
-    navigate('WorkoutFeedback')
   }
 
   function saveTemplate() {
@@ -66,18 +56,6 @@ const WorkoutHeader: React.FC = () => {
     <Header>
       <Header.Title title={'Gymwork'} />
 
-      {openedWorkout && (
-        <IconButton
-          onPress={onCommentPress}
-          underlay="darker"
-        >
-          <Icon
-            color={colors.primaryText}
-            icon={hasNotes ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'}
-          />
-        </IconButton>
-      )}
-
       <IconButton
         onPress={openCalendar}
         underlay="darker"
@@ -108,12 +86,14 @@ const WorkoutHeader: React.FC = () => {
           onPress={saveTemplate}
           title={translate('saveAsTemplate')}
         />
-        <Menu.Item
-          onPress={toggleCommentsCard}
-          title={translate(
-            showCommentsCard ? 'hideCommentsCard' : 'showCommentsCard'
-          )}
-        />
+        {openedWorkout?.hasComments && (
+          <Menu.Item
+            onPress={toggleCommentsCard}
+            title={translate(
+              showCommentsCard ? 'hideCommentsCard' : 'showCommentsCard'
+            )}
+          />
+        )}
         <Menu.Item
           onPress={exportData}
           title={translate('exportData')}

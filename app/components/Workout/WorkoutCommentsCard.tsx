@@ -5,7 +5,7 @@ import { View, Text } from 'react-native'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
-import { Card, Icon, colorSchemas, colors, fontSize } from 'designSystem'
+import { Card, Icon, colorSchemas, fontSize } from 'designSystem'
 
 const WorkoutCommentsCard: React.FC = () => {
   const { stateStore } = useStores()
@@ -14,7 +14,6 @@ const WorkoutCommentsCard: React.FC = () => {
   const hasNotes = workout.notes !== ''
   const hasExhaustion = workout.exhaustion !== 1
   const hasPain = workout.experiencedPain
-  const hasComments = hasNotes || hasExhaustion || hasPain
 
   function onPress() {
     navigate('WorkoutFeedback')
@@ -36,40 +35,29 @@ const WorkoutCommentsCard: React.FC = () => {
       onPress={onPress}
       content={
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          {hasComments && (
-            <>
-              <View style={{ flex: 1 }}>
-                {hasNotes && (
-                  <Text style={{ fontSize: fontSize.sm }}>{workout.notes}</Text>
-                )}
-                {hasExhaustion && (
-                  <Text style={{ fontSize: fontSize.sm }}>
-                    {translate('exhaustionOutOf10', {
-                      level: workout.exhaustion,
-                    })}
-                  </Text>
-                )}
-                {hasPain && (
-                  <Text style={{ fontSize: fontSize.sm }}>
-                    {translate('experiencedPain')}
-                  </Text>
-                )}
-              </View>
+          <View style={{ flex: 1 }}>
+            {hasNotes && (
+              <Text style={{ fontSize: fontSize.sm }}>{workout.notes}</Text>
+            )}
+            {hasExhaustion && (
+              <Text style={{ fontSize: fontSize.sm }}>
+                {translate('exhaustionOutOf10', {
+                  level: workout.exhaustion,
+                })}
+              </Text>
+            )}
+            {hasPain && (
+              <Text style={{ fontSize: fontSize.sm }}>
+                {translate('experiencedPain')}
+              </Text>
+            )}
+          </View>
 
-              <Icon
-                icon={feelingIcon[workout.feeling]}
-                size="large"
-                color={feelingColor[workout.feeling]}
-              />
-            </>
-          )}
-          {!hasComments && (
-            <Text
-              style={{ fontSize: fontSize.sm, color: colors.neutralDarker }}
-            >
-              {translate('addComments')}
-            </Text>
-          )}
+          <Icon
+            icon={feelingIcon[workout.feeling]}
+            size="large"
+            color={feelingColor[workout.feeling]}
+          />
         </View>
       }
     />
