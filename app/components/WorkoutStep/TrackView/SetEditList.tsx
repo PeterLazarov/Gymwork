@@ -100,7 +100,9 @@ const SetEditList: React.FC<Props> = ({
   const dragListRef = useRef<FlatList>(null)
 
   function calcWorkSetNumber(set: WorkoutSet) {
-    const workArrayIndex = stateStore.focusedStep!.workSets.indexOf(set)
+    const exerciseSets =
+      stateStore.focusedStep!.exerciseSetsMap[set.exercise.guid]
+    const workArrayIndex = exerciseSets.filter(s => !s.isWarmup).indexOf(set)
     return workArrayIndex + 1
   }
 
@@ -110,7 +112,7 @@ const SetEditList: React.FC<Props> = ({
   return (
     <>
       <DragList
-        data={sets}
+        data={sets.slice()}
         renderItem={renderItem}
         keyExtractor={set => set.guid}
         getItemLayout={getItemLayout}
