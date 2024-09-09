@@ -43,7 +43,7 @@ const Timer = forwardRef<TextInput>((_, ref) => {
         }}
       >
         <AnimatedCircularProgress
-          size={48}
+          size={40}
           width={2}
           fill={percentTimeLeft}
           rotation={0}
