@@ -21,10 +21,10 @@
 - fix Speed chart miscalculation
 - template steps list editting
 - how to delete exercises
-- auto swipe right on step focus happens unintended 
 - exerciseStepMap and exerciseSetsMap don't handle multiple steps with same exercise
 - IncrementNumericEditor remove unselected border bottom
 - revert swipe screens
+- swipe tab are messy ion header press 
 
 Performance to beat -
 100 workouts

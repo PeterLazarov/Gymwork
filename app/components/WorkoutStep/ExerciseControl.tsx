@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, View } from 'react-native'
 
 import { Icon, IconButton, boxShadows, colors, fontSize } from 'designSystem'
-import { navigate } from 'app/navigators'
 import { WorkoutStep } from 'app/db/models'
 
 type Props = {
@@ -39,17 +38,12 @@ const ExerciseControl: React.FC<Props> = ({ step, onExerciseChange }) => {
       <IconButton onPress={getPrev}>
         <Icon icon="chevron-back" />
       </IconButton>
-      <TouchableOpacity
-        onPress={() => navigate('Calendar')}
-        style={{ flex: 1 }}
+      <Text
+        style={{ fontSize: fontSize.lg, flex: 1 }}
+        numberOfLines={1}
       >
-        <Text
-          style={{ fontSize: fontSize.lg }}
-          numberOfLines={1}
-        >
-          {step.exercises[selectedIndex].name}
-        </Text>
-      </TouchableOpacity>
+        {step.exercises[selectedIndex].name}
+      </Text>
       <IconButton onPress={getNext}>
         <Icon icon="chevron-forward" />
       </IconButton>
