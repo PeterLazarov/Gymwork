@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
-
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
-import TrackView from 'app/components/WorkoutStep/TrackView'
-import StepHeader from 'app/components/WorkoutStep/StepHeader'
-import { Icon, boxShadows, colors } from 'designSystem'
 import { BottomNavigation } from 'react-native-paper'
+
+import { Icon, boxShadows, colors } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
+import { EmptyLayout } from 'app/layouts/EmptyLayouts'
+import ExerciseTrackView from 'app/components/WorkoutStep/ExerciseTrackView'
+import StepHeader from 'app/components/WorkoutStep/StepHeader'
 import ExerciseControl from 'app/components/WorkoutStep/ExerciseControl'
 import ExerciseHistoryStats from 'app/components/ExerciseStats/ExerciseHistoryStats'
 import ExerciseRecordStats from 'app/components/ExerciseStats/ExerciseRecordStats'
@@ -45,7 +45,7 @@ const WorkoutStepScreen: React.FC = () => {
     chart: ExerciseChartStats,
     records: ExerciseRecordStats,
     history: ExerciseHistoryStats,
-    track: TrackView,
+    track: ExerciseTrackView,
   })
 
   return (
