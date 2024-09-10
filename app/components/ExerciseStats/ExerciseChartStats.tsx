@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { View, Dimensions } from 'react-native'
+import { observer } from 'mobx-react-lite'
 
 import { ToggleGroupButton, colors } from 'designSystem'
 import ExerciseHistoryChart, {
@@ -54,4 +55,4 @@ const ExerciseChartStats: React.FC = () => {
   )
 }
 
-export default ExerciseChartStats
+export default observer(ExerciseChartStats)
