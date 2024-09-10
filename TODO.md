@@ -10,7 +10,7 @@
 - TrackView
   - rerender list immeadtely after set warmup change
   - scroll to bottom of sets 
-  - fix whole form rerender for timer
+  - fix whole form rerender for timer - KeyboardAvoiderView context is triggering. why??
 - superset
   - improve track rerendering
   - rerender chart on exercise change

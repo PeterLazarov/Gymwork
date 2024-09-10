@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { getSnapshot } from 'mobx-state-tree'
 import { View } from 'react-native'
 
@@ -53,7 +53,7 @@ const ExerciseTrackView: React.FC = () => {
     }
   }, [restTimer.timeElapsed, focusedExercise])
 
-  function handleAdd() {
+  const handleAdd = useCallback(() => {
     if (stateStore.draftSet) {
       const { guid, ...draftCopy } = stateStore.draftSet
       const fromDraft = WorkoutSetModel.create({
@@ -67,9 +67,9 @@ const ExerciseTrackView: React.FC = () => {
     if (focusedExercise.measurements.rest) {
       restTimer.start()
     }
-  }
+  }, [])
 
-  function handleUpdate() {
+  const handleUpdate = useCallback(() => {
     const updatedSet = {
       ...getSnapshot(stateStore.draftSet!),
       exercise: selectedSet!.exercise.guid,
@@ -80,11 +80,12 @@ const ExerciseTrackView: React.FC = () => {
     step.updateSet(updatedSet)
 
     setSelectedSet(null)
-  }
-  function handleRemove() {
+  }, [])
+
+  const handleRemove = useCallback(() => {
     setSelectedSet(null)
     step.removeSet(selectedSet!.guid)
-  }
+  }, [])
 
   console.log('StepExerciseForm render for', focusedExercise.name)
 
