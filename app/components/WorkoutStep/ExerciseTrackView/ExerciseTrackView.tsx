@@ -30,18 +30,13 @@ const ExerciseTrackView: React.FC = () => {
     const lastSet = step.exerciseSetsMap[focusedExercise.guid].at(-1)
     const setToClone = selectedSet || lastSet
 
-    if (setToClone) {
-      const { guid, exercise, ...rest } = setToClone
-      stateStore.setProp('draftSet', {
-        exercise: focusedExercise.guid,
-        ...rest,
-      })
-    } else {
-      stateStore.setProp('draftSet', {
-        exercise: focusedExercise.guid,
-        reps: focusedExercise.hasRepMeasument ? 10 : undefined,
-      })
-    }
+    const { guid, exercise, reps, ...rest } = setToClone || {}
+
+    stateStore.setProp('draftSet', {
+      exercise: focusedExercise.guid,
+      reps: reps || (focusedExercise.hasRepMeasument ? 10 : undefined),
+      ...rest,
+    })
   }, [selectedSet, focusedExercise])
 
   useEffect(() => {
