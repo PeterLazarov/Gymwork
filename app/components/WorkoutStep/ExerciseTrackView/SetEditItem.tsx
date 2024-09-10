@@ -1,5 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
+import { observer } from 'mobx-react-lite'
 
 import { WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
@@ -94,4 +95,4 @@ const SetEditItem: React.FC<Props> = ({
   )
 }
 
-export default SetEditItem
+export default observer(SetEditItem)
