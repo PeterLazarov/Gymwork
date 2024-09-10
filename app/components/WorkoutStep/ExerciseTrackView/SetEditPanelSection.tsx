@@ -10,7 +10,7 @@ type Props = {
 
 const SetEditPanelSection: React.FC<Props> = ({ text, children }) => {
   return (
-    <View style={{ gap: 12 }}>
+    <View style={{ gap: 10 }}>
       <View>
         <Text
           style={{
