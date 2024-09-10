@@ -14,6 +14,7 @@
 - superset
   - improve track rerendering
   - rerender chart on exercise change
+  - dragging
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - reasonable seed data rest periods & createdAt
 - On jump to record set, scroll to set

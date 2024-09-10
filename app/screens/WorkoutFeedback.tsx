@@ -19,7 +19,7 @@ import {
   fontSize,
 } from 'designSystem'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
-import { Workout } from 'app/db/models'
+import { Workout, painOptions, feelingOptions } from 'app/db/models'
 
 const WorkoutFeedbackScreen: React.FC = () => {
   const { stateStore } = useStores()
@@ -29,47 +29,6 @@ const WorkoutFeedbackScreen: React.FC = () => {
     navigate('Workout')
   }
 
-  const workoutOptions = [
-    {
-      icon: 'emoji-sad',
-      label: 'Bad',
-      color: colorSchemas.coral.hue600,
-      value: 'sad',
-    },
-    {
-      icon: 'emoji-happy',
-      label: 'Good',
-      color: colorSchemas.amber.hue600,
-      value: 'neutral',
-    },
-    {
-      icon: 'grin-stars',
-      label: 'Great',
-      color: colorSchemas.green.hue600,
-      value: 'happy',
-    },
-  ]
-
-  const painOptions = [
-    {
-      icon: 'alert-decagram-outline',
-      label: 'Pain',
-      color: colorSchemas.coral.hue600,
-      value: 'pain',
-    },
-    {
-      icon: 'warning-outline',
-      label: 'Discomfort',
-      color: colorSchemas.amber.hue600,
-      value: 'discomfort',
-    },
-    {
-      icon: 'check',
-      label: 'No pain',
-      color: colorSchemas.green.hue600,
-      value: 'noPain',
-    },
-  ]
   const exhaustionOptions = [
     {
       icon: 'sleep',
@@ -94,6 +53,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
       value: 'intense',
     },
   ]
+
   return (
     <EmptyLayout>
       <Header>
@@ -131,7 +91,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
           onChange={value =>
             workout.setProp('feeling', value as Workout['feeling'])
           }
-          options={workoutOptions}
+          options={Object.values(feelingOptions)}
         />
         <Text
           style={{
@@ -143,7 +103,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
         <FeedbackPicker
           selected={workout.pain}
           onChange={value => workout.setProp('pain', value as Workout['pain'])}
-          options={painOptions}
+          options={Object.values(painOptions)}
         />
         <Text
           style={{

@@ -11,13 +11,15 @@ export type FeedbackOption = {
 }
 type Props = {
   isSelected?: boolean
-  onPress: (feeling: string) => void
+  onPress?: (feeling: string) => void
   option: FeedbackOption
+  noPadding?: boolean
 }
 const FeedbackPickerOption: React.FC<Props> = ({
   option,
   onPress,
   isSelected,
+  noPadding,
 }) => {
   return (
     <View
@@ -27,12 +29,12 @@ const FeedbackPickerOption: React.FC<Props> = ({
         alignItems: 'center',
         backgroundColor: isSelected ? colors.neutralLightest : 'transparent',
         borderRadius: 8,
-        padding: 8,
+        padding: noPadding ? 0 : 8,
       }}
     >
       <IconButton
         size="lg"
-        onPress={() => onPress(option.value)}
+        onPress={() => onPress?.(option.value)}
       >
         <Icon
           icon={option.icon}

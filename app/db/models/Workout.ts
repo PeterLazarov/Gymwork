@@ -40,13 +40,9 @@ export const WorkoutModel = types
     date: '',
     steps: types.array(WorkoutStepModel),
     notes: '',
-    feeling: types.optional(
-      types.enumeration('feeling', Object.values(feelings)),
-      () => feelings.neutral
-    ),
-    pain: types.optional(
+    feeling: types.maybe(types.enumeration('feeling', Object.values(feelings))),
+    pain: types.maybe(
       types.enumeration('pain', Object.values(painOptions)),
-      () => painOptions.noPain
     ),
     intensity: types.optional(
       types.enumeration('intensity', Object.values(intensityOptions)),
@@ -130,10 +126,8 @@ export const WorkoutModel = types
     get hasComments() {
       const hasNotes = self.notes !== ''
       const hasIntensity = self.intensity !== 'standard'
-      const hasPain = self.pain !== 'noPain'
-      const hasFeeling = self.feeling !== 'neutral'
 
-      return hasNotes || hasIntensity || hasPain || hasFeeling
+      return hasNotes || hasIntensity || self.pain || self.feeling
     },
   }))
   .actions(withSetPropAction)
