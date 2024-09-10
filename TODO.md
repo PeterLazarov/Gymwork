@@ -9,6 +9,7 @@
   - swipe tabs are confused on header press 
 - TrackView
   - fix whole form rerender for timer - KeyboardAvoiderView context is triggering. why??
+  - timer doesn't start when open step and directly complete draft set without touching anything
 - superset
   - improve track rerendering
   - dragging
