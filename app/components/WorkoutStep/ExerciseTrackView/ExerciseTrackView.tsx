@@ -67,7 +67,7 @@ const ExerciseTrackView: React.FC = () => {
     if (focusedExercise.measurements.rest) {
       restTimer.start()
     }
-  }, [])
+  }, [focusedExercise])
 
   const handleUpdate = useCallback(() => {
     const updatedSet = {
@@ -80,12 +80,12 @@ const ExerciseTrackView: React.FC = () => {
     step.updateSet(updatedSet)
 
     setSelectedSet(null)
-  }, [])
+  }, [stateStore.draftSet, selectedSet])
 
   const handleRemove = useCallback(() => {
     setSelectedSet(null)
     step.removeSet(selectedSet!.guid)
-  }, [])
+  }, [selectedSet])
 
   console.log('StepExerciseForm render for', focusedExercise.name)
 
