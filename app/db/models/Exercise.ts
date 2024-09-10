@@ -84,7 +84,7 @@ export const ExerciseModel = types
     },
     get measurementNames(): measurementName[] {
       return Object.entries(exercise.measurements)
-        .filter(([k, v]) => v)
+        .filter(([k, v]) => v && k !== 'rest')
         .map(([k]) => k as measurementName)
     },
     get groupRecordsBy(): measurementName {

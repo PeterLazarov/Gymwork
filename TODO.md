@@ -13,7 +13,6 @@
   - fix whole form rerender for timer
 - superset
   - improve track rerendering
-  - fix records for second exercise
   - rerender chart on exercise change
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - reasonable seed data rest periods & createdAt

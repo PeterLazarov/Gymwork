@@ -7,7 +7,7 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
-import { PressableHighlight, colors } from 'designSystem'
+import { colors } from 'designSystem'
 import { WorkoutSet } from 'app/db/models'
 import RecordsListItem from './RecordsListItem'
 
@@ -53,15 +53,11 @@ const ExerciseRecordStats: React.FC = () => {
         >
           {recordSets.map(set => {
             return (
-              <PressableHighlight
+              <RecordsListItem
                 key={set.guid}
-                style={{
-                  paddingVertical: 4,
-                }}
+                set={set}
                 onPress={() => goToDate(set)}
-              >
-                <RecordsListItem set={set} />
-              </PressableHighlight>
+              />
             )
           })}
         </ScrollView>
