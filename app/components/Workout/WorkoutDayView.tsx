@@ -18,7 +18,7 @@ const WorkoutDayView: React.FC = () => {
     <>
       <DayControl duration={workout?.duration?.toFormat('hh:mm') ?? ''} />
       <View style={{ flex: 1, backgroundColor: colors.neutralLight }}>
-        {workout ? (
+        {workout && workout.steps.length > 0 ? (
           <>
             {stateStore.showCommentsCard && workout.hasComments && (
               <WorkoutCommentsCard />
