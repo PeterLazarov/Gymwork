@@ -3,7 +3,7 @@ import { FAB as FABPaper, FABProps } from 'react-native-paper'
 
 import { colors } from './tokens'
 
-const FAB: React.FC<FABProps> = ({ style, ...otherProps }) => {
+const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
   return (
     <FABPaper
       style={[
@@ -13,10 +13,11 @@ const FAB: React.FC<FABProps> = ({ style, ...otherProps }) => {
           right: 'auto',
           left: 'auto',
           bottom: 0,
-          backgroundColor: colors.primary,
+          backgroundColor: disabled ? colors.neutral : colors.primary,
         },
         style,
       ]}
+      disabled={disabled}
       color={colors.primaryText}
       {...otherProps}
     />

@@ -3,6 +3,8 @@ const en = {
   addExercise: 'Add exercise',
   addSuperset: 'Add superset',
   selectExercise: 'Select exercise',
+  selectExercises: 'Select exercises',
+  selectedCount: '{{count}} selected',
   copyWorkout: 'Copy workout',
   completeSet: 'Complete set',
   startRest: 'Start rest',

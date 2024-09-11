@@ -83,6 +83,11 @@ const ExerciseSelectScreen: React.FC = () => {
     },
   ]
 
+  const supersetTitle =
+    selectedExercises.length > 0
+      ? translate('selectedCount', { count: selectedExercises.length })
+      : translate('selectExercises')
+
   return (
     <EmptyLayout>
       <View style={{ flex: 1, alignItems: 'center' }}>
@@ -96,7 +101,13 @@ const ExerciseSelectScreen: React.FC = () => {
               color={colors.primaryText}
             />
           </IconButton>
-          <Header.Title title={translate('selectExercise')} />
+          <Header.Title
+            title={
+              selectMode === 'straightSet'
+                ? translate('selectExercise')
+                : supersetTitle
+            }
+          />
           <IconButton
             onPress={onAddExercisePress}
             underlay="darker"
@@ -110,9 +121,10 @@ const ExerciseSelectScreen: React.FC = () => {
         </Header>
 
         <SwipeTabs tabsConfig={tabsConfig} />
-        {selectedExercises.length > 0 && (
+        {selectMode === 'superSet' && (
           <FAB
             icon="check"
+            disabled={selectedExercises.length < 2}
             onPress={() => createExercisesStep(selectedExercises)}
           />
         )}
