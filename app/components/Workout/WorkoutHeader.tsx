@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Menu } from 'react-native-paper'
 import { getSnapshot } from 'mobx-state-tree'
 import { DateTime } from 'luxon'
+import { capitalize } from 'lodash'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
@@ -26,7 +27,7 @@ const WorkoutHeader: React.FC = () => {
   const todayDiff = Math.round(date.diff(today, 'days').days)
   const dateLabel =
     Math.abs(todayDiff) < 2
-      ? date.toRelativeCalendar({ unit: 'days' })!
+      ? capitalize(date.toRelativeCalendar({ unit: 'days' })!)
       : date.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
   function openCalendar() {
@@ -67,7 +68,7 @@ const WorkoutHeader: React.FC = () => {
   return (
     <Header>
       <Header.Title title={dateLabel} />
-      <WorkoutTimer style={{ color: colors.primaryText }} />
+      {/* <WorkoutTimer style={{ color: colors.primaryText }} /> */}
 
       <IconButton
         onPress={openCalendar}

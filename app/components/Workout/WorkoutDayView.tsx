@@ -4,19 +4,20 @@ import { observer } from 'mobx-react-lite'
 
 import { useStores } from 'app/db/helpers/useStores'
 import WorkoutStepList from './WorkoutStepList'
-import DayControl from './DayControl'
 import WorkoutEmptyState from './WorkoutEmptyState'
 import WorkoutCommentsCard from './WorkoutCommentsCard'
 import AddStepMenu from './AddStepMenu'
 import { colors } from 'designSystem'
 
-const WorkoutDayView: React.FC = () => {
-  const { stateStore } = useStores()
-  const workout = stateStore.openedWorkout
+type Props = {
+  date: string
+}
+const WorkoutDayView: React.FC<Props> = ({ date }) => {
+  const { workoutStore, stateStore } = useStores()
+  const workout = workoutStore.dateWorkoutMap[date]
 
   return (
     <>
-      {/* <DayControl duration={workout?.duration?.toFormat('hh:mm') ?? ''} /> */}
       <View style={{ flex: 1, backgroundColor: colors.neutralLight }}>
         {workout && workout.steps.length > 0 ? (
           <>

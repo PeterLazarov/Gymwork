@@ -3,14 +3,14 @@ import React from 'react'
 
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import WorkoutHeader from 'app/components/Workout/WorkoutHeader'
-import WorkoutDayView from 'app/components/Workout/WorkoutDayView'
+import WorkoutHorizontalList from 'app/components/Workout/WorkoutHorizontalList'
 
 const WorkoutPageScreen: React.FC = () => {
   return (
     <EmptyLayout>
       <WorkoutHeader />
 
-      <WorkoutDayView />
+      <WorkoutHorizontalList />
     </EmptyLayout>
   )
 }

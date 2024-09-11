@@ -1,34 +1,29 @@
+import { FlashList, FlashListProps } from '@shopify/flash-list'
 import React, { forwardRef, useCallback } from 'react'
 import {
   useWindowDimensions,
-  FlatList,
-  FlatListProps,
   View,
   ViewabilityConfig,
   ViewToken,
 } from 'react-native'
 
 type LockedProps = 'onScroll' | 'getItemLayout' | 'horizontal'
-export type HorizontalScreenListProps = Omit<
-  FlatListProps<any>,
-  LockedProps
-> & {
+
+type Props = Omit<FlashListProps<any>, LockedProps> & {
   onScreenChange?: (index: number) => void
 }
 
 const viewabilityConfig: ViewabilityConfig = {
-  itemVisiblePercentThreshold: 100,
+  itemVisiblePercentThreshold: 50,
 }
 
-const HorizontalScreenList = forwardRef<
-  FlatList<any>,
-  HorizontalScreenListProps
->(
+const HorizontalScreenList = forwardRef<FlashList<any>, Props>(
   (
     {
       onScreenChange,
       initialScrollIndex,
       renderItem: externalRenderItem,
+      data,
       ...rest
     },
     ref
@@ -46,37 +41,27 @@ const HorizontalScreenList = forwardRef<
     },
     [])
 
-    const renderItem = (props: any) => (
-      <View style={{ width, flex: 1 }}>{externalRenderItem!(props)}</View>
-    )
-
-    const getItemLayout = (
-      data: ArrayLike<any> | null | undefined,
-      index: number
-    ) => ({
-      length: width,
-      offset: width * index,
-      index,
-    })
-
     return (
-      <FlatList
-        ref={ref}
-        style={{
-          flex: 1,
-        }}
-        showsHorizontalScrollIndicator={false}
-        viewabilityConfig={viewabilityConfig}
-        onViewableItemsChanged={handleViewChange}
-        pagingEnabled
-        keyExtractor={(item, index) => String(index)}
-        getItemLayout={getItemLayout}
-        renderItem={renderItem}
-        horizontal
-        snapToAlignment="center"
-        initialScrollIndex={initialScrollIndex}
-        {...rest}
-      />
+      <View style={{ flex: 1 }}>
+        <FlashList
+          ref={ref}
+          showsHorizontalScrollIndicator={false}
+          viewabilityConfig={viewabilityConfig}
+          data={data}
+          onViewableItemsChanged={handleViewChange}
+          pagingEnabled
+          keyExtractor={(item, index) => String(index)}
+          estimatedItemSize={width}
+          renderItem={props => (
+            <View style={{ width, height: '100%' }}>
+              {externalRenderItem!(props)}
+            </View>
+          )}
+          horizontal
+          initialScrollIndex={initialScrollIndex}
+          {...rest}
+        />
+      </View>
     )
   }
 )
