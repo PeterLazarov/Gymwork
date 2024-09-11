@@ -11,6 +11,7 @@ import ExerciseHistoryStats from 'app/components/ExerciseStats/ExerciseHistorySt
 import ExerciseRecordStats from 'app/components/ExerciseStats/ExerciseRecordStats'
 import { View } from 'react-native'
 import ExerciseRow from 'app/components/ExerciseRow'
+import EmptyState from 'app/components/EmptyState'
 
 export default function Review(props: {}) {
   const { stateStore } = useStores()
@@ -73,7 +74,7 @@ export default function Review(props: {}) {
           />
         )}
 
-        {!exerciseSelectOpen && (
+        {!exerciseSelectOpen && selectedExercise && (
           <Tab.Navigator>
             <Tab.Screen name="Chart">
               {() => <ExerciseChartStats exercise={selectedExercise} />}
@@ -85,6 +86,10 @@ export default function Review(props: {}) {
               {() => <ExerciseHistoryStats exercise={selectedExercise} />}
             </Tab.Screen>
           </Tab.Navigator>
+        )}
+
+        {!exerciseSelectOpen && !selectedExercise && (
+          <EmptyState text="Select an exercise to view data" />
         )}
       </View>
     </EmptyLayout>

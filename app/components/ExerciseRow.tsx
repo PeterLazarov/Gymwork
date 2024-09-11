@@ -41,7 +41,7 @@ const ExerciseRow: React.FC<ExerciseRowProps> = ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         backgroundColor: colors.neutralLightest,
-        minHeight: 40,
+        minHeight: 44,
         gap: 4,
         ...boxShadows.default,
       }}
@@ -61,10 +61,13 @@ const ExerciseRow: React.FC<ExerciseRowProps> = ({
         }}
       >
         <Text
-          style={{ fontSize: fontSize.lg }}
+          style={{
+            fontSize: fontSize.lg,
+            color: selected ? colors.neutralDarkest : colors.neutralDarker,
+          }}
           numberOfLines={1}
         >
-          {selected && selected.name}
+          {selected ? selected.name : 'Press to select exercise'}
         </Text>
       </PressableHighlight>
 
