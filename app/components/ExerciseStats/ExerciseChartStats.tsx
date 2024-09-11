@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Dimensions } from 'react-native'
+import { View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
 import { ToggleGroupButton, colors } from 'designSystem'
@@ -20,6 +20,7 @@ const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
   const [activeView, setActiveView] = useState<CHART_VIEW>(
     Object.keys(CHART_VIEWS)[0] as CHART_VIEW_KEY
   )
+  const [viewDimensions, setViewDimensions] = useState({ width: 0, height: 0 })
 
   const toggleViewButtons = (Object.keys(CHART_VIEWS) as CHART_VIEW_KEY[]).map(
     view => ({
@@ -42,12 +43,17 @@ const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
       <View
         style={{
           alignItems: 'center',
+          flexGrow: 1,
+        }}
+        onLayout={event => {
+          const { width, height } = event.nativeEvent.layout
+          setViewDimensions({ width, height })
         }}
       >
         <ExerciseHistoryChart
           view={activeView}
-          height={Dimensions.get('window').height - 280}
-          width={Dimensions.get('window').width - 32}
+          height={viewDimensions.height}
+          width={viewDimensions.width}
           exercise={exercise || stateStore.focusedExercise!}
         />
       </View>
