@@ -1,51 +1,80 @@
-import * as React from 'react'
-import type { ICarouselInstance } from 'react-native-reanimated-carousel'
-import Carousel, { TCarouselProps } from 'react-native-reanimated-carousel'
+import React, { forwardRef, useCallback } from 'react'
+import {
+  useWindowDimensions,
+  FlatList,
+  FlatListProps,
+  View,
+  ViewabilityConfig,
+  ViewToken,
+} from 'react-native'
 
-import { View, useWindowDimensions } from 'react-native'
-import { useSharedValue } from 'react-native-reanimated'
-import { forwardRef } from 'react'
-
-type LockedProps = 'width' | 'mode' | 'vertical' | 'modeConfig'
-export type HorizontalScreenListProps = Omit<TCarouselProps, LockedProps> & {
+type LockedProps = 'onScroll' | 'getItemLayout' | 'horizontal'
+export type HorizontalScreenListProps = Omit<
+  FlatListProps<any>,
+  LockedProps
+> & {
   onScreenChange?: (index: number) => void
 }
 
+const viewabilityConfig: ViewabilityConfig = {
+  itemVisiblePercentThreshold: 100,
+}
+
 const HorizontalScreenList = forwardRef<
-  ICarouselInstance,
+  FlatList<any>,
   HorizontalScreenListProps
 >(
   (
     {
       onScreenChange,
-      defaultIndex = 0,
+      initialScrollIndex,
       renderItem: externalRenderItem,
       ...rest
     },
     ref
   ) => {
-    const windowWidth = useWindowDimensions().width
-    const scrollOffsetValue = useSharedValue<number>(0)
+    const width = useWindowDimensions().width
+
+    const handleViewChange = useCallback(function (info: {
+      viewableItems: ViewToken[]
+      changed: ViewToken[]
+    }) {
+      const index = info?.viewableItems[0]?.index
+      if (typeof index === 'number' && index >= 0) {
+        onScreenChange?.(index)
+      }
+    },
+    [])
+
+    const renderItem = (props: any) => (
+      <View style={{ width, flex: 1 }}>{externalRenderItem!(props)}</View>
+    )
+
+    const getItemLayout = (
+      data: ArrayLike<any> | null | undefined,
+      index: number
+    ) => ({
+      length: width,
+      offset: width * index,
+      index,
+    })
 
     return (
-      <Carousel
-        width={windowWidth}
-        loop
+      <FlatList
         ref={ref}
-        defaultScrollOffsetValue={scrollOffsetValue}
-        style={{ flex: 1 }}
-        defaultIndex={defaultIndex}
-        pagingEnabled
-        onSnapToItem={onScreenChange}
-        panGestureHandlerProps={{
-          // fixes android nested scrolling -> https://github.com/dohooo/react-native-reanimated-carousel/issues/125
-          activeOffsetX: [-20, 20],
+        style={{
+          flex: 1,
         }}
-        renderItem={props => (
-          <View style={{ width: windowWidth, flex: 1 }}>
-            {externalRenderItem(props)}
-          </View>
-        )}
+        showsHorizontalScrollIndicator={false}
+        viewabilityConfig={viewabilityConfig}
+        onViewableItemsChanged={handleViewChange}
+        pagingEnabled
+        keyExtractor={(item, index) => String(index)}
+        getItemLayout={getItemLayout}
+        renderItem={renderItem}
+        horizontal
+        snapToAlignment="center"
+        initialScrollIndex={initialScrollIndex}
         {...rest}
       />
     )

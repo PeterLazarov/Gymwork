@@ -1,7 +1,5 @@
 import React, { ReactNode, useRef, useState } from 'react'
-import { Keyboard, View } from 'react-native'
-import type { ICarouselInstance } from 'react-native-reanimated-carousel'
-import { CarouselRenderItem } from 'react-native-reanimated-carousel'
+import { FlatList, Keyboard, ListRenderItemInfo, View } from 'react-native'
 
 import TabHeaderPanel from './TabHeaderPanel'
 import { TabConfig, TabStyles } from './types'
@@ -27,14 +25,14 @@ const SwipeTabs: React.FC<Props> = ({
   keyboardDismissOnScroll,
   screenlistProps,
 }) => {
-  const tabsList = useRef<ICarouselInstance>(null)
+  const tabsList = useRef<FlatList>(null)
   const [currentIndex, setCurrentIndex] = useState(defaultIndex || 0)
 
   const onTabPress = (index: number) => {
     if (keyboardDismissOnScroll) Keyboard.dismiss()
 
     setCurrentIndex(index)
-    tabsList.current?.scrollTo({ index })
+    tabsList.current?.scrollToIndex({ index })
   }
 
   const onScreenChange = (index: number) => {
@@ -43,10 +41,10 @@ const SwipeTabs: React.FC<Props> = ({
     onTabChange?.(tab)
   }
 
-  const renderItem: CarouselRenderItem<TabConfig<any>> = ({
+  const renderItem = ({
     item: { component: Component, props = {} },
     index,
-  }) => (
+  }: ListRenderItemInfo<TabConfig<any>>) => (
     <Component
       {...props}
       key={index}
@@ -67,7 +65,7 @@ const SwipeTabs: React.FC<Props> = ({
         onScreenChange={onScreenChange}
         data={tabsConfig}
         renderItem={renderItem}
-        defaultIndex={defaultIndex}
+        initialScrollIndex={defaultIndex}
         {...screenlistProps}
       />
     </View>
