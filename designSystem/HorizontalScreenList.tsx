@@ -9,7 +9,10 @@ import {
 
 type LockedProps = 'onScroll' | 'getItemLayout' | 'horizontal'
 
-type Props = Omit<FlashListProps<any>, LockedProps> & {
+export type HorizontalScreenListProps = Omit<
+  FlashListProps<any>,
+  LockedProps
+> & {
   onScreenChange?: (index: number) => void
 }
 
@@ -17,7 +20,10 @@ const viewabilityConfig: ViewabilityConfig = {
   itemVisiblePercentThreshold: 50,
 }
 
-const HorizontalScreenList = forwardRef<FlashList<any>, Props>(
+const HorizontalScreenList = forwardRef<
+  FlashList<any>,
+  HorizontalScreenListProps
+>(
   (
     {
       onScreenChange,

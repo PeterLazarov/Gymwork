@@ -8,6 +8,7 @@ import AllExercisesList from 'app/components/Exercise/AllExercisesList'
 import MostUsedExercisesList from 'app/components/Exercise/MostUsedExercisesList'
 import { SwipeTabs } from 'designSystem'
 import { TabConfig } from 'designSystem/Tabs/types'
+import ExerciseReorderList from './ExerciseReorderList'
 
 type ExerciseSelectListsProps = {
   multiselect: boolean
@@ -51,6 +52,18 @@ const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
       !multiselect && onChange([exercise])
     },
     selectedExercises,
+    onReorder(from: number, to: number) {
+      setSelectedExercises(selectedExercises => {
+        const item = selectedExercises[from]!
+
+        const newSelected =
+          // @ts-ignore
+          selectedExercises.toSpliced(from, 1).toSpliced(to, 0, item) ?? []
+
+        onChange(newSelected)
+        return newSelected
+      })
+    },
   }
 
   const tabsConfig: TabConfig<typeof props>[] = [
@@ -61,15 +74,21 @@ const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
       props,
     },
     {
-      label: translate('mostUsed'),
-      name: 'tabMostUsed',
+      label: translate('frequent'),
+      name: 'tabFrequent',
       component: MostUsedExercisesList,
       props,
     },
     {
-      label: translate('allExercises'),
+      label: translate('all'),
       name: 'tabAll',
       component: AllExercisesList,
+      props,
+    },
+    {
+      label: translate('picked'),
+      name: 'tabPicked',
+      component: ExerciseReorderList,
       props,
     },
   ]

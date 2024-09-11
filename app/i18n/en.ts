@@ -5,6 +5,7 @@ const en = {
   selectExercise: 'Select exercise',
   selectExercises: 'Select exercises',
   selectedCount: '{{count}} selected',
+  picked: 'Picked',
   copyWorkout: 'Copy workout',
   completeSet: 'Complete set',
   startRest: 'Start rest',
@@ -42,8 +43,8 @@ const en = {
   noWorkoutsEntered: 'No workouts entered yet',
   noFavoriteExercises: 'No favorite exercises set',
   favorite: 'Favorite',
-  mostUsed: 'Most used',
-  allExercises: 'All Exercises',
+  frequent: 'Frequent',
+  all: 'All',
   track: 'Track',
   history: 'History',
   records: 'Records',
@@ -76,6 +77,7 @@ const en = {
   seconds: 'Seconds',
   minutes: 'Minutes',
   hours: 'Hours',
+  noExercisesSelected: 'No Exercises Selected',
 }
 
 export default en

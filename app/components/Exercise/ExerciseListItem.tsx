@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableHighlight } from 'react-native'
 
 import { Exercise } from 'app/db/models'
 import {
@@ -11,20 +11,24 @@ import {
   fontSize,
 } from 'designSystem'
 
-type Props = {
+export type ExerciseListItemProps = {
   exercise: Exercise
   onSelect: (exercise: Exercise) => void
   isSelected: boolean
-}
-const ExerciseListItem: React.FC<Props> = ({
+} & Partial<TouchableHighlight['props']>
+const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
   exercise,
   onSelect,
   isSelected,
+  ...rest
 }) => {
   const heartIcon = exercise.isFavorite ? 'heart' : 'heart-outlined'
 
   return (
-    <PressableHighlight onPress={() => onSelect(exercise)}>
+    <PressableHighlight
+      onPress={() => onSelect(exercise)}
+      {...rest}
+    >
       <View
         style={{
           width: '100%',
