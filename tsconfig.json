@@ -16,6 +16,7 @@
     "lib": ["es2022", "dom"],
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
       "app/*": ["./app/*"],
