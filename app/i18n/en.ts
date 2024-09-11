@@ -73,6 +73,9 @@ const en = {
   hideCommentsCard: 'Hide comments card',
   showCommentsCard: 'Show comments card',
   intensity: 'Intensity',
+  seconds: 'Seconds',
+  minutes: 'Minutes',
+  hours: 'Hours',
 }
 
 export default en

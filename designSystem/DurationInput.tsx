@@ -4,6 +4,7 @@ import { View, Text, TextInput as TextInputRN } from 'react-native'
 import NumberInput from 'app/components/NumberInput'
 import manageInputFocus from 'app/utils/inputFocus'
 import { fontSize } from 'designSystem'
+import { translate } from 'app/i18n'
 
 type Props = {
   valueSeconds: number
@@ -36,7 +37,7 @@ const DurationInput = forwardRef<TextInputRN, Props>(
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'center',
+          // justifyContent: 'center',
           alignItems: 'center',
           gap: 12,
         }}
@@ -45,7 +46,7 @@ const DurationInput = forwardRef<TextInputRN, Props>(
           <>
             <NumberInput
               value={hours}
-              style={{ textAlign: 'center' }}
+              style={{ textAlign: 'center', flexGrow: 1 }}
               inputMode="numeric"
               multiline={false}
               keyboardType="number-pad"
@@ -58,13 +59,14 @@ const DurationInput = forwardRef<TextInputRN, Props>(
               returnKeyType="next"
               onSubmitEditing={() => onHandleSubmit(input1)}
               maxDecimals={0}
+              label={translate('hours')}
             />
             <Text style={{ fontSize: fontSize.xs }}>:</Text>
           </>
         )}
         <NumberInput
           value={minutes}
-          style={{ textAlign: 'center' }}
+          style={{ textAlign: 'center', flexGrow: 1 }}
           inputMode="numeric"
           multiline={false}
           keyboardType="number-pad"
@@ -79,11 +81,12 @@ const DurationInput = forwardRef<TextInputRN, Props>(
           returnKeyType="next"
           onSubmitEditing={() => onHandleSubmit(input2)}
           maxDecimals={0}
+          label={translate('minutes')}
         />
         <Text style={{ fontSize: fontSize.xs }}>:</Text>
         <NumberInput
           value={seconds}
-          style={{ textAlign: 'center' }}
+          style={{ textAlign: 'center', flexGrow: 1 }}
           inputMode="numeric"
           multiline={false}
           keyboardType="number-pad"
@@ -97,6 +100,7 @@ const DurationInput = forwardRef<TextInputRN, Props>(
           ref={input3}
           onSubmitEditing={() => onHandleSubmit(input3)}
           maxDecimals={0}
+          label={translate('seconds')}
         />
       </View>
     )
