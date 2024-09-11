@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { Menu } from 'react-native-paper'
 import { getSnapshot } from 'mobx-state-tree'
+import { DateTime } from 'luxon'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
@@ -10,8 +11,6 @@ import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, colors } from 'designSystem'
 import useBenchmark from 'app/utils/useBenchmark'
 
-import { capitalize } from 'lodash'
-import { DateTime } from 'luxon'
 import WorkoutTimer from '../Timer/WorkoutTimer'
 
 const WorkoutHeader: React.FC = () => {
@@ -25,11 +24,10 @@ const WorkoutHeader: React.FC = () => {
   const date = DateTime.fromISO(stateStore.openedDate)
   const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
   const todayDiff = Math.round(date.diff(today, 'days').days)
-  const dateLabel = capitalize(
+  const dateLabel =
     Math.abs(todayDiff) < 2
       ? date.toRelativeCalendar({ unit: 'days' })!
       : date.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
-  )
 
   function openCalendar() {
     navigate('Calendar')

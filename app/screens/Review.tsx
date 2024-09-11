@@ -12,6 +12,7 @@ import ExerciseHistoryStats from 'app/components/ExerciseStats/ExerciseHistorySt
 import ExerciseRecordStats from 'app/components/ExerciseStats/ExerciseRecordStats'
 import ExerciseRow from 'app/components/ExerciseRow'
 import EmptyState from 'app/components/EmptyState'
+import { translate } from 'app/i18n'
 
 export default function Review(props: {}) {
   const { stateStore } = useStores()
@@ -89,7 +90,7 @@ export default function Review(props: {}) {
         )}
 
         {!exerciseSelectOpen && !selectedExercise && (
-          <EmptyState text="Select an exercise to view data" />
+          <EmptyState text={translate('selectExerciseForData')} />
         )}
       </View>
     </EmptyLayout>
