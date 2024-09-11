@@ -41,9 +41,7 @@ export const WorkoutModel = types
     steps: types.array(WorkoutStepModel),
     notes: '',
     feeling: types.maybe(types.enumeration('feeling', Object.values(feelings))),
-    pain: types.maybe(
-      types.enumeration('pain', Object.values(painOptions)),
-    ),
+    pain: types.maybe(types.enumeration('pain', Object.values(painOptions))),
     intensity: types.optional(
       types.enumeration('intensity', Object.values(intensityOptions)),
       () => intensityOptions.standard
@@ -73,7 +71,7 @@ export const WorkoutModel = types
           if (!map[exercise.guid]) {
             map[exercise.guid] = []
           }
-          map[exercise.guid].push(step)
+          map[exercise.guid]!.push(step)
         })
       })
 
@@ -87,7 +85,9 @@ export const WorkoutModel = types
           if (!map[exercise.guid]) {
             map[exercise.guid] = []
           }
-          map[exercise.guid].push(...step.exerciseSetsMap[exercise.guid])
+          map[exercise.guid]!.push(
+            ...(step.exerciseSetsMap[exercise.guid] ?? [])
+          )
         })
       })
       return map
