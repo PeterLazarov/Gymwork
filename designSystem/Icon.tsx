@@ -31,6 +31,7 @@ const IoniconsIcons = [
   'pause-outline',
   'stop',
   'play',
+  'play-forward-outline',
   'settings-outline',
   'refresh-outline',
   'download-outline',
