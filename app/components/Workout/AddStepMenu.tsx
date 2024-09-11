@@ -43,7 +43,7 @@ const AddStepMenu = () => {
       action: () => navigate('WorkoutFeedback'),
     })
   }
-  const height = options.length * 50
+  const height = options.length * 80
 
   return (
     <View
@@ -62,11 +62,7 @@ const AddStepMenu = () => {
         <View
           style={{
             padding: 20,
-            width: '100%',
-            height,
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
+            flexGrow: 1,
             backgroundColor: colors.neutralLighter,
           }}
         >
@@ -78,23 +74,31 @@ const AddStepMenu = () => {
                   variant="neutral"
                 />
               )}
-              <PressableHighlight
-                onPress={() => {
-                  setVisible(false)
-                  option.action()
-                }}
+              <View
                 style={{
-                  padding: 10,
+                  flexGrow: 1,
                 }}
               >
-                <Text
+                <PressableHighlight
+                  onPress={() => {
+                    setVisible(false)
+                    option.action()
+                  }}
                   style={{
-                    fontSize: fontSize.md,
+                    flexGrow: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
                 >
-                  {option.text}
-                </Text>
-              </PressableHighlight>
+                  <Text
+                    style={{
+                      fontSize: fontSize.md,
+                    }}
+                  >
+                    {option.text}
+                  </Text>
+                </PressableHighlight>
+              </View>
             </Fragment>
           ))}
         </View>
