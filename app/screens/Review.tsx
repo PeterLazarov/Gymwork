@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from 'react'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { View } from 'react-native'
 
-import { Header, Icon, IconButton, colors } from 'designSystem'
+import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
@@ -17,8 +16,6 @@ import { translate } from 'app/i18n'
 export default function Review(props: {}) {
   const { stateStore } = useStores()
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
-
-  const Tab = createMaterialTopTabNavigator()
 
   const selectedExercise = useMemo(() => {
     return stateStore.reviewFocusedExercise ?? stateStore.focusedSet?.exercise
@@ -76,17 +73,28 @@ export default function Review(props: {}) {
         )}
 
         {!exerciseSelectOpen && selectedExercise && (
-          <Tab.Navigator>
-            <Tab.Screen name="Chart">
-              {() => <ExerciseChartStats exercise={selectedExercise} />}
-            </Tab.Screen>
-            <Tab.Screen name="Records">
-              {() => <ExerciseRecordStats exercise={selectedExercise} />}
-            </Tab.Screen>
-            <Tab.Screen name="History">
-              {() => <ExerciseHistoryStats exercise={selectedExercise} />}
-            </Tab.Screen>
-          </Tab.Navigator>
+          <SwipeTabs
+            tabsConfig={[
+              {
+                label: translate('chart'),
+                name: 'Chart',
+                component: ExerciseChartStats,
+                props: { exercise: selectedExercise },
+              },
+              {
+                label: translate('records'),
+                name: 'Records',
+                component: ExerciseRecordStats,
+                props: { exercise: selectedExercise },
+              },
+              {
+                label: translate('history'),
+                name: 'History',
+                component: ExerciseHistoryStats,
+                props: { exercise: selectedExercise },
+              },
+            ]}
+          />
         )}
 
         {!exerciseSelectOpen && !selectedExercise && (
