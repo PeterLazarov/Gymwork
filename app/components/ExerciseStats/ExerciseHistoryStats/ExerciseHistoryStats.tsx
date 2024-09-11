@@ -5,15 +5,15 @@ import { View } from 'react-native'
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import WorkoutExerciseHistoryList from './ExerciseHistoryList'
+import ExerciseHistoryList from './ExerciseHistoryList'
 import { colors } from 'designSystem'
 
 const ExerciseHistoryView: React.FC = () => {
-  const { stateStore, workoutStore, recordStore } = useStores()
+  const { stateStore, workoutStore } = useStores()
 
   const exercise = stateStore.focusedExercise
   const workoutsContained = exercise
-    ? workoutStore.exerciseWorkoutsHistoryMap[exercise.guid]
+    ? workoutStore.exerciseWorkoutsHistoryMap[exercise.guid] || []
     : []
 
   return (
@@ -29,9 +29,8 @@ const ExerciseHistoryView: React.FC = () => {
       }}
     >
       {exercise && workoutsContained.length > 0 ? (
-        <WorkoutExerciseHistoryList
+        <ExerciseHistoryList
           workouts={workoutsContained}
-          records={recordStore.exerciseRecordsMap[exercise.guid]}
           exercise={exercise}
         />
       ) : (

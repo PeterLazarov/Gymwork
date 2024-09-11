@@ -29,7 +29,7 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
     legend: {
       data: Object.keys(series), // the .name of series[number]
       selected: Object.keys(series).reduce((obj, curr) =>
-        Object.assign({ [curr]: series[curr].initiallySelected })
+        Object.assign({ [curr]: series[curr]!.initiallySelected })
       ),
     },
     yAxis: {
@@ -57,7 +57,7 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
       symbol: 'circle',
       showAllSymbol: true,
       connectNulls: true,
-      lineStyle: { color: series[name].color },
+      lineStyle: { color: series[name]!.color },
     })),
   })
 

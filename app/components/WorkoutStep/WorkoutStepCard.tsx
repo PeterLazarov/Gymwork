@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react'
-import { computed } from 'mobx'
+import React from 'react'
 import { observer } from 'mobx-react-lite'
 
 import StepSetsList from './StepSetsList'
@@ -13,21 +12,16 @@ type Props = {
 }
 
 const WorkoutStepCard: React.FC<Props> = ({ step }) => {
-  const { stateStore, recordStore } = useStores()
+  const { stateStore } = useStores()
 
   function onCardPress() {
     stateStore.setFocusedStep(step.guid)
     navigate('WorkoutStep')
   }
 
-  const exerciseRecords = useMemo(
-    () => computed(() => recordStore.exerciseRecordsMap[step.exercise.guid]),
-    [step.sets]
-  ).get()
-
   const title =
     step.type === 'straightSet'
-      ? step.exercise.name
+      ? step.exercise!.name
       : step.exercises
           .map(e => `${step.exerciseLettering[e.guid]}. ${e.name}`)
           .join('\n')
@@ -36,12 +30,7 @@ const WorkoutStepCard: React.FC<Props> = ({ step }) => {
     <Card
       onPress={onCardPress}
       title={title}
-      content={
-        <StepSetsList
-          step={step}
-          records={exerciseRecords}
-        />
-      }
+      content={<StepSetsList step={step} />}
     />
   )
 }

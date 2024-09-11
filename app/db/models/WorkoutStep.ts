@@ -16,6 +16,7 @@ import { WorkoutSet, WorkoutSetModel, WorkoutSetSnapshotIn } from './WorkoutSet'
 import { RecordStore } from '../stores/RecordStore'
 import { getDataFieldForKey } from 'app/services/workoutRecordsCalculator'
 import { alphabeticNumbering } from 'app/utils/string'
+import { ExerciseRecord } from './ExerciseRecord'
 
 const stepType = {
   straightSet: 'straightSet',
@@ -35,8 +36,20 @@ export const WorkoutStepModel = types
       const rootStore = getParentOfType(step, RootStoreModel)
       return rootStore.recordStore
     },
-    get exerciseRecords() {
-      return this.recordStore.getExerciseRecords(this.exercise!.guid)
+    get exerciseRecordsMap() {
+      return step.exercises.reduce(
+        (map, exercise) => {
+          map[exercise.guid] = this.recordStore.getExerciseRecords(exercise.guid)
+          return map
+        },
+        {} as Record<Exercise['guid'], ExerciseRecord>
+      )
+    },
+    get recordSetGuids(): WorkoutSet['guid'][] {
+      return Object.values(this.exerciseRecordsMap)
+        .flatMap<WorkoutSet>(r => r.recordSets)
+        .filter(recordSet => step.sets.some(set => set.guid === recordSet.guid))
+        .map(set => set.guid)
     },
     get lastSet() {
       return step.sets.at(-1)
@@ -78,7 +91,7 @@ export const WorkoutStepModel = types
       if (deletedSet) {
         const { exercise } = deletedSet
 
-        const records = step.exerciseRecords
+        const records = step.exerciseRecordsMap[exercise.guid]!
         const isRecordBool = records.recordSetsMap.hasOwnProperty(
           deletedSet.guid
         )
@@ -97,7 +110,7 @@ export const WorkoutStepModel = types
         return set.guid === updatedSetData.guid
       })!
 
-      const records = step.exerciseRecords
+      const records = step.exerciseRecordsMap[setToUpdate.exercise.guid]!
       const isOldSetRecord = records.recordSetsMap.hasOwnProperty(
         setToUpdate.guid
       )

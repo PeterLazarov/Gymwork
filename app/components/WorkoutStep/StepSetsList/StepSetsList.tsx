@@ -2,25 +2,20 @@ import React from 'react'
 import { observer } from 'mobx-react-lite'
 
 import SetListItem from './SetListItem'
-import { ExerciseRecord, WorkoutSet, WorkoutStep } from 'app/db/models'
+import { WorkoutSet, WorkoutStep } from 'app/db/models'
 import { useStores } from 'app/db/helpers/useStores'
 
 type Props = {
   step: WorkoutStep
-  records?: ExerciseRecord
   splitSupersets?: boolean
 }
 
-const StepSetsList: React.FC<Props> = ({
-  step,
-  records,
-  splitSupersets = false,
-}) => {
+const StepSetsList: React.FC<Props> = ({ step, splitSupersets = false }) => {
   const { stateStore } = useStores()
 
-  const sets = splitSupersets
-    ? step.exerciseSetsMap[records!.exercise.guid]
-    : step.sets
+  const exerciseSets =
+    step.exerciseSetsMap[stateStore.focusedExerciseGuid!] || []
+  const sets = splitSupersets ? exerciseSets : step.sets
 
   const getLetterForSet = (set: WorkoutSet) => {
     if (step.type === 'straightSet' || splitSupersets) return
@@ -32,9 +27,8 @@ const StepSetsList: React.FC<Props> = ({
 
     if (step.type === 'straightSet') return step.workSets.indexOf(set) + 1
 
-    const workSets = step.exerciseSetsMap[set.exercise.guid].filter(
-      s => !s.isWarmup
-    )
+    const exerciseSets = step.exerciseSetsMap[set.exercise.guid] || []
+    const workSets = exerciseSets.filter(s => !s.isWarmup)
     return workSets.indexOf(set) + 1
   }
 
@@ -45,9 +39,7 @@ const StepSetsList: React.FC<Props> = ({
           key={set.guid}
           set={set}
           exercise={set.exercise!}
-          isRecord={
-            records ? records.recordSetsMap.hasOwnProperty(set.guid) : false
-          }
+          isRecord={step.recordSetGuids.includes(set.guid)}
           isFocused={stateStore.focusedSetGuid === set.guid}
           number={getNumberForSet(set)}
           letter={getLetterForSet(set)}

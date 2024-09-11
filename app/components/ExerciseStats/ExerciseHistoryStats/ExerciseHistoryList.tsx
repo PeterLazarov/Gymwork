@@ -2,25 +2,14 @@ import React, { useCallback, useMemo } from 'react'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
 import ExerciseHistoryListItem from './ExerciseHistoryListItem'
-import {
-  Exercise,
-  ExerciseRecord,
-  Workout,
-  WorkoutModel,
-  WorkoutStep,
-} from 'app/db/models'
+import { Exercise, Workout, WorkoutModel, WorkoutStep } from 'app/db/models'
 import { getParentOfType } from 'mobx-state-tree'
 
 type Props = {
   workouts: Workout[]
-  records: ExerciseRecord
   exercise: Exercise
 }
-const WorkoutExerciseHistoryList: React.FC<Props> = ({
-  workouts,
-  records,
-  exercise,
-}) => {
+const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<WorkoutStep>) => {
       const workout = getParentOfType(item, WorkoutModel)
@@ -30,16 +19,15 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({
           key={item.guid}
           date={workout.date}
           step={item}
-          records={records}
           exercise={exercise}
         />
       )
     },
-    [records]
+    []
   )
 
   const steps = useMemo(() => {
-    return workouts.flatMap(w => w.exerciseStepsMap[exercise.guid])
+    return workouts.flatMap(w => w.exerciseStepsMap[exercise.guid]!)
   }, [workouts])
 
   return (
@@ -52,4 +40,4 @@ const WorkoutExerciseHistoryList: React.FC<Props> = ({
   )
 }
 
-export default WorkoutExerciseHistoryList
+export default ExerciseHistoryList

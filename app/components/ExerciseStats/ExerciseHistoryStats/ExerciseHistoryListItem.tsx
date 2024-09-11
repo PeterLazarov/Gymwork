@@ -2,17 +2,16 @@ import { DateTime } from 'luxon'
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import { Exercise, ExerciseRecord, WorkoutStep } from 'app/db/models'
+import { Exercise, WorkoutStep } from 'app/db/models'
 import { Divider, fontSize, colors } from 'designSystem'
 import StepSetsList from 'app/components/WorkoutStep/StepSetsList'
 
 type Props = {
   date: string
   step: WorkoutStep
-  records: ExerciseRecord
   exercise: Exercise
 }
-const ExerciseHistoryListItem: React.FC<Props> = ({ date, step, records }) => {
+const ExerciseHistoryListItem: React.FC<Props> = ({ date, step }) => {
   return (
     <View
       style={{
@@ -36,7 +35,6 @@ const ExerciseHistoryListItem: React.FC<Props> = ({ date, step, records }) => {
       <View style={{ padding: 4 }}>
         <StepSetsList
           step={step}
-          records={records}
           splitSupersets
         />
       </View>

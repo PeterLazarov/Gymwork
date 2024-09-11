@@ -21,12 +21,7 @@ const SetEditList: React.FC<Props> = ({
   selectedSet,
   setSelectedSet,
 }) => {
-  const { stateStore, recordStore } = useStores()
-
-  const records =
-    sets.length > 0
-      ? recordStore.exerciseRecordsMap[sets[0]!.exercise.guid]
-      : null
+  const { stateStore } = useStores()
 
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
@@ -39,7 +34,9 @@ const SetEditList: React.FC<Props> = ({
       onDragEnd,
       isActive,
     }: DragListRenderItemInfo<WorkoutSet>) => {
-      const isRecord = records?.recordSetsMap.hasOwnProperty(item.guid)
+      const isRecord = stateStore.focusedStep!.recordSetGuids.includes(
+        item.guid
+      )
 
       return (
         <PressableHighlight
@@ -75,7 +72,7 @@ const SetEditList: React.FC<Props> = ({
         </PressableHighlight>
       )
     },
-    [selectedSet, records]
+    [selectedSet]
   )
 
   const ITEM_HEIGHT = 62
