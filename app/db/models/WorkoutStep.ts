@@ -52,7 +52,7 @@ export const WorkoutStepModel = types
         if (!map[set.exercise.guid]) {
           map[set.exercise.guid] = []
         }
-        map[set.exercise.guid].push(set)
+        map[set.exercise.guid]!.push(set)
         return map
       }, {} as Record<Exercise['guid'], WorkoutSet[]>)
     },
@@ -63,7 +63,7 @@ export const WorkoutStepModel = types
       }, {} as Record<Exercise['guid'], string>)
     },
     get name() {
-      return step.type === 'straightSet' ? this.exercise.name : 'Superset'
+      return step.type === 'straightSet' ? this.exercise!.name : 'Superset'
     },
   }))
   .actions(withSetPropAction)

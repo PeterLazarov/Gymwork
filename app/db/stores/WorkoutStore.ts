@@ -44,7 +44,7 @@ export const WorkoutStoreModel = types
           if (!acc[exercise.guid]) {
             acc[exercise.guid] = []
           }
-          acc[exercise.guid].push(workout)
+          acc[exercise.guid]!.push(workout)
         })
 
         return acc
@@ -57,7 +57,7 @@ export const WorkoutStoreModel = types
         Object.entries(this.exerciseWorkoutsHistoryMap).map(
           ([exerciseID, workouts]) => {
             const sets = workouts.flatMap<WorkoutSet>(
-              w => w.exerciseSetsMap[exerciseID]
+              w => w.exerciseSetsMap[exerciseID] || []
             )
 
             return [exerciseID, sets]
@@ -68,9 +68,10 @@ export const WorkoutStoreModel = types
 
     get mostUsedExercises(): Exercise[] {
       return Object.entries(this.exerciseSetsHistoryMap)
+        .filter(([, sets]) => sets.length > 0)
         .sort(([, e1Sets], [, e2Sets]) => e1Sets.length - e2Sets.length)
         .slice(0, 10)
-        .map(([, [{ exercise }]]) => exercise)
+        .map(([, sets]) => sets[0]!.exercise)
     },
 
     get sortedWorkouts(): Workout[] {

@@ -25,7 +25,7 @@ const SetEditList: React.FC<Props> = ({
 
   const records =
     sets.length > 0
-      ? recordStore.exerciseRecordsMap[sets[0].exercise.guid]
+      ? recordStore.exerciseRecordsMap[sets[0]!.exercise.guid]
       : null
 
   function toggleSelectedSet(set: WorkoutSet) {
@@ -39,7 +39,7 @@ const SetEditList: React.FC<Props> = ({
       onDragEnd,
       isActive,
     }: DragListRenderItemInfo<WorkoutSet>) => {
-      const isRecord = records!.recordSetsMap.hasOwnProperty(item.guid)
+      const isRecord = records?.recordSetsMap.hasOwnProperty(item.guid)
 
       return (
         <PressableHighlight
@@ -101,7 +101,7 @@ const SetEditList: React.FC<Props> = ({
 
   function calcWorkSetNumber(set: WorkoutSet) {
     const exerciseSets =
-      stateStore.focusedStep!.exerciseSetsMap[set.exercise.guid]
+      stateStore.focusedStep!.exerciseSetsMap[set.exercise.guid] || []
     const workArrayIndex = exerciseSets.filter(s => !s.isWarmup).indexOf(set)
     return workArrayIndex + 1
   }

@@ -67,10 +67,17 @@ export const RecordStoreModel = types
       return exerciseRecords
     },
     runSetUpdatedCheck(updatedSet: WorkoutSet) {
-      const records = self.exerciseRecordsMap[updatedSet.exercise.guid]
+      let records = self.exerciseRecordsMap[updatedSet.exercise.guid]
 
-      const isNewRecordBool = records.isNewRecord(updatedSet)
-      if (isNewRecordBool) {
+      if (!records) {
+        records = ExerciseRecordModel.create({
+          exercise: updatedSet.exercise.guid,
+          recordSets: [],
+        })
+        self.records.push(records)
+      }
+
+      if (records.isNewRecord(updatedSet)) {
         records.setNewRecord(updatedSet)
       }
     },
