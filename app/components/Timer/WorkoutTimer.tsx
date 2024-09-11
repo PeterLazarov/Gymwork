@@ -9,7 +9,7 @@ const WorkoutTimer: React.FC<Text['props']> = props => {
   const { stateStore } = useStores()
 
   const workoutStart = useMemo(() => {
-    return stateStore.openedWorkout?.firstSet.createdAt
+    return stateStore.openedWorkout?.firstSet?.createdAt
   }, [stateStore.openedWorkout])
 
   // TODO sets need to be added on the same day to count
