@@ -74,31 +74,26 @@ const AddStepMenu = () => {
                   variant="neutral"
                 />
               )}
-              <View
+
+              <PressableHighlight
+                onPress={() => {
+                  setVisible(false)
+                  option.action()
+                }}
                 style={{
                   flexGrow: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                <PressableHighlight
-                  onPress={() => {
-                    setVisible(false)
-                    option.action()
-                  }}
+                <Text
                   style={{
-                    flexGrow: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    fontSize: fontSize.md,
                   }}
                 >
-                  <Text
-                    style={{
-                      fontSize: fontSize.md,
-                    }}
-                  >
-                    {option.text}
-                  </Text>
-                </PressableHighlight>
-              </View>
+                  {option.text}
+                </Text>
+              </PressableHighlight>
             </Fragment>
           ))}
         </View>
