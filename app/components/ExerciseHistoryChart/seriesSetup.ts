@@ -1,7 +1,6 @@
 import { oneRepMaxEpley } from 'fitness-calc'
 
 import {
-  DistanceUnit,
   Exercise,
   WorkoutSet,
   isImperialDistance,
@@ -32,7 +31,7 @@ const seriesSetup = ({ data }: Props) => {
     )
   }
 
-  const speedFormatter = (distanceUnit: DistanceUnit) => {
+  const speedFormatter = () => {
     return data.map(
       sets =>
         sets?.reduce(
@@ -52,7 +51,7 @@ const seriesSetup = ({ data }: Props) => {
     ]
 
     if (exercise.measurements?.weight) {
-      series.Weight = {
+      series['Max Weight'] = {
         data: singleMetricFormatter('weight'),
         color: colorsStack.pop()!,
         initiallySelected: true,
@@ -68,7 +67,7 @@ const seriesSetup = ({ data }: Props) => {
       }
     }
     if (exercise.measurements?.distance) {
-      series.Distance = {
+      series['Max Distance'] = {
         data: singleMetricFormatter('distance'),
         color: colorsStack.pop()!,
         initiallySelected: true,
@@ -83,8 +82,8 @@ const seriesSetup = ({ data }: Props) => {
           : measurementUnits.distance.km
         const durationUnit = measurementUnits.duration.h
 
-        series.Speed = {
-          data: speedFormatter(distanceUnit),
+        series['Max Speed'] = {
+          data: speedFormatter(),
           color: colorsStack.pop()!,
           initiallySelected: false,
           unit: `${distanceUnit}/${durationUnit}`,
@@ -92,7 +91,7 @@ const seriesSetup = ({ data }: Props) => {
       }
     }
     if (exercise.measurements?.duration) {
-      series.Duration = {
+      series['Max Duration'] = {
         data: singleMetricFormatter('duration'),
         color: colorsStack.pop()!,
         initiallySelected: false,
@@ -100,7 +99,7 @@ const seriesSetup = ({ data }: Props) => {
       }
     }
     if (exercise.measurements?.rest) {
-      series.Rest = {
+      series['Max Rest'] = {
         data: singleMetricFormatter('rest'),
         color: colorsStack.pop()!,
         initiallySelected: false,

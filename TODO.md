@@ -21,7 +21,6 @@
 - Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 - optimise calendar rendering
 - grouping / measurement by rest
-- fix Speed chart miscalculation
 - template steps list editting rearranging and or adding
 - Alphabetically nubmer supersets if multiple in same workout?
 
