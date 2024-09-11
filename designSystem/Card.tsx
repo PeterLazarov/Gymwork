@@ -7,7 +7,10 @@ import {
   TouchableWithoutFeedbackProps,
 } from 'react-native-gesture-handler'
 
-type CardProps = Omit<TouchableWithoutFeedbackProps, 'containerStyle'> & {
+export type CardProps = Omit<
+  TouchableWithoutFeedbackProps,
+  'containerStyle'
+> & {
   title?: string
   content: React.ReactNode
   containerStyle?: ViewStyle

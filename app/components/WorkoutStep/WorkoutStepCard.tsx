@@ -1,24 +1,14 @@
 import React from 'react'
-import { observer } from 'mobx-react-lite'
-
 import StepSetsList from './StepSetsList'
-import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
 import { Card } from 'designSystem'
-import { navigate } from 'app/navigators'
+import { CardProps } from 'designSystem/Card'
 
-type Props = {
+export type WorkoutStepCardProps = {
   step: WorkoutStep
-}
+} & Partial<CardProps>
 
-const WorkoutStepCard: React.FC<Props> = ({ step }) => {
-  const { stateStore } = useStores()
-
-  function onCardPress() {
-    stateStore.setFocusedStep(step.guid)
-    navigate('WorkoutStep')
-  }
-
+const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, ...rest }) => {
   const title =
     step.type === 'straightSet'
       ? step.exercise!.name
@@ -28,11 +18,11 @@ const WorkoutStepCard: React.FC<Props> = ({ step }) => {
 
   return (
     <Card
-      onPress={onCardPress}
       title={title}
       content={<StepSetsList step={step} />}
+      {...rest}
     />
   )
 }
 
-export default observer(WorkoutStepCard)
+export default WorkoutStepCard
