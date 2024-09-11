@@ -5,7 +5,7 @@ import { Text } from 'react-native'
 import { clearDriftless, setDriftlessInterval } from 'driftless'
 import { Duration } from 'luxon'
 
-const WorkoutTimer: React.FC = () => {
+const WorkoutTimer: React.FC<Text['props']> = props => {
   const { stateStore } = useStores()
 
   const workoutStart = useMemo(() => {
@@ -61,7 +61,7 @@ const WorkoutTimer: React.FC = () => {
     return cleanup
   }, [stateStore.openedWorkout])
 
-  return shownDuration && <Text>Duration :{shownDuration}</Text>
+  return shownDuration && <Text {...props}>Duration :{shownDuration}</Text>
 }
 
 export default observer(WorkoutTimer)

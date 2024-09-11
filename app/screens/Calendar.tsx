@@ -54,7 +54,7 @@ const CalendarScreen: React.FC = () => {
   )
 
   function onBackPress() {
-    navigate('Workout')
+    navigate('Home')
   }
 
   function handleCalendarDayPress(date: Date) {
@@ -68,12 +68,12 @@ const CalendarScreen: React.FC = () => {
   }
   function goToDay(date: string) {
     stateStore.setOpenedDate(date)
-    navigate('Workout')
+    navigate('Home')
   }
 
   function onModalAction() {
     setOpenedWorkoutDialogDate('')
-    navigate('Workout')
+    navigate('Home')
   }
 
   // ! must be a whole number

@@ -15,7 +15,7 @@ const StepHeader: React.FC = () => {
   const deleteSelectedExercises = () => {
     stateStore.openedWorkout!.removeStep(stateStore.focusedStep!)
     stateStore.setFocusedStep('')
-    navigate('Workout')
+    navigate('Home')
   }
 
   function onEditExercisePress() {
@@ -25,7 +25,7 @@ const StepHeader: React.FC = () => {
 
   function goBack() {
     stateStore.setProp('focusedStepGuid', '')
-    navigate('Workout')
+    navigate('Home')
   }
 
   return (

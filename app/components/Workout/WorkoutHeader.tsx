@@ -10,12 +10,26 @@ import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, colors } from 'designSystem'
 import useBenchmark from 'app/utils/useBenchmark'
 
+import { capitalize } from 'lodash'
+import { DateTime } from 'luxon'
+import WorkoutTimer from '../Timer/WorkoutTimer'
+
 const WorkoutHeader: React.FC = () => {
   const { stateStore, workoutStore } = useStores()
 
   const { openedWorkout, showCommentsCard } = stateStore
   const [menuOpen, setMenuOpen] = useState(false)
   const { exportWorkouts, restoreWorkouts } = useExport()
+
+  // TODO dedupe with DayControl
+  const date = DateTime.fromISO(stateStore.openedDate)
+  const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
+  const todayDiff = Math.round(date.diff(today, 'days').days)
+  const dateLabel = capitalize(
+    Math.abs(todayDiff) < 2
+      ? date.toRelativeCalendar({ unit: 'days' })!
+      : date.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
+  )
 
   function openCalendar() {
     navigate('Calendar')
@@ -54,7 +68,8 @@ const WorkoutHeader: React.FC = () => {
 
   return (
     <Header>
-      <Header.Title title={'Gymwork'} />
+      <Header.Title title={dateLabel} />
+      <WorkoutTimer style={{ color: colors.primaryText }} />
 
       <IconButton
         onPress={openCalendar}

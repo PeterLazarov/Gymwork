@@ -26,7 +26,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
   const workout = stateStore.openedWorkout!
 
   function onBackPress() {
-    navigate('Workout')
+    navigate('Home')
   }
 
   const exhaustionOptions = [

@@ -23,6 +23,9 @@ export const StateStoreModel = types
     openedDate: types.optional(types.string, today.toISODate()!),
     draftSet: types.maybe(WorkoutSetModel),
     showCommentsCard: true,
+
+    // TODO consider how this works with workout focused exercise
+    reviewFocusedExerciseGuid: types.maybe(types.string),
   })
   .views(self => ({
     get rootStore(): RootStore {
@@ -52,6 +55,11 @@ export const StateStoreModel = types
         this.exerciseStore.exercisesMap[self.focusedExerciseGuid ?? ''] ||
         this.focusedSet?.exercise
       )
+    },
+    get reviewFocusedExercise(): Exercise | undefined {
+      return this.exerciseStore.exercisesMap[
+        self.reviewFocusedExerciseGuid ?? ''
+      ]
     },
     get openedWorkout(): Workout | undefined {
       return this.workoutStore.dateWorkoutMap[self.openedDate]

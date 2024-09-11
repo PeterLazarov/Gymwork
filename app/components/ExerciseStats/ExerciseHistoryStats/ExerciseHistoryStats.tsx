@@ -7,11 +7,16 @@ import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import ExerciseHistoryList from './ExerciseHistoryList'
 import { colors } from 'designSystem'
+import { Exercise } from 'app/db/models'
 
-const ExerciseHistoryView: React.FC = () => {
+export type ExerciseHistoryViewProps = {
+  exercise?: Exercise
+}
+
+const ExerciseHistoryView: React.FC<ExerciseHistoryViewProps> = props => {
   const { stateStore, workoutStore } = useStores()
 
-  const exercise = stateStore.focusedExercise
+  const exercise = props.exercise || stateStore.focusedExercise
   const workoutsContained = exercise
     ? workoutStore.exerciseWorkoutsHistoryMap[exercise.guid] || []
     : []
@@ -28,7 +33,7 @@ const ExerciseHistoryView: React.FC = () => {
         backgroundColor: colors.neutralLighter,
       }}
     >
-      {exercise && workoutsContained.length > 0 ? (
+      {exercise && workoutsContained?.length ? (
         <ExerciseHistoryList
           workouts={workoutsContained}
           exercise={exercise}

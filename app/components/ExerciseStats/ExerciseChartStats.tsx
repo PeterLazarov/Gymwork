@@ -9,8 +9,13 @@ import ExerciseHistoryChart, {
   CHART_VIEW_KEY,
 } from 'app/components/ExerciseHistoryChart'
 import { useStores } from 'app/db/helpers/useStores'
+import { Exercise } from 'app/db/models'
 
-const ExerciseChartStats: React.FC = () => {
+export type ExerciseChartStats = {
+  exercise?: Exercise
+}
+
+const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
   const { stateStore } = useStores()
   const [activeView, setActiveView] = useState<CHART_VIEW>(
     Object.keys(CHART_VIEWS)[0] as CHART_VIEW_KEY
@@ -43,7 +48,7 @@ const ExerciseChartStats: React.FC = () => {
           view={activeView}
           height={Dimensions.get('window').height - 280}
           width={Dimensions.get('window').width - 32}
-          exercise={stateStore.focusedExercise!}
+          exercise={exercise || stateStore.focusedExercise!}
         />
       </View>
 

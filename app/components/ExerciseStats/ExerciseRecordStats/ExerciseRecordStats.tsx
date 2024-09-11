@@ -8,13 +8,17 @@ import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
 import { colors } from 'designSystem'
-import { WorkoutSet } from 'app/db/models'
+import { Exercise, WorkoutSet } from 'app/db/models'
 import RecordsListItem from './RecordsListItem'
 
-const ExerciseRecordStats: React.FC = () => {
+export type ExerciseRecordStatsProps = {
+  exercise?: Exercise
+}
+
+const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
   const { stateStore, recordStore } = useStores()
 
-  const exercise = stateStore.focusedExercise!
+  const exercise = props.exercise || stateStore.focusedExercise!
   const focusedExerciseRecords = recordStore.exerciseRecordsMap[exercise.guid]
 
   const recordSets = useMemo(
@@ -32,7 +36,7 @@ const ExerciseRecordStats: React.FC = () => {
     stateStore.setOpenedDate(set.date)
     stateStore.setProp('focusedSetGuid', set.guid)
     stateStore.setProp('focusedExerciseGuid', set.exercise.guid)
-    navigate('Workout')
+    navigate('Home')
   }
 
   return (

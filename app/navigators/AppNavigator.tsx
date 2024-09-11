@@ -29,6 +29,7 @@ import SaveTemplate, {
 } from 'app/screens/SaveTemplate'
 import TemplateSelect from 'app/screens/TemplateSelect'
 import WorkoutStep from 'app/screens/WorkoutStep'
+import HomeScreen from 'app/screens/Home'
 
 /**
  * Documentation:
@@ -45,6 +46,7 @@ export type AppStackParamList = {
   WorkoutFeedback: undefined
   SaveTemplate: SaveTemplateScreenParams
   TemplateSelect: undefined
+  Home: undefined
 }
 
 export const useRouteParams = <T extends keyof AppStackParamList>(
@@ -79,7 +81,7 @@ const AppStack = observer(function AppStack() {
         navigationBarColor: colors.background,
       }}
       // initialRouteName={isAuthenticated ? 'Welcome' : 'Login'}
-      initialRouteName="Workout"
+      initialRouteName="Home"
     >
       {/* {isAuthenticated ? ( */}
       <>
@@ -95,9 +97,13 @@ const AppStack = observer(function AppStack() {
           name="ExerciseSelect"
           component={ExerciseSelect}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Workout"
           component={Workout}
+        /> */}
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
         />
         <Stack.Screen
           name="WorkoutStep"

@@ -21,7 +21,7 @@ export default function useBenchmark() {
 
     // go to today
     stateStore.setOpenedDate(DateTime.now().toISODate())
-    navigate('Workout')
+    navigate('Home')
 
     await delay(1000)
 
@@ -48,7 +48,7 @@ export default function useBenchmark() {
     set.setProp('reps', 12)
     newStep.addSet(set)
 
-    navigate('Workout')
+    navigate('Home')
 
     const finishTime = Date.now()
 
