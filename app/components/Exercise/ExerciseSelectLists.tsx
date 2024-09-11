@@ -3,21 +3,19 @@ import { View } from 'react-native'
 
 import { Exercise } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import FavoriteExercisesList from 'app/components/Exercise/FavoriteExercisesList'
 import AllExercisesList from 'app/components/Exercise/AllExercisesList'
 import MostUsedExercisesList from 'app/components/Exercise/MostUsedExercisesList'
 import { SwipeTabs } from 'designSystem'
 import { TabConfig } from 'designSystem/Tabs/types'
 
-export type ExerciseSelectSimpleParams = {
+type ExerciseSelectListsProps = {
   multiselect: boolean
   selected: Exercise[]
   onChange(exercises: Exercise[]): void
 }
 
-// TODO refactor ExerciseSelectScreen to use ExerciseSelectSimple
-const ExerciseSelectSimple: React.FC<ExerciseSelectSimpleParams> = ({
+const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
   multiselect,
   onChange,
   selected,
@@ -77,11 +75,9 @@ const ExerciseSelectSimple: React.FC<ExerciseSelectSimpleParams> = ({
   ]
 
   return (
-    <EmptyLayout>
-      <View style={{ flex: 1, alignItems: 'center' }}>
-        <SwipeTabs tabsConfig={tabsConfig} />
-      </View>
-    </EmptyLayout>
+    <View style={{ flex: 1, alignItems: 'center' }}>
+      <SwipeTabs tabsConfig={tabsConfig} />
+    </View>
   )
 }
-export default ExerciseSelectSimple
+export default ExerciseSelectLists

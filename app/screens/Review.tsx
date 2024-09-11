@@ -1,15 +1,15 @@
-import { useStores } from 'app/db/helpers/useStores'
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import React, { useMemo, useState } from 'react'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { View } from 'react-native'
 
 import { Header, Icon, IconButton, colors } from 'designSystem'
 
-import ExerciseSelectSimple from './ExerciseSelectSimple'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { useStores } from 'app/db/helpers/useStores'
+import { EmptyLayout } from 'app/layouts/EmptyLayouts'
+import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 import ExerciseChartStats from 'app/components/ExerciseStats/ExerciseChartStats'
 import ExerciseHistoryStats from 'app/components/ExerciseStats/ExerciseHistoryStats'
 import ExerciseRecordStats from 'app/components/ExerciseStats/ExerciseRecordStats'
-import { View } from 'react-native'
 import ExerciseRow from 'app/components/ExerciseRow'
 import EmptyState from 'app/components/EmptyState'
 
@@ -54,7 +54,7 @@ export default function Review(props: {}) {
         }}
       >
         {exerciseSelectOpen && (
-          <ExerciseSelectSimple
+          <ExerciseSelectLists
             multiselect={false}
             selected={[]}
             onChange={([e]) => {

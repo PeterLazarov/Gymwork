@@ -6,11 +6,8 @@ import { Exercise, WorkoutStep } from 'app/db/models'
 import { navigate, useRouteParams } from 'app/navigators'
 import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
-import FavoriteExercisesList from 'app/components/Exercise/FavoriteExercisesList'
-import AllExercisesList from 'app/components/Exercise/AllExercisesList'
-import MostUsedExercisesList from 'app/components/Exercise/MostUsedExercisesList'
-import { FAB, Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
-import { TabConfig } from 'designSystem/Tabs/types'
+import { FAB, Header, Icon, IconButton, colors } from 'designSystem'
+import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 
 export type ExerciseSelectScreenParams = {
   selectMode: WorkoutStep['type']
@@ -20,20 +17,6 @@ const ExerciseSelectScreen: React.FC = () => {
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([])
 
   const { selectMode } = useRouteParams('ExerciseSelect')
-
-  function toggleSelectedExercise(exercise: Exercise) {
-    if (!selectedExercises.includes(exercise)) {
-      setSelectedExercises(oldVal => {
-        const newSelected = [...oldVal, exercise]
-        return newSelected
-      })
-    } else {
-      setSelectedExercises(oldVal => {
-        const newSelected = oldVal.filter(e => e.guid !== exercise.guid)
-        return newSelected
-      })
-    }
-  }
 
   function createExercisesStep(exercises: Exercise[]) {
     if (!stateStore.openedWorkout) {
@@ -54,34 +37,6 @@ const ExerciseSelectScreen: React.FC = () => {
       createMode: true,
     })
   }
-
-  const props = {
-    onSelect:
-      selectMode === 'superSet'
-        ? toggleSelectedExercise
-        : (exercise: Exercise) => createExercisesStep([exercise]),
-    selectedExercises,
-  }
-  const tabsConfig: TabConfig<typeof props>[] = [
-    {
-      label: translate('favorite'),
-      name: 'tabFavorite',
-      component: FavoriteExercisesList,
-      props,
-    },
-    {
-      label: translate('mostUsed'),
-      name: 'tabMostUsed',
-      component: MostUsedExercisesList,
-      props,
-    },
-    {
-      label: translate('allExercises'),
-      name: 'tabAll',
-      component: AllExercisesList,
-      props,
-    },
-  ]
 
   const supersetTitle =
     selectedExercises.length > 0
@@ -120,7 +75,16 @@ const ExerciseSelectScreen: React.FC = () => {
           </IconButton>
         </Header>
 
-        <SwipeTabs tabsConfig={tabsConfig} />
+        <ExerciseSelectLists
+          multiselect={selectMode === 'superSet'}
+          selected={selectedExercises}
+          onChange={
+            selectMode === 'superSet'
+              ? setSelectedExercises
+              : createExercisesStep
+          }
+        />
+
         {selectMode === 'superSet' && (
           <FAB
             icon="check"
