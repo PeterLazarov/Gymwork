@@ -25,7 +25,9 @@ const ExerciseSelectScreen: React.FC = () => {
     const newStep = stateStore.openedWorkout!.addStep(exercises, selectMode)
     stateStore.setFocusedStep(newStep.guid)
     stateStore.setProp('focusedExerciseGuid', newStep.exercises[0]?.guid)
-    navigate('WorkoutStep')
+
+    stateStore.setProp('homepageTabIndex', 1)
+    navigate('Home')
   }
 
   function onBackPress() {

@@ -1,7 +1,14 @@
 import React, { useMemo, useState } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
-import { Header, Icon, IconButton, SwipeTabs, colors } from 'designSystem'
+import {
+  Header,
+  Icon,
+  IconButton,
+  PressableHighlight,
+  SwipeTabs,
+  colors,
+} from 'designSystem'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { EmptyLayout } from 'app/layouts/EmptyLayouts'
@@ -12,34 +19,70 @@ import ExerciseRecordStats from 'app/components/ExerciseStats/ExerciseRecordStat
 import ExerciseRow from 'app/components/ExerciseRow'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
+import { observer } from 'mobx-react-lite'
 
-export default function Review(props: {}) {
+export default observer(function Review(props: {}) {
   const { stateStore } = useStores()
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
 
   const selectedExercise = useMemo(() => {
-    return stateStore.reviewFocusedExercise ?? stateStore.focusedSet?.exercise
+    return stateStore.reviewFocusedExercise ?? stateStore.focusedExercise
   }, [stateStore.reviewFocusedExercise, stateStore.focusedSet?.exercise])
 
-  const rowOptions = useMemo(() => {
-    return stateStore.focusedStep?.exercises?.includes(
-      //   @ts-ignore
-      stateStore.reviewFocusedExercise ?? stateStore.focusedSet?.exercise
-    )
-      ? stateStore.focusedStep?.exercises
-      : []
-  }, [selectedExercise, stateStore.focusedStep?.exercises])
+  // const rowOptions = useMemo(() => {
+  //   return stateStore.focusedStep?.exercises?.includes(
+  //     //   @ts-ignore
+  //     stateStore.reviewFocusedExercise ?? stateStore.focusedSet?.exercise
+  //   )
+  //     ? stateStore.focusedStep?.exercises
+  //     : []
+  // }, [selectedExercise, stateStore.focusedStep?.exercises])
 
   return (
     <EmptyLayout>
       <Header>
-        <Header.Title title={selectedExercise?.name ?? 'Review'} />
+        {exerciseSelectOpen && (
+          <IconButton
+            onPress={() => setExerciseSelectOpen(false)}
+            underlay="darker"
+          >
+            <Icon
+              color={colors.primaryText}
+              icon="chevron-back"
+            />
+          </IconButton>
+        )}
+
+        <Header.Title
+          title={
+            exerciseSelectOpen
+              ? translate('selectExercise')
+              : selectedExercise?.name ?? 'Review'
+          }
+        />
+
+        {stateStore.focusedExercise && (
+          <IconButton
+            onPress={() =>
+              stateStore.setProp(
+                'reviewFocusedExerciseGuid',
+                stateStore.focusedExerciseGuid
+              )
+            }
+            underlay="darker"
+          >
+            <Icon
+              icon="dumbbell"
+              color={colors.primaryText}
+            />
+          </IconButton>
+        )}
         <IconButton
           onPress={() => setExerciseSelectOpen(true)}
           underlay="darker"
         >
           <Icon
-            icon="dumbbell"
+            icon="list-outline"
             color={colors.primaryText}
           />
         </IconButton>
@@ -62,7 +105,7 @@ export default function Review(props: {}) {
           />
         )}
 
-        {!exerciseSelectOpen && (
+        {/* {!exerciseSelectOpen && (
           <ExerciseRow
             selected={selectedExercise}
             onPress={() => {
@@ -70,7 +113,7 @@ export default function Review(props: {}) {
             }}
             options={rowOptions}
           />
-        )}
+        )} */}
 
         {!exerciseSelectOpen && selectedExercise && (
           <SwipeTabs
@@ -98,9 +141,14 @@ export default function Review(props: {}) {
         )}
 
         {!exerciseSelectOpen && !selectedExercise && (
-          <EmptyState text={translate('selectExerciseForData')} />
+          <PressableHighlight
+            style={{ flex: 1 }}
+            onPress={() => setExerciseSelectOpen(true)}
+          >
+            <EmptyState text={translate('selectExerciseForData')} />
+          </PressableHighlight>
         )}
       </View>
     </EmptyLayout>
   )
-}
+})

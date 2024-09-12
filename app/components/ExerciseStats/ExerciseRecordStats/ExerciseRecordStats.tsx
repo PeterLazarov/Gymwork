@@ -36,7 +36,9 @@ const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
     stateStore.setOpenedDate(set.date)
     stateStore.setProp('focusedSetGuid', set.guid)
     stateStore.setProp('focusedExerciseGuid', set.exercise.guid)
-    navigate('Home')
+
+    stateStore.setProp('homepageTabIndex', 1)
+    navigate('Home') // TODO navigate to workout
   }
 
   return (

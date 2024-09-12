@@ -5,9 +5,12 @@ import { colors, boxShadows, Icon } from 'designSystem'
 import { BottomNavigation } from 'react-native-paper'
 import Workout from './Workout'
 import Review from './Review'
+import { View } from 'react-native'
+import { useStores } from 'app/db/helpers/useStores'
 
 const HomeScreen: React.FC = () => {
-  const [index, setIndex] = useState(1)
+  const { stateStore } = useStores()
+  const [index, setIndex] = useState(stateStore.homepageTabIndex)
 
   const routes = useMemo(
     () => [
@@ -32,7 +35,7 @@ const HomeScreen: React.FC = () => {
   const renderScene = BottomNavigation.SceneMap({
     review: Review,
     workout: Workout,
-    plan: Workout,
+    plan: View,
   })
 
   return (

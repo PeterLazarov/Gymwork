@@ -42,6 +42,7 @@ const IoniconsIcons = [
   'star-outline',
   'star',
   'flame',
+  'list-outline',
 ] as const satisfies readonly (keyof typeof Ionicons.glyphMap)[]
 type IonicIcon = (typeof IoniconsIcons)[number]
 

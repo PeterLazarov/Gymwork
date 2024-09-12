@@ -54,6 +54,7 @@ const CalendarScreen: React.FC = () => {
   )
 
   function onBackPress() {
+    stateStore.setProp('homepageTabIndex', 1)
     navigate('Home')
   }
 
@@ -68,11 +69,13 @@ const CalendarScreen: React.FC = () => {
   }
   function goToDay(date: string) {
     stateStore.setOpenedDate(date)
+    stateStore.setProp('homepageTabIndex', 1)
     navigate('Home')
   }
 
   function onModalAction() {
     setOpenedWorkoutDialogDate('')
+    stateStore.setProp('homepageTabIndex', 1)
     navigate('Home')
   }
 

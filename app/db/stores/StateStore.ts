@@ -26,6 +26,8 @@ export const StateStoreModel = types
 
     // TODO consider how this works with workout focused exercise
     reviewFocusedExerciseGuid: types.maybe(types.string),
+
+    homepageTabIndex: 1,
   })
   .views(self => ({
     get rootStore(): RootStore {

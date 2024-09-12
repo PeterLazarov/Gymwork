@@ -106,10 +106,6 @@ const AppStack = observer(function AppStack() {
           component={HomeScreen}
         />
         <Stack.Screen
-          name="WorkoutStep"
-          component={WorkoutStep}
-        />
-        <Stack.Screen
           name="WorkoutFeedback"
           component={WorkoutFeedback}
         />
