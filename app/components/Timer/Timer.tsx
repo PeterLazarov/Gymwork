@@ -2,12 +2,11 @@ import { observer } from 'mobx-react-lite'
 import React, { forwardRef, useMemo, useState } from 'react'
 import { TextInput, View } from 'react-native'
 import { Duration } from 'luxon'
+import { AnimatedCircularProgress } from 'react-native-circular-progress'
 
 import TimerEditModal from '../TimerEditModal'
 import useTimer from 'app/db/stores/useTimer'
-import { IconButton, Icon, colors } from 'designSystem'
-import NumberInput from '../NumberInput'
-import { AnimatedCircularProgress } from 'react-native-circular-progress'
+import { IconButton, Icon, colors, NumberInput } from 'designSystem'
 
 const Timer = forwardRef<TextInput>((_, ref) => {
   const restTimer = useTimer()

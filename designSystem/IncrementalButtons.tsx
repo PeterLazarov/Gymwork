@@ -1,6 +1,7 @@
+import React from 'react'
 import { StyleProp, View, ViewStyle } from 'react-native'
 
-import { Icon, PressableHighlight, colors } from 'designSystem'
+import { Icon, PressableHighlight, colors } from '.'
 
 type Props = {
   value: number

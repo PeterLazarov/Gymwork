@@ -1,9 +1,10 @@
 import { forwardRef, useState } from 'react'
 import { TextInput, View } from 'react-native'
+import convert from 'convert-units'
+
 import { Select } from './Select'
 import { DistanceUnit, measurementUnits } from 'app/db/models'
-import NumberInput, { NumberInputProps } from 'app/components/NumberInput'
-import convert from 'convert-units'
+import { NumberInput, NumberInputProps } from 'designSystem'
 
 type _Props = {
   value: number

@@ -1,12 +1,10 @@
 import React from 'react'
 import { Text, View } from 'react-native'
+import { HelperText } from 'react-native-paper'
 
 import { ExerciseMeasurement, measurementUnits } from 'app/db/models'
-
-import { Select, ToggleSwitch, fontSize } from 'designSystem'
+import { NumberInput, Select, ToggleSwitch, fontSize } from 'designSystem'
 import { translate } from 'app/i18n'
-import NumberInput from '../NumberInput'
-import { HelperText } from 'react-native-paper'
 
 type Props = {
   measurementConfig: ExerciseMeasurement

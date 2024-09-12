@@ -7,8 +7,8 @@ import {
   DistanceEditor,
   DurationInput,
   IncrementNumericEditor,
+  manageInputFocus,
 } from 'designSystem'
-import manageInputFocus from 'app/utils/inputFocus'
 import convert from 'convert-units'
 import { observer } from 'mobx-react-lite'
 import Timer from 'app/components/Timer/Timer'

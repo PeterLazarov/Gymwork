@@ -1,7 +1,8 @@
-import { colors } from 'designSystem'
 import React, { forwardRef, useEffect, useState } from 'react'
 import { TextInput as TextInputRN } from 'react-native'
 import { TextInput, TextInputProps } from 'react-native-paper'
+
+import { colors } from '.'
 
 type _NumberInputProps = {
   value: number
@@ -21,7 +22,7 @@ const defaultMaxDigits = 4
 const defaultMaxDecimals = 2
 const defaultMaxLength = defaultMaxDigits + defaultMaxDecimals + 1
 
-const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
+export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
   (
     {
       value,
@@ -80,5 +81,3 @@ const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
     )
   }
 )
-
-export default NumberInput

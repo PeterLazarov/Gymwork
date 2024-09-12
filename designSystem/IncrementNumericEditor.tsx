@@ -1,8 +1,7 @@
 import React, { forwardRef } from 'react'
 import { TextInput, TextInputProps } from 'react-native'
 
-import IncrementalButtons from 'app/components/IncrementalButtons'
-import NumberInput from 'app/components/NumberInput'
+import { IncrementalButtons, NumberInput } from 'designSystem'
 
 type Props = {
   value: number

@@ -1,6 +1,6 @@
 import { TextInput } from 'react-native'
 
-export default function manageInputFocus(
+export function manageInputFocus(
   inputRefs: React.RefObject<TextInput>[],
   handleSubmit: (ref: React.RefObject<TextInput>) => void
 ) {
@@ -13,7 +13,7 @@ export default function manageInputFocus(
       handleSubmit(currInputRef)
     } else {
       const nextInput = inputRefs[inputRefs.indexOf(currInputRef) + 1]
-      nextInput.current?.focus()
+      nextInput?.current?.focus()
     }
   }
 
