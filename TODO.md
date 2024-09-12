@@ -4,6 +4,7 @@
 - Exercise Edit
   - muscle areas plus icon is not implemented
   - edit exercise measureBy and groupBy
+  - in UI toggle whether an exercise has rest measurement
 - Exercise Select
   - how to delete exercises
 - TrackView
