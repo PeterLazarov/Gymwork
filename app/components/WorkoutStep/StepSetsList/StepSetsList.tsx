@@ -5,16 +5,23 @@ import SetListItem from './SetListItem'
 import { WorkoutSet, WorkoutStep } from 'app/db/models'
 import { useStores } from 'app/db/helpers/useStores'
 
-type Props = {
+export type StepSetsList = {
   step: WorkoutStep
   splitSupersets?: boolean
+  focusedExerciseGuid?: string
 }
 
-const StepSetsList: React.FC<Props> = ({ step, splitSupersets = false }) => {
+const StepSetsList: React.FC<StepSetsList> = ({
+  step,
+  splitSupersets = false,
+  focusedExerciseGuid,
+}) => {
   const { stateStore } = useStores()
 
   const exerciseSets =
-    step.exerciseSetsMap[stateStore.focusedExerciseGuid!] || []
+    step.exerciseSetsMap[
+      focusedExerciseGuid || stateStore.focusedExerciseGuid!
+    ] || []
   const sets = splitSupersets ? exerciseSets : step.sets
 
   const getLetterForSet = (set: WorkoutSet) => {

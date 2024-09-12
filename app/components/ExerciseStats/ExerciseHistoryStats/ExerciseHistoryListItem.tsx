@@ -11,7 +11,7 @@ type Props = {
   step: WorkoutStep
   exercise: Exercise
 }
-const ExerciseHistoryListItem: React.FC<Props> = ({ date, step }) => {
+const ExerciseHistoryListItem: React.FC<Props> = ({ date, step, exercise }) => {
   return (
     <View
       style={{
@@ -36,6 +36,7 @@ const ExerciseHistoryListItem: React.FC<Props> = ({ date, step }) => {
         <StepSetsList
           step={step}
           splitSupersets
+          focusedExerciseGuid={exercise.guid}
         />
       </View>
     </View>
