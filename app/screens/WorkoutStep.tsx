@@ -42,10 +42,19 @@ const WorkoutStepScreen: React.FC = () => {
     []
   )
   const renderScene = BottomNavigation.SceneMap({
-    chart: ExerciseChartStats,
-    records: ExerciseRecordStats,
-    history: ExerciseHistoryStats,
-    track: ExerciseTrackView,
+    chart: () => <ExerciseChartStats exercise={stateStore.focusedExercise} />,
+    records: () => (
+      <ExerciseRecordStats exercise={stateStore.focusedExercise} />
+    ),
+    history: () => (
+      <ExerciseHistoryStats exercise={stateStore.focusedExercise} />
+    ),
+    track: () => (
+      <ExerciseTrackView
+        exercise={stateStore.focusedExercise!}
+        step={stateStore.focusedStep!}
+      />
+    ),
   })
 
   return (
@@ -53,12 +62,12 @@ const WorkoutStepScreen: React.FC = () => {
       <StepHeader />
       {stateStore.focusedStep?.type === 'superSet' && (
         <ExerciseControl
-          step={stateStore.focusedStep}
-          onExerciseChange={index => {
-            stateStore.setProp(
-              'focusedExerciseGuid',
-              stateStore.focusedStep?.exercises[index].guid
-            )
+          selectedIndex={stateStore.focusedStep.exercises.indexOf(
+            stateStore.focusedExercise!
+          )}
+          options={stateStore.focusedStep.exercises}
+          onChange={({ guid }) => {
+            stateStore.setProp('focusedExerciseGuid', guid)
           }}
         />
       )}

@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { ScrollView } from 'react-native'
 import { Searchbar } from 'react-native-paper'
 
-import ExerciseAcordionList from './ExerciseAcordionList'
+import ExerciseAccordionList from './ExerciseAccordionList'
 import ExerciseList from './ExerciseList'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
@@ -52,7 +52,7 @@ const AllExercisesList: React.FC<Props> = ({ onSelect, selectedExercises }) => {
       />
       <ScrollView style={{ display: 'flex', flexDirection: 'column' }}>
         {filterString === '' && (
-          <ExerciseAcordionList
+          <ExerciseAccordionList
             exercises={exerciseStore.exercisesByMuscle}
             onSelect={onSelect ?? noop}
             selectedExercises={selectedExercises}

@@ -8,6 +8,7 @@ import WorkoutEmptyState from './WorkoutEmptyState'
 import WorkoutCommentsCard from './WorkoutCommentsCard'
 import AddStepMenu from './AddStepMenu'
 import { colors } from 'designSystem'
+import { navigate } from 'app/navigators'
 
 type Props = {
   date: string
@@ -22,7 +23,10 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
         {workout && workout.steps.length > 0 ? (
           <>
             {stateStore.showCommentsCard && workout.hasComments && (
-              <WorkoutCommentsCard />
+              <WorkoutCommentsCard
+                workout={workout}
+                onPress={() => navigate('WorkoutFeedback')}
+              />
             )}
             <WorkoutStepList workout={workout} />
           </>

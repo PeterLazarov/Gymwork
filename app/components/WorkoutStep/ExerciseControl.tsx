@@ -1,29 +1,32 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Text, View } from 'react-native'
 
 import { Icon, IconButton, boxShadows, colors, fontSize } from 'designSystem'
-import { WorkoutStep } from 'app/db/models'
+import { Exercise } from 'app/db/models'
 
-type Props = {
-  step: WorkoutStep
-  onExerciseChange: (index: number) => void
+export type ExerciseControlProps = {
+  options: Exercise[]
+  selectedIndex: number
+  onChange: (exercise: Exercise) => void
 }
-const ExerciseControl: React.FC<Props> = ({ step, onExerciseChange }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0)
+
+const ExerciseControl: React.FC<ExerciseControlProps> = ({
+  options,
+  selectedIndex,
+  onChange,
+}) => {
+  const exercise = options[selectedIndex]!
+  const atStart = selectedIndex === 0
+  const atEnd = selectedIndex === options.length - 1
 
   const getPrev = () => {
-    const newIndex =
-      selectedIndex > 0 ? selectedIndex - 1 : step.exercises.length - 1
-    setSelectedIndex(newIndex)
-    onExerciseChange(newIndex)
+    onChange(atStart ? options.at(-1)! : options[selectedIndex - 1]!)
   }
 
   const getNext = () => {
-    const newIndex =
-      selectedIndex === step.exercises.length - 1 ? 0 : selectedIndex + 1
-    setSelectedIndex(newIndex)
-    onExerciseChange(newIndex)
+    onChange(atEnd ? options[0]! : options[selectedIndex + 1]!)
   }
+
   return (
     <View
       style={{
@@ -38,12 +41,14 @@ const ExerciseControl: React.FC<Props> = ({ step, onExerciseChange }) => {
       <IconButton onPress={getPrev}>
         <Icon icon="chevron-back" />
       </IconButton>
+
       <Text
         style={{ fontSize: fontSize.lg, flex: 1 }}
         numberOfLines={1}
       >
-        {step.exercises[selectedIndex].name}
+        {exercise.name}
       </Text>
+
       <IconButton onPress={getNext}>
         <Icon icon="chevron-forward" />
       </IconButton>

@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { List } from 'react-native-paper'
 
@@ -6,24 +5,25 @@ import ExerciseListItem from './ExerciseListItem'
 import { Exercise } from 'app/db/models'
 import { capitalize } from 'app/utils/string'
 
-type Props = {
+export type ExerciseAccordionListProps = {
+  /** key is muscle */
   exercises: Record<string, Exercise[]>
   onSelect: (exercise: Exercise) => void
   selectedExercises: Exercise[]
 }
-const ExerciseAcordionList: React.FC<Props> = ({
+const ExerciseAccordionList: React.FC<ExerciseAccordionListProps> = ({
   exercises,
   onSelect,
   selectedExercises,
 }) => {
   return (
     <>
-      {Object.keys(exercises).map(group => (
+      {Object.entries(exercises).map(([muscleGroup, exercises]) => (
         <List.Accordion
-          key={group}
-          title={`${capitalize(group)} (${exercises[group].length})`}
+          key={muscleGroup}
+          title={`${capitalize(muscleGroup)} (${exercises.length})`}
         >
-          {exercises[group].map(exercise => (
+          {exercises.map(exercise => (
             <ExerciseListItem
               key={exercise.guid}
               exercise={exercise}
@@ -37,4 +37,4 @@ const ExerciseAcordionList: React.FC<Props> = ({
   )
 }
 
-export default observer(ExerciseAcordionList)
+export default ExerciseAccordionList

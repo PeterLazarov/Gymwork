@@ -40,12 +40,12 @@ const ExerciseStatsView: React.FC = () => {
         <View style={{ flex: 1 }}>
           {stateStore.focusedStep.type === 'superSet' && (
             <ExerciseControl
-              step={stateStore.focusedStep}
-              onExerciseChange={index => {
-                stateStore.setProp(
-                  'focusedExerciseGuid',
-                  stateStore.focusedStep?.exercises[index].guid
-                )
+              selectedIndex={stateStore.focusedStep.exercises.indexOf(
+                stateStore.focusedExercise!
+              )}
+              options={stateStore.focusedStep.exercises}
+              onChange={({ guid }) => {
+                stateStore.setProp('focusedExerciseGuid', guid)
               }}
             />
           )}
