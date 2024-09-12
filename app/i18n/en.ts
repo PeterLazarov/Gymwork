@@ -76,6 +76,8 @@ const en = {
   seconds: 'Seconds',
   minutes: 'Minutes',
   hours: 'Hours',
+  setAsFavorite: 'Set as favorite',
+  removeFavorite: 'Remove favorite',
 }
 
 export default en

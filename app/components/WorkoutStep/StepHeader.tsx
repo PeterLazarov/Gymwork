@@ -18,6 +18,12 @@ const StepHeader: React.FC = () => {
     navigate('Workout')
   }
 
+  const toggleFavoriteExercise = () => {
+    setMenuOpen(false)
+    const exercise = stateStore.focusedExercise!
+    exercise.setProp('isFavorite', !exercise.isFavorite)
+  }
+
   function onEditExercisePress() {
     setMenuOpen(false)
     navigate('ExerciseEdit')
@@ -86,6 +92,14 @@ const StepHeader: React.FC = () => {
           <Menu.Item
             onPress={deleteSelectedExercises}
             title={translate('removeExercise')}
+          />
+          <Menu.Item
+            onPress={toggleFavoriteExercise}
+            title={translate(
+              stateStore.focusedExercise!.isFavorite
+                ? 'removeFavorite'
+                : 'setAsFavorite'
+            )}
           />
         </Menu>
       )}
