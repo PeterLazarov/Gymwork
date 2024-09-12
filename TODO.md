@@ -22,6 +22,7 @@
 - grouping / measurement by rest
 - template steps list editting rearranging and or adding
 - In exercise track menu, Edit exercise and especially Remove exercise could be thought of as workout scoped. They are not.
+- History is broken?
 
 Performance to beat -
 100 workouts
