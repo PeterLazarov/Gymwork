@@ -21,7 +21,7 @@ import { translate } from 'app/i18n'
 import { observer } from 'mobx-react-lite'
 import { TabsLayout } from 'app/layouts/TabsLayout'
 
-export default observer(function Review(props: {}) {
+export default observer(function ReviewScreen(props: {}) {
   const { stateStore } = useStores()
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
 
@@ -39,7 +39,7 @@ export default observer(function Review(props: {}) {
   // }, [selectedExercise, stateStore.focusedStep?.exercises])
 
   return (
-    <TabsLayout activeRoute="Review">
+    <>
       <Header>
         {exerciseSelectOpen && (
           <IconButton
@@ -149,6 +149,6 @@ export default observer(function Review(props: {}) {
           </PressableHighlight>
         )}
       </View>
-    </TabsLayout>
+    </>
   )
 })

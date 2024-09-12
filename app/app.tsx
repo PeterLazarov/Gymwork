@@ -28,6 +28,7 @@ export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 import * as SystemUI from 'expo-system-ui'
 import { colors } from 'designSystem'
 import useTimer, { TimerContext } from './db/stores/useTimer'
+
 SystemUI.setBackgroundColorAsync(colors.neutralLighter)
 
 function App() {

@@ -18,7 +18,7 @@ const ExerciseHistoryStats: React.FC<ExerciseHistoryViewProps> = props => {
 
   const exercise = props.exercise || stateStore.focusedExercise
   const workoutsContained = exercise
-    ? workoutStore.exerciseWorkoutsHistoryMap[exercise.guid]!.filter(
+    ? workoutStore.exerciseWorkoutsHistoryMap[exercise.guid]?.filter(
         w => w.exerciseSetsMap[exercise.guid]!.length > 0
       ) || []
     : []

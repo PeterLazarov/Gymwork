@@ -7,7 +7,7 @@ import { BottomNavigationItem } from './BottomNavigationItem'
 import { Item } from './types'
 
 type Props = {
-  activeRoute: string
+  activeRoute?: string
   items: Item[]
 }
 export const BottomNavigation: React.FC<Props> = ({ activeRoute, items }) => {

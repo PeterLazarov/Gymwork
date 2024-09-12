@@ -26,6 +26,8 @@ export const StateStoreModel = types
 
     // TODO consider how this works with workout focused exercise
     reviewFocusedExerciseGuid: types.maybe(types.string),
+
+    activeRoute: types.maybe(types.string),
   })
   .views(self => ({
     get rootStore(): RootStore {
@@ -100,6 +102,9 @@ export const StateStoreModel = types
   }))
   .actions(withSetPropAction)
   .actions(self => ({
+    initialize() {
+      self.activeRoute = 'Workout'
+    },
     setOpenedDate(date: string) {
       self.openedDate = date
       this.setFocusedStep('')

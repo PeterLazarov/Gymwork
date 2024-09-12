@@ -28,7 +28,10 @@ const SetEditList: React.FC<Props> = ({
   }
 
   const stepRecordGuids = useMemo(
-    () => recordStore.getRecordGuidsForStep(stateStore.focusedStep!),
+    () =>
+      stateStore.focusedStep
+        ? recordStore.getRecordGuidsForStep(stateStore.focusedStep)
+        : [],
     [sets]
   )
 
@@ -132,7 +135,7 @@ const SetEditList: React.FC<Props> = ({
         }
       />
 
-      {stateStore.focusedStep!.sets.length === 0 && (
+      {!stateStore.focusedStep?.sets?.length && (
         <EmptyState text={translate('noSetsEntered')} />
       )}
     </Pressable>

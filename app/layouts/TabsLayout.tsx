@@ -1,16 +1,16 @@
 import React, { ReactNode } from 'react'
 import { View } from 'react-native'
 
-import { AppStackParamList, navigate } from 'app/navigators'
+import { navigate } from 'app/navigators'
 import { EmptyLayout } from './EmptyLayout'
 import { BottomNavigation } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
+import { observer } from 'mobx-react-lite'
 
 type Props = {
   children?: ReactNode
-  activeRoute: keyof AppStackParamList
 }
-export const TabsLayout: React.FC<Props> = ({ children, activeRoute }) => {
+const TabsLayout: React.FC<Props> = ({ children }) => {
   const { stateStore } = useStores()
 
   const tabs = [
@@ -38,9 +38,11 @@ export const TabsLayout: React.FC<Props> = ({ children, activeRoute }) => {
     <EmptyLayout>
       <View style={{ flex: 1 }}>{children}</View>
       <BottomNavigation
-        activeRoute={activeRoute}
+        activeRoute={stateStore.activeRoute}
         items={tabs}
       />
     </EmptyLayout>
   )
 }
+
+export default observer(TabsLayout)

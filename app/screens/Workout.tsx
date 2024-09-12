@@ -6,11 +6,11 @@ import { TabsLayout } from 'app/layouts/TabsLayout'
 
 const WorkoutPageScreen: React.FC = () => {
   return (
-    <TabsLayout activeRoute="Workout">
+    <>
       <WorkoutHeader />
 
       <WorkoutHorizontalList />
-    </TabsLayout>
+    </>
   )
 }
 export default WorkoutPageScreen

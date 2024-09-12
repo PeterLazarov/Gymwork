@@ -11,7 +11,7 @@ const WorkoutStepScreen: React.FC = () => {
   const { stateStore } = useStores()
 
   return (
-    <TabsLayout activeRoute="WorkoutStep">
+    <>
       <StepHeader />
       {stateStore.focusedStep?.type === 'superSet' && (
         <ExerciseControl
@@ -28,7 +28,7 @@ const WorkoutStepScreen: React.FC = () => {
         exercise={stateStore.focusedExercise!}
         step={stateStore.focusedStep!}
       />
-    </TabsLayout>
+    </>
   )
 }
 export default observer(WorkoutStepScreen)

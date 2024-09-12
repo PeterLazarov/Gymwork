@@ -2,6 +2,7 @@ import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
+  NavigationState,
   RouteProp,
   useRoute,
 } from '@react-navigation/native'
@@ -29,7 +30,9 @@ import SaveTemplate, {
 } from 'app/screens/SaveTemplate'
 import TemplateSelect from 'app/screens/TemplateSelect'
 import WorkoutStep from 'app/screens/WorkoutStep'
-import Review from 'app/screens/Review'
+import ReviewScreen from 'app/screens/Review'
+import TabsLayout from 'app/layouts/TabsLayout'
+import { useStores } from 'app/db/helpers/useStores'
 
 /**
  * Documentation:
@@ -41,21 +44,32 @@ export type AppStackParamList = {
   Calendar: CalendarScreenParams
   ExerciseEdit: ExerciseEditScreenParams
   ExerciseSelect: ExerciseSelectScreenParams
-  Workout: undefined
-  Review: undefined
-  WorkoutStep: undefined
-  WorkoutFeedback: undefined
   SaveTemplate: SaveTemplateScreenParams
   TemplateSelect: undefined
-  Home: undefined
+  HomeStack: undefined
 }
 
-export const useRouteParams = <T extends keyof AppStackParamList>(
-  screen: T
-): AppStackParamList[T] => {
-  const route = useRoute<RouteProp<AppStackParamList, T>>()
+export type HomeStackParamList = {
+  Review: undefined
+  WorkoutStack: undefined
+}
 
-  return (route.params ?? {}) as AppStackParamList[T]
+export type WorkoutStackParamList = {
+  Workout: undefined
+  WorkoutStep: undefined
+  WorkoutFeedback: undefined
+}
+
+export type AllStacksParamList = AppStackParamList &
+  HomeStackParamList &
+  WorkoutStackParamList
+
+export const useRouteParams = <T extends keyof AllStacksParamList>(
+  screen: T
+): AllStacksParamList[T] => {
+  const route = useRoute<RouteProp<AllStacksParamList, T>>()
+
+  return (route.params ?? {}) as AllStacksParamList[T]
 }
 
 /**
@@ -77,7 +91,7 @@ const AppStack = observer(function AppStack() {
         headerShown: false,
         navigationBarColor: colors.background,
       }}
-      initialRouteName="Workout"
+      initialRouteName="HomeStack"
     >
       <>
         <Stack.Screen
@@ -92,22 +106,58 @@ const AppStack = observer(function AppStack() {
           name="ExerciseSelect"
           component={ExerciseSelect}
         />
-        <Stack.Screen
-          name="Workout"
-          component={Workout}
-        />
-        <Stack.Screen
-          name="WorkoutStep"
-          component={WorkoutStep}
-        />
-        <Stack.Screen
-          name="Review"
-          component={Review}
-        />
-        <Stack.Screen
-          name="WorkoutFeedback"
-          component={WorkoutFeedback}
-        />
+
+        <Stack.Screen name="HomeStack">
+          {({ route, navigation }) => {
+            const HomeStack = createNativeStackNavigator()
+            console.log({ route, navigation })
+            return (
+              <TabsLayout>
+                <HomeStack.Navigator
+                  initialRouteName="WorkoutStack"
+                  screenOptions={{
+                    headerShown: false,
+                    navigationBarColor: colors.background,
+                  }}
+                >
+                  <HomeStack.Screen
+                    name="Review"
+                    component={ReviewScreen}
+                  />
+
+                  <HomeStack.Screen name="WorkoutStack">
+                    {({ route, navigation }) => {
+                      const WorkoutStack = createNativeStackNavigator()
+                      return (
+                        <WorkoutStack.Navigator
+                          initialRouteName="Workout"
+                          screenOptions={{
+                            headerShown: false,
+                            navigationBarColor: colors.background,
+                          }}
+                        >
+                          <WorkoutStack.Screen
+                            name="Workout"
+                            component={Workout}
+                          />
+                          <WorkoutStack.Screen
+                            name="WorkoutStep"
+                            component={WorkoutStep}
+                          />
+                          <WorkoutStack.Screen
+                            name="WorkoutFeedback"
+                            component={WorkoutFeedback}
+                          />
+                        </WorkoutStack.Navigator>
+                      )
+                    }}
+                  </HomeStack.Screen>
+                </HomeStack.Navigator>
+              </TabsLayout>
+            )
+          }}
+        </Stack.Screen>
+
         <Stack.Screen
           name="SaveTemplate"
           component={SaveTemplate}
@@ -131,11 +181,21 @@ export const AppNavigator = observer(function AppNavigator(
 
   useBackButtonHandler(routeName => exitRoutes.includes(routeName))
 
+  const { stateStore } = useStores()
+  function handleStateChange(state: NavigationState | undefined) {
+    // @ts-ignore
+    const { currentRouteName, previousRouteName } =
+      props.onStateChange?.(state) ?? {}
+
+    stateStore.setProp('activeRoute', currentRouteName)
+  }
+
   return (
     <NavigationContainer
       ref={navigationRef}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
       {...props}
+      onStateChange={handleStateChange}
     >
       <AppStack />
     </NavigationContainer>

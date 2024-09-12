@@ -20,6 +20,7 @@ export const RootStoreModel = types
         .then(() =>
           self.workoutStore.fetch().then(() => self.recordStore.fetch())
         )
+        .then(() => self.stateStore.initialize())
     },
   }))
 
