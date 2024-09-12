@@ -11,7 +11,7 @@ import {
   WorkoutStep,
 } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
-import { removeWeakAssRecords } from 'app/services/workoutRecordsCalculator'
+import { markWeakAssRecords } from 'app/services/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
 
 export const RecordStoreModel = types
@@ -50,19 +50,11 @@ export const RecordStoreModel = types
 
       self.setProp('records', records)
     },
-    getExerciseRecords(exerciseID: Exercise['guid']): ExerciseRecord {
-      let exerciseRecords = self.exerciseRecordsMap[exerciseID]
+    getMarkedExerciseRecords(exerciseID: Exercise['guid']): ExerciseRecord {
+      const exerciseRecords = self.exerciseRecordsMap[exerciseID]!
 
-      if (exerciseRecords) {
-        if (exerciseRecords.recordSets.length > 0) {
-          removeWeakAssRecords(exerciseRecords)
-        }
-      } else {
-        exerciseRecords = ExerciseRecordModel.create({
-          exercise: exerciseID,
-          recordSets: [],
-        })
-        self.records.push(exerciseRecords)
+      if (exerciseRecords && exerciseRecords.recordSets.length > 0) {
+        markWeakAssRecords(exerciseRecords)
       }
 
       return exerciseRecords
@@ -84,8 +76,9 @@ export const RecordStoreModel = types
     },
     getRecordGuidsForStep(step: WorkoutStep) {
       return step.exercises
-        .map(ex => self.exerciseRecordsMap[ex.guid])
+        .map(ex => this.getMarkedExerciseRecords(ex.guid))
         .flatMap<WorkoutSet>(record => record?.recordSets || [])
+        .filter(s => !s.isWeakAssRecord)
         .map(s => s.guid)
     }
   }))

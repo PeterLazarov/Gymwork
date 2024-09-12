@@ -1,16 +1,18 @@
 import { ExerciseRecord, WorkoutSetSnapshotIn } from 'app/db/models'
 
-export const removeWeakAssRecords = (
+export const markWeakAssRecords = (
   exerciseAllRecords: ExerciseRecord
 ): void => {
   const groupingsDescending = Object.keys(exerciseAllRecords.groupingRecordMap)
     .map(Number)
     .sort((a, b) => b - a)
 
-  let lastRecord = exerciseAllRecords.groupingRecordMap[groupingsDescending[0]]
+  if (groupingsDescending.length === 0) return 
+
+  let lastRecord = exerciseAllRecords.groupingRecordMap[groupingsDescending[0]!]!
 
   for (const grouping of groupingsDescending) {
-    const record = exerciseAllRecords.groupingRecordMap[grouping]
+    const record = exerciseAllRecords.groupingRecordMap[grouping]!
 
     if (lastRecord.guid !== record.guid && lastRecord.isBetterThan(record)) {
       const weakAssRecord = exerciseAllRecords.recordSets.find(

@@ -72,7 +72,7 @@ export const StateStoreModel = types
         .filter(Boolean)
     },
     get focusedExerciseRecords(): ExerciseRecord {
-      return this.recordStore.getExerciseRecords(
+      return this.recordStore.getMarkedExerciseRecords(
         this.focusedStep!.exercise!.guid
       )
     },

@@ -38,7 +38,7 @@ export const WorkoutStepModel = types
     },
     get exerciseRecordsMap() {
       return step.exercises.reduce((map, exercise) => {
-        map[exercise.guid] = this.recordStore.getExerciseRecords(exercise.guid)
+        map[exercise.guid] = this.recordStore.getMarkedExerciseRecords(exercise.guid)
         return map
       }, {} as Record<Exercise['guid'], ExerciseRecord>)
     },
