@@ -13,7 +13,7 @@ export type ExerciseHistoryViewProps = {
   exercise?: Exercise
 }
 
-const ExerciseHistoryView: React.FC<ExerciseHistoryViewProps> = props => {
+const ExerciseHistoryStats: React.FC<ExerciseHistoryViewProps> = props => {
   const { stateStore, workoutStore } = useStores()
 
   const exercise = props.exercise || stateStore.focusedExercise
@@ -45,4 +45,4 @@ const ExerciseHistoryView: React.FC<ExerciseHistoryViewProps> = props => {
   )
 }
 
-export default observer(ExerciseHistoryView)
+export default observer(ExerciseHistoryStats)
