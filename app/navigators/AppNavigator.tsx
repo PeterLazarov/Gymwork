@@ -28,8 +28,10 @@ import SaveTemplate, {
   SaveTemplateScreenParams,
 } from 'app/screens/SaveTemplate'
 import TemplateSelect from 'app/screens/TemplateSelect'
-import WorkoutStep from 'app/screens/WorkoutStep'
 import HomeScreen from 'app/screens/Home'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import Review from 'app/screens/Review'
+import WorkoutStep from 'app/screens/WorkoutStep'
 
 /**
  * Documentation:
@@ -68,70 +70,88 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> =
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
+const WorkoutStack = createNativeStackNavigator()
 
-const AppStack = observer(function AppStack() {
-  // const {
-  //   authenticationStore: { isAuthenticated },
-  // } = useStores()
+const AppStack = () => (
+  <Stack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}
+    initialRouteName="Home"
+  >
+    <Stack.Screen
+      name="Home"
+      component={TabNav}
+    />
+    <Stack.Screen
+      name="Calendar"
+      component={Calendar}
+    />
+    <Stack.Screen
+      name="ExerciseEdit"
+      component={ExerciseEdit}
+    />
+    <Stack.Screen
+      name="ExerciseSelect"
+      component={ExerciseSelect}
+    />
+    <Stack.Screen
+      name="WorkoutFeedback"
+      component={WorkoutFeedback}
+    />
+    <Stack.Screen
+      name="SaveTemplate"
+      component={SaveTemplate}
+    />
+    <Stack.Screen
+      name="TemplateSelect"
+      component={TemplateSelect}
+    />
+  </Stack.Navigator>
+)
 
+const WorkoutNav = () => (
+  <WorkoutStack.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}
+  >
+    <WorkoutStack.Screen
+      name="WorkoutStep"
+      component={WorkoutStep}
+    />
+    <WorkoutStack.Screen
+      name="WorkoutDay"
+      component={Workout}
+    />
+  </WorkoutStack.Navigator>
+)
+
+const TabNav = observer(function AppStack() {
   return (
-    <Stack.Navigator
+    <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        navigationBarColor: colors.background,
       }}
-      // initialRouteName={isAuthenticated ? 'Welcome' : 'Login'}
-      initialRouteName="Home"
+      initialRouteName="Workout"
     >
-      {/* {isAuthenticated ? ( */}
-      <>
-        <Stack.Screen
-          name="Calendar"
-          component={Calendar}
-        />
-        <Stack.Screen
-          name="ExerciseEdit"
-          component={ExerciseEdit}
-        />
-        <Stack.Screen
-          name="ExerciseSelect"
-          component={ExerciseSelect}
-        />
-        {/* <Stack.Screen
-          name="Workout"
-          component={Workout}
-        /> */}
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-        />
-        <Stack.Screen
-          name="WorkoutFeedback"
-          component={WorkoutFeedback}
-        />
-        <Stack.Screen
-          name="SaveTemplate"
-          component={SaveTemplate}
-        />
-        <Stack.Screen
-          name="TemplateSelect"
-          component={TemplateSelect}
-        />
-      </>
-      {/* ) : (
-        <>
-          <Stack.Screen
-            name="Login"
-            component={Screens.LoginScreen}
-          />
-        </>
-      )} */}
+      <Tab.Screen
+        name="Review"
+        component={Review}
+      />
+      <WorkoutStack.Screen
+        name="Workout"
+        component={WorkoutNav}
+      />
 
-      {/** 🔥 Your screens go here */}
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
-    </Stack.Navigator>
+      <Tab.Screen
+        name="Plan"
+        component={Workout}
+      />
+    </Tab.Navigator>
   )
 })
+const Tab = createBottomTabNavigator()
 
 export interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
