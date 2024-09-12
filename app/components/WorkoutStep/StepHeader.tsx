@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Menu } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
@@ -28,6 +28,24 @@ const StepHeader: React.FC = () => {
     navigate('Home')
   }
 
+  const focusedStepName = useMemo(() => {
+    const step = stateStore.focusedStep!
+    const workout = stateStore.openedWorkout!
+
+    const name = step.type === 'straightSet' ? step.exercise!.name : 'Superset'
+    let similarSteps = workout.steps.filter(s => s.type === step.type)
+
+    if (step.type === 'straightSet') {
+      similarSteps = similarSteps.filter(s =>
+        s.exercises.includes(stateStore.focusedExercise!)
+      )
+    }
+
+    const n = similarSteps.indexOf(step) + 1
+
+    return `${name} ${similarSteps.length > 1 ? n : ''}`
+  }, [])
+
   return (
     <Header>
       <IconButton
@@ -40,7 +58,7 @@ const StepHeader: React.FC = () => {
         />
       </IconButton>
       <Header.Title
-        title={stateStore.focusedStep?.name || 'Gymwork'}
+        title={focusedStepName}
         numberOfLines={1}
       />
 

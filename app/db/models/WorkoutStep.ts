@@ -72,9 +72,6 @@ export const WorkoutStepModel = types
         return map
       }, {} as Record<Exercise['guid'], string>)
     },
-    get name() {
-      return step.type === 'straightSet' ? this.exercise!.name : 'Superset'
-    },
   }))
   .actions(withSetPropAction)
   .actions(step => ({

@@ -21,7 +21,6 @@
 - optimise calendar rendering
 - grouping / measurement by rest
 - template steps list editting rearranging and or adding
-- Alphabetically nubmer supersets if multiple in same workout?
 - In exercise track menu, Edit exercise and especially Remove exercise could be thought of as workout scoped. They are not.
 
 Performance to beat -
