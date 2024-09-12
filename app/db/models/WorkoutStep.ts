@@ -37,13 +37,10 @@ export const WorkoutStepModel = types
       return rootStore.recordStore
     },
     get exerciseRecordsMap() {
-      return step.exercises.reduce(
-        (map, exercise) => {
-          map[exercise.guid] = this.recordStore.getExerciseRecords(exercise.guid)
-          return map
-        },
-        {} as Record<Exercise['guid'], ExerciseRecord>
-      )
+      return step.exercises.reduce((map, exercise) => {
+        map[exercise.guid] = this.recordStore.getExerciseRecords(exercise.guid)
+        return map
+      }, {} as Record<Exercise['guid'], ExerciseRecord>)
     },
     get recordSetGuids(): WorkoutSet['guid'][] {
       return Object.values(this.exerciseRecordsMap)
@@ -128,21 +125,14 @@ export const WorkoutStepModel = types
     },
     /** Made to work with drag and drop */
     reorderSets(from: number, to: number) {
-      if (!from || !to) {
-        console.warn('DnD issues?')
-        return
-      }
-
       const item = step.sets[from]!
+
       const reorderedSets =
-        step.sets // @ts-ignore
+        getSnapshot(step.sets) // @ts-ignore
           .toSpliced(from, 1)
           .toSpliced(to, 0, item) ?? []
 
-      const reorderedSetsSnapshots = reorderedSets.map((set: WorkoutSet) =>
-        getSnapshot(set)
-      )
-      step.setProp('sets', reorderedSetsSnapshots)
+      step.setProp('sets', reorderedSets)
     },
   }))
 
