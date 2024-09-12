@@ -11,7 +11,6 @@
   - timer doesn't start when open step and directly complete draft set without touching anything
 - superset
   - improve track rerendering
-  - dragging
 - HorizontalScreenList > react-native-reanimated-carousel rolled back for FlatList version. Do we return? Keep header press bug in mind.
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - reasonable seed data rest periods & createdAt
