@@ -32,7 +32,7 @@ const SetEditList: React.FC<Props> = ({
       stateStore.focusedStep
         ? recordStore.getRecordGuidsForStep(stateStore.focusedStep)
         : [],
-    [sets]
+    [sets, stateStore.focusedStep]
   )
 
   const renderItem = useCallback(
@@ -78,7 +78,7 @@ const SetEditList: React.FC<Props> = ({
         </PressableHighlight>
       )
     },
-    [selectedSet]
+    [selectedSet, stepRecordGuids]
   )
 
   const ITEM_HEIGHT = 62
