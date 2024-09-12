@@ -37,8 +37,7 @@ const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
     stateStore.setProp('focusedSetGuid', set.guid)
     stateStore.setProp('focusedExerciseGuid', set.exercise.guid)
 
-    stateStore.setProp('homepageTabIndex', 1)
-    navigate('Home') // TODO navigate to workout
+    navigate('Workout')
   }
 
   return (

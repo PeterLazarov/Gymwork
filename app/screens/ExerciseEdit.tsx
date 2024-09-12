@@ -7,7 +7,7 @@ import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, ExerciseModel } from 'app/db/models'
 import { goBack, useRouteParams } from 'app/navigators'
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
+import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { translate } from 'app/i18n'
 import {
   Button,

@@ -1,26 +1,16 @@
-import { observer } from 'mobx-react-lite'
 import React from 'react'
 
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import WorkoutHeader from 'app/components/Workout/WorkoutHeader'
 import WorkoutHorizontalList from 'app/components/Workout/WorkoutHorizontalList'
-import { useStores } from 'app/db/helpers/useStores'
-import WorkoutStep from '../components/WorkoutStep/WorkoutStep'
+import { TabsLayout } from 'app/layouts/TabsLayout'
 
 const WorkoutPageScreen: React.FC = () => {
-  const { stateStore } = useStores()
   return (
-    <EmptyLayout>
-      {stateStore.focusedStep ? (
-        <WorkoutStep />
-      ) : (
-        <>
-          <WorkoutHeader />
+    <TabsLayout activeRoute="Workout">
+      <WorkoutHeader />
 
-          <WorkoutHorizontalList />
-        </>
-      )}
-    </EmptyLayout>
+      <WorkoutHorizontalList />
+    </TabsLayout>
   )
 }
-export default observer(WorkoutPageScreen)
+export default WorkoutPageScreen

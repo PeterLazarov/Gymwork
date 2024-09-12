@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
 import {
   Header,
@@ -11,7 +11,6 @@ import {
 } from 'designSystem'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 import ExerciseChartStats from 'app/components/ExerciseStats/ExerciseChartStats'
 import ExerciseHistoryStats from 'app/components/ExerciseStats/ExerciseHistoryStats'
@@ -20,6 +19,7 @@ import ExerciseRow from 'app/components/ExerciseRow'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
 import { observer } from 'mobx-react-lite'
+import { TabsLayout } from 'app/layouts/TabsLayout'
 
 export default observer(function Review(props: {}) {
   const { stateStore } = useStores()
@@ -39,7 +39,7 @@ export default observer(function Review(props: {}) {
   // }, [selectedExercise, stateStore.focusedStep?.exercises])
 
   return (
-    <EmptyLayout>
+    <TabsLayout activeRoute="Review">
       <Header>
         {exerciseSelectOpen && (
           <IconButton
@@ -149,6 +149,6 @@ export default observer(function Review(props: {}) {
           </PressableHighlight>
         )}
       </View>
-    </EmptyLayout>
+    </TabsLayout>
   )
 })

@@ -29,7 +29,7 @@ import SaveTemplate, {
 } from 'app/screens/SaveTemplate'
 import TemplateSelect from 'app/screens/TemplateSelect'
 import WorkoutStep from 'app/screens/WorkoutStep'
-import HomeScreen from 'app/screens/Home'
+import Review from 'app/screens/Review'
 
 /**
  * Documentation:
@@ -42,6 +42,7 @@ export type AppStackParamList = {
   ExerciseEdit: ExerciseEditScreenParams
   ExerciseSelect: ExerciseSelectScreenParams
   Workout: undefined
+  Review: undefined
   WorkoutStep: undefined
   WorkoutFeedback: undefined
   SaveTemplate: SaveTemplateScreenParams
@@ -70,20 +71,14 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> =
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
-  // const {
-  //   authenticationStore: { isAuthenticated },
-  // } = useStores()
-
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
         navigationBarColor: colors.background,
       }}
-      // initialRouteName={isAuthenticated ? 'Welcome' : 'Login'}
-      initialRouteName="Home"
+      initialRouteName="Workout"
     >
-      {/* {isAuthenticated ? ( */}
       <>
         <Stack.Screen
           name="Calendar"
@@ -97,13 +92,17 @@ const AppStack = observer(function AppStack() {
           name="ExerciseSelect"
           component={ExerciseSelect}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Workout"
           component={Workout}
-        /> */}
+        />
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
+          name="WorkoutStep"
+          component={WorkoutStep}
+        />
+        <Stack.Screen
+          name="Review"
+          component={Review}
         />
         <Stack.Screen
           name="WorkoutFeedback"
@@ -118,17 +117,6 @@ const AppStack = observer(function AppStack() {
           component={TemplateSelect}
         />
       </>
-      {/* ) : (
-        <>
-          <Stack.Screen
-            name="Login"
-            component={Screens.LoginScreen}
-          />
-        </>
-      )} */}
-
-      {/** 🔥 Your screens go here */}
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 })

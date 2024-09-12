@@ -1,4 +1,5 @@
 export { default as BottomDrawer } from './BottomDrawer'
+export * from './BottomNavigation'
 export * from './Button'
 export { default as Card } from './Card'
 export { default as DistanceEditor } from './DistanceEditor'

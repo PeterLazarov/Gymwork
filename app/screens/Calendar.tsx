@@ -7,7 +7,7 @@ import { MarkedDays } from 'react-native-month'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { navigate, useRouteParams } from 'app/navigators'
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
+import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { Header, Icon, IconButton, colors, fontSize } from 'designSystem'
 import CalendarWorkoutModal from 'app/components/CalendarWorkoutModal'
 
@@ -54,8 +54,7 @@ const CalendarScreen: React.FC = () => {
   )
 
   function onBackPress() {
-    stateStore.setProp('homepageTabIndex', 1)
-    navigate('Home')
+    navigate('Workout')
   }
 
   function handleCalendarDayPress(date: Date) {
@@ -69,14 +68,12 @@ const CalendarScreen: React.FC = () => {
   }
   function goToDay(date: string) {
     stateStore.setOpenedDate(date)
-    stateStore.setProp('homepageTabIndex', 1)
-    navigate('Home')
+    navigate('Workout')
   }
 
   function onModalAction() {
     setOpenedWorkoutDialogDate('')
-    stateStore.setProp('homepageTabIndex', 1)
-    navigate('Home')
+    navigate('Workout')
   }
 
   // ! must be a whole number

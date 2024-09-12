@@ -5,7 +5,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, WorkoutStep } from 'app/db/models'
 import { navigate, useRouteParams } from 'app/navigators'
 import { translate } from 'app/i18n'
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
+import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { FAB, Header, Icon, IconButton, colors } from 'designSystem'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 
@@ -26,12 +26,11 @@ const ExerciseSelectScreen: React.FC = () => {
     stateStore.setFocusedStep(newStep.guid)
     stateStore.setProp('focusedExerciseGuid', newStep.exercises[0]?.guid)
 
-    stateStore.setProp('homepageTabIndex', 1)
-    navigate('Home')
+    navigate('WorkoutStep')
   }
 
   function onBackPress() {
-    navigate('Home')
+    navigate('Workout')
   }
 
   function onAddExercisePress() {

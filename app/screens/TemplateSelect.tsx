@@ -5,7 +5,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutTemplate } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
+import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { Header, Icon, IconButton, colors } from 'designSystem'
 import TemplateList from 'app/components/WorkoutTemplate/TemplateList'
 import ConfirmationDialog from 'app/components/ConfirmationDialog'
@@ -18,7 +18,7 @@ const TemplateSelectScreen: React.FC = () => {
 
   function handleSelect(template: WorkoutTemplate) {
     workoutStore.createWorkoutFromTemplate(template)
-    navigate('Home')
+    navigate('Workout')
   }
 
   function handleEdit(template: WorkoutTemplate) {
@@ -35,7 +35,7 @@ const TemplateSelectScreen: React.FC = () => {
   }
 
   function onBackPress() {
-    navigate('Home')
+    navigate('Workout')
   }
 
   return (

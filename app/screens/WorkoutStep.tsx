@@ -2,16 +2,16 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
 import ExerciseTrackView from 'app/components/WorkoutStep/ExerciseTrackView'
 import StepHeader from 'app/components/WorkoutStep/StepHeader'
 import ExerciseControl from 'app/components/WorkoutStep/ExerciseControl'
+import { TabsLayout } from 'app/layouts/TabsLayout'
 
 const WorkoutStepScreen: React.FC = () => {
   const { stateStore } = useStores()
 
   return (
-    <EmptyLayout>
+    <TabsLayout activeRoute="WorkoutStep">
       <StepHeader />
       {stateStore.focusedStep?.type === 'superSet' && (
         <ExerciseControl
@@ -28,7 +28,7 @@ const WorkoutStepScreen: React.FC = () => {
         exercise={stateStore.focusedExercise!}
         step={stateStore.focusedStep!}
       />
-    </EmptyLayout>
+    </TabsLayout>
   )
 }
 export default observer(WorkoutStepScreen)

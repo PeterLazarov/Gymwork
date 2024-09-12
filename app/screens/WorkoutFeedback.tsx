@@ -5,7 +5,7 @@ import { TextInput } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
-import { EmptyLayout } from 'app/layouts/EmptyLayouts'
+import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { translate } from 'app/i18n'
 import {
   Button,
@@ -26,7 +26,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
   const workout = stateStore.openedWorkout!
 
   function onBackPress() {
-    navigate('Home')
+    navigate('Workout')
   }
 
   const exhaustionOptions = [
