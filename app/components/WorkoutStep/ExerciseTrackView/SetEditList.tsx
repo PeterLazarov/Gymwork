@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import { FlatList, Pressable, View } from 'react-native'
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
 
@@ -21,11 +21,16 @@ const SetEditList: React.FC<Props> = ({
   selectedSet,
   setSelectedSet,
 }) => {
-  const { stateStore } = useStores()
+  const { stateStore, recordStore } = useStores()
 
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
   }
+
+  const stepRecordGuids = useMemo(
+    () => recordStore.getRecordGuidsForStep(stateStore.focusedStep!),
+    [sets]
+  )
 
   const renderItem = useCallback(
     ({
@@ -34,9 +39,7 @@ const SetEditList: React.FC<Props> = ({
       onDragEnd,
       isActive,
     }: DragListRenderItemInfo<WorkoutSet>) => {
-      const isRecord = stateStore.focusedStep!.recordSetGuids.includes(
-        item.guid
-      )
+      const isRecord = stepRecordGuids.includes(item.guid)
 
       return (
         <PressableHighlight

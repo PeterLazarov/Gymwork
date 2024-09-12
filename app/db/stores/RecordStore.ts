@@ -8,6 +8,7 @@ import {
   ExerciseRecordSnapshotIn,
   ExerciseRecord,
   WorkoutSet,
+  WorkoutStep,
 } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
 import { removeWeakAssRecords } from 'app/services/workoutRecordsCalculator'
@@ -81,6 +82,12 @@ export const RecordStoreModel = types
         records.setNewRecord(updatedSet)
       }
     },
+    getRecordGuidsForStep(step: WorkoutStep) {
+      return step.exercises
+        .map(ex => self.exerciseRecordsMap[ex.guid])
+        .flatMap<WorkoutSet>(record => record?.recordSets || [])
+        .map(s => s.guid)
+    }
   }))
 
 export interface RecordStore extends Instance<typeof RecordStoreModel> {}

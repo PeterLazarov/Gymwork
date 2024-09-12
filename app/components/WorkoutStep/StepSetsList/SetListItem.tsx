@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import SetDataLabel from '../SetDataLabel'
-import { Exercise, WorkoutSet } from 'app/db/models'
+import { ExerciseMeasurement, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
 import { Icon, colors, fontSize } from 'designSystem'
@@ -10,22 +10,20 @@ import { observer } from 'mobx-react-lite'
 
 type Props = {
   set: WorkoutSet
-  exercise: Exercise
+  measurements: ExerciseMeasurement
   number?: number
   letter?: string
   isFocused?: boolean
   isRecord?: boolean
-  hideRecords?: boolean
 }
 
 const SetListItem: React.FC<Props> = ({
   set,
-  exercise,
+  measurements,
   isFocused,
   isRecord,
   number,
   letter,
-  hideRecords = false,
 }) => {
   const color = isFocused ? colors.accent : colors.neutralDarkest
 
@@ -40,78 +38,76 @@ const SetListItem: React.FC<Props> = ({
         height: 24,
       }}
     >
-      {!hideRecords && (
-        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-          {!set.isWarmup && (
-            <Text
-              style={{
-                fontSize: fontSize.sm,
-                color,
-                fontWeight: 'bold',
-                marginLeft: 8,
-                marginRight: 4,
-              }}
-            >
-              {number}.
-            </Text>
-          )}
-          {set.isWarmup && (
-            <Icon
-              icon="yoga"
-              color={color}
-            />
-          )}
-          {letter && (
-            <Text
-              style={{
-                fontSize: fontSize.sm,
-                color,
-                fontWeight: 'bold',
-                marginLeft: 4,
-              }}
-            >
-              {letter}
-            </Text>
-          )}
-          {isRecord && (
-            <Icon
-              icon="trophy"
-              color={colors.accent}
-              style={{
-                marginLeft: 4,
-              }}
-            />
-          )}
-        </View>
-      )}
-      {exercise.hasRepMeasument && (
+      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+        {!set.isWarmup && (
+          <Text
+            style={{
+              fontSize: fontSize.sm,
+              color,
+              fontWeight: 'bold',
+              marginLeft: 8,
+              marginRight: 4,
+            }}
+          >
+            {number}.
+          </Text>
+        )}
+        {set.isWarmup && (
+          <Icon
+            icon="yoga"
+            color={color}
+          />
+        )}
+        {letter && (
+          <Text
+            style={{
+              fontSize: fontSize.sm,
+              color,
+              fontWeight: 'bold',
+              marginLeft: 4,
+            }}
+          >
+            {letter}
+          </Text>
+        )}
+        {isRecord && (
+          <Icon
+            icon="trophy"
+            color={colors.accent}
+            style={{
+              marginLeft: 4,
+            }}
+          />
+        )}
+      </View>
+      {measurements.reps && (
         <SetDataLabel
           value={set.reps}
           unit={translate('reps')}
           isFocused={isFocused}
         />
       )}
-      {exercise.hasWeightMeasument && (
+      {measurements.weight && (
         <SetDataLabel
           value={set.weight}
-          unit={exercise.measurements.weight!.unit}
+          unit={measurements.weight!.unit}
           isFocused={isFocused}
         />
       )}
-      {exercise.hasDistanceMeasument && (
+      {measurements.distance && (
         <SetDataLabel
           value={set.distance}
-          unit={exercise.measurements.distance!.unit}
+          unit={measurements.distance.unit}
           isFocused={isFocused}
         />
       )}
-      {exercise.hasTimeMeasument && (
+      {measurements.duration && (
         <SetDataLabel
           value={getFormatedDuration(set.duration)}
           isFocused={isFocused}
         />
       )}
-      {exercise.measurements.rest && (
+      {measurements.rest && (
         <SetDataLabel
           value={getFormatedDuration(set.rest)}
           isFocused={isFocused}

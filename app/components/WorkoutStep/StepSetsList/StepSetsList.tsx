@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import SetListItem from './SetListItem'
@@ -16,7 +16,7 @@ const StepSetsList: React.FC<StepSetsList> = ({
   splitSupersets = false,
   focusedExerciseGuid,
 }) => {
-  const { stateStore } = useStores()
+  const { stateStore, recordStore } = useStores()
 
   const exerciseSets =
     step.exerciseSetsMap[
@@ -38,14 +38,19 @@ const StepSetsList: React.FC<StepSetsList> = ({
     return workSets.indexOf(set) + 1
   }
 
+  const stepRecordGuids = useMemo(
+    () => recordStore.getRecordGuidsForStep(step),
+    [step.sets]
+  )
+
   return (
     <>
       {sets.map((set, i) => (
         <SetListItem
           key={set.guid}
           set={set}
-          exercise={set.exercise!}
-          isRecord={step.recordSetGuids.includes(set.guid)}
+          measurements={set.exercise.measurements}
+          isRecord={stepRecordGuids.includes(set.guid)}
           isFocused={stateStore.focusedSetGuid === set.guid}
           number={getNumberForSet(set)}
           letter={getLetterForSet(set)}

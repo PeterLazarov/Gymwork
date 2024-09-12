@@ -45,12 +45,6 @@ export const WorkoutStepModel = types
         {} as Record<Exercise['guid'], ExerciseRecord>
       )
     },
-    get recordSetGuids(): WorkoutSet['guid'][] {
-      return Object.values(this.exerciseRecordsMap)
-        .flatMap<WorkoutSet>(r => r.recordSets)
-        .filter(recordSet => step.sets.some(set => set.guid === recordSet.guid))
-        .map(set => set.guid)
-    },
     get lastSet() {
       return step.sets.at(-1)
     },
