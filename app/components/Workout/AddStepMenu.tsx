@@ -20,13 +20,16 @@ const AddStepMenu = () => {
     setVisible(true)
   }
 
+  const addExercise = () => {
+    navigate('ExerciseSelect', {
+      selectMode: 'straightSet',
+    })
+  }
+
   const options = [
     {
       text: translate('addExercise'),
-      action: () =>
-        navigate('ExerciseSelect', {
-          selectMode: 'straightSet',
-        }),
+      action: addExercise,
     },
     {
       text: translate('addSuperset'),
@@ -101,6 +104,7 @@ const AddStepMenu = () => {
       <FAB
         icon="plus"
         onPress={expand}
+        onLongPress={addExercise}
       />
     </View>
   )
