@@ -6,7 +6,12 @@ import { View } from 'react-native'
 import SetEditList from './SetEditList'
 import SetEditControls from './SetEditControls'
 import { useStores } from 'app/db/helpers/useStores'
-import { WorkoutSet, WorkoutSetModel } from 'app/db/models'
+import {
+  Exercise,
+  WorkoutSet,
+  WorkoutSetModel,
+  WorkoutStep,
+} from 'app/db/models'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { SetEditActions } from './SetEditActions'
 import useTimer from 'app/db/stores/useTimer'
@@ -14,13 +19,18 @@ import { colors } from 'designSystem'
 
 const defaultReps = 10
 
-const ExerciseTrackView: React.FC = () => {
+export type ExerciseTrackViewProps = {
+  step: WorkoutStep
+  exercise: Exercise
+}
+
+const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
+  exercise: focusedExercise,
+  step,
+}) => {
   const { stateStore } = useStores()
   const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
-
-  const step = stateStore.focusedStep!
-  const focusedExercise = stateStore.focusedExercise!
 
   useEffect(() => {
     if (selectedSet && focusedExercise.guid !== selectedSet.exercise.guid) {
@@ -98,7 +108,7 @@ const ExerciseTrackView: React.FC = () => {
       }}
     >
       <SetEditList
-        sets={step.exerciseSetsMap[focusedExercise.guid]}
+        sets={step.exerciseSetsMap[focusedExercise.guid]!}
         selectedSet={selectedSet}
         setSelectedSet={setSelectedSet}
       />

@@ -1,21 +1,20 @@
 import React from 'react'
-import { observer } from 'mobx-react-lite'
 import { View, Text } from 'react-native'
 
-import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { Card, FeedbackPickerOption, fontSize } from 'designSystem'
-import { painOptions, feelingOptions } from 'app/db/models'
+import { painOptions, feelingOptions, Workout } from 'app/db/models'
 
-const WorkoutCommentsCard: React.FC = () => {
-  const { stateStore } = useStores()
-  const workout = stateStore.openedWorkout!
+export type WorkoutCommentsCardProps = {
+  workout: Workout
+  onPress?(): void
+}
 
+const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
+  workout,
+  onPress,
+}) => {
   const hasNotes = workout.notes !== ''
-
-  function onPress() {
-    navigate('WorkoutFeedback')
-  }
 
   return (
     <Card
@@ -56,4 +55,4 @@ const WorkoutCommentsCard: React.FC = () => {
   )
 }
 
-export default observer(WorkoutCommentsCard)
+export default WorkoutCommentsCard
