@@ -27,8 +27,7 @@ const StepSetsList: React.FC<Props> = ({ step, splitSupersets = false }) => {
 
     if (step.type === 'straightSet') return step.workSets.indexOf(set) + 1
 
-    const exerciseSets = step.exerciseSetsMap[set.exercise.guid] || []
-    const workSets = exerciseSets.filter(s => !s.isWarmup)
+    const workSets = step.exerciseWorkSetsMap[set.exercise.guid] || []
     return workSets.indexOf(set) + 1
   }
 

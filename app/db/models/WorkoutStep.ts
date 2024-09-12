@@ -69,6 +69,17 @@ export const WorkoutStepModel = types
         return map
       }, {} as Record<Exercise['guid'], WorkoutSet[]>)
     },
+    get exerciseWorkSetsMap() {
+      return step.sets.reduce((map, set) => {
+        if (!set.isWarmup) {
+          if (!map[set.exercise.guid]) {
+            map[set.exercise.guid] = []
+          }
+          map[set.exercise.guid]!.push(set)
+        }
+        return map
+      }, {} as Record<Exercise['guid'], WorkoutSet[]>)
+    },
     get exerciseLettering(): Record<Exercise['guid'], string> {
       return step.exercises.reduce((map, e, i) => {
         map[e.guid] = alphabeticNumbering(i)
