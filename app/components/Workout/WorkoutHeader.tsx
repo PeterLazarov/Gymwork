@@ -15,7 +15,7 @@ import useBenchmark from 'app/utils/useBenchmark'
 import WorkoutTimer from '../Timer/WorkoutTimer'
 
 const WorkoutHeader: React.FC = () => {
-  const { stateStore, workoutStore } = useStores()
+  const { stateStore, workoutStore, recordStore } = useStores()
 
   const { openedWorkout, showCommentsCard } = stateStore
   const [menuOpen, setMenuOpen] = useState(false)
@@ -56,6 +56,7 @@ const WorkoutHeader: React.FC = () => {
     const result = await restoreWorkouts()
     workoutStore.setProp('workouts', result?.workouts)
     workoutStore.setProp('workoutTemplates', result?.workoutTemplates)
+    recordStore.determineRecords()
   }
 
   const deleteWorkout = () => {

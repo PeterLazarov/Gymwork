@@ -49,12 +49,12 @@ export const RecordStoreModel = types
         if (records && records?.length > 0) {
           self.setProp('records', records)
         } else {
-          await this.seed()
+          await this.determineRecords()
         }
       }
     },
-    async seed() {
-      console.log('seeding records')
+    async determineRecords() {
+      console.log('calculating records')
       const allWorkouts = self.rootStore.workoutStore.workouts
       const records = getRecords(allWorkouts)
 
