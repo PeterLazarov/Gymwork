@@ -39,13 +39,14 @@ const StepSetsList: React.FC<StepSetsList> = ({
     return workSets.indexOf(set) + 1
   }
 
-  const [stepRecords, setStepRecords] = useState<WorkoutSet[]>([])
+  // const [stepRecords, setStepRecords] = useState<WorkoutSet[]>([])
 
-  useEffect(() => {
-    setTimeout(() => {
-      setStepRecords(recordStore.getRecordsForStep(step))
-    }, 0)
-  }, [step])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setStepRecords(recordStore.getRecordsForStep(step))
+  //   }, 0)
+  // }, [step])
+  const stepRecords = computed(() => recordStore.getRecordsForStep(step)).get()
 
   return (
     <>

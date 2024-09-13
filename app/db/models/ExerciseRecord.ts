@@ -11,7 +11,7 @@ import {
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import { getDataFieldForKey } from 'app/utils/workoutRecordsCalculator'
+import { getDataFieldForKey, markWeakAssRecords } from 'app/utils/workoutRecordsCalculator'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { ExerciseModel } from './Exercise'
 import { WorkoutSet, WorkoutSetModel } from './WorkoutSet'
@@ -72,6 +72,8 @@ export const ExerciseRecordModel = types
       }
 
       exerciseRecords.setProp('recordSets', recordSets)
+      
+      markWeakAssRecords(exerciseRecords as ExerciseRecord)
     },
     recalculateGroupingRecords(groupingToRefresh: number) {
       const refreshedRecords = exerciseRecords.recordSets.filter(recordSet => {
@@ -92,7 +94,7 @@ export const ExerciseRecordModel = types
             s => s[grouping] === set.groupingValue
           )
           if (currentRecordIndex !== -1) {
-            const currentRecord = refreshedRecords[currentRecordIndex]
+            const currentRecord = refreshedRecords[currentRecordIndex]!
             if (set.isBetterThan(currentRecord)) {
               refreshedRecords[currentRecordIndex] = set
             }
@@ -106,6 +108,8 @@ export const ExerciseRecordModel = types
         getSnapshot(record)
       )
       exerciseRecords.setProp('recordSets', refreshedRecordSnapshots)
+
+      markWeakAssRecords(exerciseRecords as ExerciseRecord)
     },
   }))
   .actions(self => ({

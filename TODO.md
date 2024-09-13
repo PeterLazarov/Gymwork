@@ -10,6 +10,7 @@
 - TrackView
   - fix whole form rerender for timer - KeyboardAvoiderView context is triggering. why??
   - timer doesn't start when open step and directly complete draft set without touching anything
+  - rest timer doesn't stop on stop button press
 - superset
   - improve track rerendering
 - HorizontalScreenList > react-native-reanimated-carousel rolled back for FlatList version. Do we return? Keep header press bug in mind.

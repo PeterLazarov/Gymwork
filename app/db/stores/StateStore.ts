@@ -64,9 +64,9 @@ export const StateStoreModel = types
         .filter(Boolean)
     },
     get focusedExerciseRecords(): ExerciseRecord {
-      return this.recordStore.getMarkedExerciseRecords(
+      return this.recordStore.exerciseRecordsMap[
         this.focusedStep!.exercise!.guid
-      )
+      ]!
     },
     get firstWorkout(): Workout | undefined {
       return this.workoutStore.workouts[this.workoutStore.workouts.length - 1]

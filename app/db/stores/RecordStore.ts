@@ -17,7 +17,6 @@ import {
   WorkoutStep,
 } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
-import { markWeakAssRecords } from 'app/utils/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
 import { autorun } from 'mobx'
 
@@ -57,15 +56,6 @@ export const RecordStoreModel = types
 
       self.setProp('records', records)
     },
-    getMarkedExerciseRecords(exerciseID: Exercise['guid']): ExerciseRecord {
-      const exerciseRecords = self.exerciseRecordsMap[exerciseID]!
-
-      if (exerciseRecords && exerciseRecords.recordSets.length > 0) {
-        markWeakAssRecords(exerciseRecords)
-      }
-
-      return exerciseRecords
-    },
     runSetUpdatedCheck(updatedSet: WorkoutSet) {
       let records = self.exerciseRecordsMap[updatedSet.exercise.guid]
 
@@ -84,7 +74,7 @@ export const RecordStoreModel = types
     getRecordsForStep(step: WorkoutStep) {
       const recordSets = step.exercises
         .flatMap<WorkoutSet>(
-          ({ guid }) => this.getMarkedExerciseRecords(guid)?.recordSets || []
+          ({ guid }) => self.exerciseRecordsMap[guid]?.recordSets || []
         )
         .filter(({ isWeakAssRecord }) => !isWeakAssRecord)
 
