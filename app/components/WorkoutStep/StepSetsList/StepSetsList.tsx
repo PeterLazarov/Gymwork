@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { computed } from 'mobx'
 
@@ -39,7 +39,13 @@ const StepSetsList: React.FC<StepSetsList> = ({
     return workSets.indexOf(set) + 1
   }
 
-  const stepRecords = computed(() => recordStore.getRecordsForStep(step)).get()
+  const [stepRecords, setStepRecords] = useState<WorkoutSet[]>([])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setStepRecords(recordStore.getRecordsForStep(step))
+    }, 0)
+  }, [step])
 
   return (
     <>
