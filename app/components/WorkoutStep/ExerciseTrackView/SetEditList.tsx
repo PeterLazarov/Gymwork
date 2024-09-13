@@ -27,7 +27,7 @@ const SetEditList: React.FC<Props> = ({
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
   }
 
-  const stepRecordGuids = useMemo(
+  const stepRecords = useMemo(
     () =>
       stateStore.focusedStep
         ? recordStore.getRecordGuidsForStep(stateStore.focusedStep)
@@ -42,7 +42,7 @@ const SetEditList: React.FC<Props> = ({
       onDragEnd,
       isActive,
     }: DragListRenderItemInfo<WorkoutSet>) => {
-      const isRecord = stepRecordGuids.includes(item.guid)
+      const isRecord = stepRecords.includes(item)
 
       return (
         <PressableHighlight
@@ -78,7 +78,7 @@ const SetEditList: React.FC<Props> = ({
         </PressableHighlight>
       )
     },
-    [selectedSet, stepRecordGuids]
+    [selectedSet, stepRecords]
   )
 
   const ITEM_HEIGHT = 62

@@ -75,13 +75,14 @@ export const RecordStoreModel = types
       }
     },
     getRecordGuidsForStep(step: WorkoutStep) {
-      const recordSets =  step.exercises
-        .map(ex => this.getMarkedExerciseRecords(ex.guid))
-        .flatMap<WorkoutSet>(record => record?.recordSets || [])
-        .filter(s => !s.isWeakAssRecord)
+      const recordSets = step.exercises
+        .flatMap<WorkoutSet>(
+          ({ guid }) => this.getMarkedExerciseRecords(guid)?.recordSets || []
+        )
+        .filter(({ isWeakAssRecord }) => !isWeakAssRecord)
 
-      return recordSets.map(s => s.guid)
-    }
+      return recordSets
+    },
   }))
 
 export interface RecordStore extends Instance<typeof RecordStoreModel> {}

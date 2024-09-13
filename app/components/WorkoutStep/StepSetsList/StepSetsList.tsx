@@ -50,7 +50,7 @@ const StepSetsList: React.FC<StepSetsList> = ({
           key={set.guid}
           set={set}
           measurements={set.exercise.measurements}
-          isRecord={stepRecordGuids.includes(set.guid)}
+          isRecord={stepRecordGuids.includes(set)}
           isFocused={stateStore.focusedSetGuid === set.guid}
           number={getNumberForSet(set)}
           letter={getLetterForSet(set)}
