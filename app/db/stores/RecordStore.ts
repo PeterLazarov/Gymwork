@@ -1,4 +1,10 @@
-import { Instance, SnapshotOut, getParent, types } from 'mobx-state-tree'
+import {
+  Instance,
+  SnapshotOut,
+  addDisposer,
+  getParent,
+  types,
+} from 'mobx-state-tree'
 
 import * as storage from 'app/utils/storage'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
@@ -13,6 +19,7 @@ import {
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
 import { markWeakAssRecords } from 'app/services/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
+import { autorun } from 'mobx'
 
 export const RecordStoreModel = types
   .model('RecordStore')
@@ -82,6 +89,18 @@ export const RecordStoreModel = types
         .filter(({ isWeakAssRecord }) => !isWeakAssRecord)
 
       return recordSets
+    },
+  }))
+  // A keepAlive hack
+  // https://github.com/mobxjs/mobx-state-tree/issues/1949
+  .actions(self => ({
+    afterAttach() {
+      addDisposer(
+        self,
+        autorun(() => {
+          console.log(self.exerciseRecordsMap) // this simple method of making sure to access self.mySlowMethod keeps the slow getter alive. you can alternatively not console.log it and do something else with it if needed, just make sure to access it in an autorun
+        })
+      )
     },
   }))
 
