@@ -49,7 +49,7 @@ function generateWorkout(date: string) {
         milliseconds: restMs * i + setDuration * i,
       })
 
-      console.log(workoutTime.toFormat('hh:mm'))
+      // console.log(workoutTime.toFormat('hh:mm'))
       const sets: WorkoutSetSnapshotIn[] = Array.from({
         length: between(2, 5),
       }).map((_, i) => ({
@@ -79,7 +79,7 @@ function generateWorkout(date: string) {
       workoutTime = workoutTime.plus({
         milliseconds: restMs * i + setDuration * i,
       })
-      console.log(workoutTime.toFormat('hh:mm'))
+      // console.log(workoutTime.toFormat('hh:mm'))
 
       return {
         exercise: '44',
@@ -103,7 +103,7 @@ function generateWorkout(date: string) {
       // const weight = between(0, 10) // not supported yet?
       const duration = km * between(4, 7)
       workoutTime = workoutTime.plus({ minutes: km * duration })
-      console.log(workoutTime.toFormat('hh:mm'))
+      // console.log(workoutTime.toFormat('hh:mm'))
 
       return {
         exercise: cardioExerciseID,
@@ -129,7 +129,7 @@ function generateWorkout(date: string) {
       workoutTime = workoutTime.plus({
         milliseconds: restMs * i + setDuration * i,
       })
-      console.log(workoutTime.toFormat('hh:mm'))
+      // console.log(workoutTime.toFormat('hh:mm'))
 
       return {
         exercise: i % 2 === 0 ? '44' : '42',

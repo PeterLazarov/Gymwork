@@ -90,18 +90,21 @@ export const WorkoutStoreModel = types
   .actions(withSetPropAction)
   .actions(self => ({
     async fetch() {
-      const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
-      const workoutTemplates = await storage.load<WorkoutTemplateSnapshotIn[]>(
-        'workoutTemplates'
-      )
+      if (self.workouts.length === 0) {
+        const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
+        const workoutTemplates = await storage.load<WorkoutTemplateSnapshotIn[]>(
+          'workoutTemplates'
+        )
 
-      if (workoutTemplates && workoutTemplates?.length > 0) {
-        self.setProp('workoutTemplates', workoutTemplates)
-      }
-      if (workouts && workouts?.length > 0) {
-        self.setProp('workouts', workouts)
-      } else if (isDev) {
-        await this.seed()
+        console.log('workouts in memory', workouts)
+        if (workoutTemplates && workoutTemplates?.length > 0) {
+          self.setProp('workoutTemplates', workoutTemplates)
+        }
+        if (workouts && workouts?.length > 0) {
+          self.setProp('workouts', workouts)
+        } else if (isDev) {
+          await this.seed()
+        }
       }
     },
     async seed() {

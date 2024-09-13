@@ -5,6 +5,7 @@ import {
   getParent,
   types,
 } from 'mobx-state-tree'
+import { autorun } from 'mobx'
 
 import * as storage from 'app/utils/storage'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
@@ -17,8 +18,8 @@ import {
   WorkoutStep,
 } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
+import { markWeakAssRecords } from 'app/utils/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
-import { autorun } from 'mobx'
 
 export const RecordStoreModel = types
   .model('RecordStore')
@@ -41,12 +42,15 @@ export const RecordStoreModel = types
   .actions(withSetPropAction)
   .actions(self => ({
     async fetch() {
-      const records = await storage.load<ExerciseRecordSnapshotIn[]>('records')
+      if (self.records.length === 0) {
+        const records = await storage.load<ExerciseRecordSnapshotIn[]>('records')
 
-      if (records && records?.length > 0) {
-        self.setProp('records', records)
-      } else {
-        await this.seed()
+        console.log('records in memory', records)
+        if (records && records?.length > 0) {
+          self.setProp('records', records)
+        } else {
+          await this.seed()
+        }
       }
     },
     async seed() {
@@ -55,6 +59,7 @@ export const RecordStoreModel = types
       const records = getRecords(allWorkouts)
 
       self.setProp('records', records)
+      self.records.forEach(record => markWeakAssRecords(record))
     },
     runSetUpdatedCheck(updatedSet: WorkoutSet) {
       let records = self.exerciseRecordsMap[updatedSet.exercise.guid]
@@ -70,6 +75,8 @@ export const RecordStoreModel = types
       if (records.isNewRecord(updatedSet)) {
         records.setNewRecord(updatedSet)
       }
+
+      markWeakAssRecords(records)
     },
     getRecordsForStep(step: WorkoutStep) {
       const recordSets = step.exercises

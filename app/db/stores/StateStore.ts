@@ -96,6 +96,8 @@ export const StateStoreModel = types
   .actions(self => ({
     initialize() {
       self.activeRoute = 'Workout'
+      self.focusedStepGuid = ''
+      self.focusedSetGuid = ''
     },
     setOpenedDate(date: string) {
       self.openedDate = date

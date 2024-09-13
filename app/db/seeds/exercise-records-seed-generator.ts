@@ -18,13 +18,13 @@ export const getRecords = (workouts: Workout[]): ExerciseRecordSnapshotIn[] => {
       if (!groupedSets[key]) {
         groupedSets[key] = []
       }
-      groupedSets[key].push(set)
+      groupedSets[key]!.push(set)
     })
   })
 
   // Process each group to find the best set
   Object.keys(groupedSets).forEach(key => {
-    const sets = groupedSets[key]
+    const sets = groupedSets[key]!
     const bestSet = sets.reduce((best, current) => {
       return current.isBetterThan(best) ? current : best
     })

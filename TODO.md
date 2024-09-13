@@ -16,7 +16,6 @@
 - dev experience
   - ios emulator -> expo crash on code change in emulator
   - android device -> after code change rendering of StepHeader when no focusedStep error
-  - limit seeding only on initial load. read from storage after that
 - HorizontalScreenList > react-native-reanimated-carousel rolled back for FlatList version. Do we return? Keep header press bug in mind.
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - reasonable seed data rest periods & createdAt

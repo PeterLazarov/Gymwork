@@ -20,12 +20,14 @@ export const ExerciseStoreModel = types
   .actions(withSetPropAction)
   .actions(store => ({
     async fetch() {
-      const exercises = await storage.load<ExerciseSnapshotIn[]>('exercises')
+      if (store.exercises.length === 0) {
+        const exercises = await storage.load<ExerciseSnapshotIn[]>('exercises')
 
-      if (exercises && exercises?.length > 0 && !isDev) {
-        store.setProp('exercises', exercises)
-      } else {
-        await this.seed()
+        if (exercises && exercises?.length > 0 && !isDev) {
+          store.setProp('exercises', exercises)
+        } else {
+          await this.seed()
+        }
       }
     },
     async seed() {

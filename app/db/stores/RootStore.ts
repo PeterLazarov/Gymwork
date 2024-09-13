@@ -1,5 +1,6 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
+import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 import { ExerciseStoreModel } from './ExerciseStore'
 import { StateStoreModel } from './StateStore'
 import { WorkoutStoreModel } from './WorkoutStore'
@@ -13,7 +14,13 @@ export const RootStoreModel = types
     stateStore: types.optional(StateStoreModel, {}),
     recordStore: types.optional(RecordStoreModel, {}),
   })
+  .actions(withSetPropAction)
   .actions(self => ({
+    applySnapshot(snapshot: RootStoreSnapshot){
+      self.setProp('exerciseStore', snapshot.exerciseStore)
+      self.setProp('workoutStore', snapshot.workoutStore)
+      self.setProp('recordStore', snapshot.recordStore)
+    },
     initializeStores(): Promise<void> {
       return self.exerciseStore
         .fetch()
