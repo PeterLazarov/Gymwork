@@ -25,7 +25,6 @@
 - In exercise track menu, Edit exercise and especially Remove exercise could be thought of as workout scoped. They are not.
 - check out focusedExerciseRecords for supersets
 - History is broken?
-- Rest timer duration too wide
 
 Performance to beat -
 100 workouts
