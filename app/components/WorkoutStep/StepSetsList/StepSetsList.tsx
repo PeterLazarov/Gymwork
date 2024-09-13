@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react-lite'
+import { computed } from 'mobx'
 
 import SetListItem from './SetListItem'
 import { WorkoutSet, WorkoutStep } from 'app/db/models'
@@ -38,10 +39,9 @@ const StepSetsList: React.FC<StepSetsList> = ({
     return workSets.indexOf(set) + 1
   }
 
-  const stepRecordGuids = useMemo(
-    () => recordStore.getRecordGuidsForStep(step),
-    [step.sets]
-  )
+  const stepRecordGuids = computed(() =>
+    recordStore.getRecordGuidsForStep(step)
+  ).get()
 
   return (
     <>

@@ -111,7 +111,7 @@ const AppStack = observer(function AppStack() {
         <Stack.Screen name="HomeStack">
           {({ route, navigation }) => {
             const HomeStack = createNativeStackNavigator()
-            console.log({ route, navigation })
+
             return (
               <TabsLayout>
                 <HomeStack.Navigator

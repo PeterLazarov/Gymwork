@@ -75,11 +75,12 @@ export const RecordStoreModel = types
       }
     },
     getRecordGuidsForStep(step: WorkoutStep) {
-      return step.exercises
+      const recordSets =  step.exercises
         .map(ex => this.getMarkedExerciseRecords(ex.guid))
         .flatMap<WorkoutSet>(record => record?.recordSets || [])
         .filter(s => !s.isWeakAssRecord)
-        .map(s => s.guid)
+
+      return recordSets.map(s => s.guid)
     }
   }))
 
