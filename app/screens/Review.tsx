@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 
 import {
@@ -15,28 +15,22 @@ import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 import ExerciseChartStats from 'app/components/ExerciseStats/ExerciseChartStats'
 import ExerciseHistoryStats from 'app/components/ExerciseStats/ExerciseHistoryStats'
 import ExerciseRecordStats from 'app/components/ExerciseStats/ExerciseRecordStats'
-import ExerciseRow from 'app/components/ExerciseRow'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
 import { observer } from 'mobx-react-lite'
-import { TabsLayout } from 'app/layouts/TabsLayout'
 
 export default observer(function ReviewScreen(props: {}) {
   const { stateStore } = useStores()
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
+  const [selectedExercise, setSelectedExercise] = useState(
+    stateStore.focusedExercise
+  )
 
-  const selectedExercise = useMemo(() => {
-    return stateStore.reviewFocusedExercise ?? stateStore.focusedExercise
-  }, [stateStore.reviewFocusedExercise, stateStore.focusedSet?.exercise])
-
-  // const rowOptions = useMemo(() => {
-  //   return stateStore.focusedStep?.exercises?.includes(
-  //     //   @ts-ignore
-  //     stateStore.reviewFocusedExercise ?? stateStore.focusedSet?.exercise
-  //   )
-  //     ? stateStore.focusedStep?.exercises
-  //     : []
-  // }, [selectedExercise, stateStore.focusedStep?.exercises])
+  useEffect(() => {
+    if (stateStore.focusedExercise) {
+      setSelectedExercise(stateStore.focusedExercise)
+    }
+  }, [stateStore.focusedExercise])
 
   return (
     <>
@@ -61,22 +55,6 @@ export default observer(function ReviewScreen(props: {}) {
           }
         />
 
-        {stateStore.focusedExercise && (
-          <IconButton
-            onPress={() =>
-              stateStore.setProp(
-                'reviewFocusedExerciseGuid',
-                stateStore.focusedExerciseGuid
-              )
-            }
-            underlay="darker"
-          >
-            <Icon
-              icon="dumbbell"
-              color={colors.primaryText}
-            />
-          </IconButton>
-        )}
         <IconButton
           onPress={() => setExerciseSelectOpen(true)}
           underlay="darker"
@@ -99,21 +77,13 @@ export default observer(function ReviewScreen(props: {}) {
             multiselect={false}
             selected={[]}
             onChange={([e]) => {
-              stateStore.setProp('reviewFocusedExerciseGuid', e?.guid)
+              if (e) {
+                setSelectedExercise(e)
+              }
               setExerciseSelectOpen(false)
             }}
           />
         )}
-
-        {/* {!exerciseSelectOpen && (
-          <ExerciseRow
-            selected={selectedExercise}
-            onPress={() => {
-              setExerciseSelectOpen(true)
-            }}
-            options={rowOptions}
-          />
-        )} */}
 
         {!exerciseSelectOpen && selectedExercise && (
           <SwipeTabs

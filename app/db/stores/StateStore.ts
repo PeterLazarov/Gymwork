@@ -24,9 +24,6 @@ export const StateStoreModel = types
     draftSet: types.maybe(WorkoutSetModel),
     showCommentsCard: true,
 
-    // TODO consider how this works with workout focused exercise
-    reviewFocusedExerciseGuid: types.maybe(types.string),
-
     activeRoute: types.maybe(types.string),
   })
   .views(self => ({
@@ -57,11 +54,6 @@ export const StateStoreModel = types
         this.exerciseStore.exercisesMap[self.focusedExerciseGuid ?? ''] ||
         this.focusedSet?.exercise
       )
-    },
-    get reviewFocusedExercise(): Exercise | undefined {
-      return this.exerciseStore.exercisesMap[
-        self.reviewFocusedExerciseGuid ?? ''
-      ]
     },
     get openedWorkout(): Workout | undefined {
       return this.workoutStore.dateWorkoutMap[self.openedDate]
@@ -123,8 +115,8 @@ export const StateStoreModel = types
       self.focusedStepGuid = stepGuid
       self.focusedSetGuid = ''
 
-      const focusedStep = self.openedWorkout?.stepsMap[self.focusedStepGuid]
-      self.focusedExerciseGuid = focusedStep?.exercises[0].guid
+      const focusedStep = self.openedWorkout?.stepsMap[self.focusedStepGuid]!
+      self.focusedExerciseGuid = focusedStep?.exercises?.[0]?.guid
     },
   }))
 

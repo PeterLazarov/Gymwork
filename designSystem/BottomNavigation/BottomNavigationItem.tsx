@@ -14,7 +14,7 @@ export const BottomNavigationItem: React.FC<Props> = ({ item, isSelected }) => (
     onPress={item.onPress}
     style={{
       flex: 1,
-      paddingTop: 10,
+      justifyContent: 'center',
     }}
   >
     <View
