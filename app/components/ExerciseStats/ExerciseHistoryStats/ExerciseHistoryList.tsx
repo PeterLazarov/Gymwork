@@ -4,12 +4,16 @@ import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import ExerciseHistoryListItem from './ExerciseHistoryListItem'
 import { Exercise, Workout, WorkoutModel, WorkoutStep } from 'app/db/models'
 import { getParentOfType } from 'mobx-state-tree'
+import { useStores } from 'app/db/helpers/useStores'
+import { navigate } from 'app/navigators'
 
 type Props = {
   workouts: Workout[]
   exercise: Exercise
 }
 const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
+  const { stateStore } = useStores()
+
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<WorkoutStep>) => {
       const workout = getParentOfType(item, WorkoutModel)
@@ -20,6 +24,10 @@ const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
           date={workout.date}
           step={item}
           exercise={exercise}
+          onPress={() => {
+            navigate('Workout')
+            stateStore.setOpenedDate(workout.date)
+          }}
         />
       )
     },

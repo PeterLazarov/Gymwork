@@ -52,7 +52,7 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
           orientation="horizontal"
           variant="primary"
         />
-        <View style={{ paddingVertical: 16 }}>
+        <View style={{ padding: 16 }}>
           <DurationInput
             valueSeconds={timerSecs}
             onUpdate={setTimerSecs}

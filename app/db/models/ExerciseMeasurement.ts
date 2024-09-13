@@ -60,6 +60,7 @@ export const measurementDefaults = {
   },
   rest: {
     unit: measurementUnits.duration.s,
+    moreIsBetter: false,
   },
 }
 
@@ -117,6 +118,7 @@ export const ExerciseMeasurementModel = types
             'restUnit',
             Object.values(measurementUnits.rest)
           ),
+          moreIsBetter: types.boolean,
         })
         .actions(withSetPropAction)
     ),
@@ -130,8 +132,4 @@ export interface ExerciseMeasurementSnapshotOut
 
 export type FilterStrings<T> = T extends string ? T : never
 
-type nonMetricFields = 'rest'
-export type measurementName = Exclude<
-  FilterStrings<keyof ExerciseMeasurementSnapshotOut>,
-  nonMetricFields
->
+export type measurementName = keyof ExerciseMeasurementSnapshotOut

@@ -2,6 +2,7 @@ import {
   Instance,
   SnapshotIn,
   SnapshotOut,
+  addDisposer,
   destroy,
   getParentOfType,
   getSnapshot,
@@ -16,6 +17,7 @@ import { ExerciseModel } from './Exercise'
 import { WorkoutSet, WorkoutSetModel } from './WorkoutSet'
 import { WorkoutStore } from '../stores/WorkoutStore'
 import { RootStoreModel } from '../stores/RootStore'
+import { autorun } from 'mobx'
 
 export const ExerciseRecordModel = types
   .model('ExerciseRecord')
@@ -104,6 +106,17 @@ export const ExerciseRecordModel = types
         getSnapshot(record)
       )
       exerciseRecords.setProp('recordSets', refreshedRecordSnapshots)
+    },
+  }))
+  .actions(self => ({
+    afterAttach() {
+      addDisposer(
+        self,
+        autorun(() => {
+          const x = self.recordSetsMap // this simple method of making sure to access self.mySlowMethod keeps the slow getter alive. you can alternatively not console.log it and do something else with it if needed, just make sure to access it in an autorun
+          const y = self.groupingRecordMap
+        })
+      )
     },
   }))
 

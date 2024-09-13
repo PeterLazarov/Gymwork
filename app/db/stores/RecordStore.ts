@@ -1,4 +1,10 @@
-import { Instance, SnapshotOut, getParent, types } from 'mobx-state-tree'
+import {
+  Instance,
+  SnapshotOut,
+  addDisposer,
+  getParent,
+  types,
+} from 'mobx-state-tree'
 
 import * as storage from 'app/utils/storage'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
@@ -13,6 +19,7 @@ import {
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
 import { markWeakAssRecords } from 'app/utils/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
+import { autorun } from 'mobx'
 
 export const RecordStoreModel = types
   .model('RecordStore')
@@ -74,14 +81,27 @@ export const RecordStoreModel = types
         records.setNewRecord(updatedSet)
       }
     },
-    getRecordGuidsForStep(step: WorkoutStep) {
-      const recordSets =  step.exercises
-        .map(ex => this.getMarkedExerciseRecords(ex.guid))
-        .flatMap<WorkoutSet>(record => record?.recordSets || [])
-        .filter(s => !s.isWeakAssRecord)
+    getRecordsForStep(step: WorkoutStep) {
+      const recordSets = step.exercises
+        .flatMap<WorkoutSet>(
+          ({ guid }) => this.getMarkedExerciseRecords(guid)?.recordSets || []
+        )
+        .filter(({ isWeakAssRecord }) => !isWeakAssRecord)
 
-      return recordSets.map(s => s.guid)
-    }
+      return recordSets
+    },
+  }))
+  // A keepAlive hack
+  // https://github.com/mobxjs/mobx-state-tree/issues/1949
+  .actions(self => ({
+    afterAttach() {
+      addDisposer(
+        self,
+        autorun(() => {
+          const x = self.exerciseRecordsMap // this simple method of making sure to access self.mySlowMethod keeps the slow getter alive. you can alternatively not console.log it and do something else with it if needed, just make sure to access it in an autorun
+        })
+      )
+    },
   }))
 
 export interface RecordStore extends Instance<typeof RecordStoreModel> {}

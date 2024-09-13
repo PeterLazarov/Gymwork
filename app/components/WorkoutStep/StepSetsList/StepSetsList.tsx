@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { computed } from 'mobx'
 
@@ -39,9 +39,13 @@ const StepSetsList: React.FC<StepSetsList> = ({
     return workSets.indexOf(set) + 1
   }
 
-  const stepRecordGuids = computed(() =>
-    recordStore.getRecordGuidsForStep(step)
-  ).get()
+  const [stepRecords, setStepRecords] = useState<WorkoutSet[]>([])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setStepRecords(recordStore.getRecordsForStep(step))
+    }, 0)
+  }, [step])
 
   return (
     <>
@@ -50,7 +54,7 @@ const StepSetsList: React.FC<StepSetsList> = ({
           key={set.guid}
           set={set}
           measurements={set.exercise.measurements}
-          isRecord={stepRecordGuids.includes(set.guid)}
+          isRecord={stepRecords.some(({ guid }) => guid === set.guid)}
           isFocused={stateStore.focusedSetGuid === set.guid}
           number={getNumberForSet(set)}
           letter={getLetterForSet(set)}
