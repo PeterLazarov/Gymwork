@@ -108,7 +108,10 @@ const AppStack = observer(function AppStack() {
           component={ExerciseSelect}
         />
 
-        <Stack.Screen name="HomeStack">
+        <Stack.Screen
+          name="HomeStack"
+          options={{ animation: 'none' }}
+        >
           {({ route, navigation }) => {
             const HomeStack = createNativeStackNavigator()
             console.log({ route, navigation })
@@ -127,7 +130,10 @@ const AppStack = observer(function AppStack() {
                     component={ReviewScreen}
                   />
 
-                  <HomeStack.Screen name="WorkoutStack">
+                  <HomeStack.Screen
+                    name="WorkoutStack"
+                    options={{ animation: 'none' }}
+                  >
                     {({ route, navigation }) => {
                       const WorkoutStack = createNativeStackNavigator()
                       return (
