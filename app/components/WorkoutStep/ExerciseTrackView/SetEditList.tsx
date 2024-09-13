@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react-lite'
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { FlatList, Pressable, View } from 'react-native'
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
+import { computed } from 'mobx'
 
 import SetEditItem from './SetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
@@ -27,13 +28,11 @@ const SetEditList: React.FC<Props> = ({
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
   }
 
-  const stepRecords = useMemo(
-    () =>
-      stateStore.focusedStep
-        ? recordStore.getRecordsForStep(stateStore.focusedStep)
-        : [],
-    [sets, stateStore.focusedStep]
-  )
+  const stepRecords = computed(() => {
+    return stateStore.focusedStep
+      ? recordStore.getRecordsForStep(stateStore.focusedStep)
+      : []
+  }).get()
 
   const renderItem = useCallback(
     ({

@@ -72,8 +72,6 @@ export const ExerciseRecordModel = types
       }
 
       exerciseRecords.setProp('recordSets', recordSets)
-      
-      markWeakAssRecords(exerciseRecords as ExerciseRecord)
     },
     recalculateGroupingRecords(groupingToRefresh: number) {
       const refreshedRecords = exerciseRecords.recordSets.filter(recordSet => {
