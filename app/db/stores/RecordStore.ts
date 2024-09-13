@@ -11,7 +11,7 @@ import {
   WorkoutStep,
 } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
-import { markWeakAssRecords } from 'app/services/workoutRecordsCalculator'
+import { markWeakAssRecords } from 'app/utils/workoutRecordsCalculator'
 import { RootStore } from './RootStore'
 
 export const RecordStoreModel = types

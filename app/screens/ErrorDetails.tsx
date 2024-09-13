@@ -1,13 +1,12 @@
-import React, { ErrorInfo } from 'react'
+import React from 'react'
 import { ScrollView, TextStyle, View, ViewStyle, Text } from 'react-native'
 
-import { colors, spacing } from '../../theme'
+import { colors, spacing } from '../theme'
 import { Button, ButtonText } from 'designSystem'
 
 export interface ErrorDetailsProps {
-  error: Error
-  errorInfo: ErrorInfo | null
-  onReset(): void
+  error: Error | null
+  resetError: () => void
 }
 
 /**
@@ -15,22 +14,23 @@ export interface ErrorDetailsProps {
  * @param {ErrorDetailsProps} props - The props for the `ErrorDetails` component.
  * @returns {JSX.Element} The rendered `ErrorDetails` component.
  */
-export function ErrorDetails(props: ErrorDetailsProps): JSX.Element {
+export const ErrorDetails: React.FC<ErrorDetailsProps> = ({
+  error,
+  resetError,
+}) => {
   return (
     <View style={{ flex: 1, marginTop: 20 }}>
       <ScrollView
         style={$errorSection}
         contentContainerStyle={$errorSectionContentContainer}
       >
-        <Text style={$errorContent}>{`${props.error}`.trim()}</Text>
-        <Text style={$errorBacktrace}>
-          {`${props.errorInfo?.componentStack ?? ''}`.trim()}
-        </Text>
+        <Text style={$errorContent}>{`${error}`.trim()}</Text>
+        <Text style={$errorBacktrace}>{`${error?.stack ?? ''}`.trim()}</Text>
       </ScrollView>
 
       <Button
         variant="critical"
-        onPress={props.onReset}
+        onPress={resetError}
       >
         <ButtonText variant="critical">Reset</ButtonText>
       </Button>

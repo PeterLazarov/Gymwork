@@ -6,6 +6,7 @@ if (__DEV__) {
 }
 import { useFonts } from 'expo-font'
 import React from 'react'
+import * as SystemUI from 'expo-system-ui'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { PaperProvider, Portal } from 'react-native-paper'
 import { KeyboardAvoiderProvider } from '@good-react-native/keyboard-avoider'
@@ -13,25 +14,27 @@ import {
   initialWindowMetrics,
   SafeAreaProvider,
 } from 'react-native-safe-area-context'
+import { Provider, ErrorBoundary } from '@rollbar/react'
 
-import Config from './config'
 import './i18n'
 import DBStoreInitializer from './db/DBStoreInitializer'
 import { useInitialRootStore } from './db/helpers/useStores'
 import { AppNavigator, useNavigationPersistence } from './navigators'
 import './utils/ignoreWarnings'
 import * as storage from './utils/storage'
-import { ErrorBoundary } from './screens/Error/ErrorBoundary'
+import { useLogging } from './utils/errorLogging'
 import { customFontsToLoad } from './theme'
-export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
-
-import * as SystemUI from 'expo-system-ui'
 import { colors } from 'designSystem'
 import useTimer, { TimerContext } from './db/stores/useTimer'
+import { ErrorDetails } from './screens/ErrorDetails'
+
+export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
 SystemUI.setBackgroundColorAsync(colors.neutralLighter)
 
 function App() {
+  const { errorLogger: instance } = useLogging()
+
   const {
     initialNavigationState,
     onNavigationStateChange,
@@ -64,16 +67,18 @@ function App() {
         <DBStoreInitializer>
           <TimerContext.Provider value={timer}>
             <GestureHandlerRootView style={{ flex: 1 }}>
-              <Portal.Host>
-                <ErrorBoundary catchErrors={Config.catchErrors}>
-                  <PaperProvider>
-                    <AppNavigator
-                      initialState={initialNavigationState}
-                      onStateChange={onNavigationStateChange}
-                    />
-                  </PaperProvider>
+              <Provider instance={instance.rollbar}>
+                <ErrorBoundary fallbackUI={ErrorDetails}>
+                  <Portal.Host>
+                    <PaperProvider>
+                      <AppNavigator
+                        initialState={initialNavigationState}
+                        onStateChange={onNavigationStateChange}
+                      />
+                    </PaperProvider>
+                  </Portal.Host>
                 </ErrorBoundary>
-              </Portal.Host>
+              </Provider>
             </GestureHandlerRootView>
           </TimerContext.Provider>
         </DBStoreInitializer>

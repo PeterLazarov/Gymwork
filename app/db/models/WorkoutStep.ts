@@ -14,7 +14,7 @@ import { RootStoreModel } from 'app/db/stores/RootStore'
 import { Exercise, ExerciseModel } from './Exercise'
 import { WorkoutSet, WorkoutSetModel, WorkoutSetSnapshotIn } from './WorkoutSet'
 import { RecordStore } from '../stores/RecordStore'
-import { getDataFieldForKey } from 'app/services/workoutRecordsCalculator'
+import { getDataFieldForKey } from 'app/utils/workoutRecordsCalculator'
 import { alphabeticNumbering } from 'app/utils/string'
 import { ExerciseRecord } from './ExerciseRecord'
 
