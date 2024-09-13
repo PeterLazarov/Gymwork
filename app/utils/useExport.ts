@@ -7,9 +7,14 @@ import {
 import * as DocumentPicker from 'expo-document-picker'
 
 import { WorkoutStoreSnapshot } from 'app/db/stores/WorkoutStore'
+import { useStores } from 'app/db/helpers/useStores'
+import { getSnapshot } from 'mobx-state-tree'
 
 export function useExport() {
-  async function exportWorkouts(workoutStore: WorkoutStoreSnapshot) {
+  const rootStore = useStores()
+  const { workoutStore, exerciseStore, recordStore } = rootStore
+
+  async function exportData() {
     const permissions =
       await StorageAccessFramework.requestDirectoryPermissionsAsync()
     if (!permissions.granted) {
@@ -17,7 +22,10 @@ export function useExport() {
     }
 
     try {
-      const jsonString = JSON.stringify(workoutStore)
+      const jsonString = JSON.stringify({
+        workoutStore: getSnapshot(workoutStore),
+        exerciseStore: getSnapshot(exerciseStore),
+      })
 
       await StorageAccessFramework.createFileAsync(
         permissions.directoryUri,
@@ -31,20 +39,24 @@ export function useExport() {
     }
   }
 
-  async function restoreWorkouts(): Promise<WorkoutStoreSnapshot | null> {
+  async function restoreData(): Promise<WorkoutStoreSnapshot | null> {
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: 'application/json',
       })
 
       if (!result.canceled) {
-        const fileUri = result.assets[0].uri
+        const fileUri = result.assets[0]!.uri
 
         // Read the file's content
         const fileContent = await readAsStringAsync(fileUri)
 
         // Parse the JSON data
-        return JSON.parse(fileContent)
+        const data = JSON.parse(fileContent)
+
+        rootStore.setProp('workoutStore', data?.workoutStore)
+        rootStore.setProp('exerciseStore', data?.exerciseStore)
+        recordStore.determineRecords()
       }
     } catch (error: any) {
       Alert.alert(error.message)
@@ -54,7 +66,7 @@ export function useExport() {
   }
 
   return {
-    exportWorkouts,
-    restoreWorkouts,
+    exportData,
+    restoreData,
   }
 }

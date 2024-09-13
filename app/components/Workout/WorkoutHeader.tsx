@@ -15,11 +15,11 @@ import useBenchmark from 'app/utils/useBenchmark'
 import WorkoutTimer from '../Timer/WorkoutTimer'
 
 const WorkoutHeader: React.FC = () => {
-  const { stateStore, workoutStore, recordStore } = useStores()
+  const { stateStore, workoutStore } = useStores()
 
   const { openedWorkout, showCommentsCard } = stateStore
   const [menuOpen, setMenuOpen] = useState(false)
-  const { exportWorkouts, restoreWorkouts } = useExport()
+  const { exportData, restoreData } = useExport()
 
   // TODO dedupe with DayControl
   const date = DateTime.fromISO(stateStore.openedDate)
@@ -44,19 +44,16 @@ const WorkoutHeader: React.FC = () => {
     stateStore.setProp('showCommentsCard', !showCommentsCard)
   }
 
-  const exportData = () => {
+  const onExportData = () => {
     setMenuOpen(false)
 
-    exportWorkouts(getSnapshot(workoutStore))
+    exportData()
   }
 
-  const restoreData = async () => {
+  const onRestoreData = async () => {
     setMenuOpen(false)
 
-    const result = await restoreWorkouts()
-    workoutStore.setProp('workouts', result?.workouts)
-    workoutStore.setProp('workoutTemplates', result?.workoutTemplates)
-    recordStore.determineRecords()
+    restoreData()
   }
 
   const deleteWorkout = () => {
@@ -110,11 +107,11 @@ const WorkoutHeader: React.FC = () => {
           />
         )}
         <Menu.Item
-          onPress={exportData}
+          onPress={onExportData}
           title={translate('exportData')}
         />
         <Menu.Item
-          onPress={restoreData}
+          onPress={onRestoreData}
           title={translate('restoreData')}
         />
         <Menu.Item
