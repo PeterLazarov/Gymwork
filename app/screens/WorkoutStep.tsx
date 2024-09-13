@@ -5,13 +5,13 @@ import { useStores } from 'app/db/helpers/useStores'
 import ExerciseTrackView from 'app/components/WorkoutStep/ExerciseTrackView'
 import StepHeader from 'app/components/WorkoutStep/StepHeader'
 import ExerciseControl from 'app/components/WorkoutStep/ExerciseControl'
-import { TabsLayout } from 'app/layouts/TabsLayout'
+import { View } from 'react-native'
 
 const WorkoutStepScreen: React.FC = () => {
   const { stateStore } = useStores()
 
   return (
-    <>
+    <View style={{ marginBottom: 8, flex: 1 }}>
       <StepHeader />
       {stateStore.focusedStep?.type === 'superSet' && (
         <ExerciseControl
@@ -28,7 +28,7 @@ const WorkoutStepScreen: React.FC = () => {
         exercise={stateStore.focusedExercise!}
         step={stateStore.focusedStep!}
       />
-    </>
+    </View>
   )
 }
 export default observer(WorkoutStepScreen)
