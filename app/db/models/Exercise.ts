@@ -84,7 +84,7 @@ export const ExerciseModel = types
     },
     get measurementNames(): measurementName[] {
       return Object.entries(exercise.measurements)
-        .filter(([k, v]) => v && k !== 'rest')
+        .filter(([, v]) => v)
         .map(([k]) => k as measurementName)
     },
     get groupRecordsBy(): measurementName {
@@ -108,7 +108,7 @@ export const ExerciseModel = types
 
       const combination = measurementCombinations.find(cfg => {
         if (
-          exerciseMeasurementNames.every(name => cfg.measurement.includes(name))
+          cfg.measurement.every(name => exerciseMeasurementNames.includes(name))
         ) {
           return cfg.measureBy
         }
