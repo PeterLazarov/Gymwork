@@ -81,7 +81,7 @@ export const RecordStoreModel = types
         records.setNewRecord(updatedSet)
       }
     },
-    getRecordGuidsForStep(step: WorkoutStep) {
+    getRecordsForStep(step: WorkoutStep) {
       const recordSets = step.exercises
         .flatMap<WorkoutSet>(
           ({ guid }) => this.getMarkedExerciseRecords(guid)?.recordSets || []

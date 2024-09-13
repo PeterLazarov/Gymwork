@@ -30,7 +30,7 @@ const SetEditList: React.FC<Props> = ({
   const stepRecords = useMemo(
     () =>
       stateStore.focusedStep
-        ? recordStore.getRecordGuidsForStep(stateStore.focusedStep)
+        ? recordStore.getRecordsForStep(stateStore.focusedStep)
         : [],
     [sets, stateStore.focusedStep]
   )
@@ -42,7 +42,7 @@ const SetEditList: React.FC<Props> = ({
       onDragEnd,
       isActive,
     }: DragListRenderItemInfo<WorkoutSet>) => {
-      const isRecord = stepRecords.includes(item)
+      const isRecord = stepRecords.some(({ guid }) => guid === item.guid)
 
       return (
         <PressableHighlight

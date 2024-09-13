@@ -39,9 +39,7 @@ const StepSetsList: React.FC<StepSetsList> = ({
     return workSets.indexOf(set) + 1
   }
 
-  const stepRecordGuids = computed(() =>
-    recordStore.getRecordGuidsForStep(step)
-  ).get()
+  const stepRecords = computed(() => recordStore.getRecordsForStep(step)).get()
 
   return (
     <>
@@ -50,7 +48,7 @@ const StepSetsList: React.FC<StepSetsList> = ({
           key={set.guid}
           set={set}
           measurements={set.exercise.measurements}
-          isRecord={stepRecordGuids.includes(set)}
+          isRecord={stepRecords.some(({ guid }) => guid === set.guid)}
           isFocused={stateStore.focusedSetGuid === set.guid}
           number={getNumberForSet(set)}
           letter={getLetterForSet(set)}
