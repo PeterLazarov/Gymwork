@@ -7,24 +7,20 @@ export const markWeakAssRecords = (
     .map(Number)
     .sort((a, b) => b - a)
 
-  if (groupingsDescending.length === 0) return 
+  if (groupingsDescending.length === 0) return
 
-  let lastRecord = exerciseAllRecords.groupingRecordMap[groupingsDescending[0]!]!
+  let lastRecord =
+    exerciseAllRecords.groupingRecordMap[groupingsDescending[0]!]!
 
   for (const grouping of groupingsDescending) {
     const record = exerciseAllRecords.groupingRecordMap[grouping]!
 
     if (lastRecord.guid !== record.guid && lastRecord.isBetterThan(record)) {
-      const weakAssRecord = exerciseAllRecords.recordSets.find(
-        set => set.guid === record.guid
-      )
+      const weakAssRecord = exerciseAllRecords.recordSetsMap[record.guid]
       weakAssRecord?.setProp('isWeakAssRecord', true)
     } else {
-      const strongAssRecord = exerciseAllRecords.recordSets.find(
-        set => set.guid === lastRecord.guid
-      )
+      const strongAssRecord = exerciseAllRecords.recordSetsMap[lastRecord.guid]
       strongAssRecord?.setProp('isWeakAssRecord', false)
-
       lastRecord = record
     }
   }

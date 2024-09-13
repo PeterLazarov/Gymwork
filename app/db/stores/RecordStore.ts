@@ -98,7 +98,7 @@ export const RecordStoreModel = types
       addDisposer(
         self,
         autorun(() => {
-          console.log(self.exerciseRecordsMap) // this simple method of making sure to access self.mySlowMethod keeps the slow getter alive. you can alternatively not console.log it and do something else with it if needed, just make sure to access it in an autorun
+          const x = self.exerciseRecordsMap // this simple method of making sure to access self.mySlowMethod keeps the slow getter alive. you can alternatively not console.log it and do something else with it if needed, just make sure to access it in an autorun
         })
       )
     },
