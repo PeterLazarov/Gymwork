@@ -1,4 +1,4 @@
-import { colorSchemas } from "designSystem"
+import { colorSchemas } from 'designSystem'
 
 export const feelingOptions = {
   sad: {

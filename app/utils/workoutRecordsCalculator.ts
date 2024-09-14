@@ -1,4 +1,8 @@
-import { ExerciseRecord, WorkoutSetSnapshotIn, measurementName } from 'app/db/models'
+import {
+  ExerciseRecord,
+  WorkoutSetSnapshotIn,
+  measurementName,
+} from 'app/db/models'
 
 export const markWeakAssRecords = (
   exerciseAllRecords: ExerciseRecord
@@ -26,7 +30,9 @@ export const markWeakAssRecords = (
   }
 }
 
-export const getDataFieldForKey = (key: measurementName): keyof WorkoutSetSnapshotIn => {
+export const getDataFieldForKey = (
+  key: measurementName
+): keyof WorkoutSetSnapshotIn => {
   const dataFieldsMap = {
     weight: 'weightMcg',
     duration: 'durationMs',

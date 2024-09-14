@@ -92,9 +92,9 @@ export const WorkoutStoreModel = types
     async fetch() {
       if (self.workouts.length === 0) {
         const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
-        const workoutTemplates = await storage.load<WorkoutTemplateSnapshotIn[]>(
-          'workoutTemplates'
-        )
+        const workoutTemplates = await storage.load<
+          WorkoutTemplateSnapshotIn[]
+        >('workoutTemplates')
 
         console.log('workouts in memory', workouts)
         if (workoutTemplates && workoutTemplates?.length > 0) {

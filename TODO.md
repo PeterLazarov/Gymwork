@@ -22,7 +22,6 @@
   - add overscroll for sets covered by the FAB
 - review
   - remember the review tab previously selected e.g. records -> step track -> records
-  - in chart an exercise with 0kg is not shown
   - On jump to record set, scroll to set
 - Workout Comments
   - what is third option picker? (condition?)

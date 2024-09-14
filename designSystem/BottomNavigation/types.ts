@@ -1,4 +1,4 @@
-import { IconProps } from "../Icon"
+import { IconProps } from '../Icon'
 
 export type Item = {
   text: string

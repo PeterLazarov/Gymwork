@@ -14,30 +14,34 @@ type Props = {
 }
 const seriesSetup = ({ data }: Props) => {
   const singleMetricFormatter = (metric: keyof WorkoutSet) => {
-    return data.map(
-      sets => sets?.reduce((max, set) => Math.max(max, set[metric]), 0) || null
+    return data.map(sets =>
+      sets.length > 0
+        ? sets.reduce((max, set) => Math.max(max, set[metric]), 0)
+        : null
     )
   }
   const oneRepMaxFormatter = () => {
-    return data.map(
-      sets =>
-        sets?.reduce(
-          (max, set) =>
-            Number(
-              Math.max(max, oneRepMaxEpley(set.weight!, set.reps!)).toFixed(2)
-            ),
-          0
-        ) || null
+    return data.map(sets =>
+      sets.length > 0
+        ? sets.reduce(
+            (max, set) =>
+              Number(
+                Math.max(max, oneRepMaxEpley(set.weight!, set.reps!)).toFixed(2)
+              ),
+            0
+          )
+        : null
     )
   }
 
   const speedFormatter = () => {
-    return data.map(
-      sets =>
-        sets?.reduce(
-          (max, set) => Number(Math.max(max, set.speed).toFixed(2)),
-          0
-        ) || null
+    return data.map(sets =>
+      sets.length > 0
+        ? sets.reduce(
+            (max, set) => Number(Math.max(max, set.speed).toFixed(2)),
+            0
+          )
+        : null
     )
   }
 

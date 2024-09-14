@@ -43,7 +43,9 @@ export const RecordStoreModel = types
   .actions(self => ({
     async fetch() {
       if (self.records.length === 0) {
-        const records = await storage.load<ExerciseRecordSnapshotIn[]>('records')
+        const records = await storage.load<ExerciseRecordSnapshotIn[]>(
+          'records'
+        )
 
         console.log('records in memory', records)
         if (records && records?.length > 0) {

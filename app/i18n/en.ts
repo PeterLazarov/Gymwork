@@ -79,7 +79,7 @@ const en = {
   setAsFavorite: 'Set as favorite',
   removeFavorite: 'Remove from favorites',
   dataImportSuccess: 'Data successfully imported.',
-  dataExportSuccess: 'Data successfully exported.'
+  dataExportSuccess: 'Data successfully exported.',
 }
 
 export default en
