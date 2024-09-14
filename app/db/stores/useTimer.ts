@@ -40,22 +40,28 @@ function _useTimer() {
     startTickInterval(defaultUpdateFrequency)
   }
 
-  // Resume teleports to time in the past
   function startTickInterval(
     updateFrequency: Duration = defaultUpdateFrequency
   ) {
-    if (intervalHandle === null) {
-      lastTickAt.current = Date.now()
-      setIntervalHandle(setDriftlessInterval(tick, updateFrequency.toMillis()))
-    }
+    setIntervalHandle(currentHandle => {
+      if (currentHandle === null) {
+        lastTickAt.current = Date.now()
+        return setDriftlessInterval(tick, updateFrequency.toMillis())
+      }
+      return currentHandle
+    })
   }
 
   function stop() {
-    if (intervalHandle !== null) {
-      clearDriftless(intervalHandle)
-      setIntervalHandle(null)
-      tick()
-    }
+    setIntervalHandle(currentHandle => {
+      if (currentHandle !== null) {
+        clearDriftless(currentHandle)
+        tick()
+        return null
+      }
+
+      return currentHandle
+    })
   }
 
   function tick() {
