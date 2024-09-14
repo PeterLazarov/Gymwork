@@ -24,7 +24,6 @@
 - review
   - remember the review tab previously selected e.g. records -> step track -> records
   - in chart an exercise with 0kg is not shown
-- after successful import / export show a 'success' toast 
 - HorizontalScreenList > react-native-reanimated-carousel rolled back for FlatList version. Do we return? Keep header press bug in mind.
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - reasonable seed data rest periods & createdAt

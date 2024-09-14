@@ -6,7 +6,6 @@ import {
 } from 'expo-file-system'
 import * as DocumentPicker from 'expo-document-picker'
 
-import { WorkoutStoreSnapshot } from 'app/db/stores/WorkoutStore'
 import { useStores } from 'app/db/helpers/useStores'
 import { getSnapshot } from 'mobx-state-tree'
 
@@ -33,13 +32,14 @@ export function useExport() {
         'application/json'
       ).then(async uri => {
         await writeAsStringAsync(uri, jsonString)
+        return
       })
     } catch (error: any) {
       Alert.alert(error.message)
     }
   }
 
-  async function restoreData(): Promise<WorkoutStoreSnapshot | null> {
+  async function restoreData(): Promise<void> {
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: 'application/json',
@@ -57,12 +57,13 @@ export function useExport() {
         rootStore.setProp('workoutStore', data?.workoutStore)
         rootStore.setProp('exerciseStore', data?.exerciseStore)
         recordStore.determineRecords()
+        return
       }
     } catch (error: any) {
       Alert.alert(error.message)
     }
 
-    return null
+    return
   }
 
   return {

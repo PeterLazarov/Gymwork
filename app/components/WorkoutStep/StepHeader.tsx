@@ -13,8 +13,7 @@ const StepHeader: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const deleteSelectedExercises = () => {
-    stateStore.openedWorkout!.removeStep(stateStore.focusedStep!)
-    stateStore.setFocusedStep('')
+    stateStore.deleteFocusedStep()
     navigate('Workout')
   }
 

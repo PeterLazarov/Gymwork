@@ -78,6 +78,8 @@ const en = {
   hours: 'Hours',
   setAsFavorite: 'Set as favorite',
   removeFavorite: 'Remove favorite',
+  dataImportSuccess: 'Data successfully imported.',
+  dataExportSuccess: 'Data successfully exported.'
 }
 
 export default en
