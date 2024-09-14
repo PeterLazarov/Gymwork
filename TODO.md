@@ -19,7 +19,6 @@
   - ios emulator -> expo crash on code change in emulator
   - android device -> after code change rendering of StepHeader when no focusedStep error
 - error logging
-  - fix android build crash
   - log only production errors
 - WorkoutDayView
   - add overscroll for sets covered by the FAB
