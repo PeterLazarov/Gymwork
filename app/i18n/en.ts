@@ -23,7 +23,7 @@ const en = {
   editRestTimer: 'Edit Rest Timer',
   createExercise: 'Create exercise',
   editExercise: 'Edit exercise',
-  removeExercise: 'Remove exercise',
+  removeFromWorkout: 'Remove from workout',
   showGraph: 'Show graph',
   hideGraph: 'Hide graph',
   changesWillBeLost: 'Any changes made will be lost.',
@@ -77,7 +77,7 @@ const en = {
   minutes: 'Minutes',
   hours: 'Hours',
   setAsFavorite: 'Set as favorite',
-  removeFavorite: 'Remove favorite',
+  removeFavorite: 'Remove from favorites',
   dataImportSuccess: 'Data successfully imported.',
   dataExportSuccess: 'Data successfully exported.'
 }

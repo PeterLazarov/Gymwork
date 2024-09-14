@@ -12,8 +12,7 @@
   - timer doesn't start when open step and directly complete draft set without touching anything
   - rest timer doesn't stop on stop button press
   - on step delete show an undo or a confirm button
-- superset
-  - improve track rerendering
+  - improve double rerendering
 - dev experience
   - ios emulator -> expo crash on code change in emulator
   - android device -> after code change rendering of StepHeader when no focusedStep error
@@ -24,19 +23,17 @@
 - review
   - remember the review tab previously selected e.g. records -> step track -> records
   - in chart an exercise with 0kg is not shown
+  - On jump to record set, scroll to set
+- Workout Comments
+  - what is third option picker? (condition?)
+  - historical comments screen?
 - HorizontalScreenList > react-native-reanimated-carousel rolled back for FlatList version. Do we return? Keep header press bug in mind.
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
-- reasonable seed data rest periods & createdAt
-- On jump to record set, scroll to set
-- improve and rearrange feedback UI
 - Workout historical stats screen with muscle areas and comments analysis
 - Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
-- optimise calendar rendering
 - grouping / measurement by rest
 - template steps list editting rearranging and or adding
-- In exercise track menu, Edit exercise and especially Remove exercise could be thought of as workout scoped. They are not.
 - check out focusedExerciseRecords for supersets
-- History is broken?
 
 Performance to beat -
 100 workouts

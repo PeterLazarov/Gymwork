@@ -90,7 +90,7 @@ const StepHeader: React.FC = () => {
           />
           <Menu.Item
             onPress={deleteSelectedExercises}
-            title={translate('removeExercise')}
+            title={translate('removeFromWorkout')}
           />
           <Menu.Item
             onPress={toggleFavoriteExercise}
