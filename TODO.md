@@ -10,7 +10,7 @@
 - TrackView
   - fix whole form rerender for timer - KeyboardAvoiderView context is triggering. why??
   - timer doesn't start when open step and directly complete draft set without touching anything
-  - rest timer doesn't stop on stop button press
+  - every timer start is not stopping the previous ones making it impossible to stop and causing infinite rerenders
   - on step delete show an undo or a confirm button
   - improve double rerendering
 - dev experience
