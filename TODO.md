@@ -22,7 +22,6 @@
   - log only production errors
 - WorkoutDayView
   - add overscroll for sets covered by the FAB
-  - changing an exercise name doesn't change the cards until the cards array is changed
 - review
   - remember the review tab previously selected e.g. records -> step track -> records
   - in chart an exercise with 0kg is not shown

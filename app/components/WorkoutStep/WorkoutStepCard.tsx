@@ -1,4 +1,6 @@
 import React from 'react'
+import { observer } from 'mobx-react-lite'
+
 import StepSetsList from './StepSetsList'
 import { WorkoutStep } from 'app/db/models'
 import { Card } from 'designSystem'
@@ -25,4 +27,4 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, ...rest }) => {
   )
 }
 
-export default WorkoutStepCard
+export default observer(WorkoutStepCard)

@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { Menu } from 'react-native-paper'
-import { getSnapshot } from 'mobx-state-tree'
 import { DateTime } from 'luxon'
 import { capitalize } from 'lodash'
 
@@ -11,7 +10,6 @@ import { useExport } from 'app/utils/useExport'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, colors } from 'designSystem'
 import useBenchmark from 'app/utils/useBenchmark'
-
 import WorkoutTimer from '../Timer/WorkoutTimer'
 
 const WorkoutHeader: React.FC = () => {
@@ -94,10 +92,6 @@ const WorkoutHeader: React.FC = () => {
           </IconButton>
         }
       >
-        <Menu.Item
-          onPress={saveTemplate}
-          title={translate('saveAsTemplate')}
-        />
         {openedWorkout?.hasComments && (
           <Menu.Item
             onPress={toggleCommentsCard}
@@ -106,6 +100,18 @@ const WorkoutHeader: React.FC = () => {
             )}
           />
         )}
+        {openedWorkout && (
+          <>
+            <Menu.Item
+              onPress={saveTemplate}
+              title={translate('saveAsTemplate')}
+            />
+            <Menu.Item
+              onPress={deleteWorkout}
+              title={translate('removeWorkout')}
+            />
+          </>
+        )}
         <Menu.Item
           onPress={onExportData}
           title={translate('exportData')}
@@ -113,10 +119,6 @@ const WorkoutHeader: React.FC = () => {
         <Menu.Item
           onPress={onRestoreData}
           title={translate('restoreData')}
-        />
-        <Menu.Item
-          onPress={deleteWorkout}
-          title={translate('removeWorkout')}
         />
         <Menu.Item
           onPress={performBenchmark}

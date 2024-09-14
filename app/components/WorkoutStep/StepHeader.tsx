@@ -50,7 +50,7 @@ const StepHeader: React.FC = () => {
     const n = similarSteps.indexOf(step) + 1
 
     return `${name} ${similarSteps.length > 1 ? n : ''}`
-  }, [])
+  }, [stateStore.focusedStep!.exercise])
 
   return (
     <Header>
