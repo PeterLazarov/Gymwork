@@ -7,7 +7,7 @@
     "scheme": "gymwork",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/pen-logo.png",
     "splash": {
       "image": "./assets/logo.png",
       "resizeMode": "contain",
@@ -20,11 +20,11 @@
     "jsEngine": "hermes",
     "assetBundlePatterns": ["**/*"],
     "android": {
-      "icon": "./assets/logo.png",
+      "icon": "./assets/pen-logo.png",
       "package": "com.gymwork",
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
+        "foregroundImage": "./assets/pen-logo.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
       },
       "splash": {
@@ -34,7 +34,7 @@
       }
     },
     "ios": {
-      "icon": "./assets/logo.png",
+      "icon": "./assets/pen-logo.png",
       "supportsTablet": true,
       "bundleIdentifier": "com.gymwork",
       "splash": {
@@ -45,7 +45,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/logo.png",
+      "favicon": "./assets/pen-logo.png",
       "splash": {
         "image": "./assets/logo.png",
         "resizeMode": "contain",
