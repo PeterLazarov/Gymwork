@@ -47,6 +47,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
             onSubmit={() => onHandleSubmit(input1)}
             ref={input1}
             returnKeyType={isLastInput(input1) ? 'default' : 'next'}
+            maxDecimals={0}
           />
         </SetEditPanelSection>
       )}

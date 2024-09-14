@@ -9,10 +9,11 @@ type Props = {
   onSubmit?: TextInputProps['onSubmitEditing']
   step?: number
   returnKeyType?: TextInputProps['returnKeyType']
+  maxDecimals?: number
 }
 
 const IncrementNumericEditor = forwardRef<TextInput, Props>(
-  ({ value, onChange, step, onSubmit, returnKeyType }, ref) => {
+  ({ value, onChange, step, onSubmit, returnKeyType, maxDecimals }, ref) => {
     return (
       <IncrementalButtons
         value={value}
@@ -29,6 +30,7 @@ const IncrementNumericEditor = forwardRef<TextInput, Props>(
           ref={ref}
           returnKeyType={returnKeyType}
           textAlign="center"
+          maxDecimals={maxDecimals}
           style={{
             textAlign: 'center',
           }}

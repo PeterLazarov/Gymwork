@@ -11,7 +11,6 @@
   - fix whole form rerender for timer - KeyboardAvoiderView context is triggering. why??
   - timer doesn't start when open step and directly complete draft set without touching anything
   - rest timer doesn't stop on stop button press
-  - .5 reps are possible
   - on step delete show an undo or a confirm button
 - superset
   - improve track rerendering
