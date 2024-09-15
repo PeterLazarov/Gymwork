@@ -19,7 +19,7 @@ const CalendarWorkoutModalExerciseItem: React.FC<Props> = ({
       <Text
         style={{
           fontSize: fontSize.md,
-          color: colors.neutralText,
+          color: colors.tertiaryText,
           marginBottom: 8,
           textAlign: 'center',
         }}

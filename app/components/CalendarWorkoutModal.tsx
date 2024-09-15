@@ -97,7 +97,9 @@ const CalendarWorkoutModal: React.FC<Props> = ({
                   gap: 10,
                 }}
               >
-                <Text style={{ fontSize: fontSize.md }}>
+                <Text
+                  style={{ fontSize: fontSize.md, color: colors.tertiaryText }}
+                >
                   {translate('includeSets')}
                 </Text>
                 <ToggleSwitch
