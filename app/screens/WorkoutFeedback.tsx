@@ -1,12 +1,13 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View, Text, Dimensions } from 'react-native'
+import { View, Text } from 'react-native'
 import { TextInput } from 'react-native-paper'
+import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { translate } from 'app/i18n'
+import { TxKeyPath, translate } from 'app/i18n'
 import {
   Button,
   ButtonText,
@@ -16,9 +17,8 @@ import {
   IconButton,
   useColors,
   fontSize,
-  Slider,
+  ToggleGroupButton,
 } from 'designSystem'
-import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { Workout, painOptions, feelingOptions } from 'app/db/models'
 
 const WorkoutFeedbackScreen: React.FC = () => {
@@ -31,7 +31,13 @@ const WorkoutFeedbackScreen: React.FC = () => {
     navigate('Workout')
   }
 
-  const screenWidth = Dimensions.get('window').width
+  const rpeOptions = Array.from({ length: 6 }).map((_, i) => i + 5)
+  const difficultyButtons = rpeOptions.map(option => ({
+    text: String(option),
+    onPress: () => {
+      workout.setProp('rpe', option)
+    },
+  }))
 
   return (
     <EmptyLayout>
@@ -92,18 +98,26 @@ const WorkoutFeedbackScreen: React.FC = () => {
             color: colors.tertiaryText,
           }}
         >
-          {workout.rpe !== undefined
-            ? translate('rpeValue', { rate: workout.rpe })
-            : translate('rpe')}
+          {translate('difficulty')}
         </Text>
-        <Slider
-          values={workout.rpe !== undefined ? [workout.rpe] : []}
-          sliderLength={screenWidth - 40}
-          onValuesChange={([value]) => workout.setProp('rpe', value)}
-          min={1}
-          max={10}
-          snapped
+        <ToggleGroupButton
+          buttons={difficultyButtons}
+          initialActiveIndex={
+            workout.rpe ? rpeOptions.indexOf(workout.rpe) : undefined
+          }
+          containerStyle={{ padding: 10 }}
         />
+        {workout.rpe && (
+          <Text
+            style={{
+              fontSize: fontSize.md,
+              color: colors.tertiaryText,
+              textAlign: 'center',
+            }}
+          >
+            {translate(`rpe.${workout.rpe}` as TxKeyPath)}
+          </Text>
+        )}
         <TextInput
           value={workout.notes}
           onChangeText={text => workout.setProp('notes', text)}

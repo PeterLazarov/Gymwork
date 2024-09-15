@@ -44,7 +44,7 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
               <Text
                 style={{ fontSize: fontSize.md, color: colors.tertiaryText }}
               >
-                {translate('rpeValue', { rate: workout.rpe })}
+                {translate('diffValue', { rpe: workout.rpe })}
               </Text>
             )}
             {workout.pain && (
