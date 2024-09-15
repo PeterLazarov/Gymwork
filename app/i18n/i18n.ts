@@ -4,8 +4,17 @@ import { I18nManager } from 'react-native'
 
 // if English isn't your default language, move Translations to the appropriate language file.
 import en, { Translations } from './en'
+import { capitalize } from 'app/utils/string'
+import decamelize from 'decamelize'
 
 i18n.fallbacks = true
+i18n.missingTranslation = scope => {
+  console.warn(`Missing Translation: ${scope}`)
+
+  return capitalize(
+    decamelize(scope, { preserveConsecutiveUppercase: true, separator: ' ' })
+  )
+}
 
 // to use regional locales use { "en-US": enUS } etc
 i18n.translations = { en, 'en-US': en }
