@@ -5,6 +5,7 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons'
 import { StyleProp, TextStyle } from 'react-native'
+import { useColors } from './tokens'
 
 const iconSizes = {
   small: 16,
@@ -89,9 +90,12 @@ export type IconProps = {
 export const Icon: React.FC<IconProps> = ({
   icon,
   size = 'default',
-  color = 'black',
+  color: _color,
   style,
 }) => {
+  const colors = useColors()
+  const color = _color ?? colors.neutralText
+
   return (
     <>
       {IoniconsIcons.includes(icon) && (

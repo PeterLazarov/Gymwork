@@ -39,7 +39,7 @@ const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
         justifyContent: 'space-between',
         display: 'flex',
         flexGrow: 1,
-        backgroundColor: colors.neutralLighter,
+        // backgroundColor: colors.neutralLighter,
       }}
     >
       <View

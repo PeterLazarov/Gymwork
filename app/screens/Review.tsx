@@ -72,6 +72,7 @@ export default observer(function ReviewScreen(props: {}) {
         style={{
           flexGrow: 1,
           position: 'relative',
+          backgroundColor: colors.neutralLight,
         }}
       >
         {exerciseSelectOpen && (

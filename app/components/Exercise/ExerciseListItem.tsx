@@ -38,7 +38,12 @@ const ExerciseListItem: React.FC<Props> = ({
         }}
       >
         <Text
-          style={{ fontSize: fontSize.md, flex: 1, flexWrap: 'wrap' }}
+          style={{
+            fontSize: fontSize.md,
+            flex: 1,
+            flexWrap: 'wrap',
+            color: colors.neutralText,
+          }}
           numberOfLines={1}
         >
           {exercise.name}

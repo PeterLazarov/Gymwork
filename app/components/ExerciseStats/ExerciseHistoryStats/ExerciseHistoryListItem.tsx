@@ -34,7 +34,12 @@ const ExerciseHistoryListItem: React.FC<Props> = ({
     >
       <>
         <Text
-          style={{ fontSize: fontSize.md, textAlign: 'center', paddingTop: 4 }}
+          style={{
+            fontSize: fontSize.md,
+            textAlign: 'center',
+            paddingTop: 4,
+            color: colors.neutralText,
+          }}
         >
           {DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}
         </Text>

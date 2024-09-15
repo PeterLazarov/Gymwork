@@ -3,7 +3,13 @@ import { Text, View } from 'react-native'
 import { HelperText } from 'react-native-paper'
 
 import { ExerciseMeasurement, measurementUnits } from 'app/db/models'
-import { NumberInput, Select, ToggleSwitch, fontSize } from 'designSystem'
+import {
+  NumberInput,
+  Select,
+  ToggleSwitch,
+  fontSize,
+  useColors,
+} from 'designSystem'
 import { translate } from 'app/i18n'
 
 type Props = {
@@ -20,6 +26,7 @@ const ExerciseEditFormWeightSection: React.FC<Props> = ({
   onFormChange,
   weightIncError,
 }) => {
+  const colors = useColors()
   const weightMeasurement = measurementConfig.weight!
   function setUnit(unit: weightUnits) {
     weightMeasurement.setProp('unit', unit)
@@ -47,7 +54,7 @@ const ExerciseEditFormWeightSection: React.FC<Props> = ({
           alignItems: 'center',
         }}
       >
-        <Text style={{ fontSize: fontSize.md }}>
+        <Text style={{ fontSize: fontSize.md, color: colors.neutralText }}>
           {translate('moreIsBetter')}
         </Text>
         <ToggleSwitch
