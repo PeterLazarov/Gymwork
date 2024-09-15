@@ -10,7 +10,6 @@
 - TrackView
   - fix whole form rerender for timer - KeyboardAvoiderView context is triggering. why??
   - timer doesn't start when open step and directly complete draft set without touching anything
-  - every timer start is not stopping the previous ones making it impossible to stop and causing infinite rerenders
   - on step delete show an undo or a confirm button
   - improve double rerendering
 - dev experience
@@ -18,13 +17,14 @@
   - android device -> after code change rendering of StepHeader when no focusedStep error
 - error logging
   - log only production errors
+  - include state data
+  - improve fallback UI
 - WorkoutDayView
-  - add overscroll for sets covered by the FAB
+  - on Android add overscroll for sets covered by the FAB
 - review
   - remember the review tab previously selected e.g. records -> step track -> records
   - On jump to record set, scroll to set
 - Workout Comments
-  - what is third option picker? (condition?)
   - historical comments screen?
 - HorizontalScreenList > react-native-reanimated-carousel rolled back for FlatList version. Do we return? Keep header press bug in mind.
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen

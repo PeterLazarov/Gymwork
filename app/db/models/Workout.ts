@@ -27,11 +27,6 @@ const painOptions = {
   discomfort: 'discomfort',
   noPain: 'noPain',
 } as const
-const intensityOptions = {
-  easy: 'easy',
-  standard: 'standard',
-  intense: 'intense',
-} as const
 
 export const WorkoutModel = types
   .model('Workout')
@@ -42,10 +37,7 @@ export const WorkoutModel = types
     notes: '',
     feeling: types.maybe(types.enumeration('feeling', Object.values(feelings))),
     pain: types.maybe(types.enumeration('pain', Object.values(painOptions))),
-    intensity: types.optional(
-      types.enumeration('intensity', Object.values(intensityOptions)),
-      () => intensityOptions.standard
-    ),
+    rpe: types.maybe(types.number)
   })
   .views(self => ({
     get exercises(): Exercise[] {
@@ -125,9 +117,8 @@ export const WorkoutModel = types
     },
     get hasComments() {
       const hasNotes = self.notes !== ''
-      const hasIntensity = self.intensity !== 'standard'
 
-      return hasNotes || hasIntensity || self.pain || self.feeling
+      return hasNotes || self.rpe || self.pain || self.feeling
     },
   }))
   .actions(withSetPropAction)

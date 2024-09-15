@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Dimensions } from 'react-native'
 import { TextInput } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
@@ -14,9 +14,9 @@ import {
   FeedbackPicker,
   Icon,
   IconButton,
-  colorSchemas,
   colors,
   fontSize,
+  Slider,
 } from 'designSystem'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { Workout, painOptions, feelingOptions } from 'app/db/models'
@@ -29,30 +29,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
     navigate('Workout')
   }
 
-  const exhaustionOptions = [
-    {
-      icon: 'sleep',
-      // icon: 'star-outline',
-      // icon: 'speedometer-slow',
-      label: 'Easy',
-      color: colorSchemas.coral.hue600,
-      value: 'easy',
-    },
-    {
-      icon: 'star',
-      // icon: 'speedometer-medium',
-      label: 'Standard',
-      color: colorSchemas.amber.hue600,
-      value: 'standard',
-    },
-    {
-      icon: 'flame',
-      // icon: 'speedometer',
-      label: 'Intense',
-      color: colorSchemas.green.hue600,
-      value: 'intense',
-    },
-  ]
+  const screenWidth = Dimensions.get('window').width
 
   return (
     <EmptyLayout>
@@ -110,15 +87,17 @@ const WorkoutFeedbackScreen: React.FC = () => {
             fontSize: fontSize.md,
           }}
         >
-          {translate('intensity')}
+          {workout.rpe !== undefined
+            ? translate('rpeValue', { rate: workout.rpe })
+            : translate('rpe')}
         </Text>
-
-        <FeedbackPicker
-          selected={workout.intensity}
-          onChange={value =>
-            workout.setProp('intensity', value as Workout['intensity'])
-          }
-          options={exhaustionOptions}
+        <Slider
+          values={workout.rpe !== undefined ? [workout.rpe] : []}
+          sliderLength={screenWidth - 40}
+          onValuesChange={([value]) => workout.setProp('rpe', value)}
+          min={1}
+          max={10}
+          snapped
         />
         <TextInput
           value={workout.notes}

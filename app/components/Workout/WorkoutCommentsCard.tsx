@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import { navigate } from 'app/navigators'
 import { Card, FeedbackPickerOption, fontSize } from 'designSystem'
 import { painOptions, feelingOptions, Workout } from 'app/db/models'
+import { translate } from 'app/i18n'
 
 export type WorkoutCommentsCardProps = {
   workout: Workout
@@ -31,9 +31,15 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
             style={{
               flexDirection: 'row',
               justifyContent: 'space-around',
+              alignItems: 'center',
               width: '100%',
             }}
           >
+            {workout.rpe !== undefined && (
+              <Text style={{ fontSize: fontSize.md }}>
+                {translate('rpeValue', { rate: workout.rpe })}
+              </Text>
+            )}
             {workout.pain && (
               <FeedbackPickerOption
                 option={painOptions[workout.pain]}
