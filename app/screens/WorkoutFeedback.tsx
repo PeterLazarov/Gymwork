@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
 import { TextInput } from 'react-native-paper'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
@@ -9,8 +9,6 @@ import { navigate } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { TxKeyPath, translate } from 'app/i18n'
 import {
-  Button,
-  ButtonText,
   Header,
   FeedbackPicker,
   Icon,
@@ -129,19 +127,6 @@ const WorkoutFeedbackScreen: React.FC = () => {
           }}
         />
       </KeyboardAvoiderView>
-
-      <View
-        style={{
-          backgroundColor: colors.primary,
-        }}
-      >
-        <Button
-          variant="primary"
-          onPress={onBackPress}
-        >
-          <ButtonText variant="primary">{translate('done')}</ButtonText>
-        </Button>
-      </View>
     </EmptyLayout>
   )
 }
