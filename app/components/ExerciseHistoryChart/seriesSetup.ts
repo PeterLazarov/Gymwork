@@ -45,6 +45,17 @@ const seriesSetup = ({ data }: Props) => {
     )
   }
 
+  const totalVolumeFormatter = () => {
+    return data.map(sets =>
+      sets.length > 0
+        ? sets.reduce(
+            (acc, set) => acc += set.reps * set.weight,
+            0
+          )
+        : null
+    )
+  }
+
   const getChartSeries = (exercise: Exercise) => {
     const series: Record<string, SeriesItem> = {}
     const colorsStack = [
@@ -66,6 +77,12 @@ const seriesSetup = ({ data }: Props) => {
           data: oneRepMaxFormatter(),
           color: colorsStack.pop()!,
           initiallySelected: true,
+          unit: exercise.measurements.weight.unit,
+        }
+        series['Total Volume'] = {
+          data: totalVolumeFormatter(),
+          color: colorsStack.pop()!,
+          initiallySelected: false,
           unit: exercise.measurements.weight.unit,
         }
       }
