@@ -50,7 +50,7 @@ export const darkColors = {
   primaryText: colorSchemas.neutral.hue100,
   secondaryText: colorSchemas.neutral.hue100,
   criticalText: colorSchemas.neutral.hue100,
-  neutralText: colorSchemas.neutral.hue900,
+  neutralText: colorSchemas.neutral.hue100,
   tertiaryText: colorSchemas.neutral.hue900,
   disabled: colorSchemas.neutral.hue600,
 } as const

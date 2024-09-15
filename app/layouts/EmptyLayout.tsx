@@ -16,7 +16,7 @@ export const EmptyLayout: React.FC<Props> = ({ children }) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: colors.neutralLight,
+        backgroundColor: colors.neutralLighter,
         // paddingBottom: insets && insets.bottom > 0 ? insets.bottom: 0,
       }}
     >

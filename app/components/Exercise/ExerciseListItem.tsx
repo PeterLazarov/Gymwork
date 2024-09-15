@@ -34,7 +34,7 @@ const ExerciseListItem: React.FC<Props> = ({
           justifyContent: 'space-between',
           alignItems: 'center',
           padding: 10,
-          backgroundColor: isSelected ? colors.neutral : colors.neutralLight,
+          backgroundColor: isSelected ? colors.neutral : colors.neutralLighter,
         }}
       >
         <Text

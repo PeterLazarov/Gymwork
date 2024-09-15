@@ -35,7 +35,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
   const luxonDate = DateTime.fromISO(workoutDate)
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
-  const workout = workoutStore.dateWorkoutMap[workoutDate]
+  const workout = workoutStore.dateWorkoutMap[workoutDate]!
 
   const colors = useColors()
 
@@ -66,6 +66,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
           <Text
             style={{
               fontSize: fontSize.lg,
+              color: colors.neutralText,
               textAlign: 'center',
               padding: 16,
             }}
@@ -81,7 +82,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
               {workout.steps.map(step => (
                 <CalendarWorkoutModalExerciseItem
                   key={step.guid}
-                  exercise={step.exercise}
+                  exercise={step.exercise!}
                   step={step}
                 />
               ))}

@@ -12,6 +12,8 @@
   - timer doesn't start when open step and directly complete draft set without touching anything
   - on step delete show an undo or a confirm button
   - improve double rerendering
+- superset
+  - show supersets in workout calendar modal
 - dev experience
   - ios emulator -> expo crash on code change in emulator
   - android device -> after code change rendering of StepHeader when no focusedStep error
