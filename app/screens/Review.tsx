@@ -1,25 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { View } from 'react-native'
 
-import {
-  Header,
-  Icon,
-  IconButton,
-  PressableHighlight,
-  SwipeTabs,
-  useColors,
-} from 'designSystem'
+import { Header, Icon, IconButton, SwipeTabs, useColors } from 'designSystem'
 
 import { useStores } from 'app/db/helpers/useStores'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 import ExerciseChartStats from 'app/components/ExerciseStats/ExerciseChartStats'
 import ExerciseHistoryStats from 'app/components/ExerciseStats/ExerciseHistoryStats'
 import ExerciseRecordStats from 'app/components/ExerciseStats/ExerciseRecordStats'
-import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
-import { observer } from 'mobx-react-lite'
+import ExerciseView from 'app/components/ExerciseHistoryChart/ExerciseView'
 
-export default observer(function ReviewScreen(props: {}) {
+const ReviewScreen: React.FC = () => {
   const colors = useColors()
 
   const { stateStore } = useStores()
@@ -38,19 +30,39 @@ export default observer(function ReviewScreen(props: {}) {
     {
       label: translate('chart'),
       name: 'Chart',
-      component: ExerciseChartStats,
-      props: { exercise: selectedExercise },
+      component: () => (
+        <ExerciseView
+          openSelect={() => setExerciseSelectOpen(true)}
+          isExerciseSelected={!!selectedExercise}
+        >
+          <ExerciseChartStats exercise={selectedExercise} />
+        </ExerciseView>
+      ),
     },
     {
       label: translate('records'),
       name: 'Records',
-      component: ExerciseRecordStats,
+      component: () => (
+        <ExerciseView
+          openSelect={() => setExerciseSelectOpen(true)}
+          isExerciseSelected={!!selectedExercise}
+        >
+          <ExerciseRecordStats exercise={selectedExercise} />
+        </ExerciseView>
+      ),
       props: { exercise: selectedExercise },
     },
     {
       label: translate('history'),
       name: 'History',
-      component: ExerciseHistoryStats,
+      component: () => (
+        <ExerciseView
+          openSelect={() => setExerciseSelectOpen(true)}
+          isExerciseSelected={!!selectedExercise}
+        >
+          <ExerciseHistoryStats exercise={selectedExercise} />
+        </ExerciseView>
+      ),
       props: { exercise: selectedExercise },
     },
   ]
@@ -115,7 +127,7 @@ export default observer(function ReviewScreen(props: {}) {
           />
         )}
 
-        {!exerciseSelectOpen && selectedExercise && (
+        {!exerciseSelectOpen && (
           <SwipeTabs
             defaultIndex={defaultIndex}
             tabsConfig={tabsConfig}
@@ -124,16 +136,9 @@ export default observer(function ReviewScreen(props: {}) {
             }}
           />
         )}
-
-        {!exerciseSelectOpen && !selectedExercise && (
-          <PressableHighlight
-            style={{ flex: 1 }}
-            onPress={() => setExerciseSelectOpen(true)}
-          >
-            <EmptyState text={translate('selectExerciseForData')} />
-          </PressableHighlight>
-        )}
       </View>
     </>
   )
-})
+}
+
+export default ReviewScreen

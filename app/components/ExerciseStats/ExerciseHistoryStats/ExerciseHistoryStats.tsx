@@ -24,6 +24,7 @@ const ExerciseHistoryStats: React.FC<ExerciseHistoryViewProps> = props => {
         w => w.exerciseSetsMap[exercise.guid]!.length > 0
       ) || []
     : []
+  console.log('ExerciseHistoryStats')
 
   return (
     <View

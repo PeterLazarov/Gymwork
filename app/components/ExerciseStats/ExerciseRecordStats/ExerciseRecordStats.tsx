@@ -41,6 +41,7 @@ const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
 
     navigate('Workout')
   }
+  console.log('ExerciseRecordStats')
 
   return (
     <View

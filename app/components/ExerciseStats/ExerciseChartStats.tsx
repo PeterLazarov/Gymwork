@@ -28,7 +28,7 @@ const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
       value: CHART_VIEWS[view],
     })
   )
-
+  console.log('ExerciseChartStats')
   return (
     <View
       style={{

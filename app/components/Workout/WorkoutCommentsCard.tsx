@@ -42,7 +42,7 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
           >
             {workout.rpe !== undefined && (
               <Text
-                style={{ fontSize: fontSize.md, color: colors.tertiaryText }}
+                style={{ fontSize: fontSize.md, color: colors.neutralText }}
               >
                 {translate('diffValue', { rpe: workout.rpe })}
               </Text>
