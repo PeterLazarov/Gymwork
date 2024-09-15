@@ -33,6 +33,7 @@
 - grouping / measurement by rest
 - template steps list editting rearranging and or adding
 - check out focusedExerciseRecords for supersets
+- devEx : ban conflicting/unused imports (ignite's colors)/i18n lib as opposed to app/i18n
 
 Performance to beat -
 100 workouts
