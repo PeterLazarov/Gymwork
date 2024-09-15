@@ -5,10 +5,10 @@ import SelectButton from './SelectButton'
 import SelectOptionsModal from './SelectOptionsModal'
 import { SelectOption } from './types'
 
-type Props = {
-  options: SelectOption[]
-  value?: string
-  onChange: (selected: string) => void
+type Props<T = unknown> = {
+  options: SelectOption<T>[]
+  value?: T
+  onChange: (selected: T) => void
   headerText?: string
   placeholder?: string
   containerStyle?: ViewStyle
@@ -16,7 +16,7 @@ type Props = {
   label?: string
 }
 
-const Select: React.FC<Props> = ({
+function Select<T>({
   options,
   value,
   onChange,
@@ -24,7 +24,7 @@ const Select: React.FC<Props> = ({
   placeholder,
   label,
   containerStyle = {},
-}) => {
+}: Props<T>) {
   const [selectionOpen, setSelectionOpen] = useState(false)
 
   const openSelection = () => setSelectionOpen(true)
@@ -33,7 +33,7 @@ const Select: React.FC<Props> = ({
   const getOptionLabel = (option: SelectOption): string => {
     return typeof option === 'string' ? option : option.label
   }
-  const getOptionValue = (option: SelectOption): string => {
+  const getOptionValue = (option: SelectOption): T => {
     return typeof option === 'string' ? option : option.value
   }
   const selectedOption = useMemo(

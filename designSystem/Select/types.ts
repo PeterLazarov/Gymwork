@@ -1,6 +1,6 @@
-export type SelectOption =
+export type SelectOption<T = unknown> =
   | string
   | {
-      value: string
+      value: T
       label: string
     }

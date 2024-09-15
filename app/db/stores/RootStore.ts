@@ -5,6 +5,7 @@ import { ExerciseStoreModel } from './ExerciseStore'
 import { StateStoreModel } from './StateStore'
 import { WorkoutStoreModel } from './WorkoutStore'
 import { RecordStoreModel } from './RecordStore'
+import { SettingsStoreModel } from './SettingsStore'
 
 export const RootStoreModel = types
   .model('RootStore')
@@ -13,6 +14,7 @@ export const RootStoreModel = types
     workoutStore: types.optional(WorkoutStoreModel, {}),
     stateStore: types.optional(StateStoreModel, {}),
     recordStore: types.optional(RecordStoreModel, {}),
+    settingsStore: types.optional(SettingsStoreModel, {}),
   })
   .actions(withSetPropAction)
   .actions(self => ({
@@ -24,10 +26,10 @@ export const RootStoreModel = types
     initializeStores(): Promise<void> {
       return self.exerciseStore
         .fetch()
-        .then(() =>
-          self.workoutStore.fetch().then(() => self.recordStore.fetch())
-        )
+        .then(() => self.workoutStore.fetch())
+        .then(() => self.recordStore.fetch())
         .then(() => self.stateStore.initialize())
+        .then(() => self.settingsStore.initialize())
     },
   }))
 

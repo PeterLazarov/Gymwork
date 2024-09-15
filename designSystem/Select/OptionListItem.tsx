@@ -4,18 +4,18 @@ import { Text } from 'react-native'
 import { Divider, PressableHighlight, colors, fontSize } from 'designSystem'
 import { SelectOption } from './types'
 
-type Props = {
-  option: SelectOption
+type Props<T = unknown> = {
+  option: SelectOption<T>
   showDivider: boolean
-  selectedValues: string[]
-  onSelect: (option: SelectOption) => void
+  selectedValues: T[]
+  onSelect: (option: SelectOption<T>) => void
 }
-const OptionListItem: React.FC<Props> = ({
+function OptionListItem<T = unknown>({
   option,
   showDivider,
   selectedValues,
   onSelect,
-}) => {
+}: Props<T>) {
   const getOptionLabel = (option: SelectOption): string => {
     return typeof option === 'string' ? option : option.label
   }

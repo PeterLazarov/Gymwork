@@ -35,7 +35,9 @@ const ExerciseEditFormDurationSection: React.FC<Props> = ({
           alignItems: 'center',
         }}
       >
-        <Text style={{ fontSize: fontSize.md }}>More is better</Text>
+        <Text style={{ fontSize: fontSize.md }}>
+          {translate('moreIsBetter')}
+        </Text>
         <ToggleSwitch
           variant="primary"
           value={durationMeasurement.moreIsBetter}

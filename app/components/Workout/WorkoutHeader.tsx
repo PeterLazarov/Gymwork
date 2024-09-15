@@ -66,6 +66,11 @@ const WorkoutHeader: React.FC = () => {
 
   const { performBenchmark } = useBenchmark()
 
+  function goToSettings() {
+    setMenuOpen(false)
+    navigate('Settings')
+  }
+
   return (
     <>
       <Header>
@@ -106,6 +111,10 @@ const WorkoutHeader: React.FC = () => {
               )}
             />
           )}
+          <Menu.Item
+            onPress={goToSettings}
+            title={translate('settings')}
+          />
           {openedWorkout && (
             <>
               <Menu.Item
