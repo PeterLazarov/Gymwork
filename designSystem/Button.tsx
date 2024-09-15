@@ -1,6 +1,8 @@
 import styled from 'styled-components/native'
 
-import { lightColors } from './tokens'
+import { getColors } from './tokens'
+
+const lightColors = getColors('light')
 
 type ButtonProps = {
   variant: 'primary' | 'accent' | 'neutral' | 'critical' | 'tertiary'

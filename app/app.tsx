@@ -27,7 +27,7 @@ import { customFontsToLoad } from './theme'
 import useTimer, { TimerContext } from './db/stores/useTimer'
 import { ErrorDetails } from './screens/ErrorDetails'
 import { ThemeProvider } from 'styled-components/native'
-import { lightColors } from 'designSystem'
+import { getColors } from 'designSystem'
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
@@ -59,6 +59,8 @@ function App() {
   ) {
     return null
   }
+
+  const lightColors = getColors('light')
 
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>

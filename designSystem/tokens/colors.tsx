@@ -1,62 +1,41 @@
-import { useColorScheme } from 'react-native'
+import { ColorSchemeName, useColorScheme } from 'react-native'
 import { colorSchemas } from './colorSchemas'
 
-export const lightColors = {
-  primary: colorSchemas.purple.hue600,
-  primaryLight: colorSchemas.purple.hue300,
-  primaryLighter: colorSchemas.purple.hue100,
+const primary = colorSchemas.purple
+const accent = colorSchemas.coral
+const neutral = colorSchemas.neutral
 
-  accent: colorSchemas.coral.hue600,
-  accentLight: colorSchemas.coral.hue300,
-  accentLightest: colorSchemas.coral.hue100,
+export const getColors = (colorScheme: ColorSchemeName) => ({
+  primary: primary.hue600,
+  primaryLight: colorScheme === 'light' ? primary.hue300 : primary.hue400,
+  primaryLighter: colorScheme === 'light' ? primary.hue100 : primary.hue300,
 
-  neutralDarkest: colorSchemas.black,
-  neutralDarker: colorSchemas.neutral.hue900,
-  neutralDark: colorSchemas.neutral.hue800,
-  neutral: colorSchemas.neutral.hue700,
-  neutralLight: colorSchemas.neutral.hue500,
-  neutralLighter: colorSchemas.neutral.hue300,
-  neutralLightest: colorSchemas.neutral.hue100,
+  accent: accent.hue600,
+  accentLight: colorScheme === 'light' ? accent.hue300 : accent.hue400,
+  accentLightest:
+    colorScheme === 'light' ? accent.hue100 : colorSchemas.coral.hue300,
 
-  critical: colorSchemas.pink.hue900,
-  tertiary: 'transparent',
-  primaryText: colorSchemas.neutral.hue100,
-  secondaryText: colorSchemas.neutral.hue100,
-  criticalText: colorSchemas.neutral.hue100,
-  neutralText: colorSchemas.neutral.hue900,
-  tertiaryText: colorSchemas.neutral.hue900,
-  disabled: colorSchemas.neutral.hue600,
-} as const
-
-export const darkColors = {
-  primary: colorSchemas.purple.hue600,
-  primaryLight: colorSchemas.purple.hue400,
-  primaryLighter: colorSchemas.purple.hue300,
-
-  accent: colorSchemas.coral.hue600,
-  accentLight: colorSchemas.coral.hue400,
-  accentLightest: colorSchemas.coral.hue300,
-
-  neutralDarkest: 'rgb(192,192,192)',
-  neutralDarker: 'rgb(160,160,160)',
-  neutralDark: 'rgb(128,128,128)',
-  neutral: 'rgb(96,96,96)',
-  neutralLight: colorSchemas.black, // The background color
-  neutralLighter: 'rgb(32,32,32)',
-  neutralLightest: 'rgb(16,16,16)',
+  neutralDarkest:
+    colorScheme === 'light' ? colorSchemas.black : 'rgb(192,192,192)',
+  neutralDarker: colorScheme === 'light' ? neutral.hue900 : 'rgb(160,160,160)',
+  neutralDark: colorScheme === 'light' ? neutral.hue800 : 'rgb(128,128,128)',
+  neutral: colorScheme === 'light' ? neutral.hue700 : 'rgb(96,96,96)',
+  neutralLight: colorScheme === 'light' ? neutral.hue500 : colorSchemas.black,
+  neutralLighter: colorScheme === 'light' ? neutral.hue300 : 'rgb(32,32,32)',
+  neutralLightest: colorScheme === 'light' ? neutral.hue100 : 'rgb(16,16,16)',
 
   critical: colorSchemas.pink.hue900,
   tertiary: 'transparent',
-  primaryText: colorSchemas.neutral.hue100,
-  secondaryText: colorSchemas.neutral.hue100,
-  criticalText: colorSchemas.neutral.hue100,
-  neutralText: colorSchemas.neutral.hue100,
-  tertiaryText: colorSchemas.neutral.hue900,
-  disabled: colorSchemas.neutral.hue600,
-} as const
+  primaryText: neutral.hue100,
+  secondaryText: neutral.hue100,
+  criticalText: neutral.hue100,
+  neutralText: colorScheme === 'light' ? neutral.hue900 : neutral.hue100,
+  tertiaryText: neutral.hue900,
+  disabled: neutral.hue600,
+})
 
 export function useColors() {
   const colorScheme = useColorScheme()
 
-  return colorScheme === 'light' ? lightColors : darkColors
+  return getColors(colorScheme)
 }
