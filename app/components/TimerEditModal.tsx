@@ -46,6 +46,7 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
             fontSize: fontSize.lg,
             textAlign: 'center',
             padding: 16,
+            color: colors.neutralText,
           }}
         >
           {translate('editRestTimer')}
