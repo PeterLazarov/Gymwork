@@ -24,6 +24,7 @@ export const StateStoreModel = types
     draftSet: types.maybe(WorkoutSetModel),
     showCommentsCard: true,
 
+    reviewLastTab: types.maybe(types.string),
     activeRoute: types.maybe(types.string),
   })
   .views(self => ({

@@ -24,7 +24,6 @@
 - WorkoutDayView
   - on Android add overscroll for sets covered by the FAB
 - review
-  - remember the review tab previously selected e.g. records -> step track -> records
   - On jump to record set, scroll to set
 - Workout Comments
   - historical comments screen?

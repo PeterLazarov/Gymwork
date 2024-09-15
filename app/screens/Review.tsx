@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { View } from 'react-native'
 
 import {
@@ -33,6 +33,33 @@ export default observer(function ReviewScreen(props: {}) {
       setSelectedExercise(stateStore.focusedExercise)
     }
   }, [stateStore.focusedExercise])
+
+  const tabsConfig = [
+    {
+      label: translate('chart'),
+      name: 'Chart',
+      component: ExerciseChartStats,
+      props: { exercise: selectedExercise },
+    },
+    {
+      label: translate('records'),
+      name: 'Records',
+      component: ExerciseRecordStats,
+      props: { exercise: selectedExercise },
+    },
+    {
+      label: translate('history'),
+      name: 'History',
+      component: ExerciseHistoryStats,
+      props: { exercise: selectedExercise },
+    },
+  ]
+
+  const defaultIndex = useMemo(() => {
+    return stateStore.reviewLastTab
+      ? tabsConfig.map(t => t.name).indexOf(stateStore.reviewLastTab)
+      : 0
+  }, [stateStore.reviewLastTab])
 
   return (
     <>
@@ -90,26 +117,11 @@ export default observer(function ReviewScreen(props: {}) {
 
         {!exerciseSelectOpen && selectedExercise && (
           <SwipeTabs
-            tabsConfig={[
-              {
-                label: translate('chart'),
-                name: 'Chart',
-                component: ExerciseChartStats,
-                props: { exercise: selectedExercise },
-              },
-              {
-                label: translate('records'),
-                name: 'Records',
-                component: ExerciseRecordStats,
-                props: { exercise: selectedExercise },
-              },
-              {
-                label: translate('history'),
-                name: 'History',
-                component: ExerciseHistoryStats,
-                props: { exercise: selectedExercise },
-              },
-            ]}
+            defaultIndex={defaultIndex}
+            tabsConfig={tabsConfig}
+            onTabChange={tab => {
+              stateStore.setProp('reviewLastTab', tab)
+            }}
           />
         )}
 
