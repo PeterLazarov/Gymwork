@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-import { Icon, IconButton, boxShadows, colors, fontSize } from 'designSystem'
+import { Icon, IconButton, boxShadows, useColors, fontSize } from 'designSystem'
 import { Exercise } from 'app/db/models'
 
 export type ExerciseControlProps = {
@@ -15,6 +15,8 @@ const ExerciseControl: React.FC<ExerciseControlProps> = ({
   selectedIndex,
   onChange,
 }) => {
+  const colors = useColors()
+
   const exercise = options[selectedIndex]!
   const atStart = selectedIndex === 0
   const atEnd = selectedIndex === options.length - 1

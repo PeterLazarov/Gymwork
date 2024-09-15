@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, ViewStyle } from 'react-native'
 
-import { colors, fontSize } from './tokens'
+import { useColors, fontSize } from './tokens'
 import {
   TouchableOpacity,
   TouchableWithoutFeedbackProps,
@@ -22,6 +22,26 @@ const Card: React.FC<CardProps> = ({
   containerStyle = {},
   ...otherProps
 }) => {
+  const colors = useColors()
+
+  const styles = StyleSheet.create({
+    card: {
+      backgroundColor: colors.neutralLightest,
+      borderRadius: 8,
+      marginVertical: 10,
+      marginHorizontal: 20,
+      overflow: 'hidden',
+    },
+    content: {
+      padding: 15,
+      gap: 5,
+    },
+    title: {
+      fontSize: fontSize.sm,
+      fontWeight: 'bold',
+    },
+  })
+
   return (
     <TouchableOpacity
       style={{ ...styles.card, ...containerStyle }}
@@ -35,23 +55,5 @@ const Card: React.FC<CardProps> = ({
     </TouchableOpacity>
   )
 }
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: colors.neutralLightest,
-    borderRadius: 8,
-    marginVertical: 10,
-    marginHorizontal: 20,
-    overflow: 'hidden',
-  },
-  content: {
-    padding: 15,
-    gap: 5,
-  },
-  title: {
-    fontSize: fontSize.sm,
-    fontWeight: 'bold',
-  },
-})
 
 export default Card

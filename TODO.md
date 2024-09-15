@@ -34,6 +34,8 @@
 - template steps list editting rearranging and or adding
 - check out focusedExerciseRecords for supersets
 - devEx : ban conflicting/unused imports (ignite's colors)/i18n lib as opposed to app/i18n
+- darkMode: Text element default color?
+- darkMode: rename colors so that they're usable across both color schemes
 
 Performance to beat -
 100 workouts

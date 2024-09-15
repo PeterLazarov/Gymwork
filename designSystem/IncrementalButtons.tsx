@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleProp, View, ViewStyle } from 'react-native'
 
-import { Icon, PressableHighlight, colors } from '.'
+import { Icon, PressableHighlight, useColors } from '.'
 
 type Props = {
   value: number
@@ -16,6 +16,8 @@ const IncrementalButtons: React.FC<Props> = ({
   children,
   step,
 }) => {
+  const colors = useColors()
+
   const btnStyle: StyleProp<ViewStyle> = {
     backgroundColor: colors.primaryLight,
     padding: 7,

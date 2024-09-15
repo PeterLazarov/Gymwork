@@ -7,7 +7,7 @@ import {
   PressableHighlight,
   IconButton,
   Icon,
-  colors,
+  useColors,
   fontSize,
 } from 'designSystem'
 
@@ -22,6 +22,7 @@ const ExerciseListItem: React.FC<Props> = ({
   isSelected,
 }) => {
   const heartIcon = exercise.isFavorite ? 'heart' : 'heart-outlined'
+  const colors = useColors()
 
   return (
     <PressableHighlight onPress={() => onSelect(exercise)}>

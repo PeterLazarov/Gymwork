@@ -3,7 +3,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 
 import { Exercise, WorkoutStep } from 'app/db/models'
-import { Divider, fontSize, colors, PressableHighlight } from 'designSystem'
+import { Divider, fontSize, useColors, PressableHighlight } from 'designSystem'
 import StepSetsList from 'app/components/WorkoutStep/StepSetsList'
 
 type Props = {
@@ -18,6 +18,8 @@ const ExerciseHistoryListItem: React.FC<Props> = ({
   exercise,
   onPress,
 }) => {
+  const colors = useColors()
+
   return (
     <PressableHighlight
       style={{

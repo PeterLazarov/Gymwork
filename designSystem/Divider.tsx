@@ -1,21 +1,27 @@
-import styled from 'styled-components/native'
-
-import { colors } from './tokens'
+import { View } from 'react-native'
+import { useColors } from './tokens'
 
 type Props = {
   orientation: 'horizontal' | 'vertical'
   variant: 'primary' | 'accent' | 'neutral'
 }
 
-const variants = {
-  primary: colors.primary,
-  accent: colors.accent,
-  neutral: colors.neutralDark,
+export function Divider(props: Props) {
+  const colors = useColors()
+
+  const variants = {
+    primary: colors.primary,
+    accent: colors.accent,
+    neutral: colors.neutralDark,
+  }
+
+  return (
+    <View
+      style={{
+        width: props.orientation === 'horizontal' ? '100%' : 1,
+        height: props.orientation === 'horizontal' ? 1 : '100%',
+        backgroundColor: variants[props.variant],
+      }}
+    ></View>
+  )
 }
-export const Divider = styled.View<Props>`
-  /* flex: 1; */
-  width: ${props => (props.orientation === 'horizontal' ? '100%' : '1px')};
-  height: ${props => (props.orientation === 'horizontal' ? '1px' : '100%')};
-  background-color: ${props => variants[props.variant]};
-`
-Divider.displayName = 'Divider'

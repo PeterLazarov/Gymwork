@@ -6,13 +6,15 @@ import { Exercise, WorkoutStep } from 'app/db/models'
 import { navigate, useRouteParams } from 'app/navigators'
 import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { FAB, Header, Icon, IconButton, colors } from 'designSystem'
+import { FAB, Header, Icon, IconButton, useColors } from 'designSystem'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 
 export type ExerciseSelectScreenParams = {
   selectMode: WorkoutStep['type']
 }
 const ExerciseSelectScreen: React.FC = () => {
+  const colors = useColors()
+
   const { stateStore, workoutStore } = useStores()
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([])
 

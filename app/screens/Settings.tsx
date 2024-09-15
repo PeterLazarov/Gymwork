@@ -1,7 +1,7 @@
 import React from 'react'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { goBack, type StackScreenProps } from 'app/navigators'
-import { colors, Header, Icon, IconButton, Select } from 'designSystem'
+import { Header, Icon, IconButton, Select, useColors } from 'designSystem'
 import { observer } from 'mobx-react-lite'
 import { View, useColorScheme, Text, Appearance } from 'react-native'
 import { translate } from 'app/i18n'
@@ -18,9 +18,7 @@ const appearanceOptions = [
 const SettingsScreen: React.FC<SettingsScreenProps> = ({}) => {
   const { settingsStore } = useStores()
 
-  const colorScheme = useColorScheme()
-
-  Appearance.addChangeListener(console.log)
+  const colors = useColors()
 
   return (
     <EmptyLayout>

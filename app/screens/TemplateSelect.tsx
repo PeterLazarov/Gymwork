@@ -6,11 +6,13 @@ import { WorkoutTemplate } from 'app/db/models'
 import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { Header, Icon, IconButton, colors } from 'designSystem'
+import { Header, Icon, IconButton, useColors } from 'designSystem'
 import TemplateList from 'app/components/WorkoutTemplate/TemplateList'
 import ConfirmationDialog from 'app/components/ConfirmationDialog'
 
 const TemplateSelectScreen: React.FC = () => {
+  const colors = useColors()
+
   const { workoutStore } = useStores()
 
   const [templateToDelete, setTemplateToDelete] =

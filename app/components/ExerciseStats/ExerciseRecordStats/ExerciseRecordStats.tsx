@@ -7,7 +7,7 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
-import { colors } from 'designSystem'
+import { useColors } from 'designSystem'
 import { Exercise, WorkoutSet } from 'app/db/models'
 import RecordsListItem from './RecordsListItem'
 
@@ -16,6 +16,8 @@ export type ExerciseRecordStatsProps = {
 }
 
 const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
+  const colors = useColors()
+
   const { stateStore, recordStore } = useStores()
 
   const exercise = props.exercise || stateStore.focusedExercise!

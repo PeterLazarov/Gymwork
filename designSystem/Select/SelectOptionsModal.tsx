@@ -3,7 +3,7 @@ import { ScrollView, View, Dimensions, Text } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
 import { translate } from 'app/i18n'
-import { Button, ButtonText, Divider, colors, fontSize } from 'designSystem'
+import { Button, ButtonText, Divider, useColors, fontSize } from 'designSystem'
 import { SelectOption } from './types'
 import OptionListItem from './OptionListItem'
 
@@ -26,6 +26,8 @@ function SelectOptionsModal<T = unknown>({
   onOptionSelect,
   hideButton,
 }: Props<T>) {
+  const colors = useColors()
+
   const maxHeight = Dimensions.get('screen').height - 100
   const itemHeight = 53
   const modalHeight = (options.length + (hideButton ? 1 : 2)) * itemHeight

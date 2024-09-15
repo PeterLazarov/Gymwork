@@ -7,7 +7,7 @@ import { computed } from 'mobx'
 import SetEditItem from './SetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
-import { colors, Divider, Icon, PressableHighlight } from 'designSystem'
+import { useColors, Divider, Icon, PressableHighlight } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
 
@@ -22,6 +22,8 @@ const SetEditList: React.FC<Props> = ({
   selectedSet,
   setSelectedSet,
 }) => {
+  const colors = useColors()
+
   const { stateStore, recordStore } = useStores()
 
   function toggleSelectedSet(set: WorkoutSet) {

@@ -5,13 +5,15 @@ import { Text, TouchableOpacity, View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { capitalize } from 'app/utils/string'
-import { Icon, IconButton, boxShadows, colors, fontSize } from 'designSystem'
+import { Icon, IconButton, boxShadows, useColors, fontSize } from 'designSystem'
 import { navigate } from 'app/navigators'
 
 type Props = {
   duration?: string
 }
 const DayControl: React.FC<Props> = ({ duration }) => {
+  const colors = useColors()
+
   const { stateStore } = useStores()
 
   const luxonDate = DateTime.fromISO(stateStore.openedDate)

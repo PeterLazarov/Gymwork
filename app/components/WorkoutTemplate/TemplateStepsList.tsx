@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 
 import { WorkoutStep } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { Icon, IconButton, colors, fontSize } from 'designSystem'
+import { Icon, IconButton, useColors, fontSize } from 'designSystem'
 
 type Props = {
   steps: WorkoutStep[]
@@ -11,6 +11,8 @@ type Props = {
 }
 
 const TemplateStepsList: React.FC<Props> = ({ steps, onStepRemove }) => {
+  const colors = useColors()
+
   return (
     <>
       <Text style={{ fontSize: fontSize.lg }}>{translate('exercises')}</Text>

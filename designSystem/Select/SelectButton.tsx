@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableWithoutFeedback } from 'react-native'
 
-import { colors, fontSize, Icon } from 'designSystem'
+import { useColors, fontSize, Icon } from 'designSystem'
 
 type Props = {
   onPress: () => void
@@ -11,6 +11,8 @@ type Props = {
 }
 
 const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
+  const colors = useColors()
+
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View

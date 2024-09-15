@@ -6,9 +6,11 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress'
 
 import TimerEditModal from '../TimerEditModal'
 import useTimer from 'app/db/stores/useTimer'
-import { IconButton, Icon, colors, NumberInput } from 'designSystem'
+import { IconButton, Icon, useColors, NumberInput } from 'designSystem'
 
 const Timer = forwardRef<TextInput>((_, ref) => {
+  const colors = useColors()
+
   const restTimer = useTimer()
   const percentTimeLeft = useMemo(() => {
     if (restTimer.duration.toMillis() === 0) {

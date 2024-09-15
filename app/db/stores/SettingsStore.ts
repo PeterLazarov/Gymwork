@@ -5,6 +5,8 @@ import { RootStore } from './RootStore'
 import { WorkoutStore } from './WorkoutStore'
 import { RecordStore } from './RecordStore'
 import { Appearance, ColorSchemeName } from 'react-native'
+import { darkColors, lightColors } from 'designSystem'
+import * as SystemUI from 'expo-system-ui'
 
 let deviceColorScheme = Appearance.getColorScheme()
 Appearance.addChangeListener(({ colorScheme }) => {
@@ -38,13 +40,27 @@ export const SettingsStoreModel = types
   //   .actions(withSetPropAction)
   .actions(self => ({
     initialize() {
-      Appearance.setColorScheme(self.colorSchemePreference)
+      if (self.colorSchemePreference) {
+        Appearance.setColorScheme(self.colorSchemePreference)
+      }
+
+      SystemUI.setBackgroundColorAsync(
+        Appearance.getColorScheme() === 'light'
+          ? lightColors.neutralLighter
+          : darkColors.neutralLighter
+      )
     },
 
     //   null or undefined sets it to 'light'
     setColorSchemePreference(scheme: 'dark' | 'light' | null) {
       self.colorSchemePreference = scheme
       Appearance.setColorScheme(scheme ?? deviceColorScheme)
+
+      SystemUI.setBackgroundColorAsync(
+        Appearance.getColorScheme() === 'light'
+          ? lightColors.neutralLighter
+          : darkColors.neutralLighter
+      )
     },
   }))
 

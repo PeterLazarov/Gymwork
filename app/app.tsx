@@ -24,13 +24,12 @@ import './utils/ignoreWarnings'
 import * as storage from './utils/storage'
 import { useLogging } from './utils/useLogging'
 import { customFontsToLoad } from './theme'
-import { colors } from 'designSystem'
 import useTimer, { TimerContext } from './db/stores/useTimer'
 import { ErrorDetails } from './screens/ErrorDetails'
+import { ThemeProvider } from 'styled-components/native'
+import { lightColors } from 'designSystem'
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
-
-SystemUI.setBackgroundColorAsync(colors.neutralLighter)
 
 function App() {
   useLogging()
@@ -67,23 +66,25 @@ function App() {
         <DBStoreInitializer>
           <TimerContext.Provider value={timer}>
             <GestureHandlerRootView style={{ flex: 1 }}>
-              <ErrorBoundary
-                fallback={({ error, resetError }) => (
-                  <ErrorDetails
-                    error={error}
-                    resetError={resetError}
-                  />
-                )}
-              >
-                <Portal.Host>
-                  <PaperProvider>
-                    <AppNavigator
-                      initialState={initialNavigationState}
-                      onStateChange={onNavigationStateChange}
+              <ThemeProvider theme={{ colors: lightColors }}>
+                <ErrorBoundary
+                  fallback={({ error, resetError }) => (
+                    <ErrorDetails
+                      error={error}
+                      resetError={resetError}
                     />
-                  </PaperProvider>
-                </Portal.Host>
-              </ErrorBoundary>
+                  )}
+                >
+                  <Portal.Host>
+                    <PaperProvider>
+                      <AppNavigator
+                        initialState={initialNavigationState}
+                        onStateChange={onNavigationStateChange}
+                      />
+                    </PaperProvider>
+                  </Portal.Host>
+                </ErrorBoundary>
+              </ThemeProvider>
             </GestureHandlerRootView>
           </TimerContext.Provider>
         </DBStoreInitializer>

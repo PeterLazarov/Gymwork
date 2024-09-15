@@ -9,8 +9,8 @@ import {
   ButtonText,
   Divider,
   ToggleSwitch,
-  colors,
   fontSize,
+  useColors,
 } from 'designSystem'
 import { translate } from 'app/i18n'
 import { useState } from 'react'
@@ -36,6 +36,8 @@ const CalendarWorkoutModal: React.FC<Props> = ({
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
   const workout = workoutStore.dateWorkoutMap[workoutDate]
+
+  const colors = useColors()
 
   const onActionPress = () => {
     if (mode === 'copy') {

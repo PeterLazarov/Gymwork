@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
-import { ToggleGroupButton, colors } from 'designSystem'
+import { ToggleGroupButton, useColors } from 'designSystem'
 import ExerciseHistoryChart, {
   CHART_VIEW,
   CHART_VIEWS,
@@ -16,6 +16,8 @@ export type ExerciseChartStats = {
 }
 
 const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
+  const colors = useColors()
+
   const { stateStore } = useStores()
   const [activeView, setActiveView] = useState<CHART_VIEW>(
     Object.keys(CHART_VIEWS)[0] as CHART_VIEW_KEY

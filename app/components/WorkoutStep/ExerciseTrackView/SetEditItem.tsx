@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { getFormatedDuration } from 'app/utils/time'
-import { colors, Icon } from 'designSystem'
+import { useColors, Icon } from 'designSystem'
 import SetWarmupButton from './SetWarmupButton'
 import SetDataLabel from '../SetDataLabel'
 
@@ -24,6 +24,8 @@ const SetEditItem: React.FC<Props> = ({
   calcWorkSetNumber,
   toggleSetWarmup,
 }) => {
+  const colors = useColors()
+
   const color = colors.neutralText
 
   const number = set.isWarmup ? undefined : calcWorkSetNumber(set)

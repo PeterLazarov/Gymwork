@@ -15,13 +15,15 @@ import {
   Icon,
   IconButton,
   colorSchemas,
-  colors,
+  useColors,
   fontSize,
 } from 'designSystem'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { Workout, painOptions, feelingOptions } from 'app/db/models'
 
 const WorkoutFeedbackScreen: React.FC = () => {
+  const colors = useColors()
+
   const { stateStore } = useStores()
   const workout = stateStore.openedWorkout!
 

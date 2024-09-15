@@ -1,7 +1,7 @@
 import { Switch } from 'react-native'
 
 import React from 'react'
-import { colors } from './tokens'
+import { useColors } from './tokens'
 
 interface Props {
   value: boolean
@@ -9,6 +9,8 @@ interface Props {
   variant: 'primary' | 'critical'
 }
 const ToggleSwitch: React.FC<Props> = ({ value, onValueChange, variant }) => {
+  const colors = useColors()
+
   const thumbActiveColor = colors[variant]
   return (
     <Switch

@@ -1,6 +1,7 @@
 import React from 'react'
 import { ScrollView, TextStyle, View, ViewStyle, Text } from 'react-native'
 
+// TODO use our colors
 import { colors, spacing } from '../theme'
 import { Button, ButtonText } from 'designSystem'
 

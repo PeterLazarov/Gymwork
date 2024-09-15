@@ -3,7 +3,7 @@ import { View, PanResponder, LayoutChangeEvent } from 'react-native'
 import MultiSlider, {
   MultiSliderProps,
 } from '@ptomasroos/react-native-multi-slider'
-import { colors } from './tokens'
+import { useColors } from './tokens'
 
 type Props = Omit<MultiSliderProps, 'min' | 'max' | 'onValuesChange'> & {
   max: number
@@ -19,6 +19,8 @@ const CustomSlider: React.FC<Props> = ({
   markerStyle,
   ...otherProps
 }) => {
+  const colors = useColors()
+
   const sliderRef = useRef(null)
   const [sliderWidth, setSliderWidth] = useState(0)
 
