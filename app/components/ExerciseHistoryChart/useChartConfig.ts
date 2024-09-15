@@ -1,4 +1,5 @@
 import { WorkoutSet } from 'app/db/models'
+import { useColors } from 'designSystem'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -14,7 +15,9 @@ type ChartConfigParams = {
   symbolSize: number
   xAxis: string[]
 }
-const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
+const useChartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
+  const colors = useColors()
+
   const getViewOptions = () => ({
     animation: true,
     tooltip: {
@@ -31,6 +34,12 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
       selected: Object.keys(series).reduce((obj, curr) =>
         Object.assign({ [curr]: series[curr]!.initiallySelected })
       ),
+      textStyle: {
+        color: colors.neutralText
+      },
+      inactiveColor: colors.tertiaryText,
+      inactiveBorderColor: colors.tertiaryText,
+      icon: 'roundRect',
     },
     yAxis: {
       type: 'value',
@@ -85,4 +94,4 @@ const chartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
   }
 }
 
-export default chartConfig
+export default useChartConfig

@@ -30,7 +30,7 @@ export const getColors = (colorScheme: ColorSchemeName) => ({
   secondaryText: neutral.hue100,
   criticalText: neutral.hue100,
   neutralText: colorScheme === 'light' ? neutral.hue900 : neutral.hue100,
-  tertiaryText: neutral.hue900,
+  tertiaryText: colorScheme === 'light' ? neutral.hue800 : neutral.hue900,
   disabled: neutral.hue600,
 })
 

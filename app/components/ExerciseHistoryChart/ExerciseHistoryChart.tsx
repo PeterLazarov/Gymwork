@@ -16,7 +16,7 @@ import { Dimensions, View } from 'react-native'
 import { computed } from 'mobx'
 
 import { useStores } from 'app/db/helpers/useStores'
-import chartConfig from './chartConfig'
+import useChartConfig from './useChartConfig'
 import seriesSetup from './seriesSetup'
 import { Exercise } from 'app/db/models'
 
@@ -137,7 +137,7 @@ const ExerciseHistoryChart: React.FC<Props> = ({
 
   const series = getChartSeries(exercise)
 
-  const { getViewOptions, feedChartSeriesData } = chartConfig({
+  const { getViewOptions, feedChartSeriesData } = useChartConfig({
     series,
     symbolSize,
     xAxis,

@@ -7,7 +7,7 @@ import {
   measurementUnits,
 } from 'app/db/models'
 import { colorSchemas } from 'designSystem'
-import { SeriesItem } from './chartConfig'
+import { SeriesItem } from './useChartConfig'
 
 type Props = {
   data: WorkoutSet[][]
