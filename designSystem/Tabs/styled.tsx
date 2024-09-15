@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import { colors, fontSize } from '../tokens'
+import { fontSize } from '../tokens'
 
 type TabLabelProps = {
   isActive: boolean
@@ -16,7 +16,8 @@ export const TabHeaderTouchable = styled.TouchableOpacity`
 TabHeaderTouchable.displayName = 'TabHeaderTouchable'
 
 export const TabLabel = styled.Text<TabLabelProps>`
-  color: ${({ isActive }) => (isActive ? colors.accent : colors.neutralDarker)};
+  color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.accent : theme.colors.neutralDarker};
   font-size: ${`${fontSize.md}px`};
 `
 TabLabel.displayName = 'TabLabel'
@@ -25,6 +26,6 @@ export const ActiveIndicator = styled.View`
   margin-left: 10px;
   margin-right: 10px;
   border-bottom-width: 2px;
-  border-color: ${colors.accent};
+  border-color: ${props => props.theme.colors.accent};
 `
 ActiveIndicator.displayName = 'ActiveIndicator'

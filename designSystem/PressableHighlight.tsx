@@ -1,25 +1,30 @@
 import React from 'react'
 
-import { colors } from './tokens'
+import { useColors } from './tokens'
 import { TouchableHighlight, TouchableHighlightProps } from 'react-native'
 
 type Props = TouchableHighlightProps & {
   underlay?: 'default' | 'darker'
 }
 
-const underlayColors = {
-  default: colors.primaryLighter,
-  darker: colors.primaryLight,
-}
 const PressableHighlight: React.FC<Props> = ({
   underlay = 'default',
   ...props
-}) => (
-  <TouchableHighlight
-    underlayColor={underlayColors[underlay]}
-    activeOpacity={0.6}
-    {...props}
-  />
-)
+}) => {
+  const colors = useColors()
+
+  const underlayColors = {
+    default: colors.primaryLighter,
+    darker: colors.primaryLight,
+  }
+
+  return (
+    <TouchableHighlight
+      underlayColor={underlayColors[underlay]}
+      activeOpacity={0.6}
+      {...props}
+    />
+  )
+}
 
 export default PressableHighlight

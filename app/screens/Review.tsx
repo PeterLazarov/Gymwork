@@ -7,7 +7,7 @@ import {
   IconButton,
   PressableHighlight,
   SwipeTabs,
-  colors,
+  useColors,
 } from 'designSystem'
 
 import { useStores } from 'app/db/helpers/useStores'
@@ -20,6 +20,8 @@ import { translate } from 'app/i18n'
 import { observer } from 'mobx-react-lite'
 
 export default observer(function ReviewScreen(props: {}) {
+  const colors = useColors()
+
   const { stateStore } = useStores()
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
   const [selectedExercise, setSelectedExercise] = useState(

@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState } from 'react'
 import { TextInput as TextInputRN } from 'react-native'
 import { TextInput, TextInputProps } from 'react-native-paper'
 
-import { colors } from '.'
+import { useColors } from '.'
 
 type _NumberInputProps = {
   value: number
@@ -37,6 +37,7 @@ export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
     },
     ref
   ) => {
+    const colors = useColors()
     const [rendered, setRendered] = useState(String(value) ?? '')
 
     useEffect(() => {

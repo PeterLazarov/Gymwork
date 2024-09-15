@@ -5,7 +5,7 @@ import {
   Divider,
   FAB,
   PressableHighlight,
-  colors,
+  useColors,
   fontSize,
 } from 'designSystem'
 import { translate } from 'app/i18n'
@@ -13,6 +13,8 @@ import { navigate } from 'app/navigators'
 import { useStores } from 'app/db/helpers/useStores'
 
 const AddStepMenu = () => {
+  const colors = useColors()
+
   const [visible, setVisible] = useState(false)
   const { stateStore } = useStores()
 

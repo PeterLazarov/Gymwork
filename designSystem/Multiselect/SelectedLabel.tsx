@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import { colors, fontSize, Icon, IconButton } from 'designSystem'
+import { useColors, fontSize, Icon, IconButton } from 'designSystem'
 
 type Props = {
   selection: string
@@ -13,42 +13,46 @@ const SelectedLabel: React.FC<Props> = ({
   selection,
   hideRemove,
   onRemove,
-}) => (
-  <View
-    style={{
-      borderWidth: 1,
-      borderColor: colors.primary,
-      paddingLeft: 10,
-      paddingRight: 4,
-      paddingVertical: 6,
-      borderRadius: 8,
-      gap: 4,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
-    <Text
+}) => {
+  const colors = useColors()
+
+  return (
+    <View
       style={{
-        fontSize: fontSize.sm,
-        color: colors.primary,
-        textTransform: 'capitalize',
+        borderWidth: 1,
+        borderColor: colors.primary,
+        paddingLeft: 10,
+        paddingRight: 4,
+        paddingVertical: 6,
+        borderRadius: 8,
+        gap: 4,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
-      {selection}
-    </Text>
-    {!hideRemove && (
-      <IconButton
-        onPress={() => onRemove?.(selection)}
-        size="sm"
+      <Text
+        style={{
+          fontSize: fontSize.sm,
+          color: colors.primary,
+          textTransform: 'capitalize',
+        }}
       >
-        <Icon
-          icon="close"
-          size="small"
-        />
-      </IconButton>
-    )}
-  </View>
-)
+        {selection}
+      </Text>
+      {!hideRemove && (
+        <IconButton
+          onPress={() => onRemove?.(selection)}
+          size="sm"
+        >
+          <Icon
+            icon="close"
+            size="small"
+          />
+        </IconButton>
+      )}
+    </View>
+  )
+}
 
 export default SelectedLabel

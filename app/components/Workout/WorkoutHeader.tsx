@@ -8,11 +8,13 @@ import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { useExport } from 'app/utils/useExport'
 import { translate } from 'app/i18n'
-import { Header, Icon, IconButton, Snackbar, colors } from 'designSystem'
+import { Header, Icon, IconButton, Snackbar, useColors } from 'designSystem'
 import useBenchmark from 'app/utils/useBenchmark'
 import WorkoutTimer from '../Timer/WorkoutTimer'
 
 const WorkoutHeader: React.FC = () => {
+  const colors = useColors()
+
   const { stateStore, workoutStore } = useStores()
   const { openedWorkout, showCommentsCard } = stateStore
 

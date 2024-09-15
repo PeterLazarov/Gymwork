@@ -6,7 +6,7 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import ExerciseHistoryList from './ExerciseHistoryList'
-import { colors } from 'designSystem'
+import { useColors } from 'designSystem'
 import { Exercise } from 'app/db/models'
 
 export type ExerciseHistoryViewProps = {
@@ -14,6 +14,8 @@ export type ExerciseHistoryViewProps = {
 }
 
 const ExerciseHistoryStats: React.FC<ExerciseHistoryViewProps> = props => {
+  const colors = useColors()
+
   const { stateStore, workoutStore } = useStores()
 
   const exercise = props.exercise || stateStore.focusedExercise

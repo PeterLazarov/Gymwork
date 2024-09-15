@@ -1,7 +1,7 @@
 import { useColorScheme } from 'react-native'
 import { colorSchemas } from './colorSchemas'
 
-export const colors = {
+export const lightColors = {
   primary: colorSchemas.purple.hue600,
   primaryLight: colorSchemas.purple.hue300,
   primaryLighter: colorSchemas.purple.hue100,
@@ -58,5 +58,5 @@ export const darkColors = {
 export function useColors() {
   const colorScheme = useColorScheme()
 
-  return colorScheme === 'light' ? colors : darkColors
+  return colorScheme === 'light' ? lightColors : darkColors
 }

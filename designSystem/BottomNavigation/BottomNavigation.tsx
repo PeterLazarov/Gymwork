@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 
-import { boxShadows, colors } from '../'
+import { boxShadows, useColors } from '../'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 import { BottomNavigationItem } from './BottomNavigationItem'
 import { Item } from './types'
@@ -15,6 +15,8 @@ const btnMinHeight = 56
 const insetCoverage = 0.75
 
 export const BottomNavigation: React.FC<Props> = ({ activeRoute, items }) => {
+  const colors = useColors()
+
   return (
     <SafeAreaInsetsContext.Consumer>
       {insets => (

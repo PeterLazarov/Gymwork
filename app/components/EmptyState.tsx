@@ -1,31 +1,35 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import { colors, fontSize } from 'designSystem'
+import { fontSize, useColors } from 'designSystem'
 
 type Props = {
   text: string
 }
-const EmptyState: React.FC<Props> = ({ text }) => (
-  <View
-    style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: 10,
-      padding: 10,
-    }}
-  >
-    <Text
+const EmptyState: React.FC<Props> = ({ text }) => {
+  const colors = useColors()
+
+  return (
+    <View
       style={{
-        color: colors.neutralDarker,
-        fontSize: fontSize.xl,
-        textAlign: 'center',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: 10,
+        padding: 10,
       }}
     >
-      {text}
-    </Text>
-  </View>
-)
+      <Text
+        style={{
+          color: colors.neutralDarker,
+          fontSize: fontSize.xl,
+          textAlign: 'center',
+        }}
+      >
+        {text}
+      </Text>
+    </View>
+  )
+}
 
 export default EmptyState

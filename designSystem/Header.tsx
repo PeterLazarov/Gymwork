@@ -1,43 +1,51 @@
 import { View, Text, ViewProps, TextProps } from 'react-native'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 
-import { colors, fontSize } from './tokens'
+import { useColors, fontSize } from './tokens'
 
 interface SubComponents {
   Title: React.FC<HeaderTitleProps>
 }
-export const Header: React.FC<ViewProps> & SubComponents = props => (
-  <SafeAreaInsetsContext.Consumer>
-    {insets => (
-      <View
-        style={{
-          backgroundColor: colors.primary,
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingHorizontal: 12,
-          paddingBottom: 12,
-          paddingTop: insets && insets.top > 0 ? insets.top : 12,
-        }}
-        {...props}
-      />
-    )}
-  </SafeAreaInsetsContext.Consumer>
-)
+export const Header: React.FC<ViewProps> & SubComponents = props => {
+  const colors = useColors()
+
+  return (
+    <SafeAreaInsetsContext.Consumer>
+      {insets => (
+        <View
+          style={{
+            backgroundColor: colors.primary,
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: 12,
+            paddingBottom: 12,
+            paddingTop: insets && insets.top > 0 ? insets.top : 12,
+          }}
+          {...props}
+        />
+      )}
+    </SafeAreaInsetsContext.Consumer>
+  )
+}
 Header.displayName = 'Header'
 
 type HeaderTitleProps = {
   title: string
   numberOfLines?: TextProps['numberOfLines']
 }
-const HeaderTitle: React.FC<HeaderTitleProps> = ({ title, numberOfLines }) => (
-  <View style={{ marginLeft: 10, alignItems: 'flex-start', flex: 1 }}>
-    <Text
-      style={{ color: colors.primaryText, fontSize: fontSize.lg }}
-      numberOfLines={numberOfLines}
-    >
-      {title}
-    </Text>
-  </View>
-)
+const HeaderTitle: React.FC<HeaderTitleProps> = ({ title, numberOfLines }) => {
+  const colors = useColors()
+
+  return (
+    <View style={{ marginLeft: 10, alignItems: 'flex-start', flex: 1 }}>
+      <Text
+        style={{ color: colors.primaryText, fontSize: fontSize.lg }}
+        numberOfLines={numberOfLines}
+      >
+        {title}
+      </Text>
+    </View>
+  )
+}
 HeaderTitle.displayName = 'HeaderTitle'
 Header.Title = HeaderTitle

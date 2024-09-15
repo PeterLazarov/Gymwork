@@ -15,7 +15,6 @@ import React from 'react'
 import { useColorScheme } from 'react-native'
 import Config from '../config'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
-import { colors } from 'app/theme'
 import Workout from 'app/screens/Workout'
 import ExerciseSelect, {
   ExerciseSelectScreenParams,
@@ -34,6 +33,8 @@ import ReviewScreen from 'app/screens/Review'
 import TabsLayout from 'app/layouts/TabsLayout'
 import { useStores } from 'app/db/helpers/useStores'
 import Settings from 'app/screens/Settings'
+import { useColors } from 'designSystem'
+import { ThemeProvider } from 'styled-components/native'
 
 /**
  * Documentation:
@@ -87,11 +88,13 @@ export type StackScreenProps<T extends keyof AllStacksParamList> =
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
+  const colors = useColors()
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        navigationBarColor: colors.background,
+        navigationBarColor: colors.neutralLight,
         animation: 'none',
       }}
       initialRouteName="HomeStack"
@@ -193,6 +196,7 @@ export const AppNavigator = observer(function AppNavigator(
   props: NavigationProps
 ) {
   const colorScheme = useColorScheme()
+  const colors = useColors()
 
   useBackButtonHandler(routeName => exitRoutes.includes(routeName))
 
@@ -205,14 +209,18 @@ export const AppNavigator = observer(function AppNavigator(
     stateStore.setProp('activeRoute', currentRouteName)
   }
 
+  const theme = { colors }
+
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-      {...props}
-      onStateChange={handleStateChange}
-    >
-      <AppStack />
-    </NavigationContainer>
+    <ThemeProvider theme={theme}>
+      <NavigationContainer
+        ref={navigationRef}
+        theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+        {...props}
+        onStateChange={handleStateChange}
+      >
+        <AppStack />
+      </NavigationContainer>
+    </ThemeProvider>
   )
 })

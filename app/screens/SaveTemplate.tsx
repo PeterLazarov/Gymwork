@@ -20,13 +20,15 @@ import {
   Header,
   Icon,
   IconButton,
-  colors,
+  useColors,
 } from 'designSystem'
 
 export type SaveTemplateScreenParams = {
   edittingTemplate?: WorkoutTemplate
 }
 const SaveTemplateScreen: React.FC = () => {
+  const colors = useColors()
+
   const { workoutStore, stateStore } = useStores()
   const { edittingTemplate } = useRouteParams('SaveTemplate')
 

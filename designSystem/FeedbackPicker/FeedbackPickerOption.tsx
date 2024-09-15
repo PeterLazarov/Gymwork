@@ -1,7 +1,7 @@
 import React from 'react'
 import { Platform, View, Text } from 'react-native'
 
-import { Icon, IconButton, IconProps, colors, fontSize } from '..'
+import { Icon, IconButton, IconProps, useColors, fontSize } from '..'
 
 export type FeedbackOption = {
   icon: IconProps['icon']
@@ -21,6 +21,8 @@ const FeedbackPickerOption: React.FC<Props> = ({
   isSelected,
   noPadding,
 }) => {
+  const colors = useColors()
+
   return (
     <View
       key={option.value}

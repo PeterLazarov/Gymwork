@@ -7,7 +7,7 @@ import {
   ButtonText,
   Divider,
   DurationInput,
-  colors,
+  useColors,
   fontSize,
 } from 'designSystem'
 import { translate } from 'app/i18n'
@@ -19,6 +19,8 @@ type Props = {
   onClose: () => void
 }
 const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
+  const colors = useColors()
+
   const { setDuration, duration } = useTimer()
 
   const [timerSecs, setTimerSecs] = useState(duration.as('seconds'))

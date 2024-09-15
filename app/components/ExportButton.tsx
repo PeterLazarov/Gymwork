@@ -1,5 +1,5 @@
 import { useStores } from 'app/db/helpers/useStores'
-import { colors, ButtonText, Icon, Button } from 'designSystem'
+import { useColors, ButtonText, Icon, Button } from 'designSystem'
 import { Share, Alert } from 'react-native'
 
 type Props = {
@@ -7,6 +7,8 @@ type Props = {
 }
 
 export const ExportButton: React.FC<Props> = props => {
+  const colors = useColors()
+
   const { workoutStore } = useStores()
 
   async function exportWorkouts() {

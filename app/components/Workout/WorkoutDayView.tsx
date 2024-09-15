@@ -7,13 +7,15 @@ import WorkoutStepList from './WorkoutStepList'
 import WorkoutEmptyState from './WorkoutEmptyState'
 import WorkoutCommentsCard from './WorkoutCommentsCard'
 import AddStepMenu from './AddStepMenu'
-import { colors } from 'designSystem'
+import { useColors } from 'designSystem'
 import { navigate } from 'app/navigators'
 
 type Props = {
   date: string
 }
 const WorkoutDayView: React.FC<Props> = ({ date }) => {
+  const colors = useColors()
+
   const { workoutStore, stateStore } = useStores()
   const workout = workoutStore.dateWorkoutMap[date]
 

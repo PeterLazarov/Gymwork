@@ -1,6 +1,6 @@
 import styled from 'styled-components/native'
 
-import { colors } from './tokens'
+import { lightColors } from './tokens'
 
 type ButtonProps = {
   variant: 'primary' | 'accent' | 'neutral' | 'critical' | 'tertiary'
@@ -10,11 +10,11 @@ type ButtonProps = {
 }
 
 const buttonVariants = {
-  primary: colors.primary,
-  accent: colors.accent,
-  neutral: colors.neutral,
-  critical: colors.critical,
-  tertiary: colors.tertiary,
+  primary: lightColors.primary,
+  accent: lightColors.accent,
+  neutral: lightColors.neutral,
+  critical: lightColors.critical,
+  tertiary: lightColors.tertiary,
 }
 const buttonSizes = {
   small: '32px',
@@ -28,10 +28,10 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
   flex-direction: row;
   background: ${({ disabled, variant, type }) =>
     disabled
-      ? colors.disabled
+      ? lightColors.disabled
       : type !== 'outline'
       ? buttonVariants[variant]
-      : colors.neutralLight};
+      : lightColors.neutralLight};
   border-width: ${({ type }) => (type === 'outline' ? '2px' : 0)};
   border-color: ${({ type, variant }) =>
     type === 'outline' ? buttonVariants[variant] : 'transparent'};
@@ -39,11 +39,11 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
 Button.displayName = 'Button'
 
 const buttonTextVariants = {
-  primary: colors.primaryText,
-  accent: colors.secondaryText,
-  neutral: colors.neutralText,
-  critical: colors.criticalText,
-  tertiary: colors.tertiaryText,
+  primary: lightColors.primaryText,
+  accent: lightColors.secondaryText,
+  neutral: lightColors.neutralText,
+  critical: lightColors.criticalText,
+  tertiary: lightColors.tertiaryText,
 }
 export const ButtonText = styled.Text<ButtonProps>`
   font-size: 16px;

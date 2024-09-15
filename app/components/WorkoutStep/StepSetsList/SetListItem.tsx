@@ -5,7 +5,7 @@ import SetDataLabel from '../SetDataLabel'
 import { ExerciseMeasurement, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
-import { Icon, colors, fontSize } from 'designSystem'
+import { Icon, useColors, fontSize } from 'designSystem'
 import { observer } from 'mobx-react-lite'
 
 type Props = {
@@ -25,6 +25,8 @@ const SetListItem: React.FC<Props> = ({
   number,
   letter,
 }) => {
+  const colors = useColors()
+
   const color = isFocused ? colors.accent : colors.neutralDarkest
 
   return (

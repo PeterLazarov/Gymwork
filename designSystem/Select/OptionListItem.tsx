@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text } from 'react-native'
 
-import { Divider, PressableHighlight, colors, fontSize } from 'designSystem'
+import { Divider, PressableHighlight, useColors, fontSize } from 'designSystem'
 import { SelectOption } from './types'
 
 type Props<T = unknown> = {
@@ -16,10 +16,12 @@ function OptionListItem<T = unknown>({
   selectedValues,
   onSelect,
 }: Props<T>) {
+  const colors = useColors()
+
   const getOptionLabel = (option: SelectOption): string => {
     return typeof option === 'string' ? option : option.label
   }
-  const getOptionValue = (option: SelectOption): string => {
+  const getOptionValue = (option: SelectOption<T>): T => {
     return typeof option === 'string' ? option : option.value
   }
 

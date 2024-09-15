@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import { colors, fontSize as fontSizeToken } from 'designSystem'
+import { useColors, fontSize as fontSizeToken } from 'designSystem'
 
 type Props = {
   value: string | number
@@ -17,6 +17,8 @@ const SetDataLabel: React.FC<Props> = ({
   isFocused,
   fontSize,
 }) => {
+  const colors = useColors()
+
   return (
     <View
       style={{

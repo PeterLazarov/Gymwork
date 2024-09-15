@@ -15,13 +15,15 @@ import {
   Header,
   Icon,
   IconButton,
-  colors,
+  useColors,
 } from 'designSystem'
 
 export type ExerciseEditScreenParams = {
   createMode?: boolean
 }
 const ExerciseEditScreen: React.FC = () => {
+  const colors = useColors()
+
   const { stateStore, exerciseStore } = useStores()
 
   const { createMode } = useRouteParams('ExerciseEdit')

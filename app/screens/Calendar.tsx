@@ -8,13 +8,15 @@ import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { navigate, useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { Header, Icon, IconButton, colors, fontSize } from 'designSystem'
+import { Header, Icon, IconButton, useColors, fontSize } from 'designSystem'
 import CalendarWorkoutModal from 'app/components/CalendarWorkoutModal'
 
 export type CalendarScreenParams = {
   copyWorkoutMode?: boolean
 }
 const CalendarScreen: React.FC = () => {
+  const colors = useColors()
+
   const { workoutStore, stateStore } = useStores()
 
   const { copyWorkoutMode } = useRouteParams('Calendar')

@@ -15,7 +15,7 @@ import {
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { SetEditActions } from './SetEditActions'
 import useTimer from 'app/db/stores/useTimer'
-import { colors } from 'designSystem'
+import { useColors } from 'designSystem'
 
 const defaultReps = 10
 
@@ -28,6 +28,8 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   exercise: focusedExercise,
   step,
 }) => {
+  const colors = useColors()
+
   const { stateStore } = useStores()
   const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
