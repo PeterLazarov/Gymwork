@@ -60,6 +60,7 @@ const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
       <ToggleGroupButton
         buttons={toggleViewButtons}
         initialActiveIndex={0}
+        containerStyle={{ padding: 10 }}
       />
     </View>
   )
