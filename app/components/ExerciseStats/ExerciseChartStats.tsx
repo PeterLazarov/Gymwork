@@ -25,7 +25,7 @@ const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
   const toggleViewButtons = (Object.keys(CHART_VIEWS) as CHART_VIEW_KEY[]).map(
     view => ({
       text: view,
-      onPress: () => setActiveView(CHART_VIEWS[view]),
+      value: CHART_VIEWS[view],
     })
   )
 
@@ -61,6 +61,7 @@ const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
         buttons={toggleViewButtons}
         initialActiveIndex={0}
         containerStyle={{ padding: 10 }}
+        onChange={view => setActiveView(view as CHART_VIEW)}
       />
     </View>
   )

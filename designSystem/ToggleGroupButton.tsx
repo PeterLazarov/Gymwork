@@ -6,18 +6,24 @@ import { Button, ButtonText, useColors } from '.'
 type Props = {
   buttons: {
     text: string
-    onPress: () => void
+    value: string
   }[]
   initialActiveIndex?: number
   containerStyle?: ViewStyle
+  unselectable?: boolean
+  onChange: (value: string | undefined) => void
 }
 
 const ToggleGroupButton: React.FC<Props> = ({
   buttons,
   initialActiveIndex,
   containerStyle,
+  unselectable,
+  onChange,
 }) => {
-  const [activeIndex, setActiveIndex] = useState(initialActiveIndex ?? 0)
+  const [activeIndex, setActiveIndex] = useState(
+    initialActiveIndex ?? (unselectable ? undefined : 0)
+  )
   const colors = useColors()
 
   return (
@@ -27,8 +33,10 @@ const ToggleGroupButton: React.FC<Props> = ({
           variant={index === activeIndex ? 'primary' : 'tertiary'}
           key={index}
           onPress={() => {
-            setActiveIndex(index)
-            button.onPress()
+            const isUnselect = unselectable && activeIndex === index
+
+            setActiveIndex(isUnselect ? undefined : index)
+            onChange(isUnselect ? undefined : button.value)
           }}
           style={{
             flex: 1,

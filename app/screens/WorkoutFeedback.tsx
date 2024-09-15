@@ -34,9 +34,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
   const rpeOptions = Array.from({ length: 6 }).map((_, i) => i + 5)
   const difficultyButtons = rpeOptions.map(option => ({
     text: String(option),
-    onPress: () => {
-      workout.setProp('rpe', option)
-    },
+    value: String(option),
   }))
 
   return (
@@ -105,7 +103,10 @@ const WorkoutFeedbackScreen: React.FC = () => {
           initialActiveIndex={
             workout.rpe ? rpeOptions.indexOf(workout.rpe) : undefined
           }
-          containerStyle={{ padding: 10 }}
+          unselectable
+          onChange={value => {
+            workout.setProp('rpe', value ? Number(value) : undefined)
+          }}
         />
         {workout.rpe && (
           <Text
