@@ -33,6 +33,7 @@
 - grouping / measurement by rest
 - template steps list editting rearranging and or adding
 - check out focusedExerciseRecords for supersets
+- devEx : ban conflicting/unused imports (ignite's colors)/i18n lib as opposed to app/i18n
 
 Performance to beat -
 100 workouts
@@ -51,3 +52,7 @@ Save workout (with or without sets)
 Workout duration + see in chart/history
 Better comment UI
 Workout programs
+
+LOW PRIORITY
+
+- perf: move styles to stylesheet objects

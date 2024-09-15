@@ -7,16 +7,17 @@ import { Button, ButtonText, Divider, colors, fontSize } from 'designSystem'
 import { SelectOption } from './types'
 import OptionListItem from './OptionListItem'
 
-type Props = {
+type Props<T = unknown> = {
   header?: string
   open: boolean
   onClose: () => void
-  options: readonly SelectOption[]
-  selectedValues: string[]
-  onOptionSelect: (option: SelectOption) => void
+  options: readonly SelectOption<T>[]
+  selectedValues: T[]
+  onOptionSelect: (option: SelectOption<T>) => void
   hideButton?: boolean
 }
-const SelectOptionsModal: React.FC<Props> = ({
+
+function SelectOptionsModal<T = unknown>({
   header = 'Select an option',
   open,
   onClose,
@@ -24,7 +25,7 @@ const SelectOptionsModal: React.FC<Props> = ({
   selectedValues,
   onOptionSelect,
   hideButton,
-}) => {
+}: Props<T>) {
   const maxHeight = Dimensions.get('screen').height - 100
   const itemHeight = 53
   const modalHeight = (options.length + (hideButton ? 1 : 2)) * itemHeight

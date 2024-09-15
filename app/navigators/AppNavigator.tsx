@@ -33,6 +33,7 @@ import WorkoutStep from 'app/screens/WorkoutStep'
 import ReviewScreen from 'app/screens/Review'
 import TabsLayout from 'app/layouts/TabsLayout'
 import { useStores } from 'app/db/helpers/useStores'
+import Settings from 'app/screens/Settings'
 
 /**
  * Documentation:
@@ -47,6 +48,7 @@ export type AppStackParamList = {
   SaveTemplate: SaveTemplateScreenParams
   TemplateSelect: undefined
   HomeStack: undefined
+  Settings: undefined
 }
 
 export type HomeStackParamList = {
@@ -78,8 +80,8 @@ export const useRouteParams = <T extends keyof AllStacksParamList>(
  */
 const exitRoutes = Config.exitRoutes
 
-export type AppStackScreenProps<T extends keyof AppStackParamList> =
-  NativeStackScreenProps<AppStackParamList, T>
+export type StackScreenProps<T extends keyof AllStacksParamList> =
+  NativeStackScreenProps<AllStacksParamList, T>
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
@@ -98,6 +100,10 @@ const AppStack = observer(function AppStack() {
         <Stack.Screen
           name="Calendar"
           component={Calendar}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={Settings}
         />
         <Stack.Screen
           name="ExerciseEdit"

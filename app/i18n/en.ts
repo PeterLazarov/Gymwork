@@ -81,6 +81,13 @@ const en = {
   removeFavorite: 'Remove from favorites',
   dataImportSuccess: 'Data successfully imported.',
   dataExportSuccess: 'Data successfully exported.',
+  settings: 'Settings',
+  appearance: 'Appearance',
+  darkMode: 'Dark Mode',
+  on: 'On',
+  off: 'Off',
+  auto: 'Auto',
+  moreIsBetter: 'More is better',
 }
 
 export default en
