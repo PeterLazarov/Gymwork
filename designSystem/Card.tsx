@@ -39,6 +39,7 @@ const Card: React.FC<CardProps> = ({
     title: {
       fontSize: fontSize.sm,
       fontWeight: 'bold',
+      color: colors.neutralText,
     },
   })
 

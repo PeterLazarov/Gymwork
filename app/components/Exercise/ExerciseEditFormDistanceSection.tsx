@@ -3,7 +3,7 @@ import { Text, View } from 'react-native'
 
 import { ExerciseMeasurement, measurementUnits } from 'app/db/models'
 
-import { Select, ToggleSwitch, fontSize } from 'designSystem'
+import { Select, ToggleSwitch, fontSize, useColors } from 'designSystem'
 import { translate } from 'app/i18n'
 
 type Props = {
@@ -18,6 +18,8 @@ const ExerciseEditFormDistanceSection: React.FC<Props> = ({
   measurementConfig,
   onFormChange,
 }) => {
+  const colors = useColors()
+
   const distanceMeasurement = measurementConfig.distance!
   function setUnit(unit: distanceUnits) {
     distanceMeasurement.setProp('unit', unit)
@@ -42,7 +44,7 @@ const ExerciseEditFormDistanceSection: React.FC<Props> = ({
           alignItems: 'center',
         }}
       >
-        <Text style={{ fontSize: fontSize.md }}>
+        <Text style={{ fontSize: fontSize.md, color: colors.neutralText }}>
           {translate('moreIsBetter')}
         </Text>
         <ToggleSwitch

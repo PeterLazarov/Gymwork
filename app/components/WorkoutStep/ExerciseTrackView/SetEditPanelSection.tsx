@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import { View, Text } from 'react-native'
 
-import { Divider, fontSize } from 'designSystem'
+import { Divider, fontSize, useColors } from 'designSystem'
 
 type Props = {
   text: string
@@ -9,6 +9,8 @@ type Props = {
 }
 
 const SetEditPanelSection: React.FC<Props> = ({ text, children }) => {
+  const colors = useColors()
+
   return (
     <View style={{ gap: 10 }}>
       <View>
@@ -17,6 +19,7 @@ const SetEditPanelSection: React.FC<Props> = ({ text, children }) => {
             fontSize: fontSize.xs,
             textTransform: 'uppercase',
             marginVertical: 4,
+            color: colors.neutralText,
           }}
         >
           {text}

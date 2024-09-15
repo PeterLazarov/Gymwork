@@ -55,6 +55,7 @@ function SelectOptionsModal<T = unknown>({
               fontSize: fontSize.lg,
               textAlign: 'center',
               padding: 16,
+              color: colors.neutralText,
             }}
           >
             {header}

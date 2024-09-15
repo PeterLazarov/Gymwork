@@ -45,7 +45,7 @@ const ExerciseControl: React.FC<ExerciseControlProps> = ({
       </IconButton>
 
       <Text
-        style={{ fontSize: fontSize.lg, flex: 1 }}
+        style={{ fontSize: fontSize.lg, flex: 1, color: colors.neutralText }}
         numberOfLines={1}
       >
         {exercise.name}

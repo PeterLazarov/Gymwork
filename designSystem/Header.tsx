@@ -1,4 +1,4 @@
-import { View, Text, ViewProps, TextProps } from 'react-native'
+import { View, Text, ViewProps, TextProps, useColorScheme } from 'react-native'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 
 import { useColors, fontSize } from './tokens'
@@ -8,13 +8,15 @@ interface SubComponents {
 }
 export const Header: React.FC<ViewProps> & SubComponents = props => {
   const colors = useColors()
+  const colorScheme = useColorScheme()
 
   return (
     <SafeAreaInsetsContext.Consumer>
       {insets => (
         <View
           style={{
-            backgroundColor: colors.primary,
+            backgroundColor:
+              colorScheme === 'light' ? colors.primary : colors.neutralLight,
             flexDirection: 'row',
             alignItems: 'center',
             paddingHorizontal: 12,

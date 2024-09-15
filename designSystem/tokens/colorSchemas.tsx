@@ -1,5 +1,6 @@
 export const colorSchemas = {
   black: 'black',
+  white: 'white',
   neutral: {
     hue900: '#626262', // Dark
     hue800: '#9A9A9A',

@@ -137,7 +137,12 @@ const CalendarScreen: React.FC = () => {
             },
             monthTitleTextStyle: {
               fontSize: fontSize.lg,
+              color: colors.neutralText,
             },
+            dayTextStyle: {
+              color: colors.neutralText,
+            },
+            weekColumnTextStyle: { color: colors.neutralText },
           }}
           disableRange
           monthHeight={460}
