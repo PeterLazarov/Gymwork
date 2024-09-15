@@ -52,3 +52,7 @@ Save workout (with or without sets)
 Workout duration + see in chart/history
 Better comment UI
 Workout programs
+
+LOW PRIORITY
+
+- perf: move styles to stylesheet objects
