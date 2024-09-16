@@ -11,7 +11,7 @@ import {
   fontSize,
 } from 'designSystem'
 import { translate } from 'app/i18n'
-import useTimer from 'app/db/stores/useTimer'
+import { useTimer } from 'app/contexts/TimerContext'
 import { Duration } from 'luxon'
 
 type Props = {

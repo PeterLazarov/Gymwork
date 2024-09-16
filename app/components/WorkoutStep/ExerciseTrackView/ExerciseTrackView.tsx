@@ -14,7 +14,7 @@ import {
 } from 'app/db/models'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { SetEditActions } from './SetEditActions'
-import useTimer from 'app/db/stores/useTimer'
+import { useTimer } from 'app/contexts/TimerContext'
 import { useColors } from 'designSystem'
 
 const defaultReps = 10

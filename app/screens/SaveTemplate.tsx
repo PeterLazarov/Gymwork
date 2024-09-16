@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { getSnapshot } from 'mobx-state-tree'
 
-import ConfirmationDialog from 'app/components/ConfirmationDialog'
 import EditTemplateForm from 'app/components/WorkoutTemplate/EditTemplateForm'
 import { useStores } from 'app/db/helpers/useStores'
 import {
@@ -22,6 +21,7 @@ import {
   IconButton,
   useColors,
 } from 'designSystem'
+import { useDialogContext } from 'app/contexts/DialogContext'
 
 export type SaveTemplateScreenParams = {
   edittingTemplate?: WorkoutTemplate
@@ -39,14 +39,18 @@ const SaveTemplateScreen: React.FC = () => {
     edittingTemplate?.steps || stateStore.openedWorkout!.steps
   )
   const [formValid, setFormValid] = useState(true)
-  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
+  const { showConfirm } = useDialogContext()
 
   function onBackPress() {
-    setConfirmDialogOpen(true)
+    showConfirm!({
+      message: translate('workoutWillNotBeSaved'),
+      onClose: () => showConfirm!(undefined),
+      onConfirm: onBackConfirmed,
+    })
   }
 
   function onBackConfirmed() {
-    setConfirmDialogOpen(false)
+    showConfirm!(undefined)
     goBack()
   }
 
@@ -68,54 +72,46 @@ const SaveTemplateScreen: React.FC = () => {
   }
 
   return (
-    <>
-      <EmptyLayout>
-        <Header>
-          <IconButton onPress={onBackPress}>
-            <Icon
-              icon="chevron-back"
-              color={colors.primaryText}
-            />
-          </IconButton>
-          <Header.Title title={translate('saveTemplate')} />
-          <IconButton
-            onPress={onComplete}
-            disabled={!formValid}
-          >
-            <Icon
-              icon="checkmark"
-              size="large"
-              color={colors.primaryText}
-            />
-          </IconButton>
-        </Header>
-        <KeyboardAvoiderView
-          avoidMode="focused-input"
-          style={{ flex: 1, overflow: 'hidden' }}
-        >
-          <EditTemplateForm
-            template={template}
-            steps={templateSteps}
-            onUpdateSteps={steps => setTemplateSteps(steps)}
-            onUpdate={onUpdate}
+    <EmptyLayout>
+      <Header>
+        <IconButton onPress={onBackPress}>
+          <Icon
+            icon="chevron-back"
+            color={colors.primaryText}
           />
+        </IconButton>
+        <Header.Title title={translate('saveTemplate')} />
+        <IconButton
+          onPress={onComplete}
+          disabled={!formValid}
+        >
+          <Icon
+            icon="checkmark"
+            size="large"
+            color={colors.primaryText}
+          />
+        </IconButton>
+      </Header>
+      <KeyboardAvoiderView
+        avoidMode="focused-input"
+        style={{ flex: 1, overflow: 'hidden' }}
+      >
+        <EditTemplateForm
+          template={template}
+          steps={templateSteps}
+          onUpdateSteps={steps => setTemplateSteps(steps)}
+          onUpdate={onUpdate}
+        />
 
-          <Button
-            variant="primary"
-            onPress={onComplete}
-            disabled={!formValid}
-          >
-            <ButtonText variant="primary">{translate('save')}</ButtonText>
-          </Button>
-        </KeyboardAvoiderView>
-      </EmptyLayout>
-      <ConfirmationDialog
-        open={confirmDialogOpen}
-        message={translate('workoutWillNotBeSaved')}
-        onClose={() => setConfirmDialogOpen(false)}
-        onConfirm={onBackConfirmed}
-      />
-    </>
+        <Button
+          variant="primary"
+          onPress={onComplete}
+          disabled={!formValid}
+        >
+          <ButtonText variant="primary">{translate('save')}</ButtonText>
+        </Button>
+      </KeyboardAvoiderView>
+    </EmptyLayout>
   )
 }
 export default observer(SaveTemplateScreen)

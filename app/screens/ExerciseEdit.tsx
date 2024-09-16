@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
-import ConfirmationDialog from 'app/components/ConfirmationDialog'
 import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, ExerciseModel } from 'app/db/models'
@@ -17,6 +16,7 @@ import {
   IconButton,
   useColors,
 } from 'designSystem'
+import { useDialogContext } from 'app/contexts/DialogContext'
 
 export type ExerciseEditScreenParams = {
   createMode?: boolean
@@ -31,14 +31,19 @@ const ExerciseEditScreen: React.FC = () => {
     createMode ? ExerciseModel.create() : stateStore.focusedStep!.exercise
   )
   const [formValid, setFormValid] = useState(false)
-  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
+
+  const { showConfirm } = useDialogContext()
 
   function onBackPress() {
-    setConfirmDialogOpen(true)
+    showConfirm!({
+      message: translate('changesWillBeLost'),
+      onClose: () => showConfirm!(undefined),
+      onConfirm: onBackConfirmed,
+    })
   }
 
   function onBackConfirmed() {
-    setConfirmDialogOpen(false)
+    showConfirm!(undefined)
     goBack()
   }
 
@@ -57,58 +62,50 @@ const ExerciseEditScreen: React.FC = () => {
   }
 
   return (
-    <>
-      <EmptyLayout>
-        <Header>
-          <IconButton
-            onPress={onBackPress}
-            underlay="darker"
-          >
-            <Icon
-              icon="chevron-back"
-              color={colors.primaryText}
-            />
-          </IconButton>
-          <Header.Title
-            title={translate(createMode ? 'createExercise' : 'editExercise')}
-          />
-          <IconButton
-            onPress={onComplete}
-            disabled={!formValid}
-            underlay="darker"
-          >
-            <Icon
-              icon="checkmark"
-              size="large"
-              color={colors.primaryText}
-            />
-          </IconButton>
-        </Header>
-        <KeyboardAvoiderView
-          avoidMode="focused-input"
-          style={{ flex: 1 }}
+    <EmptyLayout>
+      <Header>
+        <IconButton
+          onPress={onBackPress}
+          underlay="darker"
         >
-          <ExerciseEditForm
-            exercise={exercise}
-            onUpdate={onUpdate}
+          <Icon
+            icon="chevron-back"
+            color={colors.primaryText}
           />
+        </IconButton>
+        <Header.Title
+          title={translate(createMode ? 'createExercise' : 'editExercise')}
+        />
+        <IconButton
+          onPress={onComplete}
+          disabled={!formValid}
+          underlay="darker"
+        >
+          <Icon
+            icon="checkmark"
+            size="large"
+            color={colors.primaryText}
+          />
+        </IconButton>
+      </Header>
+      <KeyboardAvoiderView
+        avoidMode="focused-input"
+        style={{ flex: 1 }}
+      >
+        <ExerciseEditForm
+          exercise={exercise}
+          onUpdate={onUpdate}
+        />
 
-          <Button
-            variant="primary"
-            onPress={onComplete}
-            disabled={!formValid}
-          >
-            <ButtonText variant="primary">{translate('save')}</ButtonText>
-          </Button>
-        </KeyboardAvoiderView>
-      </EmptyLayout>
-      <ConfirmationDialog
-        open={confirmDialogOpen}
-        message={translate('changesWillBeLost')}
-        onClose={() => setConfirmDialogOpen(false)}
-        onConfirm={onBackConfirmed}
-      />
-    </>
+        <Button
+          variant="primary"
+          onPress={onComplete}
+          disabled={!formValid}
+        >
+          <ButtonText variant="primary">{translate('save')}</ButtonText>
+        </Button>
+      </KeyboardAvoiderView>
+    </EmptyLayout>
   )
 }
 export default observer(ExerciseEditScreen)

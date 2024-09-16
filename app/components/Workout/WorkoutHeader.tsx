@@ -8,9 +8,10 @@ import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
 import { useExport } from 'app/utils/useExport'
 import { translate } from 'app/i18n'
-import { Header, Icon, IconButton, Snackbar, useColors } from 'designSystem'
+import { Header, Icon, IconButton, useColors } from 'designSystem'
 import useBenchmark from 'app/utils/useBenchmark'
 import WorkoutTimer from '../Timer/WorkoutTimer'
+import { useDialogContext } from 'app/contexts/DialogContext'
 
 const WorkoutHeader: React.FC = () => {
   const colors = useColors()
@@ -18,9 +19,9 @@ const WorkoutHeader: React.FC = () => {
   const { stateStore, workoutStore } = useStores()
   const { openedWorkout, showCommentsCard } = stateStore
 
-  const [snackbarText, setSnackbarText] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
   const { exportData, restoreData } = useExport()
+  const { showSnackbar } = useDialogContext()
 
   // TODO dedupe with DayControl
   const date = DateTime.fromISO(stateStore.openedDate)
@@ -49,7 +50,9 @@ const WorkoutHeader: React.FC = () => {
     setMenuOpen(false)
 
     exportData().then(() => {
-      setSnackbarText(translate('dataExportSuccess'))
+      showSnackbar!({
+        text: translate('dataExportSuccess'),
+      })
     })
   }
 
@@ -57,7 +60,9 @@ const WorkoutHeader: React.FC = () => {
     setMenuOpen(false)
 
     restoreData().then(() => {
-      setSnackbarText(translate('dataImportSuccess'))
+      showSnackbar!({
+        text: translate('dataImportSuccess'),
+      })
     })
   }
 
@@ -74,81 +79,74 @@ const WorkoutHeader: React.FC = () => {
   }
 
   return (
-    <>
-      <Header>
-        <Header.Title title={dateLabel} />
-        {/* <WorkoutTimer style={{ color: colors.primaryText }} /> */}
+    <Header>
+      <Header.Title title={dateLabel} />
+      {/* <WorkoutTimer style={{ color: colors.primaryText }} /> */}
 
-        <IconButton
-          onPress={openCalendar}
-          underlay="darker"
-        >
-          <Icon
-            icon="calendar-sharp"
-            color={colors.primaryText}
-          />
-        </IconButton>
+      <IconButton
+        onPress={openCalendar}
+        underlay="darker"
+      >
+        <Icon
+          icon="calendar-sharp"
+          color={colors.primaryText}
+        />
+      </IconButton>
 
-        <Menu
-          visible={menuOpen}
-          onDismiss={() => setMenuOpen(false)}
-          anchorPosition="bottom"
-          anchor={
-            <IconButton
-              onPress={() => setMenuOpen(true)}
-              underlay="darker"
-            >
-              <Icon
-                icon="ellipsis-vertical"
-                color={colors.primaryText}
-              />
-            </IconButton>
-          }
-        >
-          {openedWorkout?.hasComments && (
-            <Menu.Item
-              onPress={toggleCommentsCard}
-              title={translate(
-                showCommentsCard ? 'hideCommentsCard' : 'showCommentsCard'
-              )}
+      <Menu
+        visible={menuOpen}
+        onDismiss={() => setMenuOpen(false)}
+        anchorPosition="bottom"
+        anchor={
+          <IconButton
+            onPress={() => setMenuOpen(true)}
+            underlay="darker"
+          >
+            <Icon
+              icon="ellipsis-vertical"
+              color={colors.primaryText}
             />
-          )}
+          </IconButton>
+        }
+      >
+        {openedWorkout?.hasComments && (
           <Menu.Item
-            onPress={goToSettings}
-            title={translate('settings')}
+            onPress={toggleCommentsCard}
+            title={translate(
+              showCommentsCard ? 'hideCommentsCard' : 'showCommentsCard'
+            )}
           />
-          {openedWorkout && (
-            <>
-              <Menu.Item
-                onPress={saveTemplate}
-                title={translate('saveAsTemplate')}
-              />
-              <Menu.Item
-                onPress={deleteWorkout}
-                title={translate('removeWorkout')}
-              />
-            </>
-          )}
-          <Menu.Item
-            onPress={onExportData}
-            title={translate('exportData')}
-          />
-          <Menu.Item
-            onPress={onRestoreData}
-            title={translate('restoreData')}
-          />
-          <Menu.Item
-            onPress={performBenchmark}
-            title="Perform benchmark"
-          />
-        </Menu>
-      </Header>
-      <Snackbar
-        visible={snackbarText !== ''}
-        onDismiss={() => setSnackbarText('')}
-        text={snackbarText}
-      />
-    </>
+        )}
+        <Menu.Item
+          onPress={goToSettings}
+          title={translate('settings')}
+        />
+        {openedWorkout && (
+          <>
+            <Menu.Item
+              onPress={saveTemplate}
+              title={translate('saveAsTemplate')}
+            />
+            <Menu.Item
+              onPress={deleteWorkout}
+              title={translate('removeWorkout')}
+            />
+          </>
+        )}
+        <Menu.Item
+          onPress={onExportData}
+          title={translate('exportData')}
+        />
+        <Menu.Item
+          onPress={onRestoreData}
+          title={translate('restoreData')}
+        />
+        <Menu.Item
+          onPress={performBenchmark}
+          title="Perform benchmark"
+        />
+      </Menu>
+    </Header>
   )
 }
 

@@ -2,7 +2,7 @@ import { Duration } from 'luxon'
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { createContext } from 'react'
 import { setDriftlessInterval, clearDriftless } from 'driftless'
-import { useStores } from '../helpers/useStores'
+import { useStores } from '../db/helpers/useStores'
 import { Vibration } from 'react-native'
 
 export const TimerContext = createContext<ReturnType<typeof _useTimer>>(
@@ -101,7 +101,7 @@ function _useTimer() {
   }
 }
 
-export default function useTimer() {
+export function useTimer() {
   const { stateStore } = useStores()
 
   const ctx = useContext(TimerContext)

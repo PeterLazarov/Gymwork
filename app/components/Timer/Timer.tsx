@@ -5,7 +5,7 @@ import { Duration } from 'luxon'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
 
 import TimerEditModal from '../TimerEditModal'
-import useTimer from 'app/db/stores/useTimer'
+import { useTimer } from 'app/contexts/TimerContext'
 import { IconButton, Icon, useColors, NumberInput } from 'designSystem'
 
 const Timer = forwardRef<TextInput>((_, ref) => {

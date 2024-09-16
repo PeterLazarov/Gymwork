@@ -23,8 +23,9 @@ import './utils/ignoreWarnings'
 import * as storage from './utils/storage'
 import { useLogging } from './utils/useLogging'
 import { customFontsToLoad } from './theme'
-import useTimer, { TimerContext } from './db/stores/useTimer'
+import { useTimer, TimerContext } from './contexts/TimerContext'
 import { ErrorDetails } from './screens/ErrorDetails'
+import { DialogContextProvider } from './contexts/DialogContext'
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
@@ -73,10 +74,12 @@ function App() {
               >
                 <Portal.Host>
                   <PaperProvider>
-                    <AppNavigator
-                      initialState={initialNavigationState}
-                      onStateChange={onNavigationStateChange}
-                    />
+                    <DialogContextProvider>
+                      <AppNavigator
+                        initialState={initialNavigationState}
+                        onStateChange={onNavigationStateChange}
+                      />
+                    </DialogContextProvider>
                   </PaperProvider>
                 </Portal.Host>
               </ErrorBoundary>

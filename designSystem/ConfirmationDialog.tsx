@@ -9,12 +9,16 @@ type Props = {
   message: string
   onConfirm: () => void
   onClose: () => void
+  cancelButtonText?: string
+  confirmButtonText?: string
 }
 const ConfirmationDialog: React.FC<Props> = ({
   open,
   message,
   onConfirm,
   onClose,
+  cancelButtonText = 'Cancel',
+  confirmButtonText = 'Confirm',
 }) => {
   const colors = useColors()
 
@@ -36,14 +40,14 @@ const ConfirmationDialog: React.FC<Props> = ({
             style={{ flex: 1 }}
             onPress={onClose}
           >
-            <ButtonText variant="tertiary">{translate('cancel')}</ButtonText>
+            <ButtonText variant="tertiary">{cancelButtonText}</ButtonText>
           </Button>
           <Button
             variant="tertiary"
             style={{ flex: 1 }}
             onPress={onConfirm}
           >
-            <ButtonText variant="tertiary"> {translate('confirm')}</ButtonText>
+            <ButtonText variant="tertiary"> {confirmButtonText}</ButtonText>
           </Button>
         </Dialog.Actions>
       </Dialog>
