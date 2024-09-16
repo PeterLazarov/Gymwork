@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useMemo } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
 import SetDataLabel from '../SetDataLabel'
 import { ExerciseMeasurement, WorkoutSet } from 'app/db/models'
@@ -28,57 +28,23 @@ const SetListItem: React.FC<Props> = ({
   const colors = useColors()
 
   const color = isFocused ? colors.accent : colors.neutralDarkest
+  const styles = useMemo(() => makeStyles(color), [color])
 
   return (
-    <View
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 16,
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        height: 24,
-      }}
-    >
-      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-        {!set.isWarmup && (
-          <Text
-            style={{
-              fontSize: fontSize.sm,
-              color,
-              fontWeight: 'bold',
-              marginLeft: 8,
-              marginRight: 4,
-            }}
-          >
-            {number}.
-          </Text>
-        )}
+    <View style={styles.item}>
+      <View style={styles.indexColumn}>
+        {!set.isWarmup && <Text style={styles.setNumber}>{number}.</Text>}
         {set.isWarmup && (
           <Icon
             icon="yoga"
             color={color}
           />
         )}
-        {letter && (
-          <Text
-            style={{
-              fontSize: fontSize.sm,
-              color,
-              fontWeight: 'bold',
-              marginLeft: 4,
-            }}
-          >
-            {letter}
-          </Text>
-        )}
+        {letter && <Text style={styles.setLetter}>{letter}</Text>}
         {isRecord && (
           <Icon
             icon="trophy"
             color={colors.accent}
-            style={{
-              marginLeft: 4,
-            }}
           />
         )}
       </View>
@@ -118,5 +84,34 @@ const SetListItem: React.FC<Props> = ({
     </View>
   )
 }
+
+const makeStyles = (textColor: string) =>
+  StyleSheet.create({
+    item: {
+      display: 'flex',
+      flexDirection: 'row',
+      gap: 16,
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      height: 24,
+    },
+    indexColumn: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+    },
+    setNumber: {
+      fontSize: fontSize.sm,
+      color: textColor,
+      fontWeight: 'bold',
+      marginLeft: 8,
+    },
+    setLetter: {
+      fontSize: fontSize.sm,
+      color: textColor,
+      fontWeight: 'bold',
+    },
+  })
 
 export default observer(SetListItem)

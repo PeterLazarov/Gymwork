@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useMemo } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
 import { Exercise, WorkoutStep } from 'app/db/models'
 import { Divider, fontSize, useColors, PressableHighlight } from 'designSystem'
@@ -20,29 +20,18 @@ const ExerciseHistoryListItem: React.FC<Props> = ({
 }) => {
   const colors = useColors()
 
+  const styles = useMemo(() => makeStyles(colors), [colors])
+
   const sets = step.exerciseSetsMap[exercise.guid] || []
 
   return (
     <PressableHighlight
-      style={{
-        gap: 8,
-        marginBottom: 12,
-        borderRadius: 8,
-        borderColor: colors.neutralDark,
-        borderWidth: 1,
-      }}
+      style={styles.item}
       key={date}
       onPress={onPress}
     >
       <>
-        <Text
-          style={{
-            fontSize: fontSize.md,
-            textAlign: 'center',
-            paddingTop: 4,
-            color: colors.neutralText,
-          }}
-        >
+        <Text style={styles.itemDate}>
           {DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}
         </Text>
         <Divider
@@ -60,5 +49,22 @@ const ExerciseHistoryListItem: React.FC<Props> = ({
     </PressableHighlight>
   )
 }
+
+const makeStyles = (colors: any) =>
+  StyleSheet.create({
+    item: {
+      gap: 8,
+      marginBottom: 12,
+      borderRadius: 8,
+      borderColor: colors.neutralDark,
+      borderWidth: 1,
+    },
+    itemDate: {
+      fontSize: fontSize.md,
+      textAlign: 'center',
+      paddingTop: 4,
+      color: colors.neutralText,
+    },
+  })
 
 export default ExerciseHistoryListItem
