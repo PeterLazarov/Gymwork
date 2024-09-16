@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, View } from 'react-native'
+import { observer } from 'mobx-react-lite'
 
 import { translate } from 'app/i18n'
 import { Card, Icon, fontSize, useColors } from 'designSystem'
@@ -55,7 +56,9 @@ const WorkoutEmptyState: React.FC = () => {
                 icon="download-outline"
                 style={{ paddingBottom: 10 }}
               />
-              <Text style={{ fontSize: fontSize.md }}>
+              <Text
+                style={{ fontSize: fontSize.md, color: colors.neutralText }}
+              >
                 {translate('useTemplate')}
               </Text>
             </View>
@@ -67,4 +70,4 @@ const WorkoutEmptyState: React.FC = () => {
   )
 }
 
-export default WorkoutEmptyState
+export default observer(WorkoutEmptyState)
