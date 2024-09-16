@@ -15,23 +15,25 @@
 - dev experience
   - ios emulator -> expo crash on code change in emulator
   - android device -> after code change rendering of StepHeader when no focusedStep error
-- error logging
+  - ban conflicting/unused imports (ignite's colors)/i18n lib as opposed to app/i18n
+- reporting
   - log only production errors
   - include state data
+  - make improvement suggestions functionality
 - review
   - On jump to record set, scroll to set
-- Workout Comments
-  - historical comments screen?
+  - Optimise render of history tab
+  - Optimise render of chart
+  - Workout historical stats screen with muscle areas and comments analysis 
+- darkMode
+  - Text element default color?
+  - rename colors so that they're usable across both color schemes
 - HorizontalScreenList > react-native-reanimated-carousel rolled back for FlatList version. Do we return? Keep header press bug in mind.
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
-- Workout historical stats screen with muscle areas and comments analysis
 - Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 - grouping / measurement by rest
 - template steps list editting rearranging and or adding
 - check out focusedExerciseRecords for supersets
-- devEx : ban conflicting/unused imports (ignite's colors)/i18n lib as opposed to app/i18n
-- darkMode: Text element default color?
-- darkMode: rename colors so that they're usable across both color schemes
 
 Performance to beat -
 100 workouts
