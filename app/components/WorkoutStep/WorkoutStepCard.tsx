@@ -21,7 +21,12 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, ...rest }) => {
   return (
     <Card
       title={title}
-      content={<StepSetsList step={step} />}
+      content={
+        <StepSetsList
+          step={step}
+          sets={step.sets}
+        />
+      }
       {...rest}
     />
   )

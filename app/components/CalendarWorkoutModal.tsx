@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { ScrollView, View, Text } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
-import CalendarWorkoutModalExerciseItem from './CalendarWorkoutModalExerciseItem'
+import CalendarWorkoutModalStepItem from './CalendarWorkoutModalStepItem'
 import { useStores } from 'app/db/helpers/useStores'
 import {
   Button,
@@ -80,9 +80,8 @@ const CalendarWorkoutModal: React.FC<Props> = ({
           <View style={{ flex: 1 }}>
             <ScrollView>
               {workout.steps.map(step => (
-                <CalendarWorkoutModalExerciseItem
+                <CalendarWorkoutModalStepItem
                   key={step.guid}
-                  exercise={step.exercise!}
                   step={step}
                 />
               ))}

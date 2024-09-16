@@ -8,25 +8,19 @@ import { useStores } from 'app/db/helpers/useStores'
 
 export type StepSetsList = {
   step: WorkoutStep
-  splitSupersets?: boolean
-  focusedExerciseGuid?: string
+  sets: WorkoutSet[]
+  hideSupersetLetters?: boolean
 }
 
 const StepSetsList: React.FC<StepSetsList> = ({
   step,
-  splitSupersets = false,
-  focusedExerciseGuid,
+  sets,
+  hideSupersetLetters = false,
 }) => {
   const { stateStore, recordStore } = useStores()
 
-  const exerciseSets =
-    step.exerciseSetsMap[
-      focusedExerciseGuid || stateStore.focusedExerciseGuid!
-    ] || []
-  const sets = splitSupersets ? exerciseSets : step.sets
-
   const getLetterForSet = (set: WorkoutSet) => {
-    if (step.type === 'straightSet' || splitSupersets) return
+    if (step.type === 'straightSet' || hideSupersetLetters) return
 
     return step.exerciseLettering[set.exercise.guid]
   }

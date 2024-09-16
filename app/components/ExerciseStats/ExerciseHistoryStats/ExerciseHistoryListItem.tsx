@@ -20,6 +20,8 @@ const ExerciseHistoryListItem: React.FC<Props> = ({
 }) => {
   const colors = useColors()
 
+  const sets = step.exerciseSetsMap[exercise.guid] || []
+
   return (
     <PressableHighlight
       style={{
@@ -50,8 +52,8 @@ const ExerciseHistoryListItem: React.FC<Props> = ({
         <View style={{ padding: 4 }}>
           <StepSetsList
             step={step}
-            splitSupersets
-            focusedExerciseGuid={exercise.guid}
+            sets={sets}
+            hideSupersetLetters
           />
         </View>
       </>
