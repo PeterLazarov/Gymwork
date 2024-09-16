@@ -34,7 +34,6 @@ import TabsLayout from 'app/layouts/TabsLayout'
 import { useStores } from 'app/db/helpers/useStores'
 import Settings from 'app/screens/Settings'
 import { useColors } from 'designSystem'
-import { ThemeProvider } from 'styled-components/native'
 
 /**
  * Documentation:
@@ -196,7 +195,6 @@ export const AppNavigator = observer(function AppNavigator(
   props: NavigationProps
 ) {
   const colorScheme = useColorScheme()
-  const colors = useColors()
 
   useBackButtonHandler(routeName => exitRoutes.includes(routeName))
 
@@ -209,18 +207,14 @@ export const AppNavigator = observer(function AppNavigator(
     stateStore.setProp('activeRoute', currentRouteName)
   }
 
-  const theme = { colors }
-
   return (
-    <ThemeProvider theme={theme}>
-      <NavigationContainer
-        ref={navigationRef}
-        theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-        {...props}
-        onStateChange={handleStateChange}
-      >
-        <AppStack />
-      </NavigationContainer>
-    </ThemeProvider>
+    <NavigationContainer
+      ref={navigationRef}
+      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+      {...props}
+      onStateChange={handleStateChange}
+    >
+      <AppStack />
+    </NavigationContainer>
   )
 })

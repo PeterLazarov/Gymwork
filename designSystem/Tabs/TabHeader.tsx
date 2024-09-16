@@ -1,12 +1,12 @@
 import React from 'react'
 import { View } from 'react-native'
 
-import { ActiveIndicator, TabHeaderTouchable, TabLabel } from './styled'
+import { ActiveIndicator, TabHeaderTouchable, TabLabel } from './components'
 import { TabConfig, TabStyles } from './types'
 
 type Props = {
   index: number
-  item: TabConfig
+  item: TabConfig<any>
   style?: TabStyles['header']
   currentIndex: number
   scrollableContainer?: boolean

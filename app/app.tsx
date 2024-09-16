@@ -6,7 +6,6 @@ if (__DEV__) {
 }
 import { useFonts } from 'expo-font'
 import React from 'react'
-import * as SystemUI from 'expo-system-ui'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { PaperProvider, Portal } from 'react-native-paper'
 import { KeyboardAvoiderProvider } from '@good-react-native/keyboard-avoider'
@@ -26,8 +25,6 @@ import { useLogging } from './utils/useLogging'
 import { customFontsToLoad } from './theme'
 import useTimer, { TimerContext } from './db/stores/useTimer'
 import { ErrorDetails } from './screens/ErrorDetails'
-import { ThemeProvider } from 'styled-components/native'
-import { getColors } from 'designSystem'
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
@@ -60,33 +57,29 @@ function App() {
     return null
   }
 
-  const lightColors = getColors('light')
-
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <KeyboardAvoiderProvider>
         <DBStoreInitializer>
           <TimerContext.Provider value={timer}>
             <GestureHandlerRootView style={{ flex: 1 }}>
-              <ThemeProvider theme={{ colors: lightColors }}>
-                <ErrorBoundary
-                  fallback={({ error, resetError }) => (
-                    <ErrorDetails
-                      error={error}
-                      resetError={resetError}
+              <ErrorBoundary
+                fallback={({ error, resetError }) => (
+                  <ErrorDetails
+                    error={error}
+                    resetError={resetError}
+                  />
+                )}
+              >
+                <Portal.Host>
+                  <PaperProvider>
+                    <AppNavigator
+                      initialState={initialNavigationState}
+                      onStateChange={onNavigationStateChange}
                     />
-                  )}
-                >
-                  <Portal.Host>
-                    <PaperProvider>
-                      <AppNavigator
-                        initialState={initialNavigationState}
-                        onStateChange={onNavigationStateChange}
-                      />
-                    </PaperProvider>
-                  </Portal.Host>
-                </ErrorBoundary>
-              </ThemeProvider>
+                  </PaperProvider>
+                </Portal.Host>
+              </ErrorBoundary>
             </GestureHandlerRootView>
           </TimerContext.Provider>
         </DBStoreInitializer>
