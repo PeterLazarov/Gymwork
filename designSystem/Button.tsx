@@ -1,56 +1,105 @@
-import styled from 'styled-components/native'
+import { TouchableOpacityProps } from 'react-native-gesture-handler'
 
-import { getColors } from './tokens'
+import { fontSize, useColors } from './tokens'
+import { Text, TextProps } from 'react-native'
+import PressableHighlight from './PressableHighlight'
 
-const lightColors = getColors('light')
-
-type ButtonProps = {
+type ButtonVariants = {
   variant: 'primary' | 'accent' | 'neutral' | 'critical' | 'tertiary'
   type?: 'filled' | 'outline'
-  disabled?: boolean
-  size?: 'default' | 'small'
 }
+type ButtonProps = TouchableOpacityProps &
+  ButtonVariants & {
+    size?: 'default' | 'small'
+  }
 
-const buttonVariants = {
-  primary: lightColors.primary,
-  accent: lightColors.accent,
-  neutral: lightColors.neutral,
-  critical: lightColors.critical,
-  tertiary: lightColors.tertiary,
-}
 const buttonSizes = {
-  small: '32px',
-  default: '48px',
+  small: 32,
+  default: 48,
 }
-export const Button = styled.TouchableOpacity<ButtonProps>`
-  justify-content: center;
-  align-items: center;
-  height: ${({ size }) => buttonSizes[size ?? 'default']};
-  gap: 6px;
-  flex-direction: row;
-  background: ${({ disabled, variant, type }) =>
-    disabled
-      ? lightColors.disabled
-      : type !== 'outline'
-      ? buttonVariants[variant]
-      : lightColors.neutralLight};
-  border-width: ${({ type }) => (type === 'outline' ? '2px' : 0)};
-  border-color: ${({ type, variant }) =>
-    type === 'outline' ? buttonVariants[variant] : 'transparent'};
-`
-Button.displayName = 'Button'
+export const Button: React.FC<ButtonProps> = ({
+  size = 'default',
+  disabled,
+  variant,
+  type,
+  style,
+  ...otherProps
+}) => {
+  const colors = useColors()
 
-const buttonTextVariants = {
-  primary: lightColors.primaryText,
-  accent: lightColors.secondaryText,
-  neutral: lightColors.neutralText,
-  critical: lightColors.criticalText,
-  tertiary: lightColors.tertiaryText,
+  const buttonColors = {
+    primary: colors.primary,
+    accent: colors.accent,
+    neutral: colors.neutral,
+    critical: colors.critical,
+    tertiary: colors.tertiary,
+    disabled: colors.disabled,
+    outline: colors.neutralLight,
+  }
+
+  const color = disabled ? 'disabled' : type === 'outline' ? 'outline' : variant
+
+  return (
+    <PressableHighlight
+      style={[
+        {
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: buttonSizes[size],
+          gap: 6,
+          flexDirection: 'row',
+          backgroundColor: buttonColors[color],
+          borderWidth: type === 'outline' ? 2 : 0,
+          borderColor:
+            type === 'outline' ? buttonColors[variant] : 'transparent',
+        },
+        style,
+      ]}
+      disabled={disabled}
+      {...otherProps}
+    />
+  )
 }
-export const ButtonText = styled.Text<ButtonProps>`
-  font-size: 16px;
-  text-align: center;
-  color: ${({ variant, type }) =>
-    type !== 'outline' ? buttonTextVariants[variant] : buttonVariants[variant]};
-`
-ButtonText.displayName = 'ButtonText'
+
+type ButtonTextProps = TextProps & ButtonVariants
+export const ButtonText: React.FC<ButtonTextProps> = ({
+  variant,
+  type,
+  style,
+  ...otherProps
+}) => {
+  const colors = useColors()
+
+  const buttonColors = {
+    primary: colors.primary,
+    accent: colors.accent,
+    neutral: colors.neutral,
+    critical: colors.critical,
+    tertiary: colors.tertiary,
+  }
+
+  const buttonTextColors = {
+    primary: colors.primaryText,
+    accent: colors.secondaryText,
+    neutral: colors.neutralText,
+    critical: colors.criticalText,
+    tertiary: colors.tertiaryText,
+  }
+
+  return (
+    <Text
+      style={[
+        {
+          fontSize: fontSize.md,
+          textAlign: 'center',
+          color:
+            type !== 'outline'
+              ? buttonTextColors[variant]
+              : buttonColors[variant],
+        },
+        style,
+      ]}
+      {...otherProps}
+    />
+  )
+}
