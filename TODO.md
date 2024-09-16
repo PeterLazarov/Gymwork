@@ -21,8 +21,6 @@
   - log only production errors
   - include state data
   - improve fallback UI
-- WorkoutDayView
-  - on Android add overscroll for sets covered by the FAB
 - review
   - On jump to record set, scroll to set
 - Workout Comments

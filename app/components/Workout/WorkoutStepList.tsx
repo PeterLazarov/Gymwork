@@ -28,6 +28,7 @@ const WorkoutStepList: React.FC<Props> = ({ workout }) => {
 
   return (
     <FlashList
+      contentContainerStyle={{ paddingBottom: 80 }}
       data={workout.steps.slice()}
       renderItem={renderItem}
       keyExtractor={item => `${workout!.date}_${item.guid}`}

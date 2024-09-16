@@ -63,7 +63,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
         <Text
           style={{
             fontSize: fontSize.md,
-            color: colors.tertiaryText,
+            color: colors.neutralText,
           }}
         >
           {translate('howWasWorkout')}
@@ -78,7 +78,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
         <Text
           style={{
             fontSize: fontSize.md,
-            color: colors.tertiaryText,
+            color: colors.neutralText,
           }}
         >
           {translate('experiencedPain')}
@@ -91,7 +91,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
         <Text
           style={{
             fontSize: fontSize.md,
-            color: colors.tertiaryText,
+            color: colors.neutralText,
           }}
         >
           {translate('difficulty')}

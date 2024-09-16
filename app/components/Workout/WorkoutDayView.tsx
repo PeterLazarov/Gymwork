@@ -20,24 +20,22 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
   const workout = workoutStore.dateWorkoutMap[date]
 
   return (
-    <>
-      <View style={{ flex: 1, backgroundColor: colors.neutralLighter }}>
-        {workout && workout.steps.length > 0 ? (
-          <>
-            {stateStore.showCommentsCard && workout.hasComments && (
-              <WorkoutCommentsCard
-                workout={workout}
-                onPress={() => navigate('WorkoutFeedback')}
-              />
-            )}
-            <WorkoutStepList workout={workout} />
-          </>
-        ) : (
-          <WorkoutEmptyState />
-        )}
-      </View>
+    <View style={{ flex: 1, backgroundColor: colors.neutralLighter }}>
+      {workout && workout.steps.length > 0 ? (
+        <>
+          {stateStore.showCommentsCard && workout.hasComments && (
+            <WorkoutCommentsCard
+              workout={workout}
+              onPress={() => navigate('WorkoutFeedback')}
+            />
+          )}
+          <WorkoutStepList workout={workout} />
+        </>
+      ) : (
+        <WorkoutEmptyState />
+      )}
       <AddStepMenu />
-    </>
+    </View>
   )
 }
 
