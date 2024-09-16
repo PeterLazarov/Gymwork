@@ -1,9 +1,8 @@
-import React from 'react'
-import { ScrollView, TextStyle, View, ViewStyle, Text } from 'react-native'
+import React, { useState } from 'react'
+import { ScrollView, Text, View } from 'react-native'
 
-// TODO use our colors
-import { colors, spacing } from '../theme'
-import { Button, ButtonText } from 'designSystem'
+import { Button, ButtonText, fontSize, useColors } from 'designSystem'
+import { SafeLayout } from 'app/layouts/SafeLayout'
 
 export interface ErrorDetailsProps {
   error: Error | null
@@ -19,42 +18,74 @@ export const ErrorDetails: React.FC<ErrorDetailsProps> = ({
   error,
   resetError,
 }) => {
-  return (
-    <View style={{ flex: 1, marginTop: 20 }}>
-      <ScrollView
-        style={$errorSection}
-        contentContainerStyle={$errorSectionContentContainer}
-      >
-        <Text style={$errorContent}>{`${error}`.trim()}</Text>
-        <Text style={$errorBacktrace}>{`${error?.stack ?? ''}`.trim()}</Text>
-      </ScrollView>
+  const colors = useColors()
+  const [detailsVisible, setDetailsVisible] = useState(false)
 
+  return (
+    <SafeLayout style={{ gap: 16, paddingHorizontal: 10 }}>
+      <Text
+        style={{
+          color: colors.critical,
+          fontSize: fontSize.xl,
+          textAlign: 'center',
+        }}
+      >
+        Error found
+      </Text>
+      <Text
+        style={{
+          color: colors.neutralText,
+          fontSize: fontSize.md,
+          textAlign: 'center',
+        }}
+      >
+        We are already notified and will try to fix it soon.
+      </Text>
+      <Button
+        variant="neutral"
+        onPress={() => setDetailsVisible(oldVisible => !oldVisible)}
+      >
+        <ButtonText variant="neutral">Show / Hide error details</ButtonText>
+      </Button>
+
+      <View style={{ flex: 1, gap: 16 }}>
+        {detailsVisible && (
+          <>
+            <Text
+              style={{
+                fontSize: fontSize.md,
+                textAlign: 'center',
+              }}
+            >
+              {`${error}`.trim()}
+            </Text>
+            <ScrollView
+              style={{
+                flex: 2,
+                backgroundColor: colors.neutralLight,
+                borderRadius: 6,
+              }}
+              contentContainerStyle={{
+                padding: 16,
+              }}
+            >
+              <Text
+                style={{
+                  backgroundColor: colors.neutralLight,
+                }}
+              >
+                {`${error?.stack ?? ''}`.trim()}
+              </Text>
+            </ScrollView>
+          </>
+        )}
+      </View>
       <Button
         variant="critical"
         onPress={resetError}
       >
         <ButtonText variant="critical">Reset</ButtonText>
       </Button>
-    </View>
+    </SafeLayout>
   )
-}
-
-const $errorSection: ViewStyle = {
-  flex: 2,
-  backgroundColor: colors.separator,
-  marginVertical: spacing.md,
-  borderRadius: 6,
-}
-
-const $errorSectionContentContainer: ViewStyle = {
-  padding: spacing.md,
-}
-
-const $errorContent: TextStyle = {
-  color: colors.error,
-}
-
-const $errorBacktrace: TextStyle = {
-  marginTop: spacing.md,
-  color: colors.textDim,
 }

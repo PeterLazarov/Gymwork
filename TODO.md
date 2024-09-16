@@ -18,7 +18,6 @@
 - error logging
   - log only production errors
   - include state data
-  - improve fallback UI
 - review
   - On jump to record set, scroll to set
 - Workout Comments
