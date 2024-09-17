@@ -193,6 +193,7 @@ export const AppNavigator = observer(function AppNavigator(
   props: NavigationProps
 ) {
   const colorScheme = useColorScheme()
+  const colors = useColors()
 
   useBackButtonHandler(routeName => exitRoutes.includes(routeName))
 
@@ -213,7 +214,10 @@ export const AppNavigator = observer(function AppNavigator(
       onStateChange={handleStateChange}
     >
       <>
-        <StatusBar barStyle={'light-content'}></StatusBar>
+        <StatusBar
+          backgroundColor={colorScheme === 'light' ? colors.primary : 'black'}
+          barStyle={'light-content'}
+        ></StatusBar>
         <AppStack />
       </>
     </NavigationContainer>
