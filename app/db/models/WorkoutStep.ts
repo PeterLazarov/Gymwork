@@ -72,10 +72,29 @@ export const WorkoutStepModel = types
       }, {} as Record<Exercise['guid'], WorkoutSet[]>)
     },
     get exerciseLettering(): Record<Exercise['guid'], string> {
-      return step.exercises.reduce((map, e, i) => {
-        map[e.guid] = alphabeticNumbering(i)
-        return map
-      }, {} as Record<Exercise['guid'], string>)
+      let map: Record<Exercise['guid'], string> = {}
+
+      if (step.type === 'superSet') {
+        map = step.exercises.reduce((map, e, i) => {
+          map[e.guid] = alphabeticNumbering(i)
+          return map
+        }, {} as Record<Exercise['guid'], string>)
+      }
+
+      return map
+    },
+    get setNumberMap(): Record<WorkoutSet['guid'], number> {
+      const map: Record<WorkoutSet['guid'], number> = {}
+
+      step.exercises.forEach(exercise =>{
+        const workSets = this.exerciseWorkSetsMap[exercise.guid]!
+
+        workSets.forEach((set, index) => {
+          map[set.guid] = index + 1
+        })
+      })  
+
+      return map
     },
   }))
   .actions(withSetPropAction)

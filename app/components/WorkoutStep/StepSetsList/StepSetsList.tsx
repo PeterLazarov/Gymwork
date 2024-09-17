@@ -30,7 +30,12 @@ const StepSetsList: React.FC<StepSetsList> = ({
           measurements={set.exercise.measurements}
           isRecord={stepRecords.some(({ guid }) => guid === set.guid)}
           isFocused={stateStore.highlightedSetGuid === set.guid}
-          letter={hideSupersetLetters ? undefined : set.letter}
+          letter={
+            hideSupersetLetters
+              ? undefined
+              : step.exerciseLettering[set.exercise.guid]
+          }
+          number={step.setNumberMap[set.guid]}
         />
       ))}
     </>
