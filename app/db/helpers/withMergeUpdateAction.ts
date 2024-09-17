@@ -6,7 +6,7 @@ import { IStateTreeNode, SnapshotIn } from 'mobx-state-tree'
 export const withMergeUpdateAction = <T extends IStateTreeNode>(
   mstInstance: T
 ) => ({
-  mergeUpdate(update: Partial<SnapshotIn<T>>) {
-    Object.assign(mstInstance, update)
-  },
-})
+    mergeUpdate(update: Partial<SnapshotIn<T>>) {
+      Object.assign(mstInstance, update)
+    },
+  })

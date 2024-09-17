@@ -24,12 +24,12 @@ const seriesSetup = ({ data }: Props) => {
     return data.map(sets =>
       sets.length > 0
         ? sets.reduce(
-            (max, set) =>
-              Number(
-                Math.max(max, oneRepMaxEpley(set.weight!, set.reps!)).toFixed(2)
-              ),
-            0
-          )
+          (max, set) =>
+            Number(
+              Math.max(max, oneRepMaxEpley(set.weight!, set.reps!)).toFixed(2)
+            ),
+          0
+        )
         : null
     )
   }
@@ -38,9 +38,9 @@ const seriesSetup = ({ data }: Props) => {
     return data.map(sets =>
       sets.length > 0
         ? sets.reduce(
-            (max, set) => Number(Math.max(max, set.speed).toFixed(2)),
-            0
-          )
+          (max, set) => Number(Math.max(max, set.speed).toFixed(2)),
+          0
+        )
         : null
     )
   }
@@ -49,9 +49,9 @@ const seriesSetup = ({ data }: Props) => {
     return data.map(sets =>
       sets.length > 0
         ? sets.reduce(
-            (acc, set) => acc += set.reps * set.weight,
-            0
-          )
+          (acc, set) => acc += set.reps * set.weight,
+          0
+        )
         : null
     )
   }

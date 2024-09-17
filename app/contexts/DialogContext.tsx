@@ -1,7 +1,6 @@
 import { translate } from 'app/i18n'
 import { ConfirmationDialog, Snackbar } from 'designSystem'
-import { ReactNode, useContext, useState } from 'react'
-import { createContext } from 'react'
+import { ReactNode, useContext, useState, createContext } from 'react'
 
 type SnackbarOptions = {
   text: string

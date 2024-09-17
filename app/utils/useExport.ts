@@ -32,7 +32,6 @@ export function useExport() {
         'application/json'
       ).then(async uri => {
         await writeAsStringAsync(uri, jsonString)
-        return
       })
     } catch (error: any) {
       Alert.alert(error.message)
@@ -57,13 +56,10 @@ export function useExport() {
         rootStore.setProp('workoutStore', data?.workoutStore)
         rootStore.setProp('exerciseStore', data?.exerciseStore)
         recordStore.determineRecords()
-        return
       }
     } catch (error: any) {
       Alert.alert(error.message)
     }
-
-    return
   }
 
   return {

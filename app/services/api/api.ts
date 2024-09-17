@@ -46,7 +46,7 @@ export class Api {
    */
   async getEpisodes(): Promise<
     { kind: 'ok'; episodes: EpisodeSnapshotIn[] } | GeneralApiProblem
-  > {
+    > {
     // make the api call
     const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(
       `api.json?rss_url=https%3A%2F%2Ffeeds.simplecast.com%2FhEI_f9Dx`
