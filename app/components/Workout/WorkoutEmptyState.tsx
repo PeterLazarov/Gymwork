@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
@@ -13,6 +13,26 @@ const WorkoutEmptyState: React.FC = () => {
   const hasWorkouts = workoutStore.workouts.length > 0
   const hasTemplates = workoutStore.workoutTemplates.length > 0
 
+  const actions = useMemo(() => {
+    const result = []
+    if (hasWorkouts) {
+      result.push({
+        icon: 'copy-outline',
+        text: translate('copyWorkout'),
+        onPress: copyWorkout,
+      })
+    }
+
+    if (hasTemplates) {
+      result.push({
+        icon: 'download-outline',
+        text: translate('useTemplate'),
+        onPress: useTemplate,
+      })
+    }
+    return result
+  }, [hasWorkouts, hasTemplates])
+
   function copyWorkout() {
     navigate('Calendar', {
       copyWorkoutMode: true,
@@ -25,37 +45,25 @@ const WorkoutEmptyState: React.FC = () => {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      {hasWorkouts && (
-        <Card
-          containerStyle={{ paddingHorizontal: 8 }}
-          onPress={copyWorkout}
-          content={
-            <View style={{ alignItems: 'center' }}>
-              <Icon
-                icon="copy-outline"
-                style={{ paddingBottom: 10 }}
-              />
-              <Text>{translate('copyWorkout')}</Text>
-            </View>
-          }
-        />
+      {actions.length > 0 &&
+        actions.map(action => (
+          <Card
+            containerStyle={{ paddingHorizontal: 8 }}
+            onPress={action.onPress}
+            content={
+              <View style={{ alignItems: 'center' }}>
+                <Icon
+                  icon={action.icon}
+                  style={{ paddingBottom: 10 }}
+                />
+                <Text>{action.text}</Text>
+              </View>
+            }
+          />
+        ))}
+      {actions.length === 0 && (
+        <EmptyState text={translate('noWorkoutsEntered')} />
       )}
-      {hasTemplates && (
-        <Card
-          containerStyle={{ paddingHorizontal: 8 }}
-          onPress={useTemplate}
-          content={
-            <View style={{ alignItems: 'center' }}>
-              <Icon
-                icon="download-outline"
-                style={{ paddingBottom: 10 }}
-              />
-              <Text>{translate('useTemplate')}</Text>
-            </View>
-          }
-        />
-      )}
-      {!hasWorkouts && <EmptyState text={translate('noWorkoutsEntered')} />}
     </View>
   )
 }

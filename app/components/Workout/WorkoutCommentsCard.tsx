@@ -1,5 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
+import { observer } from 'mobx-react-lite'
 
 import {
   Text,
@@ -70,4 +71,4 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
   )
 }
 
-export default WorkoutCommentsCard
+export default observer(WorkoutCommentsCard)
