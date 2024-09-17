@@ -3,9 +3,11 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
     'expo',
-    'prettier',
     'plugin:@typescript-eslint/recommended',
     'standard',
+    'prettier',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
   ],
   plugins: ['@typescript-eslint'],
   globals: {
@@ -42,6 +44,24 @@ module.exports = {
     'no-use-before-define': 'off',
     quotes: 0,
     'space-before-function-paren': 0,
+    'react-hooks/exhaustive-deps': 0,
+    'import/no-named-as-default-member': 0,
+    'no-restricted-imports': [
+      'error',
+      {
+        name: 'react-native',
+        importNames: ['Text'],
+        message: "Please use 'Text' from designSystem instead",
+      },
+    ],
+  },
+  settings: {
+    // 'import/resolver': {
+    //   // You will also need to install and configure the TypeScript resolver
+    //   // See also https://github.com/import-js/eslint-import-resolver-typescript#configuration
+    //   typescript: true,
+    //   node: true,
+    // },
   },
   ignorePatterns: ['**/*.snap', '**/*.txt', 'bin/ignite'],
 }
