@@ -17,12 +17,12 @@ const StepHeader: React.FC = () => {
   const { showSnackbar } = useDialogContext()
 
   const deleteSelectedExercises = () => {
-    // stateStore.deleteFocusedStep()
+    const undoDelete = stateStore.deleteFocusedStep()
     navigate('Workout')
     showSnackbar!({
       text: 'Exercise was removed from workout',
       actionText: 'Undo',
-      action: () => console.log('do the thing'),
+      action: undoDelete,
     })
   }
 

@@ -91,9 +91,9 @@ export const WorkoutStepModel = types
         const { exercise } = deletedSet
 
         const records = step.exerciseRecordsMap[exercise.guid]!
-        const isRecordBool = records.recordSetsMap.hasOwnProperty(
+        const isRecordBool = records?.recordSetsMap.hasOwnProperty(
           deletedSet.guid
-        )
+        ) || false
 
         const deletedSetSnapshot = getSnapshot(deletedSet)
         step.sets.splice(deletedSetIndex, 1)

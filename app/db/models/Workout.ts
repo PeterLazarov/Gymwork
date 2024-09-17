@@ -2,7 +2,9 @@ import {
   Instance,
   SnapshotIn,
   SnapshotOut,
+  applyPatch,
   getSnapshot,
+  recordPatches,
   types,
   // getIdentifier,
 } from 'mobx-state-tree'
@@ -135,7 +137,9 @@ export const WorkoutModel = types
       return workout.steps.at(-1)!
     },
 
-    removeStep(step: WorkoutStep) {
+    removeStep(step: WorkoutStep): () => void {
+      const recorder = recordPatches(workout);
+
       const sets = step.sets
       sets?.forEach(set => {
         step.removeSet(set.guid)
@@ -145,6 +149,9 @@ export const WorkoutModel = types
         'steps',
         remainingSteps.map(s => getSnapshot(s))
       )
+      recorder.stop();
+
+      return () => recorder.undo();
     },
   }))
 
