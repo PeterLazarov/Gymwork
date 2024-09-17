@@ -39,7 +39,7 @@ export const WorkoutModel = types
     notes: '',
     feeling: types.maybe(types.enumeration('feeling', Object.values(feelings))),
     pain: types.maybe(types.enumeration('pain', Object.values(painOptions))),
-    rpe: types.maybe(types.number),
+    rpe: types.maybe(types.number)
   })
   .views(self => ({
     get exercises(): Exercise[] {
@@ -137,8 +137,8 @@ export const WorkoutModel = types
       return workout.steps.at(-1)!
     },
 
-    removeStep(step: WorkoutStep) {
-      const recorder = recordPatches(workout)
+    removeStep(step: WorkoutStep): () => void {
+      const recorder = recordPatches(workout);
 
       const sets = step.sets
       sets?.forEach(set => {
@@ -149,9 +149,9 @@ export const WorkoutModel = types
         'steps',
         remainingSteps.map(s => getSnapshot(s))
       )
-      recorder.stop()
+      recorder.stop();
 
-      return () => recorder.undo()
+      return () => recorder.undo();
     },
   }))
 
