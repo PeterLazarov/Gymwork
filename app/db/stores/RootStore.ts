@@ -22,6 +22,7 @@ export const RootStoreModel = types
       self.setProp('exerciseStore', snapshot.exerciseStore)
       self.setProp('workoutStore', snapshot.workoutStore)
       self.setProp('recordStore', snapshot.recordStore)
+      self.setProp('settingsStore', snapshot.settingsStore)
     },
     initializeStores(): Promise<void> {
       return self.exerciseStore

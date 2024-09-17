@@ -1,9 +1,5 @@
-import { Instance, SnapshotOut, types, getParent } from 'mobx-state-tree'
+import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
-import { ExerciseStore } from './ExerciseStore'
-import { RootStore } from './RootStore'
-import { WorkoutStore } from './WorkoutStore'
-import { RecordStore } from './RecordStore'
 import { Appearance, ColorSchemeName } from 'react-native'
 import { getColors } from 'designSystem'
 import * as SystemUI from 'expo-system-ui'
@@ -23,20 +19,6 @@ export const SettingsStoreModel = types
       'light' // TODO rethink once we have dark mode set up
     ),
   })
-  .views(self => ({
-    get rootStore(): RootStore {
-      return getParent(self) as RootStore
-    },
-    get exerciseStore(): ExerciseStore {
-      return this.rootStore.exerciseStore
-    },
-    get workoutStore(): WorkoutStore {
-      return this.rootStore.workoutStore
-    },
-    get recordStore(): RecordStore {
-      return this.rootStore.recordStore
-    },
-  }))
   //   .actions(withSetPropAction)
   .actions(self => ({
     initialize() {
