@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text, TouchableWithoutFeedback } from 'react-native'
+import { View, TouchableWithoutFeedback } from 'react-native'
 
-import { useColors, fontSize, Icon } from 'designSystem'
+import { Text, useColors, fontSize, Icon } from 'designSystem'
 
 type Props = {
   onPress: () => void
@@ -38,7 +38,6 @@ const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
               style={{
                 fontSize: fontSize.xs,
                 opacity: 0.75,
-                color: colors.neutralText,
               }}
             >
               {label}
@@ -46,7 +45,6 @@ const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
           )}
           <Text
             style={{
-              fontSize: fontSize.md,
               color: error ? colors.critical : colors.neutralText,
             }}
           >

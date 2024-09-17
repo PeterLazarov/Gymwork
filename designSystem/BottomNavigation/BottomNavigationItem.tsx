@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
-import { Icon, PressableHighlight, useColors, fontSize } from '../'
+import { Text, Icon, PressableHighlight, useColors, fontSize } from '../'
 import { Item } from './types'
 
 type Props = {

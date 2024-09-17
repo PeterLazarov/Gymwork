@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
 import {
+  Text,
   Button,
   ButtonText,
   Divider,
@@ -46,7 +47,6 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
             fontSize: fontSize.lg,
             textAlign: 'center',
             padding: 16,
-            color: colors.neutralText,
           }}
         >
           {translate('editRestTimer')}

@@ -1,12 +1,12 @@
-import { fontSize, useColors } from '../tokens'
 import {
   TouchableOpacity,
   TouchableOpacityProps,
-  Text,
   ViewProps,
   View,
   TextProps,
 } from 'react-native'
+
+import { Text, useColors } from '../'
 
 export const TabHeaderTouchable: React.FC<TouchableOpacityProps> = ({
   style,
@@ -43,7 +43,6 @@ export const TabLabel: React.FC<TabLabelProps> = ({
       style={[
         {
           color: isActive ? colors.accent : colors.neutralDarker,
-          fontSize: fontSize.md,
         },
         style,
       ]}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 
-import { Button, ButtonText, fontSize, useColors } from 'designSystem'
+import { Text, Button, ButtonText, fontSize, useColors } from 'designSystem'
 import { SafeLayout } from 'app/layouts/SafeLayout'
 
 export interface ErrorDetailsProps {
@@ -34,8 +34,6 @@ export const ErrorDetails: React.FC<ErrorDetailsProps> = ({
       </Text>
       <Text
         style={{
-          color: colors.neutralText,
-          fontSize: fontSize.md,
           textAlign: 'center',
         }}
       >
@@ -53,7 +51,6 @@ export const ErrorDetails: React.FC<ErrorDetailsProps> = ({
           <>
             <Text
               style={{
-                fontSize: fontSize.md,
                 textAlign: 'center',
               }}
             >

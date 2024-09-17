@@ -1,16 +1,14 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
 import { translate } from 'app/i18n'
-import { Card, Icon, fontSize, useColors } from 'designSystem'
+import { Text, Card, Icon } from 'designSystem'
 import { navigate } from 'app/navigators'
 import { useStores } from 'app/db/helpers/useStores'
 import EmptyState from '../EmptyState'
 
 const WorkoutEmptyState: React.FC = () => {
-  const colors = useColors()
-
   const { workoutStore } = useStores()
   const hasWorkouts = workoutStore.workouts.length > 0
   const hasTemplates = workoutStore.workoutTemplates.length > 0
@@ -37,11 +35,7 @@ const WorkoutEmptyState: React.FC = () => {
                 icon="copy-outline"
                 style={{ paddingBottom: 10 }}
               />
-              <Text
-                style={{ fontSize: fontSize.md, color: colors.neutralText }}
-              >
-                {translate('copyWorkout')}
-              </Text>
+              <Text>{translate('copyWorkout')}</Text>
             </View>
           }
         />
@@ -56,11 +50,7 @@ const WorkoutEmptyState: React.FC = () => {
                 icon="download-outline"
                 style={{ paddingBottom: 10 }}
               />
-              <Text
-                style={{ fontSize: fontSize.md, color: colors.neutralText }}
-              >
-                {translate('useTemplate')}
-              </Text>
+              <Text>{translate('useTemplate')}</Text>
             </View>
           }
         />

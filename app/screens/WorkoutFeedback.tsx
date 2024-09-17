@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { Text } from 'react-native'
 import { TextInput } from 'react-native-paper'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
@@ -9,12 +8,12 @@ import { navigate } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { TxKeyPath, translate } from 'app/i18n'
 import {
+  Text,
   Header,
   FeedbackPicker,
   Icon,
   IconButton,
   useColors,
-  fontSize,
   ToggleGroupButton,
 } from 'designSystem'
 import { Workout, painOptions, feelingOptions } from 'app/db/models'
@@ -60,14 +59,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
           alignItems: 'center',
         }}
       >
-        <Text
-          style={{
-            fontSize: fontSize.md,
-            color: colors.neutralText,
-          }}
-        >
-          {translate('howWasWorkout')}
-        </Text>
+        <Text>{translate('howWasWorkout')}</Text>
         <FeedbackPicker
           selected={workout.feeling}
           onChange={value =>
@@ -75,27 +67,13 @@ const WorkoutFeedbackScreen: React.FC = () => {
           }
           options={Object.values(feelingOptions)}
         />
-        <Text
-          style={{
-            fontSize: fontSize.md,
-            color: colors.neutralText,
-          }}
-        >
-          {translate('experiencedPain')}
-        </Text>
+        <Text>{translate('experiencedPain')}</Text>
         <FeedbackPicker
           selected={workout.pain}
           onChange={value => workout.setProp('pain', value as Workout['pain'])}
           options={Object.values(painOptions)}
         />
-        <Text
-          style={{
-            fontSize: fontSize.md,
-            color: colors.neutralText,
-          }}
-        >
-          {translate('difficulty')}
-        </Text>
+        <Text>{translate('difficulty')}</Text>
         <ToggleGroupButton
           buttons={difficultyButtons}
           initialActiveIndex={
@@ -109,7 +87,6 @@ const WorkoutFeedbackScreen: React.FC = () => {
         {workout.rpe && (
           <Text
             style={{
-              fontSize: fontSize.md,
               color: colors.tertiaryText,
               textAlign: 'center',
             }}

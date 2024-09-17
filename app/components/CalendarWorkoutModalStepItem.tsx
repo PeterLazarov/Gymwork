@@ -1,8 +1,8 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
 import StepSetsList from './WorkoutStep/StepSetsList/StepSetsList'
 import { WorkoutStep } from 'app/db/models'
-import { fontSize, useColors } from 'designSystem'
+import { Text, useColors } from 'designSystem'
 
 type Props = {
   step: WorkoutStep
@@ -19,7 +19,6 @@ const CalendarWorkoutModalStepItem: React.FC<Props> = ({ step }) => {
         >
           <Text
             style={{
-              fontSize: fontSize.md,
               color: colors.tertiaryText,
               marginBottom: 8,
               textAlign: 'center',

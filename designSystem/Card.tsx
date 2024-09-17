@@ -1,7 +1,7 @@
-import React from 'react'
-import { StyleSheet, View, Text, ViewStyle } from 'react-native'
+import React, { useMemo } from 'react'
+import { StyleSheet, View, ViewStyle } from 'react-native'
 
-import { useColors, fontSize } from './tokens'
+import { Text, useColors } from '.'
 import {
   TouchableOpacity,
   TouchableWithoutFeedbackProps,
@@ -24,24 +24,7 @@ const Card: React.FC<CardProps> = ({
 }) => {
   const colors = useColors()
 
-  const styles = StyleSheet.create({
-    card: {
-      backgroundColor: colors.neutralLightest,
-      borderRadius: 8,
-      marginVertical: 10,
-      marginHorizontal: 20,
-      overflow: 'hidden',
-    },
-    content: {
-      padding: 15,
-      gap: 5,
-    },
-    title: {
-      fontSize: fontSize.sm,
-      fontWeight: 'bold',
-      color: colors.neutralText,
-    },
-  })
+  const styles = useMemo(() => makeStyles(colors), [colors])
 
   return (
     <TouchableOpacity
@@ -56,5 +39,23 @@ const Card: React.FC<CardProps> = ({
     </TouchableOpacity>
   )
 }
+
+const makeStyles = (colors: any) =>
+  StyleSheet.create({
+    card: {
+      backgroundColor: colors.neutralLightest,
+      borderRadius: 8,
+      marginVertical: 10,
+      marginHorizontal: 20,
+      overflow: 'hidden',
+    },
+    content: {
+      padding: 15,
+      gap: 5,
+    },
+    title: {
+      fontWeight: 'bold',
+    },
+  })
 
 export default Card

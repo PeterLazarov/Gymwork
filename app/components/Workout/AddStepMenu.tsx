@@ -1,12 +1,12 @@
 import React, { Fragment, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import {
+  Text,
   BottomDrawer,
   Divider,
   FAB,
   PressableHighlight,
   useColors,
-  fontSize,
 } from 'designSystem'
 import { translate } from 'app/i18n'
 import { navigate } from 'app/navigators'
@@ -91,14 +91,7 @@ const AddStepMenu = () => {
                   alignItems: 'center',
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: fontSize.md,
-                    color: colors.neutralText,
-                  }}
-                >
-                  {option.text}
-                </Text>
+                <Text>{option.text}</Text>
               </PressableHighlight>
             </Fragment>
           ))}

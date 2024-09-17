@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
 import { WorkoutTemplate } from 'app/db/models'
-import { Icon, IconButton, PressableHighlight, fontSize } from 'designSystem'
+import { Text, Icon, IconButton, PressableHighlight } from 'designSystem'
 
 type Props = {
   template: WorkoutTemplate
@@ -31,7 +31,7 @@ const ExerciseListItem: React.FC<Props> = ({
         }}
       >
         <Text
-          style={{ fontSize: fontSize.md, flex: 1, flexWrap: 'wrap' }}
+          style={{ flex: 1, flexWrap: 'wrap' }}
           numberOfLines={1}
         >
           {template.name}

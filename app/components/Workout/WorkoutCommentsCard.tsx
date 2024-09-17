@@ -1,7 +1,13 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
-import { Card, FeedbackPickerOption, fontSize, useColors } from 'designSystem'
+import {
+  Text,
+  Card,
+  FeedbackPickerOption,
+  fontSize,
+  useColors,
+} from 'designSystem'
 import { painOptions, feelingOptions, Workout } from 'app/db/models'
 import { translate } from 'app/i18n'
 
@@ -41,11 +47,7 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
             }}
           >
             {workout.rpe !== undefined && (
-              <Text
-                style={{ fontSize: fontSize.md, color: colors.neutralText }}
-              >
-                {translate('diffValue', { rpe: workout.rpe })}
-              </Text>
+              <Text>{translate('diffValue', { rpe: workout.rpe })}</Text>
             )}
             {workout.pain && (
               <FeedbackPickerOption

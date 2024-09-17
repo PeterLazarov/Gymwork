@@ -1,8 +1,13 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { Text } from 'react-native'
 
-import { Icon, PressableHighlight, useColors, fontSize } from 'designSystem'
+import {
+  Text,
+  Icon,
+  PressableHighlight,
+  useColors,
+  fontSize,
+} from 'designSystem'
 
 type Props = {
   isWarmup: boolean

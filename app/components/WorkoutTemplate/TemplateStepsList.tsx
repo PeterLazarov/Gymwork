@@ -1,9 +1,9 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
 import { WorkoutStep } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { Icon, IconButton, useColors, fontSize } from 'designSystem'
+import { Text, Icon, IconButton, useColors, fontSize } from 'designSystem'
 
 type Props = {
   steps: WorkoutStep[]
@@ -37,7 +37,7 @@ const TemplateStepsList: React.FC<Props> = ({ steps, onStepRemove }) => {
                 flex: 1,
               }}
             >
-              {step.exercise.name}
+              {step.exercise!.name}
             </Text>
             <IconButton onPress={() => onStepRemove(step)}>
               <Icon icon="delete" />

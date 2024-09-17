@@ -26,13 +26,14 @@
   - Optimise render of chart
   - Workout historical stats screen with muscle areas and comments analysis 
 - darkMode
-  - Text element default color?
   - rename colors so that they're usable across both color schemes
+- Template edit
+  - superset step support
+  - steps list editting rearranging and or adding
 - HorizontalScreenList > react-native-reanimated-carousel rolled back for FlatList version. Do we return? Keep header press bug in mind.
 - keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 - Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 - grouping / measurement by rest
-- template steps list editting rearranging and or adding
 - check out focusedExerciseRecords for supersets
 
 Performance to beat -

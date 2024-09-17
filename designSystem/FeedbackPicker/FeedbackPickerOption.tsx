@@ -1,7 +1,7 @@
 import React from 'react'
-import { Platform, View, Text } from 'react-native'
+import { Platform, View } from 'react-native'
 
-import { Icon, IconButton, IconProps, useColors, fontSize } from '..'
+import { Text, Icon, IconButton, IconProps, useColors, fontSize } from '..'
 
 export type FeedbackOption = {
   icon: IconProps['icon']

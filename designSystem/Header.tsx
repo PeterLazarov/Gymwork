@@ -1,7 +1,7 @@
-import { View, Text, ViewProps, TextProps, useColorScheme } from 'react-native'
+import { View, ViewProps, TextProps, useColorScheme } from 'react-native'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 
-import { useColors, fontSize } from './tokens'
+import { Text, useColors, fontSize } from '.'
 
 interface SubComponents {
   Title: React.FC<HeaderTitleProps>

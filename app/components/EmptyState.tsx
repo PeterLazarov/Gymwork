@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
-import { fontSize, useColors } from 'designSystem'
+import { Text, fontSize, useColors } from 'designSystem'
 
 type Props = {
   text: string

@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
-import { ScrollView, View, Text } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
 import CalendarWorkoutModalStepItem from './CalendarWorkoutModalStepItem'
 import { useStores } from 'app/db/helpers/useStores'
 import {
+  Text,
   Button,
   ButtonText,
   Divider,
@@ -66,7 +67,6 @@ const CalendarWorkoutModal: React.FC<Props> = ({
           <Text
             style={{
               fontSize: fontSize.lg,
-              color: colors.neutralText,
               textAlign: 'center',
               padding: 16,
             }}
@@ -96,9 +96,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
                   gap: 10,
                 }}
               >
-                <Text
-                  style={{ fontSize: fontSize.md, color: colors.tertiaryText }}
-                >
+                <Text style={{ color: colors.tertiaryText }}>
                   {translate('includeSets')}
                 </Text>
                 <ToggleSwitch

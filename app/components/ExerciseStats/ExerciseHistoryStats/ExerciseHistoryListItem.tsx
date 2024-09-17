@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon'
 import React, { useMemo } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 
 import { Exercise, WorkoutStep } from 'app/db/models'
-import { Divider, fontSize, useColors, PressableHighlight } from 'designSystem'
+import { Text, Divider, useColors, PressableHighlight } from 'designSystem'
 import StepSetsList from 'app/components/WorkoutStep/StepSetsList'
 
 type Props = {
@@ -60,10 +60,8 @@ const makeStyles = (colors: any) =>
       borderWidth: 1,
     },
     itemDate: {
-      fontSize: fontSize.md,
       textAlign: 'center',
       paddingTop: 4,
-      color: colors.neutralText,
     },
   })
 

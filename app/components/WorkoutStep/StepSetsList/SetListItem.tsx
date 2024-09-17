@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 
 import SetDataLabel from '../SetDataLabel'
 import { ExerciseMeasurement, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
-import { Icon, useColors, fontSize } from 'designSystem'
+import { Text, Icon, useColors, fontSize } from 'designSystem'
 import { observer } from 'mobx-react-lite'
 
 type Props = {

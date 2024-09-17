@@ -1,11 +1,18 @@
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { capitalize } from 'app/utils/string'
-import { Icon, IconButton, boxShadows, useColors, fontSize } from 'designSystem'
+import {
+  Text,
+  Icon,
+  IconButton,
+  boxShadows,
+  useColors,
+  fontSize,
+} from 'designSystem'
 import { navigate } from 'app/navigators'
 
 type Props = {

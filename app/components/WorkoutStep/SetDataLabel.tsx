@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 
-import { useColors, fontSize as fontSizeToken } from 'designSystem'
+import { Text, useColors, fontSize as fontSizeToken } from 'designSystem'
 
 type Props = {
   value: string | number

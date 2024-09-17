@@ -1,9 +1,9 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
 import { ExerciseMeasurement } from 'app/db/models'
 
-import { ToggleSwitch, fontSize, useColors } from 'designSystem'
+import { Text, ToggleSwitch } from 'designSystem'
 import { translate } from 'app/i18n'
 
 type Props = {
@@ -15,7 +15,6 @@ const ExerciseEditFormDurationSection: React.FC<Props> = ({
   measurementConfig,
   onFormChange,
 }) => {
-  const colors = useColors()
   const durationMeasurement = measurementConfig.duration!
 
   function toggleMoreIsBetter(value: boolean) {
@@ -25,9 +24,7 @@ const ExerciseEditFormDurationSection: React.FC<Props> = ({
 
   return (
     <>
-      <Text style={{ fontSize: fontSize.md, color: colors.neutralText }}>
-        {translate('durationMeasurementSettings')}
-      </Text>
+      <Text>{translate('durationMeasurementSettings')}</Text>
 
       <View
         style={{
@@ -36,9 +33,7 @@ const ExerciseEditFormDurationSection: React.FC<Props> = ({
           alignItems: 'center',
         }}
       >
-        <Text style={{ fontSize: fontSize.md }}>
-          {translate('moreIsBetter')}
-        </Text>
+        <Text>{translate('moreIsBetter')}</Text>
         <ToggleSwitch
           variant="primary"
           value={durationMeasurement.moreIsBetter}

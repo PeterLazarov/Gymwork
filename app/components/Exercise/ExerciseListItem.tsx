@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
 import { Exercise } from 'app/db/models'
 import {
+  Text,
   PressableHighlight,
   IconButton,
   Icon,
   useColors,
-  fontSize,
 } from 'designSystem'
 
 type Props = {
@@ -39,10 +39,8 @@ const ExerciseListItem: React.FC<Props> = ({
       >
         <Text
           style={{
-            fontSize: fontSize.md,
             flex: 1,
             flexWrap: 'wrap',
-            color: colors.neutralText,
           }}
           numberOfLines={1}
         >

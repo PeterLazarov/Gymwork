@@ -1,7 +1,7 @@
 import { TouchableOpacityProps } from 'react-native-gesture-handler'
 
-import { fontSize, useColors } from './tokens'
-import { Text, TextProps } from 'react-native'
+import { Text, useColors } from '.'
+import { TextProps } from 'react-native'
 import PressableHighlight from './PressableHighlight'
 
 type ButtonVariants = {
@@ -90,7 +90,6 @@ export const ButtonText: React.FC<ButtonTextProps> = ({
     <Text
       style={[
         {
-          fontSize: fontSize.md,
           textAlign: 'center',
           color:
             type !== 'outline'

@@ -1,9 +1,16 @@
 import React from 'react'
-import { ScrollView, View, Dimensions, Text } from 'react-native'
+import { ScrollView, View, Dimensions } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
 import { translate } from 'app/i18n'
-import { Button, ButtonText, Divider, useColors, fontSize } from 'designSystem'
+import {
+  Text,
+  Button,
+  ButtonText,
+  Divider,
+  useColors,
+  fontSize,
+} from 'designSystem'
 import { SelectOption } from './types'
 import OptionListItem from './OptionListItem'
 
@@ -57,7 +64,6 @@ function SelectOptionsModal<T = unknown>({
               fontSize: fontSize.lg,
               textAlign: 'center',
               padding: 16,
-              color: colors.neutralText,
             }}
           >
             {header}

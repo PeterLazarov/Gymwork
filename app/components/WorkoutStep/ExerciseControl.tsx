@@ -1,7 +1,14 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 
-import { Icon, IconButton, boxShadows, useColors, fontSize } from 'designSystem'
+import {
+  Text,
+  Icon,
+  IconButton,
+  boxShadows,
+  useColors,
+  fontSize,
+} from 'designSystem'
 import { Exercise } from 'app/db/models'
 
 export type ExerciseControlProps = {
@@ -45,7 +52,7 @@ const ExerciseControl: React.FC<ExerciseControlProps> = ({
       </IconButton>
 
       <Text
-        style={{ fontSize: fontSize.lg, flex: 1, color: colors.neutralText }}
+        style={{ fontSize: fontSize.lg, flex: 1 }}
         numberOfLines={1}
       >
         {exercise.name}

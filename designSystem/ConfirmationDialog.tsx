@@ -1,7 +1,6 @@
-import { Text } from 'react-native'
 import { Portal, Dialog } from 'react-native-paper'
 
-import { Button, ButtonText, fontSize, useColors } from 'designSystem'
+import { Text, Button, ButtonText } from 'designSystem'
 import { translate } from 'app/i18n'
 
 type Props = {
@@ -20,8 +19,6 @@ const ConfirmationDialog: React.FC<Props> = ({
   cancelButtonText = 'Cancel',
   confirmButtonText = 'Confirm',
 }) => {
-  const colors = useColors()
-
   return (
     <Portal>
       <Dialog
@@ -30,9 +27,7 @@ const ConfirmationDialog: React.FC<Props> = ({
       >
         <Dialog.Title>{translate('warning')}</Dialog.Title>
         <Dialog.Content>
-          <Text style={{ fontSize: fontSize.md, color: colors.neutralText }}>
-            {message}
-          </Text>
+          <Text>{message}</Text>
         </Dialog.Content>
         <Dialog.Actions>
           <Button

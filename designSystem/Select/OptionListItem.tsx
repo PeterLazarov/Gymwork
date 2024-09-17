@@ -1,7 +1,6 @@
 import React from 'react'
-import { Text } from 'react-native'
 
-import { Divider, PressableHighlight, useColors, fontSize } from 'designSystem'
+import { Text, Divider, PressableHighlight, useColors } from 'designSystem'
 import { SelectOption } from './types'
 
 type Props<T = unknown> = {
@@ -46,14 +45,7 @@ function OptionListItem<T = unknown>({
         }}
         onPress={() => onSelect(option)}
       >
-        <Text
-          style={{
-            fontSize: fontSize.md,
-            color: colors.neutralText,
-          }}
-        >
-          {label}
-        </Text>
+        <Text>{label}</Text>
       </PressableHighlight>
     </>
   )

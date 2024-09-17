@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 
-import { useColors, fontSize, Icon, IconButton } from 'designSystem'
+import { Text, useColors, Icon, IconButton } from 'designSystem'
 
 type Props = {
   selection: string
@@ -33,7 +33,6 @@ const SelectedLabel: React.FC<Props> = ({
     >
       <Text
         style={{
-          fontSize: fontSize.sm,
           color: colors.primary,
           textTransform: 'capitalize',
         }}
