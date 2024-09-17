@@ -80,7 +80,7 @@ export const ButtonText: React.FC<ButtonTextProps> = ({
 
   const buttonTextColors = {
     primary: colors.primaryText,
-    accent: colors.secondaryText,
+    accent: colors.accentText,
     neutral: colors.neutralText,
     critical: colors.criticalText,
     tertiary: colors.tertiaryText,

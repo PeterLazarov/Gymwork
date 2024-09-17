@@ -1,25 +1,25 @@
+* Before Android store closed test
+  - ExerciseEdit - in UI toggle whether an exercise has rest measurement
+  - make improvement suggestions functionality
+  - reporting
+    - log only production errors
+    - include state data
+
 - Timer
   - workout timer for today's workout
   - configurable duration based on exercise
 - Exercise Edit
   - muscle areas plus icon is not implemented
   - edit exercise measureBy and groupBy
-  - in UI toggle whether an exercise has rest measurement
 - Exercise Select
   - how to delete exercises
 - TrackView
   - fix whole form rerender for timer - KeyboardAvoiderView context is triggering. why??
-  - timer doesn't start when open step and directly complete draft set without touching anything
-  - on step delete show an undo or a confirm button
   - improve double rerendering
 - dev experience
   - ios emulator -> expo crash on code change in emulator
   - android device -> after code change rendering of StepHeader when no focusedStep error
   - ban conflicting/unused imports (ignite's colors)/i18n lib as opposed to app/i18n
-- reporting
-  - log only production errors
-  - include state data
-  - make improvement suggestions functionality
 - review
   - On jump to record set, scroll to set
   - Optimise render of history tab

@@ -28,10 +28,10 @@ const CalendarScreen: React.FC = () => {
         if (!(curr.date in acc)) {
           acc[curr.date] = {}
         }
-        acc[curr.date].dots = [
+        acc[curr.date]!.dots = [
           {
             color: colors.accent,
-            selectedColor: colors.secondaryText,
+            selectedColor: colors.accentText,
           },
         ]
 
