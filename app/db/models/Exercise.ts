@@ -10,10 +10,10 @@ import {
 } from './ExerciseMeasurement'
 
 // Should we group by multiple?
-const groupingCombinations: Array<{
+const groupingCombinations: {
   measurement: measurementName[]
   groupBy: measurementName
-}> = [
+}[] = [
   // { measurement: [], groupBy: '' },
   { measurement: ['weight'], groupBy: 'weight' },
   { measurement: ['duration'], groupBy: 'duration' },
@@ -35,10 +35,10 @@ const groupingCombinations: Array<{
   },
 ]
 
-const measurementCombinations: Array<{
+const measurementCombinations: {
   measurement: measurementName[]
   measureBy: measurementName
-}> = [
+}[] = [
   // TODO: implement measureBy array for triple metrics ?
   { measurement: ['weight'], measureBy: 'weight' },
   { measurement: ['duration'], measureBy: 'duration' },

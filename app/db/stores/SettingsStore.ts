@@ -13,7 +13,7 @@ Appearance.addChangeListener(({ colorScheme }) => {
   deviceColorScheme = colorScheme
 })
 
-const colorSchemes = ['dark', 'light'] satisfies Array<ColorSchemeName>
+const colorSchemes = ['dark', 'light'] satisfies ColorSchemeName[]
 
 export const SettingsStoreModel = types
   .model('SettingsStore')

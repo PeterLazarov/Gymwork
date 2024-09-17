@@ -5,7 +5,7 @@ import { useColors } from 'designSystem'
 // https://echarts.apache.org/en/option.html#title
 
 export type SeriesItem = {
-  data: Array<number | null>
+  data: (number | null)[]
   color: string
   initiallySelected: boolean
   unit: string
