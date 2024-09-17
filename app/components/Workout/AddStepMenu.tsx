@@ -48,7 +48,7 @@ const AddStepMenu = () => {
       action: () => navigate('WorkoutFeedback'),
     })
   }
-  const height = options.length * 80
+  const height = options.length * 70
 
   return (
     <View
@@ -94,6 +94,7 @@ const AddStepMenu = () => {
                 <Text
                   style={{
                     fontSize: fontSize.md,
+                    color: colors.neutralText,
                   }}
                 >
                   {option.text}
