@@ -121,7 +121,7 @@ export const StateStoreModel = types
       const focusedStep = self.openedWorkout?.stepsMap[self.focusedStepGuid]!
       self.focusedExerciseGuid = focusedStep?.exercises?.[0]?.guid
     },
-    deleteFocusedStep(): () => void {
+    deleteFocusedStep() {
       const undoDelete = self.openedWorkout!.removeStep(self.focusedStep!)
       this.setFocusedStep('')
       return undoDelete
