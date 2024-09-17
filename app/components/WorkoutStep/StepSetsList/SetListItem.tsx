@@ -11,7 +11,6 @@ import { observer } from 'mobx-react-lite'
 type Props = {
   set: WorkoutSet
   measurements: ExerciseMeasurement
-  number?: number
   letter?: string
   isFocused?: boolean
   isRecord?: boolean
@@ -22,7 +21,6 @@ const SetListItem: React.FC<Props> = ({
   measurements,
   isFocused,
   isRecord,
-  number,
   letter,
 }) => {
   const colors = useColors()
@@ -33,7 +31,7 @@ const SetListItem: React.FC<Props> = ({
   return (
     <View style={styles.item}>
       <View style={styles.indexColumn}>
-        {!set.isWarmup && <Text style={styles.setNumber}>{number}.</Text>}
+        {!set.isWarmup && <Text style={styles.setNumber}>{set.number}.</Text>}
         {set.isWarmup && (
           <Icon
             icon="yoga"

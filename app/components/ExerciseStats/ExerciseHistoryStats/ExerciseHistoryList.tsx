@@ -2,7 +2,13 @@ import React, { useCallback, useMemo } from 'react'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
 import ExerciseHistoryListItem from './ExerciseHistoryListItem'
-import { Exercise, Workout, WorkoutModel, WorkoutStep } from 'app/db/models'
+import {
+  Exercise,
+  Workout,
+  WorkoutModel,
+  WorkoutSet,
+  WorkoutStep,
+} from 'app/db/models'
 import { getParentOfType } from 'mobx-state-tree'
 import { useStores } from 'app/db/helpers/useStores'
 import { navigate } from 'app/navigators'
@@ -23,7 +29,7 @@ const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
           key={item.guid}
           date={workout.date}
           step={item}
-          exercise={exercise}
+          sets={stepSets[item.guid]!}
           onPress={() => {
             navigate('Workout')
             stateStore.setOpenedDate(workout.date)
@@ -38,6 +44,14 @@ const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
     return workouts.flatMap(w => w.exerciseStepsMap[exercise.guid]!)
   }, [workouts])
 
+  const stepSets = useMemo(() => {
+    return steps.reduce((acc, step) => {
+      acc[step.guid] = step.exerciseSetsMap[exercise.guid]!
+      return acc
+    }, {} as Record<string, WorkoutSet[]>)
+  }, [steps])
+
+  console.log('ExerciseHistoryList')
   return (
     <FlashList
       data={steps}

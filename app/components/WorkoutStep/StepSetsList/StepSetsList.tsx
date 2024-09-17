@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react-lite'
 import { computed } from 'mobx'
 
@@ -19,27 +19,6 @@ const StepSetsList: React.FC<StepSetsList> = ({
 }) => {
   const { stateStore, recordStore } = useStores()
 
-  const getLetterForSet = (set: WorkoutSet) => {
-    if (step.type === 'straightSet' || hideSupersetLetters) return
-
-    return step.exerciseLettering[set.exercise.guid]
-  }
-  const getNumberForSet = (set: WorkoutSet) => {
-    if (set.isWarmup) return
-
-    if (step.type === 'straightSet') return step.workSets.indexOf(set) + 1
-
-    const workSets = step.exerciseWorkSetsMap[set.exercise.guid] || []
-    return workSets.indexOf(set) + 1
-  }
-
-  // const [stepRecords, setStepRecords] = useState<WorkoutSet[]>([])
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setStepRecords(recordStore.getRecordsForStep(step))
-  //   }, 0)
-  // }, [step])
   const stepRecords = computed(() => recordStore.getRecordsForStep(step)).get()
 
   return (
@@ -51,8 +30,7 @@ const StepSetsList: React.FC<StepSetsList> = ({
           measurements={set.exercise.measurements}
           isRecord={stepRecords.some(({ guid }) => guid === set.guid)}
           isFocused={stateStore.highlightedSetGuid === set.guid}
-          number={getNumberForSet(set)}
-          letter={getLetterForSet(set)}
+          letter={hideSupersetLetters ? undefined : set.letter}
         />
       ))}
     </>

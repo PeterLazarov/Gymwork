@@ -1,8 +1,9 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
+import { Instance, SnapshotIn, SnapshotOut, getParentOfType, types } from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import { ExerciseModel } from './Exercise'
+import { WorkoutStepModel } from './WorkoutStep'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import convert from 'convert-units'
 import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction'
@@ -96,6 +97,20 @@ export const WorkoutSetModel = types
       const distance = convert(set.distanceMm).from('mm').to(distanceUnit)
       return distance / duration
     },
+    get number(): number| undefined {
+      const step = getParentOfType(set, WorkoutStepModel)
+      if (!step) return undefined
+
+      const workSets = step.type === 'straightSet' ? step.workSets : step.exerciseWorkSetsMap[set.exercise.guid]!
+
+      return workSets.findIndex(s => s.guid === set.guid) + 1
+    },
+    get letter(): string| undefined {
+      const step = getParentOfType(set, WorkoutStepModel)
+      if (!step || step.type !== 'superSet') return undefined
+
+      return step.exerciseLettering[set.exercise.guid]!
+    }
   }))
   .actions(withSetPropAction)
   .actions(withMergeUpdateAction)
