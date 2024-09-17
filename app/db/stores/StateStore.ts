@@ -18,8 +18,8 @@ export const StateStoreModel = types
   .model('StateStore')
   .props({
     focusedStepGuid: '',
-    focusedSetGuid: '',
-    focusedExerciseGuid: types.maybe(types.string), // ! this can be inferred from the top two
+    highlightedSetGuid: '',
+    focusedExerciseGuid: types.maybe(types.string),
     openedDate: types.optional(types.string, today.toISODate()!),
     draftSet: types.maybe(WorkoutSetModel),
     showCommentsCard: true,
@@ -46,7 +46,7 @@ export const StateStoreModel = types
     },
     get focusedSet() {
       return this.focusedStep?.sets.find(
-        set => set.guid === self.focusedSetGuid
+        set => set.guid === self.highlightedSetGuid
       )
     },
     // ! TODO rethink
@@ -98,7 +98,7 @@ export const StateStoreModel = types
     initialize() {
       self.activeRoute = 'Workout'
       self.focusedStepGuid = ''
-      self.focusedSetGuid = ''
+      self.highlightedSetGuid = ''
     },
     setOpenedDate(date: string) {
       self.openedDate = date
@@ -116,7 +116,7 @@ export const StateStoreModel = types
     },
     setFocusedStep(stepGuid: string) {
       self.focusedStepGuid = stepGuid
-      self.focusedSetGuid = ''
+      self.highlightedSetGuid = ''
 
       const focusedStep = self.openedWorkout?.stepsMap[self.focusedStepGuid]!
       self.focusedExerciseGuid = focusedStep?.exercises?.[0]?.guid
