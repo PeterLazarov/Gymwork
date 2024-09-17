@@ -28,9 +28,11 @@ function SelectOptionsModal<T = unknown>({
 }: Props<T>) {
   const colors = useColors()
 
-  const maxHeight = Dimensions.get('screen').height - 100
+  const dividerHeight = 1
   const itemHeight = 53
-  const modalHeight = (options.length + (hideButton ? 1 : 2)) * itemHeight
+  const modalHeight =
+    (options.length + (hideButton ? 1 : 2)) * itemHeight + dividerHeight
+  const maxModalHeight = Dimensions.get('screen').height - 100
 
   return (
     <Portal>
@@ -41,13 +43,13 @@ function SelectOptionsModal<T = unknown>({
           backgroundColor: colors.neutralLightest,
           marginVertical: 8,
           marginHorizontal: 20,
-          maxHeight,
+          maxHeight: maxModalHeight,
         }}
       >
         <View
           style={{
             height: modalHeight,
-            maxHeight,
+            maxHeight: maxModalHeight,
           }}
         >
           <Text
