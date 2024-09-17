@@ -64,25 +64,10 @@ function App() {
         <DBStoreInitializer>
           <TimerContext.Provider value={timer}>
             <GestureHandlerRootView style={{ flex: 1 }}>
-              <ErrorBoundary
-                fallback={({ error, resetError }) => (
-                  <ErrorDetails
-                    error={error}
-                    resetError={resetError}
-                  />
-                )}
-              >
-                <Portal.Host>
-                  <PaperProvider>
-                    <DialogContextProvider>
-                      <AppNavigator
-                        initialState={initialNavigationState}
-                        onStateChange={onNavigationStateChange}
-                      />
-                    </DialogContextProvider>
-                  </PaperProvider>
-                </Portal.Host>
-              </ErrorBoundary>
+              <AppNavigator
+                initialState={initialNavigationState}
+                onStateChange={onNavigationStateChange}
+              />
             </GestureHandlerRootView>
           </TimerContext.Provider>
         </DBStoreInitializer>
