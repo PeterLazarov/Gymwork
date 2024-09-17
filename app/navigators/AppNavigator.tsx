@@ -12,7 +12,7 @@ import {
 } from '@react-navigation/native-stack'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { StatusBar, useColorScheme } from 'react-native'
+import { useColorScheme } from 'react-native'
 import Config from '../config'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 import Workout from 'app/screens/Workout'
@@ -212,10 +212,7 @@ export const AppNavigator = observer(function AppNavigator(
       {...props}
       onStateChange={handleStateChange}
     >
-      <>
-        <StatusBar barStyle={'light-content'}></StatusBar>
-        <AppStack />
-      </>
+      <AppStack />
     </NavigationContainer>
   )
 })
