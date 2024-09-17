@@ -24,6 +24,8 @@ export const StateStoreModel = types
     draftSet: types.maybe(WorkoutSetModel),
     showCommentsCard: true,
 
+    chartWidth: 0,
+    chartHeight: 0,
     reviewLastTab: types.maybe(types.string),
     activeRoute: types.maybe(types.string),
   })

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
 import { ToggleGroupButton } from 'designSystem'
@@ -20,8 +20,6 @@ const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
   const [activeView, setActiveView] = useState<CHART_VIEW>(
     Object.keys(CHART_VIEWS)[0] as CHART_VIEW_KEY
   )
-  const [viewDimensions, setViewDimensions] = useState({ width: 0, height: 0 })
-
   const toggleViewButtons = (Object.keys(CHART_VIEWS) as CHART_VIEW_KEY[]).map(
     view => ({
       text: view,
@@ -30,31 +28,23 @@ const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
   )
   console.log('ExerciseChartStats')
   return (
-    <View
-      style={{
-        marginTop: 16,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        display: 'flex',
-        flexGrow: 1,
-      }}
-    >
+    <View style={styles.screen}>
       <View
-        style={{
-          alignItems: 'center',
-          flexGrow: 1,
-        }}
+        style={styles.chartContainer}
         onLayout={event => {
           const { width, height } = event.nativeEvent.layout
-          setViewDimensions({ width, height })
+          stateStore.setProp('chartHeight', height)
+          stateStore.setProp('chartWidth', width)
         }}
       >
-        <ExerciseHistoryChart
-          view={activeView}
-          height={viewDimensions.height}
-          width={viewDimensions.width}
-          exercise={exercise || stateStore.focusedExercise!}
-        />
+        {stateStore.chartHeight !== 0 && (
+          <ExerciseHistoryChart
+            view={activeView}
+            height={stateStore.chartHeight}
+            width={stateStore.chartWidth}
+            exercise={exercise || stateStore.focusedExercise!}
+          />
+        )}
       </View>
 
       <ToggleGroupButton
@@ -66,5 +56,19 @@ const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    marginTop: 16,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    display: 'flex',
+    flexGrow: 1,
+  },
+  chartContainer: {
+    alignItems: 'center',
+    flexGrow: 1,
+  },
+})
 
 export default observer(ExerciseChartStats)
