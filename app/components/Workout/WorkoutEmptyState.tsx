@@ -48,6 +48,7 @@ const WorkoutEmptyState: React.FC = () => {
       {actions.length > 0 &&
         actions.map(action => (
           <Card
+            key={action.text}
             containerStyle={{ paddingHorizontal: 8 }}
             onPress={action.onPress}
             content={
