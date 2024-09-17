@@ -93,7 +93,7 @@ const AppStack = observer(function AppStack() {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        navigationBarColor: colors.neutralLight,
+        navigationBarColor: colors.neutralLightest,
         animation: 'none',
       }}
       initialRouteName="HomeStack"
@@ -129,7 +129,6 @@ const AppStack = observer(function AppStack() {
                   initialRouteName="WorkoutStack"
                   screenOptions={{
                     headerShown: false,
-                    navigationBarColor: colors.background,
                     animation: 'none',
                   }}
                 >
@@ -149,7 +148,6 @@ const AppStack = observer(function AppStack() {
                           initialRouteName="Workout"
                           screenOptions={{
                             headerShown: false,
-                            navigationBarColor: colors.background,
                             animation: 'none',
                           }}
                         >
