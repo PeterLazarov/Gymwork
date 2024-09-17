@@ -1,6 +1,6 @@
 import {
-  DarkTheme,
-  DefaultTheme,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
   NavigationContainer,
   NavigationState,
   RouteProp,
@@ -34,6 +34,17 @@ import TabsLayout from 'app/layouts/TabsLayout'
 import { useStores } from 'app/db/helpers/useStores'
 import Settings from 'app/screens/Settings'
 import { useColors } from 'designSystem'
+import { ErrorBoundary } from '@sentry/react-native'
+import { DialogContextProvider } from 'app/contexts/DialogContext'
+import { ErrorDetails } from 'app/screens/ErrorDetails'
+import {
+  Portal,
+  PaperProvider,
+  MD3DarkTheme,
+  MD3LightTheme,
+  adaptNavigationTheme,
+} from 'react-native-paper'
+import { paperThemeDark, paperThemeLight } from 'designSystem/tokens/theme'
 
 /**
  * Documentation:
@@ -206,20 +217,49 @@ export const AppNavigator = observer(function AppNavigator(
     stateStore.setProp('activeRoute', currentRouteName)
   }
 
+  const materialLightTheme = { ...MD3LightTheme, colors: paperThemeLight }
+  const materialDarkTheme = { ...MD3DarkTheme, colors: paperThemeDark }
+
+  const { LightTheme, DarkTheme } = adaptNavigationTheme({
+    reactNavigationLight: NavigationDefaultTheme,
+    reactNavigationDark: NavigationDarkTheme,
+    materialLight: materialLightTheme,
+    materialDark: materialDarkTheme,
+  })
+
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-      {...props}
-      onStateChange={handleStateChange}
+    <PaperProvider
+      theme={colorScheme === 'dark' ? materialDarkTheme : materialLightTheme}
     >
-      <>
-        <StatusBar
-          backgroundColor={colorScheme === 'light' ? colors.primary : 'black'}
-          barStyle={'light-content'}
-        ></StatusBar>
-        <AppStack />
-      </>
-    </NavigationContainer>
+      <ErrorBoundary
+        fallback={({ error, resetError }) => (
+          <ErrorDetails
+            error={error}
+            resetError={resetError}
+          />
+        )}
+      >
+        <Portal.Host>
+          <DialogContextProvider>
+            <NavigationContainer
+              theme={colorScheme === 'dark' ? DarkTheme : LightTheme}
+              ref={navigationRef}
+              {...props}
+              onStateChange={handleStateChange}
+            >
+              <>
+                <StatusBar
+                  backgroundColor={
+                    colorScheme === 'light' ? colors.primary : 'black'
+                  }
+                  barStyle={'light-content'}
+                />
+                <AppStack />
+              </>
+            </NavigationContainer>
+          </DialogContextProvider>
+        </Portal.Host>
+      </ErrorBoundary>
+    </PaperProvider>
   )
 })
