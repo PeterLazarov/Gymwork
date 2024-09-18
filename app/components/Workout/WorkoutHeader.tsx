@@ -5,11 +5,9 @@ import { DateTime } from 'luxon'
 import { capitalize } from 'lodash'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { useExport } from 'app/utils/useExport'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, useColors } from 'designSystem'
 import useBenchmark from 'app/utils/useBenchmark'
-import { useDialogContext } from 'app/contexts/DialogContext'
 
 const WorkoutHeader: React.FC = () => {
   const colors = useColors()
@@ -22,8 +20,6 @@ const WorkoutHeader: React.FC = () => {
   const { openedWorkout, showCommentsCard } = stateStore
 
   const [menuOpen, setMenuOpen] = useState(false)
-  const { exportData, restoreData } = useExport()
-  const { showSnackbar } = useDialogContext()
 
   // TODO dedupe with DayControl
   const date = DateTime.fromISO(stateStore.openedDate)
@@ -46,26 +42,6 @@ const WorkoutHeader: React.FC = () => {
   function toggleCommentsCard() {
     setMenuOpen(false)
     stateStore.setProp('showCommentsCard', !showCommentsCard)
-  }
-
-  const onExportData = () => {
-    setMenuOpen(false)
-
-    exportData().then(() => {
-      showSnackbar!({
-        text: translate('dataExportSuccess'),
-      })
-    })
-  }
-
-  const onRestoreData = async () => {
-    setMenuOpen(false)
-
-    restoreData().then(() => {
-      showSnackbar!({
-        text: translate('dataImportSuccess'),
-      })
-    })
   }
 
   const deleteWorkout = () => {
@@ -144,18 +120,12 @@ const WorkoutHeader: React.FC = () => {
             />
           </>
         )}
-        <Menu.Item
-          onPress={onExportData}
-          title={translate('exportData')}
-        />
-        <Menu.Item
-          onPress={onRestoreData}
-          title={translate('restoreData')}
-        />
-        <Menu.Item
-          onPress={performBenchmark}
-          title="Perform benchmark"
-        />
+        {__DEV__ && (
+          <Menu.Item
+            onPress={performBenchmark}
+            title="Perform benchmark"
+          />
+        )}
       </Menu>
     </Header>
   )
