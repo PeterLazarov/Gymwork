@@ -19,6 +19,7 @@ export const StateStoreModel = types
   .props({
     focusedStepGuid: '',
     highlightedSetGuid: '',
+    feedbackUser: '',
     focusedExerciseGuid: types.maybe(types.string),
     openedDate: types.optional(types.string, today.toISODate()!),
     draftSet: types.maybe(WorkoutSetModel),

@@ -18,6 +18,7 @@ const pages: (keyof AllStacksParamList)[] = [
   'Workout',
   'WorkoutStep',
   'WorkoutFeedback',
+  'UserFeedback'
 ]
 
 export const NavStoreModel = types

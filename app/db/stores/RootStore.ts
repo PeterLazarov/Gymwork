@@ -25,6 +25,7 @@ export const RootStoreModel = types
       self.setProp('workoutStore', snapshot.workoutStore)
       self.setProp('recordStore', snapshot.recordStore)
       self.setProp('settingsStore', snapshot.settingsStore)
+      self.stateStore.setProp('feedbackUser', snapshot.stateStore.feedbackUser)
     },
     initializeStores(): Promise<void> {
       return self.exerciseStore

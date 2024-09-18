@@ -132,7 +132,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
       )}
       <Multiselect
         options={measurementTypes}
-        selectedValues={edittedExercise.measurementNames}
+        selectedValues={edittedExercise.measurementNames as string[]}
         headerText="Measurements"
         onSelect={selection => {
           setMeasurementTypes(selection as measurementName[])

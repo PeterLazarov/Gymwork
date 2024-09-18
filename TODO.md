@@ -1,9 +1,6 @@
 * Before Android store closed test
   - ExerciseEdit - in UI toggle whether an exercise has rest measurement
-  - make improvement suggestions functionality
-  - reporting
-    - log only production errors
-    - error on initial render -> logged report will not have updated "activeRoute" prop
+  - reporting - log only production errors
 
 - Timer
   - workout timer for today's workout

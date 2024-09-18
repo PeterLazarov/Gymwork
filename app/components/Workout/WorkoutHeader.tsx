@@ -80,6 +80,11 @@ const WorkoutHeader: React.FC = () => {
     navigate('Settings')
   }
 
+  function goToFeedback() {
+    setMenuOpen(false)
+    navigate('UserFeedback')
+  }
+
   return (
     <Header>
       <Header.Title title={dateLabel} />
@@ -122,6 +127,10 @@ const WorkoutHeader: React.FC = () => {
         <Menu.Item
           onPress={goToSettings}
           title={translate('settings')}
+        />
+        <Menu.Item
+          onPress={goToFeedback}
+          title={'Give feedback'}
         />
         {openedWorkout && (
           <>

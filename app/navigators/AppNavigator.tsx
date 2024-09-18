@@ -36,6 +36,7 @@ import { ErrorBoundary } from '@sentry/react-native'
 import { DialogContextProvider } from 'app/contexts/DialogContext'
 import { ErrorDetails } from 'app/screens/ErrorDetails'
 import { Portal, PaperProvider } from 'react-native-paper'
+import UserFeedbackScreen from 'app/screens/UserFeedback'
 
 /**
  * Documentation:
@@ -51,6 +52,7 @@ export type AppStackParamList = {
   TemplateSelect: undefined
   HomeStack: undefined
   Settings: undefined
+  UserFeedback: undefined
 }
 
 export type HomeStackParamList = {
@@ -182,6 +184,10 @@ const AppStack = observer(function AppStack() {
         <Stack.Screen
           name="TemplateSelect"
           component={TemplateSelect}
+        />
+        <Stack.Screen
+          name="UserFeedback"
+          component={UserFeedbackScreen}
         />
       </>
     </Stack.Navigator>
