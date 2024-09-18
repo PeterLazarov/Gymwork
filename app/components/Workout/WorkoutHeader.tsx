@@ -107,10 +107,6 @@ const WorkoutHeader: React.FC = () => {
           </>
         )}
         <HeaderMenuItems onClose={() => setMenuOpen(false)} />
-        <Menu.Item
-          onPress={performBenchmark}
-          title="Perform benchmark"
-        />
       </Menu>
     </Header>
   )
