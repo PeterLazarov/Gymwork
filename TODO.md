@@ -3,7 +3,7 @@
   - make improvement suggestions functionality
   - reporting
     - log only production errors
-    - include state data
+    - error on initial render -> logged report will not have updated "activeRoute" prop
 
 - Timer
   - workout timer for today's workout
