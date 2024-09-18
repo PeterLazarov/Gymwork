@@ -38,6 +38,10 @@ export const WorkoutStoreModel = types
       return map
     },
 
+    get exercisesPerformed(): Exercise[] {
+      return [...new Set(this.sortedReverseWorkouts.flatMap(w => w.exercises))]
+    },
+
     get exerciseWorkoutsHistoryMap(): Record<Exercise['guid'], Workout[]> {
       return this.sortedReverseWorkouts.reduce((acc, workout) => {
         workout.exercises.forEach(exercise => {

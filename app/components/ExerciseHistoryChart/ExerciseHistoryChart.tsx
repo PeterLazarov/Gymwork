@@ -89,10 +89,8 @@ const ExerciseHistoryChart: React.FC<Props> = ({
       case '30D':
         return getPastDays(30)
       case 'ALL': {
-        const range = [
-          workoutStore.exerciseWorkoutsHistoryMap[exercise.guid].at(-1)!.date,
-          workoutStore.exerciseWorkoutsHistoryMap[exercise.guid][0]!.date,
-        ] as const
+        const workouts = workoutStore.exerciseWorkoutsHistoryMap[exercise.guid]!
+        const range = [workouts.at(-1)!.date, workouts[0]!.date] as const
 
         // TODO grey out tab when no history
         if (range.some(x => x === undefined)) {

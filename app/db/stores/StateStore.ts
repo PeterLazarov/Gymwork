@@ -6,7 +6,7 @@ import { RootStore } from './RootStore'
 import { WorkoutStore } from './WorkoutStore'
 import { RecordStore } from './RecordStore'
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import { Exercise, ExerciseRecord, Workout, WorkoutSetModel } from '../models'
+import { ExerciseRecord, Workout, WorkoutSetModel } from '../models'
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -60,11 +60,6 @@ export const StateStoreModel = types
     },
     get openedWorkout(): Workout | undefined {
       return this.workoutStore.dateWorkoutMap[self.openedDate]
-    },
-    get exercisesPerformed(): Exercise[] {
-      return Object.keys(this.workoutStore.exerciseWorkoutsHistoryMap)
-        .map(id => this.exerciseStore.exercisesMap[id])
-        .filter(Boolean)
     },
     get focusedExerciseRecords(): ExerciseRecord {
       return this.recordStore.exerciseRecordsMap[
