@@ -101,7 +101,7 @@ const CalendarScreen: React.FC = () => {
           >
             <Icon
               icon="chevron-back"
-              color={colors.primaryText}
+              color={colors.mat.onPrimary}
             />
           </IconButton>
           <Header.Title title={translate('calendar')} />
@@ -111,7 +111,7 @@ const CalendarScreen: React.FC = () => {
           >
             <Icon
               icon="ellipsis-vertical"
-              color={colors.primaryText}
+              color={colors.mat.onPrimary}
             />
           </IconButton>
         </Header>

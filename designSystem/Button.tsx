@@ -28,7 +28,7 @@ export const Button: React.FC<ButtonProps> = ({
   const colors = useColors()
 
   const buttonColors = {
-    primary: colors.primary,
+    primary: colors.mat.primary,
     accent: colors.accent,
     neutral: colors.neutral,
     critical: colors.critical,

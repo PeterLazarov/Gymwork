@@ -32,7 +32,7 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
           <View style={{ flexDirection: 'row' }}>
             {hasNotes && (
               <Text
-                style={{ fontSize: fontSize.sm, color: colors.tertiaryText }}
+                style={{ fontSize: fontSize.sm, color: colors.mat.onSurface }}
               >
                 {workout.notes}
               </Text>

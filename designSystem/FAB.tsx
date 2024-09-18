@@ -22,7 +22,7 @@ const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
         style,
       ]}
       disabled={disabled}
-      color={colors.primaryText}
+      color={colors.mat.onPrimary}
       {...otherProps}
     />
   )

@@ -70,7 +70,7 @@ const ExerciseEditScreen: React.FC = () => {
         >
           <Icon
             icon="chevron-back"
-            color={colors.primaryText}
+            color={colors.mat.onPrimary}
           />
         </IconButton>
         <Header.Title
@@ -84,7 +84,7 @@ const ExerciseEditScreen: React.FC = () => {
           <Icon
             icon="checkmark"
             size="large"
-            color={colors.primaryText}
+            color={colors.mat.onPrimary}
           />
         </IconButton>
       </Header>

@@ -19,7 +19,7 @@ const IncrementalButtons: React.FC<Props> = ({
   const colors = useColors()
 
   const btnStyle: StyleProp<ViewStyle> = {
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.mat.primaryLight,
     padding: 7,
     justifyContent: 'center',
     alignItems: 'center',

@@ -52,7 +52,7 @@ const TemplateSelectScreen: React.FC = () => {
         >
           <Icon
             icon="chevron-back"
-            color={colors.primaryText}
+            color={colors.mat.onPrimary}
           />
         </IconButton>
         <Header.Title title={translate('selectTemplate')} />

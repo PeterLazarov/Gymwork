@@ -82,7 +82,7 @@ const ReviewScreen: React.FC = () => {
             underlay="darker"
           >
             <Icon
-              color={colors.primaryText}
+              color={colors.mat.onPrimary}
               icon="chevron-back"
             />
           </IconButton>
@@ -102,7 +102,7 @@ const ReviewScreen: React.FC = () => {
         >
           <Icon
             icon="list-outline"
-            color={colors.primaryText}
+            color={colors.mat.onPrimary}
           />
         </IconButton>
       </Header>

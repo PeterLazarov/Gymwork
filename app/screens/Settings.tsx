@@ -29,7 +29,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({}) => {
         >
           <Icon
             icon="chevron-back"
-            color={colors.primaryText}
+            color={colors.mat.onPrimary}
           />
         </IconButton>
         <Header.Title title={translate('settings')} />
