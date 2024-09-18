@@ -92,10 +92,11 @@ const en = {
     5: 'Feels pretty easy, I could keep going for a while.',
     6: 'Starting to feel some effort, but still comfortable.',
     7: 'Getting tough now, but I can hang in there.',
-    8: 'This is hard, I\'m pushing, but can still manage.',
-    9: 'Really tough, almost maxed out, I\'m barely hanging on.',
-    10: 'All-out effort, I\'ve got nothing left to give!',
-  }
+    8: "This is hard, I'm pushing, but can still manage.",
+    9: "Really tough, almost maxed out, I'm barely hanging on.",
+    10: "All-out effort, I've got nothing left to give!",
+  },
+  measureRest: 'Measure rest',
 }
 
 export default en

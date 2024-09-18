@@ -1,12 +1,20 @@
 import React from 'react'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { type StackScreenProps } from 'app/navigators'
-import { Header, Icon, IconButton, Select, useColors } from 'designSystem'
+import {
+  Divider,
+  Header,
+  Icon,
+  IconButton,
+  Select,
+  Text,
+  ToggleSwitch,
+  useColors,
+} from 'designSystem'
 import { observer } from 'mobx-react-lite'
 import { View } from 'react-native'
 import { translate } from 'app/i18n'
 import { useStores } from 'app/db/helpers/useStores'
-
 export type SettingsScreenProps = StackScreenProps<'Settings'>
 
 const appearanceOptions = [
@@ -43,6 +51,32 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
           headerText={translate('darkMode')}
           label={translate('darkMode')}
         />
+
+        <Divider
+          variant="neutral"
+          orientation="horizontal"
+        />
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: 5,
+            gap: 10,
+          }}
+        >
+          <Text style={{ color: colors.onSurface }}>
+            {translate('measureRest')}
+          </Text>
+          <ToggleSwitch
+            variant="primary"
+            value={settingsStore.measureRest}
+            onValueChange={measureRest => {
+              settingsStore.setProp('measureRest', measureRest)
+            }}
+          />
+        </View>
       </View>
     </EmptyLayout>
   )

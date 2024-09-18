@@ -3,6 +3,7 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { Appearance, ColorSchemeName } from 'react-native'
 import { getColors } from 'designSystem'
 import * as SystemUI from 'expo-system-ui'
+import { withSetPropAction } from '../helpers/withSetPropAction'
 
 let deviceColorScheme = Appearance.getColorScheme()
 Appearance.addChangeListener(({ colorScheme }) => {
@@ -18,8 +19,9 @@ export const SettingsStoreModel = types
       types.maybeNull(types.maybe(types.enumeration(colorSchemes))),
       'light' // TODO rethink once we have dark mode set up
     ),
+    measureRest: false,
   })
-  //   .actions(withSetPropAction)
+  .actions(withSetPropAction)
   .actions(self => ({
     initialize() {
       if (self.colorSchemePreference) {
