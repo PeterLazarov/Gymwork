@@ -1,5 +1,5 @@
 import { ColorSchemeName, useColorScheme } from 'react-native'
-import { schemes } from './themeV2'
+import { schemes } from './theme'
 
 export const getColors = (colorScheme: NonNullable<ColorSchemeName>) => {
   return schemes[colorScheme]
