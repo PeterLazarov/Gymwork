@@ -185,10 +185,9 @@ const AppStack = observer(function AppStack() {
           name="TemplateSelect"
           component={TemplateSelect}
         />
-        <Stack.Screen
-          name="UserFeedback"
-          component={UserFeedbackScreen}
-        />
+        <Stack.Screen name="UserFeedback">
+          {() => <UserFeedbackScreen />}
+        </Stack.Screen>
       </>
     </Stack.Navigator>
   )
