@@ -11,14 +11,16 @@ import {
 } from 'app/db/models'
 import { getParentOfType } from 'mobx-state-tree'
 import { useStores } from 'app/db/helpers/useStores'
-import { navigate } from 'app/navigators'
 
 type Props = {
   workouts: Workout[]
   exercise: Exercise
 }
 const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
-  const { stateStore } = useStores()
+  const {
+    stateStore,
+    navStore: { navigate },
+  } = useStores()
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<WorkoutStep>) => {

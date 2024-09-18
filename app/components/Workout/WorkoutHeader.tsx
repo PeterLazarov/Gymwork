@@ -5,18 +5,20 @@ import { DateTime } from 'luxon'
 import { capitalize } from 'lodash'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { navigate } from 'app/navigators'
 import { useExport } from 'app/utils/useExport'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, useColors } from 'designSystem'
 import useBenchmark from 'app/utils/useBenchmark'
-import WorkoutTimer from '../Timer/WorkoutTimer'
 import { useDialogContext } from 'app/contexts/DialogContext'
 
 const WorkoutHeader: React.FC = () => {
   const colors = useColors()
 
-  const { stateStore, workoutStore } = useStores()
+  const {
+    stateStore,
+    workoutStore,
+    navStore: { navigate },
+  } = useStores()
   const { openedWorkout, showCommentsCard } = stateStore
 
   const [menuOpen, setMenuOpen] = useState(false)

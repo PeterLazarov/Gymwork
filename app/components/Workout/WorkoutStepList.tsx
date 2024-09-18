@@ -5,14 +5,16 @@ import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import { Workout, WorkoutStep } from 'app/db/models'
 import WorkoutStepCard from '../WorkoutStep/WorkoutStepCard'
 import { useStores } from 'app/db/helpers/useStores'
-import { navigate } from 'app/navigators'
 
 type Props = {
   workout: Workout
 }
 
 const WorkoutStepList: React.FC<Props> = ({ workout }) => {
-  const { stateStore } = useStores()
+  const {
+    stateStore,
+    navStore: { navigate },
+  } = useStores()
 
   function onCardPress(stepGuid: string) {
     stateStore.setFocusedStep(stepGuid)

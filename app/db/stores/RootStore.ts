@@ -6,6 +6,7 @@ import { StateStoreModel } from './StateStore'
 import { WorkoutStoreModel } from './WorkoutStore'
 import { RecordStoreModel } from './RecordStore'
 import { SettingsStoreModel } from './SettingsStore'
+import { NavStoreModel } from './NavStore'
 
 export const RootStoreModel = types
   .model('RootStore')
@@ -15,6 +16,7 @@ export const RootStoreModel = types
     stateStore: types.optional(StateStoreModel, {}),
     recordStore: types.optional(RecordStoreModel, {}),
     settingsStore: types.optional(SettingsStoreModel, {}),
+    navStore: types.optional(NavStoreModel, {}),
   })
   .actions(withSetPropAction)
   .actions(self => ({

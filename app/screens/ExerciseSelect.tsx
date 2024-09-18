@@ -3,7 +3,7 @@ import { View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, WorkoutStep } from 'app/db/models'
-import { navigate, useRouteParams } from 'app/navigators'
+import { useRouteParams } from 'app/navigators'
 import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { FAB, Header, Icon, IconButton, useColors } from 'designSystem'
@@ -15,7 +15,11 @@ export type ExerciseSelectScreenParams = {
 const ExerciseSelectScreen: React.FC = () => {
   const colors = useColors()
 
-  const { stateStore, workoutStore } = useStores()
+  const {
+    stateStore,
+    workoutStore,
+    navStore: { navigate },
+  } = useStores()
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([])
 
   const { selectMode } = useRouteParams('ExerciseSelect')

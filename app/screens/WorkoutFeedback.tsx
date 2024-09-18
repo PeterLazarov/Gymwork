@@ -4,7 +4,6 @@ import { TextInput } from 'react-native-paper'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { navigate } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { TxKeyPath, translate } from 'app/i18n'
 import {
@@ -21,7 +20,10 @@ import { Workout, painOptions, feelingOptions } from 'app/db/models'
 const WorkoutFeedbackScreen: React.FC = () => {
   const colors = useColors()
 
-  const { stateStore } = useStores()
+  const {
+    stateStore,
+    navStore: { navigate },
+  } = useStores()
   const workout = stateStore.openedWorkout!
 
   function onBackPress() {

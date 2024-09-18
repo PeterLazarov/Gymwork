@@ -4,12 +4,14 @@ import { observer } from 'mobx-react-lite'
 
 import { translate } from 'app/i18n'
 import { Text, Card, Icon } from 'designSystem'
-import { navigate } from 'app/navigators'
 import { useStores } from 'app/db/helpers/useStores'
 import EmptyState from '../EmptyState'
 
 const WorkoutEmptyState: React.FC = () => {
-  const { workoutStore } = useStores()
+  const {
+    workoutStore,
+    navStore: { navigate },
+  } = useStores()
   const hasWorkouts = workoutStore.workouts.length > 0
   const hasTemplates = workoutStore.workoutTemplates.length > 0
 

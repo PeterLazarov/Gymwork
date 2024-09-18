@@ -3,7 +3,6 @@ import React from 'react'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutTemplate } from 'app/db/models'
-import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { Header, Icon, IconButton, useColors } from 'designSystem'
@@ -13,7 +12,10 @@ import { useDialogContext } from 'app/contexts/DialogContext'
 const TemplateSelectScreen: React.FC = () => {
   const colors = useColors()
 
-  const { workoutStore } = useStores()
+  const {
+    workoutStore,
+    navStore: { navigate },
+  } = useStores()
 
   const { showConfirm } = useDialogContext()
 

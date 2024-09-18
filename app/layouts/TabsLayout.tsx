@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react'
 import { View } from 'react-native'
 
-import { navigate } from 'app/navigators'
 import { EmptyLayout } from './EmptyLayout'
 import { BottomNavigation } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
@@ -11,7 +10,10 @@ type Props = {
   children?: ReactNode
 }
 const TabsLayout: React.FC<Props> = ({ children }) => {
-  const { stateStore } = useStores()
+  const {
+    stateStore,
+    navStore: { navigate },
+  } = useStores()
 
   const tabs = [
     {

@@ -3,7 +3,6 @@ import React, { useMemo, useState } from 'react'
 import { Menu } from 'react-native-paper'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { navigate } from 'app/navigators'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, useColors } from 'designSystem'
 import { useDialogContext } from 'app/contexts/DialogContext'
@@ -11,7 +10,10 @@ import { useDialogContext } from 'app/contexts/DialogContext'
 const StepHeader: React.FC = () => {
   const colors = useColors()
 
-  const { stateStore } = useStores()
+  const {
+    stateStore,
+    navStore: { navigate },
+  } = useStores()
 
   const [menuOpen, setMenuOpen] = useState(false)
   const { showSnackbar } = useDialogContext()

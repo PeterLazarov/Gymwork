@@ -13,7 +13,6 @@ import {
   useColors,
   fontSize,
 } from 'designSystem'
-import { navigate } from 'app/navigators'
 
 type Props = {
   duration?: string
@@ -21,7 +20,10 @@ type Props = {
 const DayControl: React.FC<Props> = ({ duration }) => {
   const colors = useColors()
 
-  const { stateStore } = useStores()
+  const {
+    stateStore,
+    navStore: { navigate },
+  } = useStores()
 
   const luxonDate = DateTime.fromISO(stateStore.openedDate)
   const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })

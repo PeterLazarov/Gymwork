@@ -6,7 +6,7 @@ import { MarkedDays } from 'react-native-month'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { navigate, useRouteParams } from 'app/navigators'
+import { useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { Header, Icon, IconButton, useColors, fontSize } from 'designSystem'
 import CalendarWorkoutModal from 'app/components/CalendarWorkoutModal'
@@ -17,7 +17,11 @@ export type CalendarScreenParams = {
 const CalendarScreen: React.FC = () => {
   const colors = useColors()
 
-  const { workoutStore, stateStore } = useStores()
+  const {
+    workoutStore,
+    stateStore,
+    navStore: { navigate },
+  } = useStores()
 
   const { copyWorkoutMode } = useRouteParams('Calendar')
   const [openedWorkoutDialogDate, setOpenedWorkoutDialogDate] = useState('')

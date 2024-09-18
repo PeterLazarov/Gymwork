@@ -6,7 +6,6 @@ import { View, ScrollView } from 'react-native'
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { navigate } from 'app/navigators'
 import { useColors } from 'designSystem'
 import { Exercise, WorkoutSet } from 'app/db/models'
 import RecordsListItem from './RecordsListItem'
@@ -18,7 +17,11 @@ export type ExerciseRecordStatsProps = {
 const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
   const colors = useColors()
 
-  const { stateStore, recordStore } = useStores()
+  const {
+    stateStore,
+    recordStore,
+    navStore: { navigate },
+  } = useStores()
 
   const exercise = props.exercise || stateStore.focusedExercise!
   const focusedExerciseRecords = recordStore.exerciseRecordsMap[exercise.guid]
