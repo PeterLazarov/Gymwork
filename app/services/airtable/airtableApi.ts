@@ -30,7 +30,8 @@ export class AirtableApi {
         fields: {
           User: feedback.user,
           Comments: feedback.comments,
-          Date: feedback.date
+          Date: feedback.date,
+          CreatedAt: feedback.createdAt
         }
       }]
     })

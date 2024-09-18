@@ -16,6 +16,7 @@ import { useDialogContext } from 'app/contexts/DialogContext'
 import { translate } from 'app/i18n'
 import UserFeedbackForm from 'app/components/UserFeedbackForm'
 import { observer } from 'mobx-react-lite'
+import { DateTime } from 'luxon'
 
 const UserFeedbackScreen: React.FC = () => {
   const {
@@ -31,6 +32,7 @@ const UserFeedbackScreen: React.FC = () => {
     date: stateStore.openedDate,
     user: stateStore.feedbackUser,
     comments: '',
+    createdAt: DateTime.now().toISO(),
   })
   const [formValid, setFormValid] = useState(false)
 

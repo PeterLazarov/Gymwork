@@ -3,6 +3,7 @@ export type AirtableFeedback = {
   date: string
   user: string
   comments: string
+  createdAt: string
 }
 
 export interface ApiConfig {
