@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { observable } from 'mobx'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
@@ -16,6 +15,7 @@ import { AirtableFeedback, airtableApi } from 'app/services/airtable'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import { translate } from 'app/i18n'
 import UserFeedbackForm from 'app/components/UserFeedbackForm'
+import { observer } from 'mobx-react-lite'
 
 const UserFeedbackScreen: React.FC = () => {
   const {
@@ -94,4 +94,4 @@ const UserFeedbackScreen: React.FC = () => {
   )
 }
 
-export default observable(UserFeedbackScreen)
+export default observer(UserFeedbackScreen)
