@@ -10,9 +10,9 @@ export function Divider(props: Props) {
   const colors = useColors()
 
   const variants = {
-    primary: colors.primary,
-    accent: colors.accent,
-    neutral: colors.neutralDark,
+    primary: colors.mat.primary,
+    accent: colors.mat.tertiary,
+    neutral: colors.mat.outlineVariant,
   }
 
   return (

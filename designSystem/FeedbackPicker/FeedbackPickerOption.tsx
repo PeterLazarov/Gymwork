@@ -43,13 +43,13 @@ const FeedbackPickerOption: React.FC<Props> = ({
         <Icon
           icon={option.icon}
           size="large"
-          color={isSelected ? option.color : colors.neutralDarker}
+          color={isSelected ? option.color : colors.mat.outlineVariant}
         />
       </IconButton>
       <Text
         style={{
           fontSize: fontSize.sm,
-          color: isSelected ? option.color : colors.neutralDarker,
+          color: isSelected ? option.color : colors.mat.outlineVariant,
           fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
         }}
       >

@@ -27,7 +27,7 @@ const SetListItem: React.FC<Props> = ({
 }) => {
   const colors = useColors()
 
-  const color = isFocused ? colors.accent : colors.neutralDarkest
+  const color = isFocused ? colors.mat.tertiary : colors.mat.onSurface
   const styles = useMemo(() => makeStyles(color), [color])
 
   return (

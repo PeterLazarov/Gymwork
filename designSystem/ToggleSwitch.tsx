@@ -11,12 +11,17 @@ interface Props {
 const ToggleSwitch: React.FC<Props> = ({ value, onValueChange, variant }) => {
   const colors = useColors()
 
-  const thumbActiveColor = colors[variant]
+  const thumbActiveColor =
+    variant === 'critical' ? colors.mat.error : colors.mat.primary
+
   return (
     <Switch
-      trackColor={{ false: colors.neutralDarker, true: colors.primaryLighter }}
-      thumbColor={value ? thumbActiveColor : colors.primaryLighter}
-      ios_backgroundColor={colors.neutralDarker}
+      trackColor={{
+        false: colors.mat.surfaceContainerHighest,
+        true: colors.mat.surfaceContainerHigh,
+      }}
+      thumbColor={value ? thumbActiveColor : colors.mat.surfaceContainer}
+      ios_backgroundColor={colors.mat.surfaceContainerHighest}
       onValueChange={onValueChange}
       value={value}
     />
