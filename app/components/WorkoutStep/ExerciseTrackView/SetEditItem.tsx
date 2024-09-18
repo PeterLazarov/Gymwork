@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { getFormatedDuration } from 'app/utils/time'
-import { useColors, Icon } from 'designSystem'
+import { useColors, Icon, palettes } from 'designSystem'
 import SetWarmupButton from './SetWarmupButton'
 import SetDataLabel from '../SetDataLabel'
 import { useStores } from 'app/db/helpers/useStores'
@@ -62,7 +62,7 @@ const SetEditItem: React.FC<Props> = ({
         {isRecord && (
           <Icon
             icon="trophy"
-            color={colors.tertiary}
+            color={palettes.gold['80']}
           />
         )}
       </View>

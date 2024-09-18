@@ -5,7 +5,7 @@ import SetDataLabel from '../SetDataLabel'
 import { ExerciseMeasurement, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
-import { Text, Icon, useColors, fontSize } from 'designSystem'
+import { Text, Icon, useColors, fontSize, palettes } from 'designSystem'
 import { observer } from 'mobx-react-lite'
 import { useStores } from 'app/db/helpers/useStores'
 
@@ -45,7 +45,7 @@ const SetListItem: React.FC<Props> = ({
         {isRecord && (
           <Icon
             icon="trophy"
-            color={colors.tertiary}
+            color={palettes.gold['80']}
           />
         )}
       </View>
