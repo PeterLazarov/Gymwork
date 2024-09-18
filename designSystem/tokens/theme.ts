@@ -267,6 +267,8 @@ export const palettes = {
     hue200: '#E3E8F3', // Lighter
     hue100: '#F0F3FA',
   },
+  white: 'white',
+  black: 'black',
 }
 
 export const schemes = {
@@ -322,9 +324,11 @@ export const schemes = {
     surfaceContainerHighest: palettes.neutral[70],
   },
   dark: {
-    primary: palettes.primary[80],
+    // primary: palettes.primary[80],
+    primary: palettes.primary[40],
     surfaceTint: palettes.primary[80],
-    onPrimary: palettes.primary[10],
+    // onPrimary: palettes.primary[10],
+    onPrimary: palettes.primary[100],
     primaryContainer: palettes.primary[50],
     onPrimaryContainer: palettes.primary[100],
     secondary: palettes.secondary[80],

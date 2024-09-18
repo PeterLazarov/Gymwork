@@ -151,7 +151,7 @@ const CalendarScreen: React.FC = () => {
             },
 
             activeDayTextStyle: {
-              color: colors.onTertiary,
+              color: colors.onPrimary,
             },
             activeDayContainerStyle: {
               backgroundColor: colors.primary,
