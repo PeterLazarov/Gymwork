@@ -54,6 +54,9 @@ const UserFeedbackForm: React.FC<Props> = ({ feedback, onUpdate }) => {
         placeholder="Comments"
         value={feedback.comments}
         multiline
+        style={{
+          minHeight: 200,
+        }}
         onChangeText={text => onPropChange('comments', text)}
         error={commentsError !== ''}
       />
