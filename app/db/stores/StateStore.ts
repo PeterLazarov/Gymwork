@@ -27,7 +27,6 @@ export const StateStoreModel = types
     chartWidth: 0,
     chartHeight: 0,
     reviewLastTab: types.maybe(types.string),
-    activeRoute: types.maybe(types.string),
   })
   .views(self => ({
     get rootStore(): RootStore {
@@ -93,7 +92,6 @@ export const StateStoreModel = types
   .actions(withSetPropAction)
   .actions(self => ({
     initialize() {
-      self.activeRoute = 'Workout'
       self.focusedStepGuid = ''
       self.highlightedSetGuid = ''
     },

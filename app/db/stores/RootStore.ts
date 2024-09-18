@@ -33,6 +33,7 @@ export const RootStoreModel = types
         .then(() => self.recordStore.fetch())
         .then(() => self.stateStore.initialize())
         .then(() => self.settingsStore.initialize())
+        .then(() => self.navStore.initialize())
     },
   }))
 

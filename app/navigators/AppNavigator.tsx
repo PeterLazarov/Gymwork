@@ -208,13 +208,13 @@ export const AppNavigator = observer(function AppNavigator(
 
   useBackButtonHandler(routeName => exitRoutes.includes(routeName))
 
-  const { stateStore } = useStores()
+  const { navStore } = useStores()
   function handleStateChange(state: NavigationState | undefined) {
     // @ts-ignore
     const { currentRouteName, previousRouteName } =
       props.onStateChange?.(state) ?? {}
 
-    stateStore.setProp('activeRoute', currentRouteName)
+    navStore.setProp('activeRoute', currentRouteName)
   }
 
   const materialLightTheme = { ...MD3LightTheme, colors: paperThemeLight }

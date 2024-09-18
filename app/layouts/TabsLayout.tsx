@@ -10,17 +10,14 @@ type Props = {
   children?: ReactNode
 }
 const TabsLayout: React.FC<Props> = ({ children }) => {
-  const {
-    stateStore,
-    navStore: { navigate },
-  } = useStores()
+  const { stateStore, navStore } = useStores()
 
   const tabs = [
     {
       text: 'Review',
       routes: ['Review'],
       icon: 'history',
-      onPress: () => navigate('Review'),
+      onPress: () => navStore.navigate('Review'),
     },
     {
       text: 'Workout',
@@ -28,9 +25,9 @@ const TabsLayout: React.FC<Props> = ({ children }) => {
       icon: 'dumbbell',
       onPress: () => {
         if (stateStore.focusedStep) {
-          navigate('WorkoutStep')
+          navStore.navigate('WorkoutStep')
         } else {
-          navigate('Workout')
+          navStore.navigate('Workout')
         }
       },
     },
@@ -40,7 +37,7 @@ const TabsLayout: React.FC<Props> = ({ children }) => {
     <EmptyLayout>
       <View style={{ flex: 1 }}>{children}</View>
       <BottomNavigation
-        activeRoute={stateStore.activeRoute}
+        activeRoute={navStore.activeRoute}
         items={tabs}
       />
     </EmptyLayout>

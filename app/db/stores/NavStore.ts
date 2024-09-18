@@ -28,9 +28,9 @@ export const NavStoreModel = types
   })
   .actions(withSetPropAction)
   .actions(self => ({
-    // initialize() {
-    //   //
-    // },
+    initialize() {
+      self.activeRoute = 'Workout'
+    },
 
     /**
      * use this to navigate without the navigation
