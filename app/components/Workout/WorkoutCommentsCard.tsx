@@ -26,6 +26,7 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
 
   return (
     <Card
+      style={{ padding: 0, paddingBottom: 8 }}
       onPress={onPress}
       content={
         <View style={{ alignItems: 'center' }}>

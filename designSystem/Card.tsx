@@ -20,6 +20,7 @@ const Card: React.FC<CardProps> = ({
   title,
   content,
   containerStyle = {},
+  style,
   ...otherProps
 }) => {
   const colors = useColors()
@@ -28,11 +29,11 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <TouchableOpacity
-      style={{ ...styles.card, ...containerStyle }}
+      style={[styles.card, containerStyle]}
       activeOpacity={0.5}
       {...otherProps}
     >
-      <View style={styles.content}>
+      <View style={[styles.content, style]}>
         {title && <Text style={styles.title}>{title}</Text>}
         <View>{content}</View>
       </View>
