@@ -97,6 +97,7 @@ const en = {
     10: "All-out effort, I've got nothing left to give!",
   },
   measureRest: 'Measure rest',
+  giveFeedback: 'Give feedback',
 }
 
 export default en

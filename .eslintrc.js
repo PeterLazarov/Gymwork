@@ -53,6 +53,11 @@ module.exports = {
         importNames: ['Text'],
         message: "Please use 'Text' from designSystem instead",
       },
+      {
+        name: 'i18n-js',
+        importNames: ['translate'],
+        message: "Are you sure you don't need the one from app/i18n?",
+      },
     ],
   },
   settings: {

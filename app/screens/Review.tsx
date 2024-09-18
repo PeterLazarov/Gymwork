@@ -10,6 +10,8 @@ import ExerciseHistoryStats from 'app/components/ExerciseStats/ExerciseHistorySt
 import ExerciseRecordStats from 'app/components/ExerciseStats/ExerciseRecordStats'
 import { translate } from 'app/i18n'
 import ExerciseView from 'app/components/ExerciseHistoryChart/ExerciseView'
+import { Menu } from 'react-native-paper'
+import HeaderMenuItems from 'app/components/HeaderMenuItems'
 
 const ReviewScreen: React.FC = () => {
   const colors = useColors()
@@ -73,6 +75,8 @@ const ReviewScreen: React.FC = () => {
       : 0
   }, [stateStore.reviewLastTab])
 
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <>
       <Header>
@@ -105,6 +109,25 @@ const ReviewScreen: React.FC = () => {
             color={colors.onPrimary}
           />
         </IconButton>
+
+        <Menu
+          visible={menuOpen}
+          onDismiss={() => setMenuOpen(false)}
+          anchorPosition="bottom"
+          anchor={
+            <IconButton
+              onPress={() => setMenuOpen(true)}
+              underlay="darker"
+            >
+              <Icon
+                icon="ellipsis-vertical"
+                color={colors.onPrimary}
+              />
+            </IconButton>
+          }
+        >
+          <HeaderMenuItems onClose={() => setMenuOpen(false)} />
+        </Menu>
       </Header>
 
       <View

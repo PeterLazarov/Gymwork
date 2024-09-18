@@ -5,9 +5,12 @@ import { DateTime } from 'luxon'
 import { capitalize } from 'lodash'
 
 import { useStores } from 'app/db/helpers/useStores'
+import { useExport } from 'app/utils/useExport'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, useColors } from 'designSystem'
 import useBenchmark from 'app/utils/useBenchmark'
+import { useDialogContext } from 'app/contexts/DialogContext'
+import HeaderMenuItems from '../HeaderMenuItems'
 
 const WorkoutHeader: React.FC = () => {
   const colors = useColors()
@@ -51,16 +54,6 @@ const WorkoutHeader: React.FC = () => {
 
   const { performBenchmark } = useBenchmark()
 
-  function goToSettings() {
-    setMenuOpen(false)
-    navigate('Settings')
-  }
-
-  function goToFeedback() {
-    setMenuOpen(false)
-    navigate('UserFeedback')
-  }
-
   return (
     <Header>
       <Header.Title title={dateLabel} />
@@ -100,14 +93,7 @@ const WorkoutHeader: React.FC = () => {
             )}
           />
         )}
-        <Menu.Item
-          onPress={goToSettings}
-          title={translate('settings')}
-        />
-        <Menu.Item
-          onPress={goToFeedback}
-          title={'Give feedback'}
-        />
+
         {openedWorkout && (
           <>
             <Menu.Item
@@ -120,12 +106,11 @@ const WorkoutHeader: React.FC = () => {
             />
           </>
         )}
-        {__DEV__ && (
-          <Menu.Item
-            onPress={performBenchmark}
-            title="Perform benchmark"
-          />
-        )}
+        <HeaderMenuItems onClose={() => setMenuOpen(false)} />
+        <Menu.Item
+          onPress={performBenchmark}
+          title="Perform benchmark"
+        />
       </Menu>
     </Header>
   )
