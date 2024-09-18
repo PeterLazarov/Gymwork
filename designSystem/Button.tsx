@@ -28,7 +28,7 @@ export const Button: React.FC<ButtonProps> = ({
   const colors = useColors()
 
   const buttonColors = {
-    primary: colors.primaryContainer,
+    primary: colors.primary,
     accent: colors.tertiaryContainer,
     neutral: colors.secondaryContainer,
     critical: colors.errorContainer,
@@ -71,7 +71,7 @@ export const ButtonText: React.FC<ButtonTextProps> = ({
   const colors = useColors()
 
   const buttonColors = {
-    primary: colors.primaryContainer,
+    primary: colors.primary,
     accent: colors.tertiaryContainer,
     neutral: colors.secondaryContainer,
     critical: colors.errorContainer,
@@ -79,7 +79,7 @@ export const ButtonText: React.FC<ButtonTextProps> = ({
   }
 
   const buttonTextColors = {
-    primary: colors.onPrimaryContainer,
+    primary: colors.onPrimary,
     accent: colors.onTertiaryContainer,
     neutral: colors.onSecondaryContainer,
     critical: colors.onErrorContainer,
