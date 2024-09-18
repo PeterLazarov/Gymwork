@@ -42,7 +42,7 @@ export const TabLabel: React.FC<TabLabelProps> = ({
     <Text
       style={[
         {
-          color: isActive ? colors.mat.tertiary : colors.mat.outlineVariant,
+          color: isActive ? colors.mat.onSurface : colors.mat.outlineVariant,
         },
         style,
       ]}
@@ -59,7 +59,7 @@ export const ActiveIndicator: React.FC<ViewProps> = () => {
         marginLeft: 10,
         marginRight: 10,
         borderBottomWidth: 2,
-        borderColor: colors.mat.tertiary,
+        borderColor: colors.mat.onSurface,
       }}
     />
   )

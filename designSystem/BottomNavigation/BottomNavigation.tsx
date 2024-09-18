@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { useColorScheme, View } from 'react-native'
 
 import { boxShadows, useColors } from '../'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
@@ -16,6 +16,7 @@ const insetCoverage = 0.75
 
 export const BottomNavigation: React.FC<Props> = ({ activeRoute, items }) => {
   const colors = useColors()
+  const colorScheme = useColorScheme()
 
   return (
     <SafeAreaInsetsContext.Consumer>
@@ -25,7 +26,10 @@ export const BottomNavigation: React.FC<Props> = ({ activeRoute, items }) => {
             style={{
               flexDirection: 'row',
               height: (insets?.bottom ?? 0) * insetCoverage + btnMinHeight,
-              backgroundColor: colors.mat.surface,
+              backgroundColor:
+                colorScheme === 'light'
+                  ? colors.mat.surface
+                  : colors.mat.shadow,
               ...boxShadows.lg,
             }}
           >

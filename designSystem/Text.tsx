@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+// eslint-disable-next-line no-restricted-imports
 import { Text as TextRN, TextProps, StyleSheet } from 'react-native'
 
 import { fontSize, useColors } from './tokens'
@@ -17,7 +18,7 @@ export const Text: React.FC<TextProps> = ({ style, ...otherProps }) => {
 const makeStyles = (colors: any) =>
   StyleSheet.create({
     default: {
-      color: colors.neutralText,
+      color: colors.mat.onSurface,
       fontSize: fontSize.md,
     },
   })

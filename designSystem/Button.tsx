@@ -28,13 +28,13 @@ export const Button: React.FC<ButtonProps> = ({
   const colors = useColors()
 
   const buttonColors = {
-    primary: colors.mat.primary,
-    accent: colors.accent,
-    neutral: colors.neutral,
-    critical: colors.critical,
-    tertiary: colors.mat.surface,
-    disabled: colors.disabled,
-    outline: colors.neutralLight,
+    primary: colors.mat.primaryContainer,
+    accent: colors.mat.tertiaryContainer,
+    neutral: colors.mat.secondaryContainer,
+    critical: colors.mat.errorContainer,
+    tertiary: colors.mat.surfaceContainer,
+    disabled: colors.mat.outlineVariant,
+    outline: colors.mat.outline,
   }
 
   const color = disabled ? 'disabled' : type === 'outline' ? 'outline' : variant
@@ -71,18 +71,18 @@ export const ButtonText: React.FC<ButtonTextProps> = ({
   const colors = useColors()
 
   const buttonColors = {
-    primary: colors.mat.primary,
-    accent: colors.mat.tertiary,
-    neutral: colors.mat.secondary,
-    critical: colors.mat.error,
-    tertiary: colors.mat.surface,
+    primary: colors.mat.primaryContainer,
+    accent: colors.mat.tertiaryContainer,
+    neutral: colors.mat.secondaryContainer,
+    critical: colors.mat.errorContainer,
+    tertiary: colors.mat.surfaceContainer,
   }
 
   const buttonTextColors = {
-    primary: colors.mat.onPrimary,
-    accent: colors.mat.onTertiary,
-    neutral: colors.mat.onSecondary,
-    critical: colors.mat.onError,
+    primary: colors.mat.onPrimaryContainer,
+    accent: colors.mat.onTertiaryContainer,
+    neutral: colors.mat.onSecondaryContainer,
+    critical: colors.mat.onErrorContainer,
     tertiary: colors.mat.onSurface,
   }
 

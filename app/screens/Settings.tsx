@@ -1,9 +1,9 @@
 import React from 'react'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { goBack, type StackScreenProps } from 'app/navigators'
+import { type StackScreenProps } from 'app/navigators'
 import { Header, Icon, IconButton, Select, useColors } from 'designSystem'
 import { observer } from 'mobx-react-lite'
-import { View, useColorScheme, Text, Appearance } from 'react-native'
+import { View } from 'react-native'
 import { translate } from 'app/i18n'
 import { useStores } from 'app/db/helpers/useStores'
 
@@ -15,8 +15,8 @@ const appearanceOptions = [
   { label: translate('auto'), value: null },
 ]
 
-const SettingsScreen: React.FC<SettingsScreenProps> = ({}) => {
-  const { settingsStore } = useStores()
+const SettingsScreen: React.FC<SettingsScreenProps> = () => {
+  const { settingsStore, navStore } = useStores()
 
   const colors = useColors()
 
@@ -24,7 +24,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({}) => {
     <EmptyLayout>
       <Header>
         <IconButton
-          onPress={goBack}
+          onPress={navStore.goBack}
           underlay="darker"
         >
           <Icon

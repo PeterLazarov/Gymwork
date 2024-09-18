@@ -17,12 +17,12 @@ const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
           bottom: 0,
           backgroundColor: disabled
             ? colors.mat.surfaceVariant
-            : colors.mat.primary,
+            : colors.mat.primaryContainer,
         },
         style,
       ]}
       disabled={disabled}
-      color={colors.mat.onPrimary}
+      color={colors.mat.onPrimaryContainer}
       {...otherProps}
     />
   )

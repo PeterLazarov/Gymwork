@@ -94,7 +94,7 @@ export const Icon: React.FC<IconProps> = ({
   style,
 }) => {
   const colors = useColors()
-  const color = _color ?? colors.neutralText
+  const color = _color ?? colors.mat.onSurface
 
   return (
     <>

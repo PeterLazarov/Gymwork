@@ -44,7 +44,7 @@ const SetListItem: React.FC<Props> = ({
         {isRecord && (
           <Icon
             icon="trophy"
-            color={colors.accent}
+            color={colors.mat.tertiary}
           />
         )}
       </View>

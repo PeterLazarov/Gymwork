@@ -89,7 +89,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
         {workout.rpe && (
           <Text
             style={{
-              color: colors.tertiaryText,
+              color: colors.mat.onSurface,
               textAlign: 'center',
             }}
           >

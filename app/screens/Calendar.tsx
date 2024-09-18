@@ -34,8 +34,8 @@ const CalendarScreen: React.FC = () => {
         }
         acc[curr.date]!.dots = [
           {
-            color: colors.accent,
-            selectedColor: colors.accentText,
+            color: colors.mat.tertiary,
+            selectedColor: colors.mat.tertiaryText,
           },
         ]
 
@@ -126,27 +126,38 @@ const CalendarScreen: React.FC = () => {
           markedDays={markedDates}
           numberOfMonths={monthsToRender}
           theme={{
-            startDateContainerStyle: {
-              backgroundColor: colors.accent,
-              aspectRatio: 1,
-            },
-            dayContainerStyle: {
-              backgroundColor: 'transparent',
-              aspectRatio: 1,
+            todayTextStyle: {
+              color: colors.mat.onTertiary,
             },
             todayContainerStyle: {
-              backgroundColor: colors.accentLight,
+              backgroundColor: colors.mat.tertiary,
               aspectRatio: 1,
               borderRadius: 50,
             },
+
+            // makes all days a circle, therefore all lines equally tall
+            dayContainerStyle: {
+              backgroundColor: 'transparent',
+              aspectRatio: 1,
+              borderRadius: 50,
+            },
+
             monthTitleTextStyle: {
               fontSize: fontSize.lg,
-              color: colors.neutralText,
+              color: colors.mat.onSurface,
             },
             dayTextStyle: {
-              color: colors.neutralText,
+              color: colors.mat.onSurface,
             },
-            weekColumnTextStyle: { color: colors.neutralText },
+
+            activeDayTextStyle: {
+              color: colors.mat.onTertiary,
+            },
+            activeDayContainerStyle: {
+              backgroundColor: colors.mat.primary,
+            },
+
+            weekColumnTextStyle: { color: colors.mat.onSurface },
           }}
           disableRange
           monthHeight={460}

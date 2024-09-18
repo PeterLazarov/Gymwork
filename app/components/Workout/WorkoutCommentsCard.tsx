@@ -54,14 +54,14 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
               <FeedbackPickerOption
                 option={painOptions[workout.pain]}
                 isSelected
-                noPadding
+                style={{ backgroundColor: 'transparent' }}
               />
             )}
             {workout.feeling && (
               <FeedbackPickerOption
                 option={feelingOptions[workout.feeling]}
                 isSelected
-                noPadding
+                style={{ backgroundColor: 'transparent' }}
               />
             )}
           </View>

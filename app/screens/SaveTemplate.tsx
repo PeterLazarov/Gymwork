@@ -10,7 +10,7 @@ import {
   WorkoutTemplate,
   WorkoutTemplateModel,
 } from 'app/db/models'
-import { goBack, useRouteParams } from 'app/navigators'
+import { useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { translate } from 'app/i18n'
 import {
@@ -29,7 +29,7 @@ export type SaveTemplateScreenParams = {
 const SaveTemplateScreen: React.FC = () => {
   const colors = useColors()
 
-  const { workoutStore, stateStore } = useStores()
+  const { workoutStore, stateStore, navStore } = useStores()
   const { edittingTemplate } = useRouteParams('SaveTemplate')
 
   const [template, setTemplate] = useState<WorkoutTemplate>(
@@ -51,7 +51,7 @@ const SaveTemplateScreen: React.FC = () => {
 
   function onBackConfirmed() {
     showConfirm!(undefined)
-    goBack()
+    navStore.goBack()
   }
 
   function onUpdate(updated: WorkoutTemplate, isValid: boolean) {

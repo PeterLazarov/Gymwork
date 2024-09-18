@@ -14,8 +14,8 @@ const PressableHighlight: React.FC<Props> = ({
   const colors = useColors()
 
   const underlayColors = {
-    default: colors.mat.primaryLighter,
-    darker: colors.mat.primaryLight,
+    default: colors.mat.primaryContainer,
+    darker: colors.mat.inversePrimary,
   }
 
   return (

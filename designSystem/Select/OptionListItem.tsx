@@ -40,7 +40,7 @@ function OptionListItem<T = unknown>({
           paddingHorizontal: 10,
           paddingVertical: 15,
           backgroundColor: selectedValues.includes(value)
-            ? colors.accentLightest
+            ? colors.mat.tertiaryLightest
             : colors.mat.surfaceContainerLowest,
         }}
         onPress={() => onSelect(option)}

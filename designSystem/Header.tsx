@@ -16,9 +16,7 @@ export const Header: React.FC<ViewProps> & SubComponents = props => {
         <View
           style={{
             backgroundColor:
-              colorScheme === 'light'
-                ? colors.mat.primary
-                : colors.neutralLight,
+              colorScheme === 'light' ? colors.mat.primary : colors.mat.shadow,
             flexDirection: 'row',
             alignItems: 'center',
             paddingHorizontal: 12,
@@ -39,11 +37,18 @@ type HeaderTitleProps = {
 }
 const HeaderTitle: React.FC<HeaderTitleProps> = ({ title, numberOfLines }) => {
   const colors = useColors()
+  const colorScheme = useColorScheme()
 
   return (
     <View style={{ marginLeft: 10, alignItems: 'flex-start', flex: 1 }}>
       <Text
-        style={{ color: colors.mat.onPrimary, fontSize: fontSize.lg }}
+        style={{
+          color:
+            colorScheme === 'light'
+              ? colors.mat.onPrimary
+              : colors.mat.onSurface,
+          fontSize: fontSize.lg,
+        }}
         numberOfLines={numberOfLines}
       >
         {title}
