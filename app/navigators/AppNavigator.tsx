@@ -92,12 +92,13 @@ const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
   const colors = useColors()
-
+  const colorScheme = useColorScheme()
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        navigationBarColor: colors.surface,
+        navigationBarColor:
+          colorScheme === 'light' ? colors.surface : colors.shadow,
         animation: 'none',
       }}
       initialRouteName="HomeStack"
