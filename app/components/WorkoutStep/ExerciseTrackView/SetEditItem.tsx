@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { StyleProp, View, ViewStyle } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
 import { WorkoutSet } from 'app/db/models'
@@ -13,17 +13,17 @@ import { useStores } from 'app/db/helpers/useStores'
 type Props = {
   set: WorkoutSet
   isRecord?: boolean
-  isFocused?: boolean
   calcWorkSetNumber: (set: WorkoutSet) => number
   toggleSetWarmup: (set: WorkoutSet) => void
-}
+} & View['props']
 
 const SetEditItem: React.FC<Props> = ({
   set,
   isRecord,
-  isFocused,
   calcWorkSetNumber,
   toggleSetWarmup,
+  style,
+  ...rest
 }) => {
   const colors = useColors()
   const { settingsStore } = useStores()
@@ -34,15 +34,18 @@ const SetEditItem: React.FC<Props> = ({
 
   return (
     <View
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        paddingHorizontal: 10,
-        paddingVertical: 1,
-        backgroundColor: isFocused ? colors.surfaceContainerHigh : undefined,
-      }}
+      style={[
+        {
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          paddingHorizontal: 10,
+          paddingVertical: 1,
+        },
+        style,
+      ]}
+      {...rest}
     >
       <View
         style={{

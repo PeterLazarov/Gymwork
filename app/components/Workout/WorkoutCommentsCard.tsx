@@ -26,13 +26,24 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
 
   return (
     <Card
-      style={{ padding: 0, paddingBottom: 8 }}
+      style={{ padding: 0 }}
       onPress={onPress}
       content={
-        <View style={{ alignItems: 'center' }}>
-          <View style={{ flexDirection: 'row' }}>
+        <View
+          style={{
+            alignItems: 'center',
+            gap: 12,
+            padding: 12,
+          }}
+        >
+          <View style={{ flexDirection: 'row', gap: 12 }}>
             {hasNotes && (
-              <Text style={{ fontSize: fontSize.sm, color: colors.onSurface }}>
+              <Text
+                style={{
+                  fontSize: fontSize.sm,
+                  color: colors.onSurface,
+                }}
+              >
                 {workout.notes}
               </Text>
             )}
@@ -47,20 +58,27 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
             }}
           >
             {workout.rpe !== undefined && (
-              <Text>{translate('diffValue', { rpe: workout.rpe })}</Text>
+              <Text
+                style={{
+                  flex: 1,
+                  textAlign: 'center',
+                }}
+              >
+                {translate('diffValue', { rpe: workout.rpe })}
+              </Text>
             )}
             {workout.pain && (
               <FeedbackPickerOption
                 option={discomfortOptions[workout.pain]}
                 isSelected
-                style={{ backgroundColor: 'transparent' }}
+                style={{ backgroundColor: 'transparent', flex: 1 }}
               />
             )}
             {workout.feeling && (
               <FeedbackPickerOption
                 option={feelingOptions[workout.feeling]}
                 isSelected
-                style={{ backgroundColor: 'transparent' }}
+                style={{ backgroundColor: 'transparent', flex: 1 }}
               />
             )}
           </View>

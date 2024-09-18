@@ -15,14 +15,12 @@ const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
           right: 'auto',
           left: 'auto',
           bottom: 0,
-          backgroundColor: disabled
-            ? colors.surfaceVariant
-            : colors.primaryContainer,
+          backgroundColor: disabled ? colors.surfaceVariant : colors.primary,
         },
         style,
       ]}
       disabled={disabled}
-      color={colors.onPrimaryContainer}
+      color={colors.onPrimary}
       {...otherProps}
     />
   )

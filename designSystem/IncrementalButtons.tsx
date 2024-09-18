@@ -19,7 +19,7 @@ const IncrementalButtons: React.FC<Props> = ({
   const colors = useColors()
 
   const btnStyle: StyleProp<ViewStyle> = {
-    backgroundColor: colors.primaryContainer,
+    backgroundColor: colors.primary,
     padding: 7,
     justifyContent: 'center',
     alignItems: 'center',
@@ -39,7 +39,7 @@ const IncrementalButtons: React.FC<Props> = ({
       >
         <Icon
           icon="remove"
-          color={colors.onPrimaryContainer}
+          color={colors.onPrimary}
         />
       </TouchableOpacity>
       <View style={{ flexGrow: 1, paddingHorizontal: 4 }}>{children}</View>
@@ -49,7 +49,7 @@ const IncrementalButtons: React.FC<Props> = ({
       >
         <Icon
           icon="add"
-          color={colors.onPrimaryContainer}
+          color={colors.onPrimary}
         />
       </TouchableOpacity>
     </View>

@@ -35,15 +35,18 @@ const FeedbackPickerOption: React.FC<Props> = ({
     <TouchableOpacity
       key={option.value}
       onPress={() => onPress?.(option.value)}
-      style={{
-        backgroundColor: isSelected
-          ? colors.surfaceContainerLowest
-          : 'transparent',
-        borderRadius: 8,
-        paddingVertical: 16,
-        flex: 1,
-        alignItems: 'center',
-      }}
+      style={[
+        {
+          backgroundColor: isSelected
+            ? colors.surfaceContainerLowest
+            : 'transparent',
+          borderRadius: 8,
+          paddingVertical: 16,
+          flex: 1,
+          alignItems: 'center',
+        },
+        style,
+      ]}
     >
       <>
         <Icon

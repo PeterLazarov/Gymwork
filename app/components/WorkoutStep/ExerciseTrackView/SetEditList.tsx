@@ -44,11 +44,16 @@ const SetEditList: React.FC<Props> = ({
       isActive,
     }: DragListRenderItemInfo<WorkoutSet>) => {
       const isRecord = stepRecords.some(({ guid }) => guid === item.guid)
+      const isFocused = selectedSet?.guid === item.guid
 
       return (
         <TouchableOpacity
           style={{
-            backgroundColor: isActive ? colors.primaryContainer : undefined,
+            backgroundColor: isActive
+              ? colors.primary
+              : isFocused
+              ? colors.surfaceContainerHigh
+              : undefined,
           }}
           onLongPress={onDragStart}
           onPressOut={onDragEnd}
@@ -70,7 +75,6 @@ const SetEditList: React.FC<Props> = ({
 
             <SetEditItem
               set={item}
-              isFocused={selectedSet?.guid === item.guid}
               isRecord={isRecord}
               calcWorkSetNumber={calcWorkSetNumber}
               toggleSetWarmup={toggleSetWarmup}
