@@ -6,14 +6,13 @@ import {
   Header,
   Icon,
   IconButton,
-  PressableHighlight,
   Select,
   Text,
   ToggleSwitch,
   useColors,
 } from 'designSystem'
 import { observer } from 'mobx-react-lite'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { translate } from 'app/i18n'
 import { useStores } from 'app/db/helpers/useStores'
 import { useExport } from 'app/utils/useExport'
@@ -79,7 +78,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
           orientation="horizontal"
         />
 
-        <PressableHighlight
+        <TouchableOpacity
           style={styles.item}
           onPress={() => {
             settingsStore.setMeasureRest(!settingsStore.measureRest)
@@ -93,29 +92,29 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
               onValueChange={settingsStore.setMeasureRest}
             />
           </>
-        </PressableHighlight>
+        </TouchableOpacity>
 
         <Divider
           variant="neutral"
           orientation="horizontal"
         />
-        <PressableHighlight
+        <TouchableOpacity
           style={styles.item}
           onPress={onExportData}
         >
           <Text style={styles.itemLabel}>{translate('exportData')}</Text>
-        </PressableHighlight>
+        </TouchableOpacity>
 
         <Divider
           variant="neutral"
           orientation="horizontal"
         />
-        <PressableHighlight
+        <TouchableOpacity
           style={styles.item}
           onPress={onRestoreData}
         >
           <Text style={styles.itemLabel}>{translate('restoreData')}</Text>
-        </PressableHighlight>
+        </TouchableOpacity>
       </View>
     </EmptyLayout>
   )

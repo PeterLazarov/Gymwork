@@ -1,13 +1,6 @@
 import React, { Fragment, useState } from 'react'
-import { View } from 'react-native'
-import {
-  Text,
-  BottomDrawer,
-  Divider,
-  FAB,
-  PressableHighlight,
-  useColors,
-} from 'designSystem'
+import { TouchableOpacity, View } from 'react-native'
+import { Text, BottomDrawer, Divider, FAB, useColors } from 'designSystem'
 import { translate } from 'app/i18n'
 import { useStores } from 'app/db/helpers/useStores'
 
@@ -82,7 +75,7 @@ const AddStepMenu = () => {
                 />
               )}
 
-              <PressableHighlight
+              <TouchableOpacity
                 onPress={() => {
                   setVisible(false)
                   option.action()
@@ -94,7 +87,7 @@ const AddStepMenu = () => {
                 }}
               >
                 <Text>{option.text}</Text>
-              </PressableHighlight>
+              </TouchableOpacity>
             </Fragment>
           ))}
         </View>

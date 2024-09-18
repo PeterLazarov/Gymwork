@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { Text, Divider, PressableHighlight, useColors } from 'designSystem'
+import { Text, Divider, useColors } from 'designSystem'
 import { SelectOption } from './types'
+import { TouchableOpacity } from 'react-native'
 
 type Props<T = unknown> = {
   option: SelectOption<T>
@@ -35,7 +36,7 @@ function OptionListItem<T = unknown>({
           variant="neutral"
         />
       )}
-      <PressableHighlight
+      <TouchableOpacity
         style={{
           paddingHorizontal: 10,
           paddingVertical: 15,
@@ -46,7 +47,7 @@ function OptionListItem<T = unknown>({
         onPress={() => onSelect(option)}
       >
         <Text>{label}</Text>
-      </PressableHighlight>
+      </TouchableOpacity>
     </>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
-import { View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 
-import { Text, Icon, PressableHighlight, useColors, fontSize } from '../'
+import { Text, Icon, useColors, fontSize } from '../'
 import { Item } from './types'
 
 type Props = {
@@ -12,7 +12,7 @@ export const BottomNavigationItem: React.FC<Props> = ({ item, isSelected }) => {
   const colors = useColors()
 
   return (
-    <PressableHighlight
+    <TouchableOpacity
       key={item.text}
       onPress={item.onPress}
       style={{
@@ -40,6 +40,6 @@ export const BottomNavigationItem: React.FC<Props> = ({ item, isSelected }) => {
           {item.text}
         </Text>
       </View>
-    </PressableHighlight>
+    </TouchableOpacity>
   )
 }

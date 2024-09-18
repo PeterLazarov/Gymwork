@@ -1,7 +1,9 @@
 import React from 'react'
-import { TouchableHighlightProps, ViewStyle } from 'react-native'
-
-import { PressableHighlight } from '.'
+import {
+  TouchableHighlightProps,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native'
 
 const sizes = {
   sm: 24,
@@ -19,7 +21,7 @@ const IconButton: React.FC<Props> = ({
   underlay = 'default',
   ...props
 }) => (
-  <PressableHighlight
+  <TouchableOpacity
     style={{
       flexGrow: 0,
       height: sizes[size],

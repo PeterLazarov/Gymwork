@@ -1,7 +1,7 @@
 import React from 'react'
-import { StyleProp, View, ViewStyle } from 'react-native'
+import { StyleProp, TouchableOpacity, View, ViewStyle } from 'react-native'
 
-import { Icon, PressableHighlight, useColors } from '.'
+import { Icon, useColors } from '.'
 
 type Props = {
   value: number
@@ -33,7 +33,7 @@ const IncrementalButtons: React.FC<Props> = ({
         flexDirection: 'row',
       }}
     >
-      <PressableHighlight
+      <TouchableOpacity
         onPress={() => onChange(value - (step ?? 1))}
         style={btnStyle}
       >
@@ -41,9 +41,9 @@ const IncrementalButtons: React.FC<Props> = ({
           icon="remove"
           color={colors.onPrimaryContainer}
         />
-      </PressableHighlight>
+      </TouchableOpacity>
       <View style={{ flexGrow: 1, paddingHorizontal: 4 }}>{children}</View>
-      <PressableHighlight
+      <TouchableOpacity
         onPress={() => onChange(value + (step ?? 1))}
         style={btnStyle}
       >
@@ -51,7 +51,7 @@ const IncrementalButtons: React.FC<Props> = ({
           icon="add"
           color={colors.onPrimaryContainer}
         />
-      </PressableHighlight>
+      </TouchableOpacity>
     </View>
   )
 }

@@ -1,13 +1,13 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback, useRef } from 'react'
-import { FlatList, Pressable, View } from 'react-native'
+import { FlatList, Pressable, TouchableOpacity, View } from 'react-native'
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
 import { computed } from 'mobx'
 
 import SetEditItem from './SetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
-import { useColors, Divider, Icon, PressableHighlight } from 'designSystem'
+import { useColors, Divider, Icon } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
 
@@ -46,7 +46,7 @@ const SetEditList: React.FC<Props> = ({
       const isRecord = stepRecords.some(({ guid }) => guid === item.guid)
 
       return (
-        <PressableHighlight
+        <TouchableOpacity
           style={{
             backgroundColor: isActive ? colors.primaryContainer : undefined,
           }}
@@ -76,7 +76,7 @@ const SetEditList: React.FC<Props> = ({
               toggleSetWarmup={toggleSetWarmup}
             />
           </View>
-        </PressableHighlight>
+        </TouchableOpacity>
       )
     },
     [selectedSet, stepRecords]

@@ -1,15 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 
 import { Exercise } from 'app/db/models'
-import {
-  Text,
-  PressableHighlight,
-  IconButton,
-  Icon,
-  useColors,
-} from 'designSystem'
+import { Text, IconButton, Icon, useColors } from 'designSystem'
 
 type Props = {
   exercise: Exercise
@@ -25,7 +19,7 @@ const ExerciseListItem: React.FC<Props> = ({
   const colors = useColors()
 
   return (
-    <PressableHighlight onPress={() => onSelect(exercise)}>
+    <TouchableOpacity onPress={() => onSelect(exercise)}>
       <View
         style={{
           width: '100%',
@@ -58,7 +52,7 @@ const ExerciseListItem: React.FC<Props> = ({
           />
         </IconButton>
       </View>
-    </PressableHighlight>
+    </TouchableOpacity>
   )
 }
 

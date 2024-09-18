@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 
 import { WorkoutTemplate } from 'app/db/models'
-import { Text, Icon, IconButton, PressableHighlight } from 'designSystem'
+import { Text, Icon, IconButton } from 'designSystem'
 
 type Props = {
   template: WorkoutTemplate
@@ -18,7 +18,7 @@ const ExerciseListItem: React.FC<Props> = ({
   onEdit,
 }) => {
   return (
-    <PressableHighlight onPress={() => onSelect(template)}>
+    <TouchableOpacity onPress={() => onSelect(template)}>
       <View
         style={{
           width: '100%',
@@ -43,7 +43,7 @@ const ExerciseListItem: React.FC<Props> = ({
           <Icon icon="delete" />
         </IconButton>
       </View>
-    </PressableHighlight>
+    </TouchableOpacity>
   )
 }
 

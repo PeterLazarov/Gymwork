@@ -1,13 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 
-import {
-  Text,
-  Icon,
-  PressableHighlight,
-  useColors,
-  fontSize,
-} from 'designSystem'
+import { Text, Icon, useColors, fontSize } from 'designSystem'
+import { TouchableOpacity } from 'react-native'
 
 type Props = {
   isWarmup: boolean
@@ -24,7 +19,7 @@ const SetWarmupButton: React.FC<Props> = ({
   const colors = useColors()
 
   return (
-    <PressableHighlight
+    <TouchableOpacity
       style={{
         height: 36,
         width: 36,
@@ -58,7 +53,7 @@ const SetWarmupButton: React.FC<Props> = ({
           />
         )}
       </>
-    </PressableHighlight>
+    </TouchableOpacity>
   )
 }
 export default observer(SetWarmupButton)

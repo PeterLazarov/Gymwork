@@ -1,15 +1,13 @@
 import React from 'react'
-import { Platform, StyleProp, View, ViewStyle } from 'react-native'
-
 import {
-  Text,
-  Icon,
-  IconButton,
-  IconProps,
-  useColors,
-  fontSize,
-  PressableHighlight,
-} from '..'
+  Platform,
+  StyleProp,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native'
+
+import { Text, Icon, IconProps, useColors, fontSize } from '..'
 
 export type FeedbackOption = {
   icon: IconProps['icon']
@@ -34,7 +32,7 @@ const FeedbackPickerOption: React.FC<Props> = ({
   const colors = useColors()
 
   return (
-    <PressableHighlight
+    <TouchableOpacity
       key={option.value}
       onPress={() => onPress?.(option.value)}
       style={{
@@ -63,7 +61,7 @@ const FeedbackPickerOption: React.FC<Props> = ({
           {option.label}
         </Text>
       </>
-    </PressableHighlight>
+    </TouchableOpacity>
   )
 }
 

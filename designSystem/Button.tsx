@@ -1,8 +1,7 @@
 import { TouchableOpacityProps } from 'react-native-gesture-handler'
 
 import { Text, useColors } from '.'
-import { TextProps } from 'react-native'
-import PressableHighlight from './PressableHighlight'
+import { TextProps, TouchableOpacity } from 'react-native'
 
 type ButtonVariants = {
   variant: 'primary' | 'accent' | 'neutral' | 'critical' | 'tertiary'
@@ -40,7 +39,7 @@ export const Button: React.FC<ButtonProps> = ({
   const color = disabled ? 'disabled' : type === 'outline' ? 'outline' : variant
 
   return (
-    <PressableHighlight
+    <TouchableOpacity
       style={[
         {
           justifyContent: 'center',

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { WorkoutSet } from 'app/db/models'
 import SetDataLabel from 'app/components/WorkoutStep/SetDataLabel'
-import { PressableHighlight } from 'designSystem'
+import { TouchableOpacity } from 'react-native'
 
 type Props = {
   set: WorkoutSet
@@ -11,7 +11,7 @@ type Props = {
 
 const RecordsListItem: React.FC<Props> = ({ set, onPress }) => {
   return (
-    <PressableHighlight
+    <TouchableOpacity
       onPress={onPress}
       style={{
         display: 'flex',
@@ -37,7 +37,7 @@ const RecordsListItem: React.FC<Props> = ({ set, onPress }) => {
           fontSize="md"
         />
       </>
-    </PressableHighlight>
+    </TouchableOpacity>
   )
 }
 

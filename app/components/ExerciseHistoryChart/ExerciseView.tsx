@@ -1,9 +1,7 @@
 import React, { ReactNode } from 'react'
-
-import { PressableHighlight } from 'designSystem'
-
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
+import { TouchableOpacity } from 'react-native'
 
 type Props = {
   children: ReactNode
@@ -18,12 +16,12 @@ const ExerciseView: React.FC<Props> = ({
   return (
     <>
       {!isExerciseSelected && (
-        <PressableHighlight
+        <TouchableOpacity
           style={{ flex: 1 }}
           onPress={openSelect}
         >
           <EmptyState text={translate('selectExerciseForData')} />
-        </PressableHighlight>
+        </TouchableOpacity>
       )}
       {isExerciseSelected && children}
     </>
