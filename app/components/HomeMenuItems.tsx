@@ -8,7 +8,7 @@ export type HeaderMenuItemsProps = {
   onClose(): void
 } & Partial<MenuProps>
 
-const HeaderMenuItems: React.FC<HeaderMenuItemsProps> = ({ onClose }) => {
+const HomeMenuItems: React.FC<HeaderMenuItemsProps> = ({ onClose }) => {
   const { performBenchmark } = useBenchmark()
 
   const {
@@ -46,4 +46,4 @@ const HeaderMenuItems: React.FC<HeaderMenuItemsProps> = ({ onClose }) => {
   )
 }
 
-export default observer(HeaderMenuItems)
+export default observer(HomeMenuItems)

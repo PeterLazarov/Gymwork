@@ -5,12 +5,10 @@ import { DateTime } from 'luxon'
 import { capitalize } from 'lodash'
 
 import { useStores } from 'app/db/helpers/useStores'
-import { useExport } from 'app/utils/useExport'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, useColors } from 'designSystem'
 import useBenchmark from 'app/utils/useBenchmark'
-import { useDialogContext } from 'app/contexts/DialogContext'
-import HeaderMenuItems from '../HeaderMenuItems'
+import HomeMenuItems from '../HomeMenuItems'
 
 const WorkoutHeader: React.FC = () => {
   const colors = useColors()
@@ -106,7 +104,7 @@ const WorkoutHeader: React.FC = () => {
             />
           </>
         )}
-        <HeaderMenuItems onClose={() => setMenuOpen(false)} />
+        <HomeMenuItems onClose={() => setMenuOpen(false)} />
       </Menu>
     </Header>
   )

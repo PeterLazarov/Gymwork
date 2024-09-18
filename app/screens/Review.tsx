@@ -11,7 +11,7 @@ import ExerciseRecordStats from 'app/components/ExerciseStats/ExerciseRecordStat
 import { translate } from 'app/i18n'
 import ExerciseView from 'app/components/ExerciseHistoryChart/ExerciseView'
 import { Menu } from 'react-native-paper'
-import HeaderMenuItems from 'app/components/HeaderMenuItems'
+import HomeMenuItems from 'app/components/HomeMenuItems'
 
 const ReviewScreen: React.FC = () => {
   const colors = useColors()
@@ -126,7 +126,7 @@ const ReviewScreen: React.FC = () => {
             </IconButton>
           }
         >
-          <HeaderMenuItems onClose={() => setMenuOpen(false)} />
+          <HomeMenuItems onClose={() => setMenuOpen(false)} />
         </Menu>
       </Header>
 
