@@ -31,12 +31,11 @@ import ReviewScreen from 'app/screens/Review'
 import TabsLayout from 'app/layouts/TabsLayout'
 import { useStores } from 'app/db/helpers/useStores'
 import Settings from 'app/screens/Settings'
-import { useColors } from 'designSystem'
+import { navThemes, paperThemes, useColors } from 'designSystem'
 import { ErrorBoundary } from '@sentry/react-native'
 import { DialogContextProvider } from 'app/contexts/DialogContext'
 import { ErrorDetails } from 'app/screens/ErrorDetails'
 import { Portal, PaperProvider } from 'react-native-paper'
-import { navThemes, paperThemes } from 'designSystem/tokens/themeV2'
 
 /**
  * Documentation:

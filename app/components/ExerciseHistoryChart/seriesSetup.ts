@@ -6,7 +6,7 @@ import {
   isImperialDistance,
   measurementUnits,
 } from 'app/db/models'
-import { colorSchemas } from 'designSystem'
+import { palettes } from 'designSystem'
 import { SeriesItem } from './useChartConfig'
 
 type Props = {
@@ -24,12 +24,12 @@ const seriesSetup = ({ data }: Props) => {
     return data.map(sets =>
       sets.length > 0
         ? sets.reduce(
-          (max, set) =>
-            Number(
-              Math.max(max, oneRepMaxEpley(set.weight!, set.reps!)).toFixed(2)
-            ),
-          0
-        )
+            (max, set) =>
+              Number(
+                Math.max(max, oneRepMaxEpley(set.weight!, set.reps!)).toFixed(2)
+              ),
+            0
+          )
         : null
     )
   }
@@ -38,9 +38,9 @@ const seriesSetup = ({ data }: Props) => {
     return data.map(sets =>
       sets.length > 0
         ? sets.reduce(
-          (max, set) => Number(Math.max(max, set.speed).toFixed(2)),
-          0
-        )
+            (max, set) => Number(Math.max(max, set.speed).toFixed(2)),
+            0
+          )
         : null
     )
   }
@@ -48,10 +48,7 @@ const seriesSetup = ({ data }: Props) => {
   const totalVolumeFormatter = () => {
     return data.map(sets =>
       sets.length > 0
-        ? sets.reduce(
-          (acc, set) => acc += set.reps * set.weight,
-          0
-        )
+        ? sets.reduce((acc, set) => (acc += set.reps * set.weight), 0)
         : null
     )
   }
@@ -59,10 +56,10 @@ const seriesSetup = ({ data }: Props) => {
   const getChartSeries = (exercise: Exercise) => {
     const series: Record<string, SeriesItem> = {}
     const colorsStack = [
-      colorSchemas.gold.hue600,
-      colorSchemas.blue.hue600,
-      colorSchemas.coral.hue600,
-      colorSchemas.purple.hue600,
+      palettes.gold['60'],
+      palettes.blue.hue600,
+      palettes.coral.hue600,
+      palettes.primary['60'],
     ]
 
     if (exercise.measurements?.weight) {
