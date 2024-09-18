@@ -19,7 +19,7 @@ const TabHeaderPanel: React.FC<Props> = ({ tabsConfig, style, ...rest }) => {
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
-      backgroundColor: colors.mat.surfaceContainerLowest,
+      backgroundColor: colors.surfaceContainerLowest,
     },
   })
 

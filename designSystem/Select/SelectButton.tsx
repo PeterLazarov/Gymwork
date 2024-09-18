@@ -17,7 +17,7 @@ const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
     <TouchableWithoutFeedback onPress={onPress}>
       <View
         style={{
-          backgroundColor: colors.mat.surfaceContainerLow,
+          backgroundColor: colors.surfaceContainerLow,
           paddingHorizontal: 15,
           paddingVertical: label ? 9 : 17,
           flexDirection: 'row',
@@ -45,7 +45,7 @@ const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
           )}
           <Text
             style={{
-              color: error ? colors.mat.onError : colors.mat.onSurface,
+              color: error ? colors.onError : colors.onSurface,
             }}
           >
             {text}

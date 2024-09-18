@@ -18,7 +18,7 @@ export const Text: React.FC<TextProps> = ({ style, ...otherProps }) => {
 const makeStyles = (colors: any) =>
   StyleSheet.create({
     default: {
-      color: colors.mat.onSurface,
+      color: colors.onSurface,
       fontSize: fontSize.md,
     },
   })

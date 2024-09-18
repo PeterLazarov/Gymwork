@@ -51,7 +51,7 @@ const makeStyles = (colors: any) =>
       flexDirection: 'column',
       display: 'flex',
       flexGrow: 1,
-      backgroundColor: colors.mat.surfaceLow,
+      backgroundColor: colors.surfaceLow,
     },
   })
 

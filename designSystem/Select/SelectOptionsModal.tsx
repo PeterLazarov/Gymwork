@@ -47,7 +47,7 @@ function SelectOptionsModal<T = unknown>({
         visible={open}
         onDismiss={onClose}
         contentContainerStyle={{
-          backgroundColor: colors.mat.surfaceContainerLowest,
+          backgroundColor: colors.surfaceContainerLowest,
           marginVertical: 8,
           marginHorizontal: 20,
           maxHeight: maxModalHeight,

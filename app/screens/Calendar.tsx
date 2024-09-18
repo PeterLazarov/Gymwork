@@ -34,8 +34,8 @@ const CalendarScreen: React.FC = () => {
         }
         acc[curr.date]!.dots = [
           {
-            color: colors.mat.tertiary,
-            selectedColor: colors.mat.tertiaryText,
+            color: colors.tertiary,
+            selectedColor: colors.tertiaryText,
           },
         ]
 
@@ -101,7 +101,7 @@ const CalendarScreen: React.FC = () => {
           >
             <Icon
               icon="chevron-back"
-              color={colors.mat.onPrimary}
+              color={colors.onPrimary}
             />
           </IconButton>
           <Header.Title title={translate('calendar')} />
@@ -111,7 +111,7 @@ const CalendarScreen: React.FC = () => {
           >
             <Icon
               icon="ellipsis-vertical"
-              color={colors.mat.onPrimary}
+              color={colors.onPrimary}
             />
           </IconButton>
         </Header>
@@ -127,10 +127,10 @@ const CalendarScreen: React.FC = () => {
           numberOfMonths={monthsToRender}
           theme={{
             todayTextStyle: {
-              color: colors.mat.onTertiary,
+              color: colors.onTertiary,
             },
             todayContainerStyle: {
-              backgroundColor: colors.mat.tertiary,
+              backgroundColor: colors.tertiary,
               aspectRatio: 1,
               borderRadius: 50,
             },
@@ -144,20 +144,20 @@ const CalendarScreen: React.FC = () => {
 
             monthTitleTextStyle: {
               fontSize: fontSize.lg,
-              color: colors.mat.onSurface,
+              color: colors.onSurface,
             },
             dayTextStyle: {
-              color: colors.mat.onSurface,
+              color: colors.onSurface,
             },
 
             activeDayTextStyle: {
-              color: colors.mat.onTertiary,
+              color: colors.onTertiary,
             },
             activeDayContainerStyle: {
-              backgroundColor: colors.mat.primary,
+              backgroundColor: colors.primary,
             },
 
-            weekColumnTextStyle: { color: colors.mat.onSurface },
+            weekColumnTextStyle: { color: colors.onSurface },
           }}
           disableRange
           monthHeight={460}

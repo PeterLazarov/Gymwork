@@ -35,10 +35,10 @@ const useChartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
         Object.assign({ [curr]: series[curr]!.initiallySelected })
       ),
       textStyle: {
-        color: colors.mat.onSurface,
+        color: colors.onSurface,
       },
-      inactiveColor: colors.mat.onSurfaceVariant,
-      inactiveBorderColor: colors.mat.onSurfaceVariant,
+      inactiveColor: colors.onSurfaceVariant,
+      inactiveBorderColor: colors.onSurfaceVariant,
       icon: 'roundRect',
     },
     yAxis: {

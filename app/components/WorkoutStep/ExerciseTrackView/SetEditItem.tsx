@@ -26,7 +26,7 @@ const SetEditItem: React.FC<Props> = ({
 }) => {
   const colors = useColors()
 
-  const color = colors.mat.onSurface
+  const color = colors.onSurface
 
   const number = set.isWarmup ? undefined : calcWorkSetNumber(set)
 
@@ -39,9 +39,7 @@ const SetEditItem: React.FC<Props> = ({
         justifyContent: 'space-around',
         paddingHorizontal: 10,
         paddingVertical: 1,
-        backgroundColor: isFocused
-          ? colors.mat.surfaceContainerHigh
-          : undefined,
+        backgroundColor: isFocused ? colors.surfaceContainerHigh : undefined,
       }}
     >
       <View
@@ -62,7 +60,7 @@ const SetEditItem: React.FC<Props> = ({
         {isRecord && (
           <Icon
             icon="trophy"
-            color={colors.mat.tertiary}
+            color={colors.tertiary}
           />
         )}
       </View>

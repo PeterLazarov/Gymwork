@@ -77,7 +77,7 @@ const SaveTemplateScreen: React.FC = () => {
         <IconButton onPress={onBackPress}>
           <Icon
             icon="chevron-back"
-            color={colors.mat.onPrimary}
+            color={colors.onPrimary}
           />
         </IconButton>
         <Header.Title title={translate('saveTemplate')} />
@@ -88,7 +88,7 @@ const SaveTemplateScreen: React.FC = () => {
           <Icon
             icon="checkmark"
             size="large"
-            color={colors.mat.onPrimary}
+            color={colors.onPrimary}
           />
         </IconButton>
       </Header>

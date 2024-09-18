@@ -33,7 +33,7 @@ const FeedbackPickerOption: React.FC<Props> = ({
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: isSelected
-            ? colors.mat.surfaceContainerLowest
+            ? colors.surfaceContainerLowest
             : 'transparent',
           borderRadius: 8,
           padding: noPadding ? 0 : 8,
@@ -48,13 +48,13 @@ const FeedbackPickerOption: React.FC<Props> = ({
         <Icon
           icon={option.icon}
           size="large"
-          color={isSelected ? option.color : colors.mat.outlineVariant}
+          color={isSelected ? option.color : colors.outlineVariant}
         />
       </IconButton>
       <Text
         style={{
           fontSize: fontSize.sm,
-          color: isSelected ? option.color : colors.mat.outlineVariant,
+          color: isSelected ? option.color : colors.outlineVariant,
           fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
         }}
       >

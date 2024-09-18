@@ -54,11 +54,11 @@ const CustomSlider: React.FC<Props> = ({
       <MultiSlider
         onValuesChange={onValuesChange}
         selectedStyle={{
-          backgroundColor: colors.mat.primary,
+          backgroundColor: colors.primary,
           ...selectedStyle,
         }}
         markerStyle={{
-          backgroundColor: colors.mat.primary,
+          backgroundColor: colors.primary,
           ...markerStyle,
         }}
         {...otherProps}

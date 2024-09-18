@@ -45,11 +45,11 @@ const makeStyles = (
     },
     value: {
       fontWeight: 'bold',
-      color: isFocused ? colors.mat.tertiary : colors.mat.onSurface,
+      color: isFocused ? colors.tertiary : colors.onSurface,
       fontSize: fontSize ? fontSizeToken[fontSize] : fontSizeToken.xs,
     },
     unit: {
-      color: isFocused ? colors.mat.tertiary : colors.mat.onSurface,
+      color: isFocused ? colors.tertiary : colors.onSurface,
       fontSize: fontSize ? fontSizeToken[fontSize] : fontSizeToken.xs,
     },
   })

@@ -82,7 +82,7 @@ const ReviewScreen: React.FC = () => {
             underlay="darker"
           >
             <Icon
-              color={colors.mat.onPrimary}
+              color={colors.onPrimary}
               icon="chevron-back"
             />
           </IconButton>
@@ -102,7 +102,7 @@ const ReviewScreen: React.FC = () => {
         >
           <Icon
             icon="list-outline"
-            color={colors.mat.onPrimary}
+            color={colors.onPrimary}
           />
         </IconButton>
       </Header>
@@ -111,7 +111,7 @@ const ReviewScreen: React.FC = () => {
         style={{
           flexGrow: 1,
           position: 'relative',
-          backgroundColor: colors.mat.surfaceContainerLow,
+          backgroundColor: colors.surfaceContainerLow,
         }}
       >
         {exerciseSelectOpen && (

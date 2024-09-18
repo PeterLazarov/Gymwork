@@ -25,7 +25,7 @@ export const ErrorDetails: React.FC<ErrorDetailsProps> = ({
     <SafeLayout style={{ gap: 16, paddingHorizontal: 10 }}>
       <Text
         style={{
-          color: colors.mat.onError,
+          color: colors.onError,
           fontSize: fontSize.xl,
           textAlign: 'center',
         }}
@@ -59,7 +59,7 @@ export const ErrorDetails: React.FC<ErrorDetailsProps> = ({
             <ScrollView
               style={{
                 flex: 2,
-                backgroundColor: colors.mat.surface,
+                backgroundColor: colors.surface,
                 borderRadius: 6,
               }}
               contentContainerStyle={{
@@ -68,7 +68,7 @@ export const ErrorDetails: React.FC<ErrorDetailsProps> = ({
             >
               <Text
                 style={{
-                  backgroundColor: colors.mat.surface,
+                  backgroundColor: colors.surface,
                 }}
               >
                 {`${error?.stack ?? ''}`.trim()}

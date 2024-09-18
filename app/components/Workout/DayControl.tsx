@@ -43,7 +43,7 @@ const DayControl: React.FC<Props> = ({ duration }) => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.mat.surfaceContainerLowest,
+        backgroundColor: colors.surfaceContainerLowest,
         padding: 4,
         ...boxShadows.default,
       }}

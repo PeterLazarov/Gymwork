@@ -28,13 +28,13 @@ export const Button: React.FC<ButtonProps> = ({
   const colors = useColors()
 
   const buttonColors = {
-    primary: colors.mat.primaryContainer,
-    accent: colors.mat.tertiaryContainer,
-    neutral: colors.mat.secondaryContainer,
-    critical: colors.mat.errorContainer,
-    tertiary: colors.mat.surfaceContainer,
-    disabled: colors.mat.outlineVariant,
-    outline: colors.mat.outline,
+    primary: colors.primaryContainer,
+    accent: colors.tertiaryContainer,
+    neutral: colors.secondaryContainer,
+    critical: colors.errorContainer,
+    tertiary: colors.surfaceContainer,
+    disabled: colors.outlineVariant,
+    outline: colors.outline,
   }
 
   const color = disabled ? 'disabled' : type === 'outline' ? 'outline' : variant
@@ -71,19 +71,19 @@ export const ButtonText: React.FC<ButtonTextProps> = ({
   const colors = useColors()
 
   const buttonColors = {
-    primary: colors.mat.primaryContainer,
-    accent: colors.mat.tertiaryContainer,
-    neutral: colors.mat.secondaryContainer,
-    critical: colors.mat.errorContainer,
-    tertiary: colors.mat.surfaceContainer,
+    primary: colors.primaryContainer,
+    accent: colors.tertiaryContainer,
+    neutral: colors.secondaryContainer,
+    critical: colors.errorContainer,
+    tertiary: colors.surfaceContainer,
   }
 
   const buttonTextColors = {
-    primary: colors.mat.onPrimaryContainer,
-    accent: colors.mat.onTertiaryContainer,
-    neutral: colors.mat.onSecondaryContainer,
-    critical: colors.mat.onErrorContainer,
-    tertiary: colors.mat.onSurface,
+    primary: colors.onPrimaryContainer,
+    accent: colors.onTertiaryContainer,
+    neutral: colors.onSecondaryContainer,
+    critical: colors.onErrorContainer,
+    tertiary: colors.onSurface,
   }
 
   return (

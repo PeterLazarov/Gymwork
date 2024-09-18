@@ -48,7 +48,7 @@ const Timer = forwardRef<TextInput>(function Timer(_, ref) {
           width={2}
           fill={percentTimeLeft}
           rotation={0}
-          tintColor={colors.mat.primary}
+          tintColor={colors.primary}
         >
           {_ => (
             <View>

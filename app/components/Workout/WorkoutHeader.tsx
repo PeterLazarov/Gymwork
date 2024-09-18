@@ -83,7 +83,7 @@ const WorkoutHeader: React.FC = () => {
   return (
     <Header>
       <Header.Title title={dateLabel} />
-      {/* <WorkoutTimer style={{ color: colors.mat.onPrimary }} /> */}
+      {/* <WorkoutTimer style={{ color: colors.onPrimary }} /> */}
 
       <IconButton
         onPress={openCalendar}
@@ -91,7 +91,7 @@ const WorkoutHeader: React.FC = () => {
       >
         <Icon
           icon="calendar-sharp"
-          color={colors.mat.onPrimary}
+          color={colors.onPrimary}
         />
       </IconButton>
 
@@ -106,7 +106,7 @@ const WorkoutHeader: React.FC = () => {
           >
             <Icon
               icon="ellipsis-vertical"
-              color={colors.mat.onPrimary}
+              color={colors.onPrimary}
             />
           </IconButton>
         }

@@ -20,7 +20,7 @@ const SelectedLabel: React.FC<Props> = ({
     <View
       style={{
         borderWidth: 1,
-        borderColor: colors.mat.primary,
+        borderColor: colors.primary,
         paddingLeft: 10,
         paddingRight: 4,
         paddingVertical: 6,
@@ -33,7 +33,7 @@ const SelectedLabel: React.FC<Props> = ({
     >
       <Text
         style={{
-          color: colors.mat.primary,
+          color: colors.primary,
           textTransform: 'capitalize',
         }}
       >

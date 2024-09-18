@@ -12,16 +12,16 @@ const ToggleSwitch: React.FC<Props> = ({ value, onValueChange, variant }) => {
   const colors = useColors()
 
   const thumbActiveColor =
-    variant === 'critical' ? colors.mat.error : colors.mat.primary
+    variant === 'critical' ? colors.error : colors.primary
 
   return (
     <Switch
       trackColor={{
-        false: colors.mat.surfaceContainerHighest,
-        true: colors.mat.surfaceContainerHigh,
+        false: colors.surfaceContainerHighest,
+        true: colors.surfaceContainerHigh,
       }}
-      thumbColor={value ? thumbActiveColor : colors.mat.surfaceContainer}
-      ios_backgroundColor={colors.mat.surfaceContainerHighest}
+      thumbColor={value ? thumbActiveColor : colors.surfaceContainer}
+      ios_backgroundColor={colors.surfaceContainerHighest}
       onValueChange={onValueChange}
       value={value}
     />
