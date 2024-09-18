@@ -44,7 +44,7 @@ const ToggleGroupButton: React.FC<Props> = ({
             borderBottomLeftRadius: index === 0 ? 999 : 0,
             borderTopRightRadius: index === buttons.length - 1 ? 999 : 0,
             borderBottomRightRadius: index === buttons.length - 1 ? 999 : 0,
-            borderColor: colors.neutralDark,
+            borderColor: colors.outlineVariant,
             borderWidth: 1,
             borderLeftWidth: index === 0 ? 1 : 0,
           }}

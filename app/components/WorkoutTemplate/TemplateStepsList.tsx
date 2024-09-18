@@ -19,7 +19,7 @@ const TemplateStepsList: React.FC<Props> = ({ steps, onStepRemove }) => {
       <View
         style={{
           borderWidth: 1,
-          borderColor: colors.neutralDarker,
+          borderColor: colors.outlineVariant,
           borderRadius: 8,
           paddingHorizontal: 10,
           paddingVertical: 5,

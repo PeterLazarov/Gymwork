@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, View } from 'react-native'
+import { Platform, StyleProp, View, ViewStyle } from 'react-native'
 
 import { Text, Icon, IconButton, IconProps, useColors, fontSize } from '..'
 
@@ -14,25 +14,32 @@ type Props = {
   onPress?: (feeling: string) => void
   option: FeedbackOption
   noPadding?: boolean
+  style?: StyleProp<ViewStyle>
 }
 const FeedbackPickerOption: React.FC<Props> = ({
   option,
   onPress,
   isSelected,
   noPadding,
+  style,
 }) => {
   const colors = useColors()
 
   return (
     <View
       key={option.value}
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: isSelected ? colors.neutralLightest : 'transparent',
-        borderRadius: 8,
-        padding: noPadding ? 0 : 8,
-      }}
+      style={[
+        {
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: isSelected
+            ? colors.surfaceContainerLowest
+            : 'transparent',
+          borderRadius: 8,
+          padding: noPadding ? 0 : 8,
+        },
+        style,
+      ]}
     >
       <IconButton
         size="lg"
@@ -41,13 +48,13 @@ const FeedbackPickerOption: React.FC<Props> = ({
         <Icon
           icon={option.icon}
           size="large"
-          color={isSelected ? option.color : colors.neutralDarker}
+          color={isSelected ? option.color : colors.outlineVariant}
         />
       </IconButton>
       <Text
         style={{
           fontSize: fontSize.sm,
-          color: isSelected ? option.color : colors.neutralDarker,
+          color: isSelected ? option.color : colors.outlineVariant,
           fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
         }}
       >

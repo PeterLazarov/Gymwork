@@ -69,7 +69,7 @@ const StepHeader: React.FC = () => {
         underlay="darker"
       >
         <Icon
-          color={colors.primaryText}
+          color={colors.onPrimary}
           icon="chevron-back"
         />
       </IconButton>
@@ -90,7 +90,7 @@ const StepHeader: React.FC = () => {
             >
               <Icon
                 icon="ellipsis-vertical"
-                color={colors.primaryText}
+                color={colors.onPrimary}
               />
             </IconButton>
           }

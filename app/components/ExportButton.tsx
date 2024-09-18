@@ -37,7 +37,7 @@ export const ExportButton: React.FC<Props> = props => {
       style={{ flex: 1 }}
     >
       <Icon
-        color={colors.primaryText}
+        color={colors.onPrimary}
         icon="analytics"
       />
       <ButtonText variant="primary">Export workouts</ButtonText>

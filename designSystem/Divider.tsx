@@ -11,8 +11,8 @@ export function Divider(props: Props) {
 
   const variants = {
     primary: colors.primary,
-    accent: colors.accent,
-    neutral: colors.neutralDark,
+    accent: colors.tertiary,
+    neutral: colors.outlineVariant,
   }
 
   return (

@@ -70,7 +70,7 @@ const AddStepMenu = () => {
           style={{
             padding: 20,
             flexGrow: 1,
-            backgroundColor: colors.neutralLighter,
+            backgroundColor: colors.surfaceContainerLow,
           }}
         >
           {options.map((option, i) => (

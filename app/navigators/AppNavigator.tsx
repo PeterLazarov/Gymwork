@@ -1,6 +1,4 @@
 import {
-  DarkTheme as NavigationDarkTheme,
-  DefaultTheme as NavigationDefaultTheme,
   NavigationContainer,
   NavigationState,
   RouteProp,
@@ -11,7 +9,7 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack'
 import { observer } from 'mobx-react-lite'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { StatusBar, useColorScheme } from 'react-native'
 import Config from '../config'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
@@ -33,18 +31,11 @@ import ReviewScreen from 'app/screens/Review'
 import TabsLayout from 'app/layouts/TabsLayout'
 import { useStores } from 'app/db/helpers/useStores'
 import Settings from 'app/screens/Settings'
-import { useColors } from 'designSystem'
+import { navThemes, paperThemes, useColors } from 'designSystem'
 import { ErrorBoundary } from '@sentry/react-native'
 import { DialogContextProvider } from 'app/contexts/DialogContext'
 import { ErrorDetails } from 'app/screens/ErrorDetails'
-import {
-  Portal,
-  PaperProvider,
-  MD3DarkTheme,
-  MD3LightTheme,
-  adaptNavigationTheme,
-} from 'react-native-paper'
-import { paperThemeDark, paperThemeLight } from 'designSystem/tokens/theme'
+import { Portal, PaperProvider } from 'react-native-paper'
 
 /**
  * Documentation:
@@ -104,7 +95,7 @@ const AppStack = observer(function AppStack() {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        navigationBarColor: colors.neutralLightest,
+        navigationBarColor: colors.surface,
         animation: 'none',
       }}
       initialRouteName="HomeStack"
@@ -203,9 +194,6 @@ export interface NavigationProps
 export const AppNavigator = observer(function AppNavigator(
   props: NavigationProps
 ) {
-  const colorScheme = useColorScheme()
-  const colors = useColors()
-
   useBackButtonHandler(routeName => exitRoutes.includes(routeName))
 
   const { navStore } = useStores()
@@ -217,20 +205,18 @@ export const AppNavigator = observer(function AppNavigator(
     navStore.setProp('activeRoute', currentRouteName)
   }
 
-  const materialLightTheme = { ...MD3LightTheme, colors: paperThemeLight }
-  const materialDarkTheme = { ...MD3DarkTheme, colors: paperThemeDark }
+  const colorScheme = useColorScheme()! // TODO is it really nullable?
+  const colors = useColors()
+  const paperTheme = useMemo(() => {
+    return paperThemes[colorScheme]
+  }, [colorScheme])
 
-  const { LightTheme, DarkTheme } = adaptNavigationTheme({
-    reactNavigationLight: NavigationDefaultTheme,
-    reactNavigationDark: NavigationDarkTheme,
-    materialLight: materialLightTheme,
-    materialDark: materialDarkTheme,
-  })
+  const navTheme = useMemo(() => {
+    return navThemes[colorScheme === 'dark' ? 'DarkTheme' : 'LightTheme']
+  }, [colorScheme])
 
   return (
-    <PaperProvider
-      theme={colorScheme === 'dark' ? materialDarkTheme : materialLightTheme}
-    >
+    <PaperProvider theme={paperTheme}>
       <ErrorBoundary
         fallback={({ error, resetError }) => (
           <ErrorDetails
@@ -242,7 +228,7 @@ export const AppNavigator = observer(function AppNavigator(
         <Portal.Host>
           <DialogContextProvider>
             <NavigationContainer
-              theme={colorScheme === 'dark' ? DarkTheme : LightTheme}
+              theme={navTheme}
               ref={navigationRef}
               {...props}
               onStateChange={handleStateChange}
@@ -250,7 +236,7 @@ export const AppNavigator = observer(function AppNavigator(
               <>
                 <StatusBar
                   backgroundColor={
-                    colorScheme === 'light' ? colors.primary : 'black'
+                    colorScheme === 'light' ? colors.primary : colors.shadow
                   }
                   barStyle={'light-content'}
                 />

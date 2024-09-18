@@ -31,9 +31,7 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
         <View style={{ alignItems: 'center' }}>
           <View style={{ flexDirection: 'row' }}>
             {hasNotes && (
-              <Text
-                style={{ fontSize: fontSize.sm, color: colors.tertiaryText }}
-              >
+              <Text style={{ fontSize: fontSize.sm, color: colors.onSurface }}>
                 {workout.notes}
               </Text>
             )}
@@ -54,14 +52,14 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
               <FeedbackPickerOption
                 option={painOptions[workout.pain]}
                 isSelected
-                noPadding
+                style={{ backgroundColor: 'transparent' }}
               />
             )}
             {workout.feeling && (
               <FeedbackPickerOption
                 option={feelingOptions[workout.feeling]}
                 isSelected
-                noPadding
+                style={{ backgroundColor: 'transparent' }}
               />
             )}
           </View>

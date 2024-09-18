@@ -54,7 +54,7 @@ const makeStyles = (colors: any) =>
       gap: 8,
       marginBottom: 12,
       borderRadius: 8,
-      borderColor: colors.neutralDark,
+      borderColor: colors.onSurfaceVariant,
       borderWidth: 1,
     },
     itemDate: {

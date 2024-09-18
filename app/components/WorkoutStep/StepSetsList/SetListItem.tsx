@@ -27,7 +27,7 @@ const SetListItem: React.FC<Props> = ({
 }) => {
   const colors = useColors()
 
-  const color = isFocused ? colors.accent : colors.neutralDarkest
+  const color = isFocused ? colors.tertiary : colors.onSurface
   const styles = useMemo(() => makeStyles(color), [color])
 
   return (
@@ -44,7 +44,7 @@ const SetListItem: React.FC<Props> = ({
         {isRecord && (
           <Icon
             icon="trophy"
-            color={colors.accent}
+            color={colors.tertiary}
           />
         )}
       </View>

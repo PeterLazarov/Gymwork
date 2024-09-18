@@ -53,7 +53,7 @@ const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
         borderRadius: 8,
         display: 'flex',
         flexGrow: 1,
-        backgroundColor: colors.neutralLighter,
+        backgroundColor: colors.surfaceContainer,
       }}
     >
       {recordSets.length > 0 ? (

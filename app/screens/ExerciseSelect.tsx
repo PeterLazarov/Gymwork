@@ -60,7 +60,7 @@ const ExerciseSelectScreen: React.FC = () => {
           >
             <Icon
               icon="chevron-back"
-              color={colors.primaryText}
+              color={colors.onPrimary}
             />
           </IconButton>
           <Header.Title
@@ -77,7 +77,7 @@ const ExerciseSelectScreen: React.FC = () => {
             <Icon
               icon="add"
               size="large"
-              color={colors.primaryText}
+              color={colors.onPrimary}
             />
           </IconButton>
         </Header>

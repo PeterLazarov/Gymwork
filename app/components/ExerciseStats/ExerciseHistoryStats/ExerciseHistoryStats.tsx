@@ -23,8 +23,8 @@ const ExerciseHistoryStats: React.FC<ExerciseHistoryViewProps> = props => {
   const exercise = props.exercise || stateStore.focusedExercise
   const workoutsContained = exercise
     ? workoutStore.exerciseWorkoutsHistoryMap[exercise.guid]?.filter(
-      w => w.exerciseSetsMap[exercise.guid]!.length > 0
-    ) || []
+        w => w.exerciseSetsMap[exercise.guid]!.length > 0
+      ) || []
     : []
   console.log('ExerciseHistoryStats')
 
@@ -51,7 +51,7 @@ const makeStyles = (colors: any) =>
       flexDirection: 'column',
       display: 'flex',
       flexGrow: 1,
-      backgroundColor: colors.neutralLighter,
+      backgroundColor: colors.surfaceLow,
     },
   })
 

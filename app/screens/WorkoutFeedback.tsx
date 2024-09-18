@@ -45,7 +45,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
         >
           <Icon
             icon="chevron-back"
-            color={colors.primaryText}
+            color={colors.onPrimary}
           />
         </IconButton>
         <Header.Title title={translate('workoutComments')} />
@@ -89,7 +89,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
         {workout.rpe && (
           <Text
             style={{
-              color: colors.tertiaryText,
+              color: colors.onSurface,
               textAlign: 'center',
             }}
           >

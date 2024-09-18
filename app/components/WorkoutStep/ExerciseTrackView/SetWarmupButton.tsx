@@ -28,7 +28,7 @@ const SetWarmupButton: React.FC<Props> = ({
       style={{
         height: 36,
         width: 36,
-        borderColor: colors.neutralDarker,
+        borderColor: colors.outline,
         borderWidth: 1,
         borderTopRightRadius: 4,
         borderTopLeftRadius: 4,

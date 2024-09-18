@@ -48,7 +48,7 @@ const SetEditList: React.FC<Props> = ({
       return (
         <PressableHighlight
           style={{
-            backgroundColor: isActive ? colors.neutralLight : undefined,
+            backgroundColor: isActive ? colors.primaryContainer : undefined,
           }}
           onLongPress={onDragStart}
           onPressOut={onDragEnd}

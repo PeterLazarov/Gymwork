@@ -42,7 +42,7 @@ const ExerciseControl: React.FC<ExerciseControlProps> = ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.neutralLightest,
+        backgroundColor: colors.surfaceContainerLowest,
         padding: 4,
         ...boxShadows.default,
       }}
