@@ -15,7 +15,8 @@ import {
   useColors,
   ToggleGroupButton,
 } from 'designSystem'
-import { Workout, painOptions, feelingOptions } from 'app/db/models'
+import { Workout, discomfortOptions, feelingOptions } from 'app/db/models'
+import { ScrollView, View } from 'react-native'
 
 const WorkoutFeedbackScreen: React.FC = () => {
   const colors = useColors()
@@ -36,6 +37,11 @@ const WorkoutFeedbackScreen: React.FC = () => {
     value: String(option),
   }))
 
+  // DUMB FIX
+  if (!workout) {
+    navigate('Workout')
+  }
+
   return (
     <EmptyLayout>
       <Header>
@@ -53,58 +59,69 @@ const WorkoutFeedbackScreen: React.FC = () => {
 
       <KeyboardAvoiderView
         avoidMode="focused-input"
-        style={{
-          padding: 8,
-          gap: 16,
-          flex: 1,
-          width: '100%',
-          alignItems: 'center',
-        }}
+        style={{ flex: 1 }}
       >
-        <Text>{translate('howWasWorkout')}</Text>
-        <FeedbackPicker
-          selected={workout.feeling}
-          onChange={value =>
-            workout.setProp('feeling', value as Workout['feeling'])
-          }
-          options={Object.values(feelingOptions)}
-        />
-        <Text>{translate('experiencedPain')}</Text>
-        <FeedbackPicker
-          selected={workout.pain}
-          onChange={value => workout.setProp('pain', value as Workout['pain'])}
-          options={Object.values(painOptions)}
-        />
-        <Text>{translate('difficulty')}</Text>
-        <ToggleGroupButton
-          buttons={difficultyButtons}
-          initialActiveIndex={
-            workout.rpe ? rpeOptions.indexOf(workout.rpe) : undefined
-          }
-          unselectable
-          onChange={value => {
-            workout.setProp('rpe', value ? Number(value) : undefined)
-          }}
-        />
-        {workout.rpe && (
-          <Text
+        <ScrollView>
+          <View
             style={{
-              color: colors.onSurface,
-              textAlign: 'center',
+              padding: 8,
+              gap: 16,
+              flex: 1,
+              width: '100%',
+              alignItems: 'center',
             }}
           >
-            {translate(`rpe.${workout.rpe}` as TxKeyPath)}
-          </Text>
-        )}
-        <TextInput
-          value={workout.notes}
-          onChangeText={text => workout.setProp('notes', text)}
-          multiline
-          placeholder={translate('enterComments')}
-          style={{
-            width: '100%',
-          }}
-        />
+            <Text>{translate('howWasWorkout')}</Text>
+            <FeedbackPicker
+              selected={workout.feeling}
+              onChange={value =>
+                workout.setProp('feeling', value as Workout['feeling'])
+              }
+              options={Object.values(feelingOptions)}
+            />
+            <Text>{translate('discomfort')}</Text>
+            <FeedbackPicker
+              selected={workout.pain}
+              onChange={value =>
+                workout.setProp('pain', value as Workout['pain'])
+              }
+              options={Object.values(discomfortOptions)}
+            />
+            <Text>{translate('difficulty')}</Text>
+            <ToggleGroupButton
+              buttons={difficultyButtons}
+              initialActiveIndex={
+                workout.rpe ? rpeOptions.indexOf(workout.rpe) : undefined
+              }
+              unselectable
+              onChange={value => {
+                workout.setProp('rpe', value ? Number(value) : undefined)
+              }}
+            />
+            {workout.rpe && (
+              <Text
+                style={{
+                  color: colors.onSurface,
+                  textAlign: 'center',
+                }}
+              >
+                {translate(`rpe.${workout.rpe}` as TxKeyPath)}
+              </Text>
+            )}
+
+            {/* TODO fill screen. somehow */}
+            <TextInput
+              value={workout.notes}
+              onChangeText={text => workout.setProp('notes', text)}
+              multiline
+              placeholder={translate('enterComments')}
+              style={{
+                width: '100%',
+                minHeight: 100,
+              }}
+            />
+          </View>
+        </ScrollView>
       </KeyboardAvoiderView>
     </EmptyLayout>
   )

@@ -1,7 +1,15 @@
 import React from 'react'
 import { Platform, StyleProp, View, ViewStyle } from 'react-native'
 
-import { Text, Icon, IconButton, IconProps, useColors, fontSize } from '..'
+import {
+  Text,
+  Icon,
+  IconButton,
+  IconProps,
+  useColors,
+  fontSize,
+  PressableHighlight,
+} from '..'
 
 export type FeedbackOption = {
   icon: IconProps['icon']
@@ -26,41 +34,36 @@ const FeedbackPickerOption: React.FC<Props> = ({
   const colors = useColors()
 
   return (
-    <View
+    <PressableHighlight
       key={option.value}
-      style={[
-        {
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: isSelected
-            ? colors.surfaceContainerLowest
-            : 'transparent',
-          borderRadius: 8,
-          padding: noPadding ? 0 : 8,
-        },
-        style,
-      ]}
+      onPress={() => onPress?.(option.value)}
+      style={{
+        backgroundColor: isSelected
+          ? colors.surfaceContainerLowest
+          : 'transparent',
+        borderRadius: 8,
+        paddingVertical: 16,
+        flex: 1,
+        alignItems: 'center',
+      }}
     >
-      <IconButton
-        size="lg"
-        onPress={() => onPress?.(option.value)}
-      >
+      <>
         <Icon
           icon={option.icon}
           size="large"
           color={isSelected ? option.color : colors.outlineVariant}
         />
-      </IconButton>
-      <Text
-        style={{
-          fontSize: fontSize.sm,
-          color: isSelected ? option.color : colors.outlineVariant,
-          fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
-        }}
-      >
-        {option.label}
-      </Text>
-    </View>
+        <Text
+          style={{
+            fontSize: fontSize.sm,
+            color: isSelected ? option.color : colors.outlineVariant,
+            fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
+          }}
+        >
+          {option.label}
+        </Text>
+      </>
+    </PressableHighlight>
   )
 }
 

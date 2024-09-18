@@ -68,7 +68,7 @@ const en = {
   selectTemplate: 'Select template',
   templateWillBeDeleted: 'Template will be deleted.',
   exercises: 'Exercises',
-  experiencedPain: 'Experienced pain',
+  discomfort: 'Discomfort',
   addComments: 'Add comments ...',
   hideCommentsCard: 'Hide comments card',
   showCommentsCard: 'Show comments card',

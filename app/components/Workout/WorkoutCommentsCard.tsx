@@ -9,7 +9,7 @@ import {
   fontSize,
   useColors,
 } from 'designSystem'
-import { painOptions, feelingOptions, Workout } from 'app/db/models'
+import { discomfortOptions, feelingOptions, Workout } from 'app/db/models'
 import { translate } from 'app/i18n'
 
 export type WorkoutCommentsCardProps = {
@@ -51,7 +51,7 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
             )}
             {workout.pain && (
               <FeedbackPickerOption
-                option={painOptions[workout.pain]}
+                option={discomfortOptions[workout.pain]}
                 isSelected
                 style={{ backgroundColor: 'transparent' }}
               />

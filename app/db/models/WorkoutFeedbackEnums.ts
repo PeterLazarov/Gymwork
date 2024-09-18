@@ -21,22 +21,22 @@ export const feelingOptions = {
   },
 }
 
-export const painOptions = {
+export const discomfortOptions = {
   pain: {
     icon: 'alert-decagram-outline',
-    label: 'Pain',
+    label: 'Severe/Pain',
     color: palettes.coral.hue600,
     value: 'pain',
   },
   discomfort: {
     icon: 'warning-outline',
-    label: 'Discomfort',
+    label: 'Mild',
     color: palettes.amber.hue600,
     value: 'discomfort',
   },
   noPain: {
     icon: 'check',
-    label: 'No pain',
+    label: 'None',
     color: palettes.green['60'],
     value: 'noPain',
   },

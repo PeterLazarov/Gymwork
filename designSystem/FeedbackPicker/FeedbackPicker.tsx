@@ -27,7 +27,7 @@ const FeedbackPicker: React.FC<Props> = ({
       style={{
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'space-around',
+        gap: 16,
       }}
     >
       {options.map(option => (
