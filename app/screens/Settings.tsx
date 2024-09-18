@@ -65,7 +65,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
         <Header.Title title={translate('settings')} />
       </Header>
 
-      <View style={{ flex: 1, gap: 8, padding: 8 }}>
+      <View style={{ flex: 1, padding: 8 }}>
         <Select
           options={appearanceOptions}
           value={settingsStore.colorSchemePreference}
@@ -120,7 +120,8 @@ const makeStyles = (colors: any) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      padding: 5,
+      height: 64,
+      padding: 12,
       gap: 10,
     },
     itemLabel: {
