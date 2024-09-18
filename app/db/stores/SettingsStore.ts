@@ -29,9 +29,7 @@ export const SettingsStoreModel = types
       const colorScheme = Appearance.getColorScheme()
       const colors = getColors(colorScheme)
 
-      SystemUI.setBackgroundColorAsync(
-        colors.neutralLighter
-      )
+      SystemUI.setBackgroundColorAsync(colors.neutralLighter)
     },
 
     //   null or undefined sets it to 'light'
@@ -46,7 +44,6 @@ export const SettingsStoreModel = types
     },
   }))
 
-export interface SettingsStoreModelStore
-  extends Instance<typeof SettingsStoreModel> {}
-export interface SettingsStoreModelStoreSnapshot
+export interface SettingsStore extends Instance<typeof SettingsStoreModel> {}
+export interface SettingsStoreSnapshot
   extends SnapshotOut<typeof SettingsStoreModel> {}
