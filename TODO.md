@@ -33,6 +33,7 @@
 * grouping / measurement by rest
 * check out focusedExerciseRecords for supersets
 * optimize useColors
+* Review button styles. Especially primary + disabled
 
 Performance to beat -
 100 workouts
