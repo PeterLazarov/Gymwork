@@ -1,7 +1,6 @@
-import { Instance, onAction, SnapshotOut, types } from 'mobx-state-tree'
+import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import { AllStacksParamList, navigationRef } from 'app/navigators'
-import { simpleActionLogger } from 'mst-middlewares'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
 const pages: (keyof AllStacksParamList)[] = [
