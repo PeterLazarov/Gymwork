@@ -6,8 +6,13 @@ import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, useColors } from 'designSystem'
 import { useDialogContext } from 'app/contexts/DialogContext'
+import { WorkoutStep } from 'app/db/models'
 
-const StepHeader: React.FC = () => {
+export type StepHeaderProps = {
+  step: WorkoutStep
+}
+
+const StepHeader: React.FC<StepHeaderProps> = ({ step }) => {
   const colors = useColors()
 
   const {
@@ -45,7 +50,6 @@ const StepHeader: React.FC = () => {
   }
 
   const focusedStepName = useMemo(() => {
-    const step = stateStore.focusedStep!
     const workout = stateStore.openedWorkout!
 
     const name = step.type === 'straightSet' ? step.exercise!.name : 'Superset'

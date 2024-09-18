@@ -8,11 +8,18 @@ import ExerciseControl from 'app/components/WorkoutStep/ExerciseControl'
 import { View } from 'react-native'
 
 const WorkoutStepScreen: React.FC = () => {
-  const { stateStore } = useStores()
+  const { stateStore,navStore } = useStores()
+
+  if (!stateStore.focusedStep) {
+    navStore.navigate('Workout')
+  }
 
   return (
     <View style={{ marginBottom: 8, flex: 1 }}>
-      <StepHeader />
+      {stateStore.focusedStep && (
+
+        <StepHeader step={ stateStore.focusedStep} />
+      
       {stateStore.focusedStep?.type === 'superSet' && (
         <ExerciseControl
           selectedIndex={stateStore.focusedStep.exercises.indexOf(
@@ -28,6 +35,7 @@ const WorkoutStepScreen: React.FC = () => {
         exercise={stateStore.focusedExercise!}
         step={stateStore.focusedStep!}
       />
+    )}
     </View>
   )
 }
