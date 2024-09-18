@@ -72,9 +72,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
           <ToggleSwitch
             variant="primary"
             value={settingsStore.measureRest}
-            onValueChange={measureRest => {
-              settingsStore.setProp('measureRest', measureRest)
-            }}
+            onValueChange={settingsStore.setMeasureRest}
           />
         </View>
       </View>

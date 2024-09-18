@@ -30,7 +30,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 }) => {
   const colors = useColors()
 
-  const { stateStore } = useStores()
+  const { stateStore, settingsStore } = useStores()
   const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
@@ -54,7 +54,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   }, [selectedSet, focusedExercise])
 
   useEffect(() => {
-    if (focusedExercise.measurements.rest) {
+    if (settingsStore.measureRest) {
       stateStore.draftSet!.setProp(
         'restMs',
         restTimer.timeElapsed.as('milliseconds')
@@ -73,7 +73,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
       step.addSet(fromDraft)
     }
 
-    if (focusedExercise.measurements.rest) {
+    if (settingsStore.measureRest) {
       restTimer.start()
     }
   }, [focusedExercise])

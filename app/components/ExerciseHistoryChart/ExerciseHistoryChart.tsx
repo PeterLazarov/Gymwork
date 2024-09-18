@@ -63,7 +63,7 @@ const ExerciseHistoryChart: React.FC<Props> = ({
   width,
   exercise,
 }) => {
-  const { workoutStore, stateStore } = useStores()
+  const { workoutStore, stateStore, settingsStore } = useStores()
 
   const chartElRef = useRef<any>(null)
   const eChartRef = useRef<ECharts>()
@@ -133,7 +133,7 @@ const ExerciseHistoryChart: React.FC<Props> = ({
 
   const { getChartSeries } = seriesSetup({ data: setsByDay })
 
-  const series = getChartSeries(exercise)
+  const series = getChartSeries(exercise, settingsStore.measureRest)
 
   const { getViewOptions, feedChartSeriesData } = useChartConfig({
     series,

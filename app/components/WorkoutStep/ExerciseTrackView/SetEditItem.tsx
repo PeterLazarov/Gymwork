@@ -8,6 +8,7 @@ import { getFormatedDuration } from 'app/utils/time'
 import { useColors, Icon } from 'designSystem'
 import SetWarmupButton from './SetWarmupButton'
 import SetDataLabel from '../SetDataLabel'
+import { useStores } from 'app/db/helpers/useStores'
 
 type Props = {
   set: WorkoutSet
@@ -25,6 +26,7 @@ const SetEditItem: React.FC<Props> = ({
   toggleSetWarmup,
 }) => {
   const colors = useColors()
+  const { settingsStore } = useStores()
 
   const color = colors.onSurface
 
@@ -85,7 +87,7 @@ const SetEditItem: React.FC<Props> = ({
       {set.exercise.hasTimeMeasument && (
         <SetDataLabel value={getFormatedDuration(set.duration)} />
       )}
-      {set.exercise.measurements.rest && (
+      {settingsStore.measureRest && (
         <SetDataLabel
           value={`${translate('rest')} ${getFormatedDuration(
             set.rest ?? 0,
