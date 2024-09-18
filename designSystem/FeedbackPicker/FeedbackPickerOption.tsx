@@ -29,7 +29,9 @@ const FeedbackPickerOption: React.FC<Props> = ({
       style={{
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: isSelected ? colors.neutralLightest : 'transparent',
+        backgroundColor: isSelected
+          ? colors.mat.surfaceContainerLowest
+          : 'transparent',
         borderRadius: 8,
         padding: noPadding ? 0 : 8,
       }}

@@ -29,11 +29,13 @@ export const BottomNavigationItem: React.FC<Props> = ({ item, isSelected }) => {
       >
         <Icon
           icon={item.icon}
-          color={isSelected ? colors.primary : colors.neutralDarkest}
+          color={isSelected ? colors.mat.primary : colors.mat.onSurfaceVariant}
         />
         <Text
           style={{
-            color: isSelected ? colors.primary : colors.neutralDarkest,
+            color: isSelected
+              ? colors.mat.primary
+              : colors.mat.onSurfaceVariant,
             fontSize: fontSize.sm,
           }}
         >

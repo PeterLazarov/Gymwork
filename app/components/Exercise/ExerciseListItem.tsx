@@ -34,13 +34,14 @@ const ExerciseListItem: React.FC<Props> = ({
           justifyContent: 'space-between',
           alignItems: 'center',
           padding: 10,
-          backgroundColor: isSelected ? colors.neutral : colors.neutralLighter,
+          backgroundColor: isSelected ? colors.mat.secondary : 'transparent',
         }}
       >
         <Text
           style={{
             flex: 1,
             flexWrap: 'wrap',
+            color: isSelected ? colors.mat.onSecondary : colors.mat.onSurface,
           }}
           numberOfLines={1}
         >
@@ -53,7 +54,7 @@ const ExerciseListItem: React.FC<Props> = ({
         >
           <Icon
             icon={heartIcon}
-            color={colors.accent}
+            color={colors.mat.tertiaryContainer}
           />
         </IconButton>
       </View>

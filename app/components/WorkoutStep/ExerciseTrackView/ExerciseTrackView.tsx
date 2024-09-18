@@ -106,7 +106,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
         flexGrow: 1,
         gap: 8,
         display: 'flex',
-        backgroundColor: colors.neutralLighter,
+        backgroundColor: colors.mat.surfaceContainerLow,
       }}
     >
       <SetEditList

@@ -21,7 +21,7 @@ const EmptyState: React.FC<Props> = ({ text }) => {
     >
       <Text
         style={{
-          color: colors.neutralDarker,
+          color: colors.mat.onSurfaceVariant,
           fontSize: fontSize.xl,
           textAlign: 'center',
         }}

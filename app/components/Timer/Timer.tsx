@@ -8,7 +8,7 @@ import TimerEditModal from '../TimerEditModal'
 import { useTimer } from 'app/contexts/TimerContext'
 import { IconButton, Icon, useColors, NumberInput } from 'designSystem'
 
-const Timer = forwardRef<TextInput>((_, ref) => {
+const Timer = forwardRef<TextInput>(function Timer(_, ref) {
   const colors = useColors()
 
   const restTimer = useTimer()
@@ -48,7 +48,7 @@ const Timer = forwardRef<TextInput>((_, ref) => {
           width={2}
           fill={percentTimeLeft}
           rotation={0}
-          tintColor={colors.primary}
+          tintColor={colors.mat.primary}
         >
           {_ => (
             <View>

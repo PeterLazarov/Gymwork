@@ -17,7 +17,7 @@ const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
     <TouchableWithoutFeedback onPress={onPress}>
       <View
         style={{
-          backgroundColor: colors.neutralLighter,
+          backgroundColor: colors.mat.surfaceContainerLow,
           paddingHorizontal: 15,
           paddingVertical: label ? 9 : 17,
           flexDirection: 'row',

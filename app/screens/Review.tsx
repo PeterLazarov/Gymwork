@@ -111,7 +111,7 @@ const ReviewScreen: React.FC = () => {
         style={{
           flexGrow: 1,
           position: 'relative',
-          backgroundColor: colors.neutralLighter,
+          backgroundColor: colors.mat.surfaceContainerLow,
         }}
       >
         {exerciseSelectOpen && (

@@ -37,7 +37,7 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
         visible={open}
         onDismiss={onClose}
         contentContainerStyle={{
-          backgroundColor: colors.neutralLightest,
+          backgroundColor: colors.mat.surface,
           marginVertical: 8,
           marginHorizontal: 20,
         }}

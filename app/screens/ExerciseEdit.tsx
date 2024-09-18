@@ -5,7 +5,7 @@ import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, ExerciseModel } from 'app/db/models'
-import { goBack, useRouteParams } from 'app/navigators'
+import { useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { translate } from 'app/i18n'
 import {
@@ -24,7 +24,7 @@ export type ExerciseEditScreenParams = {
 const ExerciseEditScreen: React.FC = () => {
   const colors = useColors()
 
-  const { stateStore, exerciseStore } = useStores()
+  const { stateStore, exerciseStore, navStore } = useStores()
 
   const { createMode } = useRouteParams('ExerciseEdit')
   const [exercise, setExercise] = useState(
@@ -44,7 +44,7 @@ const ExerciseEditScreen: React.FC = () => {
 
   function onBackConfirmed() {
     showConfirm!(undefined)
-    goBack()
+    navStore.goBack()
   }
 
   function onUpdate(updated: Exercise, isValid: boolean) {

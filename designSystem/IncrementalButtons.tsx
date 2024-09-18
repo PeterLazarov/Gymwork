@@ -39,7 +39,7 @@ const IncrementalButtons: React.FC<Props> = ({
       >
         <Icon
           icon="remove"
-          color={colors.neutralLightest}
+          color={colors.mat.surfaceContainerLowest}
         />
       </PressableHighlight>
       <View style={{ flexGrow: 1, paddingHorizontal: 4 }}>{children}</View>
@@ -49,7 +49,7 @@ const IncrementalButtons: React.FC<Props> = ({
       >
         <Icon
           icon="add"
-          color={colors.neutralLightest}
+          color={colors.mat.surfaceContainerLowest}
         />
       </PressableHighlight>
     </View>
