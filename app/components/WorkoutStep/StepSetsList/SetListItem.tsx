@@ -7,6 +7,7 @@ import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
 import { Text, Icon, useColors, fontSize } from 'designSystem'
 import { observer } from 'mobx-react-lite'
+import { useStores } from 'app/db/helpers/useStores'
 
 type Props = {
   set: WorkoutSet
@@ -26,7 +27,7 @@ const SetListItem: React.FC<Props> = ({
   number,
 }) => {
   const colors = useColors()
-
+  const { settingsStore } = useStores()
   const color = isFocused ? colors.tertiary : colors.onSurface
   const styles = useMemo(() => makeStyles(color), [color])
 
@@ -75,7 +76,7 @@ const SetListItem: React.FC<Props> = ({
           isFocused={isFocused}
         />
       )}
-      {measurements.rest && (
+      {settingsStore.measureRest && (
         <SetDataLabel
           value={getFormatedDuration(set.rest)}
           isFocused={isFocused}

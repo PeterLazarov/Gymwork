@@ -53,7 +53,7 @@ const seriesSetup = ({ data }: Props) => {
     )
   }
 
-  const getChartSeries = (exercise: Exercise) => {
+  const getChartSeries = (exercise: Exercise, measureRest = false) => {
     const series: Record<string, SeriesItem> = {}
     const colorsStack = [
       palettes.gold['60'],
@@ -116,12 +116,13 @@ const seriesSetup = ({ data }: Props) => {
         unit: exercise.measurements.duration.unit,
       }
     }
-    if (exercise.measurements?.rest) {
+
+    if (measureRest) {
       series['Max Rest'] = {
         data: singleMetricFormatter('rest'),
         color: colorsStack.pop()!,
         initiallySelected: false,
-        unit: exercise.measurements.rest.unit,
+        unit: 's', // ?
       }
     }
 

@@ -111,17 +111,6 @@ export const ExerciseMeasurementModel = types
         })
         .actions(withSetPropAction)
     ),
-    rest: types.maybe(
-      types
-        .model({
-          unit: types.enumeration(
-            'restUnit',
-            Object.values(measurementUnits.rest)
-          ),
-          moreIsBetter: types.boolean,
-        })
-        .actions(withSetPropAction)
-    ),
   })
   .actions(withSetPropAction)
 

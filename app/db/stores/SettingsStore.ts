@@ -1,9 +1,17 @@
-import { Instance, SnapshotOut, types } from 'mobx-state-tree'
+import {
+  getParentOfType,
+  getSnapshot,
+  Instance,
+  SnapshotOut,
+  types,
+} from 'mobx-state-tree'
 
 import { Appearance, ColorSchemeName } from 'react-native'
 import { getColors } from 'designSystem'
 import * as SystemUI from 'expo-system-ui'
 import { withSetPropAction } from '../helpers/withSetPropAction'
+import { RootStoreModel } from './RootStore'
+import { measurementDefaults } from '../models'
 
 let deviceColorScheme = Appearance.getColorScheme()
 Appearance.addChangeListener(({ colorScheme }) => {
@@ -21,7 +29,7 @@ export const SettingsStoreModel = types
     ),
     measureRest: false,
   })
-  .actions(withSetPropAction)
+  // .actions(withSetPropAction)
   .actions(self => ({
     initialize() {
       if (self.colorSchemePreference) {
@@ -43,6 +51,9 @@ export const SettingsStoreModel = types
       const colors = getColors(colorScheme)
 
       SystemUI.setBackgroundColorAsync(colors.surfaceContainerLow)
+    },
+    setMeasureRest(measureRest: boolean) {
+      self.measureRest = measureRest
     },
   }))
 

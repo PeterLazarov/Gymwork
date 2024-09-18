@@ -12,6 +12,7 @@ import {
 import convert from 'convert-units'
 import { observer } from 'mobx-react-lite'
 import Timer from 'app/components/Timer/Timer'
+import { useStores } from 'app/db/helpers/useStores'
 
 export type SetEditControlsProps = {
   value: WorkoutSet
@@ -30,10 +31,11 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
   const input4 = useRef<TextInput>(null)
   const inputRefs = [input1, input2, input3, input4]
   const { onHandleSubmit, isLastInput } = manageInputFocus(inputRefs, onSubmit)
+  const { settingsStore } = useStores()
 
   return (
     <View style={{ gap: 8 }}>
-      {value.exercise?.measurements.rest && (
+      {settingsStore.measureRest && (
         <SetEditPanelSection text={translate('rest')}>
           <Timer ref={input0} />
         </SetEditPanelSection>

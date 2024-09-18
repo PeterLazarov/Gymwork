@@ -78,7 +78,7 @@ export const WorkoutSetModel = types
       return Number(
         convert(set.restMs ?? 0)
           .from('ms')
-          .to(set.exercise.measurements.rest!.unit)
+          .to('s')
           .toFixed(2)
       )
     },
@@ -115,7 +115,7 @@ export const WorkoutSetModel = types
     ) {
       self.setProp('durationMs', convert(value).from(unit).to('ms'))
     },
-    setRest(value: number, unit = self.exercise.measurements.rest!.unit) {
+    setRest(value: number, unit = 's' as const) {
       self.setProp('restMs', convert(value).from(unit).to('ms'))
     },
     isBetterThan(otherSet: WorkoutSet) {
