@@ -43,7 +43,7 @@ const Card: React.FC<CardProps> = ({
 const makeStyles = (colors: any) =>
   StyleSheet.create({
     card: {
-      backgroundColor: colors.neutralLightest,
+      backgroundColor: colors.mat.surface,
       borderRadius: 8,
       marginVertical: 10,
       marginHorizontal: 20,

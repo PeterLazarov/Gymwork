@@ -57,7 +57,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
         visible={open}
         onDismiss={onClose}
         contentContainerStyle={{
-          backgroundColor: colors.neutralLightest,
+          backgroundColor: colors.mat.surface,
           marginVertical: 8,
           marginHorizontal: 20,
           flex: 1,
@@ -96,7 +96,7 @@ const CalendarWorkoutModal: React.FC<Props> = ({
                   gap: 10,
                 }}
               >
-                <Text style={{ color: colors.tertiaryText }}>
+                <Text style={{ color: colors.mat.onSurface }}>
                   {translate('includeSets')}
                 </Text>
                 <ToggleSwitch

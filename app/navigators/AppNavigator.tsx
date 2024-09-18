@@ -104,7 +104,7 @@ const AppStack = observer(function AppStack() {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        navigationBarColor: colors.neutralLightest,
+        navigationBarColor: colors.mat.surface,
         animation: 'none',
       }}
       initialRouteName="HomeStack"
@@ -250,7 +250,9 @@ export const AppNavigator = observer(function AppNavigator(
               <>
                 <StatusBar
                   backgroundColor={
-                    colorScheme === 'light' ? colors.primary : 'black'
+                    colorScheme === 'light'
+                      ? colors.mat.primary
+                      : colors.mat.shadow
                   }
                   barStyle={'light-content'}
                 />

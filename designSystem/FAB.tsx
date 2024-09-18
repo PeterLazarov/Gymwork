@@ -15,7 +15,9 @@ const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
           right: 'auto',
           left: 'auto',
           bottom: 0,
-          backgroundColor: disabled ? colors.neutral : colors.primary,
+          backgroundColor: disabled
+            ? colors.mat.surfaceVariant
+            : colors.mat.primary,
         },
         style,
       ]}

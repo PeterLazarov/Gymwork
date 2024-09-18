@@ -25,7 +25,7 @@ export const BottomNavigation: React.FC<Props> = ({ activeRoute, items }) => {
             style={{
               flexDirection: 'row',
               height: (insets?.bottom ?? 0) * insetCoverage + btnMinHeight,
-              backgroundColor: colors.neutralLightest,
+              backgroundColor: colors.mat.surface,
               ...boxShadows.lg,
             }}
           >

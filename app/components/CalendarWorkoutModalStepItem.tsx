@@ -19,7 +19,7 @@ const CalendarWorkoutModalStepItem: React.FC<Props> = ({ step }) => {
         >
           <Text
             style={{
-              color: colors.tertiaryText,
+              color: colors.mat.onSurface,
               marginBottom: 8,
               textAlign: 'center',
             }}

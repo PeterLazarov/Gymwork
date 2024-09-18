@@ -23,7 +23,7 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
   const workout = workoutStore.dateWorkoutMap[date]
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.neutralLighter }}>
+    <View style={{ flex: 1, backgroundColor: colors.mat.surfaceContainer }}>
       {workout && workout.steps.length > 0 ? (
         <>
           {stateStore.showCommentsCard && workout.hasComments && (
