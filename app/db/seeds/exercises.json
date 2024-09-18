@@ -2135,7 +2135,7 @@
       "category": "strength"
     },
     {
-      "name": "Cable Rope Overhead Triceps Extension",
+      "name": "Cable Overhead Triceps Extension",
       "force": "push",
       "level": "beginner",
       "mechanic": "isolation",
@@ -2152,7 +2152,7 @@
       "category": "strength"
     },
     {
-      "name": "Cable Rope Rear-Delt Rows",
+      "name": "Cable Rear-Delt Rows",
       "force": "pull",
       "level": "beginner",
       "mechanic": "compound",
@@ -4106,7 +4106,7 @@
       "category": "strength"
     },
     {
-      "name": "Dumbbell Prone Incline Curl",
+      "name": "Incline Dumbbell Curl",
       "force": "pull",
       "level": "intermediate",
       "mechanic": "isolation",
@@ -5108,7 +5108,7 @@
       "category": "strength"
     },
     {
-      "name": "Full Range-Of-Motion Lat Pulldown",
+      "name": "Lat Pulldown",
       "force": "pull",
       "level": "intermediate",
       "mechanic": "compound",
@@ -5829,7 +5829,7 @@
       "category": "strength"
     },
     {
-      "name": "Incline Dumbbell Bench With Palms Facing In",
+      "name": "Incline Dumbbell Bench Press",
       "force": "push",
       "level": "beginner",
       "mechanic": "compound",

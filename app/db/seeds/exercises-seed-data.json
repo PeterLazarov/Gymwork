@@ -759,13 +759,13 @@
     "weightIncrement": 2.5
   },
   {
-    "name": "Cable Rope Overhead Triceps Extension",
+    "name": "Cable Overhead Triceps Extension",
     "muscles": ["triceps"],
     "measurementType": ["reps", "weight"],
     "weightIncrement": 2.5
   },
   {
-    "name": "Cable Rope Rear-Delt Rows",
+    "name": "Cable Rear-Delt Rows",
     "muscles": ["shoulders"],
     "measurementType": ["reps", "weight"],
     "weightIncrement": 2.5
@@ -1431,7 +1431,7 @@
     "weightIncrement": 2.5
   },
   {
-    "name": "Dumbbell Prone Incline Curl",
+    "name": "Incline Dumbbell Curl",
     "muscles": ["biceps"],
     "measurementType": ["reps", "weight"],
     "weightIncrement": 2.5
@@ -1791,7 +1791,7 @@
     "weightIncrement": 2.5
   },
   {
-    "name": "Full Range-Of-Motion Lat Pulldown",
+    "name": "Lat Pulldown",
     "muscles": ["lats"],
     "measurementType": ["reps", "weight"],
     "weightIncrement": 2.5
@@ -2043,7 +2043,7 @@
     "weightIncrement": 2.5
   },
   {
-    "name": "Incline Dumbbell Bench With Palms Facing In",
+    "name": "Incline Dumbbell Bench Press",
     "muscles": ["chest"],
     "measurementType": ["reps", "weight"],
     "weightIncrement": 2.5
