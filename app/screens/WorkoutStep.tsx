@@ -8,35 +8,34 @@ import ExerciseControl from 'app/components/WorkoutStep/ExerciseControl'
 import { View } from 'react-native'
 
 const WorkoutStepScreen: React.FC = () => {
-  const { stateStore,navStore } = useStores()
+  const { stateStore, navStore } = useStores()
 
   if (!stateStore.focusedStep) {
     navStore.navigate('Workout')
   }
 
   return (
-    <View style={{ marginBottom: 8, flex: 1 }}>
-      {stateStore.focusedStep && (
+    stateStore.focusedStep && (
+      <View style={{ marginBottom: 8, flex: 1 }}>
+        <StepHeader step={stateStore.focusedStep} />
 
-        <StepHeader step={ stateStore.focusedStep} />
-      
-      {stateStore.focusedStep?.type === 'superSet' && (
-        <ExerciseControl
-          selectedIndex={stateStore.focusedStep.exercises.indexOf(
-            stateStore.focusedExercise!
-          )}
-          options={stateStore.focusedStep.exercises}
-          onChange={({ guid }) => {
-            stateStore.setProp('focusedExerciseGuid', guid)
-          }}
+        {stateStore.focusedStep?.type === 'superSet' && (
+          <ExerciseControl
+            selectedIndex={stateStore.focusedStep.exercises.indexOf(
+              stateStore.focusedExercise!
+            )}
+            options={stateStore.focusedStep.exercises}
+            onChange={({ guid }) => {
+              stateStore.setProp('focusedExerciseGuid', guid)
+            }}
+          />
+        )}
+        <ExerciseTrackView
+          exercise={stateStore.focusedExercise!}
+          step={stateStore.focusedStep!}
         />
-      )}
-      <ExerciseTrackView
-        exercise={stateStore.focusedExercise!}
-        step={stateStore.focusedStep!}
-      />
-    )}
-    </View>
+      </View>
+    )
   )
 }
 export default observer(WorkoutStepScreen)
