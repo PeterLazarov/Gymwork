@@ -51,7 +51,7 @@ const UserFeedbackScreen: React.FC = () => {
 
   return (
     <EmptyLayout>
-      {/* <Header>
+      <Header>
         <IconButton
           onPress={goBack}
           underlay="darker"
@@ -89,7 +89,7 @@ const UserFeedbackScreen: React.FC = () => {
         >
           <ButtonText variant="primary">{translate('save')}</ButtonText>
         </Button>
-      </KeyboardAvoiderView> */}
+      </KeyboardAvoiderView>
     </EmptyLayout>
   )
 }
