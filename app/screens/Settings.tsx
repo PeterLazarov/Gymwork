@@ -79,14 +79,21 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
           orientation="horizontal"
         />
 
-        <View style={styles.item}>
-          <Text style={styles.itemLabel}>{translate('measureRest')}</Text>
-          <ToggleSwitch
-            variant="primary"
-            value={settingsStore.measureRest}
-            onValueChange={settingsStore.setMeasureRest}
-          />
-        </View>
+        <PressableHighlight
+          style={styles.item}
+          onPress={() => {
+            settingsStore.setMeasureRest(!settingsStore.measureRest)
+          }}
+        >
+          <>
+            <Text style={styles.itemLabel}>{translate('measureRest')}</Text>
+            <ToggleSwitch
+              variant="primary"
+              value={settingsStore.measureRest}
+              onValueChange={settingsStore.setMeasureRest}
+            />
+          </>
+        </PressableHighlight>
 
         <Divider
           variant="neutral"
