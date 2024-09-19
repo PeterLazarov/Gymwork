@@ -86,13 +86,13 @@ export const WorkoutStepModel = types
     get setNumberMap(): Record<WorkoutSet['guid'], number> {
       const map: Record<WorkoutSet['guid'], number> = {}
 
-      step.exercises.forEach(exercise =>{
-        const workSets = this.exerciseWorkSetsMap[exercise.guid]!
+      step.exercises.forEach(exercise => {
+        const workSets = this.exerciseWorkSetsMap[exercise.guid]
 
-        workSets.forEach((set, index) => {
+        workSets?.forEach((set, index) => {
           map[set.guid] = index + 1
         })
-      })  
+      })
 
       return map
     },
@@ -110,9 +110,8 @@ export const WorkoutStepModel = types
         const { exercise } = deletedSet
 
         const records = step.exerciseRecordsMap[exercise.guid]!
-        const isRecordBool = records?.recordSetsMap.hasOwnProperty(
-          deletedSet.guid
-        ) || false
+        const isRecordBool =
+          records?.recordSetsMap.hasOwnProperty(deletedSet.guid) || false
 
         const deletedSetSnapshot = getSnapshot(deletedSet)
         step.sets.splice(deletedSetIndex, 1)

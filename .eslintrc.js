@@ -36,7 +36,7 @@ module.exports = {
     '@typescript-eslint/no-object-literal-type-assertion': 0,
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/no-use-before-define': 0,
-    '@typescript-eslint/no-non-null-assertion': 0,
+    // '@typescript-eslint/no-non-null-assertion': 0,
     'comma-dangle': 0,
     'multiline-ternary': 0,
     'no-undef': 0,
