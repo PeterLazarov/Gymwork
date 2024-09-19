@@ -35,6 +35,7 @@ const UserFeedbackScreen: React.FC = () => {
     createdAt: DateTime.now().toISO(),
   })
   const [formValid, setFormValid] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   function onUpdate(updated: AirtableFeedback, isValid: boolean) {
     setFeedback(updated)
@@ -43,7 +44,9 @@ const UserFeedbackScreen: React.FC = () => {
   }
 
   function onFeedbackSave() {
+    setSubmitting(true)
     airtableApi.sendFeedback(feedback).then(() => {
+      setSubmitting(false)
       goBack()
       showSnackbar?.({
         text: 'Thank you for sending us feedback',
@@ -66,7 +69,7 @@ const UserFeedbackScreen: React.FC = () => {
         <Header.Title title="Feedback" />
         <IconButton
           onPress={onFeedbackSave}
-          disabled={!formValid}
+          disabled={!formValid || submitting}
           underlay="darker"
         >
           <Icon
@@ -87,7 +90,7 @@ const UserFeedbackScreen: React.FC = () => {
         <Button
           variant="primary"
           onPress={onFeedbackSave}
-          disabled={!formValid}
+          disabled={!formValid || submitting}
         >
           <ButtonText variant="primary">{translate('save')}</ButtonText>
         </Button>
