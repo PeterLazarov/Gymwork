@@ -17,6 +17,8 @@ type Props = {
   toggleSetWarmup: (set: WorkoutSet) => void
 } & View['props']
 
+const hideZeroRest = true
+
 const SetEditItem: React.FC<Props> = ({
   set,
   isRecord,
@@ -92,10 +94,14 @@ const SetEditItem: React.FC<Props> = ({
       )}
       {settingsStore.measureRest && (
         <SetDataLabel
-          value={`${translate('rest')} ${getFormatedDuration(
-            set.rest ?? 0,
-            true
-          )}`}
+          value={
+            set.rest || !hideZeroRest
+              ? `${translate('rest')} ${getFormatedDuration(
+                  set.rest ?? 0,
+                  true
+                )}`
+              : ''
+          }
         />
       )}
     </View>
