@@ -70,7 +70,7 @@ function SelectOptionsModal<T = unknown>({
           </Text>
           <Divider
             orientation="horizontal"
-            variant="accent"
+            variant="primary"
           />
           <View style={{ flex: 1 }}>
             <ScrollView>
