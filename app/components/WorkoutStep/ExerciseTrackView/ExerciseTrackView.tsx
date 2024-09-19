@@ -96,8 +96,6 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
     step.removeSet(selectedSet!.guid)
   }, [selectedSet])
 
-  console.log('StepExerciseForm render for', focusedExercise.name)
-
   return (
     <KeyboardAvoiderView
       avoidMode="focused-input"
