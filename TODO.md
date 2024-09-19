@@ -35,6 +35,7 @@
 * optimize useColors
 * Review button styles. Especially primary + disabled
 * EditTemplateForm should allow adding exercises/sets
+* Standardize background usage (different screens currently use different background colors for some reason)
 
 Performance to beat -
 100 workouts
