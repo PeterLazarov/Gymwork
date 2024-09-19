@@ -2,11 +2,9 @@ import {
   Instance,
   SnapshotIn,
   SnapshotOut,
-  applyPatch,
   getSnapshot,
   recordPatches,
   types,
-  // getIdentifier,
 } from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
@@ -39,7 +37,7 @@ export const WorkoutModel = types
     notes: '',
     feeling: types.maybe(types.enumeration('feeling', Object.values(feelings))),
     pain: types.maybe(types.enumeration('pain', Object.values(painOptions))),
-    rpe: types.maybe(types.number)
+    rpe: types.maybe(types.number),
   })
   .views(self => ({
     get exercises(): Exercise[] {
@@ -62,10 +60,9 @@ export const WorkoutModel = types
 
       self.steps.forEach(step => {
         step.exercises.forEach(exercise => {
-          if (!map[exercise.guid]) {
-            map[exercise.guid] = []
-          }
-          map[exercise.guid]!.push(step)
+          const mapSteps = map[exercise.guid]
+          if (mapSteps) mapSteps.push(step)
+          else map[exercise.guid] = [step]
         })
       })
 
@@ -76,12 +73,10 @@ export const WorkoutModel = types
 
       self.steps.forEach(step => {
         step.exercises.forEach(exercise => {
-          if (!map[exercise.guid]) {
-            map[exercise.guid] = []
-          }
-          map[exercise.guid]!.push(
-            ...(step.exerciseSetsMap[exercise.guid] ?? [])
-          )
+          const toAdd = step.exerciseSetsMap[exercise.guid] ?? []
+          const mapSets = map[exercise.guid]
+          if (mapSets) mapSets.push(...toAdd)
+          else map[exercise.guid] = [...toAdd]
         })
       })
       return map
@@ -134,11 +129,12 @@ export const WorkoutModel = types
         type,
       })
       workout.setProp('steps', updatedSteps)
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return workout.steps.at(-1)!
     },
 
     removeStep(step: WorkoutStep): () => void {
-      const recorder = recordPatches(workout);
+      const recorder = recordPatches(workout)
 
       const sets = step.sets
       sets?.forEach(set => {
@@ -149,9 +145,9 @@ export const WorkoutModel = types
         'steps',
         remainingSteps.map(s => getSnapshot(s))
       )
-      recorder.stop();
+      recorder.stop()
 
-      return () => recorder.undo();
+      return () => recorder.undo()
     },
   }))
 

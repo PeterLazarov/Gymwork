@@ -29,12 +29,12 @@ const TemplateSelectScreen: React.FC = () => {
   }
 
   function handleDelete(template: WorkoutTemplate) {
-    showConfirm!({
+    showConfirm?.({
       message: translate('templateWillBeDeleted'),
-      onClose: () => showConfirm!(undefined),
+      onClose: () => showConfirm?.(undefined),
       onConfirm: () => {
         workoutStore.removeTemplate(template)
-        showConfirm!(undefined)
+        showConfirm?.(undefined)
       },
     })
   }

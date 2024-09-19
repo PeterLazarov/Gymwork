@@ -38,7 +38,10 @@ export const WorkoutStepModel = types
     },
     get exerciseRecordsMap() {
       return step.exercises.reduce((map, exercise) => {
-        map[exercise.guid] = this.recordStore.exerciseRecordsMap[exercise.guid]!
+        const records = this.recordStore.exerciseRecordsMap[exercise.guid]
+        if (records) {
+          map[exercise.guid] = records
+        }
         return map
       }, {} as Record<Exercise['guid'], ExerciseRecord>)
     },
@@ -53,20 +56,19 @@ export const WorkoutStepModel = types
     },
     get exerciseSetsMap() {
       return step.sets.reduce((map, set) => {
-        if (!map[set.exercise.guid]) {
-          map[set.exercise.guid] = []
-        }
-        map[set.exercise.guid]!.push(set)
+        const mapSets = map[set.exercise.guid]
+        if (mapSets) mapSets.push(set)
+        else map[set.exercise.guid] = [set]
+
         return map
       }, {} as Record<Exercise['guid'], WorkoutSet[]>)
     },
     get exerciseWorkSetsMap() {
       return step.sets.reduce((map, set) => {
         if (!set.isWarmup) {
-          if (!map[set.exercise.guid]) {
-            map[set.exercise.guid] = []
-          }
-          map[set.exercise.guid]!.push(set)
+          const mapSets = map[set.exercise.guid]
+          if (mapSets) mapSets.push(set)
+          else map[set.exercise.guid] = [set]
         }
         return map
       }, {} as Record<Exercise['guid'], WorkoutSet[]>)
@@ -109,7 +111,7 @@ export const WorkoutStepModel = types
       if (deletedSet) {
         const { exercise } = deletedSet
 
-        const records = step.exerciseRecordsMap[exercise.guid]!
+        const records = step.exerciseRecordsMap[exercise.guid]
         const isRecordBool =
           records?.recordSetsMap.hasOwnProperty(deletedSet.guid) || false
 
@@ -118,22 +120,25 @@ export const WorkoutStepModel = types
 
         if (isRecordBool) {
           const grouping = getDataFieldForKey(exercise.groupRecordsBy)
-          records.recalculateGroupingRecords(deletedSetSnapshot[grouping])
+          records?.recalculateGroupingRecords(deletedSetSnapshot[grouping])
         }
       }
     },
     updateSet(updatedSetData: WorkoutSetSnapshotIn) {
       const setToUpdate = step.sets.find(set => {
         return set.guid === updatedSetData.guid
-      })!
+      })
+      if (!setToUpdate) return
 
-      const records = step.exerciseRecordsMap[setToUpdate.exercise.guid]!
+      setToUpdate.mergeUpdate(updatedSetData)
+
+      const records = step.exerciseRecordsMap[setToUpdate.exercise.guid]
+      if (!records) return
+
       const isOldSetRecord = records.recordSetsMap.hasOwnProperty(
         setToUpdate.guid
       )
-      const oldGroupingValue = setToUpdate!.groupingValue
-
-      setToUpdate.mergeUpdate(updatedSetData)
+      const oldGroupingValue = setToUpdate.groupingValue
 
       if (isOldSetRecord) {
         records.recalculateGroupingRecords(oldGroupingValue)
@@ -145,7 +150,8 @@ export const WorkoutStepModel = types
     },
     /** Made to work with drag and drop */
     reorderSets(from: number, to: number) {
-      const item = step.sets[from]!
+      const item = step.sets[from]
+      if (!item || step.sets[to]) return
 
       const reorderedSets =
         getSnapshot(step.sets) // @ts-ignore

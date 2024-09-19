@@ -81,9 +81,12 @@ export const ExerciseRecordModel = types
         return recordSet.groupingValue !== groupingToRefresh
       })
 
-      const grouping = getDataFieldForKey(
-        exerciseRecords.exercise.groupRecordsBy
-      )
+      const grouping = exerciseRecords.exercise.groupRecordsBy
+        ? getDataFieldForKey(exerciseRecords.exercise.groupRecordsBy)
+        : undefined
+
+      if (!grouping) return
+
       const exerciseSets =
         exerciseRecords.workoutStore.exerciseSetsHistoryMap[
           exerciseRecords.exercise.guid
@@ -91,12 +94,12 @@ export const ExerciseRecordModel = types
 
       exerciseSets.forEach(set => {
         if (set.groupingValue === groupingToRefresh) {
-          const currentRecordIndex = refreshedRecords!.findIndex(
+          const currentRecordIndex = refreshedRecords.findIndex(
             s => s[grouping] === set.groupingValue
           )
           if (currentRecordIndex !== -1) {
-            const currentRecord = refreshedRecords[currentRecordIndex]!
-            if (set.isBetterThan(currentRecord)) {
+            const currentRecord = refreshedRecords[currentRecordIndex]
+            if (currentRecord && set.isBetterThan(currentRecord)) {
               refreshedRecords[currentRecordIndex] = set
             }
           } else {
