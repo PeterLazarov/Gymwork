@@ -32,12 +32,11 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
         <View
           style={{
             alignItems: 'center',
-            gap: 12,
-            padding: 12,
+            gap: 8,
           }}
         >
-          <View style={{ flexDirection: 'row', gap: 12 }}>
-            {hasNotes && (
+          {hasNotes && (
+            <View style={{ flexDirection: 'row', gap: 12, paddingTop: 8 }}>
               <Text
                 style={{
                   fontSize: fontSize.sm,
@@ -46,8 +45,8 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
               >
                 {workout.notes}
               </Text>
-            )}
-          </View>
+            </View>
+          )}
 
           <View
             style={{
