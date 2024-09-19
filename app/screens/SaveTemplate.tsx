@@ -68,7 +68,7 @@ const SaveTemplateScreen: React.FC = () => {
     } else {
       workoutStore.saveWorkoutTemplate(template.name, templateSteps)
     }
-    goBack()
+    navStore.goBack()
   }
 
   return (
