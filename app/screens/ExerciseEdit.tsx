@@ -27,13 +27,13 @@ const ExerciseEditScreen: React.FC = () => {
   const { stateStore, exerciseStore, navStore } = useStores()
 
   const { createMode } = useRouteParams('ExerciseEdit')
-  if (!createMode && !stateStore.focusedStep?.exercise) {
-    console.warn('REDIRECT - No focusedStep.exercise')
+  if (!createMode && !stateStore.focusedExercise) {
+    console.warn('REDIRECT - No focusedExercise')
     navStore.navigate('ExerciseSelect')
   }
 
   const [exercise, setExercise] = useState(
-    createMode ? ExerciseModel.create() : stateStore.focusedStep?.exercise
+    createMode ? ExerciseModel.create() : stateStore.focusedExercise
   )
   const [formValid, setFormValid] = useState(false)
 
