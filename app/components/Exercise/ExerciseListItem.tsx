@@ -3,7 +3,7 @@ import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 
 import { Exercise } from 'app/db/models'
-import { Text, IconButton, Icon, useColors } from 'designSystem'
+import { Text, IconButton, Icon, useColors, palettes } from 'designSystem'
 
 type Props = {
   exercise: Exercise
@@ -48,7 +48,7 @@ const ExerciseListItem: React.FC<Props> = ({
         >
           <Icon
             icon={heartIcon}
-            color={colors.tertiaryContainer}
+            color={palettes.error['60']}
           />
         </IconButton>
       </View>

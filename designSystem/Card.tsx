@@ -41,7 +41,7 @@ const Card: React.FC<CardProps> = ({
   )
 }
 
-const makeStyles = (colors: any) =>
+const makeStyles = (colors: ReturnType<typeof useColors>) =>
   StyleSheet.create({
     card: {
       backgroundColor: colors.surface,

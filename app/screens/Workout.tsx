@@ -2,14 +2,19 @@ import React from 'react'
 
 import WorkoutHeader from 'app/components/Workout/WorkoutHeader'
 import WorkoutHorizontalList from 'app/components/Workout/WorkoutHorizontalList'
-import { TabsLayout } from 'app/layouts/TabsLayout'
+import { View } from 'react-native'
+import { useColors } from 'designSystem'
 
 const WorkoutPageScreen: React.FC = () => {
+  const colors = useColors()
+
   return (
     <>
-      <WorkoutHeader />
+      <View style={{ flex: 1, backgroundColor: colors.surfaceContainer }}>
+        <WorkoutHeader />
 
-      <WorkoutHorizontalList />
+        <WorkoutHorizontalList />
+      </View>
     </>
   )
 }

@@ -15,8 +15,8 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, ...rest }) => {
     step.type === 'straightSet'
       ? step.exercise!.name
       : step.exercises
-        .map(e => `${step.exerciseLettering[e.guid]}. ${e.name}`)
-        .join('\n')
+          .map(e => `${step.exerciseLettering[e.guid]}. ${e.name}`)
+          .join('\n')
 
   return (
     <Card
