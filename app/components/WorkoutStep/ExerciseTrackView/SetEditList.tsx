@@ -49,8 +49,9 @@ const SetEditList: React.FC<Props> = ({
       return (
         <TouchableOpacity
           style={{
+            paddingHorizontal: 8,
             backgroundColor: isActive
-              ? colors.primary
+              ? colors.primaryContainer
               : isFocused
               ? colors.surfaceContainerHigh
               : undefined,
@@ -68,10 +69,15 @@ const SetEditList: React.FC<Props> = ({
               alignItems: 'center',
               flexDirection: 'row',
               justifyContent: 'space-between',
-              paddingLeft: isActive ? 10 : undefined,
+              paddingLeft: isActive ? 8 : undefined,
             }}
           >
-            {isActive && <Icon icon="drag-horizontal-variant" />}
+            {isActive && (
+              <Icon
+                size="small"
+                icon="drag-horizontal-variant"
+              />
+            )}
 
             <SetEditItem
               set={item}
@@ -119,7 +125,7 @@ const SetEditList: React.FC<Props> = ({
   }
   return (
     <Pressable
-      style={{ flex: 1, padding: 8 }}
+      style={{ flex: 1 }}
       onPress={() => setSelectedSet(null)}
     >
       <DragList
@@ -134,6 +140,9 @@ const SetEditList: React.FC<Props> = ({
             variant="neutral"
           />
         )}
+        style={{
+          paddingVertical: 8,
+        }}
         ref={dragListRef}
         onContentSizeChange={() =>
           dragListRef.current?.scrollToEnd({ animated: true })
