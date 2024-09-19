@@ -18,6 +18,7 @@ const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
         label={label}
         pointerEvents="none"
         focusable={false}
+        editable={false}
       />
     </TouchableOpacity>
   )
