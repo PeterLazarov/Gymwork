@@ -11,11 +11,13 @@ import ExerciseHistoryChart, {
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 
-export type ExerciseChartStats = {
+export type ExerciseChartStatsProps = {
   exercise?: Exercise
 }
 
-const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
+const ExerciseChartStats: React.FC<ExerciseChartStatsProps> = ({
+  exercise,
+}) => {
   const { stateStore } = useStores()
   const [activeView, setActiveView] = useState<CHART_VIEW>(
     Object.keys(CHART_VIEWS)[0] as CHART_VIEW_KEY
@@ -26,7 +28,7 @@ const ExerciseChartStats: React.FC<ExerciseChartStats> = ({ exercise }) => {
       value: CHART_VIEWS[view],
     })
   )
-  console.log('ExerciseChartStats')
+
   return (
     <View style={styles.screen}>
       <View

@@ -44,7 +44,6 @@ const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
 
     navigate('Workout')
   }
-  console.log('ExerciseRecordStats')
 
   return (
     <View
@@ -53,7 +52,6 @@ const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
         borderRadius: 8,
         display: 'flex',
         flexGrow: 1,
-        backgroundColor: colors.surfaceContainer,
       }}
     >
       {recordSets.length > 0 ? (

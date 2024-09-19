@@ -53,7 +53,6 @@ const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
     }, {} as Record<string, WorkoutSet[]>)
   }, [steps])
 
-  console.log('ExerciseHistoryList')
   return (
     <FlashList
       data={steps}
