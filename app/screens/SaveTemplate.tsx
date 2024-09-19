@@ -36,21 +36,28 @@ const SaveTemplateScreen: React.FC = () => {
     edittingTemplate ? { ...edittingTemplate } : WorkoutTemplateModel.create()
   )
   const [templateSteps, setTemplateSteps] = useState<WorkoutStep[]>(
-    edittingTemplate?.steps || stateStore.openedWorkout!.steps
+    edittingTemplate?.steps || stateStore.openedWorkout?.steps || []
   )
+
+  if (!edittingTemplate && !stateStore.openedWorkout?.steps) {
+    console.warn('REDIRECT - No openedworkout steps')
+    navStore.navigate('Workout')
+    return null
+  }
+
   const [formValid, setFormValid] = useState(true)
   const { showConfirm } = useDialogContext()
 
   function onBackPress() {
-    showConfirm!({
+    showConfirm?.({
       message: translate('workoutWillNotBeSaved'),
-      onClose: () => showConfirm!(undefined),
+      onClose: () => showConfirm?.(undefined),
       onConfirm: onBackConfirmed,
     })
   }
 
   function onBackConfirmed() {
-    showConfirm!(undefined)
+    showConfirm?.(undefined)
     navStore.goBack()
   }
 

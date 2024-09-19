@@ -87,7 +87,7 @@ export const ExerciseModel = types
         .filter(([, v]) => v)
         .map(([k]) => k as measurementName)
     },
-    get groupRecordsBy(): measurementName {
+    get groupRecordsBy(): measurementName | undefined {
       const exerciseMeasurementNames = this.measurementNames
       const groupByFallback = exerciseMeasurementNames[0]
 
@@ -102,7 +102,7 @@ export const ExerciseModel = types
 
       return combination?.groupBy || groupByFallback
     },
-    get measuredBy(): measurementName {
+    get measuredBy(): measurementName | undefined {
       const exerciseMeasurementNames = this.measurementNames
       const measureByFallback = exerciseMeasurementNames[0]
 
@@ -117,11 +117,17 @@ export const ExerciseModel = types
 
       return combination?.measureBy || measureByFallback
     },
+    // TODO fix type
     get groupMeasurement() {
-      return exercise.measurements[this.groupRecordsBy]!
+      return this.groupRecordsBy
+        ? exercise.measurements[this.groupRecordsBy]
+        : undefined
     },
+    // TODO fix type
     get valueMeasurement() {
-      return exercise.measurements[this.measuredBy]!
+      return this.measuredBy
+        ? exercise.measurements[this.measuredBy]
+        : undefined
     },
     get hasRepGrouping() {
       return this.groupRecordsBy === 'reps'

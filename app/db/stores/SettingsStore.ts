@@ -1,17 +1,8 @@
-import {
-  getParentOfType,
-  getSnapshot,
-  Instance,
-  SnapshotOut,
-  types,
-} from 'mobx-state-tree'
+import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import { Appearance, ColorSchemeName } from 'react-native'
 import { getColors } from 'designSystem'
 import * as SystemUI from 'expo-system-ui'
-import { withSetPropAction } from '../helpers/withSetPropAction'
-import { RootStoreModel } from './RootStore'
-import { measurementDefaults } from '../models'
 
 let deviceColorScheme = Appearance.getColorScheme()
 Appearance.addChangeListener(({ colorScheme }) => {

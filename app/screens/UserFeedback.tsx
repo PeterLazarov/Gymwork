@@ -45,7 +45,7 @@ const UserFeedbackScreen: React.FC = () => {
   function onFeedbackSave() {
     airtableApi.sendFeedback(feedback).then(() => {
       goBack()
-      showSnackbar!({
+      showSnackbar?.({
         text: 'Thank you for sending us feedback',
       })
     })

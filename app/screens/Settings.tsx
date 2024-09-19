@@ -35,7 +35,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
 
   const onExportData = () => {
     exportData().then(() => {
-      showSnackbar!({
+      showSnackbar?.({
         text: translate('dataExportSuccess'),
       })
     })
@@ -43,7 +43,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
 
   const onRestoreData = async () => {
     restoreData().then(() => {
-      showSnackbar!({
+      showSnackbar?.({
         text: translate('dataImportSuccess'),
       })
     })

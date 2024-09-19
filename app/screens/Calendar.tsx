@@ -35,7 +35,7 @@ const CalendarScreen: React.FC = () => {
         acc[curr.date]!.dots = [
           {
             color: colors.tertiary,
-            selectedColor: colors.tertiaryText,
+            selectedColor: colors.onTertiary,
           },
         ]
 

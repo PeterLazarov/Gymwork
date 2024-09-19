@@ -20,6 +20,7 @@ type DialogContextType = {
 }
 const DialogContext = createContext<DialogContextType>({})
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 export const useDialogContext = () => useContext(DialogContext)
 
 type Props = {

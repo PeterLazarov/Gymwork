@@ -21,7 +21,7 @@ export const StateStoreModel = types
     highlightedSetGuid: '',
     feedbackUser: '',
     focusedExerciseGuid: types.maybe(types.string),
-    openedDate: types.optional(types.string, today.toISODate()!),
+    openedDate: types.optional(types.string, today.toISODate()),
     draftSet: types.maybe(WorkoutSetModel),
     showCommentsCard: true,
 
@@ -61,10 +61,10 @@ export const StateStoreModel = types
     get openedWorkout(): Workout | undefined {
       return this.workoutStore.dateWorkoutMap[self.openedDate]
     },
-    get focusedExerciseRecords(): ExerciseRecord {
-      return this.recordStore.exerciseRecordsMap[
-        this.focusedStep!.exercise!.guid
-      ]!
+    get focusedExerciseRecords(): ExerciseRecord | undefined {
+      if (!this.focusedStep?.exercise) return
+
+      return this.recordStore.exerciseRecordsMap[this.focusedStep.exercise.guid]
     },
     get firstWorkout(): Workout | undefined {
       return this.workoutStore.workouts[this.workoutStore.workouts.length - 1]
@@ -114,13 +114,17 @@ export const StateStoreModel = types
       self.focusedStepGuid = stepGuid
       self.highlightedSetGuid = ''
 
-      const focusedStep = self.openedWorkout?.stepsMap[self.focusedStepGuid]!
+      const focusedStep = self.openedWorkout?.stepsMap[self.focusedStepGuid]
       self.focusedExerciseGuid = focusedStep?.exercises?.[0]?.guid
     },
     deleteFocusedStep(): () => void {
-      const undoDelete = self.openedWorkout!.removeStep(self.focusedStep!)
-      this.setFocusedStep('')
-      return undoDelete
+      if (self.openedWorkout && self.focusedStep) {
+        const undoDelete = self.openedWorkout?.removeStep(self.focusedStep)
+        this.setFocusedStep('')
+        return undoDelete
+      }
+
+      return () => {}
     },
   }))
 

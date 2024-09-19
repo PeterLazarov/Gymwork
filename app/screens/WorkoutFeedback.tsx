@@ -25,7 +25,13 @@ const WorkoutFeedbackScreen: React.FC = () => {
     stateStore,
     navStore: { navigate },
   } = useStores()
-  const workout = stateStore.openedWorkout!
+  const workout = stateStore.openedWorkout
+
+  if (!workout) {
+    console.warn('REDIRECT - No workout')
+    navigate('Workout')
+    return null
+  }
 
   function onBackPress() {
     navigate('Workout')

@@ -10,8 +10,10 @@ import { View } from 'react-native'
 const WorkoutStepScreen: React.FC = () => {
   const { stateStore, navStore } = useStores()
 
-  if (!stateStore.focusedStep) {
+  if (!stateStore.focusedStep || !stateStore.focusedExercise) {
+    console.warn('REDIRECT - No step or exercise')
     navStore.navigate('Workout')
+    return null
   }
 
   return (
@@ -21,9 +23,13 @@ const WorkoutStepScreen: React.FC = () => {
 
         {stateStore.focusedStep?.type === 'superSet' && (
           <ExerciseControl
-            selectedIndex={stateStore.focusedStep.exercises.indexOf(
-              stateStore.focusedExercise!
-            )}
+            selectedIndex={
+              stateStore.focusedExercise
+                ? stateStore.focusedStep.exercises.indexOf(
+                    stateStore.focusedExercise
+                  )
+                : -1
+            }
             options={stateStore.focusedStep.exercises}
             onChange={({ guid }) => {
               stateStore.setProp('focusedExerciseGuid', guid)
@@ -31,8 +37,8 @@ const WorkoutStepScreen: React.FC = () => {
           />
         )}
         <ExerciseTrackView
-          exercise={stateStore.focusedExercise!}
-          step={stateStore.focusedStep!}
+          exercise={stateStore.focusedExercise}
+          step={stateStore.focusedStep}
         />
       </View>
     )

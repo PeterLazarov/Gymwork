@@ -6,7 +6,11 @@ import { ExerciseModel } from './Exercise'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import convert from 'convert-units'
 import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction'
-import { isImperialDistance, measurementUnits } from './ExerciseMeasurement'
+import {
+  isImperialDistance,
+  measurementDefaults,
+  measurementUnits,
+} from './ExerciseMeasurement'
 
 export const WorkoutSetModel = types
   .model('WorkoutSet')
@@ -51,26 +55,32 @@ export const WorkoutSetModel = types
       }
     },
     get weight() {
+      if (!set.exercise.measurements.weight) return 0
+
       return Number(
         convert(set.weightMcg ?? 0)
           .from('mcg')
-          .to(set.exercise.measurements.weight!.unit)
+          .to(set.exercise.measurements.weight.unit)
           .toFixed(2)
       )
     },
     get distance() {
+      if (!set.exercise.measurements.distance) return 0
+
       return Number(
         convert(set.distanceMm ?? 0)
           .from('mm')
-          .to(set.exercise.measurements.distance!.unit)
+          .to(set.exercise.measurements.distance.unit)
           .toFixed(2)
       )
     },
     get duration() {
+      if (!set.exercise.measurements.duration) return 0
+
       return Number(
         convert(set.durationMs ?? 0)
           .from('ms')
-          .to(set.exercise.measurements.duration!.unit)
+          .to(set.exercise.measurements.duration.unit)
           .toFixed(2)
       )
     },
@@ -83,8 +93,15 @@ export const WorkoutSetModel = types
       )
     },
     get speed() {
+      // TODO consider replacing 0 as default with undefined?
+      if (
+        !set.exercise.measurements.distance ||
+        !set.exercise.measurements.duration
+      )
+        return 0
+
       const isImperial = isImperialDistance(
-        set.exercise.measurements.distance!.unit
+        set.exercise.measurements.distance.unit
       )
       const distanceUnit = isImperial
         ? measurementUnits.distance.mile
@@ -100,18 +117,24 @@ export const WorkoutSetModel = types
   .actions(withSetPropAction)
   .actions(withMergeUpdateAction)
   .actions(self => ({
-    setWeight(value: number, unit = self.exercise.measurements.weight!.unit) {
+    setWeight(
+      value: number,
+      unit = self.exercise.measurements.weight?.unit ??
+        measurementDefaults.weight.unit
+    ) {
       self.setProp('weightMcg', convert(value).from(unit).to('mcg'))
     },
     setDistance(
       value: number,
-      unit = self.exercise.measurements.distance!.unit
+      unit = self.exercise.measurements.distance?.unit ??
+        measurementDefaults.distance.unit
     ) {
       self.setProp('distanceMm', convert(value).from(unit).to('mm'))
     },
     setDuration(
       value: number,
-      unit = self.exercise.measurements.duration!.unit
+      unit = self.exercise.measurements.duration?.unit ??
+        measurementDefaults.duration.unit
     ) {
       self.setProp('durationMs', convert(value).from(unit).to('ms'))
     },
@@ -119,10 +142,13 @@ export const WorkoutSetModel = types
       self.setProp('restMs', convert(value).from(unit).to('ms'))
     },
     isBetterThan(otherSet: WorkoutSet) {
+      if (!self.exercise.measuredBy || !self.exercise.groupRecordsBy)
+        return false
+
       const isMoreBetter =
-        self.exercise.measurements[self.exercise.measuredBy]!.moreIsBetter
+        self.exercise.measurements[self.exercise.measuredBy].moreIsBetter
       const groupingIsMoreBetter =
-        self.exercise.measurements[self.exercise.groupRecordsBy]!.moreIsBetter
+        self.exercise.measurements[self.exercise.groupRecordsBy].moreIsBetter
 
       const isTied = self.measurementValue === otherSet.measurementValue
 

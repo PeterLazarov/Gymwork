@@ -8,7 +8,7 @@
     "moduleResolution": "node",
     "strict": true,
     "noImplicitAny": true,
-    "noImplicitReturns": true,
+    // "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "sourceMap": true,

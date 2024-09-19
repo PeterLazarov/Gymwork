@@ -27,23 +27,28 @@ const ExerciseEditScreen: React.FC = () => {
   const { stateStore, exerciseStore, navStore } = useStores()
 
   const { createMode } = useRouteParams('ExerciseEdit')
+  if (!createMode && !stateStore.focusedStep?.exercise) {
+    console.warn('REDIRECT - No focusedStep.exercise')
+    navStore.navigate('ExerciseSelect')
+  }
+
   const [exercise, setExercise] = useState(
-    createMode ? ExerciseModel.create() : stateStore.focusedStep!.exercise
+    createMode ? ExerciseModel.create() : stateStore.focusedStep?.exercise
   )
   const [formValid, setFormValid] = useState(false)
 
   const { showConfirm } = useDialogContext()
 
   function onBackPress() {
-    showConfirm!({
+    showConfirm?.({
       message: translate('changesWillBeLost'),
-      onClose: () => showConfirm!(undefined),
+      onClose: () => showConfirm?.(undefined),
       onConfirm: onBackConfirmed,
     })
   }
 
   function onBackConfirmed() {
-    showConfirm!(undefined)
+    showConfirm?.(undefined)
     navStore.goBack()
   }
 
@@ -53,12 +58,14 @@ const ExerciseEditScreen: React.FC = () => {
   }
 
   function onComplete() {
+    if (!exercise) return
+
     if (createMode) {
       exerciseStore.createExercise(exercise)
     } else {
       exerciseStore.editExercise(exercise)
     }
-    goBack()
+    navStore.goBack()
   }
 
   return (
@@ -92,10 +99,12 @@ const ExerciseEditScreen: React.FC = () => {
         avoidMode="focused-input"
         style={{ flex: 1 }}
       >
-        <ExerciseEditForm
-          exercise={exercise}
-          onUpdate={onUpdate}
-        />
+        {exercise && (
+          <ExerciseEditForm
+            exercise={exercise}
+            onUpdate={onUpdate}
+          />
+        )}
 
         <Button
           variant="primary"
