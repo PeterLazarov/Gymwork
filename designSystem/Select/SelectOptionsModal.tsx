@@ -88,11 +88,11 @@ function SelectOptionsModal<T = unknown>({
           {!hideButton && (
             <View style={{ flexDirection: 'row' }}>
               <Button
-                variant="accent"
+                variant="primary"
                 style={{ flex: 1 }}
                 onPress={onClose}
               >
-                <ButtonText variant="accent">{translate('done')}</ButtonText>
+                <ButtonText variant="primary">{translate('done')}</ButtonText>
               </Button>
             </View>
           )}
