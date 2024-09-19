@@ -34,7 +34,6 @@
 * check out focusedExerciseRecords for supersets
 * optimize useColors
 * Review button styles. Especially primary + disabled
-* Review button pressed states. Tertiary pressed looks like primary (odd)
 * EditTemplateForm should allow adding exercises/sets
 
 Performance to beat -
