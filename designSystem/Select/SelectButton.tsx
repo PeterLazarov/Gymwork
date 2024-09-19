@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, TouchableWithoutFeedback } from 'react-native'
-
-import { Text, useColors, fontSize, Icon } from 'designSystem'
+import { TouchableOpacity } from 'react-native'
+import { TextInput } from 'react-native-paper'
 
 type Props = {
   onPress: () => void
@@ -11,53 +10,16 @@ type Props = {
 }
 
 const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
-  const colors = useColors()
-
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
-      <View
-        style={{
-          backgroundColor: colors.surfaceContainerLow,
-          paddingHorizontal: 15,
-          paddingVertical: label ? 9 : 17,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          borderTopStartRadius: 4,
-          borderTopEndRadius: 4,
-          borderBottomWidth: 0.3,
-          alignItems: 'center',
-        }}
-      >
-        <View
-          style={{
-            flexDirection: 'column',
-          }}
-        >
-          {label && (
-            <Text
-              style={{
-                fontSize: fontSize.xs,
-                opacity: 0.75,
-              }}
-            >
-              {label}
-            </Text>
-          )}
-          <Text
-            style={{
-              color: error ? colors.onError : colors.onSurface,
-            }}
-          >
-            {text}
-          </Text>
-        </View>
-        <Icon
-          icon="chevron-down"
-          size="small"
-          style={{ marginLeft: 4 }}
-        />
-      </View>
-    </TouchableWithoutFeedback>
+    <TouchableOpacity onPress={onPress}>
+      <TextInput
+        value={text}
+        error={error}
+        label={label}
+        pointerEvents="none"
+        focusable={false}
+      />
+    </TouchableOpacity>
   )
 }
 
