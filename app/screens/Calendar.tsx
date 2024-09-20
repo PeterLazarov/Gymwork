@@ -9,7 +9,7 @@ import { translate } from 'app/i18n'
 import { useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { Header, Icon, IconButton, useColors, fontSize } from 'designSystem'
-import CalendarWorkoutModal from 'app/components/CalendarWorkoutModal'
+import WorkoutModal from 'app/components/WorkoutModal'
 
 export type CalendarScreenParams = {
   copyWorkoutMode?: boolean
@@ -74,11 +74,6 @@ const CalendarScreen: React.FC = () => {
   }
   function goToDay(date: string) {
     stateStore.setOpenedDate(date)
-    navigate('Workout')
-  }
-
-  function onModalAction() {
-    setOpenedWorkoutDialogDate('')
     navigate('Workout')
   }
 
@@ -165,11 +160,10 @@ const CalendarScreen: React.FC = () => {
         />
       </EmptyLayout>
       {openedWorkoutDialogDate && (
-        <CalendarWorkoutModal
+        <WorkoutModal
           open={!!openedWorkoutDialogDate}
-          workoutDate={openedWorkoutDialogDate}
+          workout={workoutStore.dateWorkoutMap[openedWorkoutDialogDate]!}
           onClose={() => setOpenedWorkoutDialogDate('')}
-          calendarAction={onModalAction}
           mode={copyWorkoutMode ? 'copy' : 'view'}
         />
       )}

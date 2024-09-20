@@ -99,6 +99,7 @@ const en = {
   measureRest: 'Measure rest',
   giveFeedback: 'Give feedback',
   comments: 'Comments',
+  commentsLogEmpty: 'No workout comments entered.'
 }
 
 export default en

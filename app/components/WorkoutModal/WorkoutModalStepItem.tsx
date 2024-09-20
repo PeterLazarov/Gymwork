@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 
-import StepSetsList from './WorkoutStep/StepSetsList/StepSetsList'
+import StepSetsList from '../WorkoutStep/StepSetsList/StepSetsList'
 import { WorkoutStep } from 'app/db/models'
 import { Text, useColors } from 'designSystem'
 

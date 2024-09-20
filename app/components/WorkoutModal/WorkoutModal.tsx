@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { ScrollView, View } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
-import CalendarWorkoutModalStepItem from './CalendarWorkoutModalStepItem'
+import CalendarWorkoutModalStepItem from './WorkoutModalStepItem'
 import { useStores } from 'app/db/helpers/useStores'
 import {
   Text,
@@ -15,40 +15,35 @@ import {
 } from 'designSystem'
 import { translate } from 'app/i18n'
 import { useState } from 'react'
+import { Workout } from 'app/db/models'
 
 type Props = {
   open: boolean
-  workoutDate: string
+  workout: Workout
   onClose: () => void
-  calendarAction: () => void
   mode: 'copy' | 'view'
 }
-const CalendarWorkoutModal: React.FC<Props> = ({
-  open,
-  workoutDate,
-  onClose,
-  calendarAction,
-  mode,
-}) => {
-  const { workoutStore, stateStore } = useStores()
+const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode }) => {
+  const {
+    workoutStore,
+    stateStore,
+    navStore: { navigate },
+  } = useStores()
   const [includeSets, setIncludeSets] = useState(true)
 
-  const luxonDate = DateTime.fromISO(workoutDate)
+  const luxonDate = DateTime.fromISO(workout.date)
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
-
-  const workout = workoutStore.dateWorkoutMap[workoutDate]!
 
   const colors = useColors()
 
   const onActionPress = () => {
     if (mode === 'copy') {
-      const workout = workoutStore.dateWorkoutMap[workoutDate]
-
       workoutStore.copyWorkout(workout!, includeSets)
     } else if (mode === 'view') {
-      stateStore.setOpenedDate(workoutDate)
+      stateStore.setOpenedDate(workout.date)
     }
-    calendarAction()
+    navigate('Workout')
+    onClose()
   }
 
   return (
@@ -135,4 +130,4 @@ const CalendarWorkoutModal: React.FC<Props> = ({
   )
 }
 
-export default CalendarWorkoutModal
+export default WorkoutModal
