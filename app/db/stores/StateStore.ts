@@ -23,7 +23,6 @@ export const StateStoreModel = types
     focusedExerciseGuid: types.maybe(types.string),
     openedDate: types.optional(types.string, today.toISODate()),
     draftSet: types.maybe(WorkoutSetModel),
-    showCommentsCard: true,
     visitedWelcomeScreen: false,
 
     chartWidth: 0,

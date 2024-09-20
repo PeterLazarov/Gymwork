@@ -7,7 +7,6 @@ import { capitalize } from 'lodash'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, useColors } from 'designSystem'
-import useBenchmark from 'app/utils/useBenchmark'
 import HomeMenuItems from '../HomeMenuItems'
 
 const WorkoutHeader: React.FC = () => {
@@ -15,10 +14,12 @@ const WorkoutHeader: React.FC = () => {
 
   const {
     stateStore,
+    settingsStore,
     workoutStore,
     navStore: { navigate },
   } = useStores()
-  const { openedWorkout, showCommentsCard } = stateStore
+  const { openedWorkout } = stateStore
+  const { showCommentsCard } = settingsStore
 
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -42,15 +43,13 @@ const WorkoutHeader: React.FC = () => {
 
   function toggleCommentsCard() {
     setMenuOpen(false)
-    stateStore.setProp('showCommentsCard', !showCommentsCard)
+    settingsStore.setProp('showCommentsCard', !showCommentsCard)
   }
 
   const deleteWorkout = () => {
     setMenuOpen(false)
     workoutStore.removeWorkout(openedWorkout!)
   }
-
-  const { performBenchmark } = useBenchmark()
 
   return (
     <Header>

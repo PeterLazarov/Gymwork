@@ -6,7 +6,6 @@ import { useStores } from 'app/db/helpers/useStores'
 import WorkoutStepList from './WorkoutStepList'
 import WorkoutEmptyState from './WorkoutEmptyState'
 import WorkoutCommentsCard from './WorkoutCommentsCard'
-import AddStepMenu from './AddStepMenu'
 import { useColors } from 'designSystem'
 
 type Props = {
@@ -17,7 +16,7 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
 
   const {
     workoutStore,
-    stateStore,
+    settingsStore,
     navStore: { navigate },
   } = useStores()
   const workout = workoutStore.dateWorkoutMap[date]
@@ -26,7 +25,7 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
     <View style={{ flex: 1, backgroundColor: colors.surfaceContainer }}>
       {workout && workout.steps.length > 0 ? (
         <>
-          {stateStore.showCommentsCard && workout.hasComments && (
+          {settingsStore.showCommentsCard && workout.hasComments && (
             <WorkoutCommentsCard
               workout={workout}
               onPress={() => navigate('WorkoutFeedback')}
