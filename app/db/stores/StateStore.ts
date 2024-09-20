@@ -24,6 +24,7 @@ export const StateStoreModel = types
     openedDate: types.optional(types.string, today.toISODate()),
     draftSet: types.maybe(WorkoutSetModel),
     showCommentsCard: true,
+    visitedWelcomeScreen: false,
 
     chartWidth: 0,
     chartHeight: 0,
@@ -90,6 +91,10 @@ export const StateStoreModel = types
     initialize() {
       self.focusedStepGuid = ''
       self.highlightedSetGuid = ''
+    },
+    applySnapshot(snapshot: StateStoreSnapshot) {
+      self.feedbackUser = snapshot.feedbackUser
+      self.visitedWelcomeScreen = snapshot.visitedWelcomeScreen
     },
     setOpenedDate(date: string) {
       self.openedDate = date

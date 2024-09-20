@@ -11,6 +11,9 @@ import {
 import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import { StatusBar, useColorScheme } from 'react-native'
+import { Portal, PaperProvider } from 'react-native-paper'
+import { ErrorBoundary } from '@sentry/react-native'
+
 import Config from '../config'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 import Workout from 'app/screens/Workout'
@@ -32,11 +35,10 @@ import TabsLayout from 'app/layouts/TabsLayout'
 import { useStores } from 'app/db/helpers/useStores'
 import Settings from 'app/screens/Settings'
 import { navThemes, paperThemes, useColors } from 'designSystem'
-import { ErrorBoundary } from '@sentry/react-native'
 import { DialogContextProvider } from 'app/contexts/DialogContext'
 import { ErrorDetails } from 'app/screens/ErrorDetails'
-import { Portal, PaperProvider } from 'react-native-paper'
 import UserFeedbackScreen from 'app/screens/UserFeedback'
+import Welcome from 'app/screens/Welcome'
 
 /**
  * Documentation:
@@ -53,6 +55,7 @@ export type AppStackParamList = {
   HomeStack: undefined
   Settings: undefined
   UserFeedback: undefined
+  Welcome: undefined
 }
 
 export type HomeStackParamList = {
@@ -93,6 +96,10 @@ const Stack = createNativeStackNavigator<AppStackParamList>()
 const AppStack = observer(function AppStack() {
   const colors = useColors()
   const colorScheme = useColorScheme()
+  const { stateStore } = useStores()
+
+  const shouldShowWelcome = !__DEV__ && !stateStore.visitedWelcomeScreen
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -101,7 +108,7 @@ const AppStack = observer(function AppStack() {
           colorScheme === 'light' ? colors.surface : colors.shadow,
         animation: 'none',
       }}
-      initialRouteName="HomeStack"
+      initialRouteName={shouldShowWelcome ? 'Welcome' : 'HomeStack'}
     >
       <>
         <Stack.Screen
@@ -186,9 +193,14 @@ const AppStack = observer(function AppStack() {
           name="TemplateSelect"
           component={TemplateSelect}
         />
-        <Stack.Screen name="UserFeedback">
-          {() => <UserFeedbackScreen />}
-        </Stack.Screen>
+        <Stack.Screen
+          name="UserFeedback"
+          component={UserFeedbackScreen}
+        />
+        <Stack.Screen
+          name="Welcome"
+          component={Welcome}
+        />
       </>
     </Stack.Navigator>
   )
