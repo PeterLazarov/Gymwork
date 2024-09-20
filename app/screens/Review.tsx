@@ -5,13 +5,14 @@ import { Header, Icon, IconButton, SwipeTabs, useColors } from 'designSystem'
 
 import { useStores } from 'app/db/helpers/useStores'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
-import ExerciseChartStats from 'app/components/ExerciseStats/ExerciseChartStats'
-import ExerciseHistoryStats from 'app/components/ExerciseStats/ExerciseHistoryStats'
-import ExerciseRecordStats from 'app/components/ExerciseStats/ExerciseRecordStats'
+import ExerciseChartReview from 'app/components/Review/ExerciseChartReview'
+import ExerciseHistoryReview from 'app/components/Review/ExerciseHistoryReview'
+import ExerciseRecordReview from 'app/components/Review/ExerciseRecordReview'
 import { translate } from 'app/i18n'
 import ExerciseView from 'app/components/ExerciseHistoryChart/ExerciseView'
 import { Menu } from 'react-native-paper'
 import HomeMenuItems from 'app/components/HomeMenuItems'
+import CommentsReview from 'app/components/Review/CommentsReview'
 
 const ReviewScreen: React.FC = () => {
   const colors = useColors()
@@ -30,6 +31,11 @@ const ReviewScreen: React.FC = () => {
 
   const tabsConfig = [
     {
+      label: translate('comments'),
+      name: 'Comments',
+      component: CommentsReview,
+    },
+    {
       label: translate('chart'),
       name: 'Chart',
       component: () => (
@@ -37,7 +43,7 @@ const ReviewScreen: React.FC = () => {
           openSelect={() => setExerciseSelectOpen(true)}
           isExerciseSelected={!!selectedExercise}
         >
-          <ExerciseChartStats exercise={selectedExercise} />
+          <ExerciseChartReview exercise={selectedExercise} />
         </ExerciseView>
       ),
     },
@@ -49,7 +55,7 @@ const ReviewScreen: React.FC = () => {
           openSelect={() => setExerciseSelectOpen(true)}
           isExerciseSelected={!!selectedExercise}
         >
-          <ExerciseRecordStats exercise={selectedExercise} />
+          <ExerciseRecordReview exercise={selectedExercise} />
         </ExerciseView>
       ),
       props: { exercise: selectedExercise },
@@ -62,7 +68,7 @@ const ReviewScreen: React.FC = () => {
           openSelect={() => setExerciseSelectOpen(true)}
           isExerciseSelected={!!selectedExercise}
         >
-          <ExerciseHistoryStats exercise={selectedExercise} />
+          <ExerciseHistoryReview exercise={selectedExercise} />
         </ExerciseView>
       ),
       props: { exercise: selectedExercise },

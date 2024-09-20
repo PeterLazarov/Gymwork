@@ -1,5 +1,4 @@
 - Before Android store closed test
-  - ExerciseEdit - in UI toggle whether an exercise has rest measurement
   - reporting - log only production errors
 
 * Timer

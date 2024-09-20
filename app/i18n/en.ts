@@ -98,6 +98,7 @@ const en = {
   },
   measureRest: 'Measure rest',
   giveFeedback: 'Give feedback',
+  comments: 'Comments',
 }
 
 export default en

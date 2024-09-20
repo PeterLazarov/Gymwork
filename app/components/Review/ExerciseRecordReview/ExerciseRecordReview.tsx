@@ -1,22 +1,19 @@
 import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
-import { View, ScrollView } from 'react-native'
+import { StyleSheet, View, ScrollView } from 'react-native'
 
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { useColors } from 'designSystem'
 import { Exercise, WorkoutSet } from 'app/db/models'
 import RecordsListItem from './RecordsListItem'
 
-export type ExerciseRecordStatsProps = {
+export type ExerciseRecordReviewProps = {
   exercise?: Exercise
 }
 
-const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
-  const colors = useColors()
-
+const ExerciseRecordReview: React.FC<ExerciseRecordReviewProps> = props => {
   const {
     stateStore,
     recordStore,
@@ -46,20 +43,9 @@ const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
   }
 
   return (
-    <View
-      style={{
-        paddingVertical: 16,
-        borderRadius: 8,
-        display: 'flex',
-        flexGrow: 1,
-      }}
-    >
+    <View style={styles.screen}>
       {recordSets.length > 0 ? (
-        <ScrollView
-          style={{
-            flexBasis: 0,
-          }}
-        >
+        <ScrollView style={styles.list}>
           {recordSets.map(set => {
             return (
               <RecordsListItem
@@ -77,4 +63,15 @@ const ExerciseRecordStats: React.FC<ExerciseRecordStatsProps> = props => {
   )
 }
 
-export default observer(ExerciseRecordStats)
+const styles = StyleSheet.create({
+  screen: {
+    marginTop: 16,
+    display: 'flex',
+    flexGrow: 1,
+  },
+  list: {
+    flexBasis: 0,
+  },
+})
+
+export default observer(ExerciseRecordReview)

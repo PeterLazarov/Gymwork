@@ -62,7 +62,6 @@ const ExerciseChartStats: React.FC<ExerciseChartStatsProps> = ({
 const styles = StyleSheet.create({
   screen: {
     marginTop: 16,
-    flexDirection: 'column',
     justifyContent: 'space-between',
     display: 'flex',
     flexGrow: 1,
