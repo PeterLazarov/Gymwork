@@ -6,6 +6,8 @@ import { useStores } from 'app/db/helpers/useStores'
 import { getDateRange } from 'app/utils/date'
 import { HorizontalScreenList } from 'designSystem'
 import WorkoutDayView from './WorkoutDayView'
+import { View } from 'react-native'
+import AddStepMenu from './AddStepMenu'
 
 const WorkoutHorizontalList = () => {
   const { stateStore } = useStores()
@@ -37,13 +39,16 @@ const WorkoutHorizontalList = () => {
   }, [stateStore.openedDate])
 
   return (
-    <HorizontalScreenList
-      ref={workoutList}
-      data={dates}
-      renderItem={renderItem}
-      onScreenChange={onScreenChange}
-      initialScrollIndex={dates.indexOf(stateStore.openedDate)}
-    />
+    <View style={{ flex: 1 }}>
+      <HorizontalScreenList
+        ref={workoutList}
+        data={dates}
+        renderItem={renderItem}
+        onScreenChange={onScreenChange}
+        initialScrollIndex={dates.indexOf(stateStore.openedDate)}
+      />
+      <AddStepMenu />
+    </View>
   )
 }
 

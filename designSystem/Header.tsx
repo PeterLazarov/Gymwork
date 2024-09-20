@@ -6,6 +6,8 @@ import { Text, useColors, fontSize } from '.'
 interface SubComponents {
   Title: React.FC<HeaderTitleProps>
 }
+
+const padding = 12
 export const Header: React.FC<ViewProps> & SubComponents = props => {
   const colors = useColors()
   const colorScheme = useColorScheme()
@@ -19,9 +21,9 @@ export const Header: React.FC<ViewProps> & SubComponents = props => {
               colorScheme === 'light' ? colors.primary : colors.shadow,
             flexDirection: 'row',
             alignItems: 'center',
-            paddingHorizontal: 12,
-            paddingBottom: 12,
-            paddingTop: insets && insets.top > 0 ? insets.top : 12,
+            paddingHorizontal: padding,
+            paddingBottom: padding,
+            paddingTop: (insets?.top ?? 0) + padding,
           }}
           {...props}
         />
@@ -35,12 +37,21 @@ type HeaderTitleProps = {
   title: string
   numberOfLines?: TextProps['numberOfLines']
 }
-const HeaderTitle: React.FC<HeaderTitleProps> = ({ title, numberOfLines }) => {
+const HeaderTitle: React.FC<HeaderTitleProps> = ({
+  title,
+  numberOfLines = 1,
+}) => {
   const colors = useColors()
   const colorScheme = useColorScheme()
 
   return (
-    <View style={{ marginLeft: 10, alignItems: 'flex-start', flex: 1 }}>
+    <View
+      style={{
+        marginLeft: 10,
+        alignItems: 'flex-start',
+        flex: 1,
+      }}
+    >
       <Text
         style={{
           color: colorScheme === 'light' ? colors.onPrimary : colors.onSurface,
