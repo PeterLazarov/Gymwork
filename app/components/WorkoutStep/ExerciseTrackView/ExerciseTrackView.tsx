@@ -30,7 +30,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 }) => {
   const colors = useColors()
 
-  const { stateStore, settingsStore } = useStores()
+  const { stateStore, settingsStore, workoutStore } = useStores()
   const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
@@ -41,7 +41,8 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   }, [focusedExercise])
 
   useEffect(() => {
-    const lastSet = step.exerciseSetsMap[focusedExercise.guid]?.at(-1)
+    const lastSet =
+      workoutStore.exerciseSetsHistoryMap[focusedExercise.guid]?.at(-1)
     const setToClone = selectedSet || lastSet
 
     const { guid, exercise, reps, ...rest } = setToClone || {}
