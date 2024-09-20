@@ -71,9 +71,11 @@ export const WorkoutStoreModel = types
     },
 
     get mostUsedExercises(): Exercise[] {
-      return Object.entries(this.exerciseSetsHistoryMap)
+      const useOrderedExecises = Object.entries(this.exerciseSetsHistoryMap)
         .filter(([, sets]) => sets.length > 0)
-        .sort(([, e1Sets], [, e2Sets]) => e1Sets.length - e2Sets.length)
+        .sort(([, e1Sets], [, e2Sets]) => e2Sets.length - e1Sets.length)
+
+      return useOrderedExecises
         .slice(0, 10)
         .map(([, sets]) => sets[0]!.exercise)
     },
