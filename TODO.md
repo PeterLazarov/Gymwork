@@ -25,7 +25,6 @@
 * darkMode
   - rename colors so that they're usable across both color schemes
 * Template edit
-  - superset step support
   - steps list editting rearranging and or adding
 * HorizontalScreenList > react-native-reanimated-carousel rolled back for FlatList version. Do we return? Keep header press bug in mind.
 * keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
