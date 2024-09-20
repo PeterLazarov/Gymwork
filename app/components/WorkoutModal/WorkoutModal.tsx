@@ -16,14 +16,22 @@ import {
 import { translate } from 'app/i18n'
 import { useState } from 'react'
 import { Workout } from 'app/db/models'
+import WorkoutCommentsCard from '../Workout/WorkoutCommentsCard'
 
 type Props = {
   open: boolean
   workout: Workout
   onClose: () => void
   mode: 'copy' | 'view'
+  showComments?: boolean
 }
-const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode }) => {
+const WorkoutModal: React.FC<Props> = ({
+  open,
+  workout,
+  onClose,
+  mode,
+  showComments,
+}) => {
   const {
     workoutStore,
     stateStore,
@@ -73,6 +81,9 @@ const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode }) => {
             variant="primary"
           />
           <View style={{ flex: 1 }}>
+            {showComments && workout.hasComments && (
+              <WorkoutCommentsCard workout={workout} />
+            )}
             <ScrollView>
               {workout.steps.map(step => (
                 <CalendarWorkoutModalStepItem

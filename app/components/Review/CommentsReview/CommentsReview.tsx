@@ -51,6 +51,7 @@ const CommentsReview: React.FC<Props> = props => {
           workout={openedWorkout}
           onClose={() => setOpenedWorkout(undefined)}
           mode="view"
+          showComments
         />
       )}
     </>
