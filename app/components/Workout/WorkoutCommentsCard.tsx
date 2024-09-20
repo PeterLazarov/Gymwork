@@ -1,5 +1,5 @@
-import React from 'react'
-import { View } from 'react-native'
+import React, { useMemo } from 'react'
+import { StyleSheet, View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
 import {
@@ -12,57 +12,36 @@ import {
 import { discomfortOptions, feelingOptions, Workout } from 'app/db/models'
 import { translate } from 'app/i18n'
 
-export type WorkoutCommentsCardProps = {
+type Props = {
   workout: Workout
   onPress?(): void
+  compactMode?: boolean
 }
 
-const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
+const WorkoutCommentsCard: React.FC<Props> = ({
   workout,
   onPress,
+  compactMode,
 }) => {
   const colors = useColors()
-  const hasNotes = workout.notes !== ''
+
+  const styles = useMemo(() => makeStyles(colors), [colors])
 
   return (
     <Card
-      style={{ padding: 0 }}
+      style={styles.card}
       onPress={onPress}
       content={
-        <View
-          style={{
-            alignItems: 'center',
-            gap: 8,
-          }}
-        >
-          {hasNotes && (
-            <View style={{ flexDirection: 'row', gap: 12, paddingTop: 8 }}>
-              <Text
-                style={{
-                  fontSize: fontSize.sm,
-                  color: colors.onSurface,
-                }}
-              >
-                {workout.notes}
-              </Text>
+        <View style={styles.cardContent}>
+          {workout.notes !== '' && (
+            <View style={styles.notesContainer}>
+              <Text style={styles.notes}>{workout.notes}</Text>
             </View>
           )}
 
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              alignItems: 'center',
-              width: '100%',
-            }}
-          >
+          <View style={styles.stickerPanel}>
             {workout.rpe !== undefined && (
-              <Text
-                style={{
-                  flex: 1,
-                  textAlign: 'center',
-                }}
-              >
+              <Text style={styles.difficultyLabel}>
                 {translate('diffValue', { rpe: workout.rpe })}
               </Text>
             )}
@@ -70,14 +49,16 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
               <FeedbackPickerOption
                 option={discomfortOptions[workout.pain]}
                 isSelected
-                style={{ backgroundColor: 'transparent', flex: 1 }}
+                style={styles.sticker}
+                compactMode={compactMode}
               />
             )}
             {workout.feeling && (
               <FeedbackPickerOption
                 option={feelingOptions[workout.feeling]}
                 isSelected
-                style={{ backgroundColor: 'transparent', flex: 1 }}
+                style={styles.sticker}
+                compactMode={compactMode}
               />
             )}
           </View>
@@ -86,5 +67,35 @@ const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
     />
   )
 }
+
+const makeStyles = (colors: any) =>
+  StyleSheet.create({
+    card: {
+      padding: 0,
+    },
+    cardContent: {
+      alignItems: 'center',
+      gap: 8,
+    },
+    notesContainer: { flexDirection: 'row', gap: 12, paddingTop: 8 },
+    notes: {
+      fontSize: fontSize.sm,
+      color: colors.onSurface,
+    },
+    stickerPanel: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      width: '100%',
+    },
+    difficultyLabel: {
+      flex: 1,
+      textAlign: 'center',
+    },
+    sticker: {
+      backgroundColor: 'transparent',
+      flex: 1,
+    },
+  })
 
 export default observer(WorkoutCommentsCard)

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useMemo, useState } from 'react'
+import React, { Fragment, useMemo, useState } from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 
 import EmptyState from 'app/components/EmptyState'
@@ -8,6 +8,7 @@ import { translate } from 'app/i18n'
 import { Exercise, Workout } from 'app/db/models'
 import CommentReviewListItem from './CommentReviewListItem'
 import WorkoutModal from 'app/components/WorkoutModal'
+import { Divider } from 'designSystem'
 
 type Props = {
   exercise?: Exercise
@@ -31,13 +32,18 @@ const CommentsReview: React.FC<Props> = props => {
       <View style={styles.screen}>
         {commentedWorkouts.length > 0 ? (
           <ScrollView style={styles.list}>
-            {commentedWorkouts.map(workout => {
+            {commentedWorkouts.map((workout, index) => {
               return (
-                <CommentReviewListItem
-                  key={workout.guid}
-                  workout={workout}
-                  onPress={() => setOpenedWorkout(workout)}
-                />
+                <Fragment key={workout.guid}>
+                  <CommentReviewListItem
+                    workout={workout}
+                    onPress={() => setOpenedWorkout(workout)}
+                  />
+                  <Divider
+                    orientation="horizontal"
+                    variant="neutral"
+                  />
+                </Fragment>
               )
             })}
           </ScrollView>

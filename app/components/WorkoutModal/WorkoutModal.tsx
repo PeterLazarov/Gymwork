@@ -82,7 +82,10 @@ const WorkoutModal: React.FC<Props> = ({
           />
           <View style={{ flex: 1 }}>
             {showComments && workout.hasComments && (
-              <WorkoutCommentsCard workout={workout} />
+              <WorkoutCommentsCard
+                workout={workout}
+                compactMode
+              />
             )}
             <ScrollView>
               {workout.steps.map(step => (

@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
+  StyleSheet,
   Platform,
   StyleProp,
   TouchableOpacity,
-  View,
   ViewStyle,
 } from 'react-native'
 
@@ -19,34 +19,29 @@ type Props = {
   isSelected?: boolean
   onPress?: (feeling: string) => void
   option: FeedbackOption
-  noPadding?: boolean
+  compactMode?: boolean
   style?: StyleProp<ViewStyle>
 }
 const FeedbackPickerOption: React.FC<Props> = ({
   option,
   onPress,
   isSelected,
-  noPadding,
+  compactMode,
   style,
 }) => {
   const colors = useColors()
+
+  const styles = useMemo(
+    () => makeStyles(colors, isSelected, compactMode),
+    [colors, isSelected, compactMode]
+  )
 
   return (
     <TouchableOpacity
       key={option.value}
       onPress={() => onPress?.(option.value)}
-      style={[
-        {
-          backgroundColor: isSelected
-            ? colors.surfaceContainerLowest
-            : 'transparent',
-          borderRadius: 8,
-          paddingVertical: 16,
-          flex: 1,
-          alignItems: 'center',
-        },
-        style,
-      ]}
+      disabled={!onPress}
+      style={[styles.card, style]}
     >
       <>
         <Icon
@@ -67,5 +62,22 @@ const FeedbackPickerOption: React.FC<Props> = ({
     </TouchableOpacity>
   )
 }
+
+const makeStyles = (
+  colors: ReturnType<typeof useColors>,
+  isSelected?: boolean,
+  compactMode?: boolean
+) =>
+  StyleSheet.create({
+    card: {
+      backgroundColor: isSelected
+        ? colors.surfaceContainerLowest
+        : 'transparent',
+      borderRadius: 8,
+      paddingVertical: compactMode ? 0 : 16,
+      flex: 1,
+      alignItems: 'center',
+    },
+  })
 
 export default FeedbackPickerOption

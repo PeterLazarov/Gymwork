@@ -21,6 +21,7 @@ const Card: React.FC<CardProps> = ({
   content,
   containerStyle = {},
   style,
+  onPress,
   ...otherProps
 }) => {
   const colors = useColors()
@@ -31,6 +32,8 @@ const Card: React.FC<CardProps> = ({
     <TouchableOpacity
       style={[styles.card, containerStyle]}
       activeOpacity={0.5}
+      onPress={onPress}
+      disabled={!onPress}
       {...otherProps}
     >
       <View style={[styles.content, style]}>
