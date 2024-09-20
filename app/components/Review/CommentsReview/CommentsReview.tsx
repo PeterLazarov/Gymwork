@@ -50,6 +50,7 @@ const CommentsReview: React.FC<Props> = props => {
         <View style={styles.filterOptionList}>
           {Object.values(discomfortOptions).map(option => (
             <FeedbackPickerOption
+              key={option.value}
               option={option}
               isSelected={filterDiscomforedLevels.includes(option.value)}
               onPress={() => onDiscomfortFilterPress(option.value)}

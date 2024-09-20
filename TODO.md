@@ -17,6 +17,7 @@
   - android device -> after code change rendering of StepHeader when no focusedStep error
   - ban conflicting/unused imports (ignite's colors)/i18n lib as opposed to app/i18n
 * review
+  - show/hide and rearrange review tabs
   - On jump to record set, scroll to set
   - Optimise render of history tab
   - Optimise render of chart

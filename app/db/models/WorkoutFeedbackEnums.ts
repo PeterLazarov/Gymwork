@@ -24,19 +24,19 @@ export const feelingOptions = {
 export const discomfortOptions = {
   pain: {
     icon: 'alert-decagram-outline',
-    label: 'Severe/Pain',
+    label: 'Severe / Pain',
     color: palettes.coral.hue600,
     value: 'pain',
   },
   discomfort: {
     icon: 'warning-outline',
-    label: 'Mild',
+    label: 'Mild discomfort',
     color: palettes.amber.hue600,
     value: 'discomfort',
   },
   noPain: {
     icon: 'check',
-    label: 'None',
+    label: 'No discomfort',
     color: palettes.green['60'],
     value: 'noPain',
   },
