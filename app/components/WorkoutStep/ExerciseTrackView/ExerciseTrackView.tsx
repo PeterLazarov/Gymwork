@@ -76,6 +76,13 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
     if (settingsStore.measureRest) {
       restTimer.start()
     }
+
+    if (step.type === 'superSet') {
+      const index = step.exercises.indexOf(focusedExercise)
+      const isLastSet = index === step.exercises.length - 1
+      const nextExercise = step.exercises[isLastSet ? 0 : index + 1]!
+      stateStore.setProp('focusedExerciseGuid', nextExercise.guid)
+    }
   }, [focusedExercise])
 
   const handleUpdate = useCallback(() => {
