@@ -37,7 +37,6 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
       ) : (
         <WorkoutEmptyState />
       )}
-      <AddStepMenu />
     </View>
   )
 }
