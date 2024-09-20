@@ -35,6 +35,8 @@
 * Review button styles. Especially primary + disabled
 * EditTemplateForm should allow adding exercises/sets
 * Standardize background usage (different screens currently use different background colors for some reason)
+* Look into replacing 'draft' with mobx-utils createViewModel
+* Look into https://reactnative.dev/docs/timers#interactionmanager for optimizing render time
 
 Performance to beat -
 100 workouts

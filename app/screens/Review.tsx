@@ -13,6 +13,7 @@ import ExerciseView from 'app/components/ExerciseHistoryChart/ExerciseView'
 import { Menu } from 'react-native-paper'
 import HomeMenuItems from 'app/components/HomeMenuItems'
 import CommentsReview from 'app/components/Review/CommentsReview'
+import MenuContainer from 'app/components/MenuContainer'
 
 const ReviewScreen: React.FC = () => {
   const colors = useColors()
@@ -81,8 +82,6 @@ const ReviewScreen: React.FC = () => {
       : 0
   }, [stateStore.reviewLastTab])
 
-  const [menuOpen, setMenuOpen] = useState(false)
-
   return (
     <>
       <Header>
@@ -116,24 +115,28 @@ const ReviewScreen: React.FC = () => {
           />
         </IconButton>
 
-        <Menu
-          visible={menuOpen}
-          onDismiss={() => setMenuOpen(false)}
-          anchorPosition="bottom"
-          anchor={
-            <IconButton
-              onPress={() => setMenuOpen(true)}
-              underlay="darker"
+        <MenuContainer>
+          {([menuVisible, setMenuVisible]) => (
+            <Menu
+              visible={menuVisible}
+              onDismiss={() => setMenuVisible(false)}
+              anchorPosition="bottom"
+              anchor={
+                <IconButton
+                  onPress={() => setMenuVisible(true)}
+                  underlay="darker"
+                >
+                  <Icon
+                    icon="ellipsis-vertical"
+                    color={colors.onPrimary}
+                  />
+                </IconButton>
+              }
             >
-              <Icon
-                icon="ellipsis-vertical"
-                color={colors.onPrimary}
-              />
-            </IconButton>
-          }
-        >
-          <HomeMenuItems onClose={() => setMenuOpen(false)} />
-        </Menu>
+              <HomeMenuItems onClose={() => setMenuVisible(false)} />
+            </Menu>
+          )}
+        </MenuContainer>
       </Header>
 
       <View
