@@ -44,9 +44,10 @@ const SaveTemplateScreen: React.FC = () => {
     navStore.navigate('Workout')
     return null
   }
-
-  const [formValid, setFormValid] = useState(true)
-  const { showConfirm } = useDialogContext()
+  const [formValid, setFormValid] = useState(
+    !!edittingTemplate?.name && edittingTemplate.name !== ''
+  )
+  const { showConfirm, showSnackbar } = useDialogContext()
 
   function onBackPress() {
     showConfirm?.({
@@ -75,6 +76,9 @@ const SaveTemplateScreen: React.FC = () => {
     } else {
       workoutStore.saveWorkoutTemplate(template.name, templateSteps)
     }
+    showSnackbar!({
+      text: translate('templateSaved'),
+    })
     navStore.goBack()
   }
 

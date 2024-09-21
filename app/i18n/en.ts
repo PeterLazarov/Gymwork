@@ -101,7 +101,8 @@ const en = {
   comments: 'Comments',
   commentsLogEmpty: 'No workout comments entered.',
   welcome: 'Welcome',
-  startGymworking: 'Start gymworking'
+  startGymworking: 'Start gymworking',
+  templateSaved: 'Template saved.',
 }
 
 export default en
