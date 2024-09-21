@@ -9,31 +9,29 @@
   - edit exercise measureBy and groupBy
 * Exercise Select
   - how to delete exercises
-* TrackView
-  - fix whole form rerender for timer - KeyboardAvoiderView context is triggering. why??
-  - improve double rerendering
 * dev experience
-  - ios emulator -> expo crash on code change in emulator
-  - android device -> after code change rendering of StepHeader when no focusedStep error
   - ban conflicting/unused imports (ignite's colors)/i18n lib as opposed to app/i18n
 * review
   - show/hide and rearrange review tabs
   - On jump to record set, scroll to set
-  - Optimise render of history tab
-  - Optimise render of chart
   - Workout historical stats screen with muscle areas and comments analysis
-* darkMode
-  - rename colors so that they're usable across both color schemes
 * Template edit
-  - steps list editting rearranging and or adding
-* HorizontalScreenList > react-native-reanimated-carousel rolled back for FlatList version. Do we return? Keep header press bug in mind.
+  - steps list editting rearranging and or adding exercises
+* WorkoutDay 
+  - Make UI more clear if user is editting on a different day from today
+* optimisation
+  - optimize useColors
+  - TrackView - fix whole form rerender for timer - KeyboardAvoiderView context is triggering. why??
+  - TrackView - improve double rerendering
+  - Review - Optimise render of history tab
+  - Review - Optimise render of chart
+  - ExerciseSelect - Optimise initial render
+  - Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
+* Split screen over half is makes UI a mess
+* UserFeedback -> Keyboard hides feedback save button 
 * keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
-* Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 * grouping / measurement by rest
-* check out focusedExerciseRecords for supersets
-* optimize useColors
 * Review button styles. Especially primary + disabled
-* EditTemplateForm should allow adding exercises/sets
 * Standardize background usage (different screens currently use different background colors for some reason)
 * Look into replacing 'draft' with mobx-utils createViewModel
 * Look into https://reactnative.dev/docs/timers#interactionmanager for optimizing render time
