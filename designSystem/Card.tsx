@@ -51,7 +51,6 @@ const makeStyles = (colors: ReturnType<typeof useColors>) =>
       borderRadius: 8,
       marginVertical: 10,
       marginHorizontal: 20,
-      overflow: 'hidden',
     },
     content: {
       padding: 15,

@@ -17,7 +17,7 @@ const CommentReviewListItem: React.FC<Props> = ({ workout, onPress }) => {
       onPress={onPress}
       style={styles.item}
     >
-      <Text>{workout.date}</Text>
+      <Text style={styles.text}>{workout.date}</Text>
       <WorkoutCommentsCard
         workout={workout}
         compactMode
@@ -31,8 +31,10 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
     flex: 1,
+  },
+  text: {
+    textAlign: 'center',
   },
 })
 

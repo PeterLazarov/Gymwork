@@ -54,6 +54,7 @@ const FeedbackPickerOption: React.FC<Props> = ({
             fontSize: fontSize.sm,
             color: isSelected ? option.color : colors.outlineVariant,
             fontWeight: Platform.OS === 'ios' ? 700 : 'bold',
+            textAlign: 'center',
           }}
         >
           {option.label}
