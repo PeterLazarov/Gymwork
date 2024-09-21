@@ -129,6 +129,7 @@ export const WorkoutStepModel = types
         return set.guid === updatedSetData.guid
       })
       if (!setToUpdate) return
+      const oldGroupingValue = setToUpdate.groupingValue
 
       setToUpdate.mergeUpdate(updatedSetData)
 
@@ -138,7 +139,6 @@ export const WorkoutStepModel = types
       const isOldSetRecord = records.recordSetsMap.hasOwnProperty(
         setToUpdate.guid
       )
-      const oldGroupingValue = setToUpdate.groupingValue
 
       if (isOldSetRecord) {
         records.recalculateGroupingRecords(oldGroupingValue)
