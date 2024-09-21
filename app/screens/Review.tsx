@@ -1,8 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Dimensions, View } from 'react-native'
+import { Menu } from 'react-native-paper'
 
-import { Header, Icon, IconButton, SwipeTabs, useColors } from 'designSystem'
-
+import {
+  Header,
+  Icon,
+  IconButton,
+  TopNavigation,
+  TabConfig,
+  useColors,
+} from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 import ExerciseChartReview from 'app/components/Review/ExerciseChartReview'
@@ -10,7 +17,6 @@ import ExerciseHistoryReview from 'app/components/Review/ExerciseHistoryReview'
 import ExerciseRecordReview from 'app/components/Review/ExerciseRecordReview'
 import { translate } from 'app/i18n'
 import ExerciseView from 'app/components/ExerciseHistoryChart/ExerciseView'
-import { Menu } from 'react-native-paper'
 import HomeMenuItems from 'app/components/HomeMenuItems'
 import CommentsReview from 'app/components/Review/CommentsReview'
 import MenuContainer from 'app/components/MenuContainer'
@@ -30,16 +36,14 @@ const ReviewScreen: React.FC = () => {
     }
   }, [stateStore.focusedExercise])
 
-  const tabsConfig = [
+  const tabsConfig: TabConfig[] = [
     {
-      label: translate('comments'),
       name: 'Comments',
-      component: CommentsReview,
+      Component: CommentsReview,
     },
     {
-      label: translate('chart'),
       name: 'Chart',
-      component: () => (
+      Component: () => (
         <ExerciseView
           openSelect={() => setExerciseSelectOpen(true)}
           isExerciseSelected={!!selectedExercise}
@@ -49,9 +53,8 @@ const ReviewScreen: React.FC = () => {
       ),
     },
     {
-      label: translate('records'),
       name: 'Records',
-      component: () => (
+      Component: () => (
         <ExerciseView
           openSelect={() => setExerciseSelectOpen(true)}
           isExerciseSelected={!!selectedExercise}
@@ -59,12 +62,10 @@ const ReviewScreen: React.FC = () => {
           <ExerciseRecordReview exercise={selectedExercise} />
         </ExerciseView>
       ),
-      props: { exercise: selectedExercise },
     },
     {
-      label: translate('history'),
       name: 'History',
-      component: () => (
+      Component: () => (
         <ExerciseView
           openSelect={() => setExerciseSelectOpen(true)}
           isExerciseSelected={!!selectedExercise}
@@ -72,15 +73,8 @@ const ReviewScreen: React.FC = () => {
           <ExerciseHistoryReview exercise={selectedExercise} />
         </ExerciseView>
       ),
-      props: { exercise: selectedExercise },
     },
   ]
-
-  const defaultIndex = useMemo(() => {
-    return stateStore.reviewLastTab
-      ? tabsConfig.map(t => t.name).indexOf(stateStore.reviewLastTab)
-      : 0
-  }, [stateStore.reviewLastTab])
 
   return (
     <>
@@ -160,9 +154,10 @@ const ReviewScreen: React.FC = () => {
         )}
 
         {!exerciseSelectOpen && (
-          <SwipeTabs
-            defaultIndex={defaultIndex}
+          <TopNavigation
             tabsConfig={tabsConfig}
+            initialRouteName={stateStore.reviewLastTab || 'Records'}
+            tabWidth={Dimensions.get('screen').width / 3.5}
             onTabChange={tab => {
               stateStore.setProp('reviewLastTab', tab)
             }}

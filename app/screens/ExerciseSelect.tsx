@@ -82,16 +82,17 @@ const ExerciseSelectScreen: React.FC = () => {
           </IconButton>
         </Header>
 
-        <ExerciseSelectLists
-          multiselect={selectMode === 'superSet'}
-          selected={selectedExercises}
-          onChange={
-            selectMode === 'superSet'
-              ? setSelectedExercises
-              : createExercisesStep
-          }
-        />
-
+        <View style={{ flex: 1 }}>
+          <ExerciseSelectLists
+            multiselect={selectMode === 'superSet'}
+            selected={selectedExercises}
+            onChange={
+              selectMode === 'superSet'
+                ? setSelectedExercises
+                : createExercisesStep
+            }
+          />
+        </View>
         {selectMode === 'superSet' && (
           <FAB
             icon="check"

@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { Dimensions } from 'react-native'
 
 import { Exercise } from 'app/db/models'
 import { translate } from 'app/i18n'
 import FavoriteExercisesList from 'app/components/Exercise/FavoriteExercisesList'
 import AllExercisesList from 'app/components/Exercise/AllExercisesList'
 import MostUsedExercisesList from 'app/components/Exercise/MostUsedExercisesList'
-import { SwipeTabs } from 'designSystem'
-import { TabConfig } from 'designSystem/Tabs/types'
+import { TopNavigation, TabConfig } from 'designSystem'
 
 type ExerciseSelectListsProps = {
   multiselect: boolean
@@ -53,31 +52,27 @@ const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
     selectedExercises,
   }
 
-  const tabsConfig: TabConfig<typeof props>[] = [
+  const tabsConfig: TabConfig[] = [
     {
-      label: translate('favorite'),
-      name: 'tabFavorite',
-      component: FavoriteExercisesList,
-      props,
+      name: translate('favorite'),
+      Component: () => <FavoriteExercisesList {...props} />,
     },
     {
-      label: translate('mostUsed'),
-      name: 'tabMostUsed',
-      component: MostUsedExercisesList,
-      props,
+      name: translate('mostUsed'),
+      Component: () => <MostUsedExercisesList {...props} />,
     },
     {
-      label: translate('allExercises'),
-      name: 'tabAll',
-      component: AllExercisesList,
-      props,
+      name: translate('allExercises'),
+      Component: () => <AllExercisesList {...props} />,
     },
   ]
 
   return (
-    <View style={{ flex: 1, alignItems: 'center' }}>
-      <SwipeTabs tabsConfig={tabsConfig} />
-    </View>
+    <TopNavigation
+      initialRouteName="Favorite"
+      tabsConfig={tabsConfig}
+      tabWidth={Dimensions.get('screen').width / 3}
+    />
   )
 }
 export default ExerciseSelectLists

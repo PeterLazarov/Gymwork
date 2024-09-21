@@ -10,9 +10,7 @@ export type TabStyles = {
   }
 }
 
-export type TabConfig<T extends object | undefined> = {
-  label: string
+export type TabConfig = {
   name: string
-  component: T extends undefined ? FunctionComponent : FunctionComponent<T>
-  props?: T
+  Component: FunctionComponent
 }
