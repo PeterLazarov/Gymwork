@@ -10,6 +10,7 @@ import { useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { Header, Icon, IconButton, useColors, fontSize } from 'designSystem'
 import WorkoutModal from 'app/components/WorkoutModal'
+import { Menu } from 'react-native-paper'
 
 export type CalendarScreenParams = {
   copyWorkoutMode?: boolean
@@ -25,6 +26,7 @@ const CalendarScreen: React.FC = () => {
 
   const { copyWorkoutMode } = useRouteParams('Calendar')
   const [openedWorkoutDialogDate, setOpenedWorkoutDialogDate] = useState('')
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const markedDates = useMemo(
     () =>
@@ -77,6 +79,11 @@ const CalendarScreen: React.FC = () => {
     navigate('Workout')
   }
 
+  function goToFeedback() {
+    setMenuOpen(false)
+    navigate('UserFeedback')
+  }
+
   // ! must be a whole number
   const monthsToRender = useMemo(() => {
     const start = DateTime.fromISO(stateStore.firstRenderedDate)
@@ -100,15 +107,27 @@ const CalendarScreen: React.FC = () => {
             />
           </IconButton>
           <Header.Title title={translate('calendar')} />
-          <IconButton
-            onPress={() => {}}
-            underlay="darker"
+          <Menu
+            visible={menuOpen}
+            onDismiss={() => setMenuOpen(false)}
+            anchorPosition="bottom"
+            anchor={
+              <IconButton
+                onPress={() => setMenuOpen(true)}
+                underlay="darker"
+              >
+                <Icon
+                  icon="ellipsis-vertical"
+                  color={colors.onPrimary}
+                />
+              </IconButton>
+            }
           >
-            <Icon
-              icon="ellipsis-vertical"
-              color={colors.onPrimary}
+            <Menu.Item
+              onPress={goToFeedback}
+              title={translate('giveFeedback')}
             />
-          </IconButton>
+          </Menu>
         </Header>
 
         <Calendar

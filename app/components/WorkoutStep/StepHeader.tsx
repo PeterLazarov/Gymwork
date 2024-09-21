@@ -44,6 +44,11 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step }) => {
     navigate('ExerciseEdit')
   }
 
+  function goToFeedback() {
+    setMenuOpen(false)
+    navigate('UserFeedback')
+  }
+
   function goBack() {
     stateStore.setProp('focusedStepGuid', '')
     navigate('Workout')
@@ -114,6 +119,11 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step }) => {
                 ? 'removeFavorite'
                 : 'setAsFavorite'
             )}
+          />
+
+          <Menu.Item
+            onPress={goToFeedback}
+            title={translate('giveFeedback')}
           />
         </Menu>
       )}

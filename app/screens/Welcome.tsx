@@ -35,8 +35,8 @@ const WelcomeScreen: React.FC = () => {
         <Text style={styles.text}>
           If you encounter any areas for improvement or issues we may have
           missed, please share them with us through the “
-          <Text style={styles.bold}>Give Feedback</Text>” option in the Home
-          header menu.
+          <Text style={styles.bold}>Give Feedback</Text>” option in the header
+          menu.
         </Text>
         <Text style={[styles.text, styles.bold]}>
           We hope you have an awesome time Gymworking!
