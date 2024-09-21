@@ -24,7 +24,7 @@ import MenuContainer from 'app/components/MenuContainer'
 const ReviewScreen: React.FC = () => {
   const colors = useColors()
 
-  const { stateStore } = useStores()
+  const { stateStore, navStore } = useStores()
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
   const [selectedExercise, setSelectedExercise] = useState(
     stateStore.focusedExercise
@@ -156,10 +156,10 @@ const ReviewScreen: React.FC = () => {
         {!exerciseSelectOpen && (
           <TopNavigation
             tabsConfig={tabsConfig}
-            initialRouteName={stateStore.reviewLastTab || 'Records'}
+            initialRouteName={navStore.reviewLastTab || 'Records'}
             tabWidth={Dimensions.get('screen').width / 3.5}
             onTabChange={tab => {
-              stateStore.setProp('reviewLastTab', tab)
+              navStore.setProp('reviewLastTab', tab)
             }}
           />
         )}

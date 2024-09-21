@@ -25,6 +25,8 @@ export const NavStoreModel = types
   .model('NavigationStore')
   .props({
     activeRoute: types.maybe(types.enumeration(pages)),
+    reviewLastTab: types.maybe(types.string),
+    exerciseSelectLastTab: types.maybe(types.string),
   })
   .actions(withSetPropAction)
   .actions(self => ({

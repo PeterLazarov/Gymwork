@@ -7,6 +7,7 @@ import FavoriteExercisesList from 'app/components/Exercise/FavoriteExercisesList
 import AllExercisesList from 'app/components/Exercise/AllExercisesList'
 import MostUsedExercisesList from 'app/components/Exercise/MostUsedExercisesList'
 import { TopNavigation, TabConfig } from 'designSystem'
+import { useStores } from 'app/db/helpers/useStores'
 
 type ExerciseSelectListsProps = {
   multiselect: boolean
@@ -21,6 +22,8 @@ const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
 }) => {
   const [selectedExercises, setSelectedExercises] =
     useState<Exercise[]>(selected)
+
+  const { navStore } = useStores()
 
   function toggleSelectedExercise(exercise: Exercise) {
     if (!selectedExercises.includes(exercise)) {
@@ -69,9 +72,12 @@ const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
 
   return (
     <TopNavigation
-      initialRouteName="Favorite"
+      initialRouteName={navStore.exerciseSelectLastTab || 'Favorite'}
       tabsConfig={tabsConfig}
       tabWidth={Dimensions.get('screen').width / 3}
+      onTabChange={tab => {
+        navStore.setProp('exerciseSelectLastTab', tab)
+      }}
     />
   )
 }
