@@ -49,8 +49,8 @@
   },
   {
     "name": "Air Bike",
-    "muscles": ["abdominals"],
-    "measurementType": ["reps", "weight"],
+    "muscles": ["abdominals", "cardio"],
+    "measurementType": ["duration", "distance"],
     "weightIncrement": 2.5
   },
   {
@@ -591,9 +591,9 @@
     "weightIncrement": 2.5
   },
   {
-    "name": "Bottoms-Up Clean From The Hang Position",
-    "muscles": ["forearms"],
-    "measurementType": ["reps", "weight"],
+    "name": "Hang",
+    "muscles": ["lats", "forearms"],
+    "measurementType": ["duration", "weight"],
     "weightIncrement": 2.5
   },
   {
@@ -3363,7 +3363,7 @@
     "weightIncrement": 2.5
   },
   {
-    "name": "Pullups",
+    "name": "Pull-Up",
     "muscles": ["lats"],
     "measurementType": ["reps", "weight"],
     "weightIncrement": 2.5
@@ -3472,8 +3472,8 @@
   },
   {
     "name": "Recumbent Bike",
-    "muscles": ["quadriceps"],
-    "measurementType": ["reps", "weight"],
+    "muscles": ["quadriceps", "cardio"],
+    "measurementType": ["duration", "distance"],
     "weightIncrement": 2.5
   },
   {
