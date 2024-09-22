@@ -1565,7 +1565,7 @@
   {
     "name": "Elliptical Trainer",
     "muscles": ["quadriceps"],
-    "measurementType": ["reps", "weight"],
+    "measurementType": ["duration", "distance"],
     "weightIncrement": 2.5
   },
   {
@@ -2679,7 +2679,7 @@
     "weightIncrement": 2.5
   },
   {
-    "name": "Lying Hamstring",
+    "name": "Lying Hamstring Curl",
     "muscles": ["hamstrings"],
     "measurementType": ["reps", "weight"],
     "weightIncrement": 2.5
