@@ -94,8 +94,6 @@ export type StackScreenProps<T extends keyof AllStacksParamList> =
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
-  const colors = useColors()
-  const colorScheme = useColorScheme()
   const { stateStore } = useStores()
 
   const shouldShowWelcome = !__DEV__ && !stateStore.visitedWelcomeScreen
@@ -104,8 +102,6 @@ const AppStack = observer(function AppStack() {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        navigationBarColor:
-          colorScheme === 'light' ? colors.surface : colors.shadow,
         animation: 'none',
       }}
       initialRouteName={shouldShowWelcome ? 'Welcome' : 'HomeStack'}
@@ -252,6 +248,7 @@ export const AppNavigator = observer(function AppNavigator(
               onStateChange={handleStateChange}
             >
               <>
+                {/* The bar at the top */}
                 <StatusBar
                   backgroundColor={
                     colorScheme === 'light' ? colors.primary : colors.shadow
