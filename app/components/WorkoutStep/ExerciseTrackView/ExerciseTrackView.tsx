@@ -105,8 +105,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   }, [selectedSet])
 
   return (
-    <KeyboardAvoiderView
-      avoidMode="focused-input"
+    <View
       style={{
         flexDirection: 'column',
         flexGrow: 1,
@@ -121,22 +120,27 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
         setSelectedSet={setSelectedSet}
       />
 
-      {stateStore.draftSet && (
-        <View style={{ paddingHorizontal: 8 }}>
-          <SetEditControls
-            value={stateStore.draftSet}
-            onSubmit={handleAdd}
-          />
-        </View>
-      )}
+      <KeyboardAvoiderView
+        avoidMode="whole-view"
+        style={{ gap: 8 }}
+      >
+        {stateStore.draftSet && (
+          <View style={{ paddingHorizontal: 8 }}>
+            <SetEditControls
+              value={stateStore.draftSet}
+              onSubmit={handleAdd}
+            />
+          </View>
+        )}
 
-      <SetEditActions
-        mode={selectedSet ? 'edit' : 'add'}
-        onAdd={handleAdd}
-        onUpdate={handleUpdate}
-        onRemove={handleRemove}
-      />
-    </KeyboardAvoiderView>
+        <SetEditActions
+          mode={selectedSet ? 'edit' : 'add'}
+          onAdd={handleAdd}
+          onUpdate={handleUpdate}
+          onRemove={handleRemove}
+        />
+      </KeyboardAvoiderView>
+    </View>
   )
 }
 

@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
+import { View } from 'react-native'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
@@ -95,17 +96,15 @@ const ExerciseEditScreen: React.FC = () => {
           />
         </IconButton>
       </Header>
-      <KeyboardAvoiderView
-        avoidMode="focused-input"
-        style={{ flex: 1 }}
-      >
+      <View style={{ flex: 1 }}>
         {exercise && (
           <ExerciseEditForm
             exercise={exercise}
             onUpdate={onUpdate}
           />
         )}
-
+      </View>
+      <KeyboardAvoiderView>
         <Button
           variant="primary"
           onPress={onComplete}

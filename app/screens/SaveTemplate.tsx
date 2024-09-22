@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
+import { View } from 'react-native'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { getSnapshot } from 'mobx-state-tree'
 
@@ -103,17 +104,15 @@ const SaveTemplateScreen: React.FC = () => {
           />
         </IconButton>
       </Header>
-      <KeyboardAvoiderView
-        avoidMode="focused-input"
-        style={{ flex: 1, overflow: 'hidden' }}
-      >
+      <View style={{ flex: 1 }}>
         <EditTemplateForm
           template={template}
           steps={templateSteps}
           onUpdateSteps={steps => setTemplateSteps(steps)}
           onUpdate={onUpdate}
         />
-
+      </View>
+      <KeyboardAvoiderView>
         <Button
           variant="primary"
           onPress={onComplete}

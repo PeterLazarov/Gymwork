@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { View } from 'react-native'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
@@ -79,14 +80,13 @@ const UserFeedbackScreen: React.FC = () => {
           />
         </IconButton>
       </Header>
-      <KeyboardAvoiderView
-        avoidMode="focused-input"
-        style={{ flex: 1 }}
-      >
+      <View style={{ flex: 1 }}>
         <UserFeedbackForm
           feedback={feedback}
           onUpdate={onUpdate}
         />
+      </View>
+      <KeyboardAvoiderView avoidMode="whole-view">
         <Button
           variant="primary"
           onPress={onFeedbackSave}
