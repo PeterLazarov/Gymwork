@@ -35,10 +35,11 @@ function SelectOptionsModal<T = unknown>({
 }: Props<T>) {
   const colors = useColors()
 
-  const dividerHeight = 1
-  const itemHeight = 53
+  const headerHeight = 59
+  const buttonHeight = 48
+  const itemHeight = 55
   const modalHeight =
-    (options.length + (hideButton ? 1 : 2)) * itemHeight + dividerHeight
+    headerHeight + options.length * itemHeight + (hideButton ? 0 : buttonHeight)
   const maxModalHeight = Dimensions.get('screen').height - 100
 
   return (
