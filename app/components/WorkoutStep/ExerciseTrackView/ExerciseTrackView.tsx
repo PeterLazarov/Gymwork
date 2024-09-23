@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getSnapshot } from 'mobx-state-tree'
-import { View } from 'react-native'
+import { KeyboardAvoidingView, View } from 'react-native'
 
 import SetEditList from './SetEditList'
 import SetEditControls from './SetEditControls'
@@ -104,37 +104,42 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   }, [selectedSet])
 
   return (
-    <View
-      style={{
-        flexDirection: 'column',
-        flexGrow: 1,
-        gap: 8,
-        display: 'flex',
-        backgroundColor: colors.surfaceContainerLow,
-      }}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior="padding"
     >
-      <SetEditList
-        sets={step?.exerciseSetsMap[focusedExercise.guid] ?? []}
-        selectedSet={selectedSet}
-        setSelectedSet={setSelectedSet}
-      />
+      <View
+        style={{
+          flexDirection: 'column',
+          flexGrow: 1,
+          gap: 8,
+          display: 'flex',
+          backgroundColor: colors.surfaceContainerLow,
+        }}
+      >
+        <SetEditList
+          sets={step?.exerciseSetsMap[focusedExercise.guid] ?? []}
+          selectedSet={selectedSet}
+          setSelectedSet={setSelectedSet}
+        />
 
-      {stateStore.draftSet && (
-        <View style={{ paddingHorizontal: 8 }}>
-          <SetEditControls
-            value={stateStore.draftSet}
-            onSubmit={handleAdd}
-          />
-        </View>
-      )}
+        {stateStore.draftSet && (
+          <View style={{ paddingHorizontal: 8 }}>
+            <SetEditControls
+              value={stateStore.draftSet}
+              onSubmit={handleAdd}
+            />
+          </View>
+        )}
 
-      <SetEditActions
-        mode={selectedSet ? 'edit' : 'add'}
-        onAdd={handleAdd}
-        onUpdate={handleUpdate}
-        onRemove={handleRemove}
-      />
-    </View>
+        <SetEditActions
+          mode={selectedSet ? 'edit' : 'add'}
+          onAdd={handleAdd}
+          onUpdate={handleUpdate}
+          onRemove={handleRemove}
+        />
+      </View>
+    </KeyboardAvoidingView>
   )
 }
 
