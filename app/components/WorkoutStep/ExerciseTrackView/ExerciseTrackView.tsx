@@ -108,14 +108,10 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   }, [selectedSet])
 
   const keyboard = useAnimatedKeyboard()
-  const bottomBarSize = Platform.OS === 'android' ? 56 : 80
+  const bottomBarSize = Platform.OS === 'android' ? 64 : 92
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      transform: [
-        {
-          translateY: -Math.max(keyboard.height.value - bottomBarSize, 0),
-        },
-      ],
+      height: Math.max(keyboard.height.value - bottomBarSize, 0),
     }
   })
 
@@ -137,14 +133,13 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
         setSelectedSet={setSelectedSet}
       />
 
-      <Animated.View
+      <View
         style={[
           {
             justifyContent: 'flex-end',
             backgroundColor: colors.surfaceContainerLow,
             gap: 8,
           },
-          animatedStyles,
         ]}
       >
         {stateStore.draftSet && (
@@ -161,7 +156,10 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
           onUpdate={handleUpdate}
           onRemove={handleRemove}
         />
-      </Animated.View>
+
+        {/* Spacer */}
+        <Animated.View style={[{ height: 0 }, animatedStyles]} />
+      </View>
     </View>
   )
 }

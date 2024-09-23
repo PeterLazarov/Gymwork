@@ -105,9 +105,7 @@ const UserFeedbackScreen: React.FC = () => {
       </Button>
 
       {/* Spacer */}
-      <Animated.View
-        style={[{ height: 0, backgroundColor: 'green' }, animatedStyles]}
-      ></Animated.View>
+      <Animated.View style={[{ height: 0 }, animatedStyles]} />
     </EmptyLayout>
   )
 }
