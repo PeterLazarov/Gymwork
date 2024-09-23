@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getSnapshot } from 'mobx-state-tree'
-import { View } from 'react-native'
+import { KeyboardAvoidingView, View } from 'react-native'
 
 import SetEditList from './SetEditList'
 import SetEditControls from './SetEditControls'
@@ -12,10 +12,9 @@ import {
   WorkoutSetModel,
   WorkoutStep,
 } from 'app/db/models'
-import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { SetEditActions } from './SetEditActions'
 import { useTimer } from 'app/contexts/TimerContext'
-import { useColors } from 'designSystem'
+import { KeyboardCollapseView, useColors } from 'designSystem'
 
 const defaultReps = 10
 
@@ -33,6 +32,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   const { stateStore, settingsStore, workoutStore } = useStores()
   const restTimer = useTimer()
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
+  const [screenHeight, setScreenHeight] = useState<number>(0)
 
   useEffect(() => {
     if (selectedSet && focusedExercise.guid !== selectedSet.exercise.guid) {
@@ -111,35 +111,48 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
         flexGrow: 1,
         gap: 8,
         display: 'flex',
-        backgroundColor: colors.surfaceContainerLow,
+        // backgroundColor: colors.surfaceContainerLow,
+        backgroundColor: 'cyan',
+      }}
+      onLayout={event => {
+        const { height } = event.nativeEvent.layout
+        // Capture initial height on first layout event
+        if (screenHeight !== height) {
+          setScreenHeight(height)
+        }
       }}
     >
-      <SetEditList
-        sets={step?.exerciseSetsMap[focusedExercise.guid] ?? []}
-        selectedSet={selectedSet}
-        setSelectedSet={setSelectedSet}
-      />
-
-      <KeyboardAvoiderView
-        avoidMode="whole-view"
-        style={{ gap: 8 }}
+      {/* <KeyboardAvoidingView
+        behavior="position"
+        style={{ flex: 1 }}
+      > */}
+      <KeyboardCollapseView
+        footerHeight={stateStore.footerHeight}
+        screenHeight={stateStore.screenHeight}
       >
-        {stateStore.draftSet && (
-          <View style={{ paddingHorizontal: 8 }}>
-            <SetEditControls
-              value={stateStore.draftSet}
-              onSubmit={handleAdd}
-            />
-          </View>
-        )}
-
-        <SetEditActions
-          mode={selectedSet ? 'edit' : 'add'}
-          onAdd={handleAdd}
-          onUpdate={handleUpdate}
-          onRemove={handleRemove}
+        <SetEditList
+          sets={step?.exerciseSetsMap[focusedExercise.guid] ?? []}
+          selectedSet={selectedSet}
+          setSelectedSet={setSelectedSet}
         />
-      </KeyboardAvoiderView>
+      </KeyboardCollapseView>
+      {/* </KeyboardAvoidingView> */}
+
+      {stateStore.draftSet && (
+        <View style={{ paddingHorizontal: 8 }}>
+          <SetEditControls
+            value={stateStore.draftSet}
+            onSubmit={handleAdd}
+          />
+        </View>
+      )}
+
+      <SetEditActions
+        mode={selectedSet ? 'edit' : 'add'}
+        onAdd={handleAdd}
+        onUpdate={handleUpdate}
+        onRemove={handleRemove}
+      />
     </View>
   )
 }

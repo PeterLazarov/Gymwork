@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { KeyboardAvoidingView, View } from 'react-native'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
@@ -9,6 +9,7 @@ import {
   Header,
   Icon,
   IconButton,
+  KeyboardCollapseView,
   useColors,
 } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
@@ -18,6 +19,7 @@ import { translate } from 'app/i18n'
 import UserFeedbackForm from 'app/components/UserFeedbackForm'
 import { observer } from 'mobx-react-lite'
 import { DateTime } from 'luxon'
+import TabsLayout from 'app/layouts/TabsLayout'
 
 const UserFeedbackScreen: React.FC = () => {
   const {
@@ -80,21 +82,19 @@ const UserFeedbackScreen: React.FC = () => {
           />
         </IconButton>
       </Header>
-      <View style={{ flex: 1 }}>
-        <UserFeedbackForm
-          feedback={feedback}
-          onUpdate={onUpdate}
-        />
-      </View>
-      <KeyboardAvoiderView avoidMode="whole-view">
-        <Button
-          variant="primary"
-          onPress={onFeedbackSave}
-          disabled={!formValid || submitting}
-        >
-          <ButtonText variant="primary">{translate('save')}</ButtonText>
-        </Button>
-      </KeyboardAvoiderView>
+      {/* <KeyboardAvoidingView behavior="height"> */}
+      <UserFeedbackForm
+        feedback={feedback}
+        onUpdate={onUpdate}
+      />
+      {/* </KeyboardAvoidingView> */}
+      <Button
+        variant="primary"
+        onPress={onFeedbackSave}
+        disabled={!formValid || submitting}
+      >
+        <ButtonText variant="primary">{translate('save')}</ButtonText>
+      </Button>
     </EmptyLayout>
   )
 }

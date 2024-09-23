@@ -34,11 +34,18 @@ const TabsLayout: React.FC<Props> = ({ children }) => {
   ]
 
   return (
-    <EmptyLayout>
+    <EmptyLayout hasFooter>
       <View style={{ flex: 1 }}>{children}</View>
       <BottomNavigation
         activeRoute={navStore.activeRoute}
         items={tabs}
+        onLayout={event => {
+          const { height } = event.nativeEvent.layout
+          // Capture initial height on first layout event
+          if (stateStore.footerHeight !== height) {
+            stateStore.setProp('footerHeight', height)
+          }
+        }}
       />
     </EmptyLayout>
   )

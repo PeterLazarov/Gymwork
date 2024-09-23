@@ -38,6 +38,9 @@ dependencies:
   '@react-native-async-storage/async-storage':
     specifier: 1.23.1
     version: 1.23.1(react-native@0.74.5)
+  '@react-native-community/hooks':
+    specifier: ^3.0.0
+    version: 3.0.0(react-native@0.74.5)(react@18.2.0)
   '@react-native-picker/picker':
     specifier: 2.7.5
     version: 2.7.5(react-native@0.74.5)(react@18.2.0)
@@ -3101,6 +3104,16 @@ packages:
       - encoding
       - supports-color
       - utf-8-validate
+
+  /@react-native-community/hooks@3.0.0(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-g2OyxXHfwIytXUJitBR6Z/ISoOfp0WKx5FOv+NqJ/CrWjRDcTw6zXE5I1C9axfuh30kJqzWchVfCDrkzZYTxqg==}
+    peerDependencies:
+      react: '>=17.0.2'
+      react-native: '>=0.65'
+    dependencies:
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
+    dev: false
 
   /@react-native-picker/picker@2.7.5(react-native@0.74.5)(react@18.2.0):
     resolution: {integrity: sha512-vhMaOLkXSUb+YKVbukMJToU4g+89VMhBG2U9+cLYF8X8HtFRidrHjohGqT8/OyesDuKIXeLIP+UFYI9Q9CRA9Q==}

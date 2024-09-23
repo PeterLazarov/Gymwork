@@ -60,18 +60,18 @@ function App() {
 
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <KeyboardAvoiderProvider>
-        <DBStoreInitializer>
-          <TimerContext.Provider value={timer}>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <AppNavigator
-                initialState={initialNavigationState}
-                onStateChange={onNavigationStateChange}
-              />
-            </GestureHandlerRootView>
-          </TimerContext.Provider>
-        </DBStoreInitializer>
-      </KeyboardAvoiderProvider>
+      {/* <KeyboardAvoiderProvider> */}
+      <DBStoreInitializer>
+        <TimerContext.Provider value={timer}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <AppNavigator
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+          </GestureHandlerRootView>
+        </TimerContext.Provider>
+      </DBStoreInitializer>
+      {/* </KeyboardAvoiderProvider> */}
     </SafeAreaProvider>
   )
 }
