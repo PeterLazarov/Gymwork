@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getSnapshot } from 'mobx-state-tree'
-import { KeyboardAvoidingView, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, View } from 'react-native'
 
 import SetEditList from './SetEditList'
 import SetEditControls from './SetEditControls'
@@ -105,8 +105,8 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 
   return (
     <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       style={{ flex: 1 }}
-      behavior="padding"
     >
       <View
         style={{
