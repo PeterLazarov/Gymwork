@@ -34,7 +34,7 @@ const TabsLayout: React.FC<Props> = ({ children }) => {
   ]
 
   return (
-    <EmptyLayout>
+    <EmptyLayout hasFooter>
       <View style={{ flex: 1 }}>{children}</View>
       <BottomNavigation
         activeRoute={navStore.activeRoute}

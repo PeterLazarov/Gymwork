@@ -2,14 +2,21 @@ import React, { ReactNode } from 'react'
 // import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 import { View, ViewStyle } from 'react-native'
 
-import { useColors } from 'designSystem'
+import { KeyboardExpandingView, useColors } from 'designSystem'
+import { useStores } from 'app/db/helpers/useStores'
 
 type Props = {
   children?: ReactNode
   style?: ViewStyle
+  hasFooter?: boolean
 }
-export const EmptyLayout: React.FC<Props> = ({ children, style }) => {
+export const EmptyLayout: React.FC<Props> = ({
+  children,
+  style,
+  hasFooter,
+}) => {
   const colors = useColors()
+  const { stateStore } = useStores()
 
   return (
     // <SafeAreaInsetsContext.Consumer>
@@ -25,6 +32,9 @@ export const EmptyLayout: React.FC<Props> = ({ children, style }) => {
       ]}
     >
       {children}
+      <KeyboardExpandingView
+        footerHeight={hasFooter ? stateStore.footerHeight : undefined}
+      />
     </View>
     // )}
     // </SafeAreaInsetsContext.Consumer>

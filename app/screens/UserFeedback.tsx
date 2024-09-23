@@ -10,7 +10,6 @@ import {
   Header,
   Icon,
   IconButton,
-  KeyboardExpandingView,
   useColors,
 } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
@@ -94,8 +93,6 @@ const UserFeedbackScreen: React.FC = () => {
       >
         <ButtonText variant="primary">{translate('save')}</ButtonText>
       </Button>
-
-      <KeyboardExpandingView />
     </EmptyLayout>
   )
 }

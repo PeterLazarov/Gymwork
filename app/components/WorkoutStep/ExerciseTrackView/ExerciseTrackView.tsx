@@ -14,7 +14,7 @@ import {
 } from 'app/db/models'
 import { SetEditActions } from './SetEditActions'
 import { useTimer } from 'app/contexts/TimerContext'
-import { KeyboardExpandingView, useColors } from 'designSystem'
+import { useColors } from 'designSystem'
 
 const defaultReps = 10
 
@@ -121,32 +121,20 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
         setSelectedSet={setSelectedSet}
       />
 
-      <View
-        style={[
-          {
-            justifyContent: 'flex-end',
-            backgroundColor: colors.surfaceContainerLow,
-            gap: 8,
-          },
-        ]}
-      >
-        {stateStore.draftSet && (
-          <View style={{ paddingHorizontal: 8 }}>
-            <SetEditControls
-              value={stateStore.draftSet}
-              onSubmit={handleAdd}
-            />
-          </View>
-        )}
-        <SetEditActions
-          mode={selectedSet ? 'edit' : 'add'}
-          onAdd={handleAdd}
-          onUpdate={handleUpdate}
-          onRemove={handleRemove}
-        />
-
-        <KeyboardExpandingView footerHeight={stateStore.footerHeight} />
-      </View>
+      {stateStore.draftSet && (
+        <View style={{ paddingHorizontal: 8 }}>
+          <SetEditControls
+            value={stateStore.draftSet}
+            onSubmit={handleAdd}
+          />
+        </View>
+      )}
+      <SetEditActions
+        mode={selectedSet ? 'edit' : 'add'}
+        onAdd={handleAdd}
+        onUpdate={handleUpdate}
+        onRemove={handleRemove}
+      />
     </View>
   )
 }
