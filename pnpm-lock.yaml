@@ -182,9 +182,6 @@ dependencies:
   react-native-graph:
     specifier: ^1.0.2
     version: 1.1.0(@shopify/react-native-skia@1.2.3)(react-native-gesture-handler@2.16.2)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
-  react-native-keyboard-spacer:
-    specifier: ^0.4.1
-    version: 0.4.1
   react-native-pager-view:
     specifier: 6.3.0
     version: 6.3.0(react-native@0.74.5)(react@18.2.0)
@@ -11651,10 +11648,6 @@ packages:
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
       react-native-gesture-handler: 2.16.2(react-native@0.74.5)(react@18.2.0)
       react-native-reanimated: 3.10.1(@babel/core@7.25.2)(react-native@0.74.5)(react@18.2.0)
-    dev: false
-
-  /react-native-keyboard-spacer@0.4.1:
-    resolution: {integrity: sha512-QPX2El4U2VfhRQm1YOTrTsOJIDjJBydpdz87jmiFOxBmKJfVn7CwiTzzipKTiLwfAFoUYQ+sB/xcnIhRZPF+SQ==}
     dev: false
 
   /react-native-month@1.6.3(react-native@0.74.5)(react@18.2.0):
