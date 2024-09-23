@@ -120,7 +120,7 @@ export const WorkoutModel = types
   }))
   .actions(withSetPropAction)
   .actions(workout => ({
-    addStep(exercises: Exercise[], type: WorkoutStep['type']) {
+    addStep(exercises: Exercise[], type: WorkoutStep['type'] = 'straightSet') {
       const updatedSteps = (workout.steps || []).map(step => getSnapshot(step))
       updatedSteps.push({
         exercises: exercises.map(e => e.guid),
