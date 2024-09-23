@@ -7,13 +7,11 @@ if (__DEV__) {
 import { useFonts } from 'expo-font'
 import React from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { PaperProvider, Portal } from 'react-native-paper'
 import { KeyboardAvoiderProvider } from '@good-react-native/keyboard-avoider'
 import {
   initialWindowMetrics,
   SafeAreaProvider,
 } from 'react-native-safe-area-context'
-import { ErrorBoundary } from '@sentry/react'
 
 import './i18n'
 import DBStoreInitializer from './db/DBStoreInitializer'
@@ -24,8 +22,6 @@ import * as storage from './utils/storage'
 import { useLogging } from './utils/useLogging'
 import { customFontsToLoad } from './theme'
 import { useTimer, TimerContext } from './contexts/TimerContext'
-import { ErrorDetails } from './screens/ErrorDetails'
-import { DialogContextProvider } from './contexts/DialogContext'
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
