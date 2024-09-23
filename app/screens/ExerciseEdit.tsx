@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { ScrollView } from 'react-native'
 import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 
 import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
@@ -96,14 +96,14 @@ const ExerciseEditScreen: React.FC = () => {
           />
         </IconButton>
       </Header>
-      <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
         {exercise && (
           <ExerciseEditForm
             exercise={exercise}
             onUpdate={onUpdate}
           />
         )}
-      </View>
+      </ScrollView>
       <KeyboardAvoiderView>
         <Button
           variant="primary"
