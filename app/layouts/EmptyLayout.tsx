@@ -19,14 +19,11 @@ export const EmptyLayout: React.FC<Props> = ({
   const { stateStore } = useStores()
 
   return (
-    // <SafeAreaInsetsContext.Consumer>
-    // {insets => (
     <View
       style={[
         {
           flex: 1,
           backgroundColor: colors.surfaceContainer,
-          // paddingBottom: insets && insets.bottom > 0 ? insets.bottom: 0,
         },
         style,
       ]}
@@ -36,7 +33,5 @@ export const EmptyLayout: React.FC<Props> = ({
         footerHeight={hasFooter ? stateStore.footerHeight : undefined}
       />
     </View>
-    // )}
-    // </SafeAreaInsetsContext.Consumer>
   )
 }
