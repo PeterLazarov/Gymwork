@@ -7,7 +7,6 @@ if (__DEV__) {
 import { useFonts } from 'expo-font'
 import React from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { KeyboardAvoiderProvider } from '@good-react-native/keyboard-avoider'
 import {
   initialWindowMetrics,
   SafeAreaProvider,
@@ -56,18 +55,16 @@ function App() {
 
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <KeyboardAvoiderProvider>
-        <DBStoreInitializer>
-          <TimerContext.Provider value={timer}>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <AppNavigator
-                initialState={initialNavigationState}
-                onStateChange={onNavigationStateChange}
-              />
-            </GestureHandlerRootView>
-          </TimerContext.Provider>
-        </DBStoreInitializer>
-      </KeyboardAvoiderProvider>
+      <DBStoreInitializer>
+        <TimerContext.Provider value={timer}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <AppNavigator
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+          </GestureHandlerRootView>
+        </TimerContext.Provider>
+      </DBStoreInitializer>
     </SafeAreaProvider>
   )
 }

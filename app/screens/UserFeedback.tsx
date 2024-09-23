@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
-
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import {
   Button,
@@ -86,15 +84,13 @@ const UserFeedbackScreen: React.FC = () => {
           onUpdate={onUpdate}
         />
       </View>
-      <KeyboardAvoiderView avoidMode="whole-view">
-        <Button
-          variant="primary"
-          onPress={onFeedbackSave}
-          disabled={!formValid || submitting}
-        >
-          <ButtonText variant="primary">{translate('save')}</ButtonText>
-        </Button>
-      </KeyboardAvoiderView>
+      <Button
+        variant="primary"
+        onPress={onFeedbackSave}
+        disabled={!formValid || submitting}
+      >
+        <ButtonText variant="primary">{translate('save')}</ButtonText>
+      </Button>
     </EmptyLayout>
   )
 }

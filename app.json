@@ -22,7 +22,6 @@
     "android": {
       "icon": "./assets/pen-logo.png",
       "package": "com.gymwork",
-      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/pen-logo.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
