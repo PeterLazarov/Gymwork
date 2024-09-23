@@ -14,14 +14,18 @@ type Props = {
 const btnMinHeight = 56
 const insetCoverage = 0.75
 
-export const BottomNavigation: React.FC<Props> = ({ activeRoute, items }) => {
+export const BottomNavigation: React.FC<Props & View['props']> = ({
+  activeRoute,
+  items,
+  ...rest
+}) => {
   const colors = useColors()
   const colorScheme = useColorScheme()
 
   return (
     <SafeAreaInsetsContext.Consumer>
       {insets => (
-        <View>
+        <View {...rest}>
           <View
             style={{
               flexDirection: 'row',

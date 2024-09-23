@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { Platform, View } from 'react-native'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import {
   Button,
@@ -16,6 +16,10 @@ import { translate } from 'app/i18n'
 import UserFeedbackForm from 'app/components/UserFeedbackForm'
 import { observer } from 'mobx-react-lite'
 import { DateTime } from 'luxon'
+import Animated, {
+  useAnimatedKeyboard,
+  useAnimatedStyle,
+} from 'react-native-reanimated'
 
 const UserFeedbackScreen: React.FC = () => {
   const {
@@ -53,6 +57,13 @@ const UserFeedbackScreen: React.FC = () => {
     })
   }
 
+  const keyboard = useAnimatedKeyboard()
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      height: keyboard.height.value,
+    }
+  })
+
   return (
     <EmptyLayout>
       <Header>
@@ -78,12 +89,13 @@ const UserFeedbackScreen: React.FC = () => {
           />
         </IconButton>
       </Header>
-      <View style={{ flex: 1 }}>
+
+      <Animated.View style={[{ flex: 1 }]}>
         <UserFeedbackForm
           feedback={feedback}
           onUpdate={onUpdate}
         />
-      </View>
+      </Animated.View>
       <Button
         variant="primary"
         onPress={onFeedbackSave}
@@ -91,6 +103,11 @@ const UserFeedbackScreen: React.FC = () => {
       >
         <ButtonText variant="primary">{translate('save')}</ButtonText>
       </Button>
+
+      {/* Spacer */}
+      <Animated.View
+        style={[{ height: 0, backgroundColor: 'green' }, animatedStyles]}
+      ></Animated.View>
     </EmptyLayout>
   )
 }

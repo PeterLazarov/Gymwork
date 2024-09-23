@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getSnapshot } from 'mobx-state-tree'
-import { KeyboardAvoidingView, Platform, View } from 'react-native'
+import { Platform, View } from 'react-native'
 
 import SetEditList from './SetEditList'
 import SetEditControls from './SetEditControls'
@@ -15,6 +15,10 @@ import {
 import { SetEditActions } from './SetEditActions'
 import { useTimer } from 'app/contexts/TimerContext'
 import { useColors } from 'designSystem'
+import Animated, {
+  useAnimatedKeyboard,
+  useAnimatedStyle,
+} from 'react-native-reanimated'
 
 const defaultReps = 10
 
@@ -103,26 +107,46 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
     step.removeSet(selectedSet!.guid)
   }, [selectedSet])
 
+  const keyboard = useAnimatedKeyboard()
+  const bottomBarSize = Platform.OS === 'android' ? 56 : 80
+  const animatedStyles = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: -Math.max(keyboard.height.value - bottomBarSize, 0),
+        },
+      ],
+    }
+  })
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      style={{ flex: 1 }}
-    >
-      <View
-        style={{
+    <View
+      style={[
+        {
           flexDirection: 'column',
           flexGrow: 1,
           gap: 8,
           display: 'flex',
           backgroundColor: colors.surfaceContainerLow,
-        }}
-      >
-        <SetEditList
-          sets={step?.exerciseSetsMap[focusedExercise.guid] ?? []}
-          selectedSet={selectedSet}
-          setSelectedSet={setSelectedSet}
-        />
+        },
+      ]}
+    >
+      <SetEditList
+        sets={step?.exerciseSetsMap[focusedExercise.guid] ?? []}
+        selectedSet={selectedSet}
+        setSelectedSet={setSelectedSet}
+      />
 
+      <Animated.View
+        style={[
+          {
+            justifyContent: 'flex-end',
+            backgroundColor: colors.surfaceContainerLow,
+            gap: 8,
+          },
+          animatedStyles,
+        ]}
+      >
         {stateStore.draftSet && (
           <View style={{ paddingHorizontal: 8 }}>
             <SetEditControls
@@ -131,15 +155,14 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
             />
           </View>
         )}
-
         <SetEditActions
           mode={selectedSet ? 'edit' : 'add'}
           onAdd={handleAdd}
           onUpdate={handleUpdate}
           onRemove={handleRemove}
         />
-      </View>
-    </KeyboardAvoidingView>
+      </Animated.View>
+    </View>
   )
 }
 

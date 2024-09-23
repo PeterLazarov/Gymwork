@@ -1,10 +1,14 @@
 import React, { ReactNode } from 'react'
-import { View } from 'react-native'
+import { KeyboardAvoidingView, Platform, View } from 'react-native'
 
 import { EmptyLayout } from './EmptyLayout'
 import { BottomNavigation } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
 import { observer } from 'mobx-react-lite'
+import Animated, {
+  useAnimatedKeyboard,
+  useAnimatedStyle,
+} from 'react-native-reanimated'
 
 type Props = {
   children?: ReactNode
@@ -33,12 +37,44 @@ const TabsLayout: React.FC<Props> = ({ children }) => {
     },
   ]
 
+  // const keyboard = useAnimatedKeyboard()
+  // const bottomBarSize = Platform.OS === 'android' ? 56 : 80
+  // const animatedStyles = useAnimatedStyle(() => {
+  //   console.log(keyboard.height.value)
+  //   return {
+  //     transform: [
+  //       {
+  //         translateY: Math.min(-keyboard.height.value, -bottomBarSize),
+  //       },
+  //     ],
+  //   }
+  // })
+
   return (
     <EmptyLayout>
-      <View style={{ flex: 1 }}>{children}</View>
+      {/* <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
+      > */}
+      <Animated.View
+        style={[
+          {
+            flex: 1,
+            // position: 'absolute',
+            // top: 0,
+            // bottom: 0,
+            // left: 0,
+            // right: 0,
+          },
+          // animatedStyles,
+        ]}
+      >
+        {children}
+      </Animated.View>
       <BottomNavigation
         activeRoute={navStore.activeRoute}
         items={tabs}
+        // style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}
       />
     </EmptyLayout>
   )
