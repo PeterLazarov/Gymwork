@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback, useEffect, useState } from 'react'
 import { getSnapshot } from 'mobx-state-tree'
-import { Platform, View } from 'react-native'
+import { View } from 'react-native'
 
 import SetEditList from './SetEditList'
 import SetEditControls from './SetEditControls'
@@ -14,11 +14,7 @@ import {
 } from 'app/db/models'
 import { SetEditActions } from './SetEditActions'
 import { useTimer } from 'app/contexts/TimerContext'
-import { useColors } from 'designSystem'
-import Animated, {
-  useAnimatedKeyboard,
-  useAnimatedStyle,
-} from 'react-native-reanimated'
+import { KeyboardExpandingView, useColors } from 'designSystem'
 
 const defaultReps = 10
 
@@ -107,14 +103,6 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
     step.removeSet(selectedSet!.guid)
   }, [selectedSet])
 
-  const keyboard = useAnimatedKeyboard()
-  const bottomBarSize = Platform.OS === 'android' ? 64 : 92
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      height: Math.max(keyboard.height.value - bottomBarSize, 0),
-    }
-  })
-
   return (
     <View
       style={[
@@ -157,8 +145,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
           onRemove={handleRemove}
         />
 
-        {/* Spacer */}
-        <Animated.View style={[{ height: 0 }, animatedStyles]} />
+        <KeyboardExpandingView footerHeight={stateStore.footerHeight} />
       </View>
     </View>
   )
