@@ -17,7 +17,7 @@
   - Workout historical stats screen with muscle areas and comments analysis
 * Template edit
   - steps list editting rearranging and or adding exercises
-* WorkoutDay 
+* WorkoutDay
   - Make UI more clear if user is editting on a different day from today
 * optimisation
   - optimize useColors
@@ -28,7 +28,7 @@
   - ExerciseSelect - Optimise initial render
   - Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 * Split screen over half is makes UI a mess
-* UserFeedback -> Keyboard hides feedback save button 
+* UserFeedback -> Keyboard hides feedback save button
 * keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 * grouping / measurement by rest
 * Review button styles. Especially primary + disabled
@@ -57,3 +57,17 @@ Workout programs
 LOW PRIORITY
 
 - perf: move styles to stylesheet objects
+
+Cardio Wheel Picker:
+wix - kinda laggy, scroll snaps abruptly
+
+https://github.com/TronNatthakorn/react-native-wheel-pick - (works only in development build , and even then only SOMETIMES)
+
+https://github.com/Liamandrew/react-native-picky
+TODO
+
+https://github.com/erksch/react-native-wheely
+TODO
+
+https://github.com/yz1311/react-native-wheel-picker
+?
