@@ -100,6 +100,7 @@
     "react-native-screens": "3.31.1",
     "react-native-svg": "15.2.0",
     "react-native-tab-view": "^3.5.2",
+    "react-native-ui-lib": "^7.31.0",
     "react-native-uuid": "^2.0.1",
     "react-native-web": "~0.19.6",
     "reanimated-bottom-sheet": "1.0.0-alpha.22",

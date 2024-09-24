@@ -15,6 +15,7 @@ import {
 import { SetEditActions } from './SetEditActions'
 import { useTimer } from 'app/contexts/TimerContext'
 import { useColors } from 'designSystem'
+import { CardioInput } from 'designSystem/CardioInput'
 
 const defaultReps = 10
 
@@ -123,10 +124,11 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 
       {stateStore.draftSet && (
         <View style={{ paddingHorizontal: 8 }}>
-          <SetEditControls
+          {/* <SetEditControls
             value={stateStore.draftSet}
             onSubmit={handleAdd}
-          />
+          /> */}
+          <CardioInput />
         </View>
       )}
       <SetEditActions

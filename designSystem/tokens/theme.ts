@@ -8,6 +8,7 @@ import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
 } from '@react-navigation/native'
+import { Colors, Typography, Spacings } from 'react-native-ui-lib'
 
 // Generated with https://material-foundation.github.io/material-theme-builder/
 /*
@@ -411,4 +412,27 @@ export const navThemes = adaptNavigationTheme({
   reactNavigationDark: NavigationDarkTheme,
   materialLight: paperThemes.light,
   materialDark: paperThemes.dark,
+})
+
+Colors.loadColors({
+  primaryColor: schemes.light.primary,
+  secondaryColor: schemes.light.tertiary,
+  textColor: schemes.light.onSurface,
+  errorColor: schemes.light.error,
+  successColor: palettes.green['70'],
+  warnColor: palettes.gold['80'],
+})
+
+// TODO
+Typography.loadTypographies({
+  heading: { fontSize: 36, fontWeight: '600' },
+  subheading: { fontSize: 28, fontWeight: '500' },
+  body: { fontSize: 18, fontWeight: '400' },
+})
+
+// TODO
+Spacings.loadSpacings({
+  page: 20,
+  card: 12,
+  gridGutter: 16,
 })
