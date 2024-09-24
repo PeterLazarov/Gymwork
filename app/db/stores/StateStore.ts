@@ -25,6 +25,7 @@ export const StateStoreModel = types
     draftSet: types.maybe(WorkoutSetModel),
     visitedWelcomeScreen: false,
 
+    footerHeight: 0,
     chartWidth: 0,
     chartHeight: 0,
   })

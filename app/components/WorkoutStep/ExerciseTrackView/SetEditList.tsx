@@ -1,6 +1,12 @@
 import { observer } from 'mobx-react-lite'
 import React, { useCallback, useRef } from 'react'
-import { FlatList, Pressable, TouchableOpacity, View } from 'react-native'
+import {
+  FlatList,
+  Keyboard,
+  Pressable,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
 import { computed } from 'mobx'
 
@@ -126,7 +132,10 @@ const SetEditList: React.FC<Props> = ({
   return (
     <Pressable
       style={{ flex: 1 }}
-      onPress={() => setSelectedSet(null)}
+      onPress={() => {
+        setSelectedSet(null)
+        Keyboard.dismiss()
+      }}
     >
       <DragList
         data={sets.slice()}

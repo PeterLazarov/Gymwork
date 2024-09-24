@@ -1,8 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { ScrollView } from 'react-native'
-import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
-
 import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, ExerciseModel } from 'app/db/models'
@@ -104,15 +102,13 @@ const ExerciseEditScreen: React.FC = () => {
           />
         )}
       </ScrollView>
-      <KeyboardAvoiderView>
-        <Button
-          variant="primary"
-          onPress={onComplete}
-          disabled={!formValid}
-        >
-          <ButtonText variant="primary">{translate('save')}</ButtonText>
-        </Button>
-      </KeyboardAvoiderView>
+      <Button
+        variant="primary"
+        onPress={onComplete}
+        disabled={!formValid}
+      >
+        <ButtonText variant="primary">{translate('save')}</ButtonText>
+      </Button>
     </EmptyLayout>
   )
 }

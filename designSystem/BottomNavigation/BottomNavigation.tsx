@@ -1,5 +1,5 @@
 import React from 'react'
-import { useColorScheme, View } from 'react-native'
+import { useColorScheme, View, ViewProps } from 'react-native'
 
 import { boxShadows, useColors } from '../'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
@@ -9,12 +9,16 @@ import { Item } from './types'
 type Props = {
   activeRoute?: string
   items: Item[]
-}
+} & ViewProps
 
 const btnMinHeight = 56
 const insetCoverage = 0.75
 
-export const BottomNavigation: React.FC<Props> = ({ activeRoute, items }) => {
+export const BottomNavigation: React.FC<Props> = ({
+  activeRoute,
+  items,
+  ...rest
+}) => {
   const colors = useColors()
   const colorScheme = useColorScheme()
 
@@ -23,6 +27,7 @@ export const BottomNavigation: React.FC<Props> = ({ activeRoute, items }) => {
       {insets => (
         <View>
           <View
+            {...rest}
             style={{
               flexDirection: 'row',
               height: (insets?.bottom ?? 0) * insetCoverage + btnMinHeight,

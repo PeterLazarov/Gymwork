@@ -18,7 +18,7 @@ const WorkoutStepScreen: React.FC = () => {
 
   return (
     stateStore.focusedStep && (
-      <View style={{ marginBottom: 8, flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <StepHeader step={stateStore.focusedStep} />
 
         {stateStore.focusedStep?.type === 'superSet' && (

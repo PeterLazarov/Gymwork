@@ -12,7 +12,6 @@ import {
   WorkoutSetModel,
   WorkoutStep,
 } from 'app/db/models'
-import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { SetEditActions } from './SetEditActions'
 import { useTimer } from 'app/contexts/TimerContext'
 import { useColors } from 'designSystem'
@@ -106,13 +105,15 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 
   return (
     <View
-      style={{
-        flexDirection: 'column',
-        flexGrow: 1,
-        gap: 8,
-        display: 'flex',
-        backgroundColor: colors.surfaceContainerLow,
-      }}
+      style={[
+        {
+          flexDirection: 'column',
+          flexGrow: 1,
+          gap: 8,
+          display: 'flex',
+          backgroundColor: colors.surfaceContainerLow,
+        },
+      ]}
     >
       <SetEditList
         sets={step?.exerciseSetsMap[focusedExercise.guid] ?? []}
@@ -120,26 +121,20 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
         setSelectedSet={setSelectedSet}
       />
 
-      <KeyboardAvoiderView
-        avoidMode="whole-view"
-        style={{ gap: 8 }}
-      >
-        {stateStore.draftSet && (
-          <View style={{ paddingHorizontal: 8 }}>
-            <SetEditControls
-              value={stateStore.draftSet}
-              onSubmit={handleAdd}
-            />
-          </View>
-        )}
-
-        <SetEditActions
-          mode={selectedSet ? 'edit' : 'add'}
-          onAdd={handleAdd}
-          onUpdate={handleUpdate}
-          onRemove={handleRemove}
-        />
-      </KeyboardAvoiderView>
+      {stateStore.draftSet && (
+        <View style={{ paddingHorizontal: 8 }}>
+          <SetEditControls
+            value={stateStore.draftSet}
+            onSubmit={handleAdd}
+          />
+        </View>
+      )}
+      <SetEditActions
+        mode={selectedSet ? 'edit' : 'add'}
+        onAdd={handleAdd}
+        onUpdate={handleUpdate}
+        onRemove={handleRemove}
+      />
     </View>
   )
 }

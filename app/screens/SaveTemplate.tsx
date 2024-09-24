@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
 import { getSnapshot } from 'mobx-state-tree'
 
 import EditTemplateForm from 'app/components/WorkoutTemplate/EditTemplateForm'
@@ -112,15 +111,13 @@ const SaveTemplateScreen: React.FC = () => {
           onUpdate={onUpdate}
         />
       </View>
-      <KeyboardAvoiderView>
-        <Button
-          variant="primary"
-          onPress={onComplete}
-          disabled={!formValid}
-        >
-          <ButtonText variant="primary">{translate('save')}</ButtonText>
-        </Button>
-      </KeyboardAvoiderView>
+      <Button
+        variant="primary"
+        onPress={onComplete}
+        disabled={!formValid}
+      >
+        <ButtonText variant="primary">{translate('save')}</ButtonText>
+      </Button>
     </EmptyLayout>
   )
 }

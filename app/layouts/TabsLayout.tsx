@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react'
 import { View } from 'react-native'
+import { observer } from 'mobx-react-lite'
 
 import { EmptyLayout } from './EmptyLayout'
 import { BottomNavigation } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
-import { observer } from 'mobx-react-lite'
 
 type Props = {
   children?: ReactNode
@@ -34,11 +34,18 @@ const TabsLayout: React.FC<Props> = ({ children }) => {
   ]
 
   return (
-    <EmptyLayout>
+    <EmptyLayout hasFooter>
       <View style={{ flex: 1 }}>{children}</View>
       <BottomNavigation
         activeRoute={navStore.activeRoute}
         items={tabs}
+        onLayout={event => {
+          const { height } = event.nativeEvent.layout
+
+          if (stateStore.footerHeight !== height) {
+            stateStore.setProp('footerHeight', Math.ceil(height))
+          }
+        }}
       />
     </EmptyLayout>
   )

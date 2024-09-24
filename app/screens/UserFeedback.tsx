@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { KeyboardAvoiderView } from '@good-react-native/keyboard-avoider'
+import { observer } from 'mobx-react-lite'
+import { DateTime } from 'luxon'
 
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import {
@@ -16,8 +17,6 @@ import { AirtableFeedback, airtableApi } from 'app/services/airtable'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import { translate } from 'app/i18n'
 import UserFeedbackForm from 'app/components/UserFeedbackForm'
-import { observer } from 'mobx-react-lite'
-import { DateTime } from 'luxon'
 
 const UserFeedbackScreen: React.FC = () => {
   const {
@@ -76,21 +75,20 @@ const UserFeedbackScreen: React.FC = () => {
           />
         </IconButton>
       </Header>
-      <View style={{ flex: 1 }}>
+
+      <View style={[{ flex: 1 }]}>
         <UserFeedbackForm
           feedback={feedback}
           onUpdate={onUpdate}
         />
       </View>
-      <KeyboardAvoiderView avoidMode="whole-view">
-        <Button
-          variant="primary"
-          onPress={onFeedbackSave}
-          disabled={!formValid}
-        >
-          <ButtonText variant="primary">{translate('save')}</ButtonText>
-        </Button>
-      </KeyboardAvoiderView>
+      <Button
+        variant="primary"
+        onPress={onFeedbackSave}
+        disabled={!formValid}
+      >
+        <ButtonText variant="primary">{translate('save')}</ButtonText>
+      </Button>
     </EmptyLayout>
   )
 }

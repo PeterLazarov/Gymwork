@@ -24,6 +24,7 @@ export const Header: React.FC<ViewProps> & SubComponents = props => {
             paddingHorizontal: padding,
             paddingBottom: padding,
             paddingTop: (insets?.top ?? 0) + padding,
+            zIndex: 1,
           }}
           {...props}
         />
