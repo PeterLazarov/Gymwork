@@ -19,17 +19,17 @@ export const KeyboardExpandingView: React.FC<Props> = ({
   // Used in older devices where useAnimatedKeyboard doesn't work. Tested on Nexus 4 API 23 emulator
   const kbHeight = useSharedValue(0)
   useEffect(() => {
-    Keyboard.addListener('keyboardDidShow', ({ endCoordinates }) => {
-      kbHeight.value = endCoordinates.height
-    })
-    Keyboard.addListener('keyboardDidHide', e => {
-      kbHeight.value = 0
-    })
+    const subs = [
+      Keyboard.addListener('keyboardDidShow', ({ endCoordinates }) => {
+        kbHeight.value = endCoordinates.height
+      }),
+      Keyboard.addListener('keyboardDidHide', e => {
+        kbHeight.value = 0
+      }),
+    ]
 
-    // TODO more precise cleanup?
     return () => {
-      Keyboard.removeAllListeners('keyboardDidShow')
-      Keyboard.removeAllListeners('keyboardDidHide')
+      subs.forEach(sub => sub.remove())
     }
   }, [])
 
