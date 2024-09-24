@@ -20,9 +20,9 @@ export const CardioInput = (props: CardioInputProps) => {
   return <SectionsWheelPickerScreen />
 }
 
-const DAYS = _.times(10, i => i)
-const HOURS = _.times(24, i => i)
-const MINUTES = _.times(60, i => i)
+const SPEED = _.times(400, i => i / 10)
+const ELEVATION = _.times(200, i => i / 10)
+const DIFFICULTY = _.times(100, i => i)
 
 const SectionsWheelPickerScreen = () => {
   const [numOfSections, setNumOfSections] = useState(1)
@@ -94,10 +94,10 @@ const SectionsWheelPickerScreen = () => {
   const sections: WheelPickerProps<string | number>[] = useMemo(() => {
     return [
       {
-        items: getItems(DAYS),
+        items: getItems(SPEED),
         onChange: onDaysChange,
         initialValue: selectedDays,
-        label: Constants.isRTL ? 'ימים' : 'Days',
+        label: 'Speed',
         align:
           numOfSections === 1
             ? WheelPicker.alignments.CENTER
@@ -113,10 +113,10 @@ const SectionsWheelPickerScreen = () => {
         },
       },
       {
-        items: getItems(HOURS),
+        items: getItems(ELEVATION),
         onChange: onHoursChange,
         initialValue: selectedHours,
-        label: Constants.isRTL ? 'שעות' : 'Hrs',
+        label: 'Elavation',
         align:
           numOfSections === 2
             ? shouldDisableRTL
@@ -132,10 +132,10 @@ const SectionsWheelPickerScreen = () => {
             : undefined,
       },
       {
-        items: getItems(MINUTES),
+        items: getItems(DIFFICULTY),
         onChange: onMinutesChange,
         initialValue: selectedMinutes,
-        label: Constants.isRTL ? 'דקות' : 'Mins',
+        label: 'Difficulty',
         align: shouldDisableRTL
           ? WheelPicker.alignments.RIGHT
           : WheelPicker.alignments.LEFT,
