@@ -26,64 +26,39 @@ const DIFFICULTY = _.times(100, i => i)
 
 const SectionsWheelPickerScreen = () => {
   const [numOfSections, setNumOfSections] = useState(1)
-  const [disableRTL, setDisableRTL] = useState(false)
-  const [selectedDays, setSelectedDays] = useState(0)
-  const [selectedHours, setSelectedHours] = useState(0)
-  const [selectedMinutes, setSelectedMinutes] = useState(0)
-
-  const shouldDisableRTL = useMemo(() => {
-    return Constants.isRTL && disableRTL
-  }, [disableRTL])
+  const [selectedSpeed, setSelectedDays] = useState(0)
+  const [selectedElevation, setSelectedHours] = useState(0)
+  const [selectedDifficulty, setSelectedMinutes] = useState(0)
 
   const getItems = useCallback((values: (number | string)[]) => {
     return _.map(values, item => ({ label: '' + item, value: item }))
   }, [])
 
-  const onDaysChange = useCallback((item: number | string) => {
+  const onSpeedChange = useCallback((item: number | string) => {
     setSelectedDays(item as number)
   }, [])
 
-  const onHoursChange = useCallback((item: number | string) => {
+  const onElevationChange = useCallback((item: number | string) => {
     setSelectedHours(item as number)
   }, [])
 
-  const onMinutesChange = useCallback((item: number | string) => {
+  const onDifficultyChange = useCallback((item: number | string) => {
     setSelectedMinutes(item as number)
   }, [])
 
   const onSavePress = useCallback(() => {
-    const days = selectedDays === 1 ? 'day' : 'days'
-    const hours = selectedHours === 1 ? 'hour' : 'hours'
-    const minutes = selectedMinutes === 1 ? 'minute' : 'minutes'
-
-    numOfSections === 3
-      ? Alert.alert(
-          'Your chosen duration is:\n' +
-            selectedDays +
-            ' ' +
-            days +
-            ', ' +
-            selectedHours +
-            ' ' +
-            hours +
-            ' and ' +
-            selectedMinutes +
-            ' ' +
-            minutes
-        )
-      : numOfSections === 2
-      ? Alert.alert(
-          'Your chosen duration is:\n' +
-            selectedDays +
-            ' ' +
-            days +
-            ' and ' +
-            selectedHours +
-            ' ' +
-            hours
-        )
-      : Alert.alert('Your chosen duration is:\n' + selectedDays + ' ' + days)
-  }, [numOfSections, selectedDays, selectedHours, selectedMinutes])
+    Alert.alert(
+      JSON.stringify(
+        {
+          selectedSpeed,
+          selectedElevation,
+          selectedDifficulty,
+        },
+        undefined,
+        2
+      )
+    )
+  }, [numOfSections, selectedSpeed, selectedElevation, selectedDifficulty])
 
   const onResetPress = useCallback(() => {
     setSelectedDays(0)
@@ -95,67 +70,63 @@ const SectionsWheelPickerScreen = () => {
     return [
       {
         items: getItems(SPEED),
-        onChange: onDaysChange,
-        initialValue: selectedDays,
+        onChange: onSpeedChange,
+        initialValue: selectedSpeed,
         label: 'Speed',
         align:
           numOfSections === 1
             ? WheelPicker.alignments.CENTER
-            : shouldDisableRTL
-            ? WheelPicker.alignments.LEFT
             : WheelPicker.alignments.RIGHT,
         style: {
           flex: 1,
-          flexDirection:
-            numOfSections !== 1 && Constants.isRTL && !disableRTL
-              ? 'row-reverse'
-              : undefined,
+          //   flexDirection:
+          // numOfSections !== 1 && Constants.isRTL && !disableRTL
+          //   ? 'row-reverse'
+          //   : undefined,
         },
       },
       {
         items: getItems(ELEVATION),
-        onChange: onHoursChange,
-        initialValue: selectedHours,
-        label: 'Elavation',
-        align:
-          numOfSections === 2
-            ? shouldDisableRTL
-              ? WheelPicker.alignments.RIGHT
-              : WheelPicker.alignments.LEFT
-            : WheelPicker.alignments.CENTER,
+        onChange: onElevationChange,
+        initialValue: selectedElevation,
+        label: 'Elevation',
+        // align:
+        //   numOfSections === 2
+        //     ? shouldDisableRTL
+        //       ? WheelPicker.alignments.RIGHT
+        //       : WheelPicker.alignments.LEFT
+        //     : WheelPicker.alignments.CENTER,
         style:
           numOfSections === 2
             ? {
                 flex: 1,
-                flexDirection: shouldDisableRTL ? 'row-reverse' : 'row',
+                // flexDirection: shouldDisableRTL ? 'row-reverse' : 'row',
               }
             : undefined,
       },
       {
         items: getItems(DIFFICULTY),
-        onChange: onMinutesChange,
-        initialValue: selectedMinutes,
+        onChange: onDifficultyChange,
+        initialValue: selectedDifficulty,
         label: 'Difficulty',
-        align: shouldDisableRTL
-          ? WheelPicker.alignments.RIGHT
-          : WheelPicker.alignments.LEFT,
+        // align: shouldDisableRTL
+        //   ? WheelPicker.alignments.RIGHT
+        //   : WheelPicker.alignments.LEFT,
         style: {
           flex: 1,
-          flexDirection: shouldDisableRTL ? 'row-reverse' : 'row',
+          //   flexDirection: shouldDisableRTL ? 'row-reverse' : 'row',
         },
       },
     ]
   }, [
     getItems,
-    disableRTL,
-    selectedDays,
-    selectedHours,
-    selectedMinutes,
-    onDaysChange,
-    onHoursChange,
-    onMinutesChange,
+    selectedSpeed,
+    selectedElevation,
+    selectedDifficulty,
+    onSpeedChange,
+    onElevationChange,
+    onDifficultyChange,
     numOfSections,
-    shouldDisableRTL,
   ])
 
   const sectionsToPresent = useMemo(
@@ -163,62 +134,16 @@ const SectionsWheelPickerScreen = () => {
     [numOfSections, sections]
   )
 
-  const timeSections = useMemo(() => {
-    return [
-      {
-        items: getItems(_.times(24, i => i + 1)),
-      },
-      {
-        items: getItems(
-          _.times(12, i => {
-            if (i < 2) {
-              return `0${i * 5}`
-            }
-            return i * 5
-          })
-        ),
-      },
-    ]
-  }, [getItems])
-
   const onChangeIndex = useCallback((index: number) => {
     return setNumOfSections(index + 1)
   }, [])
 
-  const updateDisableRTLValue = useCallback((value: boolean) => {
-    setDisableRTL(value)
-  }, [])
-
   return (
     <View>
-      <Text
-        text40
-        marginL-10
-        marginT-20
-      >
-        Sections Wheel Picker
-      </Text>
-      <View
-        row
-        center
-        style={styles.bottomDivider}
-      >
-        <Text margin-s5> Disable RTL</Text>
-        <Switch
-          value={shouldDisableRTL}
-          onValueChange={updateDisableRTLValue}
-        />
-      </View>
       <View
         centerH
         marginT-20
       >
-        <Text
-          text60
-          marginB-20
-        >
-          Pick a duration
-        </Text>
         <SegmentedControl
           segments={[
             { label: '1 section' },
@@ -231,7 +156,6 @@ const SectionsWheelPickerScreen = () => {
       </View>
       <SectionsWheelPicker
         numberOfVisibleRows={4}
-        disableRTL={disableRTL}
         sections={sectionsToPresent}
       />
       <View
@@ -251,19 +175,6 @@ const SectionsWheelPickerScreen = () => {
           label={'Reset'}
           link
           onPress={onResetPress}
-        />
-      </View>
-      <View>
-        <Text
-          center
-          text60
-          marginV-20
-        >
-          Pick a time
-        </Text>
-        <SectionsWheelPicker
-          disableRTL={disableRTL}
-          sections={timeSections}
         />
       </View>
     </View>
