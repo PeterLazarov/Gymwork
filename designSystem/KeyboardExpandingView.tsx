@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
+import { Keyboard } from 'react-native'
 
 import Animated, {
   useAnimatedKeyboard,
-  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
 } from 'react-native-reanimated'
 
 type Props = {
@@ -14,11 +16,36 @@ export const KeyboardExpandingView: React.FC<Props> = ({
 }) => {
   const keyboard = useAnimatedKeyboard()
 
-  const animatedStyles = useAnimatedStyle(() => {
-    return {
-      height: Math.max(keyboard.height.value - footerHeight, 0),
+  // Used in older devices where useAnimatedKeyboard doesn't work. Tested on Nexus 4 API 23 emulator
+  const kbHeight = useSharedValue(0)
+  useEffect(() => {
+    Keyboard.addListener('keyboardDidShow', ({ endCoordinates }) => {
+      kbHeight.value = endCoordinates.height
+    })
+    Keyboard.addListener('keyboardDidHide', e => {
+      kbHeight.value = 0
+    })
+
+    // TODO more precise cleanup?
+    return () => {
+      Keyboard.removeAllListeners('keyboardDidShow')
+      Keyboard.removeAllListeners('keyboardDidHide')
     }
+  }, [])
+
+  const useAnimatedHeight = useRef(false)
+
+  const derivedValue = useDerivedValue(() => {
+    if (keyboard.height.value !== 0) {
+      useAnimatedHeight.current = true
+    }
+
+    return Math.max(
+      (useAnimatedHeight.current ? keyboard.height.value : kbHeight.value) -
+        footerHeight,
+      0
+    )
   })
 
-  return <Animated.View style={[{ height: 0 }, animatedStyles]} />
+  return <Animated.View style={[{ height: derivedValue }]} />
 }
