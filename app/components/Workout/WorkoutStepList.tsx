@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
+import { ListRenderItemInfo } from '@shopify/flash-list'
 
 import { Workout, WorkoutStep } from 'app/db/models'
 import WorkoutStepCard from '../WorkoutStep/WorkoutStepCard'
 import { useStores } from 'app/db/helpers/useStores'
+import { IndicatedScrollList } from 'designSystem'
 
 type Props = {
   workout: Workout
@@ -29,7 +30,7 @@ const WorkoutStepList: React.FC<Props> = ({ workout }) => {
   )
 
   return (
-    <FlashList
+    <IndicatedScrollList
       contentContainerStyle={{ paddingBottom: 80 }}
       data={workout.steps.slice()}
       renderItem={renderItem}
