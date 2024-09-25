@@ -46,12 +46,7 @@ const AddStepMenu = () => {
   const height = options.length * 70
 
   return (
-    <View
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <View>
       <BottomDrawer
         visible={visible}
         height={height}
@@ -96,6 +91,7 @@ const AddStepMenu = () => {
         icon="plus"
         onPress={expand}
         onLongPress={addExercise}
+        style={{ position: 'relative' }}
       />
     </View>
   )

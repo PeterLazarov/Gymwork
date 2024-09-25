@@ -1,13 +1,13 @@
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useMemo, useRef } from 'react'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
+import { View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { getDateRange } from 'app/utils/date'
 import { HorizontalScreenList } from 'designSystem'
 import WorkoutDayView from './WorkoutDayView'
-import { View } from 'react-native'
-import AddStepMenu from './AddStepMenu'
+import WorkoutBottomControls from './WorkoutBottomControls'
 
 const WorkoutHorizontalList = () => {
   const { stateStore } = useStores()
@@ -47,7 +47,7 @@ const WorkoutHorizontalList = () => {
         onScreenChange={onScreenChange}
         initialScrollIndex={dates.indexOf(stateStore.openedDate)}
       />
-      <AddStepMenu />
+      <WorkoutBottomControls />
     </View>
   )
 }

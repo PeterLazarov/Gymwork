@@ -11,10 +11,8 @@ const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
       style={[
         {
           position: 'absolute',
-          margin: 16,
           right: 'auto',
           left: 'auto',
-          bottom: 0,
           backgroundColor: disabled ? colors.surfaceVariant : colors.primary,
         },
         style,

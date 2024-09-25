@@ -1,4 +1,5 @@
 import { DateTime, Interval } from 'luxon'
+import { capitalize } from './string'
 
 export const getDateRange = (from: string, to: string) => {
   const range = [from, to] as const
@@ -14,4 +15,15 @@ export const getDateRange = (from: string, to: string) => {
     .concat(range[1])
 
   return result
+}
+
+export const formatDate = (date: DateTime, format = 'MMM dd') => {
+  const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
+  const todayDiff = Math.round(date.diff(today, 'days').days)
+  const dateLabel =
+    Math.abs(todayDiff) < 2
+      ? capitalize(date.toRelativeCalendar({ unit: 'days' })!)
+      : date.toFormat(format)
+
+  return dateLabel
 }

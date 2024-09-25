@@ -2,12 +2,12 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { Menu } from 'react-native-paper'
 import { DateTime } from 'luxon'
-import { capitalize } from 'lodash'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, useColors } from 'designSystem'
 import HomeMenuItems from '../HomeMenuItems'
+import { formatDate } from 'app/utils/date'
 
 const WorkoutHeader: React.FC = () => {
   const colors = useColors()
@@ -23,14 +23,8 @@ const WorkoutHeader: React.FC = () => {
 
   const [menuOpen, setMenuOpen] = useState(false)
 
-  // TODO dedupe with DayControl
   const date = DateTime.fromISO(stateStore.openedDate)
-  const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
-  const todayDiff = Math.round(date.diff(today, 'days').days)
-  const dateLabel =
-    Math.abs(todayDiff) < 2
-      ? capitalize(date.toRelativeCalendar({ unit: 'days' })!)
-      : date.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
+  const dateLabel = formatDate(date, 'ccc, MMM dd, yyyy')
 
   function openCalendar() {
     navigate('Calendar')
