@@ -22,12 +22,18 @@ const WorkoutStepList: React.FC<Props> = ({ workout }) => {
     navigate('WorkoutStep')
   }
 
-  const renderItem = ({ item }: ListRenderItemInfo<WorkoutStep>) => (
-    <WorkoutStepCard
-      step={item}
-      onPress={() => onCardPress(item.guid)}
-    />
-  )
+  const renderItem = ({ item, index }: ListRenderItemInfo<WorkoutStep>) => {
+    const isLast = index === workout.steps.length - 1
+    return (
+      <WorkoutStepCard
+        step={item}
+        onPress={() => onCardPress(item.guid)}
+        containerStyle={{
+          marginBottom: isLast ? 0 : undefined,
+        }}
+      />
+    )
+  }
 
   return (
     <IndicatedScrollList
