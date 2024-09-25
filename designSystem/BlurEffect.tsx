@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Platform, View } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useColors } from 'designSystem'
 
@@ -10,6 +10,8 @@ type Props = {
 
 const BlurEffect: React.FC<Props> = ({ height, position }) => {
   const colors = useColors()
+
+  const startY = Platform.OS === 'android' ? 0 : -1
 
   return (
     <View
@@ -26,7 +28,7 @@ const BlurEffect: React.FC<Props> = ({ height, position }) => {
     >
       {/* Gradient Layer */}
       <LinearGradient
-        colors={[colors.surfaceContainer, 'transparent']}
+        colors={[colors.surfaceContainerHigh, 'transparent']}
         style={{
           height: 20 * height,
           flex: 1,
@@ -39,7 +41,7 @@ const BlurEffect: React.FC<Props> = ({ height, position }) => {
                 ]
               : undefined,
         }}
-        start={{ x: 0, y: -1 }}
+        start={{ x: 0, y: startY }}
         end={{ x: 0, y: 0.5 }}
       />
     </View>
