@@ -75,6 +75,7 @@ const makeStyles = (
         ? colors.surfaceContainerLowest
         : 'transparent',
       borderRadius: 8,
+      gap: 4,
       paddingVertical: compactMode ? 0 : 16,
       flex: 1,
       alignItems: 'center',
