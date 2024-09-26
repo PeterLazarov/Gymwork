@@ -29,6 +29,7 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
             <WorkoutCommentsCard
               workout={workout}
               onPress={() => navigate('WorkoutFeedback')}
+              compactMode
             />
           )}
           <WorkoutStepList workout={workout} />

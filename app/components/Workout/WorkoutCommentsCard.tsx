@@ -71,7 +71,7 @@ const WorkoutCommentsCard: React.FC<Props> = ({
 const makeStyles = (colors: any) =>
   StyleSheet.create({
     card: {
-      padding: 0,
+      padding: 8,
     },
     cardContent: {
       alignItems: 'center',
