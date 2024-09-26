@@ -36,6 +36,7 @@
 * Look into replacing 'draft' with mobx-utils createViewModel
 * Look into https://reactnative.dev/docs/timers#interactionmanager for optimizing render time
 * Make timer vibration work
+* Timer duration not being visible as a countdown, just as a loader is not enough
 
 Performance to beat -
 100 workouts
