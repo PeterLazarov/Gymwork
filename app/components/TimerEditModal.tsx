@@ -12,7 +12,6 @@ import {
   fontSize,
 } from 'designSystem'
 import { translate } from 'app/i18n'
-import { Duration } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import { useStores } from 'app/db/helpers/useStores'
 import { restTimerKey } from 'app/db/stores/TimerStore'
@@ -28,10 +27,11 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const { setDuration, duration } = timerStore.timers.get(restTimerKey)!
 
-  const [timerSecs, setTimerSecs] = useState(duration.as('seconds'))
+  // TODO explore MST-Utils createViewModel?
+  const [preferredDuration, setPreferredDuration] = useState(duration)
 
   function onConfirm() {
-    setDuration(Duration.fromDurationLike({ seconds: timerSecs }))
+    setDuration(preferredDuration)
     onClose()
   }
 
@@ -61,9 +61,10 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
         />
         <View style={{ padding: 16 }}>
           <DurationInput
-            valueSeconds={timerSecs}
-            onUpdate={setTimerSecs}
+            value={preferredDuration}
+            onUpdate={setPreferredDuration}
             hideHours
+            hideTimer
           />
         </View>
         <View style={{ flexDirection: 'row' }}>

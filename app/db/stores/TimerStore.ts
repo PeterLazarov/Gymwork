@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { types, Instance, SnapshotOut, getParent } from 'mobx-state-tree'
 import { TimerModel } from '../models/Timer'
 import { RootStore } from './RootStore'
@@ -18,8 +19,8 @@ export const TimerStoreModel = types
   .actions(self => {
     const rootStore = getParent(self) as RootStore
     const { stateStore } = rootStore
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const restTimer = self.timers.get(restTimerKey)!
+    const durationTimer = self.timers.get(durationTimerKey)!
 
     let lastStep = stateStore.focusedStepGuid
 
@@ -36,6 +37,7 @@ export const TimerStoreModel = types
             if (focusedStepGuid && focusedStepGuid !== lastStep) {
               lastStep = focusedStepGuid
               restTimer.clear()
+              durationTimer.clear()
             }
           }
         )

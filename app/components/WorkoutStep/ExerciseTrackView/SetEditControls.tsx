@@ -9,10 +9,10 @@ import {
   IncrementNumericEditor,
   manageInputFocus,
 } from 'designSystem'
-import convert from 'convert-units'
 import { observer } from 'mobx-react-lite'
 import Timer from 'app/components/Timer/Timer'
 import { useStores } from 'app/db/helpers/useStores'
+import { Duration } from 'luxon'
 
 export type SetEditControlsProps = {
   value: WorkoutSet
@@ -84,10 +84,8 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
       {value.exercise!.hasTimeMeasument && (
         <SetEditPanelSection text={translate('duration')}>
           <DurationInput
-            valueSeconds={convert(value.durationMs).from('ms').to('s')}
-            onUpdate={durationSeconds =>
-              value.setDuration(durationSeconds, 's')
-            }
+            value={Duration.fromMillis(value.durationMs)}
+            onUpdate={duration => value.setDuration(duration.toMillis(), 'ms')}
             onSubmitEditing={() => onHandleSubmit(input4)}
             ref={input4}
           />
