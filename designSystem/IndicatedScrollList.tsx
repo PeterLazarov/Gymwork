@@ -20,7 +20,7 @@ const IndicatedScrollList: React.FC<Props> = ({
   const visibleHeight = useRef(0)
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const currentOffset = event.nativeEvent.contentOffset.y
+    const currentOffset = Math.round(event.nativeEvent.contentOffset.y)
 
     // Check if scroll up is possible (not at the top)
     setCanScrollUp(currentOffset > 0)
@@ -45,7 +45,7 @@ const IndicatedScrollList: React.FC<Props> = ({
         {...otherProps}
         onContentSizeChange={(width, height) => {
           // Save the content height
-          contentHeight.current = height
+          contentHeight.current = Math.round(height)
           // Recalculate scrollability when content changes
           setCanScrollDown(visibleHeight.current < height)
 
@@ -53,7 +53,7 @@ const IndicatedScrollList: React.FC<Props> = ({
         }}
         onLayout={event => {
           // Save the visible area height
-          visibleHeight.current = event.nativeEvent.layout.height
+          visibleHeight.current = Math.round(event.nativeEvent.layout.height)
           // Recalculate scrollability when the layout changes
           setCanScrollDown(visibleHeight.current < contentHeight.current)
 
