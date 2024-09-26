@@ -37,6 +37,7 @@
 * Look into https://reactnative.dev/docs/timers#interactionmanager for optimizing render time
 * Make timer vibration work
 * Timer duration not being visible as a countdown, just as a loader is not enough
+* Consider switching to a single Date library (remove date-fns)
 
 Performance to beat -
 100 workouts
