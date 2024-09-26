@@ -5,13 +5,17 @@ import { Duration } from 'luxon'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
 
 import TimerEditModal from '../TimerEditModal'
-import { useTimer } from 'app/contexts/TimerContext'
 import { IconButton, Icon, useColors, NumberInput } from 'designSystem'
+import { useStores } from 'app/db/helpers/useStores'
+import { restTimerKey } from 'app/db/stores/TimerStore'
 
 const Timer = forwardRef<TextInput>(function Timer(_, ref) {
   const colors = useColors()
 
-  const restTimer = useTimer()
+  const { timerStore } = useStores()
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const restTimer = timerStore.timers.get(restTimerKey)!
+
   const percentTimeLeft = useMemo(() => {
     if (restTimer.duration.toMillis() === 0) {
       return 0

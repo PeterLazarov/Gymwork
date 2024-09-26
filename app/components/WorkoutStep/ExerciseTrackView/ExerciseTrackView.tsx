@@ -13,8 +13,8 @@ import {
   WorkoutStep,
 } from 'app/db/models'
 import { SetEditActions } from './SetEditActions'
-import { useTimer } from 'app/contexts/TimerContext'
 import { useColors } from 'designSystem'
+import { restTimerKey } from 'app/db/stores/TimerStore'
 
 const defaultReps = 10
 
@@ -30,7 +30,11 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   const colors = useColors()
 
   const { stateStore, settingsStore, workoutStore } = useStores()
-  const restTimer = useTimer()
+
+  const { timerStore } = useStores()
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const restTimer = timerStore.timers.get(restTimerKey)!
+
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
   useEffect(() => {

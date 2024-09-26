@@ -12,8 +12,10 @@ import {
   fontSize,
 } from 'designSystem'
 import { translate } from 'app/i18n'
-import { useTimer } from 'app/contexts/TimerContext'
 import { Duration } from 'luxon'
+import { observer } from 'mobx-react-lite'
+import { useStores } from 'app/db/helpers/useStores'
+import { restTimerKey } from 'app/db/stores/TimerStore'
 
 type Props = {
   open: boolean
@@ -22,7 +24,9 @@ type Props = {
 const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
   const colors = useColors()
 
-  const { setDuration, duration } = useTimer()
+  const { timerStore } = useStores()
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const { setDuration, duration } = timerStore.timers.get(restTimerKey)!
 
   const [timerSecs, setTimerSecs] = useState(duration.as('seconds'))
 
@@ -83,4 +87,4 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
   )
 }
 
-export default TimerEditModal
+export default observer(TimerEditModal)
