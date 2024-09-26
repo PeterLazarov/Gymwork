@@ -17,7 +17,7 @@
   - Workout historical stats screen with muscle areas and comments analysis
 * Template edit
   - steps list editting rearranging and or adding exercises
-* WorkoutDay 
+* WorkoutDay
   - Make UI more clear if user is editting on a different day from today
 * optimisation
   - optimize useColors
@@ -28,13 +28,14 @@
   - ExerciseSelect - Optimise initial render
   - Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 * Split screen over half is makes UI a mess
-* UserFeedback -> Keyboard hides feedback save button 
+* UserFeedback -> Keyboard hides feedback save button
 * keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 * grouping / measurement by rest
 * Review button styles. Especially primary + disabled
 * Standardize background usage (different screens currently use different background colors for some reason)
 * Look into replacing 'draft' with mobx-utils createViewModel
 * Look into https://reactnative.dev/docs/timers#interactionmanager for optimizing render time
+* Make timer vibration work
 
 Performance to beat -
 100 workouts
