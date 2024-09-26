@@ -13,6 +13,7 @@ import {
 } from 'designSystem'
 import WorkoutCommentsForm from 'app/components/WorkoutCommentsForm'
 import { WorkoutComments } from 'app/db/models'
+import { useDialogContext } from 'app/contexts/DialogContext'
 
 const WorkoutFeedbackScreen: React.FC = () => {
   const colors = useColors()
@@ -29,9 +30,19 @@ const WorkoutFeedbackScreen: React.FC = () => {
     return null
   }
 
+  const { showConfirm } = useDialogContext()
   const [comments, setComments] = useState<WorkoutComments>(workout?.comments)
 
   function onBackPress() {
+    showConfirm?.({
+      message: translate('changesWillBeLost'),
+      onClose: () => showConfirm?.(undefined),
+      onConfirm: onBackConfirmed,
+    })
+  }
+
+  function onBackConfirmed() {
+    showConfirm?.(undefined)
     goBack()
   }
 
