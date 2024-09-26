@@ -57,7 +57,7 @@ export default observer(
         }}
       >
         {!hideTimer && (
-          <View>
+          <View style={{ paddingLeft: 4 }}>
             {durationTimer.isRunning ? (
               <IconButton onPress={durationTimer.stop}>
                 <Icon icon="stop" />
@@ -74,7 +74,7 @@ export default observer(
           <>
             <NumberInput
               value={hours ?? 0}
-              style={{ textAlign: 'center', flexGrow: 1 }}
+              style={{ textAlign: 'center', flex: 1 }}
               inputMode="numeric"
               multiline={false}
               keyboardType="number-pad"
@@ -96,7 +96,7 @@ export default observer(
         )}
         <NumberInput
           value={minutes ?? 0}
-          style={{ textAlign: 'center', flexGrow: 1 }}
+          style={{ textAlign: 'center', flex: 1 }}
           inputMode="numeric"
           multiline={false}
           keyboardType="number-pad"
@@ -118,7 +118,7 @@ export default observer(
         <Text style={{ fontSize: fontSize.xs }}>:</Text>
         <NumberInput
           value={seconds ?? 0}
-          style={{ textAlign: 'center', flexGrow: 1 }}
+          style={{ textAlign: 'center', flex: 1 }}
           inputMode="numeric"
           multiline={false}
           keyboardType="number-pad"
