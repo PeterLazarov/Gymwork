@@ -20,7 +20,6 @@ import './utils/ignoreWarnings'
 import * as storage from './utils/storage'
 import { useLogging } from './utils/useLogging'
 import { customFontsToLoad } from './theme'
-import { useTimer, TimerContext } from './contexts/TimerContext'
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
@@ -32,8 +31,6 @@ function App() {
     onNavigationStateChange,
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
-
-  const timer = useTimer()
 
   const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
 
@@ -56,14 +53,12 @@ function App() {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <DBStoreInitializer>
-        <TimerContext.Provider value={timer}>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <AppNavigator
-              initialState={initialNavigationState}
-              onStateChange={onNavigationStateChange}
-            />
-          </GestureHandlerRootView>
-        </TimerContext.Provider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <AppNavigator
+            initialState={initialNavigationState}
+            onStateChange={onNavigationStateChange}
+          />
+        </GestureHandlerRootView>
       </DBStoreInitializer>
     </SafeAreaProvider>
   )
