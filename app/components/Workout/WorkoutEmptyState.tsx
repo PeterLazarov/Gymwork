@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
 import { translate } from 'app/i18n'
-import { Text, Card, Icon } from 'designSystem'
+import { Text, Card, Icon, useColors } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
 import EmptyState from '../EmptyState'
 
@@ -16,22 +16,27 @@ const WorkoutEmptyState: React.FC = () => {
   const hasTemplates = workoutStore.workoutTemplates.length > 0
 
   const actions = useMemo(() => {
-    const result = []
-    if (hasWorkouts) {
-      result.push({
+    const result = [
+      {
         icon: 'copy-outline',
         text: translate('copyWorkout'),
-        onPress: copyWorkout,
-      })
-    }
-
-    if (hasTemplates) {
-      result.push({
+        onPress: hasWorkouts
+          ? copyWorkout
+          : () => Alert.alert('', translate('copyWorkoutAlert')),
+        forbidden: !hasWorkouts,
+      },
+      {
         icon: 'download-outline',
         text: translate('useTemplate'),
-        onPress: useTemplate,
-      })
-    }
+        onPress: hasTemplates
+          ? useTemplate
+          : () =>
+              // TODO revisit once templates can be created apart from workouts
+              Alert.alert('', translate('useTemplateAlert')),
+        forbidden: !hasTemplates,
+      },
+    ]
+
     return result
   }, [hasWorkouts, hasTemplates])
 
@@ -45,6 +50,8 @@ const WorkoutEmptyState: React.FC = () => {
     navigate('TemplateSelect')
   }
 
+  const colors = useColors()
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       {actions.length > 0 &&
@@ -56,10 +63,17 @@ const WorkoutEmptyState: React.FC = () => {
             content={
               <View style={{ alignItems: 'center' }}>
                 <Icon
+                  color={action.forbidden ? colors.outlineVariant : undefined}
                   icon={action.icon}
                   style={{ paddingBottom: 10 }}
                 />
-                <Text>{action.text}</Text>
+                <Text
+                  style={{
+                    color: action.forbidden ? colors.outlineVariant : undefined,
+                  }}
+                >
+                  {action.text}
+                </Text>
               </View>
             }
           />

@@ -103,6 +103,9 @@ const en = {
   welcome: 'Welcome',
   startGymworking: 'Start gymworking',
   templateSaved: 'Template saved.',
+  copyWorkoutAlert: 'Please create at least 1 workout first.',
+  useTemplateAlert:
+    'Please create at least 1 template first.\nYou can do so by saving a workout as a template.',
 }
 
 export default en
