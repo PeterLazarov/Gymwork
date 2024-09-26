@@ -19,6 +19,7 @@ const CommentReviewListItem: React.FC<Props> = ({ workout, onPress }) => {
     >
       <Text style={styles.text}>{workout.date}</Text>
       <WorkoutCommentsCard
+        onPress={onPress}
         workout={workout}
         compactMode
       />
