@@ -63,13 +63,17 @@ const WorkoutEmptyState: React.FC = () => {
             content={
               <View style={{ alignItems: 'center' }}>
                 <Icon
-                  color={action.forbidden ? colors.outlineVariant : undefined}
+                  color={
+                    action.forbidden ? colors.outlineVariant : colors.onSurface
+                  }
                   icon={action.icon}
                   style={{ paddingBottom: 10 }}
                 />
                 <Text
                   style={{
-                    color: action.forbidden ? colors.outlineVariant : undefined,
+                    color: action.forbidden
+                      ? colors.outlineVariant
+                      : colors.onSurface,
                   }}
                 >
                   {action.text}
