@@ -22,11 +22,18 @@ const feelings = {
   neutral: 'neutral',
   happy: 'happy',
 } as const
-const painOptions = {
+const discomfort = {
   pain: 'pain',
   discomfort: 'discomfort',
   noPain: 'noPain',
 } as const
+
+export type WorkoutComments = {
+  notes: string,
+  feeling?: typeof feelings[keyof typeof feelings]
+  pain?: typeof discomfort[keyof typeof discomfort]
+  rpe?: number
+}
 
 export const WorkoutModel = types
   .model('Workout')
@@ -36,7 +43,7 @@ export const WorkoutModel = types
     steps: types.array(WorkoutStepModel),
     notes: '',
     feeling: types.maybe(types.enumeration('feeling', Object.values(feelings))),
-    pain: types.maybe(types.enumeration('pain', Object.values(painOptions))),
+    pain: types.maybe(types.enumeration('pain', Object.values(discomfort))),
     rpe: types.maybe(types.number),
   })
   .views(self => ({
@@ -117,6 +124,14 @@ export const WorkoutModel = types
 
       return hasNotes || self.rpe || self.pain || self.feeling
     },
+    get comments(): WorkoutComments {
+      return {
+        notes: self.notes,
+        feeling: self.feeling,
+        pain: self.pain,
+        rpe: self.rpe
+      }
+    }
   }))
   .actions(withSetPropAction)
   .actions(workout => ({
@@ -149,6 +164,12 @@ export const WorkoutModel = types
 
       return () => recorder.undo()
     },
+    saveComments(comments: WorkoutComments){
+      workout.notes = comments.notes
+      workout.feeling = comments.feeling
+      workout.pain = comments.pain
+      workout.rpe = comments.rpe
+    }
   }))
 
 export interface Workout extends Instance<typeof WorkoutModel> {}

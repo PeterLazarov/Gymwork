@@ -93,6 +93,33 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
             />
           </>
         </TouchableOpacity>
+        <Divider
+          variant="neutral"
+          orientation="horizontal"
+        />
+
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            settingsStore.setProp(
+              'showCommentsCard',
+              !settingsStore.showCommentsCard
+            )
+          }}
+        >
+          <>
+            <Text style={styles.itemLabel}>
+              {translate('showCommentsCard')}
+            </Text>
+            <ToggleSwitch
+              variant="primary"
+              value={settingsStore.showCommentsCard}
+              onValueChange={val =>
+                settingsStore.setProp('showCommentsCard', val)
+              }
+            />
+          </>
+        </TouchableOpacity>
 
         <Divider
           variant="neutral"
