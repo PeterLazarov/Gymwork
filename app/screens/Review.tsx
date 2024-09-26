@@ -76,20 +76,26 @@ const ReviewScreen: React.FC = () => {
     },
   ]
 
+  function onBack() {
+    if (exerciseSelectOpen) {
+      setExerciseSelectOpen(false)
+    } else {
+      navStore.goBack()
+    }
+  }
+
   return (
     <>
       <Header>
-        {exerciseSelectOpen && (
-          <IconButton
-            onPress={() => setExerciseSelectOpen(false)}
-            underlay="darker"
-          >
-            <Icon
-              color={colors.onPrimary}
-              icon="chevron-back"
-            />
-          </IconButton>
-        )}
+        <IconButton
+          onPress={onBack}
+          underlay="darker"
+        >
+          <Icon
+            color={colors.onPrimary}
+            icon="chevron-back"
+          />
+        </IconButton>
 
         <Header.Title
           title={
