@@ -1,8 +1,7 @@
-import { observer } from 'mobx-react-lite'
 import React from 'react'
+import { observer } from 'mobx-react-lite'
 import { TextInput } from 'react-native-paper'
 import { useStores } from 'app/db/helpers/useStores'
-import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { TxKeyPath, translate } from 'app/i18n'
 import {
   Text,
@@ -14,7 +13,8 @@ import {
   ToggleGroupButton,
 } from 'designSystem'
 import { Workout, discomfortOptions, feelingOptions } from 'app/db/models'
-import { ScrollView, View } from 'react-native'
+import { View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const WorkoutFeedbackScreen: React.FC = () => {
   const colors = useColors()
@@ -24,12 +24,6 @@ const WorkoutFeedbackScreen: React.FC = () => {
     navStore: { navigate },
   } = useStores()
   const workout = stateStore.openedWorkout
-
-  if (!workout) {
-    console.warn('REDIRECT - No workout')
-    navigate('Workout')
-    return null
-  }
 
   function onBackPress() {
     navigate('Workout')
@@ -41,13 +35,14 @@ const WorkoutFeedbackScreen: React.FC = () => {
     value: String(option),
   }))
 
-  // DUMB FIX
   if (!workout) {
+    console.warn('REDIRECT - No workout')
     navigate('Workout')
+    return null
   }
 
   return (
-    <EmptyLayout>
+    <>
       <Header>
         <IconButton
           onPress={onBackPress}
@@ -61,7 +56,7 @@ const WorkoutFeedbackScreen: React.FC = () => {
         <Header.Title title={translate('workoutComments')} />
       </Header>
 
-      <ScrollView>
+      <KeyboardAwareScrollView extraScrollHeight={100}>
         <View
           style={{
             padding: 8,
@@ -121,8 +116,8 @@ const WorkoutFeedbackScreen: React.FC = () => {
             }}
           />
         </View>
-      </ScrollView>
-    </EmptyLayout>
+      </KeyboardAwareScrollView>
+    </>
   )
 }
 export default observer(WorkoutFeedbackScreen)
