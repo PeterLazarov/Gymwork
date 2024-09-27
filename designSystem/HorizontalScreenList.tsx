@@ -1,7 +1,8 @@
-import { FlashList, FlashListProps } from '@shopify/flash-list'
 import React, { forwardRef, useCallback } from 'react'
 import {
   useWindowDimensions,
+  FlatList,
+  FlatListProps,
   View,
   ViewabilityConfig,
   ViewToken,
@@ -15,21 +16,20 @@ import Animated, {
 
 type LockedProps = 'onScroll' | 'getItemLayout' | 'horizontal'
 
-type Props = Omit<FlashListProps<any>, LockedProps> & {
+type Props = Omit<FlatListProps<any>, LockedProps> & {
   onScreenChange?: (index: number) => void
 }
 
 const viewabilityConfig: ViewabilityConfig = {
-  itemVisiblePercentThreshold: 50,
+  itemVisiblePercentThreshold: 60,
 }
 
-const HorizontalScreenList = forwardRef<FlashList<any>, Props>(
+const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
   (
     {
       onScreenChange,
       initialScrollIndex,
       renderItem: externalRenderItem,
-      data,
       ...rest
     },
     ref
@@ -46,6 +46,20 @@ const HorizontalScreenList = forwardRef<FlashList<any>, Props>(
       }
     },
     [])
+
+    const renderItem = (props: any) => (
+      <View style={{ width, flex: 1 }}>{externalRenderItem!(props)}</View>
+    )
+
+    const getItemLayout = (
+      data: ArrayLike<any> | null | undefined,
+      index: number
+    ) => ({
+      length: width,
+      offset: width * index,
+      index,
+    })
+
     const translationX = useSharedValue(0)
 
     const panGesture = Gesture.Pan()
@@ -66,6 +80,7 @@ const HorizontalScreenList = forwardRef<FlashList<any>, Props>(
     const animatedStyle = useAnimatedStyle(() => ({
       transform: [{ translateX: translationX.value }],
     }))
+
     return (
       <GestureDetector gesture={panGesture}>
         <Animated.View
@@ -76,22 +91,17 @@ const HorizontalScreenList = forwardRef<FlashList<any>, Props>(
             animatedStyle,
           ]}
         >
-          <FlashList
+          <FlatList
             ref={ref}
             showsHorizontalScrollIndicator={false}
             viewabilityConfig={viewabilityConfig}
-            data={data}
             onViewableItemsChanged={handleViewChange}
             pagingEnabled
             keyExtractor={(item, index) => String(index)}
-            estimatedItemSize={width}
-            // scrollEventThrottle={32}
-            renderItem={props => (
-              <View style={{ width, height: '100%' }}>
-                {externalRenderItem!(props)}
-              </View>
-            )}
+            getItemLayout={getItemLayout}
+            renderItem={renderItem}
             horizontal
+            snapToAlignment="center"
             initialScrollIndex={initialScrollIndex}
             {...rest}
           />

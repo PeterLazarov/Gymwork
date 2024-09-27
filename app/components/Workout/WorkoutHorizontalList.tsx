@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useMemo, useRef } from 'react'
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
-import { View } from 'react-native'
+import { FlatList, ListRenderItemInfo, View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { getDateRange } from 'app/utils/date'
@@ -11,7 +10,7 @@ import WorkoutBottomControls from './WorkoutBottomControls'
 
 const WorkoutHorizontalList = () => {
   const { stateStore } = useStores()
-  const workoutList = useRef<FlashList<string>>(null)
+  const workoutList = useRef<FlatList<string>>(null)
 
   const dates = useMemo(() => {
     const from = stateStore.firstRenderedDate
