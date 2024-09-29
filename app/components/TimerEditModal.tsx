@@ -13,21 +13,17 @@ import {
 } from 'designSystem'
 import { translate } from 'app/i18n'
 import { observer } from 'mobx-react-lite'
-import { useStores } from 'app/db/helpers/useStores'
-import { restTimerKey } from 'app/db/stores/TimerStore'
+import { Timer } from 'app/db/models/Timer'
 
 type Props = {
   open: boolean
   onClose: () => void
+  timer: Timer
 }
-const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
+const TimerEditModal: React.FC<Props> = ({ open, onClose, timer }) => {
   const colors = useColors()
 
-  const { timerStore } = useStores()
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const { setDuration, duration } = timerStore.timers.get(restTimerKey)!
-
-  // TODO explore MST-Utils createViewModel?
+  const { setDuration, duration } = timer
   const [preferredDuration, setPreferredDuration] = useState(duration)
 
   function onConfirm() {
@@ -64,7 +60,6 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose }) => {
             value={preferredDuration}
             onUpdate={setPreferredDuration}
             hideHours
-            hideTimer
           />
         </View>
         <View style={{ flexDirection: 'row' }}>

@@ -14,7 +14,6 @@ import {
 } from 'app/db/models'
 import { SetEditActions } from './SetEditActions'
 import { useColors } from 'designSystem'
-import { restTimerKey } from 'app/db/stores/TimerStore'
 
 const defaultReps = 10
 
@@ -32,9 +31,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   const { stateStore, settingsStore, workoutStore } = useStores()
 
   const { timerStore } = useStores()
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const restTimer = timerStore.timers.get(restTimerKey)!
-
+  const timer = timerStore.timers.get(`timer_${focusedExercise.guid}`)
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
   useEffect(() => {
@@ -53,18 +50,11 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
     stateStore.setProp('draftSet', {
       exercise: focusedExercise.guid,
       reps: reps || (focusedExercise.hasRepMeasument ? defaultReps : undefined),
+      // date: setToClone!.date,
       ...rest,
+      durationMs: 0,
     })
   }, [selectedSet, focusedExercise])
-
-  useEffect(() => {
-    if (settingsStore.measureRest) {
-      stateStore.draftSet!.setProp(
-        'restMs',
-        restTimer.timeElapsed.as('milliseconds')
-      )
-    }
-  }, [restTimer.timeElapsed, focusedExercise])
 
   const handleAdd = useCallback(() => {
     if (stateStore.draftSet) {
@@ -77,8 +67,12 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
       step.addSet(fromDraft)
     }
 
-    if (settingsStore.measureRest) {
-      restTimer.start()
+    if (settingsStore.measureRest && timer) {
+      timer.setProp('type', 'rest')
+
+      timer.start()
+
+      stateStore.draftSet?.setDuration(0)
     }
 
     if (step.type === 'superSet') {
@@ -94,7 +88,6 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
       ...getSnapshot(stateStore.draftSet!),
       exercise: selectedSet!.exercise.guid,
       guid: selectedSet!.guid,
-      date: selectedSet!.date,
     }
 
     step.updateSet(updatedSet)
@@ -130,6 +123,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
           <SetEditControls
             value={stateStore.draftSet}
             onSubmit={handleAdd}
+            timer={timer}
           />
         </View>
       )}

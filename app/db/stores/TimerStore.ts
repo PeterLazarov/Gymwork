@@ -3,44 +3,50 @@ import { types, Instance, SnapshotOut, getParent } from 'mobx-state-tree'
 import { TimerModel } from '../models/Timer'
 import { RootStore } from './RootStore'
 import { reaction } from 'mobx'
+import { DateTime } from 'luxon'
+import { difference } from 'lodash'
+import { Exercise } from '../models'
 
-export const restTimerKey = 'defaultTimer'
-export const durationTimerKey = 'durationTimer'
+const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
 
 // Store to handle the timer context and stateStore interaction
 export const TimerStoreModel = types
   .model('TimerStore', {
-    timers: types.optional(types.map(TimerModel), {
-      [restTimerKey]: TimerModel.create({ id: restTimerKey }),
-      [durationTimerKey]: TimerModel.create({ id: durationTimerKey }),
-    }),
+    timers: types.optional(types.map(TimerModel), {}),
   })
   // TODO replace this with superset support
   .actions(self => {
     const rootStore = getParent(self) as RootStore
-    const { stateStore } = rootStore
-    const restTimer = self.timers.get(restTimerKey)!
-    const durationTimer = self.timers.get(durationTimerKey)!
+    const { workoutStore } = rootStore
 
-    let lastStep = stateStore.focusedStepGuid
+    let dispose: Function
 
     return {
-      afterAttach() {
-        reaction(
-          () => stateStore.focusedStepGuid,
-          focusedStepGuid => {
-            if (!lastStep) {
-              lastStep = stateStore.focusedStepGuid
-              return
-            }
-
-            if (focusedStepGuid && focusedStepGuid !== lastStep) {
-              lastStep = focusedStepGuid
-              restTimer.clear()
-              durationTimer.clear()
-            }
-          }
+      initialize() {
+        this.updateTimers(
+          workoutStore.dateWorkoutMap[today.toISODate()]?.exercises
         )
+      },
+      updateTimers(exercises: Exercise[] = []) {
+        const currentTimers = [...self.timers.keys()]
+        const exerciseIds = exercises.map(({ guid }) => guid)
+
+        difference(currentTimers, exerciseIds).forEach(id => {
+          self.timers.delete(`timer_${id}`)
+        })
+
+        difference(exerciseIds, currentTimers).forEach(id => {
+          self.timers.put({ id: `timer_${id}` })
+        })
+      },
+      afterAttach() {
+        dispose = reaction(
+          () => workoutStore.dateWorkoutMap[today.toISODate()]?.exercises,
+          this.updateTimers
+        )
+      },
+      beforeDestroy() {
+        dispose?.()
       },
     }
   })

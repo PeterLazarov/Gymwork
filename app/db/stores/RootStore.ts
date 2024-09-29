@@ -38,6 +38,7 @@ export const RootStoreModel = types
         .then(() => self.settingsStore.initialize())
         .then(() => self.navStore.initialize())
         .then(() => self.recordStore.initialize())
+        .then(() => self.timerStore.initialize())
     },
   }))
 

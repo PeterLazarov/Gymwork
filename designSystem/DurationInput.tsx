@@ -1,4 +1,4 @@
-import { forwardRef, RefObject, useEffect, useRef } from 'react'
+import { forwardRef, RefObject, useEffect, useMemo, useRef } from 'react'
 import { View, TextInput as TextInputRN } from 'react-native'
 
 import {
@@ -10,22 +10,21 @@ import {
   IconButton,
 } from 'designSystem'
 import { translate } from 'app/i18n'
-import { durationTimerKey } from 'app/db/stores/TimerStore'
-import { useStores } from 'app/db/helpers/useStores'
 import { Duration } from 'luxon'
 import { observer } from 'mobx-react-lite'
+import { Timer } from 'app/db/models/Timer'
 
 type Props = {
   value: Duration
   onUpdate: (duration: Duration) => void
   hideHours?: boolean
-  hideTimer?: boolean
   onSubmitEditing?: () => void
+  timer?: Timer
 }
 
 export default observer(
   forwardRef<TextInputRN, Props>(function DurationInput(
-    { value, onUpdate, hideHours, onSubmitEditing, hideTimer },
+    { value, onUpdate, hideHours, onSubmitEditing, timer },
     ref
   ) {
     const { hours, minutes, seconds } = value.shiftToAll().toObject()
@@ -40,13 +39,26 @@ export default observer(
       onSubmitEditing?.()
     )
 
-    const { timerStore } = useStores()
-    // Should durationTimer be additive?
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const durationTimer = timerStore.timers.get(durationTimerKey)!
     useEffect(() => {
-      onUpdate(durationTimer.timeElapsed)
-    }, [durationTimer.timeElapsed])
+      if (timer?.timeElapsed && timer?.type === 'duration') {
+        onUpdate(timer?.timeElapsed)
+      }
+    }, [timer?.timeElapsed, timer?.type])
+
+    const hideTimer = useMemo(() => {
+      return !timer
+    }, [timer])
+
+    function onResume() {
+      if (!timer) return
+
+      if (timer.type !== 'duration') {
+        timer?.setTimeElapsed(value)
+        timer.setProp('type', 'duration')
+      }
+
+      timer.resume()
+    }
 
     return (
       <View
@@ -58,12 +70,12 @@ export default observer(
       >
         {!hideTimer && (
           <View style={{ paddingLeft: 4 }}>
-            {durationTimer.isRunning ? (
-              <IconButton onPress={durationTimer.stop}>
+            {timer?.type === 'duration' && timer?.isRunning ? (
+              <IconButton onPress={timer?.stop}>
                 <Icon icon="stop" />
               </IconButton>
             ) : (
-              <IconButton onPress={durationTimer.resume}>
+              <IconButton onPress={onResume}>
                 <Icon icon="play" />
               </IconButton>
             )}
@@ -79,9 +91,12 @@ export default observer(
               multiline={false}
               keyboardType="number-pad"
               onChange={hours => {
-                const updatedDuration = value.set({ hours })
+                const updatedDuration = value.shiftToAll().set({ hours })
                 onUpdate(updatedDuration)
-                durationTimer.setTimeElapsed(updatedDuration)
+                if (timer?.type === 'duration') {
+                  timer?.setTimeElapsed(updatedDuration)
+                  timer?.stop()
+                }
               }}
               placeholder={translate('hours')}
               maxLength={2}
@@ -102,9 +117,13 @@ export default observer(
           keyboardType="number-pad"
           onChange={minutes => {
             if (minutes <= 59) {
-              const updatedDuration = value.set({ minutes })
+              const updatedDuration = value.shiftToAll().set({ minutes })
+              timer?.stop()
               onUpdate(updatedDuration)
-              durationTimer.setTimeElapsed(updatedDuration)
+              if (timer?.type === 'duration') {
+                timer?.setTimeElapsed(updatedDuration)
+                timer?.stop()
+              }
             }
           }}
           placeholder={translate('minutes')}
@@ -124,9 +143,12 @@ export default observer(
           keyboardType="number-pad"
           onChange={seconds => {
             if (seconds <= 59) {
-              const updatedDuration = value.set({ seconds })
+              const updatedDuration = value.shiftToAll().set({ seconds })
               onUpdate(updatedDuration)
-              durationTimer.setTimeElapsed(updatedDuration)
+              if (timer?.type === 'duration') {
+                timer?.setTimeElapsed(updatedDuration)
+                timer?.stop()
+              }
             }
           }}
           placeholder={translate('seconds')}

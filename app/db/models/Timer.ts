@@ -14,6 +14,11 @@ export const TimerModel = types
     id: types.identifier,
     timeElapsedMillis: 0,
     durationMillis: defaultDuration.toMillis(),
+
+    type: types.optional(
+      types.enumeration(['rest', 'duration'] as const),
+      'rest'
+    ),
   })
   .volatile(self => {
     return {

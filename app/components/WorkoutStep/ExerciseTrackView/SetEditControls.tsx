@@ -10,18 +10,21 @@ import {
   manageInputFocus,
 } from 'designSystem'
 import { observer } from 'mobx-react-lite'
-import Timer from 'app/components/Timer/Timer'
+import RestInput from 'app/components/RestInput'
 import { useStores } from 'app/db/helpers/useStores'
 import { Duration } from 'luxon'
+import { Timer } from 'app/db/models/Timer'
 
 export type SetEditControlsProps = {
   value: WorkoutSet
   onSubmit(): void
+  timer?: Timer
 }
 
 const SetEditControls: React.FC<SetEditControlsProps> = ({
   value,
   onSubmit,
+  timer,
 }) => {
   // TODO add more input options
   const input0 = useRef<TextInput>(null)
@@ -37,7 +40,12 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
     <View style={{ gap: 8 }}>
       {settingsStore.measureRest && (
         <SetEditPanelSection text={translate('rest')}>
-          <Timer ref={input0} />
+          <RestInput
+            ref={input0}
+            value={Duration.fromMillis(value.restMs)}
+            onChange={rest => value.setRest(rest.as('milliseconds'), 'ms')}
+            timer={timer}
+          />
         </SetEditPanelSection>
       )}
 
@@ -87,6 +95,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
             value={Duration.fromMillis(value.durationMs)}
             onUpdate={duration => value.setDuration(duration.toMillis(), 'ms')}
             onSubmitEditing={() => onHandleSubmit(input4)}
+            timer={timer}
             ref={input4}
           />
         </SetEditPanelSection>
