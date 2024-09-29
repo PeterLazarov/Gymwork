@@ -92,7 +92,7 @@ export const StateStoreModel = types
       self.highlightedSetGuid = ''
     },
     applySnapshot(snapshot: StateStoreSnapshot) {
-      self.feedbackUser = snapshot.feedbackUser
+      self.feedbackUser = snapshot?.feedbackUser
       self.visitedWelcomeScreen = snapshot.visitedWelcomeScreen
     },
     setOpenedDate(date: string) {
