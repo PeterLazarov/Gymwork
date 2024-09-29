@@ -37,8 +37,8 @@ const useChartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
       textStyle: {
         color: colors.onSurface,
       },
-      inactiveColor: colors.onSurfaceVariant,
-      inactiveBorderColor: colors.onSurfaceVariant,
+      inactiveColor: colors.outline,
+      inactiveBorderColor: colors.outline,
       icon: 'roundRect',
     },
     yAxis: {

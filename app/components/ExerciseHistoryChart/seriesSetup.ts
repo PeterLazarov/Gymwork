@@ -45,7 +45,7 @@ const seriesSetup = ({ data }: Props) => {
     )
   }
 
-  const totalVolumeFormatter = () => {
+  const totalTonnageFormatter = () => {
     return data.map(sets =>
       sets.length > 0
         ? sets.reduce((acc, set) => (acc += set.reps * set.weight), 0)
@@ -53,10 +53,24 @@ const seriesSetup = ({ data }: Props) => {
     )
   }
 
+  const totalVolumeFormatter = () => {
+    return data.map(sets => sets.reduce((acc, { reps }) => acc + reps, 0))
+  }
+
+  const workSetsFormatter = () => {
+    return data.map(sets => sets.filter(s => !s.isWarmup).length)
+  }
+
   const getChartSeries = (exercise: Exercise, measureRest = false) => {
     const series: Record<string, SeriesItem> = {}
     const colorsStack = [
-      palettes.gold['60'],
+      palettes.tertiary['40'],
+      palettes.coolSlateBlue.hue600,
+      palettes.teal.hue600,
+      palettes.error['80'],
+      palettes.green['60'],
+      palettes.coolMintGreen.hue600,
+      palettes.amber.hue800,
       palettes.blue.hue600,
       palettes.coral.hue600,
       palettes.primary['60'],
@@ -76,11 +90,23 @@ const seriesSetup = ({ data }: Props) => {
           initiallySelected: true,
           unit: exercise.measurements.weight.unit,
         }
-        series['Total Volume'] = {
-          data: totalVolumeFormatter(),
+        // series.Sets = {
+        //   data: workSetsFormatter(),
+        //   color: colorsStack.pop()!,
+        //   initiallySelected: false,
+        //   unit: 'sets',
+        // }
+        series.Tonnage = {
+          data: totalTonnageFormatter(),
           color: colorsStack.pop()!,
           initiallySelected: false,
           unit: exercise.measurements.weight.unit,
+        }
+        series.Volume = {
+          data: totalVolumeFormatter(),
+          color: colorsStack.pop()!,
+          initiallySelected: false,
+          unit: 'reps',
         }
       }
     }
@@ -117,14 +143,14 @@ const seriesSetup = ({ data }: Props) => {
       }
     }
 
-    if (measureRest) {
-      series['Max Rest'] = {
-        data: singleMetricFormatter('rest'),
-        color: colorsStack.pop()!,
-        initiallySelected: false,
-        unit: 's', // ?
-      }
-    }
+    // if (measureRest) {
+    //   series['Max Rest'] = {
+    //     data: singleMetricFormatter('rest'),
+    //     color: colorsStack.pop()!,
+    //     initiallySelected: false,
+    //     unit: 's', // ?
+    //   }
+    // }
 
     return series
   }
