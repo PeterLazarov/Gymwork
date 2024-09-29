@@ -142,7 +142,9 @@ const SetEditList: React.FC<Props> = ({
       <DragList
         data={sets.concat(
           ...[
-            settingsStore.previewNextSet ? stateStore.draftSet : undefined,
+            !selectedSet && settingsStore.previewNextSet
+              ? stateStore.draftSet
+              : undefined,
           ].filter(Boolean)
         )}
         renderItem={renderItem}
