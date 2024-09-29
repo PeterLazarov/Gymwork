@@ -2,7 +2,7 @@ import React from 'react'
 
 import ExerciseListItem from './ExerciseListItem'
 import { Exercise } from 'app/db/models'
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
+import { FlatList, ListRenderItemInfo } from 'react-native'
 
 type Props = {
   exercises: Exercise[]
@@ -25,11 +25,10 @@ const ExerciseList: React.FC<Props> = ({
   }
 
   return (
-    <FlashList
+    <FlatList
       data={exercises.slice()}
       renderItem={renderItem}
       keyExtractor={exercise => exercise.guid}
-      estimatedItemSize={69}
     />
   )
 }

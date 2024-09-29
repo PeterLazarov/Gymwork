@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
-import { useMemo, useState } from 'react'
-import { ScrollView } from 'react-native'
+import { useMemo, useRef, useState } from 'react'
+import { ScrollView, View } from 'react-native'
 import { Searchbar } from 'react-native-paper'
 
 import ExerciseAccordionList from './ExerciseAccordionList'
@@ -8,6 +8,7 @@ import ExerciseList from './ExerciseList'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 import { translate } from 'app/i18n'
+import { useDebounce } from '@uidotdev/usehooks'
 
 const noop = () => {}
 
@@ -17,30 +18,32 @@ type Props = {
 }
 const AllExercisesList: React.FC<Props> = ({ onSelect, selectedExercises }) => {
   const { exerciseStore } = useStores()
+  const exercisesSorted = useRef(
+    exerciseStore.exercises.slice().sort((a, b) => a.name.localeCompare(b.name))
+  )
 
   const [filterString, setFilterString] = useState('')
+  const debouncedFilterString = useDebounce(filterString, 200)
 
   const filteredExercises = useMemo(() => {
-    if (!filterString) {
-      return exerciseStore.exercises
+    if (!debouncedFilterString) {
+      return exercisesSorted.current
     }
 
-    return exerciseStore.exercises
-      .filter((e: Exercise) => {
-        const exName = e.name.toLowerCase()
-        const filterWords = filterString
-          .toLowerCase()
-          .split(' ')
-          .filter(Boolean)
+    return exercisesSorted.current.filter((e: Exercise) => {
+      const exName = e.name.toLowerCase()
+      const filterWords = debouncedFilterString
+        .toLowerCase()
+        .split(' ')
+        .filter(Boolean)
 
-        return filterWords.every(
-          word =>
-            exName.includes(word) ||
-            (filterWords.length > 1 && e.muscles.includes(word))
-        )
-      })
-      .sort((a, b) => a.name.localeCompare(b.name))
-  }, [filterString, exerciseStore.exercises])
+      return filterWords.every(
+        word =>
+          exName.includes(word) ||
+          (filterWords.length > 1 && e.muscles.includes(word))
+      )
+    })
+  }, [debouncedFilterString])
 
   return (
     <>
@@ -50,22 +53,23 @@ const AllExercisesList: React.FC<Props> = ({ onSelect, selectedExercises }) => {
         value={filterString}
         mode="view"
       />
-      <ScrollView style={{ display: 'flex', flexDirection: 'column' }}>
-        {filterString === '' && (
-          <ExerciseAccordionList
-            exercises={exerciseStore.exercisesByMuscle}
-            onSelect={onSelect ?? noop}
-            selectedExercises={selectedExercises}
-          />
-        )}
-        {filterString !== '' && (
+      <View style={{ display: 'flex', flexDirection: 'column' }}>
+        {filterString === '' ? (
+          <ScrollView>
+            <ExerciseAccordionList
+              exercises={exerciseStore.exercisesByMuscle}
+              onSelect={onSelect ?? noop}
+              selectedExercises={selectedExercises}
+            />
+          </ScrollView>
+        ) : (
           <ExerciseList
             exercises={filteredExercises}
             onSelect={onSelect ?? noop}
             selectedExercises={selectedExercises}
           />
         )}
-      </ScrollView>
+      </View>
     </>
   )
 }

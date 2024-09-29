@@ -55,6 +55,7 @@
     "@shopify/flash-list": "1.6.4",
     "@shopify/react-native-skia": "1.2.3",
     "@types/convert-units": "^2.3.9",
+    "@uidotdev/usehooks": "^2.4.1",
     "@wuba/react-native-echarts": "^1.2.5",
     "apisauce": "3.0.1",
     "convert-units": "^2.3.4",

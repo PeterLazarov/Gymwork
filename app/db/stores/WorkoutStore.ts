@@ -75,9 +75,11 @@ export const WorkoutStoreModel = types
         .filter(([, sets]) => sets.length > 0)
         .sort(([, e1Sets], [, e2Sets]) => e2Sets.length - e1Sets.length)
 
-      return useOrderedExecises
-        .slice(0, 10)
-        .map(([, sets]) => sets[0]!.exercise)
+      return (
+        useOrderedExecises
+          // .slice(0, 10)
+          .map(([, sets]) => sets[0]!.exercise)
+      )
     },
 
     get sortedWorkouts(): Workout[] {
