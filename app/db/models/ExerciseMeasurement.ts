@@ -25,6 +25,10 @@ export const measurementUnits = {
   reps: {
     reps: 'reps',
   },
+  speed: {
+    kph: 'km/h',
+    mph: 'm/h',
+  },
 } as const
 
 export type DistanceUnit =
@@ -61,6 +65,10 @@ export const measurementDefaults = {
   rest: {
     unit: measurementUnits.duration.s,
     moreIsBetter: false,
+  },
+  speed: {
+    unit: measurementUnits.speed.kph,
+    moreIsBetter: true,
   },
 }
 
@@ -106,6 +114,17 @@ export const ExerciseMeasurementModel = types
           unit: types.enumeration(
             'distanceUnit',
             Object.values(measurementUnits.distance)
+          ),
+          moreIsBetter: types.boolean,
+        })
+        .actions(withSetPropAction)
+    ),
+    speed: types.maybe(
+      types
+        .model({
+          unit: types.enumeration(
+            'speedUnit',
+            Object.values(measurementUnits.speed)
           ),
           moreIsBetter: types.boolean,
         })

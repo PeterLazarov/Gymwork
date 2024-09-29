@@ -30,7 +30,7 @@ const SetEditList: React.FC<Props> = ({
 }) => {
   const colors = useColors()
 
-  const { stateStore, recordStore } = useStores()
+  const { stateStore, recordStore, settingsStore } = useStores()
 
   function toggleSelectedSet(set: WorkoutSet) {
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
@@ -48,6 +48,7 @@ const SetEditList: React.FC<Props> = ({
       onDragStart,
       onDragEnd,
       isActive,
+      index,
     }: DragListRenderItemInfo<WorkoutSet>) => {
       const isRecord = stepRecords.some(({ guid }) => guid === item.guid)
       const isFocused = selectedSet?.guid === item.guid
@@ -90,6 +91,7 @@ const SetEditList: React.FC<Props> = ({
               isRecord={isRecord}
               calcWorkSetNumber={calcWorkSetNumber}
               toggleSetWarmup={toggleSetWarmup}
+              draft={index === sets.length}
             />
           </View>
         </TouchableOpacity>
@@ -138,9 +140,13 @@ const SetEditList: React.FC<Props> = ({
       }}
     >
       <DragList
-        data={sets.slice()}
+        data={sets.concat(
+          ...[
+            settingsStore.previewNextSet ? stateStore.draftSet : undefined,
+          ].filter(Boolean)
+        )}
         renderItem={renderItem}
-        keyExtractor={set => set.guid}
+        keyExtractor={set => set.guid || 'draft'}
         getItemLayout={getItemLayout}
         onReordered={handleReorder}
         ItemSeparatorComponent={() => (

@@ -5,7 +5,7 @@ import { View, StyleSheet } from 'react-native'
 import { Text, useColors, fontSize as fontSizeToken } from 'designSystem'
 
 type Props = {
-  value: string | number
+  value?: string | number
   unit?: string
   isFocused?: boolean
   fontSize?: keyof typeof fontSizeToken
@@ -25,7 +25,9 @@ const SetDataLabel: React.FC<Props> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.value}>{value}</Text>
+      <Text style={styles.value}>
+        {typeof value === 'number' ? value.toFixed(2) : value}
+      </Text>
       {unit && <Text style={styles.unit}>{unit}</Text>}
     </View>
   )

@@ -2,7 +2,7 @@
   {
     "name": "Threadmill",
     "muscles": ["cardio"],
-    "measurementType": ["duration", "distance"]
+    "measurementType": ["duration", "distance", "speed"]
   },
   {
     "name": "3/4 Sit-Up",
@@ -3679,7 +3679,7 @@
   {
     "name": "Running, Treadmill",
     "muscles": ["quadriceps", "cardio"],
-    "measurementType": ["duration", "distance"],
+    "measurementType": ["duration", "distance", "speed"],
     "weightIncrement": 2.5
   },
   {

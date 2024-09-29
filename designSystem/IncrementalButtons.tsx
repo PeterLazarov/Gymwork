@@ -10,6 +10,10 @@ type Props = {
   step?: number
 }
 
+function isInvalidNumber(value?: number) {
+  return [NaN, Infinity, -Infinity, undefined].includes(value)
+}
+
 const IncrementalButtons: React.FC<Props> = ({
   value,
   onChange,
@@ -34,7 +38,9 @@ const IncrementalButtons: React.FC<Props> = ({
       }}
     >
       <TouchableOpacity
-        onPress={() => onChange(value - (step ?? 1))}
+        onPress={() =>
+          onChange(isInvalidNumber(value) ? 0 : value - (step ?? 1))
+        }
         style={btnStyle}
       >
         <Icon
@@ -44,7 +50,9 @@ const IncrementalButtons: React.FC<Props> = ({
       </TouchableOpacity>
       <View style={{ flexGrow: 1, paddingHorizontal: 4 }}>{children}</View>
       <TouchableOpacity
-        onPress={() => onChange(value + (step ?? 1))}
+        onPress={() =>
+          onChange(isInvalidNumber(value) ? 0 : value + (step ?? 1))
+        }
         style={btnStyle}
       >
         <Icon

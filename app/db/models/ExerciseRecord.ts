@@ -46,7 +46,9 @@ export const ExerciseRecordModel = types
       const map: Record<string, WorkoutSet> = {}
 
       self.recordSets.forEach(record => {
-        map[record.groupingValue] = record
+        if (record.groupingValue !== undefined) {
+          map[record.groupingValue] = record
+        }
       })
       return map
     },

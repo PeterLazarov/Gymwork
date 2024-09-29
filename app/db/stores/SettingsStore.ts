@@ -21,6 +21,7 @@ export const SettingsStoreModel = types
     ),
     measureRest: false,
     showCommentsCard: true,
+    previewNextSet: false,
   })
   .actions(withSetPropAction)
   .actions(self => ({

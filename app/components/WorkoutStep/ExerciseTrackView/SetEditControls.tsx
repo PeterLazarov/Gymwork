@@ -32,7 +32,8 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
   const input2 = useRef<TextInput>(null)
   const input3 = useRef<TextInput>(null)
   const input4 = useRef<TextInput>(null)
-  const inputRefs = [input1, input2, input3, input4]
+  const input5 = useRef<TextInput>(null)
+  const inputRefs = [input1, input2, input3, input4, input5]
   const { onHandleSubmit, isLastInput } = manageInputFocus(inputRefs, onSubmit)
   const { settingsStore } = useStores()
 
@@ -42,7 +43,8 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
         <SetEditPanelSection text={translate('rest')}>
           <RestInput
             ref={input0}
-            value={Duration.fromMillis(value.restMs)}
+            value={value.restMs ? Duration.fromMillis(value.restMs) : undefined}
+            onSubmit={() => onHandleSubmit(input0)}
             onChange={rest => value.setRest(rest.as('milliseconds'), 'ms')}
             timer={timer}
           />
@@ -92,11 +94,34 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
       {value.exercise!.hasTimeMeasument && (
         <SetEditPanelSection text={translate('duration')}>
           <DurationInput
-            value={Duration.fromMillis(value.durationMs)}
+            value={
+              value.durationMs
+                ? Duration.fromMillis(value.durationMs)
+                : undefined
+            }
             onUpdate={duration => value.setDuration(duration.toMillis(), 'ms')}
             onSubmitEditing={() => onHandleSubmit(input4)}
             timer={timer}
             ref={input4}
+          />
+        </SetEditPanelSection>
+      )}
+
+      {value.exercise!.measurements.speed && (
+        <SetEditPanelSection text={translate('speed')}>
+          <IncrementNumericEditor
+            value={value.speed}
+            onChange={speed => value.setProp('speedKph', speed)}
+            onSubmit={() => onHandleSubmit(input5)}
+            ref={input5}
+            returnKeyType={isLastInput(input1) ? 'default' : 'next'}
+            maxDecimals={2}
+            label={value.exercise.measurements.speed.unit}
+            placeholder={
+              !value.speed && value.inferredSpeed
+                ? String(value.inferredSpeed.toFixed(2))
+                : undefined
+            }
           />
         </SetEditPanelSection>
       )}

@@ -6,13 +6,13 @@ import SetListItem from './SetListItem'
 import { WorkoutSet, WorkoutStep } from 'app/db/models'
 import { useStores } from 'app/db/helpers/useStores'
 
-export type StepSetsList = {
+export type StepSetsListProps = {
   step: WorkoutStep
   sets: WorkoutSet[]
   hideSupersetLetters?: boolean
 }
 
-const StepSetsList: React.FC<StepSetsList> = ({
+const StepSetsList: React.FC<StepSetsListProps> = ({
   step,
   sets,
   hideSupersetLetters = false,

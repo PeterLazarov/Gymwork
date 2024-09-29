@@ -7,14 +7,14 @@ import { DistanceUnit, measurementUnits } from 'app/db/models'
 import { NumberInput, NumberInputProps } from 'designSystem'
 
 type _Props = {
-  value: number
+  value?: number
   unit: DistanceUnit
   onChange: (selected: number) => void
 }
 export type DistanceEditorProps = _Props & Omit<NumberInputProps, keyof _Props>
 
 const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(
-  ({ value, unit, onChange, ...rest }, ref) => {
+  function DistanceEditor({ value, unit, onChange, ...rest }, ref) {
     const [internalUnit, setInternalUnit] = useState<DistanceUnit>(unit)
 
     const formattedDistance = convert(value).from(unit).to(internalUnit)

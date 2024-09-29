@@ -106,6 +106,8 @@ const en = {
   copyWorkoutAlert: 'Please create at least 1 workout first.',
   useTemplateAlert:
     'Please create at least 1 template first.\nYou can do so by saving a workout as a template.',
+  speed: 'Speed',
+  previewNextSet: 'Preview Next Set',
 }
 
 export default en

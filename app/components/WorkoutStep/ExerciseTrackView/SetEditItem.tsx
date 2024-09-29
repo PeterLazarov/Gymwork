@@ -15,6 +15,7 @@ type Props = {
   isRecord?: boolean
   calcWorkSetNumber: (set: WorkoutSet) => number
   toggleSetWarmup: (set: WorkoutSet) => void
+  draft?: boolean
 } & View['props']
 
 const hideZeroRest = true
@@ -25,6 +26,7 @@ const SetEditItem: React.FC<Props> = ({
   calcWorkSetNumber,
   toggleSetWarmup,
   style,
+  draft,
   ...rest
 }) => {
   const colors = useColors()
@@ -44,6 +46,7 @@ const SetEditItem: React.FC<Props> = ({
           justifyContent: 'space-around',
           paddingHorizontal: 10,
           paddingVertical: 1,
+          backgroundColor: draft ? colors.surfaceContainer : undefined,
         },
         style,
       ]}
@@ -61,7 +64,7 @@ const SetEditItem: React.FC<Props> = ({
         <SetWarmupButton
           isWarmup={set.isWarmup}
           toggleSetWarmup={() => toggleSetWarmup(set)}
-          number={number}
+          number={draft ? '+' : number} // TODO
           color={color}
         />
         {isRecord && (
@@ -85,12 +88,23 @@ const SetEditItem: React.FC<Props> = ({
       )}
       {set.exercise.hasDistanceMeasument && (
         <SetDataLabel
-          value={set.distance}
+          value={set.distance ?? set.inferredDistance?.toFixed(2)}
           unit={set.exercise.measurements.distance!.unit}
         />
       )}
       {set.exercise.hasTimeMeasument && (
-        <SetDataLabel value={getFormatedDuration(set.duration)} />
+        <SetDataLabel
+          value={getFormatedDuration(
+            set.duration ??
+              (set.inferredDuration ? +set.inferredDuration.toFixed(2) : 0)
+          )}
+        />
+      )}
+      {set.exercise.measurements.speed && (
+        <SetDataLabel
+          value={set.speed ?? set.inferredSpeed}
+          unit={set.exercise.measurements.speed!.unit}
+        />
       )}
       {settingsStore.measureRest && (
         <SetDataLabel

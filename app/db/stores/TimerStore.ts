@@ -42,7 +42,13 @@ export const TimerStoreModel = types
       afterAttach() {
         dispose = reaction(
           () => workoutStore.dateWorkoutMap[today.toISODate()]?.exercises,
-          this.updateTimers
+          this.updateTimers,
+          {
+            onError(e) {
+              // TODO check why this happens
+              // [mobx] Encountered an uncaught exception that was thrown by a reaction or observer component, in: 'Reaction[Reaction@7712]' [TypeError: cyclical structure in JSON object]
+            },
+          }
         )
       },
       beforeDestroy() {

@@ -5,8 +5,8 @@ import { TextInput, TextInputProps } from 'react-native-paper'
 import { useColors } from '.'
 
 type _NumberInputProps = {
-  value: number
-  onChange: (value: number) => void
+  value?: number
+  onChange?: (value: number | undefined) => void
   //   onSubmit?: TextInputProps['onSubmitEditing']
   //   returnKeyType?: TextInputProps['returnKeyType']
 
@@ -23,7 +23,7 @@ const defaultMaxDecimals = 2
 const defaultMaxLength = defaultMaxDigits + defaultMaxDecimals + 1
 
 export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
-  (
+  function NumberInput(
     {
       value,
       onChange,
@@ -36,17 +36,26 @@ export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
       ...rest
     },
     ref
-  ) => {
+  ) {
     const colors = useColors()
     const [rendered, setRendered] = useState(String(value) ?? '')
 
     useEffect(() => {
+      if (value === Infinity || value === -Infinity) {
+        setRendered('∞')
+        return
+      }
+
       if (Number(rendered) !== value) {
         setRendered(
-          String(value.toFixed(String(value).includes('.') ? maxDecimals : 0))
+          value !== undefined
+            ? String(
+                value.toFixed(String(value).includes('.') ? maxDecimals : 0)
+              )
+            : ''
         )
       }
-    })
+    }, [value])
 
     return (
       <TextInput
@@ -59,6 +68,11 @@ export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
         underlineStyle={{ borderWidth: 0 }}
         underlineColor={colors.tertiary}
         onChangeText={text => {
+          if (text === '') {
+            setRendered('')
+            onChange?.(undefined)
+            return
+          }
           const asNum = Number(text)
           if (isNaN(asNum)) {
             return
@@ -75,7 +89,7 @@ export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
             )
           setRendered(toFixed)
 
-          onChange(Number(toFixed))
+          onChange?.(Number(toFixed))
         }}
         value={rendered}
       />

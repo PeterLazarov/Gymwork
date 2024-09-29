@@ -120,11 +120,36 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
             />
           </>
         </TouchableOpacity>
-
         <Divider
           variant="neutral"
           orientation="horizontal"
         />
+
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => {
+            settingsStore.setProp(
+              'previewNextSet',
+              !settingsStore.previewNextSet
+            )
+          }}
+        >
+          <>
+            <Text style={styles.itemLabel}>{translate('previewNextSet')}</Text>
+            <ToggleSwitch
+              variant="primary"
+              value={settingsStore.previewNextSet}
+              onValueChange={val =>
+                settingsStore.setProp('previewNextSet', val)
+              }
+            />
+          </>
+        </TouchableOpacity>
+        <Divider
+          variant="neutral"
+          orientation="horizontal"
+        />
+
         <TouchableOpacity
           style={styles.item}
           onPress={onExportData}

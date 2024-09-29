@@ -15,7 +15,7 @@ import { observer } from 'mobx-react-lite'
 import { Timer } from 'app/db/models/Timer'
 
 type Props = {
-  value: Duration
+  value?: Duration
   onUpdate: (duration: Duration) => void
   hideHours?: boolean
   onSubmitEditing?: () => void
@@ -27,7 +27,7 @@ export default observer(
     { value, onUpdate, hideHours, onSubmitEditing, timer },
     ref
   ) {
-    const { hours, minutes, seconds } = value.shiftToAll().toObject()
+    const { hours, minutes, seconds } = value?.shiftToAll().toObject() ?? {}
 
     const _input1 = useRef<TextInputRN>(null)
     const input1 = (ref ?? _input1) as RefObject<TextInputRN>
@@ -53,7 +53,7 @@ export default observer(
       if (!timer) return
 
       if (timer.type !== 'duration') {
-        timer?.setTimeElapsed(value)
+        timer?.setTimeElapsed(value ?? Duration.fromMillis(0))
         timer.setProp('type', 'duration')
       }
 
@@ -85,20 +85,21 @@ export default observer(
         {!hideHours && (
           <>
             <NumberInput
-              value={hours ?? 0}
+              value={hours}
               style={{ textAlign: 'center', flex: 1 }}
               inputMode="numeric"
               multiline={false}
               keyboardType="number-pad"
               onChange={hours => {
-                const updatedDuration = value.shiftToAll().set({ hours })
+                const updatedDuration = (value ?? Duration.fromMillis(0))
+                  .shiftToAll()
+                  .set({ hours: hours ?? 0 })
                 onUpdate(updatedDuration)
                 if (timer?.type === 'duration') {
                   timer?.setTimeElapsed(updatedDuration)
                   timer?.stop()
                 }
               }}
-              placeholder={translate('hours')}
               maxLength={2}
               ref={input1}
               returnKeyType="next"
@@ -110,14 +111,16 @@ export default observer(
           </>
         )}
         <NumberInput
-          value={minutes ?? 0}
+          value={minutes}
           style={{ textAlign: 'center', flex: 1 }}
           inputMode="numeric"
           multiline={false}
           keyboardType="number-pad"
           onChange={minutes => {
-            if (minutes <= 59) {
-              const updatedDuration = value.shiftToAll().set({ minutes })
+            if (!minutes || minutes <= 59) {
+              const updatedDuration = (value ?? Duration.fromMillis(0))
+                .shiftToAll()
+                .set({ minutes: minutes ?? 0 })
               timer?.stop()
               onUpdate(updatedDuration)
               if (timer?.type === 'duration') {
@@ -126,7 +129,6 @@ export default observer(
               }
             }
           }}
-          placeholder={translate('minutes')}
           maxLength={2}
           ref={input2}
           returnKeyType="next"
@@ -136,14 +138,16 @@ export default observer(
         />
         <Text style={{ fontSize: fontSize.xs }}>:</Text>
         <NumberInput
-          value={seconds ?? 0}
+          value={seconds}
           style={{ textAlign: 'center', flex: 1 }}
           inputMode="numeric"
           multiline={false}
           keyboardType="number-pad"
           onChange={seconds => {
-            if (seconds <= 59) {
-              const updatedDuration = value.shiftToAll().set({ seconds })
+            if (!seconds || seconds <= 59) {
+              const updatedDuration = (value ?? Duration.fromMillis(0))
+                .shiftToAll()
+                .set({ seconds: seconds ?? 0 })
               onUpdate(updatedDuration)
               if (timer?.type === 'duration') {
                 timer?.setTimeElapsed(updatedDuration)
@@ -151,7 +155,6 @@ export default observer(
               }
             }
           }}
-          placeholder={translate('seconds')}
           maxLength={2}
           ref={input3}
           onSubmitEditing={() => onHandleSubmit(input3)}

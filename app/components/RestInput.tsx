@@ -10,12 +10,13 @@ import { Timer } from 'app/db/models/Timer'
 
 export type RestInputProps = {
   timer?: Timer
-  value: Duration
+  value?: Duration
   onChange(duration: Duration): void
+  onSubmit?: () => void
 }
 
 const RestInput = forwardRef<TextInput, RestInputProps>(function RestInput(
-  { timer, value, onChange },
+  { timer, value, onChange, onSubmit },
   ref
 ) {
   const colors = useColors()
@@ -44,7 +45,7 @@ const RestInput = forwardRef<TextInput, RestInputProps>(function RestInput(
     if (!timer) return
 
     if (timer.type !== 'rest') {
-      timer?.setTimeElapsed(value)
+      timer?.setTimeElapsed(value ?? Duration.fromMillis(0))
       timer.setProp('type', 'rest')
     }
     timer.resume()
@@ -94,7 +95,7 @@ const RestInput = forwardRef<TextInput, RestInputProps>(function RestInput(
         <NumberInput
           dense
           style={{ flexGrow: 1, textAlign: 'center' }}
-          value={Math.round(value.as('seconds') ?? 0)}
+          value={value ? Math.round(value.as('seconds') ?? 0) : undefined}
           onChange={seconds => {
             const duration = Duration.fromDurationLike({ seconds })
             if (timer?.type === 'rest') {
@@ -104,6 +105,7 @@ const RestInput = forwardRef<TextInput, RestInputProps>(function RestInput(
             onChange(duration)
           }}
           ref={ref}
+          onSubmitEditing={onSubmit}
         />
 
         {timer && (
