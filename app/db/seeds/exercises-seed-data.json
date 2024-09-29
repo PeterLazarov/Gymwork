@@ -2,8 +2,7 @@
   {
     "name": "Threadmill",
     "muscles": ["cardio"],
-    "measurementType": ["duration", "distance"],
-    "isFavorite": true
+    "measurementType": ["duration", "distance"]
   },
   {
     "name": "3/4 Sit-Up",
@@ -267,15 +266,13 @@
     "name": "Barbell Bench Press - Medium Grip",
     "muscles": ["chest"],
     "measurementType": ["reps", "weight", "rest"],
-    "weightIncrement": 2.5,
-    "isFavorite": true
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Curl",
     "muscles": ["biceps"],
     "measurementType": ["reps", "weight", "rest"],
-    "weightIncrement": 2.5,
-    "isFavorite": true
+    "weightIncrement": 2.5
   },
   {
     "name": "Barbell Curls Lying Against An Incline",
@@ -323,7 +320,6 @@
     "name": "Barbell Incline Bench Press - Medium Grip",
     "muscles": ["chest"],
     "weightIncrement": 2.5,
-    "isFavorite": true,
     "measurementType": ["reps", "weight", "rest"]
   },
   {
