@@ -151,7 +151,7 @@ export const WorkoutStepModel = types
     /** Made to work with drag and drop */
     reorderSets(from: number, to: number) {
       const item = step.sets[from]
-      if (!item || step.sets[to]) return
+      if (!item || !step.sets[to]) return
 
       const reorderedSets =
         getSnapshot(step.sets) // @ts-ignore
