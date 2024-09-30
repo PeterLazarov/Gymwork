@@ -52,7 +52,7 @@ const SetEditList: React.FC<Props> = ({
     }: DragListRenderItemInfo<WorkoutSet>) => {
       const isRecord = stepRecords.some(({ guid }) => guid === item.guid)
       const isFocused = selectedSet?.guid === item.guid
-
+      const isDraft = index === sets.length
       return (
         <TouchableOpacity
           style={{
@@ -63,11 +63,17 @@ const SetEditList: React.FC<Props> = ({
               ? colors.surfaceContainerHigh
               : undefined,
           }}
-          onLongPress={onDragStart}
-          onPressOut={onDragEnd}
+          onLongPress={() => {
+            !isDraft && onDragStart()
+          }}
+          onPressOut={() => {
+            !isDraft && onDragEnd()
+          }}
           onPress={e => {
             e.preventDefault()
-            toggleSelectedSet(item)
+            if (!isDraft) {
+              toggleSelectedSet(item)
+            }
           }}
         >
           <View
@@ -91,7 +97,7 @@ const SetEditList: React.FC<Props> = ({
               isRecord={isRecord}
               calcWorkSetNumber={calcWorkSetNumber}
               toggleSetWarmup={toggleSetWarmup}
-              draft={index === sets.length}
+              draft={isDraft}
             />
           </View>
         </TouchableOpacity>
