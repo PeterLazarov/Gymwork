@@ -1,11 +1,12 @@
 import { useStores } from 'app/db/helpers/useStores'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Text } from 'react-native'
 import { clearDriftless, setDriftlessInterval } from 'driftless'
 import { Duration } from 'luxon'
+import { TextProps } from 'react-native'
+import { Text } from 'designSystem'
 
-const WorkoutTimer: React.FC<Text['props']> = props => {
+const WorkoutTimer: React.FC<TextProps> = props => {
   const { stateStore } = useStores()
 
   const workoutStart = useMemo(() => {

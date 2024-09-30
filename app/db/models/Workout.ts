@@ -29,9 +29,9 @@ const discomfort = {
 } as const
 
 export type WorkoutComments = {
-  notes: string,
-  feeling?: typeof feelings[keyof typeof feelings]
-  pain?: typeof discomfort[keyof typeof discomfort]
+  notes: string
+  feeling?: (typeof feelings)[keyof typeof feelings]
+  pain?: (typeof discomfort)[keyof typeof discomfort]
   rpe?: number
 }
 
@@ -45,6 +45,10 @@ export const WorkoutModel = types
     feeling: types.maybe(types.enumeration('feeling', Object.values(feelings))),
     pain: types.maybe(types.enumeration('pain', Object.values(discomfort))),
     rpe: types.maybe(types.number),
+
+    // TODO rename to timerStoppedAt?
+    /** Used for timers */
+    endedAt: types.maybe(types.Date),
   })
   .views(self => ({
     get exercises(): Exercise[] {
@@ -97,7 +101,7 @@ export const WorkoutModel = types
     get lastSet() {
       return this.allSets.at(-1)
     },
-    get inferredHistoricalDuration(): Duration {
+    get inferredHistoricalDuration(): Duration | undefined {
       const firstSet = this.firstSet
       const lastSet = this.lastSet
 
@@ -107,14 +111,14 @@ export const WorkoutModel = types
       if (firstSet && lastSet) {
         return Duration.fromMillis(
           lastSet.createdAt.getTime() -
-            (firstSet.createdAt.getTime() - firstSet.durationMs)
+            (firstSet.createdAt.getTime() - (firstSet.durationMs ?? 0))
         ).plus(padding)
       }
 
-      return Duration.fromMillis(0)
+      return undefined
     },
     get duration(): Duration | null {
-      return this.isToday ? null : this.inferredHistoricalDuration
+      return this.isToday ? null : this.inferredHistoricalDuration ?? null
     },
     get isToday() {
       return self.date === today.toISODate()
@@ -129,9 +133,9 @@ export const WorkoutModel = types
         notes: self.notes,
         feeling: self.feeling,
         pain: self.pain,
-        rpe: self.rpe
+        rpe: self.rpe,
       }
-    }
+    },
   }))
   .actions(withSetPropAction)
   .actions(workout => ({
@@ -164,12 +168,12 @@ export const WorkoutModel = types
 
       return () => recorder.undo()
     },
-    saveComments(comments: WorkoutComments){
+    saveComments(comments: WorkoutComments) {
       workout.notes = comments.notes
       workout.feeling = comments.feeling
       workout.pain = comments.pain
       workout.rpe = comments.rpe
-    }
+    },
   }))
 
 export interface Workout extends Instance<typeof WorkoutModel> {}

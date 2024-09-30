@@ -19,8 +19,9 @@ type Props = {
   open: boolean
   onClose: () => void
   timer: Timer
+  label?: string
 }
-const TimerEditModal: React.FC<Props> = ({ open, onClose, timer }) => {
+const TimerEditModal: React.FC<Props> = ({ open, onClose, timer, label }) => {
   const colors = useColors()
 
   const { setDuration, duration } = timer
@@ -49,7 +50,7 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose, timer }) => {
             padding: 16,
           }}
         >
-          {translate('editRestTimer')}
+          {label ?? translate('editRestTimer')}
         </Text>
         <Divider
           orientation="horizontal"

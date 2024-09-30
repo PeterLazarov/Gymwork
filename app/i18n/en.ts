@@ -108,6 +108,7 @@ const en = {
     'Please create at least 1 template first.\nYou can do so by saving a workout as a template.',
   speed: 'Speed',
   previewNextSet: 'Preview Next Set',
+  workoutDuration: 'Workout Duration',
 }
 
 export default en
