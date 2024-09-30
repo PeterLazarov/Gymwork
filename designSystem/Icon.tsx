@@ -6,8 +6,9 @@ import {
 } from '@expo/vector-icons'
 import { StyleProp, TextStyle } from 'react-native'
 import { useColors } from './tokens'
+import { ReactNode } from 'react'
 
-const iconSizes = {
+export const iconSizes = {
   small: 16,
   default: 25,
   large: 36,
@@ -46,6 +47,7 @@ const IoniconsIcons = [
   'star',
   'flame',
   'list-outline',
+  'stopwatch-outline',
 ] as const satisfies readonly (keyof typeof Ionicons.glyphMap)[]
 type IonicIcon = (typeof IoniconsIcons)[number]
 
@@ -87,6 +89,7 @@ export type IconProps = {
   size?: keyof typeof iconSizes
   color?: string
   style?: StyleProp<TextStyle>
+  children?: ReactNode
 }
 
 export const Icon: React.FC<IconProps> = ({
@@ -94,6 +97,7 @@ export const Icon: React.FC<IconProps> = ({
   size = 'default',
   color: _color,
   style,
+  children,
 }) => {
   const colors = useColors()
   const color = _color ?? colors.onSurface
@@ -106,6 +110,7 @@ export const Icon: React.FC<IconProps> = ({
           size={iconSizes[size]}
           color={color}
           style={style}
+          children={children}
         />
       )}
       {MCIcons.includes(icon) && (
@@ -114,6 +119,7 @@ export const Icon: React.FC<IconProps> = ({
           size={iconSizes[size]}
           color={color}
           style={style}
+          children={children}
         />
       )}
       {EntypoIcons.includes(icon) && (
@@ -122,6 +128,7 @@ export const Icon: React.FC<IconProps> = ({
           size={iconSizes[size]}
           color={color}
           style={style}
+          children={children}
         />
       )}
       {FontAwesome6Icons.includes(icon) && (
@@ -130,6 +137,7 @@ export const Icon: React.FC<IconProps> = ({
           size={iconSizes[size]}
           color={color}
           style={style}
+          children={children}
         />
       )}
     </>

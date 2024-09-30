@@ -22,6 +22,7 @@ export const SettingsStoreModel = types
     measureRest: false,
     showCommentsCard: true,
     previewNextSet: false,
+    showWorkoutTimer: true,
   })
   .actions(withSetPropAction)
   .actions(self => ({

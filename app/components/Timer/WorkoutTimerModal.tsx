@@ -1,5 +1,4 @@
-import { useMemo, useState } from 'react'
-import { TouchableOpacity, View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import { Portal, Modal } from 'react-native-paper'
 
 import {
@@ -10,7 +9,6 @@ import {
   DurationInput,
   useColors,
   fontSize,
-  ToggleSwitch,
 } from 'designSystem'
 import { translate } from 'app/i18n'
 import { observer } from 'mobx-react-lite'
@@ -30,20 +28,14 @@ const WorkoutTimerModal: React.FC<WorkoutTimerModalProps> = ({
   open,
   onClose,
   timer,
-  label,
 }) => {
-  const { settingsStore, navStore, timerStore } = useStores()
+  const { timerStore, stateStore } = useStores()
 
   const colors = useColors()
-  const styles = useMemo(() => makeStyles(colors), [colors])
 
-  const { setDuration, duration } = timer
-  const [preferredDuration, setPreferredDuration] = useState(duration)
-
-  function onConfirm() {
-    setDuration(preferredDuration)
-    onClose()
-  }
+  const {
+    timerStore: { workoutTimer },
+  } = useStores()
 
   return (
     <Portal>
@@ -63,15 +55,29 @@ const WorkoutTimerModal: React.FC<WorkoutTimerModalProps> = ({
             padding: 16,
           }}
         >
-          {'Workout Timer TODO'}
+          {'Workout Duration'}
         </Text>
         <Divider
           orientation="horizontal"
           variant="primary"
         />
-        {/*  */}
 
         <View style={{ flexGrow: 1, padding: 8 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            {/* TODO? onFocus pause updates for easy edit */}
+            <DurationInput
+              value={workoutTimer.timeElapsed}
+              onUpdate={time => {
+                workoutTimer.setTimeElapsed(time)
+              }}
+            />
+          </View>
+
           <SettingsToggledItem
             enabled={timerStore.workoutTimerStartOnFirstSet}
             onToggle={() =>
@@ -95,45 +101,50 @@ const WorkoutTimerModal: React.FC<WorkoutTimerModalProps> = ({
               )
             }
           >
-            Snap workout end to last set
+            End workout X min after last set
           </SettingsToggledItem>
         </View>
 
-        {/*  */}
         <View style={{ flexDirection: 'row' }}>
+          {timer.isRunning ? (
+            <Button
+              variant="tertiary"
+              style={{ flex: 1 }}
+              onPress={() => {
+                // TODO revisit for historical workouts
+                timer.stop()
+                if (stateStore.openedWorkout) {
+                  stateStore.openedWorkout.setProp('endedAt', new Date())
+                }
+              }}
+            >
+              <ButtonText variant="tertiary">
+                {translate('stopTimer')}
+              </ButtonText>
+            </Button>
+          ) : (
+            <Button
+              variant="tertiary"
+              style={{ flex: 1 }}
+              onPress={timer.resume}
+            >
+              <ButtonText variant="tertiary">
+                {translate('startTimer')}
+              </ButtonText>
+            </Button>
+          )}
+
           <Button
             variant="tertiary"
             style={{ flex: 1 }}
             onPress={onClose}
           >
-            <ButtonText variant="tertiary">{translate('cancel')}</ButtonText>
-          </Button>
-          <Button
-            variant="tertiary"
-            style={{ flex: 1 }}
-            onPress={onConfirm}
-          >
-            <ButtonText variant="tertiary">{translate('confirm')}</ButtonText>
+            <ButtonText variant="tertiary">{translate('close')}</ButtonText>
           </Button>
         </View>
       </Modal>
     </Portal>
   )
 }
-
-const makeStyles = (colors: any) =>
-  StyleSheet.create({
-    item: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      height: 64,
-      padding: 12,
-      gap: 10,
-    },
-    itemLabel: {
-      color: colors.onSurface,
-    },
-  })
 
 export default observer(WorkoutTimerModal)

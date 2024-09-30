@@ -7,7 +7,6 @@ import WorkoutStepList from './WorkoutStepList'
 import WorkoutEmptyState from './WorkoutEmptyState'
 import WorkoutCommentsCard from './WorkoutCommentsCard'
 import { useColors } from 'designSystem'
-import TimerRevived from '../TimerRevived'
 
 type Props = {
   date: string
@@ -26,12 +25,6 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
     <View style={{ flex: 1, backgroundColor: colors.surfaceContainer }}>
       {workout && workout.steps.length > 0 ? (
         <>
-          <View
-          // style={{ backgroundColor: 'red' }}
-          >
-            <TimerRevived />
-          </View>
-
           {settingsStore.showCommentsCard && workout.hasComments && (
             <WorkoutCommentsCard
               workout={workout}

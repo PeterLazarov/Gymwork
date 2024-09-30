@@ -17,6 +17,7 @@ import { translate } from 'app/i18n'
 import { useStores } from 'app/db/helpers/useStores'
 import { useExport } from 'app/utils/useExport'
 import { useDialogContext } from 'app/contexts/DialogContext'
+import SettingsToggledItem from 'app/components/SettingsToggleItem'
 export type SettingsScreenProps = StackScreenProps<'Settings'>
 
 const appearanceOptions = [
@@ -149,6 +150,18 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
           variant="neutral"
           orientation="horizontal"
         />
+
+        <SettingsToggledItem
+          enabled={settingsStore.showWorkoutTimer}
+          onToggle={() =>
+            settingsStore.setProp(
+              'showWorkoutTimer',
+              !settingsStore.showWorkoutTimer
+            )
+          }
+        >
+          Show Workout Timer
+        </SettingsToggledItem>
 
         <TouchableOpacity
           style={styles.item}

@@ -8,6 +8,8 @@ import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, useColors } from 'designSystem'
 import HomeMenuItems from '../HomeMenuItems'
 import { formatDate } from 'app/utils/date'
+import MiniTimer from '../MiniTimer'
+import WorkoutTimerModal from '../Timer/WorkoutTimerModal'
 
 const WorkoutHeader: React.FC = () => {
   const colors = useColors()
@@ -17,6 +19,7 @@ const WorkoutHeader: React.FC = () => {
     settingsStore,
     workoutStore,
     navStore: { navigate },
+    timerStore,
   } = useStores()
   const { openedWorkout } = stateStore
   const { showCommentsCard } = settingsStore
@@ -45,10 +48,27 @@ const WorkoutHeader: React.FC = () => {
     workoutStore.removeWorkout(openedWorkout!)
   }
 
+  const [showWorkoutTimerModal, setShowWorkoutTimerModal] = useState(false)
+
   return (
     <Header>
       <Header.Title title={dateLabel} />
-      {/* <WorkoutTimer style={{ color: colors.onPrimary }} /> */}
+
+      {settingsStore.showWorkoutTimer && (
+        <>
+          <MiniTimer
+            // TODO change 'n' so that past workouts show a time
+            n={Math.floor(timerStore.workoutTimer.timeElapsed.as('minutes'))}
+            onPress={() => setShowWorkoutTimerModal(true)}
+          />
+
+          <WorkoutTimerModal
+            open={showWorkoutTimerModal}
+            onClose={() => setShowWorkoutTimerModal(false)}
+            timer={timerStore.workoutTimer}
+          ></WorkoutTimerModal>
+        </>
+      )}
 
       <IconButton
         onPress={openCalendar}

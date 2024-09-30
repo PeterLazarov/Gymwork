@@ -109,6 +109,9 @@ const en = {
   speed: 'Speed',
   previewNextSet: 'Preview Next Set',
   workoutDuration: 'Workout Duration',
+  close: 'Close',
+  stopTimer: 'Stop Timer',
+  startTimer: 'Start Timer',
 }
 
 export default en
