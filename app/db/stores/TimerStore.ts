@@ -3,13 +3,12 @@ import { types, Instance, SnapshotOut, getParent } from 'mobx-state-tree'
 import { TimerModel } from '../models/Timer'
 import { RootStore } from './RootStore'
 import { reaction } from 'mobx'
-import { DateTime, Duration } from 'luxon'
+import { Duration } from 'luxon'
 import { difference } from 'lodash'
 import { Exercise } from '../models'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 import convert from 'convert-units'
 
-const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
 const defaultDelay = convert(30).from('min').to('ms')
 
 // Store to handle the timer context and stateStore interaction
@@ -19,20 +18,16 @@ export const TimerStoreModel = types
       workout: TimerModel.create({ id: 'workout' }),
     }),
 
-    // TODO utilize settings
+    workoutTimer: types.optional(TimerModel, { id: 'workout' }),
+
     workoutTimerStartOnFirstSet: true,
     workoutTimerEndWorkoutDelayMs: defaultDelay,
     workoutTimerSnapEndToLastSet: true,
   })
-  .views(self => ({
-    get workoutTimer() {
-      return self.timers.get('workout')!
-    },
-  }))
-  // TODO replace this with superset support
+
   .actions(self => {
     const rootStore = getParent(self) as RootStore
-    const { workoutStore, stateStore } = rootStore
+    const { stateStore } = rootStore
 
     let dispose: Function[] = []
 
@@ -68,34 +63,33 @@ export const TimerStoreModel = types
       }
     }
 
-    function setExerciseTimers(exercises: Exercise[] = []) {
-      const currentTimers = [...self.timers.keys()]
-      const exerciseIds = exercises.map(({ guid }) => guid)
-
-      difference(currentTimers, exerciseIds).forEach(id => {
-        self.timers.delete(`timer_${id}`)
-      })
-
-      difference(exerciseIds, currentTimers).forEach(id => {
-        self.timers.put({ id: `timer_${id}` })
-      })
-    }
-
     return {
       initialize() {
-        setExerciseTimers(
-          workoutStore.dateWorkoutMap[today.toISODate()]?.exercises
-        )
+        this.setExerciseTimers(stateStore.openedWorkout?.exercises)
         startStopOrUpdateWorkoutTimer(stateStore.openedWorkout?.isToday)
       },
 
+      // An action so that it can modify props
+      setExerciseTimers(exercises: Exercise[] = []) {
+        const currentTimers = [...self.timers.keys()]
+        const exerciseIds = exercises.map(({ guid }) => guid)
+        const exerciseTimerIds = exerciseIds.map(id => `timer_${id}`)
+
+        difference(currentTimers, exerciseTimerIds).forEach(id => {
+          self.timers.delete(id)
+        })
+
+        difference(exerciseTimerIds, currentTimers).forEach(id => {
+          self.timers.put({ id })
+        })
+      },
       afterAttach() {
         dispose = [
           reaction(
-            () => workoutStore.dateWorkoutMap[today.toISODate()]?.exercises,
-            setExerciseTimers,
+            () => stateStore.openedWorkout?.exercises,
+            this.setExerciseTimers,
             {
-              onError(e) {
+              onError() {
                 // TODO check why this happens
                 // [mobx] Encountered an uncaught exception that was thrown by a reaction or observer component, in: 'Reaction[Reaction@7712]' [TypeError: cyclical structure in JSON object]
               },
@@ -124,7 +118,7 @@ export const TimerStoreModel = types
 
           // on delay, end workout, snapping to last set
           reaction(
-            () => self.workoutTimer.timeElapsedMillis,
+            () => self.workoutTimer?.timeElapsedMillis,
             elapsed => {
               const w = stateStore.openedWorkout
 

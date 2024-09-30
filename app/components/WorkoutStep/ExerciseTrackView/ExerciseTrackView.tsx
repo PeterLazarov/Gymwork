@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { getSnapshot } from 'mobx-state-tree'
 import { View } from 'react-native'
 
@@ -31,7 +31,12 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   const { stateStore, settingsStore, workoutStore } = useStores()
 
   const { timerStore } = useStores()
-  const timer = timerStore.timers.get(`timer_${focusedExercise.guid}`)
+  const timer = useMemo(() => {
+    return stateStore.openedWorkout?.isToday
+      ? timerStore.timers.get(`timer_${focusedExercise.guid}`)
+      : undefined
+  }, [focusedExercise, timerStore.timers.size])
+
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
   useEffect(() => {
