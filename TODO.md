@@ -40,6 +40,7 @@
 * Consider switching to a single Date library (remove date-fns)
 * Timer minutes inside icon (compact design)
   - Icon idea https://www.kindpng.com/picc/m/60-604132_transparent-clock-symbol-png-timer-icon-svg-png.png
+* Handle 2-a-day workouts
 
 Performance to beat -
 100 workouts
