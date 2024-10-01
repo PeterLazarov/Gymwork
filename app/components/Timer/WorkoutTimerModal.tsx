@@ -14,7 +14,7 @@ import { translate } from 'app/i18n'
 import { observer } from 'mobx-react-lite'
 import { Timer } from 'app/db/models/Timer'
 import { useStores } from 'app/db/helpers/useStores'
-import SettingsToggledItem from '../SettingsToggleItem'
+import SettingsToggleItem from '../SettingsToggleItem'
 
 export type WorkoutTimerModalProps = {
   open: boolean
@@ -79,7 +79,7 @@ const WorkoutTimerModal: React.FC<WorkoutTimerModalProps> = ({
             />
           </View>
 
-          <SettingsToggledItem
+          {/* <SettingsToggleItem
             enabled={timerStore.workoutTimerStartOnFirstSet}
             onToggle={() =>
               timerStore.setProp(
@@ -89,11 +89,11 @@ const WorkoutTimerModal: React.FC<WorkoutTimerModalProps> = ({
             }
           >
             Start timer on first set
-          </SettingsToggledItem>
+          </SettingsToggleItem> */}
 
           {/* TODO add workoutTimerEndWorkoutDelayMs config */}
-
-          <SettingsToggledItem
+          {/* 
+          <SettingsToggleItem
             enabled={timerStore.workoutTimerSnapEndToLastSet}
             onToggle={() =>
               timerStore.setProp(
@@ -103,7 +103,7 @@ const WorkoutTimerModal: React.FC<WorkoutTimerModalProps> = ({
             }
           >
             End workout X min after last set
-          </SettingsToggledItem>
+          </SettingsToggleItem> */}
         </View>
 
         <View style={{ flexDirection: 'row' }}>

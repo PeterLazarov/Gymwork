@@ -1,6 +1,6 @@
 import { ToggleSwitch, useColors, Text } from 'designSystem'
 import { useMemo } from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { TouchableOpacity, StyleSheet } from 'react-native'
 
 export type SettingsToggledItemProps = {
   enabled: boolean
@@ -9,7 +9,7 @@ export type SettingsToggledItemProps = {
 }
 
 // TODO utilize in settings screen
-export default function SettingsToggledItem({
+export default function SettingsToggleItem({
   enabled,
   onToggle,
   children,
