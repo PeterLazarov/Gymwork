@@ -14,9 +14,7 @@ const defaultDelay = convert(30).from('min').to('ms')
 // Store to handle the timer context and stateStore interaction
 export const TimerStoreModel = types
   .model('TimerStore', {
-    exerciseTimers: types.optional(types.map(TimerModel), {
-      workout: TimerModel.create({ id: 'workout' }),
-    }),
+    exerciseTimers: types.optional(types.map(TimerModel), {}),
 
     workoutTimer: types.optional(TimerModel, { id: 'workout' }),
 
