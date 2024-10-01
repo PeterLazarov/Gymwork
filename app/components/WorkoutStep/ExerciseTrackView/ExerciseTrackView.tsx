@@ -33,9 +33,9 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   const { timerStore } = useStores()
   const timer = useMemo(() => {
     return stateStore.openedWorkout?.isToday
-      ? timerStore.timers.get(`timer_${focusedExercise.guid}`)
+      ? timerStore.exerciseTimers.get(`timer_${focusedExercise.guid}`)
       : undefined
-  }, [focusedExercise, timerStore.timers.size])
+  }, [focusedExercise, timerStore.exerciseTimers.size])
 
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 

@@ -14,7 +14,7 @@ const defaultDelay = convert(30).from('min').to('ms')
 // Store to handle the timer context and stateStore interaction
 export const TimerStoreModel = types
   .model('TimerStore', {
-    timers: types.optional(types.map(TimerModel), {
+    exerciseTimers: types.optional(types.map(TimerModel), {
       workout: TimerModel.create({ id: 'workout' }),
     }),
 
@@ -71,16 +71,16 @@ export const TimerStoreModel = types
 
       // An action so that it can modify props
       setExerciseTimers(exercises: Exercise[] = []) {
-        const currentTimers = [...self.timers.keys()]
+        const currentTimers = [...self.exerciseTimers.keys()]
         const exerciseIds = exercises.map(({ guid }) => guid)
         const exerciseTimerIds = exerciseIds.map(id => `timer_${id}`)
 
         difference(currentTimers, exerciseTimerIds).forEach(id => {
-          self.timers.delete(id)
+          self.exerciseTimers.delete(id)
         })
 
         difference(exerciseTimerIds, currentTimers).forEach(id => {
-          self.timers.put({ id })
+          self.exerciseTimers.put({ id })
         })
       },
       afterAttach() {

@@ -6,7 +6,7 @@ export type MiniTimerProps = {
   onPress?(): void
 }
 
-export default function MiniTimer({ n = 99, onPress }: MiniTimerProps) {
+export default function MiniTimer({ n, onPress }: MiniTimerProps) {
   const colors = useColors()
   const scheme = useColorScheme()
 
