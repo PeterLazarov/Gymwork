@@ -101,15 +101,17 @@ export const TimerStoreModel = types
 
           // On adding set, unEnd workout
           reaction(
-            () => stateStore.openedWorkout,
-            w => {
+            () => stateStore.openedWorkout?.allSets,
+            () => {
+              const workout = stateStore.openedWorkout
               if (
-                w?.isToday &&
-                w.lastSet &&
-                w.endedAt &&
-                w.endedAt?.getTime() < (w.lastSet?.createdAt.getTime() ?? 0)
+                workout?.isToday &&
+                workout.lastSet &&
+                workout.endedAt &&
+                workout.endedAt?.getTime() <
+                  (workout.lastSet?.createdAt.getTime() ?? 0)
               ) {
-                w.setProp('endedAt', undefined)
+                workout.setProp('endedAt', undefined)
               }
             }
           ),
