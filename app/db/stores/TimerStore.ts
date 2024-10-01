@@ -9,6 +9,7 @@ import { Exercise } from '../models'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 import convert from 'convert-units'
 
+// TODO dedupe
 const defaultDelay = convert(30).from('min').to('ms')
 
 // Store to handle the timer context and stateStore interaction
@@ -33,13 +34,21 @@ export const TimerStoreModel = types
     function startStopOrUpdateWorkoutTimer(isToday: boolean | undefined) {
       const workout = stateStore.openedWorkout
 
-      if (!workout || !isToday) {
+      if (!workout) {
         self.workoutTimer.stop()
         self.workoutTimer.clear()
         return
       }
 
-      const workoutStart = workout.firstSet?.createdAt
+      if (!isToday) {
+        self.workoutTimer.setTimeElapsed(
+          workout.duration ?? Duration.fromMillis(0)
+        )
+        self.workoutTimer.stop()
+        return
+      }
+
+      const workoutStart = workout.firstAddedSet?.createdAt
       const workoutEnd = workout.endedAt
 
       if (!workoutStart) {
@@ -106,10 +115,10 @@ export const TimerStoreModel = types
               const workout = stateStore.openedWorkout
               if (
                 workout?.isToday &&
-                workout.lastSet &&
+                workout.lastAddedSet &&
                 workout.endedAt &&
                 workout.endedAt?.getTime() <
-                  (workout.lastSet?.createdAt.getTime() ?? 0)
+                  (workout.lastAddedSet?.createdAt.getTime() ?? 0)
               ) {
                 workout.setProp('endedAt', undefined)
               }
@@ -125,8 +134,8 @@ export const TimerStoreModel = types
               if (!w?.isToday) return
               if (w?.endedAt) return
 
-              const createdAt = w.firstSet?.createdAt?.getTime()
-              const lastSetCreatedAt = w.lastSet?.createdAt?.getTime()
+              const createdAt = w.firstAddedSet?.createdAt?.getTime()
+              const lastSetCreatedAt = w.lastAddedSet?.createdAt?.getTime()
 
               if (
                 createdAt &&

@@ -73,6 +73,7 @@ const WorkoutTimerModal: React.FC<WorkoutTimerModalProps> = ({
             <DurationInput
               value={workoutTimer.timeElapsed}
               onUpdate={time => {
+                stateStore.openedWorkout?.setProp('durationMs', time.toMillis())
                 workoutTimer.setTimeElapsed(time)
               }}
             />

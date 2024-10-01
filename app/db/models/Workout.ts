@@ -14,8 +14,11 @@ import { withSetPropAction } from '../helpers/withSetPropAction'
 import { DateTime, Duration } from 'luxon'
 import { WorkoutStep, WorkoutStepModel } from './WorkoutStep'
 import { WorkoutSet } from './WorkoutSet'
+import convert from 'convert-units'
 
 const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
+// TODO dedupe
+const defaultDelay = convert(30).from('min').to('ms')
 
 const feelings = {
   sad: 'sad',
@@ -49,6 +52,8 @@ export const WorkoutModel = types
     // TODO rename to timerStoppedAt?
     /** Used for timers */
     endedAt: types.maybe(types.Date),
+    // Manually set by the timer
+    durationMs: types.maybe(types.number),
   })
   .views(self => ({
     get exercises(): Exercise[] {
@@ -95,30 +100,41 @@ export const WorkoutModel = types
     get allSets() {
       return self.steps.flatMap<WorkoutSet>(step => step.sets)
     },
-    get firstSet() {
+    /** Set added first */
+    get firstAddedSet() {
       return this.allSets[0]
     },
-    get lastSet() {
+    /** Set added last */
+    get lastAddedSet() {
       return this.allSets.at(-1)
     },
     get inferredHistoricalDuration(): Duration | undefined {
-      const firstSet = this.firstSet
-      const lastSet = this.lastSet
+      // TODO do we need this???
+      console.log({ endedAt: self.endedAt })
+      if (!self.endedAt) return undefined
+
+      const setsAddedAtDayOfWorkout = this.allSets
+        .filter(set => set.date === self.date)
+        // Sorted because reordering sets could otherwise mess things up
+        .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+
+      const firstSet = setsAddedAtDayOfWorkout[0]
+      const lastSet = setsAddedAtDayOfWorkout.at(-1)
+
+      if (!firstSet || !lastSet) return undefined
 
       // Your first set takes time
       const padding = Duration.fromDurationLike({ minutes: 1 })
 
-      if (firstSet && lastSet) {
-        return Duration.fromMillis(
-          lastSet.createdAt.getTime() -
-            (firstSet.createdAt.getTime() - (firstSet.durationMs ?? 0))
-        ).plus(padding)
-      }
-
-      return undefined
+      return Duration.fromMillis(
+        lastSet.createdAt.getTime() -
+          (firstSet.createdAt.getTime() - (firstSet.durationMs ?? 0))
+      ).plus(padding)
     },
-    get duration(): Duration | null {
-      return this.isToday ? null : this.inferredHistoricalDuration ?? null
+    // TODO do we need this?
+    get duration(): Duration | undefined {
+      if (self.durationMs) return Duration.fromMillis(self.durationMs)
+      return this.inferredHistoricalDuration
     },
     get isToday() {
       return self.date === today.toISODate()
@@ -173,6 +189,17 @@ export const WorkoutModel = types
       workout.feeling = comments.feeling
       workout.pain = comments.pain
       workout.rpe = comments.rpe
+    },
+    afterCreate() {
+      // End workout if over 30m have passed since last set
+      const lastSetCreatedAt = workout.lastAddedSet?.createdAt
+      if (
+        !workout.endedAt &&
+        lastSetCreatedAt &&
+        Date.now() - lastSetCreatedAt.getTime() > defaultDelay
+      ) {
+        workout.endedAt = lastSetCreatedAt
+      }
     },
   }))
 
