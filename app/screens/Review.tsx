@@ -18,7 +18,7 @@ import ExerciseRecordReview from 'app/components/Review/ExerciseRecordReview'
 import { translate } from 'app/i18n'
 import ExerciseView from 'app/components/ExerciseHistoryChart/ExerciseView'
 import HomeMenuItems from 'app/components/HomeMenuItems'
-import CommentsReview from 'app/components/Review/CommentsReview'
+import WorkoutsReview from 'app/components/Review/WorkoutsReview'
 import MenuContainer from 'app/components/MenuContainer'
 
 const ReviewScreen: React.FC = () => {
@@ -38,8 +38,8 @@ const ReviewScreen: React.FC = () => {
 
   const tabsConfig: TabConfig[] = [
     {
-      name: 'Comments',
-      Component: CommentsReview,
+      name: 'Workouts',
+      Component: WorkoutsReview,
     },
     {
       name: 'Chart',

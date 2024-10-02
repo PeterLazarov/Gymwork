@@ -38,7 +38,8 @@ const WorkoutBottomControls = () => {
           />
           <Text style={{ color: colors.secondary }}>
             {formatDate(
-              DateTime.fromISO(stateStore.openedDate).minus({ day: 1 })
+              DateTime.fromISO(stateStore.openedDate).minus({ day: 1 }),
+              'short'
             )}
           </Text>
         </View>
@@ -56,7 +57,8 @@ const WorkoutBottomControls = () => {
         <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
           <Text style={{ color: colors.secondary }}>
             {formatDate(
-              DateTime.fromISO(stateStore.openedDate).plus({ day: 1 })
+              DateTime.fromISO(stateStore.openedDate).plus({ day: 1 }),
+              'short'
             )}
           </Text>
           <Icon

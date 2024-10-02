@@ -6,7 +6,7 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { Exercise, Workout, discomfortOptions } from 'app/db/models'
-import CommentReviewListItem from './CommentReviewListItem'
+import WorkoutReviewListItem from './WorkoutReviewListItem'
 import WorkoutModal from 'app/components/WorkoutModal'
 import { Divider, FeedbackPickerOption } from 'designSystem'
 
@@ -14,22 +14,20 @@ type Props = {
   exercise?: Exercise
 }
 
-const CommentsReview: React.FC<Props> = props => {
+const WorkoutsReview: React.FC<Props> = props => {
   const { workoutStore } = useStores()
 
   const [filterDiscomforedLevels, setFilterDiscomforedLevels] = useState<
     string[]
   >([])
-  const commentedWorkouts = useMemo(
-    () =>
-      workoutStore.workouts.filter(
-        w =>
-          w.hasComments &&
-          (filterDiscomforedLevels.length === 0 ||
-            (w.pain && filterDiscomforedLevels.includes(w.pain)))
-      ),
-    [workoutStore.workouts, filterDiscomforedLevels]
-  )
+  const commentedWorkouts = useMemo(() => {
+    return workoutStore.sortedReverseWorkouts.filter(
+      w =>
+        w.hasComments &&
+        (filterDiscomforedLevels.length === 0 ||
+          (w.pain && filterDiscomforedLevels.includes(w.pain)))
+    )
+  }, [workoutStore.workouts, filterDiscomforedLevels])
 
   const [openedWorkout, setOpenedWorkout] = useState<Workout | undefined>()
 
@@ -64,7 +62,7 @@ const CommentsReview: React.FC<Props> = props => {
             {commentedWorkouts.map((workout, index) => {
               return (
                 <Fragment key={workout.guid}>
-                  <CommentReviewListItem
+                  <WorkoutReviewListItem
                     workout={workout}
                     onPress={() => setOpenedWorkout(workout)}
                   />
@@ -110,4 +108,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default observer(CommentsReview)
+export default observer(WorkoutsReview)

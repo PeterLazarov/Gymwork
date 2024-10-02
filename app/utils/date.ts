@@ -17,13 +17,23 @@ export const getDateRange = (from: string, to: string) => {
   return result
 }
 
-export const formatDate = (date: DateTime, format = 'MMM dd') => {
+const dateFormats = {
+  short: 'MMM dd',
+  long: 'ccc, MMM dd, yyyy'
+}
+
+export const formatDateIso = (dateIso: string, format: keyof typeof dateFormats) => {
+  const date = DateTime.fromISO(dateIso)
+
+  return formatDate(date, format)
+}
+export const formatDate = (date: DateTime, format: keyof typeof dateFormats) => {
   const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
   const todayDiff = Math.round(date.diff(today, 'days').days)
   const dateLabel =
     Math.abs(todayDiff) < 2
       ? capitalize(date.toRelativeCalendar({ unit: 'days' })!)
-      : date.toFormat(format)
+      : date.toFormat(dateFormats[format])
 
   return dateLabel
 }

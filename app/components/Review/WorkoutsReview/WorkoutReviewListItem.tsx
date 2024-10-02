@@ -5,19 +5,20 @@ import { Workout } from 'app/db/models'
 import { TouchableOpacity } from 'react-native'
 import { Text } from 'designSystem'
 import WorkoutCommentsCard from 'app/components/Workout/WorkoutCommentsCard'
+import { formatDateIso } from 'app/utils/date'
 
 type Props = {
   workout: Workout
   onPress: () => void
 }
 
-const CommentReviewListItem: React.FC<Props> = ({ workout, onPress }) => {
+const WorkoutReviewListItem: React.FC<Props> = ({ workout, onPress }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={styles.item}
     >
-      <Text style={styles.text}>{workout.date}</Text>
+      <Text style={styles.text}>{formatDateIso(workout.date, 'long')}</Text>
       <WorkoutCommentsCard
         onPress={onPress}
         workout={workout}
@@ -39,4 +40,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CommentReviewListItem
+export default WorkoutReviewListItem
