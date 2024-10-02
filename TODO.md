@@ -28,8 +28,6 @@
   - ExerciseSelect - Optimise initial render
   - Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
 * Split screen over half is makes UI a mess
-* UserFeedback -> Keyboard hides feedback save button
-* keyboard avoiding view pushes the content over the header if th einput is on the bottom of screen
 * grouping / measurement by rest
 * Review button styles. Especially primary + disabled
 * Standardize background usage (different screens currently use different background colors for some reason)
