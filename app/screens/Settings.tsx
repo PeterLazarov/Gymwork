@@ -8,7 +8,6 @@ import {
   IconButton,
   Select,
   Text,
-  ToggleSwitch,
   useColors,
 } from 'designSystem'
 import { observer } from 'mobx-react-lite'
@@ -79,73 +78,49 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
           orientation="horizontal"
         />
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
+        <SettingsToggleItem
+          enabled={settingsStore.measureRest}
+          onToggle={() =>
             settingsStore.setMeasureRest(!settingsStore.measureRest)
-          }}
+          }
         >
-          <>
-            <Text style={styles.itemLabel}>{translate('measureRest')}</Text>
-            <ToggleSwitch
-              variant="primary"
-              value={settingsStore.measureRest}
-              onValueChange={settingsStore.setMeasureRest}
-            />
-          </>
-        </TouchableOpacity>
+          {translate('measureRest')}
+        </SettingsToggleItem>
+
         <Divider
           variant="neutral"
           orientation="horizontal"
         />
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
+        <SettingsToggleItem
+          enabled={settingsStore.showCommentsCard}
+          onToggle={() =>
             settingsStore.setProp(
               'showCommentsCard',
               !settingsStore.showCommentsCard
             )
-          }}
+          }
         >
-          <>
-            <Text style={styles.itemLabel}>
-              {translate('showCommentsCard')}
-            </Text>
-            <ToggleSwitch
-              variant="primary"
-              value={settingsStore.showCommentsCard}
-              onValueChange={val =>
-                settingsStore.setProp('showCommentsCard', val)
-              }
-            />
-          </>
-        </TouchableOpacity>
+          {translate('showCommentsCard')}
+        </SettingsToggleItem>
+
         <Divider
           variant="neutral"
           orientation="horizontal"
         />
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={() => {
+        <SettingsToggleItem
+          enabled={settingsStore.previewNextSet}
+          onToggle={() =>
             settingsStore.setProp(
               'previewNextSet',
               !settingsStore.previewNextSet
             )
-          }}
+          }
         >
-          <>
-            <Text style={styles.itemLabel}>{translate('previewNextSet')}</Text>
-            <ToggleSwitch
-              variant="primary"
-              value={settingsStore.previewNextSet}
-              onValueChange={val =>
-                settingsStore.setProp('previewNextSet', val)
-              }
-            />
-          </>
-        </TouchableOpacity>
+          {translate('previewNextSet')}
+        </SettingsToggleItem>
+
         <Divider
           variant="neutral"
           orientation="horizontal"
@@ -162,6 +137,11 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
         >
           Show Workout Timer
         </SettingsToggleItem>
+
+        <Divider
+          variant="neutral"
+          orientation="horizontal"
+        />
 
         <TouchableOpacity
           style={styles.item}
