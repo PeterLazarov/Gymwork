@@ -21,8 +21,6 @@
   - Make UI more clear if user is editting on a different day from today
 * optimisation
   - optimize useColors
-  - TrackView - fix whole form rerender for timer - KeyboardAvoiderView context is triggering. why??
-  - TrackView - improve double rerendering
   - Review - Optimise render of history tab
   - Review - Optimise render of chart
   - ExerciseSelect - Optimise initial render
