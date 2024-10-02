@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useRef } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { BackHandler, TouchableOpacity } from 'react-native'
 import { Portal } from 'react-native-paper'
 import BottomSheet from '@gorhom/bottom-sheet'
 
@@ -29,6 +29,21 @@ const BottomDrawer: React.FC<Props> = ({
     sheetRef.current?.close()
     onCollapse()
   }
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        if (visible) {
+          collapse()
+          return true
+        }
+      }
+    )
+
+    return () => backHandler.remove()
+  }, [visible])
+
   return (
     <Portal>
       <BottomSheet
