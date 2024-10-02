@@ -132,6 +132,7 @@ export const WorkoutStoreModel = types
           type,
           exercises: exercises.map(e => e.guid),
           sets: [],
+          notes: template.name
         })
       )
       const created = WorkoutModel.create({
