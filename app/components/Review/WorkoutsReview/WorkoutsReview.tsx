@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
-import React, { Fragment, useMemo, useState } from 'react'
-import { StyleSheet, View, ScrollView } from 'react-native'
+import React, { useMemo, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
 
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
@@ -8,7 +8,12 @@ import { translate } from 'app/i18n'
 import { Workout, discomfortOptions } from 'app/db/models'
 import WorkoutReviewListItem from './WorkoutReviewListItem'
 import WorkoutModal from 'app/components/WorkoutModal'
-import { Divider, FeedbackPickerOption } from 'designSystem'
+import {
+  Divider,
+  FeedbackPickerOption,
+  IndicatedScrollList,
+} from 'designSystem'
+import { ListRenderItemInfo } from '@shopify/flash-list'
 
 const WorkoutsReview: React.FC = () => {
   const { workoutStore } = useStores()
@@ -37,6 +42,21 @@ const WorkoutsReview: React.FC = () => {
     }
   }
 
+  const renderItem = ({ item }: ListRenderItemInfo<Workout>) => {
+    return (
+      <>
+        <WorkoutReviewListItem
+          workout={item}
+          onPress={() => setOpenedWorkout(item)}
+        />
+        <Divider
+          orientation="horizontal"
+          variant="neutral"
+        />
+      </>
+    )
+  }
+
   return (
     <>
       <View style={styles.screen}>
@@ -53,22 +73,12 @@ const WorkoutsReview: React.FC = () => {
           ))}
         </View>
         {filteredWorkouts.length > 0 ? (
-          <ScrollView style={styles.list}>
-            {filteredWorkouts.map(workout => {
-              return (
-                <Fragment key={workout.guid}>
-                  <WorkoutReviewListItem
-                    workout={workout}
-                    onPress={() => setOpenedWorkout(workout)}
-                  />
-                  <Divider
-                    orientation="horizontal"
-                    variant="neutral"
-                  />
-                </Fragment>
-              )
-            })}
-          </ScrollView>
+          <IndicatedScrollList
+            data={filteredWorkouts}
+            renderItem={renderItem}
+            keyExtractor={workout => `${workout.date}_${workout.guid}`}
+            estimatedItemSize={157}
+          />
         ) : (
           <EmptyState text={translate('commentsLogEmpty')} />
         )}
