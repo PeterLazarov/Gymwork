@@ -5,27 +5,22 @@ import { StyleSheet, View, ScrollView } from 'react-native'
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { Exercise, Workout, discomfortOptions } from 'app/db/models'
+import { Workout, discomfortOptions } from 'app/db/models'
 import WorkoutReviewListItem from './WorkoutReviewListItem'
 import WorkoutModal from 'app/components/WorkoutModal'
 import { Divider, FeedbackPickerOption } from 'designSystem'
 
-type Props = {
-  exercise?: Exercise
-}
-
-const WorkoutsReview: React.FC<Props> = props => {
+const WorkoutsReview: React.FC = () => {
   const { workoutStore } = useStores()
 
   const [filterDiscomforedLevels, setFilterDiscomforedLevels] = useState<
     string[]
   >([])
-  const commentedWorkouts = useMemo(() => {
+  const filteredWorkouts = useMemo(() => {
     return workoutStore.sortedReverseWorkouts.filter(
       w =>
-        w.hasComments &&
-        (filterDiscomforedLevels.length === 0 ||
-          (w.pain && filterDiscomforedLevels.includes(w.pain)))
+        filterDiscomforedLevels.length === 0 ||
+        (w.pain && filterDiscomforedLevels.includes(w.pain))
     )
   }, [workoutStore.workouts, filterDiscomforedLevels])
 
@@ -57,9 +52,9 @@ const WorkoutsReview: React.FC<Props> = props => {
             />
           ))}
         </View>
-        {commentedWorkouts.length > 0 ? (
+        {filteredWorkouts.length > 0 ? (
           <ScrollView style={styles.list}>
-            {commentedWorkouts.map((workout, index) => {
+            {filteredWorkouts.map(workout => {
               return (
                 <Fragment key={workout.guid}>
                   <WorkoutReviewListItem

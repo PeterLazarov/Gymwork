@@ -1,8 +1,7 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { Workout } from 'app/db/models'
-import { TouchableOpacity } from 'react-native'
 import { Text } from 'designSystem'
 import WorkoutCommentsCard from 'app/components/Workout/WorkoutCommentsCard'
 import { formatDateIso } from 'app/utils/date'
