@@ -47,7 +47,7 @@ const TopTabs: React.FC<Props> = ({
         initialRouteName={initialRouteName || tabsConfig[0]?.name}
         screenOptions={{
           tabBarScrollEnabled: true,
-          tabBarItemStyle: { width: tabWidth },
+          tabBarItemStyle: { minWidth: tabWidth },
           swipeEnabled: !swipeDisabled,
         }}
         backBehavior="none"
