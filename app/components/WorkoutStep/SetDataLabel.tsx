@@ -9,6 +9,7 @@ type Props = {
   unit?: string
   isFocused?: boolean
   fontSize?: keyof typeof fontSizeToken
+  fixDecimals?: boolean
 }
 
 const SetDataLabel: React.FC<Props> = ({
@@ -16,6 +17,7 @@ const SetDataLabel: React.FC<Props> = ({
   unit,
   isFocused,
   fontSize,
+  fixDecimals,
 }) => {
   const colors = useColors()
   const styles = useMemo(
@@ -26,7 +28,7 @@ const SetDataLabel: React.FC<Props> = ({
   return (
     <View style={styles.container}>
       <Text style={styles.value}>
-        {typeof value === 'number' ? value.toFixed(2) : value}
+        {typeof value === 'number' && fixDecimals ? value.toFixed(2) : value}
       </Text>
       {unit && <Text style={styles.unit}>{unit}</Text>}
     </View>

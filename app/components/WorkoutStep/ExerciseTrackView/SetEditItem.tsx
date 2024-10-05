@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleProp, View, ViewStyle } from 'react-native'
+import { View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
 import { WorkoutSet } from 'app/db/models'
@@ -64,7 +64,7 @@ const SetEditItem: React.FC<Props> = ({
         <SetWarmupButton
           isWarmup={set.isWarmup}
           toggleSetWarmup={() => toggleSetWarmup(set)}
-          number={draft ? '+' : number} // TODO
+          symbol={draft ? '+' : String(number)}
           color={color}
         />
         {isRecord && (
@@ -104,6 +104,7 @@ const SetEditItem: React.FC<Props> = ({
         <SetDataLabel
           value={set.speed ?? set.inferredSpeed}
           unit={set.exercise.measurements.speed!.unit}
+          fixDecimals
         />
       )}
       {settingsStore.measureRest && (

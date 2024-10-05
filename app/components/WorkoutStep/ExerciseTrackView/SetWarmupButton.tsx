@@ -6,13 +6,13 @@ import { TouchableOpacity } from 'react-native'
 
 type Props = {
   isWarmup: boolean
-  number?: number
+  symbol?: string
   color: string
   toggleSetWarmup: () => void
 }
 const SetWarmupButton: React.FC<Props> = ({
   isWarmup,
-  number,
+  symbol,
   color,
   toggleSetWarmup,
 }) => {
@@ -43,7 +43,7 @@ const SetWarmupButton: React.FC<Props> = ({
               fontWeight: 'bold',
             }}
           >
-            {number}
+            {symbol}
           </Text>
         )}
         {isWarmup && (

@@ -70,13 +70,13 @@ const SetListItem: React.FC<Props> = ({
           isFocused={isFocused}
         />
       )}
-      {measurements.duration && (
+      {measurements.duration && set.duration !== undefined && (
         <SetDataLabel
           value={getFormatedDuration(set.duration)}
           isFocused={isFocused}
         />
       )}
-      {settingsStore.measureRest && (
+      {settingsStore.measureRest && set.rest !== undefined && (
         <SetDataLabel
           value={getFormatedDuration(set.rest)}
           isFocused={isFocused}
