@@ -44,8 +44,9 @@ function getPastDays(n: number) {
 }
 
 export const CHART_VIEWS = {
-  '7D': '7D',
   '30D': '30D',
+  '3M': '3M',
+  '6M': '6M',
   ALL: 'ALL', // (Linear)
 } as const
 export type CHART_VIEW_KEY = keyof typeof CHART_VIEWS
@@ -73,7 +74,8 @@ const ExerciseHistoryChart: React.FC<Props> = ({
       ((
         {
           '30D': 10,
-          '7D': 15,
+          '3M': 5,
+          '6M': 5,
           ALL: 5,
         } satisfies Record<CHART_VIEW, number>
       )[view]),
@@ -84,10 +86,12 @@ const ExerciseHistoryChart: React.FC<Props> = ({
     const fallback = getPastDays(1)
 
     switch (view) {
-      case '7D':
-        return getPastDays(7)
       case '30D':
         return getPastDays(30)
+      case '3M':
+        return getPastDays(90)
+      case '6M':
+        return getPastDays(180)
       case 'ALL': {
         const workouts = workoutStore.exerciseWorkoutsHistoryMap[exercise.guid]!
         const range = [workouts.at(-1)!.date, workouts[0]!.date] as const
@@ -116,9 +120,7 @@ const ExerciseHistoryChart: React.FC<Props> = ({
   }, [view, exercise])
 
   const xAxis = useMemo(() => {
-    return view === '7D'
-      ? viewDays.map(d => d.toFormat('EEE'))
-      : viewDays.map(d => d.toFormat('dd LLL'))
+    return viewDays.map(d => d.toFormat('dd LLL'))
   }, [view, exercise])
 
   const setsByDay = useMemo(() => {

@@ -24,8 +24,8 @@ export const RootStoreModel = types
   .actions(self => ({
     applySnapshot(snapshot: RootStoreSnapshot) {
       self.setProp('exerciseStore', snapshot.exerciseStore)
-      self.setProp('workoutStore', snapshot.workoutStore)
-      self.setProp('recordStore', snapshot.recordStore)
+      // self.setProp('workoutStore', snapshot.workoutStore)
+      // self.setProp('recordStore', snapshot.recordStore)
       self.setProp('settingsStore', snapshot.settingsStore)
       self.stateStore.applySnapshot(snapshot.stateStore)
     },
