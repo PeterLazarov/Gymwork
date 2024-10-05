@@ -1,6 +1,8 @@
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { Searchbar } from 'react-native-paper'
+import { ListRenderItemInfo } from '@shopify/flash-list'
 
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
@@ -13,21 +15,34 @@ import {
   FeedbackPickerOption,
   IndicatedScrollList,
 } from 'designSystem'
-import { ListRenderItemInfo } from '@shopify/flash-list'
+import { searchString } from 'app/utils/string'
 
 const WorkoutsReview: React.FC = () => {
   const { workoutStore } = useStores()
 
+  const [filterString, setFilterString] = useState('')
   const [filterDiscomforedLevels, setFilterDiscomforedLevels] = useState<
     string[]
   >([])
+
+  function filterWorkout(workout: Workout) {
+    const discomfortFilter =
+      filterDiscomforedLevels.length === 0 ||
+      (workout.pain && filterDiscomforedLevels.includes(workout.pain))
+
+    const notesFilter =
+      filterString === '' ||
+      (workout.notes !== '' &&
+        searchString(filterString, word =>
+          workout.notes.toLowerCase().includes(word)
+        ))
+
+    return discomfortFilter && notesFilter
+  }
+
   const filteredWorkouts = useMemo(() => {
-    return workoutStore.sortedReverseWorkouts.filter(
-      w =>
-        filterDiscomforedLevels.length === 0 ||
-        (w.pain && filterDiscomforedLevels.includes(w.pain))
-    )
-  }, [workoutStore.workouts, filterDiscomforedLevels])
+    return workoutStore.sortedReverseWorkouts.filter(filterWorkout)
+  }, [workoutStore.workouts, filterDiscomforedLevels, filterString])
 
   const [openedWorkout, setOpenedWorkout] = useState<Workout | undefined>()
 
@@ -60,6 +75,12 @@ const WorkoutsReview: React.FC = () => {
   return (
     <>
       <View style={styles.screen}>
+        <Searchbar
+          placeholder={translate('search')}
+          onChangeText={setFilterString}
+          value={filterString}
+          mode="view"
+        />
         <View style={styles.filterOptionList}>
           {Object.values(discomfortOptions).map(option => (
             <FeedbackPickerOption
@@ -98,12 +119,12 @@ const WorkoutsReview: React.FC = () => {
 
 const styles = StyleSheet.create({
   screen: {
-    marginTop: 16,
     display: 'flex',
     flexGrow: 1,
   },
   filterOptionList: {
     flexDirection: 'row',
+    margin: 8,
   },
   filterOption: {
     backgroundColor: 'transparent',
