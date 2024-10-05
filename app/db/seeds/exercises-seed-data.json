@@ -221,6 +221,12 @@
     "weightIncrement": 2.5
   },
   {
+    "name": "Band Assisted Dip",
+    "muscles": ["chest"],
+    "measurementType": ["reps", "weight"],
+    "weightIncrement": 2.5
+  },
+  {
     "name": "Band Good Morning",
     "muscles": ["hamstrings"],
     "measurementType": ["reps", "weight"],
@@ -649,12 +655,6 @@
   {
     "name": "Butt Lift (Bridge)",
     "muscles": ["glutes"],
-    "measurementType": ["reps", "weight"],
-    "weightIncrement": 2.5
-  },
-  {
-    "name": "Butterfly",
-    "muscles": ["chest"],
     "measurementType": ["reps", "weight"],
     "weightIncrement": 2.5
   },
@@ -1901,9 +1901,8 @@
   },
   {
     "name": "Hanging Leg Raise",
-    "muscles": ["abdominals"],
-    "measurementType": ["reps", "weight"],
-    "weightIncrement": 2.5
+    "muscles": ["abdominals", "forearms"],
+    "measurementType": ["reps"]
   },
   {
     "name": "Hanging Pike",
@@ -4721,9 +4720,8 @@
   },
   {
     "name": "Step Mill",
-    "muscles": ["quadriceps"],
-    "measurementType": ["reps", "weight"],
-    "weightIncrement": 2.5
+    "muscles": ["cardio","quadriceps"],
+    "measurementType": ["distance", "duration"]
   },
   {
     "name": "Stiff-Legged Barbell Deadlift",

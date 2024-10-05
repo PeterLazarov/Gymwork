@@ -25,6 +25,7 @@
   - Review - Optimise render of chart
   - ExerciseSelect - Optimise initial render
   - Flashlist -> data={workout.steps.slice()}. Figure out a better solution to fix rerendering after adding exercise
+* default Band Assisted exercises to moreIsBetter = false
 * Split screen over half is makes UI a mess
 * grouping / measurement by rest
 * Review button styles. Especially primary + disabled
