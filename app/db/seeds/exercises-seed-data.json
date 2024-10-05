@@ -1577,24 +1577,12 @@
     "weightIncrement": 2.5
   },
   {
-    "name": "Extended Range One-Arm Kettlebell Floor Press",
-    "muscles": ["chest"],
-    "measurementType": ["reps", "weight"],
-    "weightIncrement": 2.5
-  },
-  {
-    "name": "External Rotation",
-    "muscles": ["shoulders"],
-    "measurementType": ["reps", "weight"],
-    "weightIncrement": 2.5
-  },
-  {
     "name": "Ring Face Pull",
     "muscles": ["shoulders"],
     "measurementType": ["reps"]
   },
   {
-    "name": "External Rotation with Cable",
+    "name": "External Rotation",
     "muscles": ["shoulders"],
     "measurementType": ["reps", "weight"],
     "weightIncrement": 2.5
