@@ -25,7 +25,10 @@ const WorkoutCommentsCard: React.FC<Props> = ({
 }) => {
   const colors = useColors()
 
-  const styles = useMemo(() => makeStyles(colors), [colors])
+  const styles = useMemo(
+    () => makeStyles(colors, compactMode),
+    [colors, compactMode]
+  )
 
   return (
     <Card
@@ -68,10 +71,10 @@ const WorkoutCommentsCard: React.FC<Props> = ({
   )
 }
 
-const makeStyles = (colors: any) =>
+const makeStyles = (colors: any, compactMode?: boolean) =>
   StyleSheet.create({
     card: {
-      padding: 8,
+      padding: compactMode ? 0 : 8,
     },
     cardContent: {
       alignItems: 'center',

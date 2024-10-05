@@ -18,18 +18,20 @@ const WorkoutReviewListItem: React.FC<Props> = ({ workout, onPress }) => {
       style={styles.item}
     >
       <Text style={styles.text}>{formatDateIso(workout.date, 'long')}</Text>
-      <WorkoutCommentsCard
-        onPress={onPress}
-        workout={workout}
-        compactMode
-      />
+      {workout.hasComments && (
+        <WorkoutCommentsCard
+          onPress={onPress}
+          workout={workout}
+          compactMode
+        />
+      )}
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   item: {
-    paddingTop: 8,
+    padding: 8,
     display: 'flex',
     justifyContent: 'center',
     flex: 1,
