@@ -95,7 +95,7 @@ const SetEditList: React.FC<Props> = ({
             <SetEditItem
               set={item}
               isRecord={isRecord}
-              calcWorkSetNumber={calcWorkSetNumber}
+              number={String(stateStore.focusedStep!.setNumberMap[item.guid])}
               toggleSetWarmup={toggleSetWarmup}
               draft={isDraft}
             />
@@ -126,14 +126,6 @@ const SetEditList: React.FC<Props> = ({
   }
 
   const dragListRef = useRef<FlatList>(null)
-
-  function calcWorkSetNumber(set: WorkoutSet) {
-    const exerciseSets =
-      stateStore.focusedStep!.exerciseSetsMap[set.exercise.guid] || []
-    const workArrayIndex = exerciseSets.filter(s => !s.isWarmup).indexOf(set)
-
-    return String(workArrayIndex + 1)
-  }
 
   function toggleSetWarmup(set: WorkoutSet) {
     set.setProp('isWarmup', !set.isWarmup)
