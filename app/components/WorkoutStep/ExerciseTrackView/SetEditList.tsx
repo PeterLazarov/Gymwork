@@ -131,7 +131,8 @@ const SetEditList: React.FC<Props> = ({
     const exerciseSets =
       stateStore.focusedStep!.exerciseSetsMap[set.exercise.guid] || []
     const workArrayIndex = exerciseSets.filter(s => !s.isWarmup).indexOf(set)
-    return workArrayIndex + 1
+
+    return String(workArrayIndex + 1)
   }
 
   function toggleSetWarmup(set: WorkoutSet) {

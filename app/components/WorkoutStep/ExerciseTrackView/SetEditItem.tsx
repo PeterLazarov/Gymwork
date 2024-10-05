@@ -13,7 +13,7 @@ import { useStores } from 'app/db/helpers/useStores'
 type Props = {
   set: WorkoutSet
   isRecord?: boolean
-  calcWorkSetNumber: (set: WorkoutSet) => number
+  calcWorkSetNumber: (set: WorkoutSet) => string
   toggleSetWarmup: (set: WorkoutSet) => void
   draft?: boolean
 } & View['props']
@@ -34,7 +34,7 @@ const SetEditItem: React.FC<Props> = ({
 
   const color = colors.onSurface
 
-  const number = set.isWarmup ? undefined : calcWorkSetNumber(set)
+  const symbol = set.isWarmup ? undefined : draft ? '+' : calcWorkSetNumber(set)
 
   return (
     <View
@@ -64,7 +64,7 @@ const SetEditItem: React.FC<Props> = ({
         <SetWarmupButton
           isWarmup={set.isWarmup}
           toggleSetWarmup={() => toggleSetWarmup(set)}
-          symbol={draft ? '+' : String(number)}
+          symbol={symbol}
           color={color}
         />
         {isRecord && (
