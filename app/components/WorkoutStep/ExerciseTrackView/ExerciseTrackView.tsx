@@ -46,8 +46,10 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   }, [focusedExercise])
 
   useEffect(() => {
-    const lastSet =
-      workoutStore.exerciseSetsHistoryMap[focusedExercise.guid]?.at(-1)
+    const lastWorkout =
+      workoutStore.exerciseWorkoutsHistoryMap[focusedExercise.guid]?.[0]
+    const lastSet = lastWorkout?.exerciseSetsMap[focusedExercise.guid]?.at(-1)
+
     const setToClone = selectedSet || lastSet
 
     const { guid, exercise, reps, ...rest } = setToClone || {}

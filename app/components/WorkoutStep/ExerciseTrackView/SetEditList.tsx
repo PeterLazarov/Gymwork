@@ -95,7 +95,7 @@ const SetEditList: React.FC<Props> = ({
             <SetEditItem
               set={item}
               isRecord={isRecord}
-              number={String(stateStore.focusedStep!.setNumberMap[item.guid])}
+              number={stateStore.focusedStep!.setNumberMap[item.guid]}
               toggleSetWarmup={toggleSetWarmup}
               draft={isDraft}
             />
