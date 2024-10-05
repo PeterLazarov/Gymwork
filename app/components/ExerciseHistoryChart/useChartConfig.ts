@@ -31,9 +31,10 @@ const useChartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
     },
     legend: {
       data: Object.keys(series), // the .name of series[number]
-      selected: Object.keys(series).reduce((obj, curr) =>
-        Object.assign({ [curr]: series[curr]!.initiallySelected })
-      ),
+      selected:  Object.keys(series).reduce((obj, curr) => {
+        obj[curr] = series[curr]?.initiallySelected
+        return obj
+      }, {} as Record<string, boolean | undefined>),
       textStyle: {
         color: colors.onSurface,
       },
