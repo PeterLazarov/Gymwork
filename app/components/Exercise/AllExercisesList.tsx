@@ -9,6 +9,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { useDebounce } from '@uidotdev/usehooks'
+import { searchString } from 'app/utils/string'
 
 const noop = () => {}
 
@@ -32,15 +33,10 @@ const AllExercisesList: React.FC<Props> = ({ onSelect, selectedExercises }) => {
 
     return exercisesSorted.current.filter((e: Exercise) => {
       const exName = e.name.toLowerCase()
-      const filterWords = debouncedFilterString
-        .toLowerCase()
-        .split(' ')
-        .filter(Boolean)
 
-      return filterWords.every(
-        word =>
-          exName.includes(word) ||
-          (filterWords.length > 1 && e.muscles.includes(word))
+      return searchString(
+        debouncedFilterString,
+        word => exName.includes(word) || e.muscles.includes(word)
       )
     })
   }, [debouncedFilterString])
