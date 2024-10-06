@@ -31,7 +31,7 @@ const TopTabs: React.FC<Props> = ({
   const navTheme = useMemo(() => {
     return navThemes[colorScheme === 'dark' ? 'DarkTheme' : 'LightTheme']
   }, [colorScheme])
-  console.log('asd', initialRouteName || tabsConfig[0]?.name)
+
   return (
     <NavigationContainer
       independent
@@ -47,7 +47,10 @@ const TopTabs: React.FC<Props> = ({
         initialRouteName={initialRouteName || tabsConfig[0]?.name}
         screenOptions={{
           tabBarScrollEnabled: true,
-          tabBarItemStyle: { minWidth: tabWidth },
+          tabBarItemStyle: {
+            minWidth: tabWidth,
+            width: 'auto',
+          },
           swipeEnabled: !swipeDisabled,
         }}
         backBehavior="none"

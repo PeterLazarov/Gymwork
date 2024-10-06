@@ -55,7 +55,6 @@ const WorkoutHeader: React.FC = () => {
       {settingsStore.showWorkoutTimer && (
         <>
           <MiniTimer
-            // TODO change 'n' so that past workouts show a time
             n={Math.floor(timerStore.workoutTimer.timeElapsed.as('minutes'))}
             onPress={() => setShowWorkoutTimerModal(true)}
           />
@@ -64,7 +63,7 @@ const WorkoutHeader: React.FC = () => {
             open={showWorkoutTimerModal}
             onClose={() => setShowWorkoutTimerModal(false)}
             timer={timerStore.workoutTimer}
-          ></WorkoutTimerModal>
+          />
         </>
       )}
 

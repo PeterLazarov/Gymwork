@@ -52,12 +52,11 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 
     const setToClone = selectedSet || lastSet
 
-    const { guid, exercise, reps, ...rest } = setToClone || {}
+    const { guid, date, exercise, reps, ...rest } = setToClone || {}
 
     stateStore.setProp('draftSet', {
       exercise: focusedExercise.guid,
       reps: reps || (focusedExercise.hasRepMeasument ? defaultReps : undefined),
-      // date: setToClone!.date,
       ...rest,
       durationMs: 0,
     })
