@@ -54,8 +54,10 @@ export default function MiniTimer({ n, onPress }: MiniTimerProps) {
               fontSize: String(n).length > 2 ? fontSize.xxs : fontSize.sm,
               color: colors.onPrimary,
             }}
+            numberOfLines={1}
+            ellipsizeMode="clip"
           >
-            {n}
+            {Math.min(n, 999)}
           </Text>
         </View>
       </View>
