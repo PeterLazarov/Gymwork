@@ -25,7 +25,7 @@ const viewabilityConfig: ViewabilityConfig = {
 }
 
 const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
-  (
+  function HorizontalScreenList(
     {
       onScreenChange,
       initialScrollIndex,
@@ -33,7 +33,7 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
       ...rest
     },
     ref
-  ) => {
+  ) {
     const width = useWindowDimensions().width
 
     const handleViewChange = useCallback(function (info: {
