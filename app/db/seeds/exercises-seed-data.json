@@ -4940,24 +4940,6 @@
     "weightIncrement": 2.5
   },
   {
-    "name": "Triceps Pushdown - Rope Attachment",
-    "muscles": ["triceps"],
-    "measurementType": ["reps", "weight"],
-    "weightIncrement": 2.5
-  },
-  {
-    "name": "Triceps Pushdown - V-Bar Attachment",
-    "muscles": ["triceps"],
-    "measurementType": ["reps", "weight"],
-    "weightIncrement": 2.5
-  },
-  {
-    "name": "Triceps Stretch",
-    "muscles": ["triceps"],
-    "measurementType": ["reps", "weight"],
-    "weightIncrement": 2.5
-  },
-  {
     "name": "Tuck Crunch",
     "muscles": ["abdominals"],
     "measurementType": ["reps", "weight"],
