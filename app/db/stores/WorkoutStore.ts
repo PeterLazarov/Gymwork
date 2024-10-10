@@ -45,10 +45,13 @@ export const WorkoutStoreModel = types
     get exerciseWorkoutsHistoryMap(): Record<Exercise['guid'], Workout[]> {
       return this.sortedReverseWorkouts.reduce((acc, workout) => {
         workout.exercises.forEach(exercise => {
-          if (!acc[exercise.guid]) {
-            acc[exercise.guid] = []
+          const sets = workout.exerciseSetsMap[exercise.guid]
+          if (sets && sets.length > 0) {
+            if (!acc[exercise.guid]) {
+              acc[exercise.guid] = []
+            }
+            acc[exercise.guid]!.push(workout)
           }
-          acc[exercise.guid]!.push(workout)
         })
 
         return acc
