@@ -58,6 +58,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
       exercise: focusedExercise.guid,
       reps: reps || (focusedExercise.hasRepMeasument ? defaultReps : undefined),
       ...rest,
+      durationMs: selectedSet?.durationMs || 0,
     })
   }, [selectedSet, focusedExercise])
 
