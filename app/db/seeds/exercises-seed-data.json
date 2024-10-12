@@ -443,10 +443,9 @@
     "weightIncrement": 2.5
   },
   {
-    "name": "Bench Press - Powerlifting",
+    "name": "Ring Triceps Push",
     "muscles": ["triceps"],
-    "measurementType": ["reps", "weight"],
-    "weightIncrement": 2.5
+    "measurementType": ["reps"]
   },
   {
     "name": "Bench Press - With Bands",
