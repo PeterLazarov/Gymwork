@@ -7,7 +7,6 @@ import { withSetPropAction } from '../helpers/withSetPropAction'
 import convert from 'convert-units'
 import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction'
 import {
-  isImperialDistance,
   measurementDefaults,
   measurementUnits,
 } from './ExerciseMeasurement'
@@ -37,20 +36,31 @@ export const WorkoutSetModel = types
     createdAt: types.optional(types.Date, () => Date.now()),
   })
   .views(set => ({
-    // TODO redo?
     get measurementValue() {
-      return set.weightMcg || set.durationMs || set.distanceMm
+      switch (set.exercise.measuredBy) {
+        case 'duration':
+          return set.durationMs
+        case 'reps':
+          return set.reps
+        case 'weight':
+          return set.weightMcg
+        case 'distance':
+          return set.distanceMm
+
+        default:
+          return 0
+      }
     },
     get groupingValue() {
       switch (set.exercise.groupRecordsBy) {
         case 'duration':
-          return set.durationMs // TODO units?
+          return set.durationMs
         case 'reps':
           return set.reps
         case 'weight':
-          return set.weightMcg // TODO units?
+          return set.weightMcg
         case 'distance':
-          return set.distanceMm // TODO units?
+          return set.distanceMm
 
         default:
           return 0
