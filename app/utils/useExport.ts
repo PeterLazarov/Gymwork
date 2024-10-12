@@ -8,11 +8,13 @@ import * as DocumentPicker from 'expo-document-picker'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { getSnapshot } from 'mobx-state-tree'
+import { DateTime } from 'luxon'
 
 export function useExport() {
   const rootStore = useStores()
   const { workoutStore, exerciseStore, recordStore } = rootStore
 
+  const now = DateTime.now()
   async function exportData() {
     const permissions =
       await StorageAccessFramework.requestDirectoryPermissionsAsync()
@@ -28,7 +30,7 @@ export function useExport() {
 
       await StorageAccessFramework.createFileAsync(
         permissions.directoryUri,
-        'exportedData.json',
+        `gymwork-${now.monthShort}-${now.day}.json`,
         'application/json'
       ).then(async uri => {
         await writeAsStringAsync(uri, jsonString)
