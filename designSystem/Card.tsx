@@ -49,8 +49,6 @@ const makeStyles = (colors: ReturnType<typeof useColors>) =>
     card: {
       backgroundColor: colors.surface,
       borderRadius: 8,
-      marginVertical: 10,
-      marginHorizontal: 20,
     },
     content: {
       padding: 15,

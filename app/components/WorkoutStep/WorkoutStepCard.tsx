@@ -28,6 +28,10 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, ...rest }) => {
         />
       }
       {...rest}
+      containerStyle={{
+        marginVertical: 10,
+        marginHorizontal: 20,
+      }}
     />
   )
 }

@@ -75,6 +75,7 @@ const makeStyles = (colors: any, compactMode?: boolean) =>
   StyleSheet.create({
     card: {
       padding: compactMode ? 0 : 8,
+      paddingBottom: compactMode ? 8 : 0,
     },
     cardContent: {
       alignItems: 'center',

@@ -53,7 +53,14 @@ const WorkoutEmptyState: React.FC = () => {
   const colors = useColors()
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 20,
+      }}
+    >
       {actions.length > 0 &&
         actions.map(action => (
           <Card
