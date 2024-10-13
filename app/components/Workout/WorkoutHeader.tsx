@@ -9,6 +9,7 @@ import HomeMenuItems from '../HomeMenuItems'
 import { formatDateIso } from 'app/utils/date'
 import MiniTimer from '../MiniTimer'
 import WorkoutTimerModal from '../Timer/WorkoutTimerModal'
+import { useShareWorkout } from 'app/utils/useShareWorkout'
 
 const WorkoutHeader: React.FC = () => {
   const colors = useColors()
@@ -47,7 +48,7 @@ const WorkoutHeader: React.FC = () => {
   }
 
   const [showWorkoutTimerModal, setShowWorkoutTimerModal] = useState(false)
-
+  const shareWorkout = useShareWorkout()
   return (
     <Header>
       <Header.Title title={dateLabel} />
@@ -111,6 +112,12 @@ const WorkoutHeader: React.FC = () => {
             <Menu.Item
               onPress={deleteWorkout}
               title={translate('removeWorkout')}
+            />
+            <Menu.Item
+              onPress={() => {
+                shareWorkout(openedWorkout)
+              }}
+              title={translate('shareWorkout')}
             />
           </>
         )}

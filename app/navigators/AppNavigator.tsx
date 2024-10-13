@@ -10,9 +10,15 @@ import {
 } from '@react-navigation/native-stack'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
-import { StatusBar, useColorScheme } from 'react-native'
+import {
+  StatusBar,
+  useColorScheme,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import { Portal, PaperProvider } from 'react-native-paper'
 import { ErrorBoundary } from '@sentry/react-native'
+import { PortalHost, PortalProvider } from '@gorhom/portal'
 
 import Config from '../config'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
@@ -39,6 +45,7 @@ import { DialogContextProvider } from 'app/contexts/DialogContext'
 import { ErrorDetails } from 'app/screens/ErrorDetails'
 import UserFeedbackScreen from 'app/screens/UserFeedback'
 import Welcome from 'app/screens/Welcome'
+import { offscreenRef } from 'app/utils/useShareWorkout'
 
 /**
  * Documentation:
@@ -229,6 +236,8 @@ export const AppNavigator = observer(function AppNavigator(
     return navThemes[colorScheme === 'dark' ? 'DarkTheme' : 'LightTheme']
   }, [colorScheme])
 
+  const screenDimensions = useWindowDimensions()
+
   return (
     <PaperProvider theme={paperTheme}>
       <ErrorBoundary
@@ -239,27 +248,41 @@ export const AppNavigator = observer(function AppNavigator(
           />
         )}
       >
-        <Portal.Host>
-          <DialogContextProvider>
-            <NavigationContainer
-              theme={navTheme}
-              ref={navigationRef}
-              {...props}
-              onStateChange={handleStateChange}
-            >
-              <>
-                {/* The bar at the top */}
-                <StatusBar
-                  backgroundColor={
-                    colorScheme === 'light' ? colors.primary : colors.shadow
-                  }
-                  barStyle={'light-content'}
-                />
-                <AppStack />
-              </>
-            </NavigationContainer>
-          </DialogContextProvider>
-        </Portal.Host>
+        <PortalProvider>
+          <Portal.Host>
+            <DialogContextProvider>
+              <NavigationContainer
+                theme={navTheme}
+                ref={navigationRef}
+                {...props}
+                onStateChange={handleStateChange}
+              >
+                <>
+                  {/* The bar at the top */}
+                  <StatusBar
+                    backgroundColor={
+                      colorScheme === 'light' ? colors.primary : colors.shadow
+                    }
+                    barStyle={'light-content'}
+                  />
+                  <AppStack />
+                </>
+              </NavigationContainer>
+            </DialogContextProvider>
+          </Portal.Host>
+
+          <View
+            ref={offscreenRef}
+            style={{
+              position: 'absolute',
+              backgroundColor: 'red',
+              zIndex: 1,
+              left: screenDimensions.width,
+            }}
+          >
+            <PortalHost name="offscreen" />
+          </View>
+        </PortalProvider>
       </ErrorBoundary>
     </PaperProvider>
   )

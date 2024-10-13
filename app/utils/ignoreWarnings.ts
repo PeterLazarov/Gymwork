@@ -4,7 +4,6 @@
  */
 import { LogBox } from 'react-native'
 
+export const defaultIgnoredWarnings = ['Require cycle:']
 // prettier-ignore
-LogBox.ignoreLogs([
-  "Require cycle:",
-])
+LogBox.ignoreLogs(defaultIgnoredWarnings)

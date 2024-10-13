@@ -112,6 +112,9 @@ const en = {
   close: 'Close',
   stopTimer: 'Stop Timer',
   startTimer: 'Start Timer',
+  shareWorkout: 'Share Workout',
+  noWorkoutToShare: 'No workout to share',
+  sharingFailed: 'Sharing Failed',
 }
 
 export default en
