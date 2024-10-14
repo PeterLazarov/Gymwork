@@ -23,6 +23,7 @@ const en = {
   editRestTimer: 'Edit Rest Timer',
   createExercise: 'Create exercise',
   editExercise: 'Edit exercise',
+  switchExercise: 'Switch exercise',
   removeFromWorkout: 'Remove from workout',
   showGraph: 'Show graph',
   hideGraph: 'Hide graph',

@@ -10,9 +10,10 @@ import { WorkoutStep } from 'app/db/models'
 
 export type StepHeaderProps = {
   step: WorkoutStep
+  onSwitchExercise: () => void
 }
 
-const StepHeader: React.FC<StepHeaderProps> = ({ step }) => {
+const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
   const colors = useColors()
 
   const {
@@ -39,11 +40,15 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step }) => {
     exercise.setProp('isFavorite', !exercise.isFavorite)
   }
 
+  function onSwitchExercisePress() {
+    setMenuOpen(false)
+    onSwitchExercise()
+  }
+
   function onEditExercisePress() {
     setMenuOpen(false)
     navigate('ExerciseEdit')
   }
-
   function goToFeedback() {
     setMenuOpen(false)
     navigate('UserFeedback')
@@ -104,6 +109,10 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step }) => {
             </IconButton>
           }
         >
+          <Menu.Item
+            onPress={onSwitchExercisePress}
+            title={translate('switchExercise')}
+          />
           <Menu.Item
             onPress={onEditExercisePress}
             title={translate('editExercise')}

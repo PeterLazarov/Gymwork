@@ -105,6 +105,22 @@ export const WorkoutStepModel = types
       step.sets.push(newSet)
       step.recordStore.runSetUpdatedCheck(newSet)
     },
+    switchExercise(newVal: Exercise, oldVal: Exercise) 
+    {
+      const newExercises = step.exercises.filter(
+        ex => ex.guid !== oldVal.guid
+      )
+      .concat(newVal)
+
+      this.removeAllSets()
+      step.setProp('exercises', newExercises)
+    },
+    removeAllSets() {
+      // TODO can be optimised
+      step.sets.forEach(set => {
+        this.removeSet(set.guid)
+      })
+    },
     removeSet(setGuid: WorkoutSet['guid']) {
       const deletedSetIndex = step.sets.findIndex(s => s.guid === setGuid)
       const deletedSet = step.sets[deletedSetIndex]
@@ -118,7 +134,7 @@ export const WorkoutStepModel = types
         const deletedSetSnapshot = getSnapshot(deletedSet)
         step.sets.splice(deletedSetIndex, 1)
 
-        if (isRecordBool) {
+        if (isRecordBool && exercise.groupRecordsBy) {
           const grouping = getDataFieldForKey(exercise.groupRecordsBy)
           records?.recalculateGroupingRecords(deletedSetSnapshot[grouping])
         }
@@ -140,7 +156,7 @@ export const WorkoutStepModel = types
         setToUpdate.guid
       )
 
-      if (isOldSetRecord) {
+      if (isOldSetRecord && oldGroupingValue) {
         records.recalculateGroupingRecords(oldGroupingValue)
       }
 
