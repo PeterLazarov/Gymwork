@@ -1,7 +1,8 @@
-import React, { ReactNode, useEffect, useRef } from 'react'
-import { BackHandler, TouchableOpacity } from 'react-native'
+import React, { ReactNode, useEffect, useMemo } from 'react'
+import { BackHandler, useWindowDimensions } from 'react-native'
 import { Portal } from 'react-native-paper'
-import BottomSheet from '@gorhom/bottom-sheet'
+import Animated, { SlideInDown, SlideOutDown } from 'react-native-reanimated'
+import Backdrop from './Backdrop'
 
 type Props = {
   visible: boolean
@@ -15,27 +16,14 @@ const BottomDrawer: React.FC<Props> = ({
   children,
   onCollapse,
 }) => {
-  const sheetRef = useRef<BottomSheet>(null)
-
-  useEffect(() => {
-    if (visible) {
-      sheetRef.current?.expand()
-    } else {
-      sheetRef.current?.close()
-    }
-  }, [visible, sheetRef.current])
-
-  function collapse() {
-    sheetRef.current?.close()
-    onCollapse()
-  }
+  const dimensions = useWindowDimensions()
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
         if (visible) {
-          collapse()
+          onCollapse()
           return true
         }
       }
@@ -44,41 +32,38 @@ const BottomDrawer: React.FC<Props> = ({
     return () => backHandler.remove()
   }, [visible])
 
+  const animations = useMemo(() => {
+    return {
+      entering: SlideInDown.duration(150).withInitialValues({
+        originY: dimensions.height,
+      }),
+
+      exiting: SlideOutDown.withInitialValues({
+        originY: dimensions.height - height,
+      }),
+    }
+  }, [dimensions.height, height])
+
   return (
     <Portal>
-      <BottomSheet
-        ref={sheetRef}
-        enableDynamicSizing={false}
-        enablePanDownToClose
-        animateOnMount
-        index={visible ? 0 : -1}
-        snapPoints={[height]} // Define
-        onChange={index => {
-          if (index === -1) collapse()
-        }}
-        backdropComponent={() =>
-          visible && (
-            <TouchableOpacity
-              onPress={collapse}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                backgroundColor: 'black',
-                opacity: 0.5,
-              }}
-              activeOpacity={0.5}
-            />
-          )
-        }
-        handleStyle={{
-          display: 'none',
-        }}
-      >
-        {children}
-      </BottomSheet>
+      {visible && (
+        <>
+          <Animated.View
+            entering={animations.entering}
+            exiting={animations.exiting}
+            style={{
+              zIndex: 1,
+              position: 'absolute',
+              width: '100%',
+              bottom: 0,
+            }}
+          >
+            {children}
+          </Animated.View>
+
+          <Backdrop onPress={onCollapse}></Backdrop>
+        </>
+      )}
     </Portal>
   )
 }

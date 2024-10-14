@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { Text, BottomDrawer, Divider, FAB, useColors } from 'designSystem'
 import { translate } from 'app/i18n'
@@ -43,26 +43,30 @@ const AddStepMenu = () => {
       action: () => navigate('WorkoutFeedback'),
     })
   }
-  const height = options.length * 70
+  const drawerPadding = 20
+  const optionHeight = 70
+  const drawerHeight = options.length * optionHeight + drawerPadding * 2
 
   return (
     <View>
       <BottomDrawer
         visible={visible}
-        height={height}
+        height={drawerHeight}
         onCollapse={() => {
           setVisible(false)
         }}
       >
         <View
           style={{
-            padding: 20,
-            flexGrow: 1,
+            padding: drawerPadding,
             backgroundColor: colors.surfaceContainerLow,
           }}
         >
           {options.map((option, i) => (
-            <Fragment key={option.text}>
+            <View
+              key={option.text}
+              style={{ height: optionHeight }}
+            >
               {i !== 0 && (
                 <Divider
                   orientation="horizontal"
@@ -83,14 +87,15 @@ const AddStepMenu = () => {
               >
                 <Text>{option.text}</Text>
               </TouchableOpacity>
-            </Fragment>
+            </View>
           ))}
         </View>
       </BottomDrawer>
+
       <FAB
         icon="plus"
-        onPress={expand}
-        onLongPress={addExercise}
+        onTouchStart={expand}
+        // onLongPress={addExercise}
         style={{ position: 'relative' }}
       />
     </View>
