@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import {
   FlatList,
   Keyboard,
@@ -36,11 +36,15 @@ const SetEditList: React.FC<Props> = ({
     setSelectedSet(set.guid === selectedSet?.guid ? null : set)
   }
 
-  const stepRecords = computed(() => {
-    return stateStore.focusedStep
-      ? recordStore.getRecordsForStep(stateStore.focusedStep)
-      : []
-  }).get()
+  const stepRecords = useMemo(
+    () =>
+      computed(() => {
+        return stateStore.focusedStep
+          ? recordStore.getRecordsForStep(stateStore.focusedStep)
+          : []
+      }),
+    [stateStore.focusedStep]
+  ).get()
 
   const renderItem = useCallback(
     ({

@@ -39,12 +39,14 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 
   const [selectedSet, setSelectedSet] = useState<WorkoutSet | null>(null)
 
+  // TODO optimize. Toggle selected set to see that it's slow
   useEffect(() => {
     if (selectedSet && focusedExercise.guid !== selectedSet.exercise.guid) {
       setSelectedSet(null)
     }
   }, [focusedExercise])
 
+  // TODO optimize. Toggle selected set to see that it's slow
   useEffect(() => {
     const lastWorkout =
       workoutStore.exerciseWorkoutsHistoryMap[focusedExercise.guid]?.[0]

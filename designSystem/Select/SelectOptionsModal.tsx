@@ -37,9 +37,11 @@ function SelectOptionsModal<T = unknown>({
 
   const headerHeight = 59
   const buttonHeight = 48
-  const itemHeight = 55
+  const listItemHeight = 55
   const modalHeight =
-    headerHeight + options.length * itemHeight + (hideButton ? 0 : buttonHeight)
+    headerHeight +
+    options.length * listItemHeight +
+    (hideButton ? 0 : buttonHeight)
   const maxModalHeight = Dimensions.get('screen').height - 100
 
   return (
@@ -60,19 +62,32 @@ function SelectOptionsModal<T = unknown>({
             maxHeight: maxModalHeight,
           }}
         >
-          <Text
+          <View
             style={{
-              fontSize: fontSize.lg,
-              textAlign: 'center',
-              padding: 16,
+              height: headerHeight,
             }}
           >
-            {header}
-          </Text>
-          <Divider
-            orientation="horizontal"
-            variant="primary"
-          />
+            <View
+              style={{
+                flexGrow: 1,
+                justifyContent: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: fontSize.lg,
+                  textAlign: 'center',
+                }}
+              >
+                {header}
+              </Text>
+            </View>
+            <Divider
+              orientation="horizontal"
+              variant="primary"
+            />
+          </View>
+
           <View style={{ flex: 1 }}>
             <ScrollView>
               {options.map((option, index) => (
@@ -82,6 +97,7 @@ function SelectOptionsModal<T = unknown>({
                   showDivider={index !== 0}
                   onSelect={onOptionSelect}
                   selectedValues={selectedValues}
+                  height={listItemHeight}
                 />
               ))}
             </ScrollView>
@@ -90,7 +106,7 @@ function SelectOptionsModal<T = unknown>({
             <View style={{ flexDirection: 'row' }}>
               <Button
                 variant="primary"
-                style={{ flex: 1 }}
+                style={{ flex: 1, height: buttonHeight }}
                 onPress={onClose}
               >
                 <ButtonText variant="primary">{translate('done')}</ButtonText>

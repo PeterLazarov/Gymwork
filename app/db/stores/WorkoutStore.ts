@@ -18,6 +18,7 @@ import {
   WorkoutStep,
 } from 'app/db/models'
 import { isDev } from 'app/utils/isDev'
+import { keepAlive } from 'mobx-utils'
 
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
@@ -135,7 +136,7 @@ export const WorkoutStoreModel = types
           type,
           exercises: exercises.map(e => e.guid),
           sets: [],
-          notes: template.name
+          notes: template.name,
         })
       )
       const created = WorkoutModel.create({
@@ -188,6 +189,11 @@ export const WorkoutStoreModel = types
       self.workoutTemplates.remove(template)
     },
   }))
+  .actions(self => {
+    keepAlive(self, 'exerciseWorkoutsHistoryMap')
+    keepAlive(self, 'exerciseSetsHistoryMap')
+    return {}
+  })
 
 export interface WorkoutStore extends Instance<typeof WorkoutStoreModel> {}
 export interface WorkoutStoreSnapshot

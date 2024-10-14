@@ -1,11 +1,4 @@
-import {
-  Instance,
-  SnapshotOut,
-  addDisposer,
-  getParent,
-  types,
-} from 'mobx-state-tree'
-import { autorun } from 'mobx'
+import { Instance, SnapshotOut, getParent, types } from 'mobx-state-tree'
 import { keepAlive } from 'mobx-utils'
 import * as storage from 'app/utils/storage'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'

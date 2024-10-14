@@ -74,7 +74,7 @@ const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
     <TopNavigation
       initialRouteName={navStore.exerciseSelectLastTab || 'Favorite'}
       tabsConfig={tabsConfig}
-      tabWidth={Dimensions.get('screen').width / 3}
+      tabWidth={Dimensions.get('screen').width / tabsConfig.length}
       onTabChange={tab => {
         navStore.setProp('exerciseSelectLastTab', tab)
       }}

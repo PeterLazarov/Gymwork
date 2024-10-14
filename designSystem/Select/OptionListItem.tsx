@@ -2,19 +2,23 @@ import React from 'react'
 
 import { Text, Divider, useColors } from 'designSystem'
 import { SelectOption } from './types'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
+
+export const OptionListItemHeight = 55
 
 type Props<T = unknown> = {
   option: SelectOption<T>
   showDivider: boolean
   selectedValues: T[]
   onSelect: (option: SelectOption<T>) => void
+  height: number
 }
 function OptionListItem<T = unknown>({
   option,
   showDivider,
   selectedValues,
   onSelect,
+  height,
 }: Props<T>) {
   const colors = useColors()
 
@@ -29,7 +33,7 @@ function OptionListItem<T = unknown>({
   const label = getOptionLabel(option)
 
   return (
-    <>
+    <View style={{ height }}>
       {showDivider && (
         <Divider
           orientation="horizontal"
@@ -38,8 +42,9 @@ function OptionListItem<T = unknown>({
       )}
       <TouchableOpacity
         style={{
+          flex: 1,
           paddingHorizontal: 10,
-          paddingVertical: 15,
+          justifyContent: 'center',
           backgroundColor: selectedValues.includes(value)
             ? colors.surfaceContainer
             : colors.surfaceContainerLowest,
@@ -48,7 +53,7 @@ function OptionListItem<T = unknown>({
       >
         <Text>{label}</Text>
       </TouchableOpacity>
-    </>
+    </View>
   )
 }
 

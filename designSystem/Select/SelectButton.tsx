@@ -11,7 +11,12 @@ type Props = {
 
 const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        flexGrow: 1,
+      }}
+    >
       <TextInput
         value={text}
         error={error}
@@ -19,6 +24,7 @@ const SelectButton: React.FC<Props> = ({ onPress, text, error, label }) => {
         pointerEvents="none"
         focusable={false}
         editable={false}
+        style={{ flexGrow: 1 }}
       />
     </TouchableOpacity>
   )

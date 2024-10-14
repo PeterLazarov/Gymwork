@@ -9,11 +9,14 @@ type Props = {
   exercise: Exercise
   onSelect: (exercise: Exercise) => void
   isSelected: boolean
+  height: number
 }
+
 const ExerciseListItem: React.FC<Props> = ({
   exercise,
   onSelect,
   isSelected,
+  height,
 }) => {
   const heartIcon = exercise.isFavorite ? 'heart' : 'heart-outlined'
   const colors = useColors()
@@ -27,7 +30,8 @@ const ExerciseListItem: React.FC<Props> = ({
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: 10,
+          paddingHorizontal: 8,
+          height,
           backgroundColor: isSelected ? colors.secondary : 'transparent',
         }}
       >

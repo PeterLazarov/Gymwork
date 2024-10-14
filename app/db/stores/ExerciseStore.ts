@@ -11,6 +11,7 @@ import {
 } from 'app/db/models'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 import { isDev } from 'app/utils/isDev'
+import { keepAlive } from 'mobx-utils'
 
 export const ExerciseStoreModel = types
   .model('ExerciseStore')
@@ -58,7 +59,9 @@ export const ExerciseStoreModel = types
   }))
   .views(store => ({
     get muscleOptions() {
-      return uniqueValues(store.exercises.flatMap(e => e.muscles)).sort()
+      return uniqueValues(
+        store.exercises.flatMap<string>(e => e.muscles)
+      ).sort()
     },
     get exercisesMap() {
       const map: Record<Exercise['guid'], Exercise> = {}
@@ -88,6 +91,13 @@ export const ExerciseStoreModel = types
       return store.exercises.filter(e => e.isFavorite)
     },
   }))
+  .actions(self => {
+    keepAlive(self, 'muscleOptions')
+    keepAlive(self, 'exercisesMap')
+    keepAlive(self, 'exercisesByMuscle')
+    keepAlive(self, 'favoriteExercises')
+    return {}
+  })
 
 export interface ExerciseStore extends Instance<typeof ExerciseStoreModel> {}
 export interface ExerciseStoreSnapshot

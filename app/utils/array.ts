@@ -40,6 +40,6 @@ export const groupBy = <T extends Record<string, any>>(
   }, {} as Record<string, T[]>)
 }
 
-export const uniqueValues = (arr: any[]) => {
+export const uniqueValues = <T>(arr: T[]): T[] => {
   return [...new Set(arr)]
 }

@@ -11,6 +11,7 @@ import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { Header, Icon, IconButton, useColors, fontSize } from 'designSystem'
 import WorkoutModal from 'app/components/WorkoutModal'
 import { Menu } from 'react-native-paper'
+import { useWindowDimensions } from 'react-native'
 
 export type CalendarScreenParams = {
   copyWorkoutMode?: boolean
@@ -93,6 +94,8 @@ const CalendarScreen: React.FC = () => {
     return Math.ceil(diff.as('months'))
   }, [])
 
+  const dimensions = useWindowDimensions()
+
   return (
     <>
       <EmptyLayout>
@@ -146,14 +149,14 @@ const CalendarScreen: React.FC = () => {
             todayContainerStyle: {
               backgroundColor: colors.tertiary,
               aspectRatio: 1,
-              borderRadius: 50,
+              borderRadius: 500,
             },
 
             // makes all days a circle, therefore all lines equally tall
             dayContainerStyle: {
               backgroundColor: 'transparent',
               aspectRatio: 1,
-              borderRadius: 50,
+              borderRadius: 500,
             },
 
             monthTitleTextStyle: {
@@ -174,7 +177,7 @@ const CalendarScreen: React.FC = () => {
             weekColumnTextStyle: { color: colors.onSurface },
           }}
           disableRange
-          monthHeight={460}
+          monthHeight={dimensions.width * 1.15}
           firstDayMonday
         />
       </EmptyLayout>

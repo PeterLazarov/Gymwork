@@ -1,32 +1,40 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
 import ExerciseListItem from './ExerciseListItem'
 import { Exercise } from 'app/db/models'
-import { FlatList, ListRenderItemInfo } from 'react-native'
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 
 type Props = {
   exercises: Exercise[]
   onSelect: (exercise: Exercise) => void
   selectedExercises: Exercise[]
 }
+
+const itemHeight = 64
+
 const ExerciseList: React.FC<Props> = ({
   exercises,
   onSelect,
   selectedExercises,
 }) => {
-  const renderItem = ({ item }: ListRenderItemInfo<Exercise>) => {
-    return (
-      <ExerciseListItem
-        exercise={item}
-        onSelect={onSelect}
-        isSelected={selectedExercises.includes(item)}
-      />
-    )
-  }
+  const renderItem = useCallback(
+    ({ item }: ListRenderItemInfo<Exercise>) => {
+      return (
+        <ExerciseListItem
+          exercise={item}
+          onSelect={onSelect}
+          isSelected={selectedExercises.includes(item)}
+          height={itemHeight}
+        />
+      )
+    },
+    [selectedExercises]
+  )
 
   return (
-    <FlatList
-      data={exercises.slice()}
+    <FlashList
+      data={exercises}
+      estimatedItemSize={itemHeight}
       renderItem={renderItem}
       keyExtractor={exercise => exercise.guid}
     />

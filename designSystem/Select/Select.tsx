@@ -60,7 +60,7 @@ function Select<T>({
         open={selectionOpen}
         onClose={closeSelection}
         options={options}
-        selectedValues={value ? [value] : []}
+        selectedValues={value === undefined ? [] : [value]}
         onOptionSelect={onOptionSelect}
         hideButton
       />
