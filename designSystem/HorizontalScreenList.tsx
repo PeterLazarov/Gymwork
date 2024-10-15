@@ -21,7 +21,7 @@ type Props = Omit<FlatListProps<any>, LockedProps> & {
 }
 
 const viewabilityConfig: ViewabilityConfig = {
-  itemVisiblePercentThreshold: 60,
+  itemVisiblePercentThreshold: 51,
 }
 
 const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
