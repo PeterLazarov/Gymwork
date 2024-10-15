@@ -19,7 +19,9 @@ const WorkoutHorizontalList = () => {
     return getDateRange(from, to)
   }, [])
 
+  const currentIndex = useRef(dates.indexOf(stateStore.openedDate))
   function onScreenChange(index: number) {
+    currentIndex.current = index
     stateStore.setOpenedDate(dates[index]!)
   }
 
@@ -34,6 +36,8 @@ const WorkoutHorizontalList = () => {
       return
     }
 
+    if (stateStore.openedDate === dates[currentIndex.current]) return
+
     workoutList.current?.scrollToIndex({ index, animated: false })
   }, [stateStore.openedDate])
 
@@ -44,7 +48,7 @@ const WorkoutHorizontalList = () => {
         data={dates}
         renderItem={renderItem}
         onScreenChange={onScreenChange}
-        initialScrollIndex={dates.indexOf(stateStore.openedDate)}
+        initialScrollIndex={currentIndex.current}
       />
       <WorkoutBottomControls />
     </View>
