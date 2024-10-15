@@ -1,16 +1,16 @@
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useMemo, useRef } from 'react'
-import { FlatList, ListRenderItemInfo, View } from 'react-native'
+import { View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { getDateRange } from 'app/utils/date'
-import { HorizontalScreenList } from 'designSystem'
 import WorkoutDayView from './WorkoutDayView'
 import WorkoutBottomControls from './WorkoutBottomControls'
+import PagerView from 'react-native-pager-view'
 
 const WorkoutHorizontalList = () => {
   const { stateStore } = useStores()
-  const workoutList = useRef<FlatList<string>>(null)
+  const workoutList = useRef<PagerView>(null)
 
   const dates = useMemo(() => {
     const from = stateStore.firstRenderedDate
@@ -25,9 +25,6 @@ const WorkoutHorizontalList = () => {
     stateStore.setOpenedDate(dates[index]!)
   }
 
-  const renderItem = ({ item, index }: ListRenderItemInfo<string>) => {
-    return <WorkoutDayView date={dates[index]!} />
-  }
   useEffect(() => {
     const index = dates.indexOf(stateStore.openedDate)
 
@@ -38,18 +35,26 @@ const WorkoutHorizontalList = () => {
 
     if (stateStore.openedDate === dates[currentIndex.current]) return
 
-    workoutList.current?.scrollToIndex({ index, animated: false })
+    workoutList.current?.setPageWithoutAnimation(index)
   }, [stateStore.openedDate])
 
   return (
     <View style={{ flex: 1 }}>
-      <HorizontalScreenList
+      <PagerView
         ref={workoutList}
-        data={dates}
-        renderItem={renderItem}
-        onScreenChange={onScreenChange}
-        initialScrollIndex={currentIndex.current}
-      />
+        style={{ flex: 1 }}
+        initialPage={currentIndex.current}
+        onPageSelected={e => {
+          onScreenChange(e.nativeEvent.position)
+        }}
+      >
+        {dates.map(date => (
+          <View key={date}>
+            <WorkoutDayView date={date} />
+          </View>
+        ))}
+      </PagerView>
+
       <WorkoutBottomControls />
     </View>
   )
