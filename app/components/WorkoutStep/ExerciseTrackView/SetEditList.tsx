@@ -4,10 +4,11 @@ import {
   FlatList,
   Keyboard,
   Pressable,
+  ListRenderItemInfo,
   TouchableOpacity,
   View,
 } from 'react-native'
-import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
+// import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
 import { computed } from 'mobx'
 
 import SetEditItem from './SetEditItem'
@@ -52,11 +53,11 @@ const SetEditList: React.FC<Props> = ({
   const renderItem = useCallback(
     ({
       item,
-      onDragStart,
-      onDragEnd,
-      isActive,
+      // onDragStart,
+      // onDragEnd,
+      // isActive,
       index,
-    }: DragListRenderItemInfo<WorkoutSet>) => {
+    }: ListRenderItemInfo<WorkoutSet>) => {
       const isRecord = stepRecords.some(({ guid }) => guid === item.guid)
       const isFocused = selectedSet?.guid === item.guid
       const isDraft = index === sets.length
@@ -66,18 +67,18 @@ const SetEditList: React.FC<Props> = ({
           style={{
             // paddingHorizontal: 8,
             borderRadius: 4,
-            backgroundColor: isActive
-              ? colors.primaryContainer
-              : isFocused
-              ? colors.surfaceContainerHigh
-              : undefined,
+            backgroundColor:
+              // isActive
+              // ? colors.primaryContainer
+              // :
+              isFocused ? colors.surfaceContainerHigh : undefined,
           }}
-          onLongPress={() => {
-            !isDraft && onDragStart()
-          }}
-          onPressOut={() => {
-            !isDraft && onDragEnd()
-          }}
+          // onLongPress={() => {
+          //   !isDraft && onDragStart()
+          // }}
+          // onPressOut={() => {
+          //   !isDraft && onDragEnd()
+          // }}
           onPress={e => {
             e.preventDefault()
             if (!isDraft) {
@@ -91,15 +92,15 @@ const SetEditList: React.FC<Props> = ({
               alignItems: 'center',
               flexDirection: 'row',
               justifyContent: 'space-between',
-              paddingLeft: isActive ? 8 : undefined,
+              // paddingLeft: isActive ? 8 : undefined,
             }}
           >
-            {isActive && (
+            {/* {isActive && (
               <Icon
                 size="small"
                 icon="drag-horizontal-variant"
               />
-            )}
+            )} */}
 
             <SetEditItem
               set={item}
@@ -127,14 +128,14 @@ const SetEditList: React.FC<Props> = ({
     }
   }
 
-  const handleReorder: (from: number, to: number) => Promise<void> | void = (
-    from,
-    to
-  ) => {
-    step!.reorderSets(from, to)
-  }
+  // const handleReorder: (from: number, to: number) => Promise<void> | void = (
+  //   from,
+  //   to
+  // ) => {
+  //   step!.reorderSets(from, to)
+  // }
 
-  const dragListRef = useRef<FlatList>(null)
+  const flatListRef = useRef<FlatList>(null)
 
   function toggleSetWarmup(set: WorkoutSet) {
     set.setProp('isWarmup', !set.isWarmup)
@@ -150,7 +151,7 @@ const SetEditList: React.FC<Props> = ({
         Keyboard.dismiss()
       }}
     >
-      <DragList
+      <FlatList
         data={sets.concat(
           ...[
             !selectedSet && settingsStore.previewNextSet
@@ -161,7 +162,7 @@ const SetEditList: React.FC<Props> = ({
         renderItem={renderItem}
         keyExtractor={set => set.guid || 'draft'}
         getItemLayout={getItemLayout}
-        onReordered={handleReorder}
+        // onReordered={handleReorder}
         // ItemSeparatorComponent={() => (
         //   <Divider
         //     orientation="horizontal"
@@ -171,9 +172,9 @@ const SetEditList: React.FC<Props> = ({
         style={{
           paddingVertical: 8,
         }}
-        ref={dragListRef}
+        ref={flatListRef}
         onContentSizeChange={() =>
-          dragListRef.current?.scrollToEnd({ animated: true })
+          flatListRef.current?.scrollToEnd({ animated: true })
         }
       />
 
