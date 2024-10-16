@@ -34,7 +34,7 @@ dependencies:
     version: 1.0.14(react-native@0.74.5)(react@18.2.0)
   '@mgcrea/react-native-dnd':
     specifier: ^2.2.0
-    version: 2.2.0(react-native-gesture-handler@2.16.2)(react-native-haptic-feedback@2.3.3)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
+    version: 2.2.0(react-native-gesture-handler@2.16.2)(react-native-haptic-feedback@2.2.0)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
   '@ptomasroos/react-native-multi-slider':
     specifier: ^2.2.2
     version: 2.2.2(react-native@0.74.5)(react@18.2.0)
@@ -192,8 +192,8 @@ dependencies:
     specifier: ^1.0.2
     version: 1.1.0(@shopify/react-native-skia@1.2.3)(react-native-gesture-handler@2.16.2)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
   react-native-haptic-feedback:
-    specifier: ^2.3.3
-    version: 2.3.3(react-native@0.74.5)
+    specifier: ^2.2.0
+    version: 2.2.0(react-native@0.74.5)
   react-native-keyboard-aware-scroll-view:
     specifier: ^0.9.5
     version: 0.9.5(react-native@0.74.5)
@@ -2774,7 +2774,7 @@ packages:
     resolution: {integrity: sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==}
     dev: false
 
-  /@mgcrea/react-native-dnd@2.2.0(react-native-gesture-handler@2.16.2)(react-native-haptic-feedback@2.3.3)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0):
+  /@mgcrea/react-native-dnd@2.2.0(react-native-gesture-handler@2.16.2)(react-native-haptic-feedback@2.2.0)(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0):
     resolution: {integrity: sha512-gD6vn/ui7wn/GpaBJM5lWlvM+K6x4tBQftS/rjO97979B/Ue2JTc9/ybrJCF7adOH4BrW9aaRmjyBb/exJ4DOQ==}
     peerDependencies:
       react: '>=17'
@@ -2786,7 +2786,7 @@ packages:
       react: 18.2.0
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
       react-native-gesture-handler: 2.16.2(react-native@0.74.5)(react@18.2.0)
-      react-native-haptic-feedback: 2.3.3(react-native@0.74.5)
+      react-native-haptic-feedback: 2.2.0(react-native@0.74.5)
       react-native-reanimated: 3.10.1(@babel/core@7.25.2)(react-native@0.74.5)(react@18.2.0)
     dev: false
 
@@ -11602,8 +11602,8 @@ packages:
       react-native-reanimated: 3.10.1(@babel/core@7.25.2)(react-native@0.74.5)(react@18.2.0)
     dev: false
 
-  /react-native-haptic-feedback@2.3.3(react-native@0.74.5):
-    resolution: {integrity: sha512-svS4D5PxfNv8o68m9ahWfwje5NqukM3qLS48+WTdhbDkNUkOhP9rDfDSRHzlhk4zq+ISjyw95EhLeh8NkKX5vQ==}
+  /react-native-haptic-feedback@2.2.0(react-native@0.74.5):
+    resolution: {integrity: sha512-3tqJOjCguWhIrX0nkURn4yw6kXdsSDjjrvZCRjKXYGlL28hdQmoW2okAHduDTD9FWj9lA+lHgwFWgGs4aFNN7A==}
     peerDependencies:
       react-native: '>=0.60.0'
     dependencies:

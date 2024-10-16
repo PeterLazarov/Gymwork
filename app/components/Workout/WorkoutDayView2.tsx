@@ -35,17 +35,45 @@ import Animated, {
   FadeOut,
   LinearTransition,
 } from 'react-native-reanimated'
+import {
+  DndProvider,
+  DndProviderProps,
+  Draggable,
+  Droppable,
+} from '@mgcrea/react-native-dnd'
+
 import ExerciseTrackView from '../WorkoutStep/ExerciseTrackView'
 import StepSetsList from '../WorkoutStep/StepSetsList/StepSetsList'
 import { SetEditActions } from '../WorkoutStep/ExerciseTrackView/SetEditActions'
 import SetEditList from '../WorkoutStep/ExerciseTrackView/SetEditList'
 import SetEditControls from '../WorkoutStep/ExerciseTrackView/SetEditControls'
+import { State } from 'react-native-gesture-handler'
 
 type Props = {
   date?: string
 }
 
 let temporary: Exercise[] = []
+
+const handleDragEnd: DndProviderProps['onDragEnd'] = ({ active, over }) => {
+  'worklet'
+  if (over) {
+    console.log('onDragEnd', { active, over })
+  }
+}
+
+const handleBegin: DndProviderProps['onBegin'] = () => {
+  'worklet'
+  console.log('onBegin')
+}
+
+const handleFinalize: DndProviderProps['onFinalize'] = ({ state }) => {
+  'worklet'
+  console.log('onFinalize')
+  if (state !== State.FAILED) {
+    console.log('onFinalize')
+  }
+}
 
 const WorkoutDayView: React.FC<Props> = ({
   date = DateTime.now().toISODate(),
@@ -66,13 +94,28 @@ const WorkoutDayView: React.FC<Props> = ({
 
   if (!workout) return <WorkoutEmptyState />
 
+  // TODO reimplement separators as parts of a card? so that they get access to set
+  const idGen = (function* () {
+    for (let index = 0; index < Infinity; index++) {
+      yield index
+    }
+  })()
+
   // TODO move sets in and out of exercises?
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.surfaceContainer }}>
+    <DndProvider
+      style={{ flex: 1, backgroundColor: colors.surfaceContainer }}
+      onBegin={handleBegin}
+      onFinalize={handleFinalize}
+      onDragEnd={handleDragEnd}
+    >
       <View style={{ flex: 1 }}>
         {/* // Tabs? (supports side swipe, would look odd to highlight cards (vertical) based on side swipe (horizontal)) */}
+
         <Animated.FlatList
+          // TODO disable scroll on dnd
+          scrollEnabled={false}
           style={{
             flex: 1,
             height: stateStore.focusedStep ? 0 : undefined,
@@ -86,75 +129,86 @@ const WorkoutDayView: React.FC<Props> = ({
           ItemSeparatorComponent={() => {
             // TODO rest timer?
             return (
-              <Text style={{ fontSize: fontSize.xs, textAlign: 'center' }}>
-                00:00
-              </Text>
+              <Droppable id={String(idGen.next().value ?? 0)}>
+                <Text style={{ fontSize: fontSize.xs, textAlign: 'center' }}>
+                  00:00
+                </Text>
+              </Droppable>
             )
           }}
           renderItem={({ item: step }) => (
-            <Animated.View
-              key={step.guid}
-              exiting={FadeOut}
-              entering={FadeIn}
-            >
-              <Card
-                onPress={() => {
-                  stateStore.setFocusedStep(
-                    stateStore.focusedStepGuid === step.guid ? '' : step.guid
-                  )
-                  if (step.sets.length === 0) {
-                    step.addSet(
-                      WorkoutSetModel.create({
-                        completed: false,
-                        exercise: step.exercise!.guid,
-                      })
-                    )
-                  }
-
-                  stateStore.setProp('focusedExerciseGuid', step.exercise!.guid)
-                  setFocusedSet(step.sets.at(-1) ?? undefined)
-                }}
-                style={{
-                  // backgroundColor:
-                  //   stateStore.focusedStepGuid === step.guid
-                  //     ? colors.tertiary
-                  //     : undefined,
-                  margin: 8,
-                }}
+            <Draggable id={step.guid}>
+              <Animated.View
+                key={step.guid}
+                exiting={FadeOut}
+                entering={FadeIn}
               >
-                <Card.Title
-                  title={step.exercise?.name}
-                  // subtitle="Card Subtitle"
-                  right={size => (
-                    <IconButton>
-                      <Icon
-                        // size="default"
-                        icon={'add'}
-                      />
-                    </IconButton>
-                  )}
-                />
+                <Card
+                  onPress={() => {
+                    stateStore.setFocusedStep(
+                      stateStore.focusedStepGuid === step.guid ? '' : step.guid
+                    )
+                    if (step.sets.length === 0) {
+                      step.addSet(
+                        WorkoutSetModel.create({
+                          completed: false,
+                          exercise: step.exercise!.guid,
+                        })
+                      )
+                    }
 
-                {step.sets.length > 0 && (
-                  <Card.Content style={{}}>
-                    <SetEditList
-                      step={step}
-                      sets={step.sets}
-                      selectedSet={focusedSet ?? null}
-                      setSelectedSet={set => {
-                        stateStore.setFocusedStep(step.guid)
-                        stateStore.setProp(
-                          'focusedExerciseGuid',
-                          step.exercise!.guid
-                        )
-                        setFocusedSet(set ?? undefined)
-                      }}
-                      hideFallback
-                    ></SetEditList>
-                  </Card.Content>
-                )}
-              </Card>
-            </Animated.View>
+                    stateStore.setProp(
+                      'focusedExerciseGuid',
+                      step.exercise!.guid
+                    )
+                    setFocusedSet(step.sets.at(-1) ?? undefined)
+                  }}
+                  style={{
+                    // backgroundColor:
+                    //   stateStore.focusedStepGuid === step.guid
+                    //     ? colors.tertiary
+                    //     : undefined,
+                    margin: 8,
+                  }}
+                >
+                  <Card.Title
+                    title={step.exercise?.name}
+                    // subtitle="Card Subtitle"
+                    right={size => (
+                      <IconButton>
+                        <Icon
+                          // size="default"
+                          icon={'add'}
+                        />
+                      </IconButton>
+                    )}
+                  />
+
+                  {step.sets.length > 0 && (
+                    <Card.Content style={{}}>
+                      <Draggable id={step.guid + 'sets'}>
+                        <SetEditList
+                          step={step}
+                          sets={step.sets}
+                          selectedSet={focusedSet ?? null}
+                          setSelectedSet={set => {
+                            stateStore.setFocusedStep(step.guid)
+                            stateStore.setProp(
+                              'focusedExerciseGuid',
+                              step.exercise!.guid
+                            )
+                            setFocusedSet(set ?? undefined)
+                          }}
+                          hideFallback
+                        ></SetEditList>
+                      </Draggable>
+
+                      {/* <View></View> */}
+                    </Card.Content>
+                  )}
+                </Card>
+              </Animated.View>
+            </Draggable>
           )}
         />
 
@@ -212,7 +266,7 @@ const WorkoutDayView: React.FC<Props> = ({
           </Button>
         </View>
       )}
-    </View>
+    </DndProvider>
   )
 }
 
