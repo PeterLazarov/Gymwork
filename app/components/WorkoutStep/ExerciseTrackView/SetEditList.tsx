@@ -12,21 +12,25 @@ import { computed } from 'mobx'
 
 import SetEditItem from './SetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
-import { WorkoutSet } from 'app/db/models'
+import { WorkoutSet, WorkoutStep } from 'app/db/models'
 import { useColors, Divider, Icon } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
 
 type Props = {
+  step: WorkoutStep
   sets: WorkoutSet[]
   selectedSet: WorkoutSet | null
   setSelectedSet: (set: WorkoutSet | null) => void
+  showFallback?: boolean
 }
 
 const SetEditList: React.FC<Props> = ({
+  step,
   sets = [],
   selectedSet,
   setSelectedSet,
+  showFallback = true,
 }) => {
   const colors = useColors()
 
@@ -39,11 +43,9 @@ const SetEditList: React.FC<Props> = ({
   const stepRecords = useMemo(
     () =>
       computed(() => {
-        return stateStore.focusedStep
-          ? recordStore.getRecordsForStep(stateStore.focusedStep)
-          : []
+        return step ? recordStore.getRecordsForStep(step) : []
       }),
-    [stateStore.focusedStep]
+    [step]
   ).get()
 
   const renderItem = useCallback(
@@ -57,6 +59,7 @@ const SetEditList: React.FC<Props> = ({
       const isRecord = stepRecords.some(({ guid }) => guid === item.guid)
       const isFocused = selectedSet?.guid === item.guid
       const isDraft = index === sets.length
+
       return (
         <TouchableOpacity
           style={{
@@ -99,7 +102,7 @@ const SetEditList: React.FC<Props> = ({
             <SetEditItem
               set={item}
               isRecord={isRecord}
-              number={stateStore.focusedStep!.setNumberMap[item.guid]}
+              number={step!.setNumberMap[item.guid]}
               toggleSetWarmup={toggleSetWarmup}
               draft={isDraft}
             />
@@ -126,7 +129,7 @@ const SetEditList: React.FC<Props> = ({
     from,
     to
   ) => {
-    stateStore.focusedStep!.reorderSets(from, to)
+    step!.reorderSets(from, to)
   }
 
   const dragListRef = useRef<FlatList>(null)
@@ -134,6 +137,11 @@ const SetEditList: React.FC<Props> = ({
   function toggleSetWarmup(set: WorkoutSet) {
     set.setProp('isWarmup', !set.isWarmup)
   }
+
+  if (showFallback && !sets?.length)
+    return <EmptyState text={translate('noSetsEntered')} />
+  if (!sets?.length) return null
+
   return (
     <Pressable
       style={{ flex: 1 }}
@@ -168,10 +176,6 @@ const SetEditList: React.FC<Props> = ({
           dragListRef.current?.scrollToEnd({ animated: true })
         }
       />
-
-      {!stateStore.focusedStep?.sets?.length && (
-        <EmptyState text={translate('noSetsEntered')} />
-      )}
     </Pressable>
   )
 }
