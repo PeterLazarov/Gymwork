@@ -55,26 +55,6 @@ type Props = {
 
 let temporary: Exercise[] = []
 
-const handleDragEnd: DndProviderProps['onDragEnd'] = ({ active, over }) => {
-  'worklet'
-  if (over) {
-    console.log('onDragEnd', { active, over })
-  }
-}
-
-const handleBegin: DndProviderProps['onBegin'] = () => {
-  'worklet'
-  console.log('onBegin')
-}
-
-const handleFinalize: DndProviderProps['onFinalize'] = ({ state }) => {
-  'worklet'
-  console.log('onFinalize')
-  if (state !== State.FAILED) {
-    console.log('onFinalize')
-  }
-}
-
 const WorkoutDayView: React.FC<Props> = ({
   date = DateTime.now().toISODate(),
 }) => {
@@ -104,12 +84,7 @@ const WorkoutDayView: React.FC<Props> = ({
   // TODO move sets in and out of exercises?
 
   return (
-    <DndProvider
-      style={{ flex: 1, backgroundColor: colors.surfaceContainer }}
-      onBegin={handleBegin}
-      onFinalize={handleFinalize}
-      onDragEnd={handleDragEnd}
-    >
+    <View style={{ flex: 1, backgroundColor: colors.surfaceContainer }}>
       <View style={{ flex: 1 }}>
         {/* // Tabs? (supports side swipe, would look odd to highlight cards (vertical) based on side swipe (horizontal)) */}
 
@@ -124,7 +99,8 @@ const WorkoutDayView: React.FC<Props> = ({
           // Does this even work?
           itemLayoutAnimation={LinearTransition}
           data={
-            stateStore.focusedStep ? [stateStore.focusedStep] : workout.steps
+            // stateStore.focusedStep ? [stateStore.focusedStep] : workout.steps
+            workout.steps
           }
           ItemSeparatorComponent={() => {
             // TODO rest timer?
@@ -266,7 +242,7 @@ const WorkoutDayView: React.FC<Props> = ({
           </Button>
         </View>
       )}
-    </DndProvider>
+    </View>
   )
 }
 

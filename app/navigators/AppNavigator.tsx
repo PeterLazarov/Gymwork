@@ -46,6 +46,8 @@ import { ErrorDetails } from 'app/screens/ErrorDetails'
 import UserFeedbackScreen from 'app/screens/UserFeedback'
 import Welcome from 'app/screens/Welcome'
 import { offscreenRef } from 'app/utils/useShareWorkout'
+import { DndProvider, DndProviderProps } from '@mgcrea/react-native-dnd'
+import { State } from 'react-native-gesture-handler'
 
 /**
  * Documentation:
@@ -93,6 +95,23 @@ export const useRouteParams = <T extends keyof AllStacksParamList>(
  * is pressed while in that screen. Only affects Android.
  */
 const exitRoutes = Config.exitRoutes
+
+const handleDragEnd: DndProviderProps['onDragEnd'] = ({ active, over }) => {
+  'worklet'
+  if (over) {
+    console.log('onDragEnd', { active, over })
+  }
+}
+
+const handleBegin: DndProviderProps['onBegin'] = (e, meta) => {
+  'worklet'
+  console.log('onBegin', meta.activeId)
+}
+
+const handleFinalize: DndProviderProps['onFinalize'] = (e, meta) => {
+  'worklet'
+  console.log('onFinalize', e.state, meta.activeId)
+}
 
 export type StackScreenProps<T extends keyof AllStacksParamList> =
   NativeStackScreenProps<AllStacksParamList, T>
@@ -265,7 +284,17 @@ export const AppNavigator = observer(function AppNavigator(
                     }
                     barStyle={'light-content'}
                   />
-                  <AppStack />
+                  <DndProvider
+                    style={{
+                      flex: 1,
+                      backgroundColor: colors.surfaceContainer,
+                    }}
+                    onBegin={handleBegin}
+                    onFinalize={handleFinalize}
+                    onDragEnd={handleDragEnd}
+                  >
+                    <AppStack />
+                  </DndProvider>
                 </>
               </NavigationContainer>
             </DialogContextProvider>

@@ -74,10 +74,13 @@ const WorkoutEmptyState: React.FC = () => {
       }}
     >
       {actions.length > 0 &&
-        actions.map(action => (
+        actions.map((action, i) => (
           <Card
             key={action.text}
-            containerStyle={{ paddingHorizontal: 8 }}
+            containerStyle={{
+              paddingHorizontal: 8,
+              width: i === 0 ? '100%' : undefined,
+            }}
             onPress={action.onPress}
             content={
               <View style={{ alignItems: 'center' }}>

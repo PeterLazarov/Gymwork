@@ -17,6 +17,11 @@ import { WorkoutSet, WorkoutStep } from 'app/db/models'
 import { useColors, Divider, Icon } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
+import {
+  Draggable,
+  DraggableStack,
+  DraggableStackProps,
+} from '@mgcrea/react-native-dnd'
 
 type Props = {
   step: WorkoutStep
@@ -64,6 +69,7 @@ const SetEditList: React.FC<Props> = ({
 
       return (
         <TouchableOpacity
+          key={item.guid}
           style={{
             // paddingHorizontal: 8,
             borderRadius: 4,
@@ -135,6 +141,13 @@ const SetEditList: React.FC<Props> = ({
   //   step!.reorderSets(from, to)
   // }
 
+  const onStackOrderChange: DraggableStackProps['onOrderChange'] = value => {
+    console.log('onStackOrderChange', value)
+  }
+  const onStackOrderUpdate: DraggableStackProps['onOrderUpdate'] = value => {
+    console.log('onStackOrderUpdate', value)
+  }
+
   const flatListRef = useRef<FlatList>(null)
 
   function toggleSetWarmup(set: WorkoutSet) {
@@ -151,32 +164,32 @@ const SetEditList: React.FC<Props> = ({
         Keyboard.dismiss()
       }}
     >
-      <FlatList
-        data={sets.concat(
-          ...[
-            !selectedSet && settingsStore.previewNextSet
-              ? stateStore.draftSet
-              : undefined,
-          ].filter(Boolean)
-        )}
-        renderItem={renderItem}
-        keyExtractor={set => set.guid || 'draft'}
-        getItemLayout={getItemLayout}
-        // onReordered={handleReorder}
-        // ItemSeparatorComponent={() => (
-        //   <Divider
-        //     orientation="horizontal"
-        //     variant="neutral"
-        //   />
-        // )}
+      <DraggableStack
+        direction="column"
+        gap={10}
         style={{
           paddingVertical: 8,
         }}
-        ref={flatListRef}
-        onContentSizeChange={() =>
-          flatListRef.current?.scrollToEnd({ animated: true })
-        }
-      />
+        onOrderChange={onStackOrderChange}
+        onOrderUpdate={onStackOrderUpdate}
+      >
+        {sets
+          .concat(
+            ...[
+              !selectedSet && settingsStore.previewNextSet
+                ? stateStore.draftSet
+                : undefined,
+            ].filter(Boolean)
+          )
+          .map((item, index) => (
+            <Draggable
+              key={item.guid ?? 123}
+              id={item.guid ?? 123}
+            >
+              {renderItem({ item, index, separators: null as any })}
+            </Draggable>
+          ))}
+      </DraggableStack>
 
       {!step?.sets?.length && !hideFallback && (
         <EmptyState text={translate('noSetsEntered')} />
