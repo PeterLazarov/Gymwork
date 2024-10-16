@@ -1,19 +1,12 @@
 import React, { forwardRef, useRef, useState } from 'react'
 import { FlashList, FlashListProps } from '@shopify/flash-list'
-import {
-  FlatList,
-  FlatListProps,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  View,
-} from 'react-native'
+import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native'
 
 import BlurEffect from './BlurEffect'
-import Animated from 'react-native-reanimated'
 
-type Props = FlatListProps<any>
+type Props = FlashListProps<any>
 
-const IndicatedScrollList = forwardRef<FlatList<any>, Props>(
+const IndicatedScrollList = forwardRef<FlashList<any>, Props>(
   function IndicatedScrollList(
     { onScroll, onContentSizeChange, onLayout, ...otherProps },
     ref
@@ -47,7 +40,7 @@ const IndicatedScrollList = forwardRef<FlatList<any>, Props>(
             position="top"
           />
         )}
-        <Animated.FlatList
+        <FlashList
           ref={ref}
           {...otherProps}
           onContentSizeChange={(width, height) => {
@@ -58,9 +51,6 @@ const IndicatedScrollList = forwardRef<FlatList<any>, Props>(
 
             onContentSizeChange?.(width, height)
           }}
-          scrollToOverflowEnabled={true}
-          overScrollMode={'always'}
-          // over
           onLayout={event => {
             // Save the visible area height
             visibleHeight.current = Math.round(event.nativeEvent.layout.height)

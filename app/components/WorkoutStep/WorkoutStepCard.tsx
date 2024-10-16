@@ -10,11 +10,7 @@ export type WorkoutStepCardProps = {
   step: WorkoutStep
 } & Partial<CardProps>
 
-const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({
-  step,
-  containerStyle,
-  ...rest
-}) => {
+const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, ...rest }) => {
   const title =
     step.type === 'straightSet'
       ? step.exercise!.name
@@ -37,13 +33,10 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({
         </>
       }
       {...rest}
-      containerStyle={[
-        {
-          marginVertical: 8,
-          marginHorizontal: 8,
-          ...(containerStyle ?? {}),
-        },
-      ]}
+      containerStyle={{
+        marginVertical: 8,
+        marginHorizontal: 8,
+      }}
     />
   )
 }
