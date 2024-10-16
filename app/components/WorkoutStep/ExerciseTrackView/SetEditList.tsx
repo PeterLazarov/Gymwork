@@ -63,7 +63,7 @@ const SetEditList: React.FC<Props> = ({
       return (
         <TouchableOpacity
           style={{
-            paddingHorizontal: 8,
+            // paddingHorizontal: 8,
             backgroundColor: isActive
               ? colors.primaryContainer
               : isFocused
@@ -168,9 +168,6 @@ const SetEditList: React.FC<Props> = ({
             variant="neutral"
           />
         )}
-        style={{
-          paddingVertical: 8,
-        }}
         ref={dragListRef}
         onContentSizeChange={() =>
           dragListRef.current?.scrollToEnd({ animated: true })
