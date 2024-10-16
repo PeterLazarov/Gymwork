@@ -3,9 +3,8 @@ import { Alert, View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
 import { translate } from 'app/i18n'
-import { Text, Card, Icon, useColors } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
-import EmptyState from '../EmptyState'
+import ActionCard from '../ActionCard'
 
 const WorkoutEmptyState: React.FC = () => {
   const {
@@ -15,7 +14,12 @@ const WorkoutEmptyState: React.FC = () => {
   const hasWorkouts = workoutStore.workouts.length > 0
   const hasTemplates = workoutStore.workoutTemplates.length > 0
 
-  const actions = useMemo(() => {
+  function startWorkout() {
+    workoutStore.createWorkout()
+    navigate('ExerciseSelect')
+  }
+
+  const secondaryActions = useMemo(() => {
     const result = [
       {
         icon: 'copy-outline',
@@ -35,7 +39,7 @@ const WorkoutEmptyState: React.FC = () => {
               Alert.alert('', translate('useTemplateAlert')),
         forbidden: !hasTemplates,
       },
-    ]
+    ] as const
 
     return result
   }, [hasWorkouts, hasTemplates])
@@ -50,48 +54,35 @@ const WorkoutEmptyState: React.FC = () => {
     navigate('TemplateSelect')
   }
 
-  const colors = useColors()
-
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 20,
-      }}
-    >
-      {actions.length > 0 &&
-        actions.map(action => (
-          <Card
+    <View style={{ flex: 1, padding: 16, gap: 16, justifyContent: 'center' }}>
+      <ActionCard
+        onPress={startWorkout}
+        icon="dumbbell"
+      >
+        {translate('startEmptyWorkout')}
+      </ActionCard>
+      <View
+        style={{
+          flexDirection: 'row',
+          gap: 16,
+        }}
+      >
+        {secondaryActions.map(action => (
+          <View
+            style={{ flexGrow: 1 }}
             key={action.text}
-            containerStyle={{ paddingHorizontal: 8 }}
-            onPress={action.onPress}
-            content={
-              <View style={{ alignItems: 'center' }}>
-                <Icon
-                  color={
-                    action.forbidden ? colors.outlineVariant : colors.onSurface
-                  }
-                  icon={action.icon}
-                  style={{ paddingBottom: 10 }}
-                />
-                <Text
-                  style={{
-                    color: action.forbidden
-                      ? colors.outlineVariant
-                      : colors.onSurface,
-                  }}
-                >
-                  {action.text}
-                </Text>
-              </View>
-            }
-          />
+          >
+            <ActionCard
+              onPress={action.onPress}
+              disabled={action.forbidden}
+              icon={action.icon}
+            >
+              {action.text}
+            </ActionCard>
+          </View>
         ))}
-      {actions.length === 0 && (
-        <EmptyState text={translate('noWorkoutsEntered')} />
-      )}
+      </View>
     </View>
   )
 }

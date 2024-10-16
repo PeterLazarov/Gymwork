@@ -23,7 +23,7 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.surfaceContainer }}>
-      {workout && workout.steps.length > 0 ? (
+      {workout ? (
         <>
           {settingsStore.showCommentsCard && workout.hasComments && (
             <WorkoutCommentsCard
