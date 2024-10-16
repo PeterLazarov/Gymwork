@@ -51,7 +51,27 @@ const WorkoutHeader: React.FC = () => {
   const shareWorkout = useShareWorkout()
   return (
     <Header>
-      <Header.Title title={dateLabel} />
+      {stateStore.focusedExercise && (
+        <IconButton
+          onPress={() => {
+            stateStore.setFocusedStep('')
+          }}
+          disabled={!stateStore.focusedStep}
+          underlay="darker"
+        >
+          <Icon
+            icon="chevron-back"
+            color={colors.onPrimary}
+          />
+        </IconButton>
+      )}
+      <Header.Title
+        title={
+          stateStore.focusedExercise
+            ? stateStore.focusedExercise.name
+            : dateLabel
+        }
+      />
 
       {settingsStore.showWorkoutTimer && (
         <>

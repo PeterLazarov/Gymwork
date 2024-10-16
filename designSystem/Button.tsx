@@ -48,6 +48,7 @@ export const Button: React.FC<ButtonProps> = ({
           height: buttonSizes[size],
           gap: 6,
           flexDirection: 'row',
+          paddingHorizontal: 6,
           backgroundColor: buttonColors[color],
           borderWidth: type === 'outline' ? 2 : 0,
           borderColor:

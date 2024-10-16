@@ -15,6 +15,12 @@ const WorkoutEmptyState: React.FC = () => {
   const hasWorkouts = workoutStore.workouts.length > 0
   const hasTemplates = workoutStore.workoutTemplates.length > 0
 
+  function startWorkout() {
+    workoutStore.createWorkout()
+    // navigate('ExerciseSelect')
+    // Then select exercises
+  }
+
   const actions = useMemo(() => {
     const result = [
       {
@@ -34,6 +40,12 @@ const WorkoutEmptyState: React.FC = () => {
               // TODO revisit once templates can be created apart from workouts
               Alert.alert('', translate('useTemplateAlert')),
         forbidden: !hasTemplates,
+      },
+      {
+        icon: 'dumbbell',
+        text: translate('startWorkout'),
+        onPress: startWorkout,
+        forbidden: false,
       },
     ]
 

@@ -113,7 +113,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
       style={[
         {
           flexDirection: 'column',
-          flexGrow: 1,
+          flexGrow: 9999,
           gap: 8,
           display: 'flex',
           backgroundColor: colors.surfaceContainerLow,

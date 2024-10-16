@@ -116,6 +116,7 @@ const en = {
   shareWorkout: 'Share Workout',
   noWorkoutToShare: 'No workout to share',
   sharingFailed: 'Sharing Failed',
+  startWorkout: 'Start Workout',
 }
 
 export default en

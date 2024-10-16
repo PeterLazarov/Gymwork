@@ -22,7 +22,10 @@ const ExerciseListItem: React.FC<Props> = ({
   const colors = useColors()
 
   return (
-    <TouchableOpacity onPress={() => onSelect(exercise)}>
+    <TouchableOpacity
+      onPress={() => onSelect(exercise)}
+      style={{ height }}
+    >
       <View
         style={{
           width: '100%',

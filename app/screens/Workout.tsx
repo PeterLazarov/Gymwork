@@ -4,6 +4,7 @@ import WorkoutHeader from 'app/components/Workout/WorkoutHeader'
 import WorkoutHorizontalList from 'app/components/Workout/WorkoutHorizontalList'
 import { View } from 'react-native'
 import { useColors } from 'designSystem'
+import WorkoutDayView2 from 'app/components/Workout/WorkoutDayView2'
 
 const WorkoutPageScreen: React.FC = () => {
   const colors = useColors()
@@ -13,7 +14,7 @@ const WorkoutPageScreen: React.FC = () => {
       <View style={{ flex: 1, backgroundColor: colors.surfaceContainer }}>
         <WorkoutHeader />
 
-        <WorkoutHorizontalList />
+        <WorkoutDayView2 />
       </View>
     </>
   )

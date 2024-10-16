@@ -81,11 +81,14 @@ type EntypoIcon = (typeof EntypoIcons)[number]
 const FontAwesome6Icons = [
   'grin-stars',
 ] as const satisfies readonly (keyof typeof FontAwesome6.glyphMap)[]
-type FontAwesome6Icon = (typeof FontAwesome6)[number]
+// TODO fix broken types
+// type FontAwesome6Icon = (typeof FontAwesome6)[number]
+type FontAwesome6Icon = string
 
 // todo: get typing of all ant design icons
 export type IconProps = {
-  icon: IonicIcon | MCIcon | EntypoIcon | FontAwesome6Icon
+  // TODO readd FontAwesome6Icon when type are fixed icon: IonicIcon | MCIcon | EntypoIcon | FontAwesome6Icon
+  icon: IonicIcon | MCIcon | EntypoIcon
   size?: keyof typeof iconSizes
   color?: string
   style?: StyleProp<TextStyle>

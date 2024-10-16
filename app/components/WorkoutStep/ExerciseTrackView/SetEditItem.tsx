@@ -9,6 +9,7 @@ import { useColors, Icon, palettes } from 'designSystem'
 import SetWarmupButton from './SetWarmupButton'
 import SetDataLabel from '../SetDataLabel'
 import { useStores } from 'app/db/helpers/useStores'
+import SetCompletedButton from './SetCompletedButton'
 
 type Props = {
   set: WorkoutSet
@@ -18,7 +19,7 @@ type Props = {
   draft?: boolean
 } & View['props']
 
-const hideZeroRest = true
+const hideZeroRest = false
 
 const SetEditItem: React.FC<Props> = ({
   set,
@@ -44,7 +45,7 @@ const SetEditItem: React.FC<Props> = ({
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-around',
-          paddingHorizontal: 10,
+          paddingHorizontal: 6,
           paddingVertical: 1,
           backgroundColor: draft ? colors.surfaceContainer : undefined,
         },
@@ -109,16 +110,17 @@ const SetEditItem: React.FC<Props> = ({
       )}
       {settingsStore.measureRest && (
         <SetDataLabel
-          value={
-            set.rest || !hideZeroRest
-              ? `${translate('rest')} ${getFormatedDuration(
-                  set.rest ?? 0,
-                  true
-                )}`
-              : ''
-          }
+          unit={translate('rest')}
+          value={`${Math.round(set.rest ?? 0)}s`}
         />
       )}
+
+      <SetCompletedButton
+        onPress={() => {
+          set.setProp('completed', !set.completed)
+        }}
+        completed={set.completed}
+      />
     </View>
   )
 }
