@@ -44,6 +44,7 @@ const SetEditItem: React.FC<Props> = ({
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-around',
+          paddingHorizontal: 10,
           paddingVertical: 1,
           backgroundColor: draft ? colors.surfaceContainer : undefined,
         },

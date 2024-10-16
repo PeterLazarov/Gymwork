@@ -1,10 +1,10 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
 
+import StepSetsList from './StepSetsList'
 import { WorkoutStep } from 'app/db/models'
 import { Card } from 'designSystem'
 import { CardProps } from 'designSystem/Card'
-import SetEditList from './ExerciseTrackView/SetEditList'
 
 export type WorkoutStepCardProps = {
   step: WorkoutStep
@@ -22,20 +22,15 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, ...rest }) => {
     <Card
       title={title}
       content={
-        <>
-          <SetEditList
-            step={step}
-            sets={step.sets}
-            selectedSet={null}
-            setSelectedSet={() => {}}
-            showFallback={false}
-          ></SetEditList>
-        </>
+        <StepSetsList
+          step={step}
+          sets={step.sets}
+        />
       }
       {...rest}
       containerStyle={{
-        marginVertical: 8,
-        marginHorizontal: 8,
+        marginVertical: 10,
+        marginHorizontal: 20,
       }}
     />
   )

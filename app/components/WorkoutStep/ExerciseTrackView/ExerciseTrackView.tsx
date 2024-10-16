@@ -117,7 +117,6 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
           gap: 8,
           display: 'flex',
           backgroundColor: colors.surfaceContainerLow,
-          paddingHorizontal: 8,
         },
       ]}
     >
@@ -129,7 +128,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
       />
 
       {stateStore.draftSet && (
-        <View>
+        <View style={{ paddingHorizontal: 8 }}>
           <SetEditControls
             value={stateStore.draftSet}
             onSubmit={handleAdd}
