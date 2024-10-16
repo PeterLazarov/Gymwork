@@ -1,5 +1,5 @@
 import { TouchableOpacityProps } from 'react-native-gesture-handler'
-
+import { Children, ReactNode } from 'react'
 import { Text, useColors } from '.'
 import { TextProps, TouchableOpacity } from 'react-native'
 
@@ -10,6 +10,7 @@ type ButtonVariants = {
 type ButtonProps = TouchableOpacityProps &
   ButtonVariants & {
     size?: 'default' | 'small'
+    children?: ReactNode | string
   }
 
 const buttonSizes = {
@@ -22,6 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant,
   type,
   style,
+  children,
   ...otherProps
 }) => {
   const colors = useColors()
@@ -57,7 +59,13 @@ export const Button: React.FC<ButtonProps> = ({
       ]}
       disabled={disabled}
       {...otherProps}
-    />
+    >
+      {typeof children === 'string' ? (
+        <ButtonText variant={variant}>{children}</ButtonText>
+      ) : (
+        children
+      )}
+    </TouchableOpacity>
   )
 }
 
