@@ -1,11 +1,10 @@
 import { observer } from 'mobx-react-lite'
-import React from 'react'
-import { ListRenderItemInfo } from '@shopify/flash-list'
+import React, { useRef, useState } from 'react'
 
-import { Workout, WorkoutStep } from 'app/db/models'
+import { Workout } from 'app/db/models'
 import WorkoutStepCard from '../WorkoutStep/WorkoutStepCard'
 import { useStores } from 'app/db/helpers/useStores'
-import { IndicatedScrollList } from 'designSystem'
+import { FlatList } from 'react-native'
 
 type Props = {
   workout: Workout
@@ -20,27 +19,55 @@ const WorkoutStepList: React.FC<Props> = ({ workout }) => {
   function onCardPress(stepGuid: string) {
     stateStore.setFocusedStep(stepGuid)
     navigate('WorkoutStep')
+
+    // TODO uncomment for WIP scrollable list
+    // if (stateStore.focusedStepGuid === stepGuid) {
+    //   stateStore.setFocusedStep('')
+    // } else {
+    //   stateStore.setFocusedStep(stepGuid)
+    //   listRef.current?.scrollToIndex({
+    //     index: workout.steps.findIndex(s => s.guid === stepGuid),
+    //     animated: true,
+    //   })
+    // }
   }
 
-  const renderItem = ({ item, index }: ListRenderItemInfo<WorkoutStep>) => {
-    const isLast = index === workout.steps.length - 1
-    return (
-      <WorkoutStepCard
-        step={item}
-        onPress={() => onCardPress(item.guid)}
-        containerStyle={{
-          marginBottom: isLast ? 0 : undefined,
-        }}
-      />
-    )
-  }
+  const listRef = useRef<FlatList>(null)
+  const [scrollViewHeight, setScrollViewHeight] = useState(0)
+  const [lastCardHeight, setLastCardHeight] = useState(0)
 
   return (
-    <IndicatedScrollList
-      data={workout.steps.slice()}
-      renderItem={renderItem}
-      keyExtractor={item => `${workout!.date}_${item.guid}`}
-      estimatedItemSize={140}
+    <FlatList
+      overScrollMode="always"
+      ref={listRef}
+      scrollToOverflowEnabled={true}
+      onLayout={e => {
+        if (!scrollViewHeight) {
+          setScrollViewHeight(e.nativeEvent.layout.height)
+        }
+      }}
+      data={workout.steps}
+      renderItem={({ item, index }) => {
+        const isLast = index === workout.steps.length - 1
+
+        return (
+          <WorkoutStepCard
+            key={item.guid}
+            step={item}
+            onPress={() => onCardPress(item.guid)}
+            onLayout={e => {
+              if (isLast && !lastCardHeight) {
+                setLastCardHeight(e.nativeEvent.layout.height)
+              }
+            }}
+            containerStyle={{
+              marginBottom: isLast
+                ? Math.max(scrollViewHeight - lastCardHeight - 8, 0)
+                : undefined,
+            }}
+          />
+        )
+      }}
     />
   )
 }
