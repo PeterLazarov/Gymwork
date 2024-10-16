@@ -60,3 +60,14 @@ Workout programs
 LOW PRIORITY
 
 - perf: move styles to stylesheet objects
+
+Experiments:
+
+1. Hevy-like start workout buttons(start workout looks different than other btns)
+2. Inline editing -> do try
+   Compact entry (clicking on a value in a set opens only the control to edit that value)
+3. Set completion -> try BUT beware of records
+
+Ways to make the app crash:
+
+- Add a new translation string to en.ts
