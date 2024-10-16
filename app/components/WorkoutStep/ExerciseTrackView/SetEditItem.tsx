@@ -18,7 +18,7 @@ type Props = {
   draft?: boolean
 } & View['props']
 
-const hideZeroRest = true
+const hideZeroRest = false
 
 const SetEditItem: React.FC<Props> = ({
   set,
