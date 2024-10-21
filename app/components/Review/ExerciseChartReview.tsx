@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
@@ -19,15 +19,11 @@ const ExerciseChartStats: React.FC<ExerciseChartStatsProps> = ({
   exercise,
 }) => {
   const { stateStore } = useStores()
-  const [activeView, setActiveView] = useState<CHART_VIEW>(
-    Object.keys(CHART_VIEWS)[0] as CHART_VIEW_KEY
-  )
-  const toggleViewButtons = (Object.keys(CHART_VIEWS) as CHART_VIEW_KEY[]).map(
-    view => ({
-      text: view,
-      value: CHART_VIEWS[view],
-    })
-  )
+  const viewsArray = Object.keys(CHART_VIEWS) as CHART_VIEW_KEY[]
+  const toggleViewButtons = viewsArray.map(view => ({
+    text: view,
+    value: CHART_VIEWS[view],
+  }))
 
   return (
     <View style={styles.screen}>
@@ -41,7 +37,7 @@ const ExerciseChartStats: React.FC<ExerciseChartStatsProps> = ({
       >
         {stateStore.chartHeight !== 0 && (
           <ExerciseHistoryChart
-            view={activeView}
+            view={stateStore.chartView}
             height={stateStore.chartHeight}
             width={stateStore.chartWidth}
             exercise={exercise || stateStore.focusedExercise!}
@@ -51,9 +47,9 @@ const ExerciseChartStats: React.FC<ExerciseChartStatsProps> = ({
 
       <ToggleGroupButton
         buttons={toggleViewButtons}
-        initialActiveIndex={0}
+        initialActiveIndex={viewsArray.indexOf(stateStore.chartView)}
         containerStyle={{ padding: 10 }}
-        onChange={view => setActiveView(view as CHART_VIEW)}
+        onChange={view => stateStore.setProp('chartView', view as CHART_VIEW)}
       />
     </View>
   )

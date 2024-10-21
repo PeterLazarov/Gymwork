@@ -7,6 +7,7 @@ import { WorkoutStore } from './WorkoutStore'
 import { RecordStore } from './RecordStore'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import { ExerciseRecord, Workout, WorkoutSetModel } from '../models'
+import { CHART_VIEWS } from 'app/components/ExerciseHistoryChart'
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -28,6 +29,10 @@ export const StateStoreModel = types
     footerHeight: 0,
     chartWidth: 0,
     chartHeight: 0,
+    chartView: types.optional(types.enumeration(
+      'chartView',
+      Object.values(CHART_VIEWS)
+    ), '30D' ),
   })
   .views(self => ({
     get rootStore(): RootStore {
