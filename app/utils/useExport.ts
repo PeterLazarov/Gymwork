@@ -30,7 +30,7 @@ export function useExport() {
 
       await StorageAccessFramework.createFileAsync(
         permissions.directoryUri,
-        `Gymwork-${now.monthShort}-${now.day}.json`,
+        `${now.monthShort}-${now.day}-Gymwork-.json`,
         'application/json'
       ).then(async uri => {
         await writeAsStringAsync(uri, jsonString)
