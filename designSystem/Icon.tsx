@@ -21,6 +21,7 @@ const IoniconsIcons = [
   'chevron-forward',
   'chevron-down',
   'add',
+  'add-circle-outline',
   'remove',
   'close',
   'ellipsis-vertical',

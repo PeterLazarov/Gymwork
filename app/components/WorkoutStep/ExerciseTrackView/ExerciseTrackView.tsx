@@ -125,7 +125,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
         step={step}
         sets={step?.exerciseSetsMap[focusedExercise.guid] ?? []}
         selectedSet={selectedSet}
-        setSelectedSet={setSelectedSet}
+        onPressSet={setSelectedSet}
       />
 
       {stateStore.draftSet && (

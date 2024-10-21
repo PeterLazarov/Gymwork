@@ -1,11 +1,14 @@
 import React, { useMemo } from 'react'
-import { StyleSheet, View, ViewStyle } from 'react-native'
-
-import { Text, useColors } from '.'
 import {
+  StyleSheet,
+  View,
+  ViewStyle,
+  // ! Switching these imports to RNGH makes children non-pressable
   TouchableOpacity,
   TouchableWithoutFeedbackProps,
-} from 'react-native-gesture-handler'
+} from 'react-native'
+
+import { Text, useColors } from '.'
 
 export type CardProps = Omit<
   TouchableWithoutFeedbackProps,
@@ -42,6 +45,17 @@ const Card: React.FC<CardProps> = ({
       </View>
     </TouchableOpacity>
   )
+  // : (
+  // <View
+  //   style={[styles.card, containerStyle]}
+  //   {...otherProps}
+  // >
+  //   <View style={[styles.content, style]}>
+  //     {title && <Text style={styles.title}>{title}</Text>}
+  //     <View>{content}</View>
+  //   </View>
+  // </View>
+  // )
 }
 
 const makeStyles = (colors: ReturnType<typeof useColors>) =>

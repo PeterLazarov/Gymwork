@@ -1,20 +1,34 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { WorkoutStep } from 'app/db/models'
-import { Card } from 'designSystem'
+import { WorkoutSet, WorkoutStep } from 'app/db/models'
+import { Card, useColors } from 'designSystem'
 import { CardProps } from 'designSystem/Card'
 import SetEditList from './ExerciseTrackView/SetEditList'
+import { View, ViewStyle } from 'react-native'
+import { Button, Icon, IconButton } from 'designSystem'
 
 export type WorkoutStepCardProps = {
   step: WorkoutStep
+  selectedSet: WorkoutSet | null
+  onSelectSet(set: WorkoutSet): void
+  onPressAdd(): void
+  onDragStart(): void
+  onDragEnd(): void
 } & Partial<CardProps>
 
 const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({
   step,
+  selectedSet,
   containerStyle,
+  onSelectSet,
+  onPressAdd,
+  onDragStart,
+  onDragEnd,
   ...rest
 }) => {
+  const colors = useColors()
+
   const title =
     step.type === 'straightSet'
       ? step.exercise!.name
@@ -30,10 +44,25 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({
           <SetEditList
             step={step}
             sets={step.sets}
-            selectedSet={null}
-            setSelectedSet={() => {}}
+            selectedSet={selectedSet}
+            onPressSet={onSelectSet}
             showFallback={false}
-          ></SetEditList>
+            onDragEnd={onDragEnd}
+            onDragStart={onDragStart}
+          />
+          <IconButton
+            size="md"
+            onPress={onPressAdd}
+            style={{
+              alignSelf: 'center',
+              transform: [{ translateY: 8 }],
+            }}
+          >
+            <Icon
+              size="large"
+              icon="add"
+            />
+          </IconButton>
         </>
       }
       {...rest}
@@ -41,7 +70,7 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({
         {
           marginVertical: 8,
           marginHorizontal: 8,
-          ...(containerStyle ?? {}),
+          ...(containerStyle ?? ({} as ViewStyle)),
         },
       ]}
     />

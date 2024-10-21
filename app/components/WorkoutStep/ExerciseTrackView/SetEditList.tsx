@@ -21,7 +21,9 @@ type Props = {
   step: WorkoutStep
   sets: WorkoutSet[]
   selectedSet: WorkoutSet | null
-  setSelectedSet: (set: WorkoutSet | null) => void
+  onPressSet: (set: WorkoutSet) => void
+  onDragStart(): void
+  onDragEnd(): void
   showFallback?: boolean
 }
 
@@ -29,16 +31,14 @@ const SetEditList: React.FC<Props> = ({
   step,
   sets = [],
   selectedSet,
-  setSelectedSet,
+  onPressSet,
+  onDragStart: _onDragStart,
+  onDragEnd: _onDragEnd,
   showFallback = true,
 }) => {
   const colors = useColors()
 
   const { stateStore, recordStore, settingsStore } = useStores()
-
-  function toggleSelectedSet(set: WorkoutSet) {
-    setSelectedSet(set.guid === selectedSet?.guid ? null : set)
-  }
 
   const stepRecords = useMemo(
     () =>
@@ -58,12 +58,14 @@ const SetEditList: React.FC<Props> = ({
     }: DragListRenderItemInfo<WorkoutSet>) => {
       const isRecord = stepRecords.some(({ guid }) => guid === item.guid)
       const isFocused = selectedSet?.guid === item.guid
+      // console.log(selectedSet?.guid, item.guid, { isFocused })
       const isDraft = index === sets.length
 
       return (
         <TouchableOpacity
           style={{
-            // paddingHorizontal: 8,
+            paddingHorizontal: 4,
+            borderRadius: 4,
             backgroundColor: isActive
               ? colors.primaryContainer
               : isFocused
@@ -71,16 +73,22 @@ const SetEditList: React.FC<Props> = ({
               : undefined,
           }}
           onLongPress={() => {
-            !isDraft && onDragStart()
+            if (!isDraft) {
+              onDragStart()
+              _onDragStart()
+            }
           }}
           onPressOut={() => {
-            !isDraft && onDragEnd()
+            if (!isDraft) {
+              onDragEnd()
+              _onDragEnd()
+            }
           }}
           onPress={e => {
             e.preventDefault()
-            if (!isDraft) {
-              toggleSelectedSet(item)
-            }
+            // if (!isDraft) {
+            onPressSet(item)
+            // }
           }}
         >
           <View
@@ -110,7 +118,7 @@ const SetEditList: React.FC<Props> = ({
         </TouchableOpacity>
       )
     },
-    [selectedSet, stepRecords]
+    [selectedSet?.guid, stepRecords]
   )
 
   const ITEM_HEIGHT = 62
@@ -146,7 +154,8 @@ const SetEditList: React.FC<Props> = ({
     <Pressable
       style={{ flex: 1 }}
       onPress={() => {
-        setSelectedSet(null)
+        // console.log('123')
+        // setSelectedSet(null)
         Keyboard.dismiss()
       }}
     >

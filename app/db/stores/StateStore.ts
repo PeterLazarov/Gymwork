@@ -46,6 +46,12 @@ export const StateStoreModel = types
       const focusedStep = this.openedWorkout?.stepsMap[self.focusedStepGuid]
       return focusedStep
     },
+    get highlightedSet() {
+      return this.workoutStore.sortedWorkouts
+        .map(s => s.allSets)
+        .flat()
+        .find(set => set.guid === self.highlightedSetGuid)
+    },
     // ! TODO rethink
     get focusedExercise() {
       return (
