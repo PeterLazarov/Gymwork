@@ -16,6 +16,7 @@ type Props = {
   number?: number
   toggleSetWarmup: (set: WorkoutSet) => void
   draft?: boolean
+  showSetCompletion?: boolean
 } & View['props']
 
 const hideZeroRest = false
@@ -27,6 +28,7 @@ const SetEditItem: React.FC<Props> = ({
   toggleSetWarmup,
   style,
   draft,
+  showSetCompletion,
   ...rest
 }) => {
   const colors = useColors()
@@ -58,7 +60,7 @@ const SetEditItem: React.FC<Props> = ({
           alignItems: 'center',
           flexDirection: 'row',
           paddingVertical: 4,
-          gap: 4,
+          gap: 8,
         }}
       >
         <SetEditItemButton
@@ -118,6 +120,18 @@ const SetEditItem: React.FC<Props> = ({
               : ''
           }
         />
+      )}
+
+      {showSetCompletion && (
+        <View style={{ marginLeft: 8 }}>
+          <SetEditItemButton
+            icon={'check'}
+            onPress={() => {
+              set.setProp('completed', !set.completed)
+            }}
+            color={set.completed ? color : colors.outlineVariant}
+          />
+        </View>
       )}
     </View>
   )

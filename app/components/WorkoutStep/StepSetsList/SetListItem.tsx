@@ -16,6 +16,7 @@ type Props = {
   number?: number
   isFocused?: boolean
   isRecord?: boolean
+  showSetCompletion?: boolean
 }
 
 const SetListItem: React.FC<Props> = ({
@@ -25,6 +26,7 @@ const SetListItem: React.FC<Props> = ({
   isRecord,
   letter,
   number,
+  showSetCompletion,
 }) => {
   const colors = useColors()
   const { settingsStore } = useStores()
@@ -80,6 +82,14 @@ const SetListItem: React.FC<Props> = ({
         <SetDataLabel
           value={getFormatedDuration(set.rest)}
           isFocused={isFocused}
+        />
+      )}
+
+      {showSetCompletion && (
+        <Icon
+          size="small"
+          icon={'check'}
+          color={set.completed ? color : colors.outlineVariant}
         />
       )}
     </View>

@@ -23,6 +23,9 @@ export const SettingsStoreModel = types
     showCommentsCard: true,
     previewNextSet: false,
     showWorkoutTimer: true,
+
+    // ! TODO Currenlty makes sense only for copyWorkout + includeSets!
+    showSetCompletion: false,
   })
   .actions(withSetPropAction)
   .actions(self => ({

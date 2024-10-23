@@ -135,7 +135,24 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
             )
           }
         >
-          Show Workout Timer
+          {translate('showWorkoutTimer')}
+        </SettingsToggleItem>
+
+        <Divider
+          variant="neutral"
+          orientation="horizontal"
+        />
+
+        <SettingsToggleItem
+          enabled={settingsStore.showSetCompletion}
+          onToggle={() =>
+            settingsStore.setProp(
+              'showSetCompletion',
+              !settingsStore.showSetCompletion
+            )
+          }
+        >
+          {translate('showSetCompletion')}
         </SettingsToggleItem>
 
         <Divider

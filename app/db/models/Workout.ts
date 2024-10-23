@@ -152,6 +152,9 @@ export const WorkoutModel = types
         rpe: self.rpe,
       }
     },
+    get hasIncompleteSets(): boolean {
+      return this.allSets.some(set => set.completed === false)
+    },
   }))
   .actions(withSetPropAction)
   .actions(workout => ({

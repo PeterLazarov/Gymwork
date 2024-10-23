@@ -3,8 +3,9 @@ import { observer } from 'mobx-react-lite'
 import { computed } from 'mobx'
 
 import SetListItem from './SetListItem'
-import { WorkoutSet, WorkoutStep } from 'app/db/models'
+import { WorkoutModel, WorkoutSet, WorkoutStep } from 'app/db/models'
 import { useStores } from 'app/db/helpers/useStores'
+import { getParentOfType } from 'mobx-state-tree'
 
 export type StepSetsListProps = {
   step: WorkoutStep
@@ -17,9 +18,13 @@ const StepSetsList: React.FC<StepSetsListProps> = ({
   sets,
   hideSupersetLetters = false,
 }) => {
-  const { stateStore, recordStore } = useStores()
+  const { stateStore, recordStore, settingsStore } = useStores()
 
   const stepRecords = computed(() => recordStore.getRecordsForStep(step)).get()
+  // TODO deduplicate
+  const showSetCompletion =
+    settingsStore.showSetCompletion &&
+    getParentOfType(step, WorkoutModel).hasIncompleteSets
 
   return (
     <>
@@ -36,6 +41,7 @@ const StepSetsList: React.FC<StepSetsListProps> = ({
               : step.exerciseLettering[set.exercise.guid]
           }
           number={step.setNumberMap[set.guid]}
+          showSetCompletion={showSetCompletion}
         />
       ))}
     </>

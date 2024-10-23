@@ -12,10 +12,11 @@ import { computed } from 'mobx'
 
 import SetEditItem from './SetEditItem'
 import { useStores } from 'app/db/helpers/useStores'
-import { WorkoutSet, WorkoutStep } from 'app/db/models'
+import { WorkoutModel, WorkoutSet, WorkoutStep } from 'app/db/models'
 import { useColors, Divider, Icon } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
+import { getParentOfType } from 'mobx-state-tree'
 
 type Props = {
   step: WorkoutStep
@@ -47,6 +48,10 @@ const SetEditList: React.FC<Props> = ({
       }),
     [step]
   ).get()
+
+  const showSetCompletion =
+    settingsStore.showSetCompletion &&
+    getParentOfType(step, WorkoutModel).hasIncompleteSets
 
   const renderItem = useCallback(
     ({
@@ -105,6 +110,7 @@ const SetEditList: React.FC<Props> = ({
               number={step!.setNumberMap[item.guid]}
               toggleSetWarmup={toggleSetWarmup}
               draft={isDraft}
+              showSetCompletion={showSetCompletion}
             />
           </View>
         </TouchableOpacity>

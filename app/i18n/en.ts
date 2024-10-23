@@ -117,6 +117,8 @@ const en = {
   noWorkoutToShare: 'No workout to share',
   sharingFailed: 'Sharing Failed',
   startEmptyWorkout: 'Start Empty Workout',
+  showWorkoutTimer: 'Show Workout Timer',
+  showSetCompletion: 'Show Set Completion',
 }
 
 export default en

@@ -6,10 +6,7 @@ import { ExerciseModel } from './Exercise'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 import convert from 'convert-units'
 import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction'
-import {
-  measurementDefaults,
-  measurementUnits,
-} from './ExerciseMeasurement'
+import { measurementDefaults, measurementUnits } from './ExerciseMeasurement'
 
 export const WorkoutSetModel = types
   .model('WorkoutSet')
@@ -34,6 +31,8 @@ export const WorkoutSetModel = types
     restMs: types.maybe(types.number),
 
     createdAt: types.optional(types.Date, () => Date.now()),
+
+    completed: true,
   })
   .views(set => ({
     get measurementValue() {

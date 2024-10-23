@@ -71,3 +71,4 @@ Experiments:
 Ways to make the app crash:
 
 - Add a new translation string to en.ts
+- Make ANY change in the store (could just be an added comment)

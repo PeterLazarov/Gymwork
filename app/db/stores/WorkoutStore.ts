@@ -20,6 +20,16 @@ import {
 import { isDev } from 'app/utils/isDev'
 import { keepAlive } from 'mobx-utils'
 
+function getClonedIncompleteNoIdSets(
+  sets: WorkoutSet[]
+): WorkoutSetSnapshotIn[] {
+  return sets.map(({ guid, exercise, ...otherProps }) => ({
+    exercise: exercise.guid,
+    ...otherProps,
+    completed: false,
+  }))
+}
+
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
   .props({
@@ -146,17 +156,10 @@ export const WorkoutStoreModel = types
       self.workouts.push(created)
     },
     copyWorkout(template: Workout, includeSets: boolean) {
-      const getCleanedSets = (sets: WorkoutSet[]): WorkoutSetSnapshotIn[] => {
-        return sets.map(({ guid, exercise, ...otherProps }) => ({
-          exercise: exercise.guid,
-          ...otherProps,
-        }))
-      }
-
       const cleanedSteps: WorkoutStepSnapshotIn[] = template.steps.map(
         ({ guid, exercises, sets, ...otherProps }) => ({
           exercises: exercises.map(e => e.guid),
-          sets: includeSets ? getCleanedSets(sets) : [],
+          sets: includeSets ? getClonedIncompleteNoIdSets(sets) : [],
           ...otherProps,
         })
       )
