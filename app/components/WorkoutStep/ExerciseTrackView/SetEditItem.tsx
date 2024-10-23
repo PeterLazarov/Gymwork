@@ -6,7 +6,7 @@ import { WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { getFormatedDuration } from 'app/utils/time'
 import { useColors, Icon, palettes } from 'designSystem'
-import SetWarmupButton from './SetWarmupButton'
+import SetEditItemButton from './SetEditItemButton'
 import SetDataLabel from '../SetDataLabel'
 import { useStores } from 'app/db/helpers/useStores'
 
@@ -61,9 +61,9 @@ const SetEditItem: React.FC<Props> = ({
           gap: 4,
         }}
       >
-        <SetWarmupButton
-          isWarmup={set.isWarmup}
-          toggleSetWarmup={() => toggleSetWarmup(set)}
+        <SetEditItemButton
+          icon={set.isWarmup ? 'yoga' : undefined}
+          onPress={() => toggleSetWarmup(set)}
           symbol={symbol}
           color={color}
         />

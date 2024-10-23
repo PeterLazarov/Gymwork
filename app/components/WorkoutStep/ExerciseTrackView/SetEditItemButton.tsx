@@ -1,20 +1,20 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 
-import { Text, Icon, useColors, fontSize } from 'designSystem'
+import { Text, Icon, useColors, fontSize, IconProps } from 'designSystem'
 import { TouchableOpacity } from 'react-native'
 
-type Props = {
-  isWarmup: boolean
+export type SetEditItemButtonProps = {
+  icon?: IconProps['icon']
   symbol?: string
   color: string
-  toggleSetWarmup: () => void
+  onPress: () => void
 }
-const SetWarmupButton: React.FC<Props> = ({
-  isWarmup,
+const SetEditItemButton: React.FC<SetEditItemButtonProps> = ({
+  icon,
   symbol,
   color,
-  toggleSetWarmup,
+  onPress,
 }) => {
   const colors = useColors()
 
@@ -32,10 +32,15 @@ const SetWarmupButton: React.FC<Props> = ({
         alignItems: 'center',
         justifyContent: 'center',
       }}
-      onPress={toggleSetWarmup}
+      onPress={onPress}
     >
       <>
-        {!isWarmup && (
+        {icon ? (
+          <Icon
+            icon={icon}
+            color={color}
+          />
+        ) : (
           <Text
             style={{
               fontSize: fontSize.sm,
@@ -46,14 +51,8 @@ const SetWarmupButton: React.FC<Props> = ({
             {symbol}
           </Text>
         )}
-        {isWarmup && (
-          <Icon
-            icon="yoga"
-            color={color}
-          />
-        )}
       </>
     </TouchableOpacity>
   )
 }
-export default observer(SetWarmupButton)
+export default observer(SetEditItemButton)
