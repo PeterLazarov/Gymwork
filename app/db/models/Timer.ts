@@ -102,9 +102,8 @@ export const TimerModel = types
       setDuration(newDuration: Duration) {
         self.durationMillis = newDuration.toMillis()
       },
-      afterCreate() {
-        // Stop timer when the model is destroyed
-        return () => this.stop()
+      beforeDestroy() {
+        this.stop()
       },
     }
   })
