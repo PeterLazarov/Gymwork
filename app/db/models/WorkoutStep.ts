@@ -103,14 +103,14 @@ export const WorkoutStepModel = types
   .actions(step => ({
     addSet(newSet: WorkoutSet) {
       step.sets.push(newSet)
-      step.recordStore.runSetUpdatedCheck(newSet)
+      if (newSet.completed) {
+        step.recordStore.runSetUpdatedCheck(newSet)
+      }
     },
-    switchExercise(newVal: Exercise, oldVal: Exercise) 
-    {
-      const newExercises = step.exercises.filter(
-        ex => ex.guid !== oldVal.guid
-      )
-      .concat(newVal)
+    switchExercise(newVal: Exercise, oldVal: Exercise) {
+      const newExercises = step.exercises
+        .filter(ex => ex.guid !== oldVal.guid)
+        .concat(newVal)
 
       this.removeAllSets()
       step.setProp('exercises', newExercises)
@@ -148,6 +148,11 @@ export const WorkoutStepModel = types
       const oldGroupingValue = setToUpdate.groupingValue
 
       setToUpdate.mergeUpdate(updatedSetData)
+
+      // Do not run set updated check if the set is not completed
+      if (!setToUpdate.completed && !updatedSetData.completed) {
+        return
+      }
 
       const records = step.exerciseRecordsMap[setToUpdate.exercise.guid]
       if (!records) return

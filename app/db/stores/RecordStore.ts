@@ -81,7 +81,9 @@ export const RecordStoreModel = types
         .flatMap<WorkoutSet>(
           ({ guid }) => self.exerciseRecordsMap[guid]?.recordSets || []
         )
-        .filter(({ isWeakAssRecord }) => !isWeakAssRecord)
+        .filter(
+          ({ isWeakAssRecord, completed }) => !isWeakAssRecord && completed
+        )
 
       return recordSets
     },

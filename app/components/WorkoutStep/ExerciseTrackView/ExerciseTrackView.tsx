@@ -61,6 +61,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
       reps: reps || (focusedExercise.hasRepMeasument ? defaultReps : undefined),
       ...rest,
       durationMs: selectedSet?.durationMs || 0,
+      completed: false,
     })
   }, [selectedSet, focusedExercise])
 
@@ -71,6 +72,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
         ...draftCopy,
         exercise: focusedExercise.guid,
         date: stateStore.openedDate,
+        completed: true,
       })
       step.addSet(fromDraft)
     }
