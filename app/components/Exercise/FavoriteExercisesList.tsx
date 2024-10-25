@@ -6,22 +6,19 @@ import ExerciseList from './ExerciseList'
 import EmptyState from '../EmptyState'
 import { translate } from 'app/i18n'
 import { searchString } from 'app/utils/string'
-import { useState, useMemo } from 'react'
-import { View } from 'react-native'
-import { Searchbar } from 'react-native-paper'
-import { spacing } from 'designSystem'
+import { useMemo } from 'react'
 
 type Props = {
   onSelect: (exercise: Exercise) => void
   selectedExercises: Exercise[]
+  filterString: string
 }
 const FavoriteExercisesList: React.FC<Props> = ({
   onSelect,
   selectedExercises,
+  filterString,
 }) => {
   const { exerciseStore } = useStores()
-
-  const [filterString, setFilterString] = useState('')
 
   const filteredExercises = useMemo(() => {
     if (!filterString) {
@@ -42,21 +39,6 @@ const FavoriteExercisesList: React.FC<Props> = ({
 
   return (
     <>
-      <View
-        style={{
-          flexDirection: 'row',
-          gap: spacing.xs,
-        }}
-      >
-        <Searchbar
-          style={{ flexGrow: 1 }}
-          placeholder={translate('search')}
-          onChangeText={setFilterString}
-          mode="view"
-          defaultValue={filterString}
-        />
-      </View>
-
       {exerciseStore.favoriteExercises.length > 0 ? (
         <ExerciseList
           exercises={filteredExercises}

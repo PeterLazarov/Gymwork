@@ -17,11 +17,13 @@ type Props = {
   tabWidth?: number
   onTabChange?: (name: string) => void
   swipeDisabled?: boolean
+  tabHeight?: number
 }
 const TopTabs: React.FC<Props> = ({
   tabsConfig,
   initialRouteName,
   tabWidth,
+  tabHeight = 48,
   onTabChange,
   swipeDisabled,
 }) => {
@@ -50,6 +52,7 @@ const TopTabs: React.FC<Props> = ({
           tabBarItemStyle: {
             minWidth: tabWidth,
             width: 'auto',
+            height: tabHeight,
           },
           swipeEnabled: !swipeDisabled,
         }}

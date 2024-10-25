@@ -1,25 +1,25 @@
 import { observer } from 'mobx-react-lite'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { View } from 'react-native'
-import { Searchbar } from 'react-native-paper'
 
 import ExerciseList from './ExerciseList'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
-import { translate } from 'app/i18n'
 import { searchString } from 'app/utils/string'
-import { spacing } from 'designSystem'
 
 const noop = () => {}
 
 type Props = {
   onSelect: (exercise: Exercise) => void
   selectedExercises: Exercise[]
+  filterString: string
 }
-const AllExercisesList: React.FC<Props> = ({ onSelect, selectedExercises }) => {
+const AllExercisesList: React.FC<Props> = ({
+  onSelect,
+  selectedExercises,
+  filterString,
+}) => {
   const { exerciseStore } = useStores()
-
-  const [filterString, setFilterString] = useState('')
 
   const filteredExercises = useMemo(() => {
     if (!filterString) {
@@ -40,21 +40,6 @@ const AllExercisesList: React.FC<Props> = ({ onSelect, selectedExercises }) => {
 
   return (
     <>
-      <View
-        style={{
-          flexDirection: 'row',
-          gap: spacing.xs,
-        }}
-      >
-        <Searchbar
-          style={{ flexGrow: 1 }}
-          placeholder={translate('search')}
-          onChangeText={setFilterString}
-          mode="view"
-          defaultValue={filterString}
-        />
-      </View>
-
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <ExerciseList
           exercises={filteredExercises}
