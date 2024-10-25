@@ -38,7 +38,7 @@
 * Handle 2-a-day workouts
 * Fix workout timer issue where adding a set to a workout on another day leads to super long workout duration
 * Look into Android 15 edge-to-edge handling https://github.com/zoontek/react-native-edge-to-edge
-* Starting the timer doesn't immediately change the button to Play
+* Make modals look more consistent
 
 Save workout (with or without sets)
 Workout duration + see in chart/history
