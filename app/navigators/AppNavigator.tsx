@@ -105,11 +105,18 @@ const AppStack = observer(function AppStack() {
 
   const shouldShowWelcome = !__DEV__ && !stateStore.visitedWelcomeScreen
 
+  const colors = useColors()
+  const colorScheme = useColorScheme()
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
         animation: 'none',
+
+        // ! same as BottomNavigation background color
+        navigationBarColor:
+          colorScheme === 'light' ? colors.surface : colors.shadow,
       }}
       initialRouteName={shouldShowWelcome ? 'Welcome' : 'HomeStack'}
     >
