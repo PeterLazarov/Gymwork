@@ -282,7 +282,6 @@ export const AppNavigator = observer(function AppNavigator(
             ref={offscreenRef}
             style={{
               position: 'absolute',
-              backgroundColor: 'red',
               zIndex: 1,
               left: screenDimensions.width,
             }}
