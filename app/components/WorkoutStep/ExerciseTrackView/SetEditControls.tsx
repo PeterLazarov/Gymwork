@@ -14,6 +14,7 @@ import RestInput from 'app/components/RestInput'
 import { useStores } from 'app/db/helpers/useStores'
 import { Duration } from 'luxon'
 import { Timer } from 'app/db/models/Timer'
+import { spacing } from 'designSystem/tokens/spacing'
 
 export type SetEditControlsProps = {
   value: WorkoutSet
@@ -38,7 +39,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
   const { settingsStore } = useStores()
 
   return (
-    <View style={{ gap: 8 }}>
+    <View style={{ gap: spacing.xs }}>
       {settingsStore.measureRest && (
         <SetEditPanelSection text={translate('rest')}>
           <RestInput

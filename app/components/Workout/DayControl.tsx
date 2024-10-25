@@ -12,6 +12,7 @@ import {
   boxShadows,
   useColors,
   fontSize,
+  spacing,
 } from 'designSystem'
 
 type Props = {
@@ -44,7 +45,7 @@ const DayControl: React.FC<Props> = ({ duration }) => {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.surfaceContainerLowest,
-        padding: 4,
+        padding: spacing.xxs,
         ...boxShadows.default,
       }}
     >

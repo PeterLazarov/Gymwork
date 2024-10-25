@@ -2,7 +2,7 @@ import { View } from 'react-native'
 
 import StepSetsList from '../WorkoutStep/StepSetsList/StepSetsList'
 import { WorkoutStep } from 'app/db/models'
-import { Text, useColors } from 'designSystem'
+import { spacing, Text, useColors } from 'designSystem'
 
 type Props = {
   step: WorkoutStep
@@ -15,12 +15,12 @@ const CalendarWorkoutModalStepItem: React.FC<Props> = ({ step }) => {
       {step.exercises.map(exercise => (
         <View
           key={exercise.guid}
-          style={{ padding: 8 }}
+          style={{ padding: spacing.xs }}
         >
           <Text
             style={{
               color: colors.onSurface,
-              marginBottom: 8,
+              marginBottom: spacing.xs,
               textAlign: 'center',
             }}
             key={exercise.guid}

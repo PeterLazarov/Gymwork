@@ -3,7 +3,7 @@ import React, { useMemo } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { WorkoutSet, WorkoutStep } from 'app/db/models'
-import { Text, Divider, useColors } from 'designSystem'
+import { Text, Divider, useColors, spacing } from 'designSystem'
 import StepSetsList from 'app/components/WorkoutStep/StepSetsList'
 
 type Props = {
@@ -36,7 +36,7 @@ const ExerciseHistoryListItem: React.FC<Props> = ({
           orientation="horizontal"
           variant="neutral"
         />
-        <View style={{ padding: 4 }}>
+        <View style={{ padding: spacing.xxs }}>
           <StepSetsList
             step={step}
             sets={sets}
@@ -51,15 +51,15 @@ const ExerciseHistoryListItem: React.FC<Props> = ({
 const makeStyles = (colors: any) =>
   StyleSheet.create({
     item: {
-      gap: 8,
-      marginBottom: 12,
-      borderRadius: 8,
+      gap: spacing.xs,
+      marginBottom: spacing.sm,
+      borderRadius: spacing.xs,
       borderColor: colors.onSurfaceVariant,
       borderWidth: 1,
     },
     itemDate: {
       textAlign: 'center',
-      paddingTop: 4,
+      paddingTop: spacing.xxs,
     },
   })
 

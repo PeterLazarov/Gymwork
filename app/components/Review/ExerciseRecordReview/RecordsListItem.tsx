@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { WorkoutSet } from 'app/db/models'
 import SetDataLabel from 'app/components/WorkoutStep/SetDataLabel'
-import { TouchableOpacity } from 'react-native'
+import { spacing } from 'designSystem'
 
 type Props = {
   set: WorkoutSet
@@ -43,7 +43,7 @@ const makeStyles = (isWeakAss: boolean) =>
     item: {
       display: 'flex',
       flexDirection: 'row',
-      gap: 16,
+      gap: spacing.md,
       justifyContent: 'space-around',
       alignItems: 'center',
       height: 40,

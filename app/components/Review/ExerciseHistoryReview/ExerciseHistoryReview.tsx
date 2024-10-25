@@ -6,7 +6,7 @@ import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import ExerciseHistoryList from './ExerciseHistoryList'
-import { useColors } from 'designSystem'
+import { spacing, useColors } from 'designSystem'
 import { Exercise } from 'app/db/models'
 
 export type ExerciseHistoryViewProps = {
@@ -44,9 +44,9 @@ const ExerciseHistoryStats: React.FC<ExerciseHistoryViewProps> = props => {
 const makeStyles = (colors: any) =>
   StyleSheet.create({
     container: {
-      paddingTop: 16,
-      paddingHorizontal: 16,
-      gap: 24,
+      paddingTop: spacing.md,
+      paddingHorizontal: spacing.md,
+      gap: spacing.lg,
       flexDirection: 'column',
       display: 'flex',
       flexGrow: 1,

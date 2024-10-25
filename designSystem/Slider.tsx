@@ -4,6 +4,7 @@ import MultiSlider, {
   MultiSliderProps,
 } from '@ptomasroos/react-native-multi-slider'
 import { useColors } from './tokens'
+import { spacing } from 'designSystem'
 
 type Props = Omit<MultiSliderProps, 'min' | 'max' | 'onValuesChange'> & {
   max: number
@@ -48,8 +49,8 @@ const CustomSlider: React.FC<Props> = ({
     <View
       ref={sliderRef}
       onLayout={handleLayout}
-      {...panResponder.panHandlers} // Attach touch handlers
-      style={{ paddingHorizontal: 10 }}
+      {...panResponder.panHandlers}
+      style={{ paddingHorizontal: spacing.xs }}
     >
       <MultiSlider
         onValuesChange={onValuesChange}

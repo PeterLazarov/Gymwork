@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
-import { ToggleGroupButton } from 'designSystem'
+import { spacing, ToggleGroupButton } from 'designSystem'
 import ExerciseHistoryChart, {
   CHART_VIEW,
   CHART_VIEWS,
@@ -48,7 +48,7 @@ const ExerciseChartStats: React.FC<ExerciseChartStatsProps> = ({
       <ToggleGroupButton
         buttons={toggleViewButtons}
         initialActiveIndex={viewsArray.indexOf(stateStore.chartView)}
-        containerStyle={{ padding: 10 }}
+        containerStyle={{ padding: spacing.sm }}
         onChange={view => stateStore.setProp('chartView', view as CHART_VIEW)}
       />
     </View>
@@ -57,7 +57,7 @@ const ExerciseChartStats: React.FC<ExerciseChartStatsProps> = ({
 
 const styles = StyleSheet.create({
   screen: {
-    marginTop: 16,
+    marginTop: spacing.md,
     justifyContent: 'space-between',
     display: 'flex',
     flexGrow: 1,

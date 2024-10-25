@@ -4,7 +4,6 @@ if (__DEV__) {
   // If you turn it off in metro.config.js, you'll have to manually import it.
   require('./devtools/ReactotronConfig.ts')
 }
-import { useFonts } from 'expo-font'
 import React from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import {
@@ -19,7 +18,6 @@ import { AppNavigator, useNavigationPersistence } from './navigators'
 import './utils/ignoreWarnings'
 import * as storage from './utils/storage'
 import { useLogging } from './utils/useLogging'
-import { customFontsToLoad } from './theme'
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
@@ -32,8 +30,6 @@ function App() {
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
 
-  const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
-
   const { rehydrated } = useInitialRootStore(() => {})
 
   // Before we show the app, we have to wait for our state to be ready.
@@ -42,11 +38,7 @@ function App() {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  if (
-    !rehydrated ||
-    !isNavigationStateRestored ||
-    (!areFontsLoaded && !fontLoadError)
-  ) {
+  if (!rehydrated || !isNavigationStateRestored) {
     return null
   }
 

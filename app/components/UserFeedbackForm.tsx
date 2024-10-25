@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
+import { spacing } from 'designSystem'
 
 import { AirtableFeedback } from 'app/services/airtable'
 
@@ -34,7 +35,7 @@ const UserFeedbackForm: React.FC<Props> = ({ feedback, onUpdate }) => {
   }
 
   return (
-    <View style={{ flex: 1, gap: 8, padding: 8 }}>
+    <View style={{ flex: 1, gap: spacing.sm, padding: spacing.sm }}>
       <TextInput
         label="Name"
         value={feedback.user}

@@ -9,6 +9,7 @@ import {
   DurationInput,
   useColors,
   fontSize,
+  spacing,
 } from 'designSystem'
 import { translate } from 'app/i18n'
 import { observer } from 'mobx-react-lite'
@@ -43,15 +44,15 @@ const WorkoutTimerModal: React.FC<WorkoutTimerModalProps> = ({
         onDismiss={onClose}
         contentContainerStyle={{
           backgroundColor: colors.surface,
-          marginVertical: 8,
-          marginHorizontal: 20,
+          marginVertical: spacing.xs,
+          marginHorizontal: spacing.md,
         }}
       >
         <Text
           style={{
             fontSize: fontSize.lg,
             textAlign: 'center',
-            padding: 16,
+            padding: spacing.md,
           }}
         >
           {'Workout Duration'}
@@ -61,7 +62,7 @@ const WorkoutTimerModal: React.FC<WorkoutTimerModalProps> = ({
           variant="primary"
         />
 
-        <View style={{ flexGrow: 1, padding: 8 }}>
+        <View style={{ flexGrow: 1, padding: spacing.xs }}>
           <View
             style={{
               flexDirection: 'row',

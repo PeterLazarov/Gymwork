@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import StepSetsList from './StepSetsList'
 import { WorkoutStep } from 'app/db/models'
-import { Card } from 'designSystem'
+import { Card, spacing } from 'designSystem'
 import { CardProps } from 'designSystem/Card'
 
 export type WorkoutStepCardProps = {
@@ -29,8 +29,8 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, ...rest }) => {
       }
       {...rest}
       containerStyle={{
-        marginVertical: 10,
-        marginHorizontal: 20,
+        marginVertical: spacing.sm,
+        marginHorizontal: spacing.md,
       }}
     />
   )

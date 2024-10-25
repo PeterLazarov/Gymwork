@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 
-import { Text, fontSize, useColors } from 'designSystem'
+import { Text, fontSize, spacing, useColors } from 'designSystem'
 
 type Props = {
   text: string
@@ -15,8 +15,8 @@ const EmptyState: React.FC<Props> = ({ text }) => {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: 10,
-        padding: 10,
+        minHeight: spacing.sm,
+        padding: spacing.sm,
       }}
     >
       <Text

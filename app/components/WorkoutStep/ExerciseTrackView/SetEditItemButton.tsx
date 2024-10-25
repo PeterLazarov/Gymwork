@@ -3,6 +3,7 @@ import React from 'react'
 
 import { Text, Icon, useColors, fontSize, IconProps } from 'designSystem'
 import { TouchableOpacity } from 'react-native'
+import { spacing } from 'designSystem/tokens/spacing'
 
 export type SetEditItemButtonProps = {
   icon?: IconProps['icon']
@@ -25,10 +26,7 @@ const SetEditItemButton: React.FC<SetEditItemButtonProps> = ({
         width: 36,
         borderColor: colors.outline,
         borderWidth: 1,
-        borderTopRightRadius: 4,
-        borderTopLeftRadius: 4,
-        borderBottomRightRadius: 4,
-        borderBottomLeftRadius: 4,
+        borderRadius: spacing.xxs,
         alignItems: 'center',
         justifyContent: 'center',
       }}

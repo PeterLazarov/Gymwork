@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 
 import { WorkoutStep } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { Text, useColors, fontSize } from 'designSystem'
+import { Text, useColors, fontSize, spacing } from 'designSystem'
 import TemplateStepsListItem from './TemplateStepsListItem'
 
 type Props = {
@@ -37,9 +37,9 @@ const makeStyles = (colors: any) =>
       borderWidth: 1,
       borderColor: colors.outlineVariant,
       borderRadius: 8,
-      paddingHorizontal: 10,
-      paddingVertical: 5,
-      gap: 5,
+      paddingHorizontal: spacing.xs,
+      paddingVertical: spacing.xxs,
+      gap: spacing.xxs,
     },
   })
 

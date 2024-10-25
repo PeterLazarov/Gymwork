@@ -17,6 +17,7 @@ import { useColors, Divider, Icon } from 'designSystem'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
 import { getParentOfType } from 'mobx-state-tree'
+import { spacing } from 'designSystem/tokens/spacing'
 
 type Props = {
   step: WorkoutStep
@@ -175,7 +176,7 @@ const SetEditList: React.FC<Props> = ({
           />
         )}
         style={{
-          paddingVertical: 8,
+          paddingVertical: spacing.xs,
         }}
         ref={dragListRef}
         onContentSizeChange={() =>

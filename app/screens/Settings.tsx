@@ -9,6 +9,7 @@ import {
   Select,
   Text,
   useColors,
+  spacing,
 } from 'designSystem'
 import { observer } from 'mobx-react-lite'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -17,6 +18,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { useExport } from 'app/utils/useExport'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import SettingsToggleItem from 'app/components/SettingsToggleItem'
+
 export type SettingsScreenProps = StackScreenProps<'Settings'>
 
 const appearanceOptions = [
@@ -189,8 +191,8 @@ const makeStyles = (colors: any) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       height: 64,
-      padding: 12,
-      gap: 10,
+      padding: spacing.sm,
+      gap: spacing.xs,
     },
     itemLabel: {
       color: colors.onSurface,

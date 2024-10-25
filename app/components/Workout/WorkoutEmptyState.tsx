@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { translate } from 'app/i18n'
 import { useStores } from 'app/db/helpers/useStores'
 import ActionCard from '../ActionCard'
+import { spacing } from 'designSystem/tokens/spacing'
 
 const WorkoutEmptyState: React.FC = () => {
   const {
@@ -55,7 +56,14 @@ const WorkoutEmptyState: React.FC = () => {
   }
 
   return (
-    <View style={{ flex: 1, padding: 16, gap: 16, justifyContent: 'center' }}>
+    <View
+      style={{
+        flex: 1,
+        padding: spacing.md,
+        gap: spacing.md,
+        justifyContent: 'center',
+      }}
+    >
       <ActionCard
         onPress={startWorkout}
         icon="dumbbell"
@@ -65,7 +73,7 @@ const WorkoutEmptyState: React.FC = () => {
       <View
         style={{
           flexDirection: 'row',
-          gap: 16,
+          gap: spacing.md,
         }}
       >
         {secondaryActions.map(action => (

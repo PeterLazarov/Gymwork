@@ -1,6 +1,13 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
-import { Text, BottomDrawer, Divider, FAB, useColors } from 'designSystem'
+import {
+  Text,
+  BottomDrawer,
+  Divider,
+  FAB,
+  useColors,
+  spacing,
+} from 'designSystem'
 import { translate } from 'app/i18n'
 import { useStores } from 'app/db/helpers/useStores'
 
@@ -43,7 +50,7 @@ const AddStepMenu = () => {
       action: () => navigate('WorkoutFeedback'),
     })
   }
-  const drawerPadding = 20
+  const drawerPadding = spacing.lg
   const optionHeight = 70
   const drawerHeight = options.length * optionHeight + drawerPadding * 2
 

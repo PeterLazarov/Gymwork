@@ -3,7 +3,7 @@ import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 
 import { WorkoutTemplate } from 'app/db/models'
-import { Text, Icon, IconButton } from 'designSystem'
+import { Text, Icon, IconButton, spacing } from 'designSystem'
 
 type Props = {
   template: WorkoutTemplate
@@ -26,8 +26,8 @@ const ExerciseListItem: React.FC<Props> = ({
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          paddingVertical: 10,
-          paddingHorizontal: 15,
+          paddingVertical: spacing.xs,
+          paddingHorizontal: spacing.md,
         }}
       >
         <Text

@@ -12,6 +12,7 @@ import {
   ToggleSwitch,
   fontSize,
   useColors,
+  spacing,
 } from 'designSystem'
 import { translate } from 'app/i18n'
 import { useState } from 'react'
@@ -61,8 +62,8 @@ const WorkoutModal: React.FC<Props> = ({
         onDismiss={onClose}
         contentContainerStyle={{
           backgroundColor: colors.surface,
-          marginVertical: 8,
-          marginHorizontal: 20,
+          marginVertical: spacing.xs,
+          marginHorizontal: spacing.md,
           flex: 1,
         }}
       >

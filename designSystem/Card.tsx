@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { StyleSheet, View, ViewStyle } from 'react-native'
 
-import { Text, useColors } from '.'
+import { Text, useColors, spacing } from '.'
 import {
   TouchableOpacity,
   TouchableWithoutFeedbackProps,
@@ -51,8 +51,8 @@ const makeStyles = (colors: ReturnType<typeof useColors>) =>
       borderRadius: 8,
     },
     content: {
-      padding: 15,
-      gap: 5,
+      padding: spacing.md,
+      gap: spacing.xxs,
     },
     title: {
       fontWeight: 'bold',

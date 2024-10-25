@@ -9,6 +9,7 @@ import { useColors, Icon, palettes } from 'designSystem'
 import SetEditItemButton from './SetEditItemButton'
 import SetDataLabel from '../SetDataLabel'
 import { useStores } from 'app/db/helpers/useStores'
+import { spacing } from 'designSystem/tokens/spacing'
 
 type Props = {
   set: WorkoutSet
@@ -46,8 +47,8 @@ const SetEditItem: React.FC<Props> = ({
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-around',
-          paddingHorizontal: 10,
-          paddingVertical: 1,
+          paddingHorizontal: spacing.xs,
+          paddingVertical: spacing.xxs,
           backgroundColor: draft ? colors.surfaceContainer : undefined,
         },
         style,
@@ -59,8 +60,8 @@ const SetEditItem: React.FC<Props> = ({
           flex: 1,
           alignItems: 'center',
           flexDirection: 'row',
-          paddingVertical: 4,
-          gap: 8,
+          paddingVertical: spacing.xxs,
+          gap: spacing.xs,
         }}
       >
         <SetEditItemButton

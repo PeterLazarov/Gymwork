@@ -7,6 +7,7 @@ import { Icon, Text, useColors } from 'designSystem'
 import { TouchableOpacity, View } from 'react-native'
 import AddStepMenu from './AddStepMenu'
 import { DateTime } from 'luxon'
+import { spacing } from 'designSystem/tokens/spacing'
 
 const WorkoutBottomControls = () => {
   const { stateStore } = useStores()
@@ -18,7 +19,7 @@ const WorkoutBottomControls = () => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 8,
+        padding: spacing.xs,
       }}
     >
       <TouchableOpacity

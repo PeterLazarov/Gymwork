@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react'
-// import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 import { View, ViewStyle } from 'react-native'
 
 import { KeyboardExpandingView, useColors } from 'designSystem'

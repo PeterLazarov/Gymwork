@@ -1,4 +1,4 @@
-import { ToggleSwitch, useColors, Text } from 'designSystem'
+import { ToggleSwitch, useColors, Text, spacing } from 'designSystem'
 import { useMemo } from 'react'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 
@@ -41,8 +41,8 @@ const makeStyles = (colors: any) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       height: 64,
-      padding: 12,
-      gap: 10,
+      padding: spacing.sm,
+      gap: spacing.xs,
     },
     itemLabel: {
       color: colors.onSurface,

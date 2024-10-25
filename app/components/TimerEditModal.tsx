@@ -10,6 +10,7 @@ import {
   DurationInput,
   useColors,
   fontSize,
+  spacing,
 } from 'designSystem'
 import { translate } from 'app/i18n'
 import { observer } from 'mobx-react-lite'
@@ -39,15 +40,15 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose, timer, label }) => {
         onDismiss={onClose}
         contentContainerStyle={{
           backgroundColor: colors.surface,
-          marginVertical: 8,
-          marginHorizontal: 20,
+          marginVertical: spacing.sm,
+          marginHorizontal: spacing.md,
         }}
       >
         <Text
           style={{
             fontSize: fontSize.lg,
             textAlign: 'center',
-            padding: 16,
+            padding: spacing.md,
           }}
         >
           {label ?? translate('editRestTimer')}
@@ -56,7 +57,7 @@ const TimerEditModal: React.FC<Props> = ({ open, onClose, timer, label }) => {
           orientation="horizontal"
           variant="primary"
         />
-        <View style={{ padding: 16 }}>
+        <View style={{ padding: spacing.md }}>
           <DurationInput
             value={preferredDuration}
             onUpdate={setPreferredDuration}

@@ -9,6 +9,7 @@ import {
   FeedbackPicker,
   ToggleGroupButton,
   useColors,
+  spacing,
 } from 'designSystem'
 import {
   WorkoutComments,
@@ -35,8 +36,8 @@ const WorkoutCommentsForm: React.FC<Props> = ({ comments, onUpdate }) => {
     <KeyboardAwareScrollView extraScrollHeight={100}>
       <View
         style={{
-          padding: 8,
-          gap: 16,
+          padding: spacing.xs,
+          gap: spacing.md,
           flex: 1,
           width: '100%',
           alignItems: 'center',

@@ -1,6 +1,7 @@
 import { translate } from 'app/i18n'
 import { ButtonText, Button } from 'designSystem'
 import { View } from 'react-native'
+import { spacing } from 'designSystem/tokens/spacing'
 
 export type SetEditActionsProps = {
   mode: 'edit' | 'add'
@@ -16,7 +17,13 @@ export const SetEditActions: React.FC<SetEditActionsProps> = ({
   onUpdate,
 }) => {
   return (
-    <View style={{ flexDirection: 'row', gap: 2, paddingHorizontal: 8 }}>
+    <View
+      style={{
+        flexDirection: 'row',
+        gap: spacing.xxs,
+        paddingHorizontal: spacing.xs,
+      }}
+    >
       {mode === 'add' ? (
         <Button
           variant="primary"

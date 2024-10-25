@@ -8,6 +8,7 @@ import {
   boxShadows,
   useColors,
   fontSize,
+  spacing,
 } from 'designSystem'
 import { Exercise } from 'app/db/models'
 
@@ -43,7 +44,7 @@ const ExerciseControl: React.FC<ExerciseControlProps> = ({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: colors.surfaceContainerLowest,
-        padding: 4,
+        padding: spacing.xxs,
         ...boxShadows.default,
       }}
     >

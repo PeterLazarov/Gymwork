@@ -1,4 +1,4 @@
-import { Card, Icon, IconProps, useColors, Text } from 'designSystem'
+import { Card, Icon, IconProps, useColors, Text, spacing } from 'designSystem'
 import { View } from 'react-native'
 
 export type ActionCardProps = {
@@ -19,9 +19,7 @@ const ActionCard: React.FC<ActionCardProps> = ({
   return (
     <Card
       containerStyle={{
-        // flexGrow: 1,
-        paddingHorizontal: 8,
-        // flexShrink: 0,
+        paddingHorizontal: spacing.sm,
       }}
       onPress={onPress}
       content={
@@ -29,7 +27,7 @@ const ActionCard: React.FC<ActionCardProps> = ({
           <Icon
             color={disabled ? colors.outlineVariant : colors.onSurface}
             icon={icon}
-            style={{ paddingBottom: 10 }}
+            style={{ paddingBottom: spacing.sm }}
           />
           <Text
             style={{

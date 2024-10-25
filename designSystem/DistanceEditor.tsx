@@ -4,7 +4,7 @@ import convert from 'convert-units'
 
 import { Select } from './Select'
 import { DistanceUnit, measurementUnits } from 'app/db/models'
-import { NumberInput, NumberInputProps } from 'designSystem'
+import { NumberInput, NumberInputProps, spacing } from 'designSystem'
 
 type _Props = {
   value?: number
@@ -19,6 +19,7 @@ const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(
 
     const formattedDistance = convert(value).from(unit).to(internalUnit)
 
+    // TODO fix type issue
     function onChangeInternal(distance: number) {
       const standardizedValue = convert(distance).from(internalUnit).to(unit)
 
@@ -26,7 +27,7 @@ const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(
     }
 
     return (
-      <View style={{ flexDirection: 'row', gap: 24 }}>
+      <View style={{ flexDirection: 'row', gap: spacing.lg }}>
         <NumberInput
           value={formattedDistance}
           style={{ textAlign: 'center', flex: 1.5 }}

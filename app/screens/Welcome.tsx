@@ -3,7 +3,14 @@ import { StyleSheet, View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { Button, ButtonText, Header, Text, fontSize } from 'designSystem'
+import {
+  Button,
+  ButtonText,
+  Header,
+  Text,
+  fontSize,
+  spacing,
+} from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 
@@ -58,8 +65,8 @@ const WelcomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    padding: 20,
-    gap: 20,
+    padding: spacing.lg,
+    gap: spacing.lg,
     justifyContent: 'center',
   },
   bold: {

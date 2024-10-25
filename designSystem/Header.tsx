@@ -1,13 +1,13 @@
 import { View, ViewProps, TextProps, useColorScheme } from 'react-native'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
-
-import { Text, useColors, fontSize } from '.'
+import { fontSize, spacing, useColors } from './tokens'
+import { Text } from './Text'
 
 interface SubComponents {
   Title: React.FC<HeaderTitleProps>
 }
 
-const padding = 12
+const padding = spacing.sm
 export const Header: React.FC<ViewProps> & SubComponents = props => {
   const colors = useColors()
   const colorScheme = useColorScheme()

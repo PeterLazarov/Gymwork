@@ -8,6 +8,7 @@ import {
   FeedbackPickerOption,
   fontSize,
   useColors,
+  spacing,
 } from 'designSystem'
 import { discomfortOptions, feelingOptions, Workout } from 'app/db/models'
 import { translate } from 'app/i18n'
@@ -74,14 +75,18 @@ const WorkoutCommentsCard: React.FC<Props> = ({
 const makeStyles = (colors: any, compactMode?: boolean) =>
   StyleSheet.create({
     card: {
-      padding: compactMode ? 0 : 8,
-      paddingBottom: compactMode ? 8 : 0,
+      padding: compactMode ? 0 : spacing.xs,
+      paddingBottom: compactMode ? spacing.xs : 0,
     },
     cardContent: {
       alignItems: 'center',
-      gap: 8,
+      gap: spacing.xs,
     },
-    notesContainer: { flexDirection: 'row', gap: 12, paddingTop: 8 },
+    notesContainer: {
+      flexDirection: 'row',
+      gap: spacing.sm,
+      paddingTop: spacing.xs,
+    },
     notes: {
       fontSize: fontSize.sm,
       color: colors.onSurface,

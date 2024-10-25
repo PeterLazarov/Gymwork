@@ -8,6 +8,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { Exercise, WorkoutSet } from 'app/db/models'
 import RecordsListItem from './RecordsListItem'
+import { spacing } from 'designSystem'
 
 export type ExerciseRecordReviewProps = {
   exercise?: Exercise
@@ -65,7 +66,7 @@ const ExerciseRecordReview: React.FC<ExerciseRecordReviewProps> = props => {
 
 const styles = StyleSheet.create({
   screen: {
-    marginTop: 16,
+    marginTop: spacing.md,
     display: 'flex',
     flexGrow: 1,
   },

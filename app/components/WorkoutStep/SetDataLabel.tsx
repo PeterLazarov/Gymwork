@@ -2,7 +2,12 @@ import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import { Text, useColors, fontSize as fontSizeToken } from 'designSystem'
+import {
+  Text,
+  useColors,
+  fontSize as fontSizeToken,
+  spacing,
+} from 'designSystem'
 
 type Props = {
   value?: string | number
@@ -44,7 +49,7 @@ const makeStyles = (
     container: {
       flex: 1,
       flexDirection: 'row',
-      gap: 4,
+      gap: spacing.xxs,
       justifyContent: 'center',
     },
     value: {

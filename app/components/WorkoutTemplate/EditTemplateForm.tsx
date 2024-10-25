@@ -5,6 +5,7 @@ import { TextInput, HelperText } from 'react-native-paper'
 
 import { WorkoutStep, WorkoutTemplate } from 'app/db/models'
 import TemplateStepsList from './TemplateStepsList'
+import { spacing } from 'designSystem'
 
 type Props = {
   template: WorkoutTemplate
@@ -41,7 +42,7 @@ const ExerciseEditForm: React.FC<Props> = ({
   }
 
   return (
-    <View style={{ flex: 1, gap: 8, padding: 8 }}>
+    <View style={{ flex: 1, gap: spacing.xs, padding: spacing.xs }}>
       <TextInput
         label="Name"
         value={template.name}

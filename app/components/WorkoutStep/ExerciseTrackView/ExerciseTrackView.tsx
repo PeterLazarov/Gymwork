@@ -14,6 +14,7 @@ import {
 } from 'app/db/models'
 import { SetEditActions } from './SetEditActions'
 import { useColors } from 'designSystem'
+import { spacing } from 'designSystem/tokens/spacing'
 
 const defaultReps = 10
 
@@ -116,7 +117,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
         {
           flexDirection: 'column',
           flexGrow: 1,
-          gap: 8,
+          gap: spacing.xs,
           display: 'flex',
           backgroundColor: colors.surfaceContainerLow,
         },
@@ -130,7 +131,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
       />
 
       {stateStore.draftSet && (
-        <View style={{ paddingHorizontal: 8 }}>
+        <View style={{ paddingHorizontal: spacing.xs }}>
           <SetEditControls
             value={stateStore.draftSet}
             onSubmit={handleAdd}

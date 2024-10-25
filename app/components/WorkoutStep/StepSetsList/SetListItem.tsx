@@ -5,7 +5,14 @@ import SetDataLabel from '../SetDataLabel'
 import { ExerciseMeasurement, WorkoutSet } from 'app/db/models'
 import { getFormatedDuration } from 'app/utils/time'
 import { translate } from 'app/i18n'
-import { Text, Icon, useColors, fontSize, palettes } from 'designSystem'
+import {
+  Text,
+  Icon,
+  useColors,
+  fontSize,
+  palettes,
+  spacing,
+} from 'designSystem'
 import { observer } from 'mobx-react-lite'
 import { useStores } from 'app/db/helpers/useStores'
 
@@ -101,7 +108,7 @@ const makeStyles = (textColor: string) =>
     item: {
       display: 'flex',
       flexDirection: 'row',
-      gap: 16,
+      gap: spacing.md,
       justifyContent: 'space-around',
       alignItems: 'center',
       height: 24,
@@ -110,13 +117,13 @@ const makeStyles = (textColor: string) =>
       flex: 1,
       flexDirection: 'row',
       alignItems: 'center',
-      gap: 4,
+      gap: spacing.xxs,
     },
     setNumber: {
       fontSize: fontSize.sm,
       color: textColor,
       fontWeight: 'bold',
-      marginLeft: 8,
+      marginLeft: spacing.xs,
     },
     setLetter: {
       fontSize: fontSize.sm,
