@@ -14,7 +14,6 @@ import { translate } from 'app/i18n'
 import { observer } from 'mobx-react-lite'
 import { Timer } from 'app/db/models/Timer'
 import { useStores } from 'app/db/helpers/useStores'
-import SettingsToggleItem from '../SettingsToggleItem'
 
 export type WorkoutTimerModalProps = {
   open: boolean
@@ -29,7 +28,7 @@ const WorkoutTimerModal: React.FC<WorkoutTimerModalProps> = ({
   onClose,
   timer,
 }) => {
-  const { timerStore, stateStore } = useStores()
+  const { stateStore } = useStores()
 
   const colors = useColors()
 

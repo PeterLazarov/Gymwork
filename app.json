@@ -26,6 +26,7 @@
         "foregroundImage": "./assets/pen-logo.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
       },
+      "blockedPermissions": ["android.permission.INTERNET"],
       "splash": {
         "image": "./assets/logo.png",
         "resizeMode": "contain",

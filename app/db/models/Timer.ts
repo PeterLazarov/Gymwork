@@ -3,6 +3,8 @@ import { Duration } from 'luxon'
 import { setDriftlessInterval, clearDriftless } from 'driftless'
 import { Vibration } from 'react-native'
 import { withSetPropAction } from '../helpers/withSetPropAction'
+import { reaction } from 'mobx'
+import { keepAlive } from 'mobx-utils'
 
 // Default durations
 const defaultDuration = Duration.fromDurationLike({ minutes: 0 })
@@ -40,12 +42,31 @@ export const TimerModel = types
     },
     get timeLeft() {
       const timeLeftMillis = self.durationMillis - self.timeElapsedMillis
-      return Duration.fromMillis(Math.abs(timeLeftMillis))
+      return Duration.fromMillis(timeLeftMillis)
     },
   }))
   .actions(withSetPropAction)
   .actions(self => {
+    // Store cleanup functions
+    const disposers = new Set<() => void>()
+
+    // Keep isRunning alive
+    disposers.add(keepAlive(self, 'isRunning'))
+
     let lastTickAt = Date.now() // Timestamp of the last tick
+    let didVibrate = false
+
+    // Add reaction to disposers
+    disposers.add(
+      reaction(
+        () => self.duration,
+        newDuration => {
+          if (newDuration.toMillis() < self.timeElapsedMillis) {
+            didVibrate = false
+          }
+        }
+      )
+    )
 
     // Update state for ticking
     const tick = () => {
@@ -58,8 +79,13 @@ export const TimerModel = types
       )
 
       // Vibrate if countdown is over
-      if (self.inCountdownMode && self.timeLeft.toMillis() <= 0) {
-        Vibration.vibrate([500, 200, 500]) // TODO make this work
+      if (
+        self.inCountdownMode &&
+        self.timeLeft.toMillis() <= 0 &&
+        !didVibrate
+      ) {
+        Vibration.vibrate(1000) // TODO make this work
+        didVibrate = true
       }
     }
 
@@ -94,16 +120,21 @@ export const TimerModel = types
       },
       clear() {
         this.stop()
+        didVibrate = false
         self.timeElapsedMillis = 0
       },
       setTimeElapsed(newDuration: Duration) {
         self.timeElapsedMillis = newDuration.toMillis()
       },
       setDuration(newDuration: Duration) {
-        self.durationMillis = newDuration.toMillis()
+        // Prevent negative durations
+        const milliseconds = Math.max(0, newDuration.toMillis())
+        self.durationMillis = milliseconds
       },
       beforeDestroy() {
         this.stop()
+        // Cleanup all reactions and keepAlive
+        disposers.forEach(dispose => dispose())
       },
     }
   })

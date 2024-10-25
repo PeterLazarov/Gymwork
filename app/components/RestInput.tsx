@@ -33,7 +33,7 @@ const RestInput = forwardRef<TextInput, RestInputProps>(function RestInput(
       100
 
     return percentage
-  }, [timer?.duration, timer?.inCountdownMode, timer?.timeLeft])
+  }, [timer?.duration, timer?.timeElapsed])
 
   const [settingDialogOpen, setSettingDialogOpen] = useState(false)
 
@@ -50,6 +50,9 @@ const RestInput = forwardRef<TextInput, RestInputProps>(function RestInput(
     }
     timer.resume()
   }
+
+  // Recompute the timer state to force a rerender
+  useMemo(() => timer?.isRunning, [timer?.isRunning])
 
   useEffect(() => {
     if (timer?.type === 'rest') {
