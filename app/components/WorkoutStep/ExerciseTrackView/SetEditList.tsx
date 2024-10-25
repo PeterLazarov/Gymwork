@@ -69,7 +69,7 @@ const SetEditList: React.FC<Props> = ({
       return (
         <TouchableOpacity
           style={{
-            paddingHorizontal: 8,
+            paddingHorizontal: spacing.xs,
             backgroundColor: isActive
               ? colors.primaryContainer
               : isFocused
@@ -95,7 +95,7 @@ const SetEditList: React.FC<Props> = ({
               alignItems: 'center',
               flexDirection: 'row',
               justifyContent: 'space-between',
-              paddingLeft: isActive ? 8 : undefined,
+              paddingLeft: isActive ? spacing.xs : undefined,
             }}
           >
             {isActive && (
@@ -145,9 +145,9 @@ const SetEditList: React.FC<Props> = ({
     set.setProp('isWarmup', !set.isWarmup)
   }
 
-  if (showFallback && !sets?.length)
+  if (showFallback && !sets?.length && !settingsStore.previewNextSet)
     return <EmptyState text={translate('noSetsEntered')} />
-  if (!sets?.length) return null
+  if (!sets?.length && !settingsStore.previewNextSet) return <View></View>
 
   return (
     <Pressable
