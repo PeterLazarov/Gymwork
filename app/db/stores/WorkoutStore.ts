@@ -23,10 +23,10 @@ import { keepAlive } from 'mobx-utils'
 function getClonedIncompleteNoIdSets(
   sets: WorkoutSet[]
 ): WorkoutSetSnapshotIn[] {
-  return sets.map(({ guid, exercise, ...otherProps }) => ({
+  return sets.map(({ guid, exercise, completedAt, ...otherProps }) => ({
     exercise: exercise.guid,
     ...otherProps,
-    completed: false,
+    completedAt: null,
   }))
 }
 

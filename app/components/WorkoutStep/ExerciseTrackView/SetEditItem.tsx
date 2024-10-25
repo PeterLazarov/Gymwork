@@ -127,8 +127,9 @@ const SetEditItem: React.FC<Props> = ({
         <View style={{ marginLeft: 8 }}>
           <SetEditItemButton
             icon={'check'}
+            disabled={draft}
             onPress={() => {
-              set.setProp('completed', !set.completed)
+              set.setProp('completedAt', set.completed ? null : new Date())
             }}
             color={set.completed ? color : colors.outlineVariant}
           />

@@ -32,9 +32,12 @@ export const WorkoutSetModel = types
 
     createdAt: types.optional(types.Date, () => Date.now()),
 
-    completed: true,
+    completedAt: types.maybeNull(types.optional(types.Date, () => Date.now())),
   })
   .views(set => ({
+    get completed() {
+      return Boolean(set.completedAt)
+    },
     get measurementValue() {
       switch (set.exercise.measuredBy) {
         case 'duration':

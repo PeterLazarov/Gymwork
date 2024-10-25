@@ -10,12 +10,14 @@ export type SetEditItemButtonProps = {
   symbol?: string
   color: string
   onPress: () => void
+  disabled?: boolean
 }
 const SetEditItemButton: React.FC<SetEditItemButtonProps> = ({
   icon,
   symbol,
   color,
   onPress,
+  disabled,
 }) => {
   const colors = useColors()
 
@@ -30,6 +32,7 @@ const SetEditItemButton: React.FC<SetEditItemButtonProps> = ({
         alignItems: 'center',
         justifyContent: 'center',
       }}
+      disabled={disabled}
       onPress={onPress}
     >
       <>
