@@ -11,7 +11,7 @@ import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { Header, Icon, IconButton, useColors, fontSize } from 'designSystem'
 import WorkoutModal from 'app/components/WorkoutModal'
 import { Menu } from 'react-native-paper'
-import { useWindowDimensions } from 'react-native'
+import { useWindowDimensions, View } from 'react-native'
 
 export type CalendarScreenParams = {
   copyWorkoutMode?: boolean
@@ -164,6 +164,7 @@ const CalendarScreen: React.FC = () => {
               color: colors.onSurface,
             },
             dayTextStyle: {
+              fontSize: fontSize.md,
               color: colors.onSurface,
             },
 
@@ -174,7 +175,10 @@ const CalendarScreen: React.FC = () => {
               backgroundColor: colors.primary,
             },
 
-            weekColumnTextStyle: { color: colors.onSurface },
+            weekColumnTextStyle: {
+              color: colors.onSurface,
+              fontSize: fontSize.md,
+            },
           }}
           disableRange
           monthHeight={dimensions.width * 1.15}
