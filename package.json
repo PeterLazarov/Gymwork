@@ -60,7 +60,6 @@
     "@wuba/react-native-echarts": "^1.2.5",
     "apisauce": "3.0.1",
     "convert-units": "^2.3.4",
-    "date-fns": "^2.30.0",
     "decamelize": "^6.0.0",
     "driftless": "^2.0.3",
     "echarts": "^5.4.3",

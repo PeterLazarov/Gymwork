@@ -30,11 +30,8 @@
 * grouping / measurement by rest
 * Review button styles. Especially primary + disabled
 * Standardize background usage (different screens currently use different background colors for some reason)
-* Look into replacing 'draft' with mobx-utils createViewModel
 * Look into https://reactnative.dev/docs/timers#interactionmanager for optimizing render time
-* Make timer vibration work
 * Timer duration not being visible as a countdown, just as a loader is not enough
-* Consider switching to a single Date library (remove date-fns)
 * Handle 2-a-day workouts
 * Fix workout timer issue where adding a set to a workout on another day leads to super long workout duration
 * Look into Android 15 edge-to-edge handling https://github.com/zoontek/react-native-edge-to-edge
