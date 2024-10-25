@@ -5,6 +5,10 @@ import { Exercise } from 'app/db/models'
 import ExerciseList from './ExerciseList'
 import EmptyState from '../EmptyState'
 import { translate } from 'app/i18n'
+import { searchString } from 'app/utils/string'
+import { useState, useMemo } from 'react'
+import { View } from 'react-native'
+import { Searchbar } from 'react-native-paper'
 
 type Props = {
   onSelect: (exercise: Exercise) => void
@@ -16,16 +20,49 @@ const FavoriteExercisesList: React.FC<Props> = ({
 }) => {
   const { exerciseStore } = useStores()
 
+  const [filterString, setFilterString] = useState('')
+
+  const filteredExercises = useMemo(() => {
+    if (!filterString) {
+      return exerciseStore.favoriteExercises
+    }
+
+    const filtered = exerciseStore.favoriteExercises.filter((e: Exercise) => {
+      const exName = e.name.toLowerCase()
+
+      return searchString(
+        filterString,
+        word => exName.includes(word) || e.muscles.includes(word)
+      )
+    })
+
+    return filtered
+  }, [filterString])
+
   return (
     <>
-      {exerciseStore.favoriteExercises.length > 0 && (
+      <View
+        style={{
+          flexDirection: 'row',
+          gap: 8,
+        }}
+      >
+        <Searchbar
+          style={{ flexGrow: 1 }}
+          placeholder={translate('search')}
+          onChangeText={setFilterString}
+          mode="view"
+          defaultValue={filterString}
+        />
+      </View>
+
+      {exerciseStore.favoriteExercises.length > 0 ? (
         <ExerciseList
-          exercises={exerciseStore.favoriteExercises}
+          exercises={filteredExercises}
           onSelect={onSelect}
           selectedExercises={selectedExercises}
         />
-      )}
-      {exerciseStore.favoriteExercises.length === 0 && (
+      ) : (
         <EmptyState text={translate('noFavoriteExercises')} />
       )}
     </>
