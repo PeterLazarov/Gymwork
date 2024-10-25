@@ -37,6 +37,7 @@
 * Look into Android 15 edge-to-edge handling https://github.com/zoontek/react-native-edge-to-edge
 * Make modals look more consistent
 * copy Workout should not copy workout duration
+* Feedback screen should also send the screen it was clicked from
 
 Save workout (with or without sets)
 Workout duration + see in chart/history
