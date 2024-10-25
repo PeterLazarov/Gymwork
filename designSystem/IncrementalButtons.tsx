@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleProp, TouchableOpacity, View, ViewStyle } from 'react-native'
 
-import { Icon, useColors } from '.'
+import { Icon, spacing, useColors } from '.'
 
 type Props = {
   value: number
@@ -24,7 +24,7 @@ const IncrementalButtons: React.FC<Props> = ({
 
   const btnStyle: StyleProp<ViewStyle> = {
     backgroundColor: colors.primary,
-    padding: 7,
+    padding: spacing.xs,
     justifyContent: 'center',
     alignItems: 'center',
     aspectRatio: 1,

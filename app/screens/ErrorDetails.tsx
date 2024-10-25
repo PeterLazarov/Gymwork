@@ -1,7 +1,14 @@
 import React, { useState } from 'react'
 import { ScrollView, View } from 'react-native'
 
-import { Text, Button, ButtonText, fontSize, useColors } from 'designSystem'
+import {
+  Text,
+  Button,
+  ButtonText,
+  fontSize,
+  useColors,
+  spacing,
+} from 'designSystem'
 import { SafeLayout } from 'app/layouts/SafeLayout'
 
 export interface ErrorDetailsProps {
@@ -22,7 +29,7 @@ export const ErrorDetails: React.FC<ErrorDetailsProps> = ({
   const [detailsVisible, setDetailsVisible] = useState(false)
 
   return (
-    <SafeLayout style={{ gap: 16, paddingHorizontal: 10 }}>
+    <SafeLayout style={{ gap: spacing.md, paddingHorizontal: spacing.xs }}>
       <Text
         style={{
           color: colors.onError,
@@ -46,7 +53,7 @@ export const ErrorDetails: React.FC<ErrorDetailsProps> = ({
         <ButtonText variant="neutral">Show / Hide error details</ButtonText>
       </Button>
 
-      <View style={{ flex: 1, gap: 16 }}>
+      <View style={{ flex: 1, gap: spacing.md }}>
         {detailsVisible && (
           <>
             <Text
@@ -63,7 +70,7 @@ export const ErrorDetails: React.FC<ErrorDetailsProps> = ({
                 borderRadius: 6,
               }}
               contentContainerStyle={{
-                padding: 16,
+                padding: spacing.sm,
               }}
             >
               <Text

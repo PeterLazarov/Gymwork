@@ -8,6 +8,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { searchString } from 'app/utils/string'
+import { spacing } from 'designSystem'
 
 const noop = () => {}
 
@@ -42,7 +43,7 @@ const AllExercisesList: React.FC<Props> = ({ onSelect, selectedExercises }) => {
       <View
         style={{
           flexDirection: 'row',
-          gap: 8,
+          gap: spacing.xs,
         }}
       >
         <Searchbar

@@ -10,6 +10,7 @@ import {
   Divider,
   useColors,
   fontSize,
+  spacing,
 } from 'designSystem'
 import { SelectOption } from './types'
 import OptionListItem from './OptionListItem'
@@ -51,8 +52,8 @@ function SelectOptionsModal<T = unknown>({
         onDismiss={onClose}
         contentContainerStyle={{
           backgroundColor: colors.surfaceContainerLowest,
-          marginVertical: 8,
-          marginHorizontal: 20,
+          marginVertical: spacing.xs,
+          marginHorizontal: spacing.md,
           maxHeight: maxModalHeight,
         }}
       >

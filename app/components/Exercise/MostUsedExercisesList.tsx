@@ -9,6 +9,7 @@ import { useState, useMemo } from 'react'
 import { searchString } from 'app/utils/string'
 import { View } from 'react-native'
 import { Searchbar } from 'react-native-paper'
+import { spacing } from 'designSystem'
 
 const noop = () => {}
 
@@ -46,7 +47,7 @@ const MostUsedExercisesList: React.FC<Props> = ({
       <View
         style={{
           flexDirection: 'row',
-          gap: 8,
+          gap: spacing.xs,
         }}
       >
         <Searchbar

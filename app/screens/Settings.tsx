@@ -66,7 +66,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
         <Header.Title title={translate('settings')} />
       </Header>
 
-      <View style={{ flex: 1, padding: 8 }}>
+      <View style={{ flex: 1, padding: spacing.xs }}>
         <Select
           options={appearanceOptions}
           value={settingsStore.colorSchemePreference}

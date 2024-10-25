@@ -9,6 +9,7 @@ import { searchString } from 'app/utils/string'
 import { useState, useMemo } from 'react'
 import { View } from 'react-native'
 import { Searchbar } from 'react-native-paper'
+import { spacing } from 'designSystem'
 
 type Props = {
   onSelect: (exercise: Exercise) => void
@@ -44,7 +45,7 @@ const FavoriteExercisesList: React.FC<Props> = ({
       <View
         style={{
           flexDirection: 'row',
-          gap: 8,
+          gap: spacing.xs,
         }}
       >
         <Searchbar

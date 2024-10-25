@@ -14,7 +14,7 @@ import {
   measurementTypes,
 } from 'app/db/models'
 
-import { Icon, Multiselect, IconButton } from 'designSystem'
+import { Icon, Multiselect, IconButton, spacing } from 'designSystem'
 import { translate } from 'app/i18n'
 import ExerciseEditFormDistanceSection from './ExerciseEditFormDistanceSection'
 import ExerciseEditFormWeightSection from './ExerciseEditFormWeightSection'
@@ -117,7 +117,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
         />
         <IconButton
           onPress={onAddMusclePress}
-          style={{ margin: 4 }}
+          style={{ margin: spacing.xxs }}
         >
           <Icon icon="add" />
         </IconButton>

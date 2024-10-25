@@ -8,6 +8,7 @@ import {
   manageInputFocus,
   Icon,
   IconButton,
+  spacing,
 } from 'designSystem'
 import { translate } from 'app/i18n'
 import { Duration } from 'luxon'
@@ -65,7 +66,7 @@ export default observer(
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          gap: 12,
+          gap: spacing.sm,
         }}
       >
         {!hideTimer && (

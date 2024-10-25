@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native'
 
-import { Text, Icon, IconProps, useColors, fontSize } from '..'
+import { Text, Icon, IconProps, useColors, fontSize, spacing } from '..'
 
 export type FeedbackOption = {
   icon: IconProps['icon']
@@ -75,8 +75,8 @@ const makeStyles = (
         ? colors.surfaceContainerLowest
         : 'transparent',
       borderRadius: 8,
-      gap: 4,
-      paddingVertical: compactMode ? 0 : 16,
+      gap: spacing.xxs,
+      paddingVertical: compactMode ? 0 : spacing.md,
       flex: 1,
       alignItems: 'center',
     },

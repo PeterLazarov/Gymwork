@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 
 import FeedbackPickerOption, { FeedbackOption } from './FeedbackPickerOption'
+import { spacing } from 'designSystem'
 
 type Props = {
   selected?: string
@@ -28,7 +29,7 @@ const FeedbackPicker: React.FC<Props> = ({
       style={{
         flexDirection: 'row',
         width: '100%',
-        gap: 16,
+        gap: spacing.md,
       }}
     >
       {options.map(option => (

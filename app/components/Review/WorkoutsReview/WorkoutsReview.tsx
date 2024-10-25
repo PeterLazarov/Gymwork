@@ -14,6 +14,7 @@ import {
   Divider,
   FeedbackPickerOption,
   IndicatedScrollList,
+  spacing,
 } from 'designSystem'
 import { searchString } from 'app/utils/string'
 
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
   },
   filterOptionList: {
     flexDirection: 'row',
-    margin: 8,
+    margin: spacing.xs,
   },
   filterOption: {
     backgroundColor: 'transparent',

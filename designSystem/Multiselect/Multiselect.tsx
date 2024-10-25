@@ -7,6 +7,7 @@ import {
   SelectOption,
   SelectOptionsModal,
 } from 'designSystem/Select'
+import { spacing } from 'designSystem'
 
 type Props = {
   options: readonly SelectOption[]
@@ -57,7 +58,7 @@ const Multiselect: React.FC<Props> = ({
     <>
       <View
         style={{
-          gap: 4,
+          gap: spacing.xxs,
           ...containerStyle,
         }}
       >
@@ -66,7 +67,9 @@ const Multiselect: React.FC<Props> = ({
           text={headerText}
           error={error}
         />
-        <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
+        <View
+          style={{ flexDirection: 'row', gap: spacing.xs, flexWrap: 'wrap' }}
+        >
           {selectedValues.map(selectedValue => {
             const option = options.find(
               opt => getOptionValue(opt) === selectedValue

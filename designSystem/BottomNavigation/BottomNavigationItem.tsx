@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 
-import { Text, Icon, useColors, fontSize } from '../'
+import { Text, Icon, useColors, fontSize, spacing } from '../'
 import { Item } from './types'
 
 type Props = {
@@ -24,7 +24,7 @@ export const BottomNavigationItem: React.FC<Props> = ({ item, isSelected }) => {
         style={{
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 4,
+          gap: spacing.xxs,
         }}
       >
         <Icon

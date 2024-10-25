@@ -72,7 +72,7 @@ const WorkoutModal: React.FC<Props> = ({
             style={{
               fontSize: fontSize.lg,
               textAlign: 'center',
-              padding: 16,
+              padding: spacing.md,
             }}
           >
             {label}
@@ -102,8 +102,8 @@ const WorkoutModal: React.FC<Props> = ({
                   flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  padding: 5,
-                  gap: 10,
+                  padding: spacing.xxs,
+                  gap: spacing.xs,
                 }}
               >
                 <Text style={{ color: colors.onSurface }}>

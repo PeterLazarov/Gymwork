@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 
-import { Text, useColors, Icon, IconButton } from 'designSystem'
+import { Text, useColors, Icon, IconButton, spacing } from 'designSystem'
 
 type Props = {
   selection: string
@@ -21,11 +21,11 @@ const SelectedLabel: React.FC<Props> = ({
       style={{
         borderWidth: 1,
         borderColor: colors.primary,
-        paddingLeft: 10,
-        paddingRight: 4,
-        paddingVertical: 6,
+        paddingLeft: spacing.xs,
+        paddingRight: spacing.xxs,
+        paddingVertical: spacing.xs,
         borderRadius: 8,
-        gap: 4,
+        gap: spacing.xxs,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
