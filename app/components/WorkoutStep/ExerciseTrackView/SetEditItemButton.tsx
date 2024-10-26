@@ -33,7 +33,7 @@ const SetEditItemButton: React.FC<SetEditItemButtonProps> = ({
         justifyContent: 'center',
       }}
       disabled={disabled}
-      onPress={onPress}
+      onPress={disabled ? undefined : onPress}
     >
       <>
         {icon ? (
