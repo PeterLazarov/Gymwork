@@ -43,6 +43,7 @@ module.exports = {
     'no-unused-vars': 0,
     'no-use-before-define': 'off',
     'no-prototype-builtins': 'off',
+    'no-redeclare': 'off',
     quotes: 0,
     'space-before-function-paren': 0,
     'react-hooks/exhaustive-deps': 0,
