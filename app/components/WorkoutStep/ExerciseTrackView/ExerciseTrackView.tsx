@@ -95,7 +95,7 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   }, [focusedExercise])
 
   const handleUpdate = useCallback(() => {
-    const updatedSet = {
+    const { completedAt, ...updatedSet } = {
       ...getSnapshot(stateStore.draftSet!),
       exercise: selectedSet!.exercise.guid,
       guid: selectedSet!.guid,
