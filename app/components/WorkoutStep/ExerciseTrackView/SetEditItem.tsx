@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { getFormatedDuration } from 'app/utils/time'
-import { useColors, Icon, palettes } from 'designSystem'
+import { useColors, Icon, palettes, iconSizes } from 'designSystem'
 import SetEditItemButton from './SetEditItemButton'
 import SetDataLabel from '../SetDataLabel'
 import { useStores } from 'app/db/helpers/useStores'
@@ -49,7 +49,6 @@ const SetEditItem: React.FC<Props> = ({
           justifyContent: 'space-around',
           paddingHorizontal: spacing.xs,
           paddingVertical: spacing.xxs,
-          backgroundColor: draft ? colors.surfaceContainer : undefined,
         },
         style,
       ]}
@@ -57,11 +56,10 @@ const SetEditItem: React.FC<Props> = ({
     >
       <View
         style={{
-          flex: 1,
-          alignItems: 'center',
-          flexDirection: 'row',
           paddingVertical: spacing.xxs,
           gap: spacing.xs,
+          flexDirection: 'row',
+          alignItems: 'center',
         }}
       >
         <SetEditItemButton
@@ -70,13 +68,12 @@ const SetEditItem: React.FC<Props> = ({
           symbol={symbol}
           color={color}
         />
-        {isRecord && (
-          <Icon
-            icon="trophy"
-            color={palettes.gold['80']}
-          />
-        )}
+        <Icon
+          icon="trophy"
+          color={isRecord ? palettes.gold['80'] : 'transparent'}
+        />
       </View>
+
       {set.exercise.hasRepMeasument && (
         <SetDataLabel
           value={set.reps}

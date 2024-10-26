@@ -74,6 +74,8 @@ const SetEditList: React.FC<Props> = ({
               ? colors.primaryContainer
               : isFocused
               ? colors.surfaceContainerHigh
+              : isDraft
+              ? colors.surfaceContainer
               : undefined,
           }}
           onLongPress={() => {
