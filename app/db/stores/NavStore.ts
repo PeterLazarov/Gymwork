@@ -1,6 +1,11 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
-import { AllStacksParamList, navigationRef } from 'app/navigators'
+import {
+  AllStacksParamList,
+  navigationRef,
+  RoutesWithoutParams,
+  RoutesWithParams,
+} from 'app/navigators'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
 const pages: (keyof AllStacksParamList)[] = [
@@ -18,8 +23,28 @@ const pages: (keyof AllStacksParamList)[] = [
   'Workout',
   'WorkoutStep',
   'WorkoutFeedback',
-  'UserFeedback'
+  'UserFeedback',
 ]
+
+function navigate<T extends RoutesWithParams>(
+  name: T,
+  params: AllStacksParamList[T]
+): void
+function navigate<T extends RoutesWithoutParams>(name: T): void
+function navigate<T extends RoutesWithParams | RoutesWithoutParams>(
+  name: T,
+  params?: AllStacksParamList[T]
+): void {
+  try {
+    if (navigationRef.isReady()) {
+      // @ts-expect-error
+      navigationRef.navigate(name as never, params as never)
+    }
+  } catch (error) {
+    console.log('did throw in action')
+    throw error
+  }
+}
 
 export const NavStoreModel = types
   .model('NavigationStore')
@@ -41,20 +66,7 @@ export const NavStoreModel = types
      * @param name - The name of the route to navigate to.
      * @param params - The params to pass to the route.
      */
-    navigate<T extends keyof AllStacksParamList>(
-      name: T,
-      params?: AllStacksParamList[T]
-    ) {
-      try {
-        if (navigationRef.isReady()) {
-          // @ts-expect-error
-          navigationRef.navigate(name as never, params as never)
-        }
-      } catch (error) {
-        console.log('did throw in action')
-        throw error
-      }
-    },
+    navigate,
 
     /**
      * This function is used to go back in a navigation stack, if it's possible to go back.

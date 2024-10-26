@@ -62,6 +62,7 @@ export type AppStackParamList = {
   HomeStack: undefined
   Settings: undefined
   UserFeedback: undefined
+
   Welcome: undefined
 }
 
@@ -79,6 +80,16 @@ export type WorkoutStackParamList = {
 export type AllStacksParamList = AppStackParamList &
   HomeStackParamList &
   WorkoutStackParamList
+
+export type RoutesWithParams = {
+  [K in keyof AllStacksParamList]: AllStacksParamList[K] extends undefined
+    ? never
+    : K
+}[keyof AllStacksParamList]
+export type RoutesWithoutParams = keyof Omit<
+  AllStacksParamList,
+  RoutesWithParams
+>
 
 export const useRouteParams = <T extends keyof AllStacksParamList>(
   screen: T
