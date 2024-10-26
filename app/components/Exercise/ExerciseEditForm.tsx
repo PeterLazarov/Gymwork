@@ -139,20 +139,20 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
         }}
         error={!!measurementTypeRrror}
       />
-      {edittedExercise.hasDistanceMeasument && (
+      {edittedExercise.measurements.distance && (
         <ExerciseEditFormDistanceSection
           measurementConfig={edittedExercise.measurements}
           onFormChange={onFormChange}
         />
       )}
-      {edittedExercise.hasWeightMeasument && (
+      {edittedExercise.measurements.weight && (
         <ExerciseEditFormWeightSection
           measurementConfig={edittedExercise.measurements}
           onFormChange={onFormChange}
           weightIncError={weightIncError}
         />
       )}
-      {edittedExercise.hasTimeMeasument && (
+      {edittedExercise.measurements.duration && (
         <ExerciseEditFormDurationSection
           measurementConfig={edittedExercise.measurements}
           onFormChange={onFormChange}

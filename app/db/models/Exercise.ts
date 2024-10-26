@@ -75,15 +75,6 @@ export const ExerciseModel = types
     isFavorite: false,
   })
   .views(exercise => ({
-    get hasWeightMeasument() {
-      return !!exercise.measurements.weight
-    },
-    get hasWeightGrouping() {
-      return this.hasWeightMeasument
-    },
-    get hasRepMeasument() {
-      return !!exercise.measurements.reps
-    },
     get measurementNames(): measurementName[] {
       return Object.entries(exercise.measurements)
         .filter(([, v]) => v)
@@ -130,21 +121,6 @@ export const ExerciseModel = types
       return this.measuredBy
         ? exercise.measurements[this.measuredBy]
         : undefined
-    },
-    get hasRepGrouping() {
-      return this.groupRecordsBy === 'reps'
-    },
-    get hasDistanceMeasument() {
-      return !!exercise.measurements.distance
-    },
-    get hasDistanceGrouping() {
-      return this.groupRecordsBy === 'distance'
-    },
-    get hasTimeMeasument() {
-      return !!exercise.measurements.duration
-    },
-    get hasTimeGrouping() {
-      return this.groupRecordsBy === 'duration'
     },
   }))
   .actions(withSetPropAction)

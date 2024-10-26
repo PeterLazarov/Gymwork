@@ -52,7 +52,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
         </SetEditPanelSection>
       )}
 
-      {value.exercise?.hasRepMeasument && (
+      {value.exercise?.measurements.reps && (
         <SetEditPanelSection text={translate('reps')}>
           <IncrementNumericEditor
             value={value.reps}
@@ -65,7 +65,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
         </SetEditPanelSection>
       )}
 
-      {value.exercise!.hasWeightMeasument && (
+      {value.exercise!.measurements.weight && (
         <SetEditPanelSection text={translate('weight')}>
           {/* Works in KG */}
           <IncrementNumericEditor
@@ -79,7 +79,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
         </SetEditPanelSection>
       )}
 
-      {value.exercise!.hasDistanceMeasument && (
+      {value.exercise!.measurements.distance && (
         <SetEditPanelSection text={translate('distance')}>
           <DistanceEditor
             value={value.distance}
@@ -92,7 +92,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({
         </SetEditPanelSection>
       )}
 
-      {value.exercise!.hasTimeMeasument && (
+      {value.exercise!.measurements.duration && (
         <SetEditPanelSection text={translate('duration')}>
           <DurationInput
             value={

@@ -59,7 +59,8 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 
     stateStore.setProp('draftSet', {
       exercise: focusedExercise.guid,
-      reps: reps || (focusedExercise.hasRepMeasument ? defaultReps : undefined),
+      reps:
+        reps || (focusedExercise.measurements.reps ? defaultReps : undefined),
       ...rest,
       durationMs: selectedSet?.durationMs || 0,
       completedAt: null,

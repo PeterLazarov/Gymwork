@@ -74,25 +74,25 @@ const SetEditItem: React.FC<Props> = ({
         />
       </View>
 
-      {set.exercise.hasRepMeasument && (
+      {set.exercise.measurements.reps && (
         <SetDataLabel
           value={set.reps}
           unit={translate('reps')}
         />
       )}
-      {set.exercise.hasWeightMeasument && (
+      {set.exercise.measurements.weight && (
         <SetDataLabel
           value={set.weight}
           unit={set.exercise.measurements.weight!.unit}
         />
       )}
-      {set.exercise.hasDistanceMeasument && (
+      {set.exercise.measurements.distance && (
         <SetDataLabel
           value={set.distance ?? set.inferredDistance?.toFixed(2)}
           unit={set.exercise.measurements.distance!.unit}
         />
       )}
-      {set.exercise.hasTimeMeasument && (
+      {set.exercise.measurements.duration && (
         <SetDataLabel
           value={getFormatedDuration(
             set.duration ??
@@ -121,16 +121,14 @@ const SetEditItem: React.FC<Props> = ({
       )}
 
       {showSetCompletion && (
-        <View style={{ marginLeft: 8 }}>
-          <SetEditItemButton
-            icon={'check'}
-            disabled={draft}
-            onPress={() => {
-              set.setProp('completedAt', set.completed ? null : new Date())
-            }}
-            color={set.completed ? color : colors.outlineVariant}
-          />
-        </View>
+        <SetEditItemButton
+          icon={'check'}
+          disabled={draft}
+          onPress={() => {
+            set.setProp('completedAt', set.completed ? null : new Date())
+          }}
+          color={set.completed ? color : colors.outlineVariant}
+        />
       )}
     </View>
   )
