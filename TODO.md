@@ -38,6 +38,13 @@
 * Make modals look more consistent
 * copy Workout should not copy workout duration
 * Feedback screen should also send the screen it was clicked from
+* Colors/Dots per muscle group (in Calendar?) https://youtu.be/VkHWqq715Qc?si=MrAj21LW3CylHDBf&t=98
+* Seed templates like Strong app https://youtu.be/VkHWqq715Qc?si=k3VepIvmuQXj-cBC&t=164
+* Workout summary card like Strong app https://youtu.be/VkHWqq715Qc?si=4vyHtvnlXpxzMSSl&t=169
+* Integrated 1RM calc
+* Exercise instructions / visualisations
+* Bodyweight exercises?
+* Muscle icons (like Hevy?) https://youtu.be/VkHWqq715Qc?si=z59DycSLqc7AcWMe&t=214
 
 Save workout (with or without sets)
 Workout duration + see in chart/history
