@@ -22,7 +22,7 @@ const CalendarScreen: React.FC = () => {
   const {
     workoutStore,
     stateStore,
-    navStore: { navigate },
+    navStore: { navigate, activeRoute },
   } = useStores()
 
   const { copyWorkoutMode } = useRouteParams('Calendar')
@@ -82,7 +82,7 @@ const CalendarScreen: React.FC = () => {
 
   function goToFeedback() {
     setMenuOpen(false)
-    navigate('UserFeedback')
+    navigate('UserFeedback', { referrerPage: activeRoute ?? '?' })
   }
 
   // ! must be a whole number

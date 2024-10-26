@@ -61,7 +61,9 @@ export type AppStackParamList = {
   TemplateSelect: undefined
   HomeStack: undefined
   Settings: undefined
-  UserFeedback: undefined
+  UserFeedback: {
+    referrerPage: string
+  }
 
   Welcome: undefined
 }

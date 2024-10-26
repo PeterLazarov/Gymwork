@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 import { DateTime } from 'luxon'
 
@@ -17,8 +17,11 @@ import { AirtableFeedback, airtableApi } from 'app/services/airtable'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import { translate } from 'app/i18n'
 import UserFeedbackForm from 'app/components/UserFeedbackForm'
+import { useRouteParams } from 'app/navigators'
 
 const UserFeedbackScreen: React.FC = () => {
+  const { referrerPage } = useRouteParams('UserFeedback')
+
   const {
     stateStore,
     navStore: { goBack },
@@ -47,7 +50,13 @@ const UserFeedbackScreen: React.FC = () => {
     showSnackbar?.({
       text: 'Thank you for sending us feedback',
     })
-    airtableApi.sendFeedback(feedback)
+
+    const feedbackWithReferrer = {
+      ...feedback,
+      comments: `${feedback.comments}\n\nPage:${referrerPage}`,
+    }
+
+    airtableApi.sendFeedback(feedbackWithReferrer)
   }
 
   return (

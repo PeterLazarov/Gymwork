@@ -18,7 +18,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
 
   const {
     stateStore,
-    navStore: { navigate },
+    navStore: { navigate, activeRoute },
   } = useStores()
 
   const [menuOpen, setMenuOpen] = useState(false)
@@ -47,11 +47,11 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
 
   function onEditExercisePress() {
     setMenuOpen(false)
-    navigate('ExerciseEdit')
+    navigate('ExerciseEdit', {})
   }
   function goToFeedback() {
     setMenuOpen(false)
-    navigate('UserFeedback')
+    navigate('UserFeedback', { referrerPage: activeRoute ?? '?' })
   }
 
   function goBack() {

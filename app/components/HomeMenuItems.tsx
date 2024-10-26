@@ -12,7 +12,7 @@ const HomeMenuItems: React.FC<HeaderMenuItemsProps> = ({ onClose }) => {
   const { performBenchmark } = useBenchmark()
 
   const {
-    navStore: { navigate },
+    navStore: { navigate, activeRoute },
   } = useStores()
 
   function goToSettings() {
@@ -22,7 +22,7 @@ const HomeMenuItems: React.FC<HeaderMenuItemsProps> = ({ onClose }) => {
 
   function goToFeedback() {
     onClose()
-    navigate('UserFeedback')
+    navigate('UserFeedback', { referrerPage: activeRoute ?? '?' })
   }
 
   return (
