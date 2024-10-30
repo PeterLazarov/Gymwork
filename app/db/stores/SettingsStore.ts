@@ -31,7 +31,7 @@ export const SettingsStoreModel = types
   .actions(self => ({
     initialize() {
       if (self.colorSchemePreference) {
-        Appearance.setColorScheme(self.colorSchemePreference)
+        Appearance.setColorScheme?.(self.colorSchemePreference)
       }
 
       const colorScheme = Appearance.getColorScheme()
@@ -43,7 +43,7 @@ export const SettingsStoreModel = types
     //   null or undefined sets it to 'light'
     setColorSchemePreference(scheme: 'dark' | 'light' | null) {
       self.colorSchemePreference = scheme
-      Appearance.setColorScheme(scheme ?? deviceColorScheme)
+      Appearance.setColorScheme?.(scheme ?? deviceColorScheme)
 
       const colorScheme = Appearance.getColorScheme()
       const colors = getColors(colorScheme)

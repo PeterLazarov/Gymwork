@@ -1,4 +1,4 @@
-import { palettes } from 'designSystem'
+import { palettes } from 'designSystem/tokens/theme'
 
 export const feelingOptions = {
   sad: {
