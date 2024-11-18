@@ -64,3 +64,8 @@ Ways to make the app crash:
 
 - Add a new translation string to en.ts
 - Make ANY change in the store (could just be an added comment)
+
+Ideas
+
+- Bottom left, right, + row is similar to a music player's bottom row.
+- Share button and others could use icons similar to other apps
