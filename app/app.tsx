@@ -6,10 +6,6 @@ if (__DEV__) {
 }
 import React from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import {
-  initialWindowMetrics,
-  SafeAreaProvider,
-} from 'react-native-safe-area-context'
 
 import './i18n'
 import DBStoreInitializer from './db/DBStoreInitializer'
@@ -43,16 +39,14 @@ function App() {
   }
 
   return (
-    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <DBStoreInitializer>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <AppNavigator
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
-        </GestureHandlerRootView>
-      </DBStoreInitializer>
-    </SafeAreaProvider>
+    <DBStoreInitializer>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <AppNavigator
+          initialState={initialNavigationState}
+          onStateChange={onNavigationStateChange}
+        />
+      </GestureHandlerRootView>
+    </DBStoreInitializer>
   )
 }
 
