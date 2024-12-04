@@ -25,6 +25,7 @@ export const Header: React.FC<ViewProps> & SubComponents = props => {
             paddingBottom: padding,
             paddingTop: (insets?.top ?? 0) + padding,
             zIndex: 1,
+            width: '100%',
           }}
           {...props}
         />
