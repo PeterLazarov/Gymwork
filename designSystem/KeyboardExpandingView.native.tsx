@@ -14,6 +14,8 @@ type Props = {
 export const KeyboardExpandingView: React.FC<Props> = ({
   footerHeight = 0,
 }) => {
+  const keyboard = useAnimatedKeyboard()
+
   // Used in older devices where useAnimatedKeyboard doesn't work. Tested on Nexus 4 API 23 emulator
   const kbHeight = useSharedValue(0)
   useEffect(() => {
@@ -31,5 +33,19 @@ export const KeyboardExpandingView: React.FC<Props> = ({
     }
   }, [])
 
-  return <Animated.View style={[{ height: kbHeight }]} />
+  const useAnimatedHeight = useRef(false)
+
+  const derivedValue = useDerivedValue(() => {
+    if (keyboard.height.value !== 0) {
+      useAnimatedHeight.current = true
+    }
+
+    return Math.max(
+      (useAnimatedHeight.current ? keyboard.height.value : kbHeight.value) -
+        footerHeight,
+      0
+    )
+  })
+
+  return <Animated.View style={[{ height: derivedValue }]} />
 }
