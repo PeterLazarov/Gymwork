@@ -36,6 +36,12 @@ const TopTabs: React.FC<Props> = ({
 
   return (
     <NavigationContainer
+      linking={{
+        enabled: true,
+        prefixes: [
+          // TODO
+        ],
+      }}
       independent
       theme={navTheme}
       onStateChange={state => {
@@ -53,8 +59,15 @@ const TopTabs: React.FC<Props> = ({
             minWidth: tabWidth,
             width: 'auto',
             height: tabHeight,
+            // backgroundColor: 'red',
+          },
+          tabBarStyle: {
+            // backgroundColor: 'blue',
           },
           swipeEnabled: !swipeDisabled,
+        }}
+        style={{
+          backgroundColor: 'green',
         }}
         backBehavior="none"
       >

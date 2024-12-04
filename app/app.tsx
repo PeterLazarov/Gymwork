@@ -42,6 +42,15 @@ function App() {
     <DBStoreInitializer>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <AppNavigator
+          linking={{
+            enabled: true,
+            prefixes: [
+              'gymwork://', // App-specific scheme
+              'http://localhost', // Prefix for universal links
+              'https://gymwork.com', // Prefix for universal links
+              'https://*.gymwork.com', // Prefix which matches any subdomain
+            ],
+          }}
           initialState={initialNavigationState}
           onStateChange={onNavigationStateChange}
         />
