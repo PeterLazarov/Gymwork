@@ -2,15 +2,9 @@ import React, { useMemo } from 'react'
 import { StyleSheet, View, ViewStyle } from 'react-native'
 
 import { Text, useColors, spacing } from '.'
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedbackProps,
-} from 'react-native-gesture-handler'
+import { Pressable, PressableProps } from 'react-native-gesture-handler'
 
-export type CardProps = Omit<
-  TouchableWithoutFeedbackProps,
-  'containerStyle'
-> & {
+export type CardProps = Omit<PressableProps, 'containerStyle'> & {
   title?: string
   content: React.ReactNode
   containerStyle?: ViewStyle
@@ -29,18 +23,21 @@ const Card: React.FC<CardProps> = ({
   const styles = useMemo(() => makeStyles(colors), [colors])
 
   return (
-    <TouchableOpacity
+    <Pressable
       style={[styles.card, containerStyle]}
-      activeOpacity={0.5}
       onPress={onPress}
       disabled={!onPress}
       {...otherProps}
     >
-      <View style={[styles.content, style]}>
-        {title && <Text style={styles.title}>{title}</Text>}
-        <View>{content}</View>
-      </View>
-    </TouchableOpacity>
+      {props => (
+        <View
+          style={[styles.content, style, { opacity: props.pressed ? 0.5 : 1 }]}
+        >
+          {title && <Text style={styles.title}>{title}</Text>}
+          <View>{content}</View>
+        </View>
+      )}
+    </Pressable>
   )
 }
 
