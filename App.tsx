@@ -1,9 +1,11 @@
-import '@expo/metro-runtime'
-import React from 'react'
-import App from './app/app'
+import "@expo/metro-runtime"
+import * as SplashScreen from "expo-splash-screen"
+import App from "@/app"
+
+SplashScreen.preventAutoHideAsync()
 
 function IgniteApp() {
-  return <App />
+  return <App hideSplashScreen={SplashScreen.hideAsync} />
 }
 
 export default IgniteApp

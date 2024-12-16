@@ -1,24 +1,24 @@
-import { Edge, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Edge, useSafeAreaInsets } from "react-native-safe-area-context"
 
-export type ExtendedEdge = Edge | 'start' | 'end'
+export type ExtendedEdge = Edge | "start" | "end"
 
 const propertySuffixMap = {
-  top: 'Top',
-  bottom: 'Bottom',
-  left: 'Start',
-  right: 'End',
-  start: 'Start',
-  end: 'End',
+  top: "Top",
+  bottom: "Bottom",
+  left: "Start",
+  right: "End",
+  start: "Start",
+  end: "End",
 }
 
 const edgeInsetMap: Record<string, Edge> = {
-  start: 'left',
-  end: 'right',
+  start: "left",
+  end: "right",
 }
 
 export type SafeAreaInsetsStyle<
-  Property extends 'padding' | 'margin' = 'padding',
-  Edges extends ExtendedEdge[] = ExtendedEdge[]
+  Property extends "padding" | "margin" = "padding",
+  Edges extends Array<ExtendedEdge> = Array<ExtendedEdge>,
 > = {
   [K in Edges[number] as `${Property}${Capitalize<K>}`]: number
 }
@@ -31,11 +31,11 @@ export type SafeAreaInsetsStyle<
  * @returns {SafeAreaInsetsStyle<Property, Edges>} - The style object with the safe area insets applied.
  */
 export function useSafeAreaInsetsStyle<
-  Property extends 'padding' | 'margin' = 'padding',
-  Edges extends ExtendedEdge[] = []
+  Property extends "padding" | "margin" = "padding",
+  Edges extends Array<ExtendedEdge> = [],
 >(
   safeAreaEdges: Edges = [] as unknown as Edges,
-  property: Property = 'padding' as Property
+  property: Property = "padding" as Property,
 ): SafeAreaInsetsStyle<Property, Edges> {
   const insets = useSafeAreaInsets()
 

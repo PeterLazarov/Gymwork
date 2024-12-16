@@ -7,68 +7,49 @@
     "scheme": "gymwork",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/pen-logo.png",
-    "splash": {
-      "image": "./assets/logo.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#191015"
-    },
     "userInterfaceStyle": "automatic",
+    "icon": "./assets/images/app-icon-all.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "newArchEnabled": true,
     "jsEngine": "hermes",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
-      "icon": "./assets/pen-logo.png",
+      "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.gymwork",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/pen-logo.png",
+        "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
-      },
-      "splash": {
-        "image": "./assets/logo.png",
-        "resizeMode": "contain",
-        "backgroundColor": "#191015"
       }
     },
     "ios": {
-      "icon": "./assets/pen-logo.png",
+      "icon": "./assets/images/app-icon-ios.png",
       "supportsTablet": true,
-      "bundleIdentifier": "com.gymwork",
-      "splash": {
-        "image": "./assets/logo.png",
-        "tabletImage": "./assets/logo.png",
-        "resizeMode": "contain",
-        "backgroundColor": "#191015"
-      }
+      "bundleIdentifier": "com.gymwork"
     },
     "web": {
-      "favicon": "./assets/pen-logo.png",
-      "splash": {
-        "image": "./assets/logo.png",
-        "resizeMode": "contain",
-        "backgroundColor": "#191015"
-      },
+      "favicon": "./assets/images/app-icon-web-favicon.png",
       "bundler": "metro"
     },
     "plugins": [
       "expo-localization",
       "expo-font",
-      "expo-build-properties"
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/app-icon-android-adaptive-foreground.png",
+          "imageWidth": 300,
+          "resizeMode": "contain",
+          "backgroundColor": "#191015"
+        }
+      ]
     ],
     "experiments": {
       "tsconfigPaths": true
-    },
-    "extra": {
-      "eas": {
-        "projectId": "4263c316-24a4-4665-a39e-38e50d2b3f17"
-      }
     }
   },
   "ignite": {
-    "version": "9.8.0"
+    "version": "10.1.0"
   }
 }

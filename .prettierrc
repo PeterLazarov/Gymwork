@@ -1,10 +1,7 @@
 {
+  "printWidth": 100,
   "semi": false,
-  "arrowParens": "avoid",
-  "trailingComma": "es5",
-  "endOfLine": "lf",
-  "tabWidth": 2,
-  "useTabs": false,
-  "singleQuote": true,
-  "singleAttributePerLine": true
+  "singleQuote": false,
+  "trailingComma": "all",
+  "quoteProps": "consistent"
 }
