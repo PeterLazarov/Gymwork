@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { observer } from 'mobx-react-lite'
 
 import { EmptyLayout } from './EmptyLayout'
-import { BottomNavigation } from 'designSystem'
+import { BottomNavigation, IconProps } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from '@/i18n'
 
@@ -17,13 +17,13 @@ const TabsLayout: React.FC<Props> = ({ children }) => {
     {
       text: translate('review'),
       routes: ['Review'],
-      icon: 'history',
+      icon: 'history' as IconProps['icon'],
       onPress: () => navStore.navigate('Review'),
     },
     {
       text: translate('workout'),
       routes: ['Workout', 'WorkoutStep'],
-      icon: 'dumbbell',
+      icon: 'dumbbell' as IconProps['icon'],
       onPress: () => {
         if (stateStore.focusedStep) {
           navStore.navigate('WorkoutStep')

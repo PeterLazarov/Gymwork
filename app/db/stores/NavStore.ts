@@ -32,6 +32,7 @@ function navigate<T extends RoutesWithParams>(
 ): void
 function navigate<T extends RoutesWithoutParams>(name: T): void
 function navigate<T extends RoutesWithParams | RoutesWithoutParams>(
+  this: NavStore,
   name: T,
   params?: AllStacksParamList[T]
 ): void {
@@ -39,6 +40,7 @@ function navigate<T extends RoutesWithParams | RoutesWithoutParams>(
     if (navigationRef.isReady()) {
       // @ts-expect-error
       navigationRef.navigate(name as never, params as never)
+      this.setProp('activeRoute', name)
     }
   } catch (error) {
     console.log('did throw in action')
@@ -66,7 +68,7 @@ export const NavStoreModel = types
      * @param name - The name of the route to navigate to.
      * @param params - The params to pass to the route.
      */
-    navigate,
+    navigate: navigate.bind(self),
 
     /**
      * This function is used to go back in a navigation stack, if it's possible to go back.

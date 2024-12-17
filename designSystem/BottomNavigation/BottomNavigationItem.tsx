@@ -1,20 +1,22 @@
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 
-import { Text, Icon, useColors, fontSize, spacing } from '..'
-import { Item } from './types'
+import { Text, Icon, useColors, fontSize, spacing, IconProps } from '..'
 
-type Props = {
-  item: Item
-  isSelected: boolean
+export type BottomNavigationItemProps = {
+  text: string
+  routes: string[]
+  icon: IconProps['icon']
+  onPress: () => void
+  isSelected?: boolean
 }
-export const BottomNavigationItem: React.FC<Props> = ({ item, isSelected }) => {
+export const BottomNavigationItem: React.FC<BottomNavigationItemProps> = ({ text, routes, icon, onPress, isSelected }) => {
   const colors = useColors()
 
   return (
     <TouchableOpacity
-      key={item.text}
-      onPress={item.onPress}
+      key={text}
+      onPress={onPress}
       style={{
         flex: 1,
         justifyContent: 'center',
@@ -28,7 +30,7 @@ export const BottomNavigationItem: React.FC<Props> = ({ item, isSelected }) => {
         }}
       >
         <Icon
-          icon={item.icon}
+          icon={icon}
           color={isSelected ? colors.primary : colors.onSurfaceVariant}
         />
         <Text
@@ -37,7 +39,7 @@ export const BottomNavigationItem: React.FC<Props> = ({ item, isSelected }) => {
             fontSize: fontSize.sm,
           }}
         >
-          {item.text}
+          {text}
         </Text>
       </View>
     </TouchableOpacity>

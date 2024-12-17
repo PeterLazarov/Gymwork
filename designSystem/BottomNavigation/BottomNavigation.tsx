@@ -3,18 +3,17 @@ import { useColorScheme, View, ViewProps } from 'react-native'
 
 import { boxShadows, useColors } from '..'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
-import { BottomNavigationItem } from './BottomNavigationItem'
-import { Item } from './types'
+import { BottomNavigationItem, BottomNavigationItemProps } from './BottomNavigationItem'
 
-type Props = {
+type BottomNavigationProps = {
   activeRoute?: string
-  items: Item[]
+  items: BottomNavigationItemProps[]
 } & ViewProps
 
 const btnMinHeight = 56
 const insetCoverage = 0.75
 
-export const BottomNavigation: React.FC<Props> = ({
+export const BottomNavigation: React.FC<BottomNavigationProps> = ({
   activeRoute,
   items,
   ...rest
@@ -39,7 +38,7 @@ export const BottomNavigation: React.FC<Props> = ({
             {items.map(item => (
               <BottomNavigationItem
                 key={item.text}
-                item={item}
+                {...item}
                 isSelected={item.routes.includes(activeRoute)}
               />
             ))}
