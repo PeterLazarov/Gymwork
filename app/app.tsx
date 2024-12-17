@@ -23,7 +23,7 @@ import { useFonts } from "expo-font"
 import { useEffect, useState } from "react"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 import * as Linking from "expo-linking"
-import { useInitialRootStore } from './db/helpers/useStores'
+import { useInitialRootStore, useStores } from './db/helpers/useStores'
 import { AppNavigator, useNavigationPersistence } from "./navigators"
 import { ErrorBoundary } from "./screens/ignite/ErrorScreen/ErrorBoundary"
 import * as storage from "./utils/storage"
@@ -75,6 +75,17 @@ function App(props: AppProps) {
   const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
   const [isI18nInitialized, setIsI18nInitialized] = useState(false)
 
+  const rootStore = useStores()
+  const [isDBInitialized, setIsDBInitialized] = useState(false)
+  useEffect(() => {
+    const now = Date.now()
+    rootStore.initializeStores().then(() => {
+      setIsDBInitialized(true)
+      console.log(`Time to initialize DB: ${((Date.now() - now) / 1000).toFixed(2)}s`)
+    })
+  }, [])
+
+
   useEffect(() => {
     initI18n()
       .then(() => setIsI18nInitialized(true))
@@ -101,6 +112,7 @@ function App(props: AppProps) {
     !rehydrated ||
     !isNavigationStateRestored ||
     !isI18nInitialized ||
+    !isDBInitialized ||
     (!areFontsLoaded && !fontLoadError)
   ) {
     return null
