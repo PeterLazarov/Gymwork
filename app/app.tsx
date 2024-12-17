@@ -19,7 +19,7 @@ if (__DEV__) {
 import './utils/gestureHandler'
 import { initI18n } from './i18n'
 import './utils/ignoreWarnings'
-import { useFonts } from 'expo-font'
+// import { useFonts } from 'expo-font'
 import { useEffect, useState } from 'react'
 import {
   initialWindowMetrics,
@@ -30,7 +30,7 @@ import { useInitialRootStore, useStores } from './db/helpers/useStores'
 import { AppNavigator, useNavigationPersistence } from './navigators'
 import { ErrorBoundary } from './screens/ignite/ErrorScreen/ErrorBoundary'
 import * as storage from './utils/storage'
-import { customFontsToLoad } from './igniteTheme'
+// import { customFontsToLoad } from './igniteTheme'
 import Config from './config'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
 import { loadDateFnsLocale } from './utils/formatDate'
@@ -76,7 +76,7 @@ function App(props: AppProps) {
     isRestored: isNavigationStateRestored,
   } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
 
-  const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
+  // const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
   const [isI18nInitialized, setIsI18nInitialized] = useState(false)
 
   useEffect(() => {
@@ -104,8 +104,8 @@ function App(props: AppProps) {
   if (
     !rehydrated ||
     !isNavigationStateRestored ||
-    !isI18nInitialized ||
-    (!areFontsLoaded && !fontLoadError)
+    !isI18nInitialized
+    // (!areFontsLoaded && !fontLoadError)
   ) {
     return null
   }

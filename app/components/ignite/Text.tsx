@@ -8,11 +8,11 @@ import {
 import { isRTL, translate, TxKeyPath } from '@/i18n'
 import type { ThemedStyle, ThemedStyleArray } from '@/igniteTheme'
 import { useAppTheme } from '@/utils/useAppTheme'
-import { typography } from '@/igniteTheme/typography'
+// import { typography } from '@/igniteTheme/typography'
 import { ReactNode } from 'react'
 
 type Sizes = keyof typeof $sizeStyles
-type Weights = keyof typeof typography.primary
+// type Weights = keyof typeof typography.primary
 type Presets =
   | 'default'
   | 'bold'
@@ -46,7 +46,7 @@ export interface TextProps extends RNTextProps {
   /**
    * Text weight modifier.
    */
-  weight?: Weights
+  // weight?: Weights
   /**
    * Text size modifier.
    */
@@ -84,7 +84,7 @@ export function Text(props: TextProps) {
   const $styles: StyleProp<TextStyle> = [
     $rtlStyle,
     themed($presets[preset]),
-    weight && $fontWeightStyles[weight],
+    // weight && $fontWeightStyles[weight],
     size && $sizeStyles[size],
     $styleOverride,
   ]
@@ -109,31 +109,35 @@ const $sizeStyles = {
   xxs: { fontSize: 12, lineHeight: 18 } satisfies TextStyle,
 }
 
-const $fontWeightStyles = Object.entries(typography.primary).reduce(
-  (acc, [weight, fontFamily]) => {
-    return { ...acc, [weight]: { fontFamily } }
-  },
-  {}
-) as Record<Weights, TextStyle>
+// const $fontWeightStyles = Object.entries(typography.primary).reduce(
+//   (acc, [weight, fontFamily]) => {
+//     return { ...acc, [weight]: { fontFamily } }
+//   },
+//   {}
+// ) as Record<Weights, TextStyle>
 
 const $baseStyle: ThemedStyle<TextStyle> = theme => ({
   ...$sizeStyles.sm,
-  ...$fontWeightStyles.normal,
+  // ...$fontWeightStyles.normal,
   color: theme.colors.text,
 })
 
 const $presets: Record<Presets, ThemedStyleArray<TextStyle>> = {
   default: [$baseStyle],
-  bold: [$baseStyle, { ...$fontWeightStyles.bold }],
+  // bold: [$baseStyle, { ...$fontWeightStyles.bold }],
+  bold: [$baseStyle, { fontWeight: 'bold' }],
   heading: [
     $baseStyle,
     {
       ...$sizeStyles.xxl,
-      ...$fontWeightStyles.bold,
+      // ...$fontWeightStyles.bold,
     },
   ],
-  subheading: [$baseStyle, { ...$sizeStyles.lg, ...$fontWeightStyles.medium }],
-  formLabel: [$baseStyle, { ...$fontWeightStyles.medium }],
-  formHelper: [$baseStyle, { ...$sizeStyles.sm, ...$fontWeightStyles.normal }],
+  // subheading: [$baseStyle, { ...$sizeStyles.lg, ...$fontWeightStyles.medium }],
+  subheading: [$baseStyle, { ...$sizeStyles.lg, fontWeight: 'medium' }],
+  // formLabel: [$baseStyle, { ...$fontWeightStyles.medium }],
+  formLabel: [$baseStyle, { fontWeight: 'medium' }],
+  // formHelper: [$baseStyle, { ...$sizeStyles.sm, ...$fontWeightStyles.normal }],
+  formHelper: [$baseStyle, { ...$sizeStyles.sm, fontWeight: 'normal' }],
 }
 const $rtlStyle: TextStyle = isRTL ? { writingDirection: 'rtl' } : {}
