@@ -4,6 +4,8 @@ import { TxKeyPath } from './i18n'
 import { capitalize } from '@/utils/string'
 import decamelize from 'decamelize'
 
+export const nestingHackKey = 'nestingHack'
+
 /**
  * Translates text.
  * @param {TxKeyPath} key - The i18n key.
@@ -27,8 +29,10 @@ import decamelize from 'decamelize'
  * ```
  */
 export function translate(key: TxKeyPath, options?: TOptions): string {
+  const fixedKey = `${nestingHackKey}:${key}`
+
   if (i18n.isInitialized) {
-    if (i18n.exists(key, options)) return i18n.t(key, options)
+    if (i18n.exists(fixedKey, options)) return i18n.t(fixedKey, options)
 
     console.warn(`Missing Translation: ${key}`)
 
