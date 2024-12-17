@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { EmptyLayout } from './EmptyLayout'
 import { BottomNavigation } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
+import { translate } from '@/i18n'
 
 type Props = {
   children?: ReactNode
@@ -14,13 +15,13 @@ const TabsLayout: React.FC<Props> = ({ children }) => {
 
   const tabs = [
     {
-      text: 'Review',
+      text: translate('review'),
       routes: ['Review'],
       icon: 'history',
       onPress: () => navStore.navigate('Review'),
     },
     {
-      text: 'Workout',
+      text: translate('workout'),
       routes: ['Workout', 'WorkoutStep'],
       icon: 'dumbbell',
       onPress: () => {
