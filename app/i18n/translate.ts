@@ -1,6 +1,8 @@
-import i18n from "i18next"
-import type { TOptions } from "i18next"
-import { TxKeyPath } from "./i18n"
+import i18n from 'i18next'
+import type { TOptions } from 'i18next'
+import { TxKeyPath } from './i18n'
+import { capitalize } from '@/utils/string'
+import decamelize from 'decamelize'
 
 /**
  * Translates text.
@@ -26,7 +28,13 @@ import { TxKeyPath } from "./i18n"
  */
 export function translate(key: TxKeyPath, options?: TOptions): string {
   if (i18n.isInitialized) {
-    return i18n.t(key, options)
+    if (i18n.exists(key, options)) return i18n.t(key, options)
+
+    console.warn(`Missing Translation: ${key}`)
+
+    return capitalize(
+      decamelize(key, { preserveConsecutiveUppercase: true, separator: ' ' })
+    )
   }
   return key
 }
