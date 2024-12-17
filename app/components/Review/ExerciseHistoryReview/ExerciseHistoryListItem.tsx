@@ -51,15 +51,15 @@ const ExerciseHistoryListItem: React.FC<Props> = ({
 const makeStyles = (colors: any) =>
   StyleSheet.create({
     item: {
+      borderColor: colors.onSurfaceVariant,
+      borderRadius: spacing.xs,
+      borderWidth: 1,
       gap: spacing.xs,
       marginBottom: spacing.sm,
-      borderRadius: spacing.xs,
-      borderColor: colors.onSurfaceVariant,
-      borderWidth: 1,
     },
     itemDate: {
-      textAlign: 'center',
       paddingTop: spacing.xxs,
+      textAlign: 'center',
     },
   })
 

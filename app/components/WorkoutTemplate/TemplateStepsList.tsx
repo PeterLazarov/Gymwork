@@ -34,12 +34,12 @@ const TemplateStepsList: React.FC<Props> = ({ steps, onStepRemove }) => {
 const makeStyles = (colors: any) =>
   StyleSheet.create({
     exerciseList: {
-      borderWidth: 1,
       borderColor: colors.outlineVariant,
       borderRadius: 8,
+      borderWidth: 1,
+      gap: spacing.xxs,
       paddingHorizontal: spacing.xs,
       paddingVertical: spacing.xxs,
-      gap: spacing.xxs,
     },
   })
 

@@ -1,4 +1,4 @@
-import { MMKV } from "react-native-mmkv"
+import { MMKV } from 'react-native-mmkv'
 export const storage = new MMKV()
 
 /**
@@ -39,7 +39,7 @@ export function load<T>(key: string): T | null {
   let almostThere: string | null = null
   try {
     almostThere = loadString(key)
-    return JSON.parse(almostThere ?? "") as T
+    return JSON.parse(almostThere ?? '') as T
   } catch {
     return (almostThere as T) ?? null
   }

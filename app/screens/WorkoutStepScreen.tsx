@@ -58,8 +58,8 @@ export const WorkoutStepScreen: React.FC = observer(() => {
                 selectedIndex={
                   stateStore.focusedExercise
                     ? stateStore.focusedStep.exercises.indexOf(
-                      stateStore.focusedExercise
-                    )
+                        stateStore.focusedExercise
+                      )
                     : -1
                 }
                 options={stateStore.focusedStep.exercises}

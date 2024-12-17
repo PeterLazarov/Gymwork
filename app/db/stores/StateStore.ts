@@ -29,10 +29,10 @@ export const StateStoreModel = types
     footerHeight: 0,
     chartWidth: 0,
     chartHeight: 0,
-    chartView: types.optional(types.enumeration(
-      'chartView',
-      Object.values(CHART_VIEWS)
-    ), '30D' ),
+    chartView: types.optional(
+      types.enumeration('chartView', Object.values(CHART_VIEWS)),
+      '30D'
+    ),
   })
   .views(self => ({
     get rootStore(): RootStore {

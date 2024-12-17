@@ -48,8 +48,8 @@ const makeStyles = (colors: ReturnType<typeof useColors>) =>
       borderRadius: 8,
     },
     content: {
-      padding: spacing.md,
       gap: spacing.xxs,
+      padding: spacing.md,
     },
     title: {
       fontWeight: 'bold',

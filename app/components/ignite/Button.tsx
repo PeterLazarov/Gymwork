@@ -1,4 +1,4 @@
-import { ComponentType } from "react"
+import React, { ComponentType } from 'react'
 import {
   Pressable,
   PressableProps,
@@ -6,14 +6,13 @@ import {
   StyleProp,
   TextStyle,
   ViewStyle,
-} from "react-native"
-import type { ThemedStyle, ThemedStyleArray } from "@/igniteTheme"
-import { $styles } from "../../igniteTheme"
-import { Text, TextProps } from "./Text"
-import { useAppTheme } from "@/utils/useAppTheme"
-import React from "react"
+} from 'react-native'
+import type { ThemedStyle, ThemedStyleArray } from '@/igniteTheme'
+import { $styles } from '../../igniteTheme'
+import { Text, TextProps } from './Text'
+import { useAppTheme } from '@/utils/useAppTheme'
 
-type Presets = "default" | "filled" | "reversed"
+type Presets = 'default' | 'filled' | 'reversed'
 
 export interface ButtonAccessoryProps {
   style: StyleProp<any>
@@ -25,16 +24,16 @@ export interface ButtonProps extends PressableProps {
   /**
    * Text which is looked up via i18n.
    */
-  tx?: TextProps["tx"]
+  tx?: TextProps['tx']
   /**
    * The text to display if not using `tx` or nested components.
    */
-  text?: TextProps["text"]
+  text?: TextProps['text']
   /**
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  txOptions?: TextProps["txOptions"]
+  txOptions?: TextProps['txOptions']
   /**
    * An optional style override useful for padding & margin.
    */
@@ -118,17 +117,20 @@ export function Button(props: ButtonProps) {
 
   const { themed } = useAppTheme()
 
-  const preset: Presets = props.preset ?? "default"
+  const preset: Presets = props.preset ?? 'default'
   /**
    * @param {PressableStateCallbackType} root0 - The root object containing the pressed state.
    * @param {boolean} root0.pressed - The pressed state.
    * @returns {StyleProp<ViewStyle>} The view style based on the pressed state.
    */
-  function $viewStyle({ pressed }: PressableStateCallbackType): StyleProp<ViewStyle> {
+  function $viewStyle({
+    pressed,
+  }: PressableStateCallbackType): StyleProp<ViewStyle> {
     return [
       themed($viewPresets[preset]),
       $viewStyleOverride,
-      !!pressed && themed([$pressedViewPresets[preset], $pressedViewStyleOverride]),
+      !!pressed &&
+        themed([$pressedViewPresets[preset], $pressedViewStyleOverride]),
       !!disabled && $disabledViewStyleOverride,
     ]
   }
@@ -137,11 +139,14 @@ export function Button(props: ButtonProps) {
    * @param {boolean} root0.pressed - The pressed state.
    * @returns {StyleProp<TextStyle>} The text style based on the pressed state.
    */
-  function $textStyle({ pressed }: PressableStateCallbackType): StyleProp<TextStyle> {
+  function $textStyle({
+    pressed,
+  }: PressableStateCallbackType): StyleProp<TextStyle> {
     return [
       themed($textPresets[preset]),
       $textStyleOverride,
-      !!pressed && themed([$pressedTextPresets[preset], $pressedTextStyleOverride]),
+      !!pressed &&
+        themed([$pressedTextPresets[preset], $pressedTextStyleOverride]),
       !!disabled && $disabledTextStyleOverride,
     ]
   }
@@ -154,13 +159,22 @@ export function Button(props: ButtonProps) {
       {...rest}
       disabled={disabled}
     >
-      {(state) => (
+      {state => (
         <>
           {!!LeftAccessory && (
-            <LeftAccessory style={$leftAccessoryStyle} pressableState={state} disabled={disabled} />
+            <LeftAccessory
+              style={$leftAccessoryStyle}
+              pressableState={state}
+              disabled={disabled}
+            />
           )}
 
-          <Text tx={tx} text={text} txOptions={txOptions} style={$textStyle(state)}>
+          <Text
+            tx={tx}
+            text={text}
+            txOptions={txOptions}
+            style={$textStyle(state)}
+          >
             {children}
           </Text>
 
@@ -180,18 +194,18 @@ export function Button(props: ButtonProps) {
 const $baseViewStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
   minHeight: 56,
   borderRadius: 4,
-  justifyContent: "center",
-  alignItems: "center",
+  justifyContent: 'center',
+  alignItems: 'center',
   paddingVertical: spacing.sm,
   paddingHorizontal: spacing.sm,
-  overflow: "hidden",
+  overflow: 'hidden',
 })
 
 const $baseTextStyle: ThemedStyle<TextStyle> = ({ typography }) => ({
   fontSize: 16,
   lineHeight: 20,
   fontFamily: typography.primary.medium,
-  textAlign: "center",
+  textAlign: 'center',
   flexShrink: 1,
   flexGrow: 0,
   zIndex: 2,
@@ -231,7 +245,10 @@ const $viewPresets: Record<Presets, ThemedStyleArray<ViewStyle>> = {
 const $textPresets: Record<Presets, ThemedStyleArray<TextStyle>> = {
   default: [$baseTextStyle],
   filled: [$baseTextStyle],
-  reversed: [$baseTextStyle, ({ colors }) => ({ color: colors.palette.neutral100 })],
+  reversed: [
+    $baseTextStyle,
+    ({ colors }) => ({ color: colors.palette.neutral100 }),
+  ],
 }
 
 const $pressedViewPresets: Record<Presets, ThemedStyle<ViewStyle>> = {

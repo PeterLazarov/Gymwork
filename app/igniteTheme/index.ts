@@ -1,13 +1,13 @@
-import type { StyleProp } from "react-native"
-import { colors as colorsLight } from "./colors"
-import { colors as colorsDark } from "./colorsDark"
-import { spacing as spacingLight } from "./spacing"
-import { spacing as spacingDark } from "./spacingDark"
-import { timing } from "./timing"
-import { typography } from "./typography"
+import type { StyleProp } from 'react-native'
+import { colors as colorsLight } from './colors'
+import { colors as colorsDark } from './colorsDark'
+import { spacing as spacingLight } from './spacing'
+import { spacing as spacingDark } from './spacingDark'
+import { timing } from './timing'
+import { typography } from './typography'
 
 // This supports "light" and "dark" themes by default. If undefined, it'll use the system theme
-export type ThemeContexts = "light" | "dark" | undefined
+export type ThemeContexts = 'light' | 'dark' | undefined
 
 // Because we have two themes, we need to define the types for each of them.
 // colorsLight and colorsDark should have the same keys, but different values.
@@ -75,6 +75,6 @@ export { colorsLight as colors }
 export { colorsDark }
 export { spacingLight as spacing }
 
-export * from "./styles"
-export * from "./typography"
-export * from "./timing"
+export * from './styles'
+export * from './typography'
+export * from './timing'

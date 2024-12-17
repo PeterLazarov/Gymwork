@@ -1,14 +1,25 @@
-import { TOptions } from "i18next"
-import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
-import { isRTL, translate, TxKeyPath } from "@/i18n"
-import type { ThemedStyle, ThemedStyleArray } from "@/igniteTheme"
-import { useAppTheme } from "@/utils/useAppTheme"
-import { typography } from "@/igniteTheme/typography"
-import { ReactNode } from "react"
+import { TOptions } from 'i18next'
+import {
+  StyleProp,
+  Text as RNText,
+  TextProps as RNTextProps,
+  TextStyle,
+} from 'react-native'
+import { isRTL, translate, TxKeyPath } from '@/i18n'
+import type { ThemedStyle, ThemedStyleArray } from '@/igniteTheme'
+import { useAppTheme } from '@/utils/useAppTheme'
+import { typography } from '@/igniteTheme/typography'
+import { ReactNode } from 'react'
 
 type Sizes = keyof typeof $sizeStyles
 type Weights = keyof typeof typography.primary
-type Presets = "default" | "bold" | "heading" | "subheading" | "formLabel" | "formHelper"
+type Presets =
+  | 'default'
+  | 'bold'
+  | 'heading'
+  | 'subheading'
+  | 'formLabel'
+  | 'formHelper'
 
 export interface TextProps extends RNTextProps {
   /**
@@ -54,13 +65,22 @@ export interface TextProps extends RNTextProps {
  * @returns {JSX.Element} The rendered `Text` component.
  */
 export function Text(props: TextProps) {
-  const { weight, size, tx, txOptions, text, children, style: $styleOverride, ...rest } = props
+  const {
+    weight,
+    size,
+    tx,
+    txOptions,
+    text,
+    children,
+    style: $styleOverride,
+    ...rest
+  } = props
   const { themed } = useAppTheme()
 
   const i18nText = tx && translate(tx, txOptions)
   const content = i18nText || text || children
 
-  const preset: Presets = props.preset ?? "default"
+  const preset: Presets = props.preset ?? 'default'
   const $styles: StyleProp<TextStyle> = [
     $rtlStyle,
     themed($presets[preset]),
@@ -70,7 +90,10 @@ export function Text(props: TextProps) {
   ]
 
   return (
-    <RNText {...rest} style={$styles}>
+    <RNText
+      {...rest}
+      style={$styles}
+    >
       {content}
     </RNText>
   )
@@ -86,11 +109,14 @@ const $sizeStyles = {
   xxs: { fontSize: 12, lineHeight: 18 } satisfies TextStyle,
 }
 
-const $fontWeightStyles = Object.entries(typography.primary).reduce((acc, [weight, fontFamily]) => {
-  return { ...acc, [weight]: { fontFamily } }
-}, {}) as Record<Weights, TextStyle>
+const $fontWeightStyles = Object.entries(typography.primary).reduce(
+  (acc, [weight, fontFamily]) => {
+    return { ...acc, [weight]: { fontFamily } }
+  },
+  {}
+) as Record<Weights, TextStyle>
 
-const $baseStyle: ThemedStyle<TextStyle> = (theme) => ({
+const $baseStyle: ThemedStyle<TextStyle> = theme => ({
   ...$sizeStyles.sm,
   ...$fontWeightStyles.normal,
   color: theme.colors.text,
@@ -110,4 +136,4 @@ const $presets: Record<Presets, ThemedStyleArray<TextStyle>> = {
   formLabel: [$baseStyle, { ...$fontWeightStyles.medium }],
   formHelper: [$baseStyle, { ...$sizeStyles.sm, ...$fontWeightStyles.normal }],
 }
-const $rtlStyle: TextStyle = isRTL ? { writingDirection: "rtl" } : {}
+const $rtlStyle: TextStyle = isRTL ? { writingDirection: 'rtl' } : {}

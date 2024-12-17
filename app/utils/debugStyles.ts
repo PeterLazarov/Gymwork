@@ -1,6 +1,6 @@
 import { ColorValue, StyleProp, ViewStyle } from 'react-native'
 
-const colorGen = (function * getColor() {
+const colorGen = (function* getColor() {
   const colors: ColorValue[] = ['red', 'green', 'blue']
   for (let i = 0; true; i++) {
     yield colors[i]

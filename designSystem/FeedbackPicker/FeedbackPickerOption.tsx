@@ -71,14 +71,14 @@ const makeStyles = (
 ) =>
   StyleSheet.create({
     card: {
+      alignItems: 'center',
       backgroundColor: isSelected
         ? colors.surfaceContainerLowest
         : 'transparent',
       borderRadius: 8,
+      flex: 1,
       gap: spacing.xxs,
       paddingVertical: compactMode ? 0 : spacing.md,
-      flex: 1,
-      alignItems: 'center',
     },
   })
 

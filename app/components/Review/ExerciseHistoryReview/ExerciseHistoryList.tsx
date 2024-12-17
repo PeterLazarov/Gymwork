@@ -47,10 +47,13 @@ const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
   }, [workouts])
 
   const stepSets = useMemo(() => {
-    return steps.reduce((acc, step) => {
-      acc[step.guid] = step.exerciseSetsMap[exercise.guid]!
-      return acc
-    }, {} as Record<string, WorkoutSet[]>)
+    return steps.reduce(
+      (acc, step) => {
+        acc[step.guid] = step.exerciseSetsMap[exercise.guid]!
+        return acc
+      },
+      {} as Record<string, WorkoutSet[]>
+    )
   }, [steps])
 
   return (

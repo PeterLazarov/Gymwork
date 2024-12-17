@@ -7,7 +7,11 @@ import {
   ViewabilityConfig,
   ViewToken,
 } from 'react-native'
-import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler'
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler'
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -44,8 +48,7 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
       if (typeof index === 'number' && index >= 0) {
         onScreenChange?.(index)
       }
-    },
-      [])
+    }, [])
 
     const renderItem = (props: any) => (
       <View style={{ width, flex: 1 }}>{externalRenderItem!(props)}</View>

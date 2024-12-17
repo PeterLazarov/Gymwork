@@ -119,19 +119,19 @@ const WorkoutsReview: React.FC = () => {
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    display: 'flex',
-    flexGrow: 1,
+  filterOption: {
+    backgroundColor: 'transparent',
   },
   filterOptionList: {
     flexDirection: 'row',
     margin: spacing.xs,
   },
-  filterOption: {
-    backgroundColor: 'transparent',
-  },
   list: {
     flexBasis: 0,
+  },
+  screen: {
+    display: 'flex',
+    flexGrow: 1,
   },
 })
 

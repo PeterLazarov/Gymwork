@@ -1,8 +1,8 @@
-import { ErrorInfo } from "react"
-import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
-import { Button, Icon, Screen, Text } from "@/components/ignite"
-import type { ThemedStyle } from "@/igniteTheme"
-import { useAppTheme } from "@/utils/useAppTheme"
+import { ErrorInfo } from 'react'
+import { ScrollView, TextStyle, View, ViewStyle } from 'react-native'
+import { Button, Icon, Screen, Text } from '@/components/ignite'
+import type { ThemedStyle } from '@/igniteTheme'
+import { useAppTheme } from '@/utils/useAppTheme'
 
 export interface ErrorDetailsProps {
   error: Error
@@ -20,12 +20,19 @@ export function ErrorDetails(props: ErrorDetailsProps) {
   return (
     <Screen
       preset="fixed"
-      safeAreaEdges={["top", "bottom"]}
+      safeAreaEdges={['top', 'bottom']}
       contentContainerStyle={themed($contentContainer)}
     >
       <View style={$topSection}>
-        <Icon icon="ladybug" size={64} />
-        <Text style={themed($heading)} preset="subheading" tx="errorScreen:title" />
+        <Icon
+          icon="ladybug"
+          size={64}
+        />
+        <Text
+          style={themed($heading)}
+          preset="subheading"
+          tx="errorScreen:title"
+        />
         <Text tx="errorScreen:friendlySubtitle" />
       </View>
 
@@ -33,11 +40,15 @@ export function ErrorDetails(props: ErrorDetailsProps) {
         style={themed($errorSection)}
         contentContainerStyle={themed($errorSectionContentContainer)}
       >
-        <Text style={themed($errorContent)} weight="bold" text={`${props.error}`.trim()} />
+        <Text
+          style={themed($errorContent)}
+          weight="bold"
+          text={`${props.error}`.trim()}
+        />
         <Text
           selectable
           style={themed($errorBacktrace)}
-          text={`${props.errorInfo?.componentStack ?? ""}`.trim()}
+          text={`${props.errorInfo?.componentStack ?? ''}`.trim()}
         />
       </ScrollView>
 
@@ -52,7 +63,7 @@ export function ErrorDetails(props: ErrorDetailsProps) {
 }
 
 const $contentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  alignItems: "center",
+  alignItems: 'center',
   paddingHorizontal: spacing.lg,
   paddingTop: spacing.xl,
   flex: 1,
@@ -60,7 +71,7 @@ const $contentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
 
 const $topSection: ViewStyle = {
   flex: 1,
-  alignItems: "center",
+  alignItems: 'center',
 }
 
 const $heading: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
@@ -75,7 +86,9 @@ const $errorSection: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   borderRadius: 6,
 })
 
-const $errorSectionContentContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+const $errorSectionContentContainer: ThemedStyle<ViewStyle> = ({
+  spacing,
+}) => ({
   padding: spacing.md,
 })
 

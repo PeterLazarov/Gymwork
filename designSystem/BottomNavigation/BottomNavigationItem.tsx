@@ -10,7 +10,13 @@ export type BottomNavigationItemProps = {
   onPress: () => void
   isSelected?: boolean
 }
-export const BottomNavigationItem: React.FC<BottomNavigationItemProps> = ({ text, routes, icon, onPress, isSelected }) => {
+export const BottomNavigationItem: React.FC<BottomNavigationItemProps> = ({
+  text,
+  routes,
+  icon,
+  onPress,
+  isSelected,
+}) => {
   const colors = useColors()
 
   return (

@@ -3,7 +3,10 @@ import { useColorScheme, View, ViewProps } from 'react-native'
 
 import { boxShadows, useColors } from '..'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
-import { BottomNavigationItem, BottomNavigationItemProps } from './BottomNavigationItem'
+import {
+  BottomNavigationItem,
+  BottomNavigationItemProps,
+} from './BottomNavigationItem'
 
 type BottomNavigationProps = {
   activeRoute?: string

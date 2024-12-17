@@ -101,7 +101,7 @@ export const ReviewScreen: React.FC = () => {
           title={
             exerciseSelectOpen
               ? translate('selectExercise')
-              : selectedExercise?.name ?? 'Review'
+              : (selectedExercise?.name ?? 'Review')
           }
         />
 

@@ -105,30 +105,30 @@ const SetListItem: React.FC<Props> = ({
 
 const makeStyles = (textColor: string) =>
   StyleSheet.create({
+    indexColumn: {
+      alignItems: 'center',
+      flex: 1,
+      flexDirection: 'row',
+      gap: spacing.xxs,
+    },
     item: {
+      alignItems: 'center',
       display: 'flex',
       flexDirection: 'row',
       gap: spacing.md,
-      justifyContent: 'space-around',
-      alignItems: 'center',
       height: 24,
-    },
-    indexColumn: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: spacing.xxs,
-    },
-    setNumber: {
-      fontSize: fontSize.sm,
-      color: textColor,
-      fontWeight: 'bold',
-      marginLeft: spacing.xs,
+      justifyContent: 'space-around',
     },
     setLetter: {
-      fontSize: fontSize.sm,
       color: textColor,
+      fontSize: fontSize.sm,
       fontWeight: 'bold',
+    },
+    setNumber: {
+      color: textColor,
+      fontSize: fontSize.sm,
+      fontWeight: 'bold',
+      marginLeft: spacing.xs,
     },
   })
 

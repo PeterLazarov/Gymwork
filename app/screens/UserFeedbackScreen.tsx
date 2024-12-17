@@ -85,7 +85,7 @@ export const UserFeedbackScreen: React.FC = observer(() => {
         </IconButton>
       </Header>
 
-      <View style={[{ flex: 1 }]}>
+      <View style={{ flex: 1 }}>
         <UserFeedbackForm
           feedback={feedback}
           onUpdate={onUpdate}

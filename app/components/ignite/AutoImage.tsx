@@ -1,5 +1,5 @@
-import { useLayoutEffect, useState } from "react"
-import { Image, ImageProps, ImageURISource, Platform } from "react-native"
+import { useLayoutEffect, useState } from 'react'
+import { Image, ImageProps, ImageURISource, Platform } from 'react-native'
 
 export interface AutoImageProps extends ImageProps {
   /**
@@ -32,9 +32,11 @@ export function useAutoImage(
   headers?: {
     [key: string]: string
   },
-  dimensions?: [maxWidth?: number, maxHeight?: number],
+  dimensions?: [maxWidth?: number, maxHeight?: number]
 ): [width: number, height: number] {
-  const [[remoteWidth, remoteHeight], setRemoteImageDimensions] = useState([0, 0])
+  const [[remoteWidth, remoteHeight], setRemoteImageDimensions] = useState([
+    0, 0,
+  ])
   const remoteAspectRatio = remoteWidth / remoteHeight
   const [maxWidth, maxHeight] = dimensions ?? []
 
@@ -44,14 +46,19 @@ export function useAutoImage(
     if (!headers) {
       Image.getSize(remoteUri, (w, h) => setRemoteImageDimensions([w, h]))
     } else {
-      Image.getSizeWithHeaders(remoteUri, headers, (w, h) => setRemoteImageDimensions([w, h]))
+      Image.getSizeWithHeaders(remoteUri, headers, (w, h) =>
+        setRemoteImageDimensions([w, h])
+      )
     }
   }, [remoteUri, headers])
 
   if (Number.isNaN(remoteAspectRatio)) return [0, 0]
 
   if (maxWidth && maxHeight) {
-    const aspectRatio = Math.min(maxWidth / remoteWidth, maxHeight / remoteHeight)
+    const aspectRatio = Math.min(
+      maxWidth / remoteWidth,
+      maxHeight / remoteHeight
+    )
     return [remoteWidth * aspectRatio, remoteHeight * aspectRatio]
   } else if (maxWidth) {
     return [maxWidth, maxWidth / remoteAspectRatio]
@@ -79,8 +86,13 @@ export function AutoImage(props: AutoImageProps) {
       default: source?.uri as string,
     }),
     headers,
-    [maxWidth, maxHeight],
+    [maxWidth, maxHeight]
   )
 
-  return <Image {...ImageProps} style={[{ width, height }, props.style]} />
+  return (
+    <Image
+      {...ImageProps}
+      style={[{ width, height }, props.style]}
+    />
+  )
 }

@@ -1,4 +1,4 @@
-import { ComponentType } from "react"
+import { ComponentType } from 'react'
 import {
   Image,
   ImageStyle,
@@ -8,8 +8,8 @@ import {
   View,
   ViewProps,
   ViewStyle,
-} from "react-native"
-import { useAppTheme } from "@/utils/useAppTheme"
+} from 'react-native'
+import { useAppTheme } from '@/utils/useAppTheme'
 
 export type IconTypes = keyof typeof iconRegistry
 
@@ -42,7 +42,7 @@ interface IconProps extends TouchableOpacityProps {
   /**
    * An optional function to be called when the icon is pressed
    */
-  onPress?: TouchableOpacityProps["onPress"]
+  onPress?: TouchableOpacityProps['onPress']
 }
 
 /**
@@ -63,9 +63,9 @@ export function Icon(props: IconProps) {
   } = props
 
   const isPressable = !!WrapperProps.onPress
-  const Wrapper = (WrapperProps?.onPress ? TouchableOpacity : View) as ComponentType<
-    TouchableOpacityProps | ViewProps
-  >
+  const Wrapper = (
+    WrapperProps?.onPress ? TouchableOpacity : View
+  ) as ComponentType<TouchableOpacityProps | ViewProps>
 
   const { theme } = useAppTheme()
 
@@ -78,31 +78,34 @@ export function Icon(props: IconProps) {
 
   return (
     <Wrapper
-      accessibilityRole={isPressable ? "imagebutton" : undefined}
+      accessibilityRole={isPressable ? 'imagebutton' : undefined}
       {...WrapperProps}
       style={$containerStyleOverride}
     >
-      <Image style={$imageStyle} source={iconRegistry[icon]} />
+      <Image
+        style={$imageStyle}
+        source={iconRegistry[icon]}
+      />
     </Wrapper>
   )
 }
 
 export const iconRegistry = {
-  back: require("../../../assets/icons/back.png"),
-  bell: require("../../../assets/icons/bell.png"),
-  caretLeft: require("../../../assets/icons/caretLeft.png"),
-  caretRight: require("../../../assets/icons/caretRight.png"),
-  check: require("../../../assets/icons/check.png"),
-  hidden: require("../../../assets/icons/hidden.png"),
-  ladybug: require("../../../assets/icons/ladybug.png"),
-  lock: require("../../../assets/icons/lock.png"),
-  menu: require("../../../assets/icons/menu.png"),
-  more: require("../../../assets/icons/more.png"),
-  settings: require("../../../assets/icons/settings.png"),
-  view: require("../../../assets/icons/view.png"),
-  x: require("../../../assets/icons/x.png"),
+  back: require('../../../assets/icons/back.png'),
+  bell: require('../../../assets/icons/bell.png'),
+  caretLeft: require('../../../assets/icons/caretLeft.png'),
+  caretRight: require('../../../assets/icons/caretRight.png'),
+  check: require('../../../assets/icons/check.png'),
+  hidden: require('../../../assets/icons/hidden.png'),
+  ladybug: require('../../../assets/icons/ladybug.png'),
+  lock: require('../../../assets/icons/lock.png'),
+  menu: require('../../../assets/icons/menu.png'),
+  more: require('../../../assets/icons/more.png'),
+  settings: require('../../../assets/icons/settings.png'),
+  view: require('../../../assets/icons/view.png'),
+  x: require('../../../assets/icons/x.png'),
 }
 
 const $imageStyleBase: ImageStyle = {
-  resizeMode: "contain",
+  resizeMode: 'contain',
 }

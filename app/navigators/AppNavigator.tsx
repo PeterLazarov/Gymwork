@@ -4,35 +4,39 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import { NavigationContainer, NavigationState, NavigatorScreenParams, RouteProp, useRoute } from "@react-navigation/native"
-import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { observer } from "mobx-react-lite"
 import {
-
-  ComponentProps,
-  useMemo
-} from "react"
+  NavigationContainer,
+  NavigationState,
+  NavigatorScreenParams,
+  RouteProp,
+  useRoute,
+} from '@react-navigation/native'
+import {
+  createNativeStackNavigator,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack'
+import { observer } from 'mobx-react-lite'
+import { ComponentProps, useMemo } from 'react'
 import {
   StatusBar,
   useColorScheme,
   useWindowDimensions,
-  View
+  View,
 } from 'react-native'
-import { ErrorBoundary, } from '@sentry/react-native'
+import { ErrorBoundary } from '@sentry/react-native'
 import { PortalHost, PortalProvider } from '@gorhom/portal'
 
-import { useAppTheme, useThemeProvider } from "@/utils/useAppTheme"
-import Config from "../config"
-import * as Screens from "@/screens"
-import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { useStores } from "@/db/helpers/useStores"
-import { navThemes, paperThemes, useColors } from "designSystem"
-import TabsLayout from "@/layouts/TabsLayout"
-import { PaperProvider, Portal } from "react-native-paper"
-import { DialogContextProvider } from "@/contexts/DialogContext"
+import { useAppTheme, useThemeProvider } from '@/utils/useAppTheme'
+import Config from '../config'
+import * as Screens from '@/screens'
+import { navigationRef, useBackButtonHandler } from './navigationUtilities'
+import { useStores } from '@/db/helpers/useStores'
+import { navThemes, paperThemes, useColors } from 'designSystem'
+import TabsLayout from '@/layouts/TabsLayout'
+import { PaperProvider, Portal } from 'react-native-paper'
+import { DialogContextProvider } from '@/contexts/DialogContext'
 
 import { offscreenRef } from 'app/utils/useShareWorkout'
-
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -81,8 +85,8 @@ export type AllStacksParamList = AppStackParamList &
 
 export type RoutesWithParams = {
   [K in keyof AllStacksParamList]: AllStacksParamList[K] extends undefined
-  ? never
-  : K
+    ? never
+    : K
 }[keyof AllStacksParamList]
 export type RoutesWithoutParams = keyof Omit<
   AllStacksParamList,
@@ -104,10 +108,8 @@ export const useRouteParams = <T extends keyof AllStacksParamList>(
  */
 const exitRoutes = Config.exitRoutes
 
-export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStackScreenProps<
-  AppStackParamList,
-  T
->
+export type AppStackScreenProps<T extends keyof AppStackParamList> =
+  NativeStackScreenProps<AppStackParamList, T>
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
@@ -131,14 +133,14 @@ const AppStack = observer(function AppStack() {
         headerShown: false,
         animation: 'none',
         // navigationBarColor: colors.background,
-        navigationBarColor: colorScheme === 'light' ? colors.surface : colors.shadow,
+        navigationBarColor:
+          colorScheme === 'light' ? colors.surface : colors.shadow,
         contentStyle: {
-          backgroundColor: colorScheme === 'light' ? colors.surface : colors.shadow,
+          backgroundColor:
+            colorScheme === 'light' ? colors.surface : colors.shadow,
         },
-
       }}
       initialRouteName={shouldShowWelcome ? 'Welcome' : 'HomeStack'}
-
     >
       <Stack.Screen
         name="Calendar"
@@ -237,13 +239,20 @@ const AppStack = observer(function AppStack() {
   )
 })
 
-export interface NavigationProps extends Partial<ComponentProps<typeof NavigationContainer>> { }
+export interface NavigationProps
+  extends Partial<ComponentProps<typeof NavigationContainer>> {}
 
-export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
-  const { themeScheme, navigationTheme, setThemeContextOverride, ThemeProvider } =
-    useThemeProvider()
+export const AppNavigator = observer(function AppNavigator(
+  props: NavigationProps
+) {
+  const {
+    themeScheme,
+    navigationTheme,
+    setThemeContextOverride,
+    ThemeProvider,
+  } = useThemeProvider()
 
-  useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
+  useBackButtonHandler(routeName => exitRoutes.includes(routeName))
 
   const { navStore } = useStores()
   function handleStateChange(state: NavigationState | undefined) {
@@ -280,7 +289,11 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
           <Portal.Host>
             <DialogContextProvider>
               <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
-                <NavigationContainer ref={navigationRef} theme={navigationTheme} {...props}>
+                <NavigationContainer
+                  ref={navigationRef}
+                  theme={navigationTheme}
+                  {...props}
+                >
                   {/* The bar at the top */}
                   {/* <StatusBar
                     backgroundColor={

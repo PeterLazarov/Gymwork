@@ -63,14 +63,14 @@ export const WelcomeScreen: React.FC = observer(() => {
 })
 
 const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    padding: spacing.lg,
-    gap: spacing.lg,
-    justifyContent: 'center',
-  },
   bold: {
     fontWeight: 'bold',
+  },
+  content: {
+    flex: 1,
+    gap: spacing.lg,
+    justifyContent: 'center',
+    padding: spacing.lg,
   },
   text: {
     fontSize: fontSize.lg,

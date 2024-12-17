@@ -52,14 +52,14 @@ const makeStyles = (
       gap: spacing.xxs,
       justifyContent: 'center',
     },
-    value: {
-      fontWeight: 'bold',
-      color: isFocused ? colors.tertiary : colors.onSurface,
-      fontSize: fontSize ? fontSizeToken[fontSize] : fontSizeToken.xs,
-    },
     unit: {
       color: isFocused ? colors.tertiary : colors.onSurface,
       fontSize: fontSize ? fontSizeToken[fontSize] : fontSizeToken.xs,
+    },
+    value: {
+      color: isFocused ? colors.tertiary : colors.onSurface,
+      fontSize: fontSize ? fontSizeToken[fontSize] : fontSizeToken.xs,
+      fontWeight: 'bold',
     },
   })
 

@@ -82,28 +82,28 @@ const makeStyles = (colors: any, compactMode?: boolean) =>
       alignItems: 'center',
       gap: spacing.xs,
     },
+    difficultyLabel: {
+      flex: 1,
+      textAlign: 'center',
+    },
+    notes: {
+      color: colors.onSurface,
+      fontSize: fontSize.sm,
+    },
     notesContainer: {
       flexDirection: 'row',
       gap: spacing.sm,
       paddingTop: spacing.xs,
     },
-    notes: {
-      fontSize: fontSize.sm,
-      color: colors.onSurface,
-    },
-    stickerPanel: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      width: '100%',
-    },
-    difficultyLabel: {
-      flex: 1,
-      textAlign: 'center',
-    },
     sticker: {
       backgroundColor: 'transparent',
       flex: 1,
+    },
+    stickerPanel: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '100%',
     },
   })
 

@@ -1,4 +1,3 @@
-
 export type AirtableFeedback = {
   date: string
   user: string

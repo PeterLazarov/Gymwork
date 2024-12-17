@@ -65,13 +65,13 @@ const ExerciseRecordReview: React.FC<ExerciseRecordReviewProps> = props => {
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    marginTop: spacing.md,
-    display: 'flex',
-    flexGrow: 1,
-  },
   list: {
     flexBasis: 0,
+  },
+  screen: {
+    display: 'flex',
+    flexGrow: 1,
+    marginTop: spacing.md,
   },
 })
 

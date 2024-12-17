@@ -31,5 +31,5 @@ export const KeyboardExpandingView: React.FC<Props> = ({
     }
   }, [])
 
-  return <Animated.View style={[{ height: kbHeight }]} />
+  return <Animated.View style={{ height: kbHeight }} />
 }

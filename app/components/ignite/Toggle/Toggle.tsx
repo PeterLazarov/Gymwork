@@ -1,4 +1,4 @@
-import { ComponentType, FC, useMemo } from "react"
+import { ComponentType, FC, useMemo } from 'react'
 import {
   GestureResponderEvent,
   ImageStyle,
@@ -11,21 +11,21 @@ import {
   View,
   ViewProps,
   ViewStyle,
-} from "react-native"
-import { $styles } from "@/igniteTheme"
-import { Text, TextProps } from "../Text"
-import { useAppTheme } from "@/utils/useAppTheme"
-import type { ThemedStyle } from "@/igniteTheme"
+} from 'react-native'
+import { $styles } from '@/igniteTheme'
+import { Text, TextProps } from '../Text'
+import { useAppTheme } from '@/utils/useAppTheme'
+import type { ThemedStyle } from '@/igniteTheme'
 
-export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
+export interface ToggleProps<T> extends Omit<TouchableOpacityProps, 'style'> {
   /**
    * A style modifier for different input states.
    */
-  status?: "error" | "disabled"
+  status?: 'error' | 'disabled'
   /**
    * If false, input is not editable. The default value is true.
    */
-  editable?: TextInputProps["editable"]
+  editable?: TextInputProps['editable']
   /**
    * The value of the field. If true the component will be turned on.
    */
@@ -33,7 +33,7 @@ export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
   /**
    * Invoked with the new value when the value changes.
    */
-  onValueChange?: SwitchProps["onValueChange"]
+  onValueChange?: SwitchProps['onValueChange']
   /**
    * Style overrides for the container
    */
@@ -61,20 +61,20 @@ export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
    * The position of the label relative to the action component.
    * Default: right
    */
-  labelPosition?: "left" | "right"
+  labelPosition?: 'left' | 'right'
   /**
    * The label text to display if not using `labelTx`.
    */
-  label?: TextProps["text"]
+  label?: TextProps['text']
   /**
    * Label text which is looked up via i18n.
    */
-  labelTx?: TextProps["tx"]
+  labelTx?: TextProps['tx']
   /**
    * Optional label options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  labelTxOptions?: TextProps["txOptions"]
+  labelTxOptions?: TextProps['txOptions']
   /**
    * Style overrides for label text.
    */
@@ -86,16 +86,16 @@ export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
   /**
    * The helper text to display if not using `helperTx`.
    */
-  helper?: TextProps["text"]
+  helper?: TextProps['text']
   /**
    * Helper text which is looked up via i18n.
    */
-  helperTx?: TextProps["tx"]
+  helperTx?: TextProps['tx']
   /**
    * Optional helper options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  helperTxOptions?: TextProps["txOptions"]
+  helperTxOptions?: TextProps['txOptions']
   /**
    * Pass any additional props directly to the helper Text component.
    */
@@ -108,11 +108,11 @@ export interface ToggleProps<T> extends Omit<TouchableOpacityProps, "style"> {
 
 export interface BaseToggleInputProps<T> {
   on: boolean
-  status: ToggleProps<T>["status"]
+  status: ToggleProps<T>['status']
   disabled: boolean
   outerStyle: ViewStyle
   innerStyle: ViewStyle
-  detailStyle: Omit<ViewStyle & ImageStyle, "overflow">
+  detailStyle: Omit<ViewStyle & ImageStyle, 'overflow'>
 }
 
 /**
@@ -128,7 +128,7 @@ export function Toggle<T>(props: ToggleProps<T>) {
     value,
     onPress,
     onValueChange,
-    labelPosition = "right",
+    labelPosition = 'right',
     helper,
     helperTx,
     helperTxOptions,
@@ -145,18 +145,25 @@ export function Toggle<T>(props: ToggleProps<T>) {
     themed,
   } = useAppTheme()
 
-  const disabled = editable === false || status === "disabled" || props.disabled
+  const disabled = editable === false || status === 'disabled' || props.disabled
 
   const Wrapper = useMemo(
-    () => (disabled ? View : TouchableOpacity) as ComponentType<TouchableOpacityProps | ViewProps>,
-    [disabled],
+    () =>
+      (disabled ? View : TouchableOpacity) as ComponentType<
+        TouchableOpacityProps | ViewProps
+      >,
+    [disabled]
   )
 
   const $containerStyles = [$containerStyleOverride]
-  const $inputWrapperStyles = [$styles.row, $inputWrapper, $inputWrapperStyleOverride]
+  const $inputWrapperStyles = [
+    $styles.row,
+    $inputWrapper,
+    $inputWrapperStyleOverride,
+  ]
   const $helperStyles = themed([
     $helper,
-    status === "error" && { color: colors.error },
+    status === 'error' && { color: colors.error },
     HelperTextProps?.style,
   ])
 
@@ -179,7 +186,12 @@ export function Toggle<T>(props: ToggleProps<T>) {
       onPress={handlePress}
     >
       <View style={$inputWrapperStyles}>
-        {labelPosition === "left" && <FieldLabel<T> {...props} labelPosition={labelPosition} />}
+        {labelPosition === 'left' && (
+          <FieldLabel<T>
+            {...props}
+            labelPosition={labelPosition}
+          />
+        )}
 
         <ToggleInput
           on={!!value}
@@ -190,7 +202,12 @@ export function Toggle<T>(props: ToggleProps<T>) {
           detailStyle={props.inputDetailStyle ?? {}}
         />
 
-        {labelPosition === "right" && <FieldLabel<T> {...props} labelPosition={labelPosition} />}
+        {labelPosition === 'right' && (
+          <FieldLabel<T>
+            {...props}
+            labelPosition={labelPosition}
+          />
+        )}
       </View>
 
       {!!(helper || helperTx) && (
@@ -231,9 +248,9 @@ function FieldLabel<T>(props: ToggleProps<T>) {
 
   const $labelStyle = themed([
     $label,
-    status === "error" && { color: colors.error },
-    labelPosition === "right" && $labelRight,
-    labelPosition === "left" && $labelLeft,
+    status === 'error' && { color: colors.error },
+    labelPosition === 'right' && $labelRight,
+    labelPosition === 'left' && $labelLeft,
     $labelStyleOverride,
     LabelTextProps?.style,
   ])
@@ -251,19 +268,19 @@ function FieldLabel<T>(props: ToggleProps<T>) {
 }
 
 const $inputWrapper: ViewStyle = {
-  alignItems: "center",
+  alignItems: 'center',
 }
 
 export const $inputOuterBase: ViewStyle = {
   height: 24,
   width: 24,
   borderWidth: 2,
-  alignItems: "center",
-  overflow: "hidden",
+  alignItems: 'center',
+  overflow: 'hidden',
   flexGrow: 0,
   flexShrink: 0,
-  justifyContent: "space-between",
-  flexDirection: "row",
+  justifyContent: 'space-between',
+  flexDirection: 'row',
 }
 
 const $helper: ThemedStyle<TextStyle> = ({ spacing }) => ({

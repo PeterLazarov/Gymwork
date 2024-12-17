@@ -56,15 +56,15 @@ const ExerciseChartStats: React.FC<ExerciseChartStatsProps> = ({
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    marginTop: spacing.md,
-    justifyContent: 'space-between',
-    display: 'flex',
-    flexGrow: 1,
-  },
   chartContainer: {
     alignItems: 'center',
     flexGrow: 1,
+  },
+  screen: {
+    display: 'flex',
+    flexGrow: 1,
+    justifyContent: 'space-between',
+    marginTop: spacing.md,
   },
 })
 

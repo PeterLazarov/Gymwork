@@ -44,12 +44,12 @@ const ExerciseHistoryStats: React.FC<ExerciseHistoryViewProps> = props => {
 const makeStyles = (colors: any) =>
   StyleSheet.create({
     container: {
-      paddingTop: spacing.md,
-      paddingHorizontal: spacing.md,
-      gap: spacing.lg,
-      flexDirection: 'column',
       display: 'flex',
+      flexDirection: 'column',
       flexGrow: 1,
+      gap: spacing.lg,
+      paddingHorizontal: spacing.md,
+      paddingTop: spacing.md,
     },
   })
 

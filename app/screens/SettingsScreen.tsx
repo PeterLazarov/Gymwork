@@ -187,12 +187,12 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = observer(() => {
 const makeStyles = (colors: any) =>
   StyleSheet.create({
     item: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
-      height: 64,
-      padding: spacing.sm,
+      flexDirection: 'row',
       gap: spacing.xs,
+      height: 64,
+      justifyContent: 'space-between',
+      padding: spacing.sm,
     },
     itemLabel: {
       color: colors.onSurface,

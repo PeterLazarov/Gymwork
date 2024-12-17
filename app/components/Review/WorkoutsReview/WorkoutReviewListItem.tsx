@@ -31,10 +31,10 @@ const WorkoutReviewListItem: React.FC<Props> = ({ workout, onPress }) => {
 
 const styles = StyleSheet.create({
   item: {
-    padding: 8,
     display: 'flex',
-    justifyContent: 'center',
     flex: 1,
+    justifyContent: 'center',
+    padding: 8,
   },
   text: {
     textAlign: 'center',

@@ -114,15 +114,13 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 
   return (
     <View
-      style={[
-        {
-          flexDirection: 'column',
-          flexGrow: 1,
-          gap: spacing.xs,
-          display: 'flex',
-          backgroundColor: colors.surfaceContainerLow,
-        },
-      ]}
+      style={{
+        flexDirection: 'column',
+        flexGrow: 1,
+        gap: spacing.xs,
+        display: 'flex',
+        backgroundColor: colors.surfaceContainerLow,
+      }}
     >
       <SetEditList
         step={step}

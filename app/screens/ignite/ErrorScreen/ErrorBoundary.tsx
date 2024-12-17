@@ -1,9 +1,9 @@
-import { Component, ErrorInfo, ReactNode } from "react"
-import { ErrorDetails } from "./ErrorDetails"
+import { Component, ErrorInfo, ReactNode } from 'react'
+import { ErrorDetails } from './ErrorDetails'
 
 interface Props {
   children: ReactNode
-  catchErrors: "always" | "dev" | "prod" | "never"
+  catchErrors: 'always' | 'dev' | 'prod' | 'never'
 }
 
 interface State {
@@ -47,16 +47,19 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   // To avoid unnecessary re-renders
-  shouldComponentUpdate(nextProps: Readonly<Props>, nextState: Readonly<State>): boolean {
+  shouldComponentUpdate(
+    nextProps: Readonly<Props>,
+    nextState: Readonly<State>
+  ): boolean {
     return nextState.error !== this.state.error
   }
 
   // Only enable if we're catching errors in the right environment
   isEnabled(): boolean {
     return (
-      this.props.catchErrors === "always" ||
-      (this.props.catchErrors === "dev" && __DEV__) ||
-      (this.props.catchErrors === "prod" && !__DEV__)
+      this.props.catchErrors === 'always' ||
+      (this.props.catchErrors === 'dev' && __DEV__) ||
+      (this.props.catchErrors === 'prod' && !__DEV__)
     )
   }
 

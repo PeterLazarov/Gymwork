@@ -37,13 +37,16 @@ export const WorkoutStepModel = types
       return rootStore.recordStore
     },
     get exerciseRecordsMap() {
-      return step.exercises.reduce((map, exercise) => {
-        const records = this.recordStore.exerciseRecordsMap[exercise.guid]
-        if (records) {
-          map[exercise.guid] = records
-        }
-        return map
-      }, {} as Record<Exercise['guid'], ExerciseRecord>)
+      return step.exercises.reduce(
+        (map, exercise) => {
+          const records = this.recordStore.exerciseRecordsMap[exercise.guid]
+          if (records) {
+            map[exercise.guid] = records
+          }
+          return map
+        },
+        {} as Record<Exercise['guid'], ExerciseRecord>
+      )
     },
     get lastSet() {
       return step.sets.at(-1)
@@ -55,32 +58,41 @@ export const WorkoutStepModel = types
       return step.exercises[0]
     },
     get exerciseSetsMap() {
-      return step.sets.reduce((map, set) => {
-        const mapSets = map[set.exercise.guid]
-        if (mapSets) mapSets.push(set)
-        else map[set.exercise.guid] = [set]
-
-        return map
-      }, {} as Record<Exercise['guid'], WorkoutSet[]>)
-    },
-    get exerciseWorkSetsMap() {
-      return step.sets.reduce((map, set) => {
-        if (!set.isWarmup) {
+      return step.sets.reduce(
+        (map, set) => {
           const mapSets = map[set.exercise.guid]
           if (mapSets) mapSets.push(set)
           else map[set.exercise.guid] = [set]
-        }
-        return map
-      }, {} as Record<Exercise['guid'], WorkoutSet[]>)
+
+          return map
+        },
+        {} as Record<Exercise['guid'], WorkoutSet[]>
+      )
+    },
+    get exerciseWorkSetsMap() {
+      return step.sets.reduce(
+        (map, set) => {
+          if (!set.isWarmup) {
+            const mapSets = map[set.exercise.guid]
+            if (mapSets) mapSets.push(set)
+            else map[set.exercise.guid] = [set]
+          }
+          return map
+        },
+        {} as Record<Exercise['guid'], WorkoutSet[]>
+      )
     },
     get exerciseLettering(): Record<Exercise['guid'], string> {
       let map: Record<Exercise['guid'], string> = {}
 
       if (step.type === 'superSet') {
-        map = step.exercises.reduce((map, e, i) => {
-          map[e.guid] = alphabeticNumbering(i)
-          return map
-        }, {} as Record<Exercise['guid'], string>)
+        map = step.exercises.reduce(
+          (map, e, i) => {
+            map[e.guid] = alphabeticNumbering(i)
+            return map
+          },
+          {} as Record<Exercise['guid'], string>
+        )
       }
 
       return map

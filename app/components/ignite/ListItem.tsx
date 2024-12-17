@@ -1,4 +1,4 @@
-import { forwardRef, ReactElement } from "react"
+import { forwardRef, ReactElement } from 'react'
 import {
   StyleProp,
   TextStyle,
@@ -6,12 +6,12 @@ import {
   TouchableOpacityProps,
   View,
   ViewStyle,
-} from "react-native"
-import { $styles } from "../../igniteTheme"
-import { Icon, IconTypes } from "./Icon"
-import { Text, TextProps } from "./Text"
-import type { ThemedStyle } from "@/igniteTheme"
-import { useAppTheme } from "@/utils/useAppTheme"
+} from 'react-native'
+import { $styles } from '../../igniteTheme'
+import { Icon, IconTypes } from './Icon'
+import { Text, TextProps } from './Text'
+import type { ThemedStyle } from '@/igniteTheme'
+import { useAppTheme } from '@/utils/useAppTheme'
 
 export interface ListItemProps extends TouchableOpacityProps {
   /**
@@ -32,20 +32,20 @@ export interface ListItemProps extends TouchableOpacityProps {
   /**
    * Text to display if not using `tx` or nested components.
    */
-  text?: TextProps["text"]
+  text?: TextProps['text']
   /**
    * Text which is looked up via i18n.
    */
-  tx?: TextProps["tx"]
+  tx?: TextProps['tx']
   /**
    * Children components.
    */
-  children?: TextProps["children"]
+  children?: TextProps['children']
   /**
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  txOptions?: TextProps["txOptions"]
+  txOptions?: TextProps['txOptions']
   /**
    * Optional text style override.
    */
@@ -95,7 +95,7 @@ interface ListItemActionProps {
   iconColor?: string
   Component?: ReactElement
   size: number
-  side: "left" | "right"
+  side: 'left' | 'right'
 }
 
 /**
@@ -106,7 +106,7 @@ interface ListItemActionProps {
  */
 export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
   props: ListItemProps,
-  ref,
+  ref
 ) {
   const {
     bottomSeparator,
@@ -138,11 +138,22 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
     $containerStyleOverride,
   ]
 
-  const $touchableStyles = [$styles.row, $touchableStyle, { minHeight: height }, style]
+  const $touchableStyles = [
+    $styles.row,
+    $touchableStyle,
+    { minHeight: height },
+    style,
+  ]
 
   return (
-    <View ref={ref} style={themed($containerStyles)}>
-      <TouchableOpacity {...TouchableOpacityProps} style={$touchableStyles}>
+    <View
+      ref={ref}
+      style={themed($containerStyles)}
+    >
+      <TouchableOpacity
+        {...TouchableOpacityProps}
+        style={$touchableStyles}
+      >
         <ListItemAction
           side="left"
           size={height}
@@ -151,7 +162,13 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
           Component={LeftComponent}
         />
 
-        <Text {...TextProps} tx={tx} text={text} txOptions={txOptions} style={themed($textStyles)}>
+        <Text
+          {...TextProps}
+          tx={tx}
+          text={text}
+          txOptions={txOptions}
+          style={themed($textStyles)}
+        >
           {children}
         </Text>
 
@@ -187,8 +204,8 @@ function ListItemAction(props: ListItemActionProps) {
         color={iconColor}
         containerStyle={themed([
           $iconContainerStyles,
-          side === "left" && $iconContainerLeft,
-          side === "right" && $iconContainerRight,
+          side === 'left' && $iconContainerLeft,
+          side === 'right' && $iconContainerRight,
           { height: size },
         ])}
       />
@@ -210,18 +227,18 @@ const $separatorBottom: ThemedStyle<ViewStyle> = ({ colors }) => ({
 
 const $textStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({
   paddingVertical: spacing.xs,
-  alignSelf: "center",
+  alignSelf: 'center',
   flexGrow: 1,
   flexShrink: 1,
 })
 
 const $touchableStyle: ViewStyle = {
-  alignItems: "flex-start",
+  alignItems: 'flex-start',
 }
 
 const $iconContainer: ViewStyle = {
-  justifyContent: "center",
-  alignItems: "center",
+  justifyContent: 'center',
+  alignItems: 'center',
   flexGrow: 0,
 }
 const $iconContainerLeft: ThemedStyle<ViewStyle> = ({ spacing }) => ({

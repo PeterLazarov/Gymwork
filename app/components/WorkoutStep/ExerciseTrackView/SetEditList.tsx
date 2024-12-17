@@ -73,10 +73,10 @@ const SetEditList: React.FC<Props> = ({
             backgroundColor: isActive
               ? colors.primaryContainer
               : isFocused
-              ? colors.surfaceContainerHigh
-              : isDraft
-              ? colors.surfaceContainer
-              : undefined,
+                ? colors.surfaceContainerHigh
+                : isDraft
+                  ? colors.surfaceContainer
+                  : undefined,
           }}
           onLongPress={() => {
             !isDraft && onDragStart()

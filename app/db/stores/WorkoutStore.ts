@@ -54,19 +54,22 @@ export const WorkoutStoreModel = types
     },
 
     get exerciseWorkoutsHistoryMap(): Record<Exercise['guid'], Workout[]> {
-      return this.sortedReverseWorkouts.reduce((acc, workout) => {
-        workout.exercises.forEach(exercise => {
-          const sets = workout.exerciseSetsMap[exercise.guid]
-          if (sets && sets.length > 0) {
-            if (!acc[exercise.guid]) {
-              acc[exercise.guid] = []
+      return this.sortedReverseWorkouts.reduce(
+        (acc, workout) => {
+          workout.exercises.forEach(exercise => {
+            const sets = workout.exerciseSetsMap[exercise.guid]
+            if (sets && sets.length > 0) {
+              if (!acc[exercise.guid]) {
+                acc[exercise.guid] = []
+              }
+              acc[exercise.guid]!.push(workout)
             }
-            acc[exercise.guid]!.push(workout)
-          }
-        })
+          })
 
-        return acc
-      }, {} as Record<Exercise['guid'], Workout[]>)
+          return acc
+        },
+        {} as Record<Exercise['guid'], Workout[]>
+      )
     },
 
     /** @returns all sets performed ever */
@@ -114,9 +117,8 @@ export const WorkoutStoreModel = types
     async fetch() {
       if (self.workouts.length === 0) {
         const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
-        const workoutTemplates = await storage.load<
-          WorkoutTemplateSnapshotIn[]
-        >('workoutTemplates')
+        const workoutTemplates =
+          await storage.load<WorkoutTemplateSnapshotIn[]>('workoutTemplates')
 
         console.log('workouts in memory', workouts)
         if (workoutTemplates && workoutTemplates?.length > 0) {

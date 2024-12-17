@@ -197,4 +197,3 @@ export const CalendarScreen: React.FC = observer(() => {
     </>
   )
 })
-
