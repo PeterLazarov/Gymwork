@@ -31,6 +31,7 @@ import { customFontsToLoad } from "./igniteTheme"
 import Config from "./config"
 import { KeyboardProvider } from "react-native-keyboard-controller"
 import { loadDateFnsLocale } from "./utils/formatDate"
+import DBStoreInitializer from "./db/DBStoreInitializer"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -75,17 +76,6 @@ function App(props: AppProps) {
   const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
   const [isI18nInitialized, setIsI18nInitialized] = useState(false)
 
-  const rootStore = useStores()
-  const [isDBInitialized, setIsDBInitialized] = useState(false)
-  useEffect(() => {
-    const now = Date.now()
-    rootStore.initializeStores().then(() => {
-      setIsDBInitialized(true)
-      console.log(`Time to initialize DB: ${((Date.now() - now) / 1000).toFixed(2)}s`)
-    })
-  }, [])
-
-
   useEffect(() => {
     initI18n()
       .then(() => setIsI18nInitialized(true))
@@ -112,7 +102,6 @@ function App(props: AppProps) {
     !rehydrated ||
     !isNavigationStateRestored ||
     !isI18nInitialized ||
-    !isDBInitialized ||
     (!areFontsLoaded && !fontLoadError)
   ) {
     return null
@@ -125,17 +114,19 @@ function App(props: AppProps) {
 
   // otherwise, we're ready to render the app
   return (
-    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <ErrorBoundary catchErrors={Config.catchErrors}>
-        <KeyboardProvider>
-          <AppNavigator
-            linking={linking}
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
-        </KeyboardProvider>
-      </ErrorBoundary>
-    </SafeAreaProvider>
+    <DBStoreInitializer>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <ErrorBoundary catchErrors={Config.catchErrors}>
+          <KeyboardProvider>
+            <AppNavigator
+              linking={linking}
+              initialState={initialNavigationState}
+              onStateChange={onNavigationStateChange}
+            />
+          </KeyboardProvider>
+        </ErrorBoundary>
+      </SafeAreaProvider>
+    </DBStoreInitializer>
   )
 }
 
