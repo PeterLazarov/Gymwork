@@ -7,10 +7,10 @@ import {
   View,
   ViewStyle,
 } from "react-native"
-import { $styles } from "../theme"
+import { $styles } from "../../igniteTheme"
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
-import type { ThemedStyle } from "@/theme"
+import type { ThemedStyle } from "@/igniteTheme"
 import { useAppTheme } from "@/utils/useAppTheme"
 
 export interface ListItemProps extends TouchableOpacityProps {

@@ -7,7 +7,7 @@ import {
   ViewabilityConfig,
   ViewToken,
 } from 'react-native'
-import { Gesture, GestureDetector } from 'react-native-gesture-handler'
+import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler'
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -45,7 +45,7 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
         onScreenChange?.(index)
       }
     },
-    [])
+      [])
 
     const renderItem = (props: any) => (
       <View style={{ width, flex: 1 }}>{externalRenderItem!(props)}</View>
@@ -82,31 +82,33 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
     }))
 
     return (
-      <GestureDetector gesture={panGesture}>
-        <Animated.View
-          style={[
-            {
-              flex: 1,
-            },
-            animatedStyle,
-          ]}
-        >
-          <FlatList
-            ref={ref}
-            showsHorizontalScrollIndicator={false}
-            viewabilityConfig={viewabilityConfig}
-            onViewableItemsChanged={handleViewChange}
-            pagingEnabled
-            keyExtractor={(item, index) => String(index)}
-            getItemLayout={getItemLayout}
-            renderItem={renderItem}
-            horizontal
-            snapToAlignment="center"
-            initialScrollIndex={initialScrollIndex}
-            {...rest}
-          />
-        </Animated.View>
-      </GestureDetector>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <GestureDetector gesture={panGesture}>
+          <Animated.View
+            style={[
+              {
+                flex: 1,
+              },
+              animatedStyle,
+            ]}
+          >
+            <FlatList
+              ref={ref}
+              showsHorizontalScrollIndicator={false}
+              viewabilityConfig={viewabilityConfig}
+              onViewableItemsChanged={handleViewChange}
+              pagingEnabled
+              keyExtractor={(item, index) => String(index)}
+              getItemLayout={getItemLayout}
+              renderItem={renderItem}
+              horizontal
+              snapToAlignment="center"
+              initialScrollIndex={initialScrollIndex}
+              {...rest}
+            />
+          </Animated.View>
+        </GestureDetector>
+      </GestureHandlerRootView>
     )
   }
 )

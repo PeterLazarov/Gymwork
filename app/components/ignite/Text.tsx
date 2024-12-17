@@ -1,9 +1,9 @@
 import { TOptions } from "i18next"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
-import { isRTL, translate, TxKeyPath } from "../i18n"
-import type { ThemedStyle, ThemedStyleArray } from "@/theme"
+import { isRTL, translate, TxKeyPath } from "@/i18n"
+import type { ThemedStyle, ThemedStyleArray } from "@/igniteTheme"
 import { useAppTheme } from "@/utils/useAppTheme"
-import { typography } from "@/theme/typography"
+import { typography } from "@/igniteTheme/typography"
 import { ReactNode } from "react"
 
 type Sizes = keyof typeof $sizeStyles

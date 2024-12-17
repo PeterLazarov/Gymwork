@@ -8,8 +8,8 @@ import {
   ViewProps,
   ViewStyle,
 } from "react-native"
-import type { ThemedStyle, ThemedStyleArray } from "@/theme"
-import { $styles } from "../theme"
+import type { ThemedStyle, ThemedStyleArray } from "@/igniteTheme"
+import { $styles } from "../../igniteTheme"
 import { Text, TextProps } from "./Text"
 import { useAppTheme } from "@/utils/useAppTheme"
 

@@ -1,5 +1,5 @@
 // Choose your preferred renderer
-import { SVGRenderer, SvgChart } from '@wuba/react-native-echarts'
+import { SkiaRenderer, SvgChart } from '@wuba/react-native-echarts'
 import { LineChart } from 'echarts/charts'
 import {
   TitleComponent,
@@ -28,7 +28,7 @@ use([
   TitleComponent,
   TooltipComponent,
   GridComponent,
-  SVGRenderer,
+  SkiaRenderer,
   LegendComponent,
   // TimelineComponent,
   // ...
@@ -71,14 +71,14 @@ const ExerciseHistoryChart: React.FC<Props> = ({
 
   const symbolSize: number = useMemo(
     () =>
-      ((
-        {
-          '30D': 10,
-          '3M': 5,
-          '6M': 5,
-          ALL: 5,
-        } satisfies Record<CHART_VIEW, number>
-      )[view]),
+    ((
+      {
+        '30D': 10,
+        '3M': 5,
+        '6M': 5,
+        ALL: 5,
+      } satisfies Record<CHART_VIEW, number>
+    )[view]),
     [view]
   )
 

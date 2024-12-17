@@ -7,8 +7,9 @@ import EmptyState from '../EmptyState'
 import { translate } from 'app/i18n'
 import { useMemo } from 'react'
 import { searchString } from 'app/utils/string'
+import React from 'react'
 
-const noop = () => {}
+const noop = () => { }
 
 type Props = {
   onSelect: (exercise: Exercise) => void
