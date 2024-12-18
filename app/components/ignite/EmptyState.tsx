@@ -7,11 +7,13 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
+
 import { translate } from '@/i18n'
+import type { ThemedStyle } from '@/igniteTheme'
+import { useAppTheme } from '@/utils/useAppTheme'
+
 import { Button, ButtonProps } from './Button'
 import { Text, TextProps } from './Text'
-import { useAppTheme } from '@/utils/useAppTheme'
-import type { ThemedStyle } from '@/igniteTheme'
 
 const sadFace = require('../../../assets/images/sad-face.png')
 

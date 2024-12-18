@@ -15,11 +15,14 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
+
 import { isRTL, translate } from '@/i18n'
 import type { ThemedStyle, ThemedStyleArray } from '@/igniteTheme'
-import { $styles } from '../../igniteTheme'
-import { Text, TextProps } from './Text'
 import { useAppTheme } from '@/utils/useAppTheme'
+
+import { $styles } from '../../igniteTheme'
+
+import { Text, TextProps } from './Text'
 
 export interface TextFieldAccessoryProps {
   style: StyleProp<ViewStyle | TextStyle | ImageStyle>

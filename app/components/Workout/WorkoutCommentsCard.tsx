@@ -1,17 +1,17 @@
+import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { observer } from 'mobx-react-lite'
 
+import { useAppTheme } from '@/utils/useAppTheme'
+import { discomfortOptions, feelingOptions, Workout } from 'app/db/models'
+import { translate } from 'app/i18n'
 import {
-  Text,
   Card,
   FeedbackPickerOption,
   fontSize,
-  useColors,
   spacing,
+  Text,
 } from 'designSystem'
-import { discomfortOptions, feelingOptions, Workout } from 'app/db/models'
-import { translate } from 'app/i18n'
 
 type Props = {
   workout: Workout
@@ -24,7 +24,9 @@ const WorkoutCommentsCard: React.FC<Props> = ({
   onPress,
   compactMode,
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const styles = useMemo(
     () => makeStyles(colors, compactMode),

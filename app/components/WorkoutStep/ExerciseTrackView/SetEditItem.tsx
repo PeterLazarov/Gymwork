@@ -1,15 +1,18 @@
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
-import { observer } from 'mobx-react-lite'
 
+import { useAppTheme } from '@/utils/useAppTheme'
+import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { getFormatedDuration } from 'app/utils/time'
-import { useColors, Icon, palettes, iconSizes } from 'designSystem'
-import SetEditItemButton from './SetEditItemButton'
+import { Icon, palettes } from 'designSystem'
+import { spacing } from 'designSystem/theme/spacing'
+
 import SetDataLabel from '../SetDataLabel'
-import { useStores } from 'app/db/helpers/useStores'
-import { spacing } from 'designSystem/tokens/spacing'
+
+import SetEditItemButton from './SetEditItemButton'
 
 type Props = {
   set: WorkoutSet
@@ -32,7 +35,9 @@ const SetEditItem: React.FC<Props> = ({
   showSetCompletion,
   ...rest
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
   const { settingsStore } = useStores()
 
   const color = colors.onSurface

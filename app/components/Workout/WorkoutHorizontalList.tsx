@@ -5,8 +5,9 @@ import { FlatList, ListRenderItemInfo, View } from 'react-native'
 import { useStores } from 'app/db/helpers/useStores'
 import { getDateRange } from 'app/utils/date'
 import { HorizontalScreenList } from 'designSystem'
-import WorkoutDayView from './WorkoutDayView'
+
 import WorkoutBottomControls from './WorkoutBottomControls'
+import WorkoutDayView from './WorkoutDayView'
 
 const WorkoutHorizontalList = () => {
   const { stateStore } = useStores()

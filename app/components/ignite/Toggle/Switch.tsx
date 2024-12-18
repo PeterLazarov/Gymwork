@@ -10,17 +10,18 @@ import {
   ViewStyle,
 } from 'react-native'
 
-import { $styles } from '@/igniteTheme'
 import { iconRegistry } from '@/components/ignite/Icon'
 import { isRTL } from '@/i18n'
+import { $styles } from '@/igniteTheme'
+import type { ThemedStyle } from '@/igniteTheme'
+import { useAppTheme } from '@/utils/useAppTheme'
+
 import {
   $inputOuterBase,
   BaseToggleInputProps,
   Toggle,
   ToggleProps,
 } from './Toggle'
-import { useAppTheme } from '@/utils/useAppTheme'
-import type { ThemedStyle } from '@/igniteTheme'
 
 export interface SwitchToggleProps
   extends Omit<ToggleProps<SwitchInputProps>, 'ToggleInput'> {

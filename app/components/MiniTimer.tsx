@@ -1,5 +1,7 @@
-import { fontSize, Text, Icon, useColors, IconButton } from 'designSystem'
-import { useColorScheme, View } from 'react-native'
+import { View } from 'react-native'
+
+import { useAppTheme } from '@/utils/useAppTheme'
+import { fontSize, Icon, IconButton, Text } from 'designSystem'
 
 export type MiniTimerProps = {
   n: number
@@ -7,8 +9,9 @@ export type MiniTimerProps = {
 }
 
 export default function MiniTimer({ n, onPress }: MiniTimerProps) {
-  const colors = useColors()
-  const scheme = useColorScheme()
+  const {
+    theme: { colors, isDark },
+  } = useAppTheme()
 
   return (
     <IconButton
@@ -39,8 +42,7 @@ export default function MiniTimer({ n, onPress }: MiniTimerProps) {
         <View
           style={{
             // TODO refactor to onHeader?
-            backgroundColor:
-              scheme === 'light' ? colors.primary : colors.shadow,
+            backgroundColor: isDark ? colors.shadow : colors.primary,
             width: 22,
             height: 22,
             alignItems: 'center',

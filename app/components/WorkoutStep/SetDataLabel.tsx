@@ -1,13 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
-import {
-  Text,
-  useColors,
-  fontSize as fontSizeToken,
-  spacing,
-} from 'designSystem'
+import { useAppTheme } from '@/utils/useAppTheme'
+import { Text, fontSize as fontSizeToken, spacing } from 'designSystem'
 
 type Props = {
   value?: string | number
@@ -24,7 +20,9 @@ const SetDataLabel: React.FC<Props> = ({
   fontSize,
   fixDecimals,
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
   const styles = useMemo(
     () => makeStyles(colors, isFocused, fontSize),
     [colors, isFocused, fontSize]

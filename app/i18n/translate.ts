@@ -1,8 +1,10 @@
+import decamelize from 'decamelize'
 import i18n from 'i18next'
 import type { TOptions } from 'i18next'
-import { TxKeyPath } from './i18n'
+
 import { capitalize } from '@/utils/string'
-import decamelize from 'decamelize'
+
+import { TxKeyPath } from './i18n'
 
 export const nestingHackKey = 'nestingHack'
 

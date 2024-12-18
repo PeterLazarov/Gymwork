@@ -1,9 +1,10 @@
 import React from 'react'
 import { List } from 'react-native-paper'
 
-import ExerciseListItem from './ExerciseListItem'
 import { Exercise } from 'app/db/models'
 import { capitalize } from 'app/utils/string'
+
+import ExerciseListItem from './ExerciseListItem'
 
 export type ExerciseAccordionListProps = {
   /** key is muscle */

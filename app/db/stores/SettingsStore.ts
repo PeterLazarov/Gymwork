@@ -1,8 +1,9 @@
+import * as SystemUI from 'expo-system-ui'
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { Appearance, ColorSchemeName } from 'react-native'
-import * as SystemUI from 'expo-system-ui'
 
 import { getColors } from 'designSystem'
+
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
 let deviceColorScheme = Appearance.getColorScheme()

@@ -1,11 +1,12 @@
-import React from 'react'
-import { observer } from 'mobx-react-lite'
 import { computed } from 'mobx'
+import { observer } from 'mobx-react-lite'
+import { getParentOfType } from 'mobx-state-tree'
+import React from 'react'
+
+import { useStores } from 'app/db/helpers/useStores'
+import { WorkoutModel, WorkoutSet, WorkoutStep } from 'app/db/models'
 
 import SetListItem from './SetListItem'
-import { WorkoutModel, WorkoutSet, WorkoutStep } from 'app/db/models'
-import { useStores } from 'app/db/helpers/useStores'
-import { getParentOfType } from 'mobx-state-tree'
 
 export type StepSetsListProps = {
   step: WorkoutStep

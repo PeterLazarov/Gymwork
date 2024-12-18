@@ -3,23 +3,18 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import { capitalize } from 'app/utils/string'
-import {
-  Text,
-  Icon,
-  IconButton,
-  boxShadows,
-  useColors,
-  fontSize,
-  spacing,
-} from 'designSystem'
+import { Icon, IconButton, Text, fontSize, spacing } from 'designSystem'
 
 type Props = {
   duration?: string
 }
 const DayControl: React.FC<Props> = ({ duration }) => {
-  const colors = useColors()
+  const {
+    theme: { colors, boxShadows },
+  } = useAppTheme()
 
   const {
     stateStore,
@@ -56,7 +51,7 @@ const DayControl: React.FC<Props> = ({ duration }) => {
         <Icon icon="chevron-back" />
       </IconButton>
       <TouchableOpacity
-        onPress={() => navigate('Calendar')}
+        onPress={() => navigate('Calendar', {})}
         style={{ flex: 1 }}
       >
         <Text style={{ fontSize: fontSize.lg }}>{capitalize(label)}</Text>

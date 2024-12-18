@@ -1,23 +1,23 @@
+import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+
+import SettingsToggleItem from 'app/components/SettingsToggleItem'
+import { useDialogContext } from 'app/contexts/DialogContext'
+import { useStores } from 'app/db/helpers/useStores'
+import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { type AppStackScreenProps } from 'app/navigators'
+import { useExport } from 'app/utils/useExport'
 import {
   Divider,
   Header,
   Icon,
   IconButton,
   Select,
-  Text,
-  useColors,
   spacing,
+  Text,
 } from 'designSystem'
-import { observer } from 'mobx-react-lite'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { translate } from 'app/i18n'
-import { useStores } from 'app/db/helpers/useStores'
-import { useExport } from 'app/utils/useExport'
-import { useDialogContext } from 'app/contexts/DialogContext'
-import SettingsToggleItem from 'app/components/SettingsToggleItem'
 
 export type SettingsScreenProps = AppStackScreenProps<'Settings'>
 
@@ -30,7 +30,9 @@ const appearanceOptions = [
 export const SettingsScreen: React.FC<SettingsScreenProps> = observer(() => {
   const { settingsStore, navStore } = useStores()
 
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
   const styles = useMemo(() => makeStyles(colors), [colors])
   const { exportData, restoreData } = useExport()
   const { showSnackbar } = useDialogContext()

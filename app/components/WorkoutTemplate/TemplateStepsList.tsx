@@ -1,9 +1,11 @@
-import React, { useMemo } from 'react'
-import { View, StyleSheet } from 'react-native'
+import React from 'react'
+import { View, ViewStyle } from 'react-native'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import { WorkoutStep } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { Text, useColors, fontSize, spacing } from 'designSystem'
+import { Text, ThemedStyle } from 'designSystem'
+
 import TemplateStepsListItem from './TemplateStepsListItem'
 
 type Props = {
@@ -12,13 +14,17 @@ type Props = {
 }
 
 const TemplateStepsList: React.FC<Props> = ({ steps, onStepRemove }) => {
-  const colors = useColors()
-  const styles = useMemo(() => makeStyles(colors), [colors])
+  const {
+    theme: {
+      typography: { fontSize },
+    },
+    themed,
+  } = useAppTheme()
 
   return (
     <>
       <Text style={{ fontSize: fontSize.lg }}>{translate('exercises')}</Text>
-      <View style={styles.exerciseList}>
+      <View style={themed($exerciseList)}>
         {steps.map(step => (
           <TemplateStepsListItem
             key={step.guid}
@@ -31,16 +37,13 @@ const TemplateStepsList: React.FC<Props> = ({ steps, onStepRemove }) => {
   )
 }
 
-const makeStyles = (colors: any) =>
-  StyleSheet.create({
-    exerciseList: {
-      borderColor: colors.outlineVariant,
-      borderRadius: 8,
-      borderWidth: 1,
-      gap: spacing.xxs,
-      paddingHorizontal: spacing.xs,
-      paddingVertical: spacing.xxs,
-    },
-  })
+const $exerciseList: ThemedStyle<ViewStyle> = ({ spacing, colors }) => ({
+  borderColor: colors.outlineVariant,
+  borderRadius: 8,
+  borderWidth: 1,
+  gap: spacing.xxs,
+  paddingHorizontal: spacing.xs,
+  paddingVertical: spacing.xxs,
+})
 
 export default TemplateStepsList

@@ -1,16 +1,18 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 
+import TemplateList from 'app/components/WorkoutTemplate/TemplateList'
+import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutTemplate } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { Header, Icon, IconButton, useColors } from 'designSystem'
-import TemplateList from 'app/components/WorkoutTemplate/TemplateList'
-import { useDialogContext } from 'app/contexts/DialogContext'
+import { Header, Icon, IconButton } from 'designSystem'
 
 export const TemplateSelectScreen: React.FC = observer(() => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const {
     workoutStore,

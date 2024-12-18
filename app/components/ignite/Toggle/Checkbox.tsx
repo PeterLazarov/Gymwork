@@ -7,15 +7,18 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
+
 import { $styles } from '@/igniteTheme'
+import { useAppTheme } from '@/utils/useAppTheme'
+
 import { iconRegistry, IconTypes } from '../Icon'
+
 import {
   $inputOuterBase,
   BaseToggleInputProps,
   ToggleProps,
   Toggle,
 } from './Toggle'
-import { useAppTheme } from '@/utils/useAppTheme'
 
 export interface CheckboxToggleProps
   extends Omit<ToggleProps<CheckboxInputProps>, 'ToggleInput'> {

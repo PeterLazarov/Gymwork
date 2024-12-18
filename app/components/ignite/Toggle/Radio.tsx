@@ -1,13 +1,15 @@
 import { useEffect, useRef } from 'react'
 import { StyleProp, View, ViewStyle, Animated } from 'react-native'
+
 import { $styles } from '@/igniteTheme'
+import { useAppTheme } from '@/utils/useAppTheme'
+
 import {
   $inputOuterBase,
   BaseToggleInputProps,
   ToggleProps,
   Toggle,
 } from './Toggle'
-import { useAppTheme } from '@/utils/useAppTheme'
 
 export interface RadioToggleProps
   extends Omit<ToggleProps<RadioInputProps>, 'ToggleInput'> {

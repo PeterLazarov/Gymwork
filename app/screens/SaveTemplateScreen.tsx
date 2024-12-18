@@ -1,34 +1,29 @@
 import { observer } from 'mobx-react-lite'
+import { getSnapshot } from 'mobx-state-tree'
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { getSnapshot } from 'mobx-state-tree'
 
 import EditTemplateForm from 'app/components/WorkoutTemplate/EditTemplateForm'
+import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'
 import {
   WorkoutStep,
   WorkoutTemplate,
   WorkoutTemplateModel,
 } from 'app/db/models'
-import { useRouteParams } from 'app/navigators'
-import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { translate } from 'app/i18n'
-import {
-  Button,
-  ButtonText,
-  Header,
-  Icon,
-  IconButton,
-  useColors,
-} from 'designSystem'
-import { useDialogContext } from 'app/contexts/DialogContext'
+import { EmptyLayout } from 'app/layouts/EmptyLayout'
+import { useRouteParams } from 'app/navigators'
+import { Button, ButtonText, Header, Icon, IconButton } from 'designSystem'
 
 export type SaveTemplateScreenParams = {
   edittingTemplate?: WorkoutTemplate
 }
 
 export const SaveTemplateScreen: React.FC = observer(() => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const { workoutStore, stateStore, navStore } = useStores()
   const { edittingTemplate } = useRouteParams('SaveTemplate')

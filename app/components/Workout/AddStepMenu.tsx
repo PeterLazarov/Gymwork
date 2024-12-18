@@ -1,18 +1,15 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
-import {
-  Text,
-  BottomDrawer,
-  Divider,
-  FAB,
-  useColors,
-  spacing,
-} from 'designSystem'
-import { translate } from 'app/i18n'
+
+import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
+import { translate } from 'app/i18n'
+import { BottomDrawer, Divider, FAB, spacing, Text } from 'designSystem'
 
 const AddStepMenu = () => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const [visible, setVisible] = useState(false)
   const {

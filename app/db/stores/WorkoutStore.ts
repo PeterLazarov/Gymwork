@@ -1,9 +1,7 @@
 import { Instance, SnapshotOut, types, getParent } from 'mobx-state-tree'
+import { keepAlive } from 'mobx-utils'
 
-import { RootStore } from './RootStore'
-import * as storage from 'app/utils/storage'
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
-import workoutSeedData from 'app/db/seeds/workout-seed-data'
 import {
   WorkoutSet,
   WorkoutModel,
@@ -17,8 +15,11 @@ import {
   WorkoutTemplate,
   WorkoutStep,
 } from 'app/db/models'
+import workoutSeedData from 'app/db/seeds/workout-seed-data'
 import { isDev } from 'app/utils/isDev'
-import { keepAlive } from 'mobx-utils'
+import * as storage from 'app/utils/storage'
+
+import { RootStore } from './RootStore'
 
 function getClonedIncompleteNoIdSets(
   sets: WorkoutSet[]

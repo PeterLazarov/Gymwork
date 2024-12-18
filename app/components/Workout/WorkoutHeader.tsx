@@ -2,17 +2,21 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { Menu } from 'react-native-paper'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { Header, Icon, IconButton, useColors } from 'designSystem'
-import HomeMenuItems from '../HomeMenuItems'
 import { formatDateIso } from 'app/utils/date'
+import { useShareWorkout } from 'app/utils/useShareWorkout'
+import { Header, Icon, IconButton } from 'designSystem'
+
+import HomeMenuItems from '../HomeMenuItems'
 import MiniTimer from '../MiniTimer'
 import WorkoutTimerModal from '../Timer/WorkoutTimerModal'
-import { useShareWorkout } from 'app/utils/useShareWorkout'
 
 const WorkoutHeader: React.FC = () => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const {
     stateStore,

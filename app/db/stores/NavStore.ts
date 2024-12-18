@@ -6,6 +6,7 @@ import {
   RoutesWithoutParams,
   RoutesWithParams,
 } from 'app/navigators'
+
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
 const pages: (keyof AllStacksParamList)[] = [

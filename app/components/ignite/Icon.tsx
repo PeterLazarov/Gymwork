@@ -9,6 +9,7 @@ import {
   ViewProps,
   ViewStyle,
 } from 'react-native'
+
 import { useAppTheme } from '@/utils/useAppTheme'
 
 export type IconTypes = keyof typeof iconRegistry

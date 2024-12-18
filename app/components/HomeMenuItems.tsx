@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import { Menu, MenuProps } from 'react-native-paper'
+
 import { useStores } from 'app/db/helpers/useStores'
-import useBenchmark from 'app/utils/useBenchmark'
 import { translate } from 'app/i18n'
+import useBenchmark from 'app/utils/useBenchmark'
 
 export type HeaderMenuItemsProps = {
   onClose(): void

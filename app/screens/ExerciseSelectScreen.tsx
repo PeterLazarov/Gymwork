@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
 
+import { useAppTheme } from '@/utils/useAppTheme'
+import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, WorkoutStep } from 'app/db/models'
-import { useRouteParams } from 'app/navigators'
 import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { FAB, Header, Icon, IconButton, useColors } from 'designSystem'
-import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
+import { useRouteParams } from 'app/navigators'
+import { FAB, Header, Icon, IconButton } from 'designSystem'
 
 export type ExerciseSelectScreenParams = {
   selectMode: WorkoutStep['type']
 }
 export const ExerciseSelectScreen: React.FC = () => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const {
     stateStore,

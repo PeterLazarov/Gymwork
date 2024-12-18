@@ -1,12 +1,13 @@
+import convert from 'convert-units'
 import { DateTime } from 'luxon'
 
-import exerciseSeedData from './exercises-seed-data.json'
 import {
   WorkoutSetSnapshotIn,
   WorkoutSnapshotIn,
   WorkoutStepSnapshotIn,
 } from '../models'
-import convert from 'convert-units'
+
+import exerciseSeedData from './exercises-seed-data.json'
 const numberOfWorkouts = 20
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
 const weightIncrementKg = 2.5

@@ -1,5 +1,7 @@
-import { Card, Icon, IconProps, useColors, Text, spacing } from 'designSystem'
 import { View } from 'react-native'
+
+import { useAppTheme } from '@/utils/useAppTheme'
+import { Card, Icon, IconProps, Text } from 'designSystem'
 
 export type ActionCardProps = {
   onPress(): void
@@ -14,7 +16,9 @@ const ActionCard: React.FC<ActionCardProps> = ({
   icon,
   disabled,
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors, spacing },
+  } = useAppTheme()
 
   return (
     <Card

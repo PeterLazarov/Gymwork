@@ -1,27 +1,24 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { ScrollView } from 'react-native'
+
+import { useAppTheme } from '@/utils/useAppTheme'
 import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
+import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, ExerciseModel } from 'app/db/models'
-import { useRouteParams } from 'app/navigators'
-import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { translate } from 'app/i18n'
-import {
-  Button,
-  ButtonText,
-  Header,
-  Icon,
-  IconButton,
-  useColors,
-} from 'designSystem'
-import { useDialogContext } from 'app/contexts/DialogContext'
+import { EmptyLayout } from 'app/layouts/EmptyLayout'
+import { useRouteParams } from 'app/navigators'
+import { Button, ButtonText, Header, Icon, IconButton } from 'designSystem'
 
 export type ExerciseEditScreenParams = {
   createMode?: boolean
 }
 export const ExerciseEditScreen: React.FC = observer(() => {
-  const colors = useColors()
+  const {
+    theme: { colors, spacing },
+  } = useAppTheme()
 
   const { stateStore, exerciseStore, navStore } = useStores()
 

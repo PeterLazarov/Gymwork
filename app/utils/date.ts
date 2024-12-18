@@ -1,4 +1,5 @@
 import { DateTime, Interval } from 'luxon'
+
 import { capitalize } from './string'
 
 export const getDateRange = (from: string, to: string) => {

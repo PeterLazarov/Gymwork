@@ -11,12 +11,14 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 import { RootStoreModel } from 'app/db/stores/RootStore'
-import { Exercise, ExerciseModel } from './Exercise'
-import { WorkoutSet, WorkoutSetModel, WorkoutSetSnapshotIn } from './WorkoutSet'
-import { RecordStore } from '../stores/RecordStore'
-import { getDataFieldForKey } from 'app/utils/workoutRecordsCalculator'
 import { alphabeticNumbering } from 'app/utils/string'
+import { getDataFieldForKey } from 'app/utils/workoutRecordsCalculator'
+
+import { RecordStore } from '../stores/RecordStore'
+
+import { Exercise, ExerciseModel } from './Exercise'
 import { ExerciseRecord } from './ExerciseRecord'
+import { WorkoutSet, WorkoutSetModel, WorkoutSetSnapshotIn } from './WorkoutSet'
 
 const stepType = {
   straightSet: 'straightSet',

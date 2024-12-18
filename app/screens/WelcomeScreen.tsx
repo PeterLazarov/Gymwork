@@ -1,7 +1,9 @@
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { observer } from 'mobx-react-lite'
 
+import { useStores } from 'app/db/helpers/useStores'
+import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import {
   Button,
@@ -11,8 +13,6 @@ import {
   fontSize,
   spacing,
 } from 'designSystem'
-import { useStores } from 'app/db/helpers/useStores'
-import { translate } from 'app/i18n'
 
 export const WelcomeScreen: React.FC = observer(() => {
   const {

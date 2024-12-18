@@ -1,14 +1,18 @@
 import { View } from 'react-native'
 
-import StepSetsList from '../WorkoutStep/StepSetsList/StepSetsList'
+import { useAppTheme } from '@/utils/useAppTheme'
 import { WorkoutStep } from 'app/db/models'
-import { spacing, Text, useColors } from 'designSystem'
+import { spacing, Text } from 'designSystem'
+
+import StepSetsList from '../WorkoutStep/StepSetsList/StepSetsList'
 
 type Props = {
   step: WorkoutStep
 }
 const CalendarWorkoutModalStepItem: React.FC<Props> = ({ step }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   return (
     <>

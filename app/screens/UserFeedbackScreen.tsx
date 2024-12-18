@@ -1,23 +1,16 @@
-import React, { useState } from 'react'
-import { Alert, View } from 'react-native'
-import { observer } from 'mobx-react-lite'
 import { DateTime } from 'luxon'
+import { observer } from 'mobx-react-lite'
+import React, { useState } from 'react'
+import { View } from 'react-native'
 
-import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import {
-  Button,
-  ButtonText,
-  Header,
-  Icon,
-  IconButton,
-  useColors,
-} from 'designSystem'
-import { useStores } from 'app/db/helpers/useStores'
-import { AirtableFeedback, airtableApi } from 'app/services/airtable'
-import { useDialogContext } from 'app/contexts/DialogContext'
-import { translate } from 'app/i18n'
 import UserFeedbackForm from 'app/components/UserFeedbackForm'
+import { useDialogContext } from 'app/contexts/DialogContext'
+import { useStores } from 'app/db/helpers/useStores'
+import { translate } from 'app/i18n'
+import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { useRouteParams } from 'app/navigators'
+import { AirtableFeedback, airtableApi } from 'app/services/airtable'
+import { Button, ButtonText, Header, Icon, IconButton } from 'designSystem'
 
 export const UserFeedbackScreen: React.FC = observer(() => {
   const { referrerPage } = useRouteParams('UserFeedback')
@@ -29,7 +22,9 @@ export const UserFeedbackScreen: React.FC = observer(() => {
 
   const { showSnackbar } = useDialogContext()
 
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const [feedback, setFeedback] = useState<AirtableFeedback>({
     date: stateStore.openedDate,

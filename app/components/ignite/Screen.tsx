@@ -12,13 +12,15 @@ import {
   View,
   ViewStyle,
 } from 'react-native'
-import { $styles } from '../../igniteTheme'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
+
+import { useAppTheme } from '@/utils/useAppTheme'
 import {
   ExtendedEdge,
   useSafeAreaInsetsStyle,
 } from '@/utils/useSafeAreaInsetsStyle'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller'
-import { useAppTheme } from '@/utils/useAppTheme'
+
+import { $styles } from '../../igniteTheme'
 
 export const DEFAULT_BOTTOM_OFFSET = 50
 

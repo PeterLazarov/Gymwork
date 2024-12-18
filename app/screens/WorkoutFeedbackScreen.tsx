@@ -1,22 +1,17 @@
-import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
+import React, { useState } from 'react'
 
-import { useStores } from 'app/db/helpers/useStores'
-import { translate } from 'app/i18n'
-import {
-  Header,
-  Icon,
-  IconButton,
-  useColors,
-  Button,
-  ButtonText,
-} from 'designSystem'
 import WorkoutCommentsForm from 'app/components/WorkoutCommentsForm'
-import { WorkoutComments } from 'app/db/models'
 import { useDialogContext } from 'app/contexts/DialogContext'
+import { useStores } from 'app/db/helpers/useStores'
+import { WorkoutComments } from 'app/db/models'
+import { translate } from 'app/i18n'
+import { Button, ButtonText, Header, Icon, IconButton } from 'designSystem'
 
 export const WorkoutFeedbackScreen: React.FC = observer(() => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const {
     stateStore,

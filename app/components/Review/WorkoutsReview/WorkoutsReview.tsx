@@ -1,22 +1,23 @@
+import { ListRenderItemInfo } from '@shopify/flash-list'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Searchbar } from 'react-native-paper'
-import { ListRenderItemInfo } from '@shopify/flash-list'
 
 import EmptyState from 'app/components/EmptyState'
-import { useStores } from 'app/db/helpers/useStores'
-import { translate } from 'app/i18n'
-import { Workout, discomfortOptions } from 'app/db/models'
-import WorkoutReviewListItem from './WorkoutReviewListItem'
 import WorkoutModal from 'app/components/WorkoutModal'
+import { useStores } from 'app/db/helpers/useStores'
+import { Workout, discomfortOptions } from 'app/db/models'
+import { translate } from 'app/i18n'
+import { searchString } from 'app/utils/string'
 import {
   Divider,
   FeedbackPickerOption,
   IndicatedScrollList,
   spacing,
 } from 'designSystem'
-import { searchString } from 'app/utils/string'
+
+import WorkoutReviewListItem from './WorkoutReviewListItem'
 
 const WorkoutsReview: React.FC = () => {
   const { workoutStore } = useStores()

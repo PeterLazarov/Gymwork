@@ -1,12 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import { FC } from 'react'
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from 'react-native'
+
 import { Text, Screen } from '@/components/ignite'
+import { $styles, type ThemedStyle } from '@/igniteTheme'
+import { useAppTheme } from '@/utils/useAppTheme'
+
 import { isRTL } from '../../i18n'
 import { AppStackScreenProps } from '../../navigators'
-import { $styles, type ThemedStyle } from '@/igniteTheme'
 import { useSafeAreaInsetsStyle } from '../../utils/useSafeAreaInsetsStyle'
-import { useAppTheme } from '@/utils/useAppTheme'
 
 const welcomeLogo = require('../../../assets/images/logo.png')
 const welcomeFace = require('../../../assets/images/welcome-face.png')

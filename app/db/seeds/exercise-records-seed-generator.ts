@@ -1,10 +1,11 @@
+import { getSnapshot } from 'mobx-state-tree'
+
 import {
   ExerciseRecordSnapshotIn,
   Workout,
   WorkoutSet,
   WorkoutSetSnapshotIn,
 } from 'app/db/models'
-import { getSnapshot } from 'mobx-state-tree'
 
 export const getRecords = (workouts: Workout[]): ExerciseRecordSnapshotIn[] => {
   const records: ExerciseRecordSnapshotIn[] = []

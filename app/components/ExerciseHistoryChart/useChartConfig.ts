@@ -1,5 +1,5 @@
+import { useAppTheme } from '@/utils/useAppTheme'
 import { WorkoutSet } from 'app/db/models'
-import { useColors } from 'designSystem'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -16,7 +16,9 @@ type ChartConfigParams = {
   xAxis: string[]
 }
 const useChartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const getViewOptions = () => ({
     animation: true,

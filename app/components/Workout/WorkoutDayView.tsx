@@ -1,18 +1,21 @@
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
-import { observer } from 'mobx-react-lite'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
-import WorkoutStepList from './WorkoutStepList'
-import WorkoutEmptyState from './WorkoutEmptyState'
+
 import WorkoutCommentsCard from './WorkoutCommentsCard'
-import { useColors } from 'designSystem'
+import WorkoutEmptyState from './WorkoutEmptyState'
+import WorkoutStepList from './WorkoutStepList'
 
 type Props = {
   date: string
 }
 const WorkoutDayView: React.FC<Props> = ({ date }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const {
     workoutStore,

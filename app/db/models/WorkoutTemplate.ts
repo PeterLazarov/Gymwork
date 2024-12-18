@@ -8,8 +8,9 @@ import {
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import { withSetPropAction } from '../helpers/withSetPropAction'
 import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction'
+import { withSetPropAction } from '../helpers/withSetPropAction'
+
 import { WorkoutStepModel } from './WorkoutStep'
 
 export const WorkoutTemplateModel = types

@@ -2,11 +2,11 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
 
-import { useStores } from 'app/db/helpers/useStores'
+import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
+import ExerciseControl from 'app/components/WorkoutStep/ExerciseControl'
 import ExerciseTrackView from 'app/components/WorkoutStep/ExerciseTrackView'
 import StepHeader from 'app/components/WorkoutStep/StepHeader'
-import ExerciseControl from 'app/components/WorkoutStep/ExerciseControl'
-import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
+import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 
 export const WorkoutStepScreen: React.FC = observer(() => {

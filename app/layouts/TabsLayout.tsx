@@ -1,11 +1,12 @@
+import { observer } from 'mobx-react-lite'
 import React, { ReactNode } from 'react'
 import { View } from 'react-native'
-import { observer } from 'mobx-react-lite'
+
+import { translate } from '@/i18n'
+import { useStores } from 'app/db/helpers/useStores'
+import { BottomNavigation, IconProps } from 'designSystem'
 
 import { EmptyLayout } from './EmptyLayout'
-import { BottomNavigation, IconProps } from 'designSystem'
-import { useStores } from 'app/db/helpers/useStores'
-import { translate } from '@/i18n'
 
 type Props = {
   children?: ReactNode

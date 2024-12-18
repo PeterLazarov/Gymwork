@@ -1,10 +1,10 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { Workout } from 'app/db/models'
-import { Text } from 'designSystem'
 import WorkoutCommentsCard from 'app/components/Workout/WorkoutCommentsCard'
+import { Workout } from 'app/db/models'
 import { formatDateIso } from 'app/utils/date'
+import { Text } from 'designSystem'
 
 type Props = {
   workout: Workout

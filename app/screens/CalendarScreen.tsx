@@ -1,23 +1,26 @@
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
+import { useWindowDimensions } from 'react-native'
 import { Calendar } from 'react-native-calendario'
 import { MarkedDays } from 'react-native-month'
+import { Menu } from 'react-native-paper'
 
+import { useAppTheme } from '@/utils/useAppTheme'
+import WorkoutModal from 'app/components/WorkoutModal'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { useRouteParams } from 'app/navigators'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { Header, Icon, IconButton, useColors, fontSize } from 'designSystem'
-import WorkoutModal from 'app/components/WorkoutModal'
-import { Menu } from 'react-native-paper'
-import { useWindowDimensions } from 'react-native'
+import { useRouteParams } from 'app/navigators'
+import { Header, Icon, IconButton, fontSize } from 'designSystem'
 
 export type CalendarScreenParams = {
   copyWorkoutMode?: boolean
 }
 export const CalendarScreen: React.FC = observer(() => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const {
     workoutStore,

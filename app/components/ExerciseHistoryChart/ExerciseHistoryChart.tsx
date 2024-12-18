@@ -10,15 +10,16 @@ import {
 } from 'echarts/components'
 import { use, ECharts, init } from 'echarts/core'
 import { DateInput, DateTime, Interval } from 'luxon'
+import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useRef, useEffect, useState, useMemo } from 'react'
 import { Dimensions, View } from 'react-native'
-import { computed } from 'mobx'
 
 import { useStores } from 'app/db/helpers/useStores'
-import useChartConfig from './useChartConfig'
-import seriesSetup from './seriesSetup'
 import { Exercise } from 'app/db/models'
+
+import seriesSetup from './seriesSetup'
+import useChartConfig from './useChartConfig'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title

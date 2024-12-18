@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { WorkoutSet } from 'app/db/models'
 import SetDataLabel from 'app/components/WorkoutStep/SetDataLabel'
+import { WorkoutSet } from 'app/db/models'
 import { spacing } from 'designSystem'
 
 type Props = {

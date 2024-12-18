@@ -1,15 +1,9 @@
 import React, { useState } from 'react'
 import { ScrollView, View } from 'react-native'
 
-import {
-  Text,
-  Button,
-  ButtonText,
-  fontSize,
-  useColors,
-  spacing,
-} from 'designSystem'
+import { useAppTheme } from '@/utils/useAppTheme'
 import { SafeLayout } from 'app/layouts/SafeLayout'
+import { Button, ButtonText, fontSize, Text } from 'designSystem'
 
 export interface ErrorDetailsProps {
   error: Error | null
@@ -25,7 +19,9 @@ export const ErrorDetailsScreen: React.FC<ErrorDetailsProps> = ({
   error,
   resetError,
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors, spacing },
+  } = useAppTheme()
   const [detailsVisible, setDetailsVisible] = useState(false)
 
   return (

@@ -1,20 +1,15 @@
+import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+
+import { useAppTheme } from '@/utils/useAppTheme'
+import { useStores } from 'app/db/helpers/useStores'
+import { ExerciseMeasurement, WorkoutSet } from 'app/db/models'
+import { translate } from 'app/i18n'
+import { getFormatedDuration } from 'app/utils/time'
+import { Icon, Text, fontSize, palettes, spacing } from 'designSystem'
 
 import SetDataLabel from '../SetDataLabel'
-import { ExerciseMeasurement, WorkoutSet } from 'app/db/models'
-import { getFormatedDuration } from 'app/utils/time'
-import { translate } from 'app/i18n'
-import {
-  Text,
-  Icon,
-  useColors,
-  fontSize,
-  palettes,
-  spacing,
-} from 'designSystem'
-import { observer } from 'mobx-react-lite'
-import { useStores } from 'app/db/helpers/useStores'
 
 type Props = {
   set: WorkoutSet
@@ -35,7 +30,9 @@ const SetListItem: React.FC<Props> = ({
   number,
   showSetCompletion,
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
   const { settingsStore } = useStores()
   const color = isFocused ? colors.tertiary : colors.onSurface
   const styles = useMemo(() => makeStyles(color), [color])

@@ -7,6 +7,7 @@ import {
   measurementUnits,
 } from 'app/db/models'
 import { palettes } from 'designSystem'
+
 import { SeriesItem } from './useChartConfig'
 
 type Props = {

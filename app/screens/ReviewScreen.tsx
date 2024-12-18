@@ -2,27 +2,29 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions, View } from 'react-native'
 import { Menu } from 'react-native-paper'
 
+import { useAppTheme } from '@/utils/useAppTheme'
+import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
+import ExerciseView from 'app/components/ExerciseHistoryChart/ExerciseView'
+import HomeMenuItems from 'app/components/HomeMenuItems'
+import MenuContainer from 'app/components/MenuContainer'
+import ExerciseChartReview from 'app/components/Review/ExerciseChartReview'
+import ExerciseHistoryReview from 'app/components/Review/ExerciseHistoryReview'
+import ExerciseRecordReview from 'app/components/Review/ExerciseRecordReview'
+import WorkoutsReview from 'app/components/Review/WorkoutsReview'
+import { useStores } from 'app/db/helpers/useStores'
+import { translate } from 'app/i18n'
 import {
   Header,
   Icon,
   IconButton,
-  TopNavigation,
   TabConfig,
-  useColors,
+  TopNavigation,
 } from 'designSystem'
-import { useStores } from 'app/db/helpers/useStores'
-import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
-import ExerciseChartReview from 'app/components/Review/ExerciseChartReview'
-import ExerciseHistoryReview from 'app/components/Review/ExerciseHistoryReview'
-import ExerciseRecordReview from 'app/components/Review/ExerciseRecordReview'
-import { translate } from 'app/i18n'
-import ExerciseView from 'app/components/ExerciseHistoryChart/ExerciseView'
-import HomeMenuItems from 'app/components/HomeMenuItems'
-import WorkoutsReview from 'app/components/Review/WorkoutsReview'
-import MenuContainer from 'app/components/MenuContainer'
 
 export const ReviewScreen: React.FC = () => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const { stateStore, navStore } = useStores()
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)

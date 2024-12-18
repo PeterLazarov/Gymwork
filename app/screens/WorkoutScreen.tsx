@@ -1,12 +1,13 @@
 import React from 'react'
+import { View } from 'react-native'
 
 import WorkoutHeader from 'app/components/Workout/WorkoutHeader'
 import WorkoutHorizontalList from 'app/components/Workout/WorkoutHorizontalList'
-import { View } from 'react-native'
-import { useColors } from 'designSystem'
 
 export const WorkoutScreen: React.FC = () => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   return (
     <>

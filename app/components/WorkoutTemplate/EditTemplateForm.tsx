@@ -4,8 +4,9 @@ import { View } from 'react-native'
 import { TextInput, HelperText } from 'react-native-paper'
 
 import { WorkoutStep, WorkoutTemplate } from 'app/db/models'
-import TemplateStepsList from './TemplateStepsList'
 import { spacing } from 'designSystem'
+
+import TemplateStepsList from './TemplateStepsList'
 
 type Props = {
   template: WorkoutTemplate

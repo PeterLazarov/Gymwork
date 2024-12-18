@@ -4,10 +4,10 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
+import { PortalHost, PortalProvider } from '@gorhom/portal'
 import {
   NavigationContainer,
   NavigationState,
-  NavigatorScreenParams,
   RouteProp,
   useRoute,
 } from '@react-navigation/native'
@@ -15,28 +15,27 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack'
+import { ErrorBoundary } from '@sentry/react-native'
 import { observer } from 'mobx-react-lite'
 import { ComponentProps, useMemo } from 'react'
 import {
-  StatusBar,
-  useColorScheme,
+  // StatusBar,
   useWindowDimensions,
   View,
 } from 'react-native'
-import { ErrorBoundary } from '@sentry/react-native'
-import { PortalHost, PortalProvider } from '@gorhom/portal'
-
-import { useAppTheme, useThemeProvider } from '@/utils/useAppTheme'
-import Config from '../config'
-import * as Screens from '@/screens'
-import { navigationRef, useBackButtonHandler } from './navigationUtilities'
-import { useStores } from '@/db/helpers/useStores'
-import { navThemes, paperThemes, useColors } from 'designSystem'
-import TabsLayout from '@/layouts/TabsLayout'
 import { PaperProvider, Portal } from 'react-native-paper'
-import { DialogContextProvider } from '@/contexts/DialogContext'
 
+import { DialogContextProvider } from '@/contexts/DialogContext'
+import { useStores } from '@/db/helpers/useStores'
+import TabsLayout from '@/layouts/TabsLayout'
+import * as Screens from '@/screens'
+import { useAppTheme, useThemeProvider } from '@/utils/useAppTheme'
 import { offscreenRef } from 'app/utils/useShareWorkout'
+import { navThemes, paperThemes } from 'designSystem/theme'
+
+import Config from '../config'
+
+import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -123,8 +122,9 @@ const AppStack = observer(function AppStack() {
 
   const shouldShowWelcome = !__DEV__ && !stateStore.visitedWelcomeScreen
 
-  const colors = useColors()
-  const colorScheme = useColorScheme()
+  const {
+    theme: { colors, isDark },
+  } = useAppTheme()
 
   // TODO native header?
   return (
@@ -133,11 +133,9 @@ const AppStack = observer(function AppStack() {
         headerShown: false,
         animation: 'none',
         // navigationBarColor: colors.background,
-        navigationBarColor:
-          colorScheme === 'light' ? colors.surface : colors.shadow,
+        navigationBarColor: isDark ? colors.shadow : colors.surface,
         contentStyle: {
-          backgroundColor:
-            colorScheme === 'light' ? colors.surface : colors.shadow,
+          backgroundColor: isDark ? colors.shadow : colors.surface,
         },
       }}
       initialRouteName={shouldShowWelcome ? 'Welcome' : 'HomeStack'}
@@ -263,15 +261,16 @@ export const AppNavigator = observer(function AppNavigator(
     navStore.setProp('activeRoute', currentRouteName)
   }
 
-  const colorScheme = useColorScheme()! // TODO is it really nullable?
-  const colors = useColors()
+  const {
+    theme: { isDark },
+  } = useAppTheme()
   const paperTheme = useMemo(() => {
-    return paperThemes[colorScheme]
-  }, [colorScheme])
+    return paperThemes[isDark ? 'dark' : 'light']
+  }, [isDark])
 
   const navTheme = useMemo(() => {
-    return navThemes[colorScheme === 'dark' ? 'DarkTheme' : 'LightTheme']
-  }, [colorScheme])
+    return navThemes[isDark ? 'DarkTheme' : 'LightTheme']
+  }, [isDark])
 
   const screenDimensions = useWindowDimensions()
 

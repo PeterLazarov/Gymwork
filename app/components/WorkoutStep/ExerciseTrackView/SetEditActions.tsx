@@ -1,7 +1,8 @@
+import { View } from 'react-native'
+
 import { translate } from 'app/i18n'
 import { ButtonText, Button } from 'designSystem'
-import { View } from 'react-native'
-import { spacing } from 'designSystem/tokens/spacing'
+import { spacing } from 'designSystem/theme/spacing'
 
 export type SetEditActionsProps = {
   mode: 'edit' | 'add'

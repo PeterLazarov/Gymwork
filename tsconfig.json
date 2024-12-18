@@ -18,7 +18,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./app/*"],
-      "assets/*": ["./assets/*"]
+      "assets/*": ["./assets/*"],
+      "designSystem": ["./designSystem"],
     },
     "typeRoots": ["./node_modules/@types", "./types"]
   },
