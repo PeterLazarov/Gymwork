@@ -17,10 +17,8 @@ import {
 } from 'react-native'
 
 import { isRTL, translate } from '@/i18n'
-import type { ThemedStyle, ThemedStyleArray } from '@/igniteTheme'
 import { useAppTheme } from '@/utils/useAppTheme'
-
-import { $styles } from '../../igniteTheme'
+import { $styles, ThemedStyleArray, ThemedStyle } from 'designSystem'
 
 import { Text, TextProps } from './Text'
 
@@ -221,7 +219,7 @@ export const TextField = forwardRef(function TextField(
 
         <TextInput
           ref={input}
-          underlineColorAndroid={colors.transparent}
+          underlineColorAndroid={'transparent'}
           textAlignVertical="top"
           placeholder={placeholderContent}
           placeholderTextColor={colors.textDim}
@@ -262,8 +260,8 @@ const $inputWrapperStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
   alignItems: 'flex-start',
   borderWidth: 1,
   borderRadius: 4,
-  backgroundColor: colors.palette.neutral200,
-  borderColor: colors.palette.neutral400,
+  backgroundColor: colors.background,
+  borderColor: colors.outlineVariant,
   overflow: 'hidden',
 })
 

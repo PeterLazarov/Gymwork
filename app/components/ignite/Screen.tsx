@@ -19,8 +19,7 @@ import {
   ExtendedEdge,
   useSafeAreaInsetsStyle,
 } from '@/utils/useSafeAreaInsetsStyle'
-
-import { $styles } from '../../igniteTheme'
+import { $styles } from 'designSystem'
 
 export const DEFAULT_BOTTOM_OFFSET = 50
 

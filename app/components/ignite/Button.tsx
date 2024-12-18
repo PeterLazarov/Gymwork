@@ -1,4 +1,4 @@
-import React, { ComponentType } from 'react'
+import { ComponentType } from 'react'
 import {
   Pressable,
   PressableProps,
@@ -8,10 +8,8 @@ import {
   ViewStyle,
 } from 'react-native'
 
-import type { ThemedStyle, ThemedStyleArray } from '@/igniteTheme'
 import { useAppTheme } from '@/utils/useAppTheme'
-
-import { $styles } from '../../igniteTheme'
+import { $styles, ThemedStyle, ThemedStyleArray } from 'designSystem'
 
 import { Text, TextProps } from './Text'
 
@@ -205,9 +203,9 @@ const $baseViewStyle: ThemedStyle<ViewStyle> = ({ spacing }) => ({
 })
 
 const $baseTextStyle: ThemedStyle<TextStyle> = ({ typography }) => ({
-  fontSize: 16,
+  fontSize: typography.fontSize.md,
   lineHeight: 20,
-  fontFamily: typography.primary.medium,
+  // fontFamily: typography.primary.medium,
   textAlign: 'center',
   flexShrink: 1,
   flexGrow: 0,
@@ -229,35 +227,32 @@ const $viewPresets: Record<Presets, ThemedStyleArray<ViewStyle>> = {
     $baseViewStyle,
     ({ colors }) => ({
       borderWidth: 1,
-      borderColor: colors.palette.neutral400,
-      backgroundColor: colors.palette.neutral100,
+      borderColor: colors.outlineVariant,
+      backgroundColor: colors.background,
     }),
   ],
   filled: [
     $styles.row,
     $baseViewStyle,
-    ({ colors }) => ({ backgroundColor: colors.palette.neutral300 }),
+    ({ colors }) => ({ backgroundColor: colors.surfaceContainer }),
   ],
   reversed: [
     $styles.row,
     $baseViewStyle,
-    ({ colors }) => ({ backgroundColor: colors.palette.neutral800 }),
+    ({ colors }) => ({ backgroundColor: colors.outline }),
   ],
 }
 
 const $textPresets: Record<Presets, ThemedStyleArray<TextStyle>> = {
   default: [$baseTextStyle],
   filled: [$baseTextStyle],
-  reversed: [
-    $baseTextStyle,
-    ({ colors }) => ({ color: colors.palette.neutral100 }),
-  ],
+  reversed: [$baseTextStyle, ({ colors }) => ({ color: colors.onPrimary })],
 }
 
 const $pressedViewPresets: Record<Presets, ThemedStyle<ViewStyle>> = {
-  default: ({ colors }) => ({ backgroundColor: colors.palette.neutral200 }),
-  filled: ({ colors }) => ({ backgroundColor: colors.palette.neutral400 }),
-  reversed: ({ colors }) => ({ backgroundColor: colors.palette.neutral700 }),
+  default: ({ colors }) => ({ backgroundColor: colors.background }),
+  filled: ({ colors }) => ({ backgroundColor: colors.outlineVariant }),
+  reversed: ({ colors }) => ({ backgroundColor: colors.onPrimaryFixedVariant }),
 }
 
 const $pressedTextPresets: Record<Presets, ThemedStyle<ViewStyle>> = {

@@ -9,8 +9,8 @@ import {
 } from 'react-native'
 
 import { translate } from '@/i18n'
-import type { ThemedStyle } from '@/igniteTheme'
 import { useAppTheme } from '@/utils/useAppTheme'
+import { ThemedStyle } from 'designSystem'
 
 import { Button, ButtonProps } from './Button'
 import { Text, TextProps } from './Text'
@@ -209,7 +209,7 @@ export function EmptyState(props: EmptyStateProps) {
           source={imageSource}
           {...ImageProps}
           style={$imageStyles}
-          tintColor={theme.isDark ? theme.colors.palette.neutral900 : undefined}
+          tintColor={theme.isDark ? theme.colors.onBackground : undefined}
         />
       )}
 

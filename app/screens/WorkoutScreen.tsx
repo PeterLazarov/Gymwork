@@ -1,6 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import WorkoutHeader from 'app/components/Workout/WorkoutHeader'
 import WorkoutHorizontalList from 'app/components/Workout/WorkoutHorizontalList'
 

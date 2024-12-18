@@ -8,9 +8,8 @@ import {
 } from 'react-native'
 
 import { isRTL, translate, TxKeyPath } from '@/i18n'
-import type { ThemedStyle, ThemedStyleArray } from '@/igniteTheme'
 import { useAppTheme } from '@/utils/useAppTheme'
-// import { typography } from '@/igniteTheme/typography'
+import { ThemedStyle, ThemedStyleArray } from 'designSystem'
 
 type Sizes = keyof typeof $sizeStyles
 // type Weights = keyof typeof typography.primary

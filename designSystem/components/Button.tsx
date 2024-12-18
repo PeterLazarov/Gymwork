@@ -2,6 +2,8 @@ import { ReactNode } from 'react'
 import { TextProps, TouchableOpacity } from 'react-native'
 import { TouchableOpacityProps } from 'react-native-gesture-handler'
 
+import { useAppTheme } from '@/utils/useAppTheme'
+
 import { Text } from '.'
 
 type ButtonVariants = {

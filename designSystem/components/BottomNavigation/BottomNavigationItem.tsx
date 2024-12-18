@@ -1,7 +1,8 @@
-import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 
-import { fontSize, Icon, IconProps, spacing, Text } from '..'
+import { useAppTheme } from '@/utils/useAppTheme'
+
+import { Icon, IconProps, Text } from '..'
 
 export type BottomNavigationItemProps = {
   text: string
@@ -18,7 +19,11 @@ export const BottomNavigationItem: React.FC<BottomNavigationItemProps> = ({
   isSelected,
 }) => {
   const {
-    theme: { colors },
+    theme: {
+      colors,
+      typography: { fontSize },
+      spacing,
+    },
   } = useAppTheme()
 
   return (

@@ -7,7 +7,10 @@ import {
   ViewStyle,
 } from 'react-native'
 
-import { fontSize, Icon, IconProps, spacing, Text, useColors } from '..'
+import { useAppTheme } from '@/utils/useAppTheme'
+import { fontSize, spacing } from 'designSystem/theme'
+
+import { Icon, IconProps, Text } from '..'
 
 export type FeedbackOption = {
   icon: IconProps['icon']
@@ -67,7 +70,7 @@ const FeedbackPickerOption: React.FC<Props> = ({
 }
 
 const makeStyles = (
-  colors: ReturnType<typeof useColors>,
+  colors: ReturnType<typeof useAppTheme>['theme']['colors'],
   isSelected?: boolean,
   compactMode?: boolean
 ) =>

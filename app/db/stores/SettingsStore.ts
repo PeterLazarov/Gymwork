@@ -2,14 +2,12 @@ import * as SystemUI from 'expo-system-ui'
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { Appearance, ColorSchemeName } from 'react-native'
 
-import { getColors } from 'designSystem'
-
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
-let deviceColorScheme = Appearance.getColorScheme()
-Appearance.addChangeListener(({ colorScheme }) => {
-  deviceColorScheme = colorScheme
-})
+// let deviceColorScheme = Appearance.getColorScheme()
+// Appearance.addChangeListener(({ colorScheme }) => {
+//   deviceColorScheme = colorScheme
+// })
 
 const colorSchemes = ['dark', 'light'] satisfies ColorSchemeName[]
 
@@ -31,25 +29,23 @@ export const SettingsStoreModel = types
   .actions(withSetPropAction)
   .actions(self => ({
     initialize() {
-      if (self.colorSchemePreference) {
-        Appearance.setColorScheme?.(self.colorSchemePreference)
-      }
-
-      const colorScheme = Appearance.getColorScheme()
-      const colors = getColors(colorScheme)
-
-      SystemUI.setBackgroundColorAsync(colors.surfaceContainerLow)
+      // if (self.colorSchemePreference) {
+      //   Appearance.setColorScheme?.(self.colorSchemePreference)
+      // }
+      // const colorScheme = Appearance.getColorScheme()
+      // const colors = getColors(colorScheme)
+      // SystemUI.setBackgroundColorAsync(colors.surfaceContainerLow)
     },
 
     //   null or undefined sets it to 'light'
+
+    // TODO redo ignite-style?
     setColorSchemePreference(scheme: 'dark' | 'light' | null) {
-      self.colorSchemePreference = scheme
-      Appearance.setColorScheme?.(scheme ?? deviceColorScheme)
-
-      const colorScheme = Appearance.getColorScheme()
-      const colors = getColors(colorScheme)
-
-      SystemUI.setBackgroundColorAsync(colors.surfaceContainerLow)
+      // self.colorSchemePreference = scheme
+      // Appearance.setColorScheme?.(scheme ?? deviceColorScheme)
+      // const colorScheme = Appearance.getColorScheme()
+      // const colors = getColors(colorScheme)
+      // SystemUI.setBackgroundColorAsync(colors.surfaceContainerLow)
     },
     setMeasureRest(measureRest: boolean) {
       self.measureRest = measureRest

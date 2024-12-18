@@ -1,5 +1,3 @@
-import { ColorSchemeName, useColorScheme } from 'react-native'
-
 // Generated with https://material-foundation.github.io/material-theme-builder/
 /*
 https://material-foundation.github.io/material-theme-builder/?primary=%23A277ED&secondary=%239689A8&colorMatch=true

@@ -12,9 +12,8 @@ import {
 
 import { iconRegistry } from '@/components/ignite/Icon'
 import { isRTL } from '@/i18n'
-import { $styles } from '@/igniteTheme'
-import type { ThemedStyle } from '@/igniteTheme'
 import { useAppTheme } from '@/utils/useAppTheme'
+import { $styles, ThemedStyle } from 'designSystem'
 
 import {
   $inputOuterBase,
@@ -117,15 +116,15 @@ function SwitchInput(props: SwitchInputProps) {
   ].find(v => typeof v === 'number')
 
   const offBackgroundColor = [
-    disabled && colors.palette.neutral400,
-    status === 'error' && colors.errorBackground,
-    colors.palette.neutral300,
+    disabled && colors.outlineVariant,
+    status === 'error' && colors.onError,
+    colors.inverseSurface,
   ].filter(Boolean)[0]
 
   const onBackgroundColor = [
-    disabled && colors.transparent,
-    status === 'error' && colors.errorBackground,
-    colors.palette.secondary500,
+    disabled && 'transparent',
+    status === 'error' && colors.onError,
+    colors.primary,
   ].filter(Boolean)[0]
 
   const knobBackgroundColor = (function () {
@@ -133,15 +132,15 @@ function SwitchInput(props: SwitchInputProps) {
       return [
         $detailStyleOverride?.backgroundColor,
         status === 'error' && colors.error,
-        disabled && colors.palette.neutral600,
-        colors.palette.neutral100,
+        disabled && colors.outlineVariant,
+        colors.background,
       ].filter(Boolean)[0]
     } else {
       return [
         $innerStyleOverride?.backgroundColor,
-        disabled && colors.palette.neutral600,
+        disabled && colors.outlineVariant,
         status === 'error' && colors.error,
-        colors.palette.neutral200,
+        colors.background,
       ].filter(Boolean)[0]
     }
   })()
@@ -250,10 +249,10 @@ function SwitchAccessibilityLabel(
   ]
 
   const color = (function () {
-    if (disabled) return colors.palette.neutral600
+    if (disabled) return colors.outlineVariant
     if (status === 'error') return colors.error
-    if (!on) return innerStyle?.backgroundColor || colors.palette.secondary500
-    return detailStyle?.backgroundColor || colors.palette.neutral100
+    if (!on) return innerStyle?.backgroundColor || colors.outline
+    return detailStyle?.backgroundColor || colors.background
   })()
 
   return (
@@ -285,7 +284,7 @@ const $inputOuter: StyleProp<ViewStyle> = [
 ]
 
 const $switchInner: ThemedStyle<ViewStyle> = ({ colors }) => ({
-  borderColor: colors.transparent,
+  borderColor: 'transparent',
   position: 'absolute',
   paddingStart: 4,
   paddingEnd: 4,

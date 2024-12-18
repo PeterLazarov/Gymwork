@@ -3,8 +3,8 @@ import { FC } from 'react'
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from 'react-native'
 
 import { Text, Screen } from '@/components/ignite'
-import { $styles, type ThemedStyle } from '@/igniteTheme'
 import { useAppTheme } from '@/utils/useAppTheme'
+import { $styles, ThemedStyle } from 'designSystem'
 
 import { isRTL } from '../../i18n'
 import { AppStackScreenProps } from '../../navigators'
@@ -46,9 +46,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(
             style={$welcomeFace}
             source={welcomeFace}
             resizeMode="contain"
-            tintColor={
-              theme.isDark ? theme.colors.palette.neutral900 : undefined
-            }
+            tintColor={theme.isDark ? theme.colors.onBackground : undefined}
           />
         </View>
 
@@ -75,7 +73,7 @@ const $bottomContainer: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   flexShrink: 1,
   flexGrow: 0,
   flexBasis: '43%',
-  backgroundColor: colors.palette.neutral100,
+  backgroundColor: colors.background,
   borderTopLeftRadius: 16,
   borderTopRightRadius: 16,
   paddingHorizontal: spacing.lg,

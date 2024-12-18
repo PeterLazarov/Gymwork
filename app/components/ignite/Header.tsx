@@ -9,14 +9,12 @@ import {
 } from 'react-native'
 
 import { isRTL, translate } from '@/i18n'
-import type { ThemedStyle } from '@/igniteTheme'
 import { useAppTheme } from '@/utils/useAppTheme'
 import {
   ExtendedEdge,
   useSafeAreaInsetsStyle,
 } from '@/utils/useSafeAreaInsetsStyle'
-
-import { $styles } from '../../igniteTheme'
+import { $styles, ThemedStyle } from 'designSystem'
 
 import { Icon, IconTypes } from './Icon'
 import { Text, TextProps } from './Text'

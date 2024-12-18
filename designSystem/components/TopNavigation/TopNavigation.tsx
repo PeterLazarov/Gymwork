@@ -3,9 +3,9 @@ import {
   MaterialTopTabNavigationOptions,
 } from '@react-navigation/material-top-tabs'
 import { NavigationContainer } from '@react-navigation/native'
-import React, { useMemo } from 'react'
-import { useColorScheme } from 'react-native'
+import { useMemo } from 'react'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import { getActiveRouteName } from 'app/navigators'
 import { navThemes } from 'designSystem/theme'
 
@@ -29,11 +29,13 @@ const TopTabs: React.FC<Props> = ({
   swipeDisabled,
 }) => {
   const Tab = createMaterialTopTabNavigator()
+  const {
+    theme: { isDark },
+  } = useAppTheme()
 
-  const colorScheme = useColorScheme()!
   const navTheme = useMemo(() => {
-    return navThemes[colorScheme === 'dark' ? 'DarkTheme' : 'LightTheme']
-  }, [colorScheme])
+    return navThemes[isDark ? 'DarkTheme' : 'LightTheme']
+  }, [isDark])
 
   return (
     <NavigationContainer
@@ -67,9 +69,9 @@ const TopTabs: React.FC<Props> = ({
           },
           swipeEnabled: !swipeDisabled,
         }}
-        style={{
-          backgroundColor: 'green',
-        }}
+        // style={{
+        //   backgroundColor: 'green',
+        // }}
         backBehavior="none"
       >
         {tabsConfig.map(tab => (

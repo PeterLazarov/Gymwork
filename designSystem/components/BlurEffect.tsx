@@ -1,6 +1,7 @@
 import { LinearGradient } from 'expo-linear-gradient'
-import React from 'react'
 import { Platform, View } from 'react-native'
+
+import { useAppTheme } from '@/utils/useAppTheme'
 
 type Props = {
   height: number

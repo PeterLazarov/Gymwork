@@ -40,7 +40,6 @@ const $container: ViewStyle = {
 }
 
 const $text: ThemedStyle<TextStyle> = ({ colors, typography }) => ({
-  fontFamily: typography.primary.normal,
-  fontSize: 14,
-  color: colors.palette.primary500,
+  fontSize: typography.fontSize.sm,
+  color: colors.primary,
 })

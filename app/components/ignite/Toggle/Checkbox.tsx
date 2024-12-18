@@ -8,8 +8,8 @@ import {
   ViewStyle,
 } from 'react-native'
 
-import { $styles } from '@/igniteTheme'
 import { useAppTheme } from '@/utils/useAppTheme'
+import { palettes } from 'designSystem'
 
 import { iconRegistry, IconTypes } from '../Icon'
 
@@ -86,28 +86,28 @@ function CheckboxInput(props: CheckboxInputProps) {
   }, [on])
 
   const offBackgroundColor = [
-    disabled && colors.palette.neutral400,
-    status === 'error' && colors.errorBackground,
-    colors.palette.neutral200,
+    disabled && colors.outlineVariant,
+    status === 'error' && colors.onError,
+    colors.background,
   ].filter(Boolean)[0]
 
   const outerBorderColor = [
-    disabled && colors.palette.neutral400,
+    disabled && colors.outlineVariant,
     status === 'error' && colors.error,
-    !on && colors.palette.neutral800,
-    colors.palette.secondary500,
+    !on && colors.outline,
+    colors.outlineVariant,
   ].filter(Boolean)[0]
 
   const onBackgroundColor = [
-    disabled && colors.transparent,
-    status === 'error' && colors.errorBackground,
-    colors.palette.secondary500,
+    disabled && 'transparent',
+    status === 'error' && colors.onError,
+    colors.onBackground,
   ].filter(Boolean)[0]
 
   const iconTintColor = [
-    disabled && colors.palette.neutral600,
+    disabled && colors.outlineVariant,
     status === 'error' && colors.error,
-    colors.palette.accent100,
+    palettes.gold['90'],
   ].filter(Boolean)[0]
 
   return (
