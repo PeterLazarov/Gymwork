@@ -12,7 +12,7 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { StyleProp, useColorScheme } from 'react-native'
+import { LayoutAnimation, StyleProp, useColorScheme } from 'react-native'
 
 import {
   type Theme,
@@ -22,6 +22,7 @@ import {
   lightTheme,
   darkTheme,
 } from '../../designSystem/theme/index'
+import { useStores } from '@/db/helpers/useStores'
 
 type ThemeContextType = {
   themeScheme: ThemeContexts
@@ -47,10 +48,16 @@ const setImperativeTheming = (theme: Theme) => {
 
 export const useThemeProvider = (initialTheme: ThemeContexts = undefined) => {
   const colorScheme = useColorScheme()
-  const [overrideTheme, setTheme] = useState<ThemeContexts>(initialTheme)
+  const { settingsStore } = useStores()
+  const [overrideTheme, setTheme] = useState<ThemeContexts>(
+    initialTheme ?? settingsStore.colorSchemePreference
+  )
 
   const setThemeContextOverride = useCallback((newTheme: ThemeContexts) => {
+    // Allows for smooth transition
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setTheme(newTheme)
+    settingsStore.setProp('colorSchemePreference', newTheme)
   }, [])
 
   const themeScheme = overrideTheme || colorScheme || 'light'

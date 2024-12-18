@@ -150,6 +150,9 @@ const en = {
     workout: 'Workout',
     review: 'Review',
     performBenchmark: 'Perform benchmark',
+    dark: 'Dark',
+    light: 'Light',
+    colorScheme: 'Color scheme',
   },
 }
 

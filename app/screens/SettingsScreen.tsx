@@ -18,13 +18,14 @@ import {
   spacing,
   Text,
 } from 'designSystem'
+import { useAppTheme } from '@/utils/useAppTheme'
 
 export type SettingsScreenProps = AppStackScreenProps<'Settings'>
 
 const appearanceOptions = [
-  { label: translate('on'), value: 'dark' as const },
-  { label: translate('off'), value: 'light' as const },
-  { label: translate('auto'), value: null },
+  { label: translate('dark'), value: 'dark' as const },
+  { label: translate('light'), value: 'light' as const },
+  { label: translate('auto'), value: undefined },
 ]
 
 export const SettingsScreen: React.FC<SettingsScreenProps> = observer(() => {
@@ -32,7 +33,9 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = observer(() => {
 
   const {
     theme: { colors },
+    setThemeContextOverride
   } = useAppTheme()
+
   const styles = useMemo(() => makeStyles(colors), [colors])
   const { exportData, restoreData } = useExport()
   const { showSnackbar } = useDialogContext()
@@ -72,9 +75,9 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = observer(() => {
         <Select
           options={appearanceOptions}
           value={settingsStore.colorSchemePreference}
-          onChange={settingsStore.setColorSchemePreference}
-          headerText={translate('darkMode')}
-          label={translate('darkMode')}
+          onChange={t => setThemeContextOverride(t ?? undefined)}
+          headerText={translate('colorScheme')}
+          label={translate('colorScheme')}
         />
 
         <Divider

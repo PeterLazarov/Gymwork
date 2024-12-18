@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
-import { Text, ToggleSwitch } from 'designSystem'
+import { Text, ToggleSwitch, spacing } from 'designSystem'
 
 export type SettingsToggledItemProps = {
   enabled: boolean
@@ -17,7 +17,7 @@ export default function SettingsToggleItem({
   children,
 }: SettingsToggledItemProps) {
   const {
-    theme: { colors, spacing },
+    theme: { colors },
   } = useAppTheme()
   const styles = useMemo(() => makeStyles(colors), [colors])
 
