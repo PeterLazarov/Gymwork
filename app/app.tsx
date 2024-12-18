@@ -27,13 +27,12 @@ import {
 
 import Config from './config'
 import DBStoreInitializer from './db/DBStoreInitializer'
-import { useInitialRootStore, useStores } from './db/helpers/useStores'
+import { useInitialRootStore } from './db/helpers/useStores'
 import { initI18n } from './i18n'
 import './utils/ignoreWarnings'
 // import { useFonts } from 'expo-font'
 import { AppNavigator, useNavigationPersistence } from './navigators'
 import { ErrorBoundary } from './screens/ignite/ErrorScreen/ErrorBoundary'
-import { loadDateFnsLocale } from './utils/formatDate'
 import * as storage from './utils/storage'
 // import { customFontsToLoad } from './igniteTheme'
 
@@ -81,9 +80,7 @@ function App(props: AppProps) {
   const [isI18nInitialized, setIsI18nInitialized] = useState(false)
 
   useEffect(() => {
-    initI18n()
-      .then(() => setIsI18nInitialized(true))
-      .then(() => loadDateFnsLocale())
+    initI18n().then(() => setIsI18nInitialized(true))
   }, [])
 
   const { rehydrated } = useInitialRootStore(() => {
