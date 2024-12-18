@@ -1,23 +1,25 @@
 import { DateTime } from 'luxon'
+import { useState } from 'react'
 import { ScrollView, View } from 'react-native'
-import { Portal, Modal } from 'react-native-paper'
+import { Modal, Portal } from 'react-native-paper'
 
-import CalendarWorkoutModalStepItem from './WorkoutModalStepItem'
+import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
+import { Workout } from 'app/db/models'
+import { translate } from 'app/i18n'
 import {
-  Text,
   Button,
   ButtonText,
   Divider,
+  Text,
   ToggleSwitch,
   fontSize,
-  useColors,
   spacing,
 } from 'designSystem'
-import { translate } from 'app/i18n'
-import { useState } from 'react'
-import { Workout } from 'app/db/models'
+
 import WorkoutCommentsCard from '../Workout/WorkoutCommentsCard'
+
+import CalendarWorkoutModalStepItem from './WorkoutModalStepItem'
 
 type Props = {
   open: boolean
@@ -43,7 +45,9 @@ const WorkoutModal: React.FC<Props> = ({
   const luxonDate = DateTime.fromISO(workout.date)
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const onActionPress = () => {
     if (mode === 'copy') {

@@ -1,74 +1,95 @@
 // https://docs.expo.dev/guides/using-eslint/
 module.exports = {
-  parser: '@typescript-eslint/parser',
   extends: [
-    'expo',
-    'plugin:@typescript-eslint/recommended',
     'standard',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:react-native/all',
+    // `expo` must come after `standard` or its globals configuration will be overridden
+    'expo',
+    // `jsx-runtime` must come after `expo` or it will be overridden
+    'plugin:react/jsx-runtime',
     'prettier',
+
+    // import sorting stuff
     'plugin:import/recommended',
     'plugin:import/typescript',
   ],
-  plugins: ['@typescript-eslint'],
-  globals: {
-    __DEV__: false,
-    jasmine: false,
-    beforeAll: false,
-    afterAll: false,
-    beforeEach: false,
-    afterEach: false,
-    test: false,
-    expect: false,
-    describe: false,
-    jest: false,
-    it: false,
-  },
+  plugins: ['reactotron', 'prettier'],
   rules: {
-    '@typescript-eslint/ban-ts-ignore': 0,
+    'prettier/prettier': 'error',
+    // typescript-eslint
+    '@typescript-eslint/array-type': 0,
     '@typescript-eslint/ban-ts-comment': 0,
-    '@typescript-eslint/explicit-function-return-type': 0,
-    '@typescript-eslint/explicit-member-accessibility': 0,
-    '@typescript-eslint/explicit-module-boundary-types': 0,
-    '@typescript-eslint/indent': 0,
-    '@typescript-eslint/member-delimiter-style': 0,
-    '@typescript-eslint/no-empty-interface': 0,
     '@typescript-eslint/no-explicit-any': 0,
-    '@typescript-eslint/no-object-literal-type-assertion': 0,
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
     '@typescript-eslint/no-var-requires': 0,
-    '@typescript-eslint/no-use-before-define': 0,
-    // '@typescript-eslint/no-non-null-assertion': 0,
-    'comma-dangle': 0,
-    'multiline-ternary': 0,
-    'no-undef': 0,
-    'no-unused-vars': 0,
-    'no-use-before-define': 'off',
-    'no-prototype-builtins': 'off',
-    'no-redeclare': 'off',
-    quotes: 0,
-    'space-before-function-paren': 0,
-    'react-hooks/exhaustive-deps': 0,
-    'import/no-named-as-default-member': 0,
+    '@typescript-eslint/no-require-imports': 0,
+    '@typescript-eslint/no-empty-object-type': 0,
+    // eslint
+    'no-use-before-define': 0,
     'no-restricted-imports': [
       'error',
       {
-        name: 'react-native',
-        importNames: ['Text'],
-        message: "Please use 'Text' from designSystem instead",
+        paths: [
+          // Prefer named exports from 'react' instead of importing `React`
+          {
+            name: 'react',
+            importNames: ['default'],
+            message: "Import named exports from 'react' instead.",
+          },
+          {
+            name: 'react-native',
+            importNames: ['Text'],
+            message: "Please use 'Text' from designSystem instead",
+          },
+          {
+            name: 'i18n-js',
+            importNames: ['translate'],
+            message: "Are you sure you don't need the one from app/i18n?",
+          },
+        ],
       },
+    ],
+    // react
+    'react/prop-types': 0,
+    // react-native
+    'react-native/no-raw-text': 0,
+    // reactotron
+    'reactotron/no-tron-in-production': 'error',
+    // eslint-config-standard overrides
+    'comma-dangle': 0,
+    'no-global-assign': 0,
+    quotes: 0,
+    'space-before-function-paren': 0,
+    'import/order': [
+      'error',
       {
-        name: 'i18n-js',
-        importNames: ['translate'],
-        message: "Are you sure you don't need the one from app/i18n?",
+        groups: [
+          'builtin', // Node.js built-in modules (e.g., fs, path)
+          'external', // External libraries (e.g., lodash, react)
+          'internal', // Internal aliases (configured in tsconfig paths)
+          'parent', // Imports from parent directories (../)
+          'sibling', // Imports from the same directory (./)
+          'index', // Index files (./index)
+        ],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
       },
     ],
   },
   settings: {
-    // 'import/resolver': {
-    //   // You will also need to install and configure the TypeScript resolver
-    //   // See also https://github.com/import-js/eslint-import-resolver-typescript#configuration
-    //   typescript: true,
-    //   node: true,
-    // },
+    'import/resolver': {
+      typescript: {},
+    },
   },
-  ignorePatterns: ['**/*.snap', '**/*.txt', 'bin/ignite'],
 }

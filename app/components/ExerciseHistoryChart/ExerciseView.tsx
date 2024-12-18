@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react'
+import { TouchableOpacity } from 'react-native'
+
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
-import { TouchableOpacity } from 'react-native'
 
 type Props = {
   children: ReactNode

@@ -1,6 +1,7 @@
+import { DateTime } from 'luxon'
+
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSetModel } from 'app/db/models'
-import { DateTime } from 'luxon'
 
 let execution = 1
 const delay = (wait: number) =>

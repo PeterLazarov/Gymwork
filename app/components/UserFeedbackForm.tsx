@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { TextInput, HelperText } from 'react-native-paper'
-import { spacing } from 'designSystem'
+import { HelperText, TextInput } from 'react-native-paper'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import { AirtableFeedback } from 'app/services/airtable'
 
 type Props = {
@@ -12,6 +12,10 @@ type Props = {
 }
 
 const UserFeedbackForm: React.FC<Props> = ({ feedback, onUpdate }) => {
+  const {
+    theme: { spacing },
+  } = useAppTheme()
+
   const [nameError, setNameError] = useState('')
   const [commentsError, setCommentsError] = useState('')
 

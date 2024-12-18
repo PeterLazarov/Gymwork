@@ -5,10 +5,11 @@ import { StyleSheet, View, ScrollView } from 'react-native'
 
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
-import { translate } from 'app/i18n'
 import { Exercise, WorkoutSet } from 'app/db/models'
-import RecordsListItem from './RecordsListItem'
+import { translate } from 'app/i18n'
 import { spacing } from 'designSystem'
+
+import RecordsListItem from './RecordsListItem'
 
 export type ExerciseRecordReviewProps = {
   exercise?: Exercise
@@ -65,13 +66,13 @@ const ExerciseRecordReview: React.FC<ExerciseRecordReviewProps> = props => {
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    marginTop: spacing.md,
-    display: 'flex',
-    flexGrow: 1,
-  },
   list: {
     flexBasis: 0,
+  },
+  screen: {
+    display: 'flex',
+    flexGrow: 1,
+    marginTop: spacing.md,
   },
 })
 

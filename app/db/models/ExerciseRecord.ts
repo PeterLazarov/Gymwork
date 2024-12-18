@@ -15,11 +15,14 @@ import {
   getDataFieldForKey,
   markWeakAssRecords,
 } from 'app/utils/workoutRecordsCalculator'
+
 import { withSetPropAction } from '../helpers/withSetPropAction'
+import { RootStoreModel } from '../stores/RootStore'
+import { WorkoutStore } from '../stores/WorkoutStore'
+
 import { ExerciseModel } from './Exercise'
 import { WorkoutSet, WorkoutSetModel } from './WorkoutSet'
-import { WorkoutStore } from '../stores/WorkoutStore'
-import { RootStoreModel } from '../stores/RootStore'
+
 import { autorun } from 'mobx'
 
 export const ExerciseRecordModel = types

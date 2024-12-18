@@ -1,8 +1,9 @@
 import * as Sentry from '@sentry/react-native'
-import { useStores } from 'app/db/helpers/useStores'
 import { autorun } from 'mobx'
 import { onAction } from 'mobx-state-tree'
 import { useEffect, useRef } from 'react'
+
+import { useStores } from 'app/db/helpers/useStores'
 
 export const useLogging = () => {
   const rootStore = useStores()

@@ -1,11 +1,12 @@
+import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import { Alert, View } from 'react-native'
-import { observer } from 'mobx-react-lite'
 
-import { translate } from 'app/i18n'
 import { useStores } from 'app/db/helpers/useStores'
+import { translate } from 'app/i18n'
+import { spacing } from 'designSystem/theme/spacing'
+
 import ActionCard from '../ActionCard'
-import { spacing } from 'designSystem/tokens/spacing'
 
 const WorkoutEmptyState: React.FC = () => {
   const {

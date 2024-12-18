@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react'
 import { View, ViewStyle } from 'react-native'
 
-import { KeyboardExpandingView, useColors } from 'designSystem'
+import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
+import { KeyboardExpandingView } from 'designSystem'
 
 type Props = {
   children?: ReactNode
@@ -14,7 +15,9 @@ export const EmptyLayout: React.FC<Props> = ({
   style,
   hasFooter,
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
   const { stateStore } = useStores()
 
   return (

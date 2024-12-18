@@ -2,8 +2,9 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import { Exercise } from 'app/db/models'
-import { Text, IconButton, Icon, useColors, palettes } from 'designSystem'
+import { Icon, IconButton, palettes, Text } from 'designSystem'
 
 type Props = {
   exercise: Exercise
@@ -19,7 +20,9 @@ const ExerciseListItem: React.FC<Props> = ({
   height,
 }) => {
   const heartIcon = exercise.isFavorite ? 'heart' : 'heart-outlined'
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   return (
     <TouchableOpacity onPress={() => onSelect(exercise)}>

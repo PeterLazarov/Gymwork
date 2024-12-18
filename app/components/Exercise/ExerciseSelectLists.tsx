@@ -1,14 +1,14 @@
 import React, { useMemo, useState } from 'react'
 import { Dimensions, View } from 'react-native'
+import { Searchbar } from 'react-native-paper'
 
+import AllExercisesList from 'app/components/Exercise/AllExercisesList'
+import FavoriteExercisesList from 'app/components/Exercise/FavoriteExercisesList'
+import MostUsedExercisesList from 'app/components/Exercise/MostUsedExercisesList'
+import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 import { translate } from 'app/i18n'
-import FavoriteExercisesList from 'app/components/Exercise/FavoriteExercisesList'
-import AllExercisesList from 'app/components/Exercise/AllExercisesList'
-import MostUsedExercisesList from 'app/components/Exercise/MostUsedExercisesList'
 import { TopNavigation, TabConfig } from 'designSystem'
-import { useStores } from 'app/db/helpers/useStores'
-import { Searchbar } from 'react-native-paper'
 
 type ExerciseSelectListsProps = {
   multiselect: boolean

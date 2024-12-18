@@ -1,12 +1,14 @@
+import { Duration } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { forwardRef, useEffect, useMemo, useState } from 'react'
 import { TextInput, View } from 'react-native'
-import { Duration } from 'luxon'
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
 
-import TimerEditModal from './TimerEditModal'
-import { IconButton, Icon, useColors, NumberInput, spacing } from 'designSystem'
+import { useAppTheme } from '@/utils/useAppTheme'
 import { Timer } from 'app/db/models/Timer'
+import { Icon, IconButton, NumberInput } from 'designSystem'
+
+import TimerEditModal from './TimerEditModal'
 
 export type RestInputProps = {
   timer?: Timer
@@ -19,7 +21,9 @@ const RestInput = forwardRef<TextInput, RestInputProps>(function RestInput(
   { timer, value, onChange, onSubmit },
   ref
 ) {
-  const colors = useColors()
+  const {
+    theme: { colors, spacing },
+  } = useAppTheme()
 
   const percentTimeLeft = useMemo(() => {
     if (!timer) return 0

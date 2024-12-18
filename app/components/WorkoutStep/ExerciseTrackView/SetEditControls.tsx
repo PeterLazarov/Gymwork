@@ -1,7 +1,12 @@
+import { Duration } from 'luxon'
+import { observer } from 'mobx-react-lite'
 import React, { useRef } from 'react'
 import { TextInput, View } from 'react-native'
-import SetEditPanelSection from './SetEditPanelSection'
+
+import RestInput from 'app/components/RestInput'
+import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSet } from 'app/db/models'
+import { Timer } from 'app/db/models/Timer'
 import { translate } from 'app/i18n'
 import {
   DistanceEditor,
@@ -9,12 +14,9 @@ import {
   IncrementNumericEditor,
   manageInputFocus,
 } from 'designSystem'
-import { observer } from 'mobx-react-lite'
-import RestInput from 'app/components/RestInput'
-import { useStores } from 'app/db/helpers/useStores'
-import { Duration } from 'luxon'
-import { Timer } from 'app/db/models/Timer'
-import { spacing } from 'designSystem/tokens/spacing'
+import { spacing } from 'designSystem/theme/spacing'
+
+import SetEditPanelSection from './SetEditPanelSection'
 
 export type SetEditControlsProps = {
   value: WorkoutSet

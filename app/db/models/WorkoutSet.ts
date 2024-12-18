@@ -2,10 +2,13 @@ import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import { ExerciseModel } from './Exercise'
-import { withSetPropAction } from '../helpers/withSetPropAction'
-import convert from 'convert-units'
 import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction'
+import { withSetPropAction } from '../helpers/withSetPropAction'
+
+import { ExerciseModel } from './Exercise'
+
+import convert from 'convert-units'
+
 import { measurementDefaults, measurementUnits } from './ExerciseMeasurement'
 
 export const WorkoutSetModel = types

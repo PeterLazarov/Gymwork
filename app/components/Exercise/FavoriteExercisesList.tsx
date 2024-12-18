@@ -1,12 +1,14 @@
 import { observer } from 'mobx-react-lite'
+import { useMemo } from 'react'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
-import ExerciseList from './ExerciseList'
-import EmptyState from '../EmptyState'
 import { translate } from 'app/i18n'
 import { searchString } from 'app/utils/string'
-import { useMemo } from 'react'
+
+import EmptyState from '../EmptyState'
+
+import ExerciseList from './ExerciseList'
 
 type Props = {
   onSelect: (exercise: Exercise) => void

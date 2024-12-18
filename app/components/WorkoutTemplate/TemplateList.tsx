@@ -1,10 +1,11 @@
-import React from 'react'
-import { observer } from 'mobx-react-lite'
-
-import { WorkoutTemplate } from 'app/db/models'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
-import TemplateListItem from './TemplateListItem'
+import { observer } from 'mobx-react-lite'
+import React from 'react'
+
 import { useStores } from 'app/db/helpers/useStores'
+import { WorkoutTemplate } from 'app/db/models'
+
+import TemplateListItem from './TemplateListItem'
 
 type Props = {
   onSelect: (template: WorkoutTemplate) => void

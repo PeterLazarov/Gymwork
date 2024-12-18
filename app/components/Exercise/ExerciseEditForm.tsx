@@ -2,8 +2,9 @@ import { observer } from 'mobx-react-lite'
 import { getSnapshot } from 'mobx-state-tree'
 import React, { useMemo, useState } from 'react'
 import { View } from 'react-native'
-import { TextInput, HelperText } from 'react-native-paper'
+import { HelperText, TextInput } from 'react-native-paper'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import {
   Exercise,
@@ -13,12 +14,12 @@ import {
   measurementName,
   measurementTypes,
 } from 'app/db/models'
-
-import { Icon, Multiselect, IconButton, spacing } from 'designSystem'
 import { translate } from 'app/i18n'
+import { Icon, IconButton, Multiselect } from 'designSystem'
+
 import ExerciseEditFormDistanceSection from './ExerciseEditFormDistanceSection'
-import ExerciseEditFormWeightSection from './ExerciseEditFormWeightSection'
 import ExerciseEditFormDurationSection from './ExerciseEditFormDurationSection'
+import ExerciseEditFormWeightSection from './ExerciseEditFormWeightSection'
 
 type Props = {
   exercise: Exercise
@@ -26,6 +27,10 @@ type Props = {
 }
 
 const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
+  const {
+    theme: { spacing },
+  } = useAppTheme()
+
   const { exerciseStore } = useStores()
 
   const edittedExercise = useMemo(() => {

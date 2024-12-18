@@ -1,4 +1,6 @@
+import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
+import { getParentOfType } from 'mobx-state-tree'
 import React, { useCallback, useMemo, useRef } from 'react'
 import {
   FlatList,
@@ -8,16 +10,16 @@ import {
   View,
 } from 'react-native'
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist'
-import { computed } from 'mobx'
 
-import SetEditItem from './SetEditItem'
+import { useAppTheme } from '@/utils/useAppTheme'
+import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutModel, WorkoutSet, WorkoutStep } from 'app/db/models'
-import { useColors, Divider, Icon } from 'designSystem'
-import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
-import { getParentOfType } from 'mobx-state-tree'
-import { spacing } from 'designSystem/tokens/spacing'
+import { Divider, Icon } from 'designSystem'
+import { spacing } from 'designSystem/theme/spacing'
+
+import SetEditItem from './SetEditItem'
 
 type Props = {
   step: WorkoutStep
@@ -34,7 +36,9 @@ const SetEditList: React.FC<Props> = ({
   setSelectedSet,
   showFallback = true,
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const { stateStore, recordStore, settingsStore } = useStores()
 
@@ -73,10 +77,10 @@ const SetEditList: React.FC<Props> = ({
             backgroundColor: isActive
               ? colors.primaryContainer
               : isFocused
-              ? colors.surfaceContainerHigh
-              : isDraft
-              ? colors.surfaceContainer
-              : undefined,
+                ? colors.surfaceContainerHigh
+                : isDraft
+                  ? colors.surfaceContainer
+                  : undefined,
           }}
           onLongPress={() => {
             !isDraft && onDragStart()

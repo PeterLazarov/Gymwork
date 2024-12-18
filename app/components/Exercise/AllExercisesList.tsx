@@ -2,10 +2,11 @@ import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
 import { View } from 'react-native'
 
-import ExerciseList from './ExerciseList'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 import { searchString } from 'app/utils/string'
+
+import ExerciseList from './ExerciseList'
 
 const noop = () => {}
 

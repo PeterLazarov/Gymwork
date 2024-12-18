@@ -1,6 +1,8 @@
-import { ToggleSwitch, useColors, Text, spacing } from 'designSystem'
 import { useMemo } from 'react'
-import { TouchableOpacity, StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
+
+import { useAppTheme } from '@/utils/useAppTheme'
+import { Text, ToggleSwitch, spacing } from 'designSystem'
 
 export type SettingsToggledItemProps = {
   enabled: boolean
@@ -14,7 +16,9 @@ export default function SettingsToggleItem({
   onToggle,
   children,
 }: SettingsToggledItemProps) {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
   const styles = useMemo(() => makeStyles(colors), [colors])
 
   return (
@@ -37,12 +41,12 @@ export default function SettingsToggleItem({
 const makeStyles = (colors: any) =>
   StyleSheet.create({
     item: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
-      height: 64,
-      padding: spacing.sm,
+      flexDirection: 'row',
       gap: spacing.xs,
+      height: 64,
+      justifyContent: 'space-between',
+      padding: spacing.sm,
     },
     itemLabel: {
       color: colors.onSurface,

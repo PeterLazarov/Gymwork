@@ -1,20 +1,20 @@
+import { observer } from 'mobx-react-lite'
 import { View } from 'react-native'
-import { Portal, Modal } from 'react-native-paper'
+import { Modal, Portal } from 'react-native-paper'
 
+import { useAppTheme } from '@/utils/useAppTheme'
+import { useStores } from 'app/db/helpers/useStores'
+import { Timer } from 'app/db/models/Timer'
+import { translate } from 'app/i18n'
 import {
-  Text,
   Button,
   ButtonText,
   Divider,
   DurationInput,
-  useColors,
   fontSize,
   spacing,
+  Text,
 } from 'designSystem'
-import { translate } from 'app/i18n'
-import { observer } from 'mobx-react-lite'
-import { Timer } from 'app/db/models/Timer'
-import { useStores } from 'app/db/helpers/useStores'
 
 export type WorkoutTimerModalProps = {
   open: boolean
@@ -31,7 +31,9 @@ const WorkoutTimerModal: React.FC<WorkoutTimerModalProps> = ({
 }) => {
   const { stateStore } = useStores()
 
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const {
     timerStore: { workoutTimer },

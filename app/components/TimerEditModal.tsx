@@ -1,20 +1,19 @@
+import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import { View } from 'react-native'
-import { Portal, Modal } from 'react-native-paper'
+import { Modal, Portal } from 'react-native-paper'
 
+import { useAppTheme } from '@/utils/useAppTheme'
+import { Timer } from 'app/db/models/Timer'
+import { translate } from 'app/i18n'
 import {
-  Text,
   Button,
   ButtonText,
   Divider,
   DurationInput,
-  useColors,
   fontSize,
-  spacing,
+  Text,
 } from 'designSystem'
-import { translate } from 'app/i18n'
-import { observer } from 'mobx-react-lite'
-import { Timer } from 'app/db/models/Timer'
 
 type Props = {
   open: boolean
@@ -23,7 +22,9 @@ type Props = {
   label?: string
 }
 const TimerEditModal: React.FC<Props> = ({ open, onClose, timer, label }) => {
-  const colors = useColors()
+  const {
+    theme: { colors, spacing },
+  } = useAppTheme()
 
   const { setDuration, duration } = timer
   const [preferredDuration, setPreferredDuration] = useState(duration)

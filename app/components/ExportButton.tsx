@@ -1,13 +1,21 @@
+import { Alert, Share } from 'react-native'
+
+import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
-import { useColors, ButtonText, Icon, Button } from 'designSystem'
-import { Share, Alert } from 'react-native'
+import { Button, ButtonText, Icon } from 'designSystem'
 
 type Props = {
   createWorkout: () => void
 }
 
 export const ExportButton: React.FC<Props> = props => {
-  const colors = useColors()
+  const {
+    theme: {
+      colors,
+      spacing,
+      typography: { fontSize },
+    },
+  } = useAppTheme()
 
   const { workoutStore } = useStores()
 

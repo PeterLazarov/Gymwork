@@ -1,24 +1,24 @@
 import { observer } from 'mobx-react-lite'
-import React, { useMemo } from 'react'
-import { View, StyleSheet } from 'react-native'
+import React from 'react'
+import { View, ViewStyle } from 'react-native'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
-import { translate } from 'app/i18n'
-import ExerciseHistoryList from './ExerciseHistoryList'
-import { spacing, useColors } from 'designSystem'
 import { Exercise } from 'app/db/models'
+import { translate } from 'app/i18n'
+import { ThemedStyle } from 'designSystem'
+
+import ExerciseHistoryList from './ExerciseHistoryList'
 
 export type ExerciseHistoryViewProps = {
   exercise?: Exercise
 }
 
 const ExerciseHistoryStats: React.FC<ExerciseHistoryViewProps> = props => {
-  const colors = useColors()
+  const { themed } = useAppTheme()
 
   const { stateStore, workoutStore } = useStores()
-
-  const styles = useMemo(() => makeStyles(colors), [colors])
 
   const exercise = props.exercise || stateStore.focusedExercise
   const workoutsContained = exercise
@@ -28,7 +28,7 @@ const ExerciseHistoryStats: React.FC<ExerciseHistoryViewProps> = props => {
     : []
 
   return (
-    <View style={styles.container}>
+    <View style={themed($container)}>
       {exercise && workoutsContained?.length ? (
         <ExerciseHistoryList
           workouts={workoutsContained}
@@ -41,16 +41,13 @@ const ExerciseHistoryStats: React.FC<ExerciseHistoryViewProps> = props => {
   )
 }
 
-const makeStyles = (colors: any) =>
-  StyleSheet.create({
-    container: {
-      paddingTop: spacing.md,
-      paddingHorizontal: spacing.md,
-      gap: spacing.lg,
-      flexDirection: 'column',
-      display: 'flex',
-      flexGrow: 1,
-    },
-  })
+const $container: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 1,
+  gap: spacing.lg,
+  paddingHorizontal: spacing.md,
+  paddingTop: spacing.md,
+})
 
 export default observer(ExerciseHistoryStats)

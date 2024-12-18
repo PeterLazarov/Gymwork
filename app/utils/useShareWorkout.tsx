@@ -1,14 +1,16 @@
-import React from 'react'
 import { usePortal } from '@gorhom/portal'
-import { translate } from 'app/i18n'
 import { shareAsync } from 'expo-sharing'
+import { DateTime } from 'luxon'
+import React from 'react'
 import { Alert, LogBox, View } from 'react-native'
 import { captureRef } from 'react-native-view-shot'
-import { Workout } from 'app/db/models'
-import WorkoutDayView from 'app/components/Workout/WorkoutDayView'
-import { Header } from 'designSystem'
-import { DateTime } from 'luxon'
+
 import MiniTimer from 'app/components/MiniTimer'
+import WorkoutDayView from 'app/components/Workout/WorkoutDayView'
+import { Workout } from 'app/db/models'
+import { translate } from 'app/i18n'
+import { Header } from 'designSystem'
+
 import { defaultIgnoredWarnings } from './ignoreWarnings'
 
 export const offscreenRef = React.createRef<View>()

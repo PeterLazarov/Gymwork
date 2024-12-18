@@ -1,17 +1,17 @@
+import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { observer } from 'mobx-react-lite'
 
+import { useAppTheme } from '@/utils/useAppTheme'
+import { discomfortOptions, feelingOptions, Workout } from 'app/db/models'
+import { translate } from 'app/i18n'
 import {
-  Text,
   Card,
   FeedbackPickerOption,
   fontSize,
-  useColors,
   spacing,
+  Text,
 } from 'designSystem'
-import { discomfortOptions, feelingOptions, Workout } from 'app/db/models'
-import { translate } from 'app/i18n'
 
 type Props = {
   workout: Workout
@@ -24,7 +24,9 @@ const WorkoutCommentsCard: React.FC<Props> = ({
   onPress,
   compactMode,
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const styles = useMemo(
     () => makeStyles(colors, compactMode),
@@ -82,28 +84,28 @@ const makeStyles = (colors: any, compactMode?: boolean) =>
       alignItems: 'center',
       gap: spacing.xs,
     },
+    difficultyLabel: {
+      flex: 1,
+      textAlign: 'center',
+    },
+    notes: {
+      color: colors.onSurface,
+      fontSize: fontSize.sm,
+    },
     notesContainer: {
       flexDirection: 'row',
       gap: spacing.sm,
       paddingTop: spacing.xs,
     },
-    notes: {
-      fontSize: fontSize.sm,
-      color: colors.onSurface,
-    },
-    stickerPanel: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      width: '100%',
-    },
-    difficultyLabel: {
-      flex: 1,
-      textAlign: 'center',
-    },
     sticker: {
       backgroundColor: 'transparent',
       flex: 1,
+    },
+    stickerPanel: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '100%',
     },
   })
 

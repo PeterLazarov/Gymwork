@@ -1,7 +1,8 @@
-import React, { useCallback, useMemo } from 'react'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
+import { getParentOfType } from 'mobx-state-tree'
+import React, { useCallback, useMemo } from 'react'
 
-import ExerciseHistoryListItem from './ExerciseHistoryListItem'
+import { useStores } from 'app/db/helpers/useStores'
 import {
   Exercise,
   Workout,
@@ -9,8 +10,8 @@ import {
   WorkoutSet,
   WorkoutStep,
 } from 'app/db/models'
-import { getParentOfType } from 'mobx-state-tree'
-import { useStores } from 'app/db/helpers/useStores'
+
+import ExerciseHistoryListItem from './ExerciseHistoryListItem'
 
 type Props = {
   workouts: Workout[]
@@ -47,10 +48,13 @@ const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
   }, [workouts])
 
   const stepSets = useMemo(() => {
-    return steps.reduce((acc, step) => {
-      acc[step.guid] = step.exerciseSetsMap[exercise.guid]!
-      return acc
-    }, {} as Record<string, WorkoutSet[]>)
+    return steps.reduce(
+      (acc, step) => {
+        acc[step.guid] = step.exerciseSetsMap[exercise.guid]!
+        return acc
+      },
+      {} as Record<string, WorkoutSet[]>
+    )
   }, [steps])
 
   return (

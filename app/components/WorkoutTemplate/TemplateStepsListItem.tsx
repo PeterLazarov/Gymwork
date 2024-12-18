@@ -32,7 +32,7 @@ const TemplateStepsListItem: React.FC<Props> = ({ step, onStepRemove }) => {
 }
 
 const styles = StyleSheet.create({
-  item: { flexDirection: 'row', alignItems: 'center' },
+  item: { alignItems: 'center', flexDirection: 'row' },
   nameContainer: {
     flex: 1,
   },

@@ -1,17 +1,21 @@
+import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
+import { TouchableOpacity, View } from 'react-native'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import { formatDate } from 'app/utils/date'
-import { Icon, Text, useColors } from 'designSystem'
-import { TouchableOpacity, View } from 'react-native'
+import { Icon, Text } from 'designSystem'
+import { spacing } from 'designSystem/theme/spacing'
+
 import AddStepMenu from './AddStepMenu'
-import { DateTime } from 'luxon'
-import { spacing } from 'designSystem/tokens/spacing'
 
 const WorkoutBottomControls = () => {
   const { stateStore } = useStores()
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   return (
     <View

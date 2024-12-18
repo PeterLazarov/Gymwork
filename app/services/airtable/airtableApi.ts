@@ -1,7 +1,9 @@
 import { ApisauceInstance, create } from 'apisauce'
+
 import type { ApiConfig, AirtableFeedback } from './api.types'
 
-const AIRTABLE_TOKEN = 'patMKFyWfJGp0hEeg.433e2363cef9deb628914ddef22f1f0e0905ec6ed37bb79eb80a500fb4b8d44f'
+const AIRTABLE_TOKEN =
+  'patMKFyWfJGp0hEeg.433e2363cef9deb628914ddef22f1f0e0905ec6ed37bb79eb80a500fb4b8d44f'
 
 export const DEFAULT_API_CONFIG: ApiConfig = {
   url: 'https://api.airtable.com/v0/apptjrsE1Tt08pG4n/Feedback',
@@ -26,14 +28,16 @@ export class AirtableApi {
 
   async sendFeedback(feedback: AirtableFeedback): Promise<any> {
     return this.apisauce.post('', {
-      records: [{
-        fields: {
-          User: feedback.user,
-          Comments: feedback.comments,
-          Date: feedback.date,
-          CreatedAt: feedback.createdAt
-        }
-      }]
+      records: [
+        {
+          fields: {
+            User: feedback.user,
+            Comments: feedback.comments,
+            Date: feedback.date,
+            CreatedAt: feedback.createdAt,
+          },
+        },
+      ],
     })
   }
 }

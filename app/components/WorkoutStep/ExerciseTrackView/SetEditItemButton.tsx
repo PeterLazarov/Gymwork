@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-
-import { Text, Icon, useColors, fontSize, IconProps } from 'designSystem'
 import { TouchableOpacity } from 'react-native'
-import { spacing } from 'designSystem/tokens/spacing'
+
+import { useAppTheme } from '@/utils/useAppTheme'
+import { fontSize, Icon, IconProps, Text } from 'designSystem'
+import { spacing } from 'designSystem/theme/spacing'
 
 export type SetEditItemButtonProps = {
   icon?: IconProps['icon']
@@ -19,7 +20,9 @@ const SetEditItemButton: React.FC<SetEditItemButtonProps> = ({
   onPress,
   disabled,
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   return (
     <TouchableOpacity

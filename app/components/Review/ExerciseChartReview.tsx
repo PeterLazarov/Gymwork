@@ -1,8 +1,7 @@
+import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import { observer } from 'mobx-react-lite'
 
-import { spacing, ToggleGroupButton } from 'designSystem'
 import ExerciseHistoryChart, {
   CHART_VIEW,
   CHART_VIEWS,
@@ -10,6 +9,7 @@ import ExerciseHistoryChart, {
 } from 'app/components/ExerciseHistoryChart'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
+import { spacing, ToggleGroupButton } from 'designSystem'
 
 export type ExerciseChartStatsProps = {
   exercise?: Exercise
@@ -56,15 +56,15 @@ const ExerciseChartStats: React.FC<ExerciseChartStatsProps> = ({
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    marginTop: spacing.md,
-    justifyContent: 'space-between',
-    display: 'flex',
-    flexGrow: 1,
-  },
   chartContainer: {
     alignItems: 'center',
     flexGrow: 1,
+  },
+  screen: {
+    display: 'flex',
+    flexGrow: 1,
+    justifyContent: 'space-between',
+    marginTop: spacing.md,
   },
 })
 

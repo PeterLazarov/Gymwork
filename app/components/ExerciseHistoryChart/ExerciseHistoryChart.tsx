@@ -1,5 +1,5 @@
 // Choose your preferred renderer
-import { SVGRenderer, SvgChart } from '@wuba/react-native-echarts'
+import { SkiaRenderer, SvgChart } from '@wuba/react-native-echarts'
 import { LineChart } from 'echarts/charts'
 import {
   TitleComponent,
@@ -10,15 +10,16 @@ import {
 } from 'echarts/components'
 import { use, ECharts, init } from 'echarts/core'
 import { DateInput, DateTime, Interval } from 'luxon'
+import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useRef, useEffect, useState, useMemo } from 'react'
 import { Dimensions, View } from 'react-native'
-import { computed } from 'mobx'
 
 import { useStores } from 'app/db/helpers/useStores'
-import useChartConfig from './useChartConfig'
-import seriesSetup from './seriesSetup'
 import { Exercise } from 'app/db/models'
+
+import seriesSetup from './seriesSetup'
+import useChartConfig from './useChartConfig'
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -28,7 +29,7 @@ use([
   TitleComponent,
   TooltipComponent,
   GridComponent,
-  SVGRenderer,
+  SkiaRenderer,
   LegendComponent,
   // TimelineComponent,
   // ...
@@ -71,14 +72,14 @@ const ExerciseHistoryChart: React.FC<Props> = ({
 
   const symbolSize: number = useMemo(
     () =>
-      ((
-        {
+      (
+        ({
           '30D': 10,
           '3M': 5,
           '6M': 5,
           ALL: 5,
-        } satisfies Record<CHART_VIEW, number>
-      )[view]),
+        }) satisfies Record<CHART_VIEW, number>
+      )[view],
     [view]
   )
 
@@ -175,7 +176,7 @@ const ExerciseHistoryChart: React.FC<Props> = ({
   useEffect(() => {
     if (chartElRef.current) {
       eChartRef.current = init(chartElRef.current, 'light', {
-        renderer: 'svg',
+        renderer: 'skia',
         width,
         height,
       })

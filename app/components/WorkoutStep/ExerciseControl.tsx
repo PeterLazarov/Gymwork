@@ -1,16 +1,9 @@
 import React from 'react'
 import { View } from 'react-native'
 
-import {
-  Text,
-  Icon,
-  IconButton,
-  boxShadows,
-  useColors,
-  fontSize,
-  spacing,
-} from 'designSystem'
+import { useAppTheme } from '@/utils/useAppTheme'
 import { Exercise } from 'app/db/models'
+import { Icon, IconButton, Text, fontSize, spacing } from 'designSystem'
 
 export type ExerciseControlProps = {
   options: Exercise[]
@@ -23,7 +16,9 @@ const ExerciseControl: React.FC<ExerciseControlProps> = ({
   selectedIndex,
   onChange,
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors, boxShadows },
+  } = useAppTheme()
 
   const exercise = options[selectedIndex]!
   const atStart = selectedIndex === 0

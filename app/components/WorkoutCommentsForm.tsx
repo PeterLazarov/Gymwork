@@ -1,22 +1,17 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
-import { TextInput } from 'react-native-paper'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { TextInput } from 'react-native-paper'
 
-import {
-  Text,
-  FeedbackPicker,
-  ToggleGroupButton,
-  useColors,
-  spacing,
-} from 'designSystem'
+import { useAppTheme } from '@/utils/useAppTheme'
 import {
   WorkoutComments,
   discomfortOptions,
   feelingOptions,
 } from 'app/db/models'
 import { TxKeyPath, translate } from 'app/i18n'
+import { FeedbackPicker, Text, ToggleGroupButton } from 'designSystem'
 
 type Props = {
   comments: WorkoutComments
@@ -24,7 +19,9 @@ type Props = {
 }
 
 const WorkoutCommentsForm: React.FC<Props> = ({ comments, onUpdate }) => {
-  const colors = useColors()
+  const {
+    theme: { colors, spacing },
+  } = useAppTheme()
 
   const rpeOptions = Array.from({ length: 6 }).map((_, i) => i + 5)
   const difficultyButtons = rpeOptions.map(option => ({

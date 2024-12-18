@@ -45,6 +45,7 @@
 * Exercise instructions / visualisations
 * Bodyweight exercises?
 * Muscle icons (like Hevy?) https://youtu.be/VkHWqq715Qc?si=z59DycSLqc7AcWMe&t=214
+* Add missing translations (units, exercises... calendar?, charts?)
 
 Save workout (with or without sets)
 Workout duration + see in chart/history

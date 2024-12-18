@@ -1,10 +1,11 @@
 import { DateTime } from 'luxon'
-import React, { useMemo } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import React from 'react'
+import { TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
 
-import { WorkoutSet, WorkoutStep } from 'app/db/models'
-import { Text, Divider, useColors, spacing } from 'designSystem'
+import { useAppTheme } from '@/utils/useAppTheme'
 import StepSetsList from 'app/components/WorkoutStep/StepSetsList'
+import { WorkoutSet, WorkoutStep } from 'app/db/models'
+import { Divider, Text, ThemedStyle } from 'designSystem'
 
 type Props = {
   date: string
@@ -18,18 +19,19 @@ const ExerciseHistoryListItem: React.FC<Props> = ({
   sets,
   onPress,
 }) => {
-  const colors = useColors()
-
-  const styles = useMemo(() => makeStyles(colors), [colors])
+  const {
+    theme: { spacing },
+    themed,
+  } = useAppTheme()
 
   return (
     <TouchableOpacity
-      style={styles.item}
+      style={themed($item)}
       key={date}
       onPress={onPress}
     >
       <>
-        <Text style={styles.itemDate}>
+        <Text style={themed($itemDate)}>
           {DateTime.fromISO(date).toLocaleString(DateTime.DATE_MED)}
         </Text>
         <Divider
@@ -48,19 +50,17 @@ const ExerciseHistoryListItem: React.FC<Props> = ({
   )
 }
 
-const makeStyles = (colors: any) =>
-  StyleSheet.create({
-    item: {
-      gap: spacing.xs,
-      marginBottom: spacing.sm,
-      borderRadius: spacing.xs,
-      borderColor: colors.onSurfaceVariant,
-      borderWidth: 1,
-    },
-    itemDate: {
-      textAlign: 'center',
-      paddingTop: spacing.xxs,
-    },
-  })
+const $item: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
+  borderColor: colors.onSurfaceVariant,
+  borderRadius: spacing.xs,
+  borderWidth: 1,
+  gap: spacing.xs,
+  marginBottom: spacing.sm,
+})
+
+const $itemDate: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
+  paddingTop: spacing.xxs,
+  textAlign: 'center',
+})
 
 export default ExerciseHistoryListItem

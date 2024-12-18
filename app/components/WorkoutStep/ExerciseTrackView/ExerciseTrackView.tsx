@@ -1,10 +1,9 @@
 import { observer } from 'mobx-react-lite'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { getSnapshot } from 'mobx-state-tree'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { View } from 'react-native'
 
-import SetEditList from './SetEditList'
-import SetEditControls from './SetEditControls'
+import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import {
   Exercise,
@@ -12,9 +11,11 @@ import {
   WorkoutSetModel,
   WorkoutStep,
 } from 'app/db/models'
+import { spacing } from 'designSystem/theme/spacing'
+
 import { SetEditActions } from './SetEditActions'
-import { useColors } from 'designSystem'
-import { spacing } from 'designSystem/tokens/spacing'
+import SetEditControls from './SetEditControls'
+import SetEditList from './SetEditList'
 
 const defaultReps = 10
 
@@ -27,7 +28,9 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   exercise: focusedExercise,
   step,
 }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const { stateStore, settingsStore, workoutStore } = useStores()
 
@@ -114,15 +117,13 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 
   return (
     <View
-      style={[
-        {
-          flexDirection: 'column',
-          flexGrow: 1,
-          gap: spacing.xs,
-          display: 'flex',
-          backgroundColor: colors.surfaceContainerLow,
-        },
-      ]}
+      style={{
+        flexDirection: 'column',
+        flexGrow: 1,
+        gap: spacing.xs,
+        display: 'flex',
+        backgroundColor: colors.surfaceContainerLow,
+      }}
     >
       <SetEditList
         step={step}

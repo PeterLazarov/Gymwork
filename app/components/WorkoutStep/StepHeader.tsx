@@ -2,11 +2,12 @@ import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
 import { Menu } from 'react-native-paper'
 
-import { useStores } from 'app/db/helpers/useStores'
-import { translate } from 'app/i18n'
-import { Header, Icon, IconButton, useColors } from 'designSystem'
+import { useAppTheme } from '@/utils/useAppTheme'
 import { useDialogContext } from 'app/contexts/DialogContext'
+import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
+import { translate } from 'app/i18n'
+import { Header, Icon, IconButton } from 'designSystem'
 
 export type StepHeaderProps = {
   step: WorkoutStep
@@ -14,7 +15,9 @@ export type StepHeaderProps = {
 }
 
 const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
-  const colors = useColors()
+  const {
+    theme: { colors },
+  } = useAppTheme()
 
   const {
     stateStore,

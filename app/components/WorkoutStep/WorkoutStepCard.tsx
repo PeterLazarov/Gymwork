@@ -1,10 +1,10 @@
-import React from 'react'
 import { observer } from 'mobx-react-lite'
+import React from 'react'
+
+import { WorkoutStep } from 'app/db/models'
+import { Card, CardProps, spacing } from 'designSystem'
 
 import StepSetsList from './StepSetsList'
-import { WorkoutStep } from 'app/db/models'
-import { Card, spacing } from 'designSystem'
-import { CardProps } from 'designSystem/Card'
 
 export type WorkoutStepCardProps = {
   step: WorkoutStep

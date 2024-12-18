@@ -2,9 +2,8 @@ import React from 'react'
 import { View } from 'react-native'
 
 import { ExerciseMeasurement } from 'app/db/models'
-
-import { Text, ToggleSwitch } from 'designSystem'
 import { translate } from 'app/i18n'
+import { Text, ToggleSwitch } from 'designSystem'
 
 type Props = {
   measurementConfig: ExerciseMeasurement

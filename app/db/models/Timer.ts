@@ -1,10 +1,11 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
-import { Duration } from 'luxon'
 import { setDriftlessInterval, clearDriftless } from 'driftless'
-import { Vibration } from 'react-native'
-import { withSetPropAction } from '../helpers/withSetPropAction'
+import { Duration } from 'luxon'
 import { reaction } from 'mobx'
+import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
 import { keepAlive } from 'mobx-utils'
+import { Vibration } from 'react-native'
+
+import { withSetPropAction } from '../helpers/withSetPropAction'
 
 // Default durations
 const defaultDuration = Duration.fromDurationLike({ minutes: 0 })

@@ -1,8 +1,9 @@
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import React, { useCallback } from 'react'
 
-import ExerciseListItem from './ExerciseListItem'
 import { Exercise } from 'app/db/models'
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
+
+import ExerciseListItem from './ExerciseListItem'
 
 type Props = {
   exercises: Exercise[]

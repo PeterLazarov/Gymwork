@@ -3,8 +3,8 @@ import { View } from 'react-native'
 import { HelperText } from 'react-native-paper'
 
 import { ExerciseMeasurement, measurementUnits } from 'app/db/models'
-import { Text, NumberInput, Select, ToggleSwitch } from 'designSystem'
 import { translate } from 'app/i18n'
+import { Text, NumberInput, Select, ToggleSwitch } from 'designSystem'
 
 type Props = {
   measurementConfig: ExerciseMeasurement

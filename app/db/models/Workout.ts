@@ -9,11 +9,15 @@ import {
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import { Exercise } from './Exercise'
 import { withSetPropAction } from '../helpers/withSetPropAction'
+
+import { Exercise } from './Exercise'
+
 import { DateTime, Duration } from 'luxon'
-import { WorkoutStep, WorkoutStepModel } from './WorkoutStep'
+
 import { WorkoutSet } from './WorkoutSet'
+import { WorkoutStep, WorkoutStepModel } from './WorkoutStep'
+
 import convert from 'convert-units'
 
 const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })

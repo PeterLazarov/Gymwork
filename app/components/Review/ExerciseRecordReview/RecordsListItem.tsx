@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { WorkoutSet } from 'app/db/models'
 import SetDataLabel from 'app/components/WorkoutStep/SetDataLabel'
+import { WorkoutSet } from 'app/db/models'
 import { spacing } from 'designSystem'
 
 type Props = {
@@ -41,13 +41,13 @@ const RecordsListItem: React.FC<Props> = ({ set, onPress }) => {
 const makeStyles = (isWeakAss: boolean) =>
   StyleSheet.create({
     item: {
+      alignItems: 'center',
       display: 'flex',
       flexDirection: 'row',
-      gap: spacing.md,
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      height: 40,
       flex: 1,
+      gap: spacing.md,
+      height: 40,
+      justifyContent: 'space-around',
       opacity: isWeakAss ? 0.5 : 1,
     },
   })
