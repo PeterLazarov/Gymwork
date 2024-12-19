@@ -86,6 +86,7 @@ module.exports = {
         },
       },
     ],
+    'react-native/no-inline-styles': 0,
   },
   settings: {
     'import/resolver': {
