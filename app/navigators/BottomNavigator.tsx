@@ -109,8 +109,8 @@ export function BottomNavigator(): JSX.Element {
   )
 }
 
-const $tabBar: ThemedStyle<ViewStyle> = ({ colors }) => ({
-  backgroundColor: colors.background,
+const $tabBar: ThemedStyle<ViewStyle> = ({ colors, isDark }) => ({
+  backgroundColor: isDark ? colors.shadow : colors.surface,
   borderTopColor: 'transparent',
 })
 
