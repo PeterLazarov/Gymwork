@@ -81,10 +81,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
 
   return (
     <Header>
-      <IconButton
-        onPress={goBack}
-        underlay="darker"
-      >
+      <IconButton onPress={goBack}>
         <Icon
           color={colors.onPrimary}
           icon="chevron-back"
@@ -101,10 +98,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
           onDismiss={() => setMenuOpen(false)}
           anchorPosition="bottom"
           anchor={
-            <IconButton
-              onPress={() => setMenuOpen(true)}
-              underlay="darker"
-            >
+            <IconButton onPress={() => setMenuOpen(true)}>
               <Icon
                 icon="ellipsis-vertical"
                 color={colors.onPrimary}

@@ -58,10 +58,7 @@ export const UserFeedbackScreen: React.FC = observer(() => {
   return (
     <EmptyLayout>
       <Header>
-        <IconButton
-          onPress={goBack}
-          underlay="darker"
-        >
+        <IconButton onPress={goBack}>
           <Icon
             icon="chevron-back"
             color={colors.onPrimary}
@@ -71,7 +68,6 @@ export const UserFeedbackScreen: React.FC = observer(() => {
         <IconButton
           onPress={onFeedbackSave}
           disabled={!formValid}
-          underlay="darker"
         >
           <Icon
             icon="checkmark"

@@ -51,7 +51,7 @@ export const TemplateSelectScreen: React.FC = observer(() => {
       <Header>
         <IconButton
           onPress={onBackPress}
-          // underlay="darker"
+          //
         >
           <Icon
             icon="chevron-back"

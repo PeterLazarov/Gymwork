@@ -59,10 +59,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = observer(() => {
   return (
     <EmptyLayout>
       <Header>
-        <IconButton
-          onPress={navStore.goBack}
-          underlay="darker"
-        >
+        <IconButton onPress={navStore.goBack}>
           <Icon
             icon="chevron-back"
             color={colors.onPrimary}

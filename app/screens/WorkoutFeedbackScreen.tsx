@@ -50,20 +50,14 @@ export const WorkoutFeedbackScreen: React.FC = observer(() => {
   return (
     <>
       <Header>
-        <IconButton
-          onPress={onBackPress}
-          underlay="darker"
-        >
+        <IconButton onPress={onBackPress}>
           <Icon
             icon="chevron-back"
             color={colors.onPrimary}
           />
         </IconButton>
         <Header.Title title={translate('workoutComments')} />
-        <IconButton
-          onPress={onCommentsSave}
-          underlay="darker"
-        >
+        <IconButton onPress={onCommentsSave}>
           <Icon
             icon="checkmark"
             size="large"

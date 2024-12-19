@@ -90,10 +90,7 @@ export const ReviewScreen: React.FC = () => {
     <>
       <Header>
         {exerciseSelectOpen && (
-          <IconButton
-            onPress={onBack}
-            underlay="darker"
-          >
+          <IconButton onPress={onBack}>
             <Icon
               color={colors.onPrimary}
               icon="chevron-back"
@@ -109,10 +106,7 @@ export const ReviewScreen: React.FC = () => {
           }
         />
 
-        <IconButton
-          onPress={() => setExerciseSelectOpen(true)}
-          underlay="darker"
-        >
+        <IconButton onPress={() => setExerciseSelectOpen(true)}>
           <Icon
             icon="list-outline"
             color={colors.onPrimary}
@@ -126,10 +120,7 @@ export const ReviewScreen: React.FC = () => {
               onDismiss={() => setMenuVisible(false)}
               anchorPosition="bottom"
               anchor={
-                <IconButton
-                  onPress={() => setMenuVisible(true)}
-                  underlay="darker"
-                >
+                <IconButton onPress={() => setMenuVisible(true)}>
                   <Icon
                     icon="ellipsis-vertical"
                     color={colors.onPrimary}

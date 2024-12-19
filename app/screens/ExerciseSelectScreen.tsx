@@ -57,10 +57,7 @@ export const ExerciseSelectScreen: React.FC = () => {
     <EmptyLayout>
       <View style={{ flex: 1, alignItems: 'center' }}>
         <Header>
-          <IconButton
-            onPress={onBackPress}
-            underlay="darker"
-          >
+          <IconButton onPress={onBackPress}>
             <Icon
               icon="chevron-back"
               color={colors.onPrimary}
@@ -73,10 +70,7 @@ export const ExerciseSelectScreen: React.FC = () => {
                 : supersetTitle
             }
           />
-          <IconButton
-            onPress={onAddExercisePress}
-            underlay="darker"
-          >
+          <IconButton onPress={onAddExercisePress}>
             <Icon
               icon="add"
               size="large"

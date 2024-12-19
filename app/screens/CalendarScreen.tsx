@@ -104,10 +104,7 @@ export const CalendarScreen: React.FC = observer(() => {
     <>
       <EmptyLayout>
         <Header>
-          <IconButton
-            onPress={onBackPress}
-            underlay="darker"
-          >
+          <IconButton onPress={onBackPress}>
             <Icon
               icon="chevron-back"
               color={colors.onPrimary}
@@ -119,10 +116,7 @@ export const CalendarScreen: React.FC = observer(() => {
             onDismiss={() => setMenuOpen(false)}
             anchorPosition="bottom"
             anchor={
-              <IconButton
-                onPress={() => setMenuOpen(true)}
-                underlay="darker"
-              >
+              <IconButton onPress={() => setMenuOpen(true)}>
                 <Icon
                   icon="ellipsis-vertical"
                   color={colors.onPrimary}

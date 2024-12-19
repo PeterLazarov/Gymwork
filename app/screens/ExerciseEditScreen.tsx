@@ -69,7 +69,7 @@ export const ExerciseEditScreen: React.FC = observer(() => {
       <Header>
         <IconButton
           onPress={onBackPress}
-          // underlay="darker"
+          //
         >
           <Icon
             icon="chevron-back"
@@ -82,7 +82,7 @@ export const ExerciseEditScreen: React.FC = observer(() => {
         <IconButton
           onPress={onComplete}
           disabled={!formValid}
-          // underlay="darker"
+          //
         >
           <Icon
             icon="checkmark"

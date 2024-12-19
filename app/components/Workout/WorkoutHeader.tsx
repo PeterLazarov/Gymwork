@@ -72,10 +72,7 @@ const WorkoutHeader: React.FC = () => {
         </>
       )}
 
-      <IconButton
-        onPress={openCalendar}
-        underlay="darker"
-      >
+      <IconButton onPress={openCalendar}>
         <Icon
           icon="calendar-sharp"
           color={colors.onPrimary}
@@ -87,10 +84,7 @@ const WorkoutHeader: React.FC = () => {
         onDismiss={() => setMenuOpen(false)}
         anchorPosition="bottom"
         anchor={
-          <IconButton
-            onPress={() => setMenuOpen(true)}
-            underlay="darker"
-          >
+          <IconButton onPress={() => setMenuOpen(true)}>
             <Icon
               icon="ellipsis-vertical"
               color={colors.onPrimary}
