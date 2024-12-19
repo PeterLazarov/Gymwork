@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import { Dimensions, View } from 'react-native'
 import { Menu } from 'react-native-paper'
@@ -21,7 +22,7 @@ import {
   TopNavigation,
 } from 'designSystem'
 
-export const ReviewScreen: React.FC = () => {
+export const ReviewScreen: React.FC = observer(() => {
   const {
     theme: { colors },
   } = useAppTheme()
@@ -167,4 +168,4 @@ export const ReviewScreen: React.FC = () => {
       </View>
     </>
   )
-}
+})
