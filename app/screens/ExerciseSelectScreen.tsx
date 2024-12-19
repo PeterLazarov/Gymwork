@@ -39,7 +39,7 @@ export const ExerciseSelectScreen: React.FC = () => {
   }
 
   function onBackPress() {
-    navigate('Workout')
+    navigate('WorkoutStack', { screen: 'Workout' })
   }
 
   function onAddExercisePress() {

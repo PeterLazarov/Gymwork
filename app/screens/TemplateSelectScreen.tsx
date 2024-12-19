@@ -24,7 +24,7 @@ export const TemplateSelectScreen: React.FC = observer(() => {
 
   function handleSelect(template: WorkoutTemplate) {
     workoutStore.createWorkoutFromTemplate(template)
-    navigate('Workout')
+    navigate('WorkoutStack', { screen: 'Workout' })
   }
 
   function handleEdit(template: WorkoutTemplate) {
@@ -43,7 +43,7 @@ export const TemplateSelectScreen: React.FC = observer(() => {
   }
 
   function onBackPress() {
-    navigate('Workout')
+    navigate('WorkoutStack', { screen: 'Workout' })
   }
 
   return (

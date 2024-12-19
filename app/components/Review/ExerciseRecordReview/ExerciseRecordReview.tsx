@@ -41,7 +41,7 @@ const ExerciseRecordReview: React.FC<ExerciseRecordReviewProps> = props => {
     stateStore.setProp('highlightedSetGuid', set.guid)
     stateStore.setProp('focusedExerciseGuid', set.exercise.guid)
 
-    navigate('Workout')
+    navigate('WorkoutStack', { screen: 'Workout' })
   }
 
   return (

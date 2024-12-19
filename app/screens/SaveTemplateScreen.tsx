@@ -38,7 +38,7 @@ export const SaveTemplateScreen: React.FC = observer(() => {
 
   if (!edittingTemplate && !stateStore.openedWorkout?.steps) {
     console.warn('REDIRECT - No openedworkout steps')
-    navStore.navigate('Workout')
+    navStore.navigate('WorkoutStack', { screen: 'Workout' })
     return null
   }
   const [formValid, setFormValid] = useState(

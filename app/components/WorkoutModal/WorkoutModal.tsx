@@ -55,7 +55,7 @@ const WorkoutModal: React.FC<Props> = ({
     } else if (mode === 'view') {
       stateStore.setOpenedDate(workout.date)
     }
-    navigate('Workout')
+    navigate('WorkoutStack', { screen: 'Workout' })
     onClose()
   }
 

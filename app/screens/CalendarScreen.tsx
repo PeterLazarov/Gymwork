@@ -67,7 +67,7 @@ export const CalendarScreen: React.FC = observer(() => {
   )
 
   function onBackPress() {
-    navigate('Workout')
+    navigate('WorkoutStack', { screen: 'Workout' })
   }
 
   function handleCalendarDayPress(date: Date) {
@@ -81,7 +81,7 @@ export const CalendarScreen: React.FC = observer(() => {
   }
   function goToDay(date: string) {
     stateStore.setOpenedDate(date)
-    navigate('Workout')
+    navigate('WorkoutStack', { screen: 'Workout' })
   }
 
   function goToFeedback() {

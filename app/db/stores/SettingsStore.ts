@@ -19,6 +19,7 @@ export const SettingsStoreModel = types
 
     // ! TODO Currenlty makes sense only for copyWorkout + includeSets!
     showSetCompletion: false,
+    enableDetailedWorkoutSummary: false,
   })
   .actions(withSetPropAction)
   .actions(self => ({

@@ -16,7 +16,7 @@ export const WorkoutStepScreen: React.FC = observer(() => {
 
   if (!stateStore.focusedStep || !stateStore.focusedExercise) {
     console.warn('REDIRECT - No step or exercise')
-    navStore.navigate('Workout')
+    navStore.navigate('WorkoutStack', { screen: 'Workout' })
     return null
   }
 

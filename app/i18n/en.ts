@@ -153,6 +153,7 @@ const en = {
     dark: 'Dark',
     light: 'Light',
     colorScheme: 'Color scheme',
+    enableDetailedWorkoutSummary: 'Enable detailed workout summary',
   },
 }
 

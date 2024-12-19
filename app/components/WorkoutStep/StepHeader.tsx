@@ -29,7 +29,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
 
   const deleteSelectedExercises = () => {
     const undoDelete = stateStore.deleteFocusedStep()
-    navigate('Workout')
+    navigate('WorkoutStack', { screen: 'Workout' })
     showSnackbar!({
       text: 'Exercise was removed from workout',
       actionText: 'Undo',
@@ -59,7 +59,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
 
   function goBack() {
     stateStore.setProp('focusedStepGuid', '')
-    navigate('Workout')
+    navigate('WorkoutStack', { screen: 'Workout' })
   }
 
   const focusedStepName = useMemo(() => {
