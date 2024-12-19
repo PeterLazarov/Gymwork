@@ -214,7 +214,7 @@ export function Card(props: CardProps) {
           {HeadingComponent ||
             (isHeadingPresent && (
               <Text
-                weight="bold"
+                // weight="bold"
                 text={heading}
                 tx={headingTx}
                 txOptions={headingTxOptions}
@@ -226,7 +226,7 @@ export function Card(props: CardProps) {
           {ContentComponent ||
             (isContentPresent && (
               <Text
-                weight="normal"
+                // weight="normal"
                 text={content}
                 tx={contentTx}
                 txOptions={contentTxOptions}
@@ -239,7 +239,7 @@ export function Card(props: CardProps) {
         {FooterComponent ||
           (isFooterPresent && (
             <Text
-              weight="normal"
+              // weight="normal"
               size="xs"
               text={footer}
               tx={footerTx}

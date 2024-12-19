@@ -1,6 +1,6 @@
-import React from 'react'
 import { View } from 'react-native'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import { Icon, IconButton, spacing, Text } from 'designSystem'
 
 type Props = {

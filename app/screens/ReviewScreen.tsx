@@ -89,15 +89,17 @@ export const ReviewScreen: React.FC = () => {
   return (
     <>
       <Header>
-        <IconButton
-          onPress={onBack}
-          underlay="darker"
-        >
-          <Icon
-            color={colors.onPrimary}
-            icon="chevron-back"
-          />
-        </IconButton>
+        {exerciseSelectOpen && (
+          <IconButton
+            onPress={onBack}
+            underlay="darker"
+          >
+            <Icon
+              color={colors.onPrimary}
+              icon="chevron-back"
+            />
+          </IconButton>
+        )}
 
         <Header.Title
           title={

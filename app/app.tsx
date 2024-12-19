@@ -42,20 +42,26 @@ export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 const prefix = Linking.createURL('/')
 const config = {
   screens: {
-    Login: {
-      path: '',
+    Calendar: {
+      path: 'calendar',
     },
     Welcome: 'welcome',
-    Demo: {
+    HomeStack: {
       screens: {
-        DemoShowroom: {
-          path: 'showroom/:queryIndex?/:itemIndex?',
+        Review: {
+          // path: 'showroom/:queryIndex?/:itemIndex?',
+          path: 'review',
         },
-        DemoDebug: 'debug',
-        DemoPodcastList: 'podcast',
-        DemoCommunity: 'community',
+        Workout: 'workout',
       },
     },
+    ExerciseEdit: 'exerciseEdit',
+    ExerciseSelect: 'exerciseSelect',
+    TemplateSelect: 'templateSelect',
+    SaveTemplate: 'saveTemplate',
+    Settings: 'settings',
+    UserFeedback: 'userFeedback',
+    WorkoutStep: 'workoutStep',
   },
 }
 

@@ -1,8 +1,8 @@
+// eslint-disable-next-line no-restricted-imports
 import { TextProps, Text as TextRN, TextStyle } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 import { ThemedStyle } from 'designSystem/theme'
-// eslint-disable-next-line no-restricted-imports
 
 export const Text: React.FC<TextProps> = ({ style, ...otherProps }) => {
   const { themed } = useAppTheme()

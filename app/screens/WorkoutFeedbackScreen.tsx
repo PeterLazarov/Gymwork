@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import WorkoutCommentsForm from 'app/components/WorkoutCommentsForm'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'

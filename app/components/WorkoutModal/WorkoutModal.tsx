@@ -19,7 +19,7 @@ import {
 
 import WorkoutCommentsCard from '../Workout/WorkoutCommentsCard'
 
-import CalendarWorkoutModalStepItem from './WorkoutModalStepItem'
+import WorkoutModalStepItem from './WorkoutModalStepItem'
 
 type Props = {
   open: boolean
@@ -94,7 +94,7 @@ const WorkoutModal: React.FC<Props> = ({
             )}
             <ScrollView>
               {workout.steps.map(step => (
-                <CalendarWorkoutModalStepItem
+                <WorkoutModalStepItem
                   key={step.guid}
                   step={step}
                 />

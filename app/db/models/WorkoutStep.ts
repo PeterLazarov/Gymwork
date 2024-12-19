@@ -164,7 +164,7 @@ export const WorkoutStepModel = types
       setToUpdate.mergeUpdate(updatedSetData)
 
       // Do not run set updated check if the set is not completed
-      if (!setToUpdate.completed && !updatedSetData.completed) {
+      if (!setToUpdate.completed && !updatedSetData.completedAt) {
         return
       }
 

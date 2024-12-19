@@ -166,7 +166,8 @@ export const TextField = forwardRef(function TextField(
 
   const $inputStyles: ThemedStyleArray<TextStyle> = [
     $inputStyle,
-    disabled && { color: colors.textDim },
+    // disabled && { color: colors.textDim },
+    disabled && { color: colors.onSurfaceVariant },
     isRTL && { textAlign: 'right' as TextStyle['textAlign'] },
     TextInputProps.multiline && { height: 'auto' },
     $inputStyleOverride,
@@ -222,7 +223,8 @@ export const TextField = forwardRef(function TextField(
           underlineColorAndroid={'transparent'}
           textAlignVertical="top"
           placeholder={placeholderContent}
-          placeholderTextColor={colors.textDim}
+          // placeholderTextColor={colors.textDim}
+          placeholderTextColor={colors.onSurfaceVariant}
           {...TextInputProps}
           editable={!disabled}
           style={themed($inputStyles)}
@@ -267,13 +269,13 @@ const $inputWrapperStyle: ThemedStyle<ViewStyle> = ({ colors }) => ({
 
 const $inputStyle: ThemedStyle<ViewStyle> = ({
   colors,
-  typography,
+  // typography,
   spacing,
 }) => ({
   flex: 1,
   alignSelf: 'stretch',
-  fontFamily: typography.primary.normal,
-  color: colors.text,
+  // fontFamily: typography.primary.normal,
+  color: colors.onSurface,
   fontSize: 16,
   height: 24,
   // https://github.com/facebook/react-native/issues/21720#issuecomment-532642093

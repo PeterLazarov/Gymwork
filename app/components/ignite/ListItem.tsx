@@ -218,12 +218,12 @@ function ListItemAction(props: ListItemActionProps) {
 
 const $separatorTop: ThemedStyle<ViewStyle> = ({ colors }) => ({
   borderTopWidth: 1,
-  borderTopColor: colors.separator,
+  borderTopColor: colors.outline,
 })
 
 const $separatorBottom: ThemedStyle<ViewStyle> = ({ colors }) => ({
   borderBottomWidth: 1,
-  borderBottomColor: colors.separator,
+  borderBottomColor: colors.outline,
 })
 
 const $textStyle: ThemedStyle<TextStyle> = ({ spacing }) => ({

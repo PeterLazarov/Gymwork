@@ -6,10 +6,12 @@ import { spacing, Text } from 'designSystem'
 
 import StepSetsList from '../WorkoutStep/StepSetsList/StepSetsList'
 
-type Props = {
+type WorkoutModalStepItemProps = {
   step: WorkoutStep
 }
-const CalendarWorkoutModalStepItem: React.FC<Props> = ({ step }) => {
+const WorkoutModalStepItem: React.FC<WorkoutModalStepItemProps> = ({
+  step,
+}) => {
   const {
     theme: { colors },
   } = useAppTheme()
@@ -42,4 +44,4 @@ const CalendarWorkoutModalStepItem: React.FC<Props> = ({ step }) => {
   )
 }
 
-export default CalendarWorkoutModalStepItem
+export default WorkoutModalStepItem

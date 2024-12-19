@@ -66,7 +66,7 @@ export interface TextProps extends RNTextProps {
  */
 export function Text(props: TextProps) {
   const {
-    weight,
+    // weight,
     size,
     tx,
     txOptions,
@@ -119,7 +119,7 @@ const $sizeStyles = {
 const $baseStyle: ThemedStyle<TextStyle> = theme => ({
   ...$sizeStyles.sm,
   // ...$fontWeightStyles.normal,
-  color: theme.colors.text,
+  color: theme.colors.onSurface,
 })
 
 const $presets: Record<Presets, ThemedStyleArray<TextStyle>> = {

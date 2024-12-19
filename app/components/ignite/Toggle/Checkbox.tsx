@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
-import { palettes } from 'designSystem'
+import { $styles, palettes } from 'designSystem'
 
 import { iconRegistry, IconTypes } from '../Icon'
 

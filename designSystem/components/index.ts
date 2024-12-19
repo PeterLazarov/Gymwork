@@ -1,7 +1,6 @@
 export { default as Backdrop } from './Backdrop'
 export { default as BlurEffect } from './BlurEffect'
 export { default as BottomDrawer } from './BottomDrawer'
-export * from './BottomNavigation'
 export * from './Button'
 export { default as Card, CardProps } from './Card'
 export { default as ConfirmationDialog } from './ConfirmationDialog'

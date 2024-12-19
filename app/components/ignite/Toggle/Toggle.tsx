@@ -14,6 +14,7 @@ import {
 } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
+import { $styles, ThemedStyle } from 'designSystem'
 
 import { Text, TextProps } from '../Text'
 

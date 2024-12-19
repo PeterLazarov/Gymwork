@@ -27,7 +27,6 @@ import { PaperProvider, Portal } from 'react-native-paper'
 
 import { DialogContextProvider } from '@/contexts/DialogContext'
 import { useStores } from '@/db/helpers/useStores'
-import TabsLayout from '@/layouts/TabsLayout'
 import * as Screens from '@/screens'
 import { useAppTheme, useThemeProvider } from '@/utils/useAppTheme'
 import { offscreenRef } from 'app/utils/useShareWorkout'
@@ -36,6 +35,7 @@ import { navThemes, paperThemes } from 'designSystem/theme'
 import Config from '../config'
 
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
+import { BottomNavigator } from './BottomNavigator'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -114,10 +114,6 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> =
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = observer(function AppStack() {
-  // const {
-  //   theme: { colors },
-  // } = useAppTheme()
-
   const { stateStore } = useStores()
 
   const shouldShowWelcome = !__DEV__ && !stateStore.visitedWelcomeScreen
@@ -156,8 +152,12 @@ const AppStack = observer(function AppStack() {
         name="ExerciseSelect"
         component={Screens.ExerciseSelectScreen}
       />
-
       <Stack.Screen
+        name="HomeStack"
+        component={BottomNavigator}
+      />
+
+      {/* <Stack.Screen
         name="HomeStack"
         options={{ animation: 'none' }}
       >
@@ -212,7 +212,7 @@ const AppStack = observer(function AppStack() {
             </TabsLayout>
           )
         }}
-      </Stack.Screen>
+      </Stack.Screen> */}
 
       <Stack.Screen
         name="SaveTemplate"
@@ -261,37 +261,39 @@ export const AppNavigator = observer(function AppNavigator(
     navStore.setProp('activeRoute', currentRouteName)
   }
 
-  const {
-    theme: { isDark },
-  } = useAppTheme()
+  // const {
+  //   theme: { isDark },
+  // } = useAppTheme()
+
   const paperTheme = useMemo(() => {
-    return paperThemes[isDark ? 'dark' : 'light']
-  }, [isDark])
+    return paperThemes[themeScheme]
+  }, [themeScheme])
 
   const navTheme = useMemo(() => {
-    return navThemes[isDark ? 'DarkTheme' : 'LightTheme']
-  }, [isDark])
+    return navThemes[themeScheme === 'dark' ? 'DarkTheme' : 'LightTheme']
+  }, [themeScheme])
 
   const screenDimensions = useWindowDimensions()
 
   return (
-    <PaperProvider theme={paperTheme}>
-      <ErrorBoundary
-        fallback={({ error, resetError }) => (
-          <Screens.ErrorDetailsScreen
-            error={error}
-            resetError={resetError}
-          />
-        )}
-      >
-        <PortalProvider>
-          <Portal.Host>
-            <DialogContextProvider>
-              <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
+    <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
+      <PaperProvider theme={paperTheme}>
+        <ErrorBoundary
+          fallback={({ error, resetError }) => (
+            <Screens.ErrorDetailsScreen
+              error={error}
+              resetError={resetError}
+            />
+          )}
+        >
+          <PortalProvider>
+            <Portal.Host>
+              <DialogContextProvider>
                 <NavigationContainer
                   ref={navigationRef}
                   theme={navigationTheme}
                   {...props}
+                  onStateChange={handleStateChange}
                 >
                   {/* The bar at the top */}
                   {/* <StatusBar
@@ -302,22 +304,22 @@ export const AppNavigator = observer(function AppNavigator(
                   /> */}
                   <AppStack />
                 </NavigationContainer>
-              </ThemeProvider>
-            </DialogContextProvider>
-          </Portal.Host>
+              </DialogContextProvider>
+            </Portal.Host>
 
-          <View
-            ref={offscreenRef}
-            style={{
-              position: 'absolute',
-              zIndex: 1,
-              left: screenDimensions.width,
-            }}
-          >
-            <PortalHost name="offscreen" />
-          </View>
-        </PortalProvider>
-      </ErrorBoundary>
-    </PaperProvider>
+            <View
+              ref={offscreenRef}
+              style={{
+                position: 'absolute',
+                zIndex: 1,
+                left: screenDimensions.width,
+              }}
+            >
+              <PortalHost name="offscreen" />
+            </View>
+          </PortalProvider>
+        </ErrorBoundary>
+      </PaperProvider>
+    </ThemeProvider>
   )
 })

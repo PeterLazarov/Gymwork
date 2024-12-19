@@ -14,6 +14,8 @@ import {
 } from 'react'
 import { LayoutAnimation, StyleProp, useColorScheme } from 'react-native'
 
+import { useStores } from '@/db/helpers/useStores'
+
 import {
   type Theme,
   type ThemeContexts,
@@ -22,7 +24,6 @@ import {
   lightTheme,
   darkTheme,
 } from '../../designSystem/theme/index'
-import { useStores } from '@/db/helpers/useStores'
 
 type ThemeContextType = {
   themeScheme: ThemeContexts

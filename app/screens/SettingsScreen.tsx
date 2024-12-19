@@ -1,7 +1,8 @@
 import { observer } from 'mobx-react-lite'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import SettingsToggleItem from 'app/components/SettingsToggleItem'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'
@@ -18,7 +19,6 @@ import {
   spacing,
   Text,
 } from 'designSystem'
-import { useAppTheme } from '@/utils/useAppTheme'
 
 export type SettingsScreenProps = AppStackScreenProps<'Settings'>
 
@@ -33,7 +33,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = observer(() => {
 
   const {
     theme: { colors },
-    setThemeContextOverride
+    setThemeContextOverride,
   } = useAppTheme()
 
   const styles = useMemo(() => makeStyles(colors), [colors])

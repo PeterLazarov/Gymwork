@@ -190,12 +190,12 @@ export function useNavigationPersistence(
  * @param {unknown} name - The name of the route to navigate to.
  * @param {unknown} params - The params to pass to the route.
  */
-// export function navigate(name: unknown, params?: unknown) {
-//   if (navigationRef.isReady()) {
-//     // @ts-expect-error
-//     navigationRef.navigate(name as never, params as never)
-//   }
-// }
+export function navigate(name: unknown, params?: unknown) {
+  if (navigationRef.isReady()) {
+    // @ts-expect-error
+    navigationRef.navigate(name as never, params as never)
+  }
+}
 
 /**
  * This function is used to go back in a navigation stack, if it's possible to go back.

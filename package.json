@@ -93,6 +93,7 @@
     "react-native-safe-area-context": "5.0.0",
     "react-native-screens": "~4.1.0",
     "react-native-tab-view": "3.5.2",
+    "react-native-view-shot": "^4.0.3",
     "react-native-web": "~0.19.6",
     "uuid": "^9.0.1"
   },

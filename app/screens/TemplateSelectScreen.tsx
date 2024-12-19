@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import TemplateList from 'app/components/WorkoutTemplate/TemplateList'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'
@@ -50,7 +51,7 @@ export const TemplateSelectScreen: React.FC = observer(() => {
       <Header>
         <IconButton
           onPress={onBackPress}
-          underlay="darker"
+          // underlay="darker"
         >
           <Icon
             icon="chevron-back"

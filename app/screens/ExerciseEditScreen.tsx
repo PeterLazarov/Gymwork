@@ -17,7 +17,7 @@ export type ExerciseEditScreenParams = {
 }
 export const ExerciseEditScreen: React.FC = observer(() => {
   const {
-    theme: { colors, spacing },
+    theme: { colors },
   } = useAppTheme()
 
   const { stateStore, exerciseStore, navStore } = useStores()
@@ -69,7 +69,7 @@ export const ExerciseEditScreen: React.FC = observer(() => {
       <Header>
         <IconButton
           onPress={onBackPress}
-          underlay="darker"
+          // underlay="darker"
         >
           <Icon
             icon="chevron-back"
@@ -82,7 +82,7 @@ export const ExerciseEditScreen: React.FC = observer(() => {
         <IconButton
           onPress={onComplete}
           disabled={!formValid}
-          underlay="darker"
+          // underlay="darker"
         >
           <Icon
             icon="checkmark"

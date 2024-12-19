@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import UserFeedbackForm from 'app/components/UserFeedbackForm'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'

@@ -3,6 +3,7 @@ import { getSnapshot } from 'mobx-state-tree'
 import React, { useState } from 'react'
 import { View } from 'react-native'
 
+import { useAppTheme } from '@/utils/useAppTheme'
 import EditTemplateForm from 'app/components/WorkoutTemplate/EditTemplateForm'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'

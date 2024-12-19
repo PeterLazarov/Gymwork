@@ -3,6 +3,7 @@ import { ScrollView, TextStyle, View, ViewStyle } from 'react-native'
 
 import { Button, Icon, Screen, Text } from '@/components/ignite'
 import { useAppTheme } from '@/utils/useAppTheme'
+import { ThemedStyle } from 'designSystem'
 
 export interface ErrorDetailsProps {
   error: Error
@@ -81,7 +82,7 @@ const $heading: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
 
 const $errorSection: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
   flex: 2,
-  backgroundColor: colors.separator,
+  backgroundColor: colors.outline,
   marginVertical: spacing.md,
   borderRadius: 6,
 })
@@ -98,7 +99,7 @@ const $errorContent: ThemedStyle<TextStyle> = ({ colors }) => ({
 
 const $errorBacktrace: ThemedStyle<TextStyle> = ({ colors, spacing }) => ({
   marginTop: spacing.md,
-  color: colors.textDim,
+  color: colors.onSurfaceVariant,
 })
 
 const $resetButton: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({

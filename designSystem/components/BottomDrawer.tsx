@@ -25,7 +25,6 @@ const BottomDrawer: React.FC<Props> = ({
       () => {
         if (visible) {
           onCollapse()
-          return true
         }
       }
     )

@@ -72,7 +72,7 @@ export function Icon(props: IconProps) {
 
   const $imageStyle: StyleProp<ImageStyle> = [
     $imageStyleBase,
-    { tintColor: color ?? theme.colors.text },
+    { tintColor: color ?? theme.colors.onSurface },
     size !== undefined && { width: size, height: size },
     $imageStyleOverride,
   ]

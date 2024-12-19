@@ -216,7 +216,7 @@ export function Header(props: HeaderProps) {
             pointerEvents="none"
           >
             <Text
-              weight="medium"
+              // weight="medium"
               size="md"
               text={titleContent}
               style={[$title, $titleStyleOverride]}
@@ -269,7 +269,7 @@ function HeaderAction(props: HeaderActionProps) {
         activeOpacity={0.8}
       >
         <Text
-          weight="medium"
+          // weight="medium"
           size="md"
           text={content}
           style={themed($actionText)}
@@ -318,7 +318,7 @@ const $actionTextContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
 })
 
 const $actionText: ThemedStyle<TextStyle> = ({ colors }) => ({
-  color: colors.tint,
+  color: colors.primary,
 })
 
 const $actionIconContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({

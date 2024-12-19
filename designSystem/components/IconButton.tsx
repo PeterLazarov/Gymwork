@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   TouchableHighlightProps,
   TouchableOpacity,
@@ -13,14 +12,8 @@ const sizes = {
 type Props = Omit<TouchableHighlightProps, 'style'> & {
   style?: ViewStyle
   size?: keyof typeof sizes
-  underlay?: 'default' | 'darker'
 }
-const IconButton: React.FC<Props> = ({
-  style,
-  size = 'md',
-  underlay = 'default',
-  ...props
-}) => (
+const IconButton: React.FC<Props> = ({ style, size = 'md', ...props }) => (
   <TouchableOpacity
     style={{
       flexGrow: 0,
@@ -31,7 +24,6 @@ const IconButton: React.FC<Props> = ({
       justifyContent: 'center',
       ...style,
     }}
-    underlay={underlay}
     {...props}
   />
 )
