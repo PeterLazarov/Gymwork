@@ -16,6 +16,7 @@ const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
           right: 'auto',
           left: 'auto',
           backgroundColor: disabled ? colors.surfaceVariant : colors.primary,
+          cursor: 'pointer',
         },
         style,
       ]}
