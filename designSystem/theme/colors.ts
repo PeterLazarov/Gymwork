@@ -368,13 +368,3 @@ export const colors = {
     surfaceContainerHighest: palettes.neutral[30],
   },
 }
-
-// export const getColors = (colorScheme: NonNullable<ColorSchemeName>) => {
-//   return colors[colorScheme]
-// }
-
-// export function useColors() {
-//   const colorScheme = useColorScheme()!
-
-//   return getColors(colorScheme)
-// }
