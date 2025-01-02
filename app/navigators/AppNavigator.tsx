@@ -34,8 +34,8 @@ import { navThemes, paperThemes } from 'designSystem/theme'
 
 import Config from '../config'
 
-import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 import { BottomNavigator } from './BottomNavigator'
+import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator

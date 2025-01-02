@@ -12,7 +12,12 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { LayoutAnimation, StyleProp, useColorScheme } from 'react-native'
+import {
+  Appearance,
+  LayoutAnimation,
+  StyleProp,
+  useColorScheme,
+} from 'react-native'
 
 import { useStores } from '@/db/helpers/useStores'
 
@@ -58,6 +63,7 @@ export const useThemeProvider = (initialTheme: ThemeContexts = undefined) => {
     // Allows for smooth transition
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setTheme(newTheme)
+    Appearance.setColorScheme(newTheme) // allows it to work with native bottom tabs
     settingsStore.setProp('colorSchemePreference', newTheme)
   }, [])
 
