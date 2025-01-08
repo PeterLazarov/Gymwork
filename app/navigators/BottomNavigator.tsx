@@ -39,11 +39,12 @@ const Tab: ReturnType<typeof createBottomTabNavigator<BottomTabParamList>> =
 export function BottomNavigator(): JSX.Element {
   const {
     // themed,
-    theme: { colors },
+    theme: { colors, isDark },
   } = useAppTheme()
 
   return (
     <Tab.Navigator
+      key={String(isDark)} // rerender due to bug https://github.com/callstackincubator/react-native-bottom-tabs/issues/227
       screenOptions={{
         tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: colors.onSurface,
