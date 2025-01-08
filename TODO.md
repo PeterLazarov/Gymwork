@@ -43,6 +43,7 @@
 * Workout summary card like Strong app https://youtu.be/VkHWqq715Qc?si=4vyHtvnlXpxzMSSl&t=169
 * Integrated 1RM calc
 * Exercise instructions / visualisations
+  - https://github.com/wrkout/exercises.json
   - https://gymvisual.com/16*animated-gifs
   - https://www.exerciseanimatic.com/animated-fitness-videos-exercise-shop
     - https://www.exerciseanimatic.com/product-page/complete-1650-exercise-videos-lifetime-unlimited-license-workout-yoga-animation-exercise-fitness-gym
