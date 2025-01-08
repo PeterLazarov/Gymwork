@@ -43,6 +43,13 @@
 * Workout summary card like Strong app https://youtu.be/VkHWqq715Qc?si=4vyHtvnlXpxzMSSl&t=169
 * Integrated 1RM calc
 * Exercise instructions / visualisations
+  - https://gymvisual.com/16*animated-gifs
+  - https://www.exerciseanimatic.com/animated-fitness-videos-exercise-shop
+    - https://www.exerciseanimatic.com/product-page/complete-1650-exercise-videos-lifetime-unlimited-license-workout-yoga-animation-exercise-fitness-gym
+  - https://rapidapi.com/jus*in-WFnsXH_t6/api/exercisedb/
+  - https://rapidapi.com/mertronlp/api/muscle-group-image-generator
+  - +- watermark removal from Stability AI? (Stable Diffusion)
+  - https://gymvisual.com/blog/how-to/list-of-exercises
 * Bodyweight exercises?
 * Muscle icons (like Hevy?) https://youtu.be/VkHWqq715Qc?si=z59DycSLqc7AcWMe&t=214
 * Add missing translations (units, exercises... calendar?, charts?)
