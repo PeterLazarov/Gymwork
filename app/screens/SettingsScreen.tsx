@@ -19,6 +19,7 @@ import {
   spacing,
   Text,
 } from 'designSystem'
+import { capitalize } from '@/utils/string'
 
 export type SettingsScreenProps = AppStackScreenProps<'Settings'>
 
@@ -26,7 +27,10 @@ const appearanceOptions = [
   { label: translate('dark'), value: 'dark' as const },
   { label: translate('light'), value: 'light' as const },
   { label: translate('auto'), value: undefined },
-]
+].map(o => ({
+  ...o,
+  label: capitalize(o.label),
+}))
 
 export const SettingsScreen: React.FC<SettingsScreenProps> = observer(() => {
   const { settingsStore, navStore } = useStores()
