@@ -18,6 +18,12 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = observer(
   function ExerciseDetailsScreen(props) {
     const { exercise } = useRouteParams('ExerciseDetails')
 
+    const { navStore } = useStores()
+    if (!exercise) {
+      navStore.goBack()
+      return null
+    }
+
     const { width } = useWindowDimensions()
     const imgHeight = (width / 16) * 9
 
@@ -32,7 +38,7 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = observer(
           source={exerciseImages[exercise.images[0]]}
         />
 
-        {exercise.instructions?.length && (
+        {!!exercise.instructions?.length && (
           <View
             style={{
               gap: spacing.md,
@@ -56,7 +62,7 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = observer(
           </View>
         )}
 
-        {exercise.tips?.length && (
+        {!!exercise.tips?.length && (
           <View
             style={{
               gap: spacing.md,

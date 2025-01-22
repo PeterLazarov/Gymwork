@@ -179,7 +179,7 @@ const AppStack = observer(function AppStack() {
         name="ExerciseDetails"
         component={Screens.ExerciseDetailsScreen}
         options={({ route }) => ({
-          headerTitle: route.params.exercise.name,
+          headerTitle: route.params?.exercise?.name,
           presentation: 'modal',
           headerShown: true,
           animation: 'default',
