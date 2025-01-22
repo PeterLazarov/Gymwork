@@ -10,6 +10,7 @@ import ExerciseHistoryChart, {
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 import { spacing, ToggleGroupButton } from 'designSystem'
+import { TabHeightCompensation } from '@/navigators'
 
 export type ExerciseChartStatsProps = {
   exercise?: Exercise
@@ -48,7 +49,10 @@ const ExerciseChartStats: React.FC<ExerciseChartStatsProps> = ({
       <ToggleGroupButton
         buttons={toggleViewButtons}
         initialActiveIndex={viewsArray.indexOf(stateStore.chartView)}
-        containerStyle={{ padding: spacing.sm }}
+        containerStyle={{
+          padding: spacing.sm,
+          paddingBottom: spacing.sm + TabHeightCompensation,
+        }}
         onChange={view => stateStore.setProp('chartView', view as CHART_VIEW)}
       />
     </View>

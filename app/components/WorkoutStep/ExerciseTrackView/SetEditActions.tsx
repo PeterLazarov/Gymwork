@@ -22,7 +22,6 @@ export const SetEditActions: React.FC<SetEditActionsProps> = ({
       style={{
         flexDirection: 'row',
         gap: spacing.xxs,
-        paddingHorizontal: spacing.xs,
       }}
     >
       {mode === 'add' ? (

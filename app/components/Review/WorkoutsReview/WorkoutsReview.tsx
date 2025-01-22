@@ -18,6 +18,7 @@ import {
 } from 'designSystem'
 
 import WorkoutReviewListItem from './WorkoutReviewListItem'
+import { TabHeightCompensation } from '@/navigators'
 
 const WorkoutsReview: React.FC = () => {
   const { workoutStore } = useStores()
@@ -101,6 +102,7 @@ const WorkoutsReview: React.FC = () => {
             renderItem={renderItem}
             keyExtractor={workout => `${workout.date}_${workout.guid}`}
             estimatedItemSize={157}
+            contentContainerStyle={{ paddingBottom: TabHeightCompensation }}
           />
         ) : (
           <EmptyState text={translate('commentsLogEmpty')} />

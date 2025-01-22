@@ -10,6 +10,7 @@ import { translate } from 'app/i18n'
 import { spacing } from 'designSystem'
 
 import RecordsListItem from './RecordsListItem'
+import { TabHeightCompensation } from '@/navigators'
 
 export type ExerciseRecordReviewProps = {
   exercise?: Exercise
@@ -68,6 +69,7 @@ const ExerciseRecordReview: React.FC<ExerciseRecordReviewProps> = props => {
 const styles = StyleSheet.create({
   list: {
     flexBasis: 0,
+    paddingBottom: TabHeightCompensation,
   },
   screen: {
     display: 'flex',

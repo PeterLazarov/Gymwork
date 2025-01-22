@@ -8,6 +8,7 @@ import ExerciseTrackView from 'app/components/WorkoutStep/ExerciseTrackView'
 import StepHeader from 'app/components/WorkoutStep/StepHeader'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
+import { TabHeightCompensation } from '@/navigators'
 
 export const WorkoutStepScreen: React.FC = observer(() => {
   const { stateStore, navStore } = useStores()
@@ -33,7 +34,12 @@ export const WorkoutStepScreen: React.FC = observer(() => {
 
   return (
     stateStore.focusedStep && (
-      <View style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          // paddingBottom: TabHeightCompensation
+        }}
+      >
         <StepHeader
           step={stateStore.focusedStep}
           onSwitchExercise={() => setExerciseSelectOpen(true)}

@@ -12,6 +12,7 @@ import {
 } from 'app/db/models'
 
 import ExerciseHistoryListItem from './ExerciseHistoryListItem'
+import { TabHeightCompensation } from '@/navigators'
 
 type Props = {
   workouts: Workout[]
@@ -63,6 +64,7 @@ const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
       renderItem={renderItem}
       keyExtractor={(s, i) => `${s.guid}_${i}`}
       estimatedItemSize={190}
+      contentContainerStyle={{ paddingBottom: TabHeightCompensation }}
     />
   )
 }

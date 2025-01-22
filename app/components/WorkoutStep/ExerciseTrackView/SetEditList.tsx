@@ -27,6 +27,7 @@ type Props = {
   selectedSet: WorkoutSet | null
   setSelectedSet: (set: WorkoutSet | null) => void
   showFallback?: boolean
+  containerPaddingBottom?: number
 }
 
 const SetEditList: React.FC<Props> = ({
@@ -35,6 +36,7 @@ const SetEditList: React.FC<Props> = ({
   selectedSet,
   setSelectedSet,
   showFallback = true,
+  containerPaddingBottom = 0,
 }) => {
   const {
     theme: { colors },
@@ -176,13 +178,19 @@ const SetEditList: React.FC<Props> = ({
         getItemLayout={getItemLayout}
         onReordered={handleReorder}
         ItemSeparatorComponent={() => (
-          <Divider
-            orientation="horizontal"
-            variant="neutral"
-          />
+          // padding so that it doesn't overlap scrollbar. may bot be a great idea
+          <View style={{ paddingHorizontal: spacing.xs }}>
+            <Divider
+              orientation="horizontal"
+              variant="neutral"
+            />
+          </View>
         )}
         style={{
-          paddingVertical: spacing.xs,
+          paddingTop: spacing.xs,
+        }}
+        contentContainerStyle={{
+          paddingBottom: containerPaddingBottom,
         }}
         ref={dragListRef}
         onContentSizeChange={() =>

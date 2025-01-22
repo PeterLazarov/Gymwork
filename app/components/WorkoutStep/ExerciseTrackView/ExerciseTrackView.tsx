@@ -16,6 +16,7 @@ import { spacing } from 'designSystem/theme/spacing'
 import { SetEditActions } from './SetEditActions'
 import SetEditControls from './SetEditControls'
 import SetEditList from './SetEditList'
+import { TabHeightCompensation } from '@/navigators'
 
 const defaultReps = 10
 
@@ -115,6 +116,8 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
     step.removeSet(selectedSet!.guid)
   }, [selectedSet])
 
+  const [actionsSize, setActionsSize] = useState(128)
+
   return (
     <View
       style={{
@@ -130,23 +133,42 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
         sets={step?.exerciseSetsMap[focusedExercise.guid] ?? []}
         selectedSet={selectedSet}
         setSelectedSet={setSelectedSet}
+        containerPaddingBottom={actionsSize + TabHeightCompensation}
       />
 
-      {stateStore.draftSet && (
-        <View style={{ paddingHorizontal: spacing.xs }}>
-          <SetEditControls
-            value={stateStore.draftSet}
-            onSubmit={handleAdd}
-            timer={timer}
+      {/* 2 views allow for the background to not go over the scrollbar */}
+      <View
+        style={{
+          position: 'absolute',
+          bottom: TabHeightCompensation,
+          width: '100%',
+          paddingHorizontal: spacing.xs,
+        }}
+        onLayout={e => {
+          setActionsSize(e.nativeEvent.layout.height)
+        }}
+      >
+        <View
+          style={{
+            gap: spacing.xs,
+            backgroundColor: colors.surface, // TODO replace with blur
+          }}
+        >
+          {stateStore.draftSet && (
+            <SetEditControls
+              value={stateStore.draftSet}
+              onSubmit={handleAdd}
+              timer={timer}
+            />
+          )}
+          <SetEditActions
+            mode={selectedSet ? 'edit' : 'add'}
+            onAdd={handleAdd}
+            onUpdate={handleUpdate}
+            onRemove={handleRemove}
           />
         </View>
-      )}
-      <SetEditActions
-        mode={selectedSet ? 'edit' : 'add'}
-        onAdd={handleAdd}
-        onUpdate={handleUpdate}
-        onRemove={handleRemove}
-      />
+      </View>
     </View>
   )
 }
