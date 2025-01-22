@@ -28,7 +28,7 @@ const ExerciseListItem: React.FC<Props> = ({
 
   const { navStore } = useStores()
   function handleLongPress() {
-    navStore.navigate('ExerciseDetails',{exercise})
+    navStore.navigate('ExerciseDetails', { exercise })
   }
 
   return (
@@ -50,6 +50,8 @@ const ExerciseListItem: React.FC<Props> = ({
         }}
       >
         <Image
+          width={height}
+          height={height}
           style={{ height, width: height }}
           source={exerciseImages[exercise.images[0]]}
         />

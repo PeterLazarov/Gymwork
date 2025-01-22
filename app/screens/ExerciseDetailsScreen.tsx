@@ -11,12 +11,12 @@ import { Exercise } from '@/db/models'
 
 export interface ExerciseDetailsScreenProps
   extends AppStackScreenProps<'ExerciseDetails'> {
-    exercise: Exercise
-  }
+  exercise: Exercise
+}
 
 export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = observer(
   function ExerciseDetailsScreen(props) {
-    const {exercise} = useRouteParams('ExerciseDetails')
+    const { exercise } = useRouteParams('ExerciseDetails')
 
     const { width } = useWindowDimensions()
     const imgHeight = (width / 16) * 9
@@ -25,7 +25,7 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = observer(
       <Screen
         style={$root}
         preset="scroll"
-        safeAreaEdges={['top', 'bottom', 'left', 'right']}
+        // safeAreaEdges={['top', 'bottom', 'left', 'right']}
       >
         <Image
           style={{ width, height: imgHeight }}

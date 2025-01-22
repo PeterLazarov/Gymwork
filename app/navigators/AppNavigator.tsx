@@ -178,11 +178,12 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen
         name="ExerciseDetails"
         component={Screens.ExerciseDetailsScreen}
-        options={{
+        options={({ route }) => ({
+          headerTitle: route.params.exercise.name,
           presentation: 'modal',
           headerShown: true,
           animation: 'default',
-        }}
+        })}
       />
 
       {/* ! ADD YOUR SCREENS TO NavStore pages */}

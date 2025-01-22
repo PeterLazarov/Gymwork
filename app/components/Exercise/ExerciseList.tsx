@@ -4,6 +4,7 @@ import React, { useCallback } from 'react'
 import { Exercise } from 'app/db/models'
 
 import ExerciseListItem from './ExerciseListItem'
+import { TabHeightCompensation } from '@/navigators/BottomNavigator'
 
 type Props = {
   exercises: Exercise[]
@@ -38,6 +39,7 @@ const ExerciseList: React.FC<Props> = ({
       estimatedItemSize={itemHeight}
       renderItem={renderItem}
       keyExtractor={exercise => exercise.guid}
+      contentContainerStyle={{ paddingBottom: TabHeightCompensation }}
     />
   )
 }
