@@ -28,7 +28,7 @@ const ExerciseListItem: React.FC<Props> = ({
 
   const { navStore } = useStores()
   function handleLongPress() {
-    navStore.navigate('ExerciseDetails')
+    navStore.navigate('ExerciseDetails',{exercise})
   }
 
   return (

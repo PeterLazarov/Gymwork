@@ -64,7 +64,7 @@ export type AppStackParamList = {
 
   Welcome: undefined
   // 🔥 Your screens go here
-  ExerciseDetails: undefined
+  ExerciseDetails: Screens.ExerciseDetailsScreenProps
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
@@ -178,7 +178,11 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen
         name="ExerciseDetails"
         component={Screens.ExerciseDetailsScreen}
-        options={{ presentation: 'modal', headerShown: true }}
+        options={{
+          presentation: 'modal',
+          headerShown: true,
+          animation: 'default',
+        }}
       />
 
       {/* ! ADD YOUR SCREENS TO NavStore pages */}
