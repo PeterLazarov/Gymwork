@@ -1,4 +1,4 @@
-import { readdirSync, writeFileSync } from 'node:fs'
+const { readdirSync, writeFileSync } = require('node:fs')
 
 // NOTE: ran from root project dir
 

@@ -1,11 +1,3 @@
-TODO
-Link the fonts in your iOS project. Add this to your ios/[YourProject]/Info.plist:
-
-<key>UIAppFonts</key>
-<array>
-<string>MaterialIcons.ttf</string>
-</array>
-
 # Welcome to your new ignited app!
 
 [![CircleCI](https://circleci.com/gh/infinitered/ignite.svg?style=svg)](https://circleci.com/gh/infinitered/ignite)
