@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
+// import { BlurView } from '@react-native-community/blur'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
@@ -10,6 +11,9 @@ import { Icon, Text } from 'designSystem'
 import { spacing } from 'designSystem/theme/spacing'
 
 import AddStepMenu from './AddStepMenu'
+import { TabHeightCompensation } from '@/navigators/BottomNavigator'
+
+export const WorkoutBottomControlsHeight = 72
 
 const WorkoutBottomControls = () => {
   const { stateStore } = useStores()
@@ -20,10 +24,14 @@ const WorkoutBottomControls = () => {
   return (
     <View
       style={{
+        position: 'absolute',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: spacing.xs,
+        bottom: TabHeightCompensation,
+        backgroundColor: colors.surface, // TODO ios blur
+        maxHeight: WorkoutBottomControlsHeight,
       }}
     >
       <TouchableOpacity

@@ -58,6 +58,12 @@ export const useThemeProvider = (initialTheme: ThemeContexts = undefined) => {
   const [overrideTheme, setTheme] = useState<ThemeContexts>(
     initialTheme ?? settingsStore.colorSchemePreference
   )
+  useEffect(() => {
+    if (overrideTheme) {
+      Appearance.setColorScheme(overrideTheme)
+    }
+  }, [])
+
 
   const setThemeContextOverride = useCallback((newTheme: ThemeContexts) => {
     // Allows for smooth transition

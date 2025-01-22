@@ -37,10 +37,11 @@ const Tab: ReturnType<typeof createBottomTabNavigator<BottomTabParamList>> =
   createNativeBottomTabNavigator<BottomTabParamList>()
 
 // on iOS, the tabs float over the content. This is added as padding to compensate
-export const TabHeightCompensation = Platform.select({
-  ios: 84,
-  android: 0, // TODO determine if thats really it
-})
+export const TabHeightCompensation =
+  Platform.select({
+    ios: 83,
+    android: 0, // TODO determine if thats really it
+  }) ?? 0
 
 export function BottomNavigator(): JSX.Element {
   const {

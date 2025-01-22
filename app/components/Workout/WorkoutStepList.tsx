@@ -7,6 +7,8 @@ import { Workout, WorkoutStep } from 'app/db/models'
 import { IndicatedScrollList } from 'designSystem'
 
 import WorkoutStepCard from '../WorkoutStep/WorkoutStepCard'
+import { TabHeightCompensation } from '@/navigators/BottomNavigator'
+import { WorkoutBottomControlsHeight } from './WorkoutBottomControls'
 
 type Props = {
   workout: Workout
@@ -42,6 +44,9 @@ const WorkoutStepList: React.FC<Props> = ({ workout }) => {
       renderItem={renderItem}
       keyExtractor={item => `${workout!.date}_${item.guid}`}
       estimatedItemSize={140}
+      contentContainerStyle={{
+        paddingBottom: TabHeightCompensation + WorkoutBottomControlsHeight,
+      }}
     />
   )
 }
