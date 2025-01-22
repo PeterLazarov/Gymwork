@@ -54,6 +54,7 @@
 * Bodyweight exercises?
 * Muscle icons (like Hevy?) https://youtu.be/VkHWqq715Qc?si=z59DycSLqc7AcWMe&t=214
 * Add missing translations (units, exercises... calendar?, charts?)
+* Remove backgrounds from exercise images
 * Native components
 
   - iOS Table https://github.com/candlefinance/react-native-tableview
