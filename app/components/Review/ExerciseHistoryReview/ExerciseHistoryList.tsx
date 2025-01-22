@@ -32,7 +32,7 @@ const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
           key={item.guid}
           date={workout.date}
           step={item}
-          sets={stepSets[item.guid]!}
+          sets={stepSets[item.guid] ?? []}
           onPress={() => {
             navigate('WorkoutStack', { screen: 'Workout' })
             stateStore.setOpenedDate(workout.date)

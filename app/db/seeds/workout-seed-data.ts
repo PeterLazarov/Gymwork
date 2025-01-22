@@ -7,7 +7,8 @@ import {
   WorkoutStepSnapshotIn,
 } from '../models'
 
-import exerciseSeedData from './exercises-seed-data.json'
+import { exercises } from './exerciseSeed'
+
 const numberOfWorkouts = 20
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
 const weightIncrementKg = 2.5
@@ -18,9 +19,17 @@ function between(min: number, max: number) {
   return Math.round(Math.random() * (max - min) + min)
 }
 
-const cardioExerciseID = exerciseSeedData
-  .findIndex(e => e.muscles.includes('cardio'))
-  .toString()
+const benchPressID = Object.values(exercises).find(e =>
+  e.name?.toLowerCase().includes('bench press')
+)?.guid!
+
+const squatID = Object.values(exercises).find(e =>
+  e.name?.toLowerCase().includes('squat')
+)?.guid!
+
+const cardioExerciseID = Object.entries(exercises).find(([keyof, v]) =>
+  v.muscleAreas?.includes('Cardio')
+)?.[0]!
 
 function generateStep(
   exercises: string[],
@@ -44,7 +53,7 @@ function generateWorkout(date: string) {
     return Array.from({
       length: between(3, 8),
     }).map((_, i): WorkoutStepSnapshotIn => {
-      const exercise = String(between(0, 100))
+      const exerciseID = Object.keys(exercises)[between(0, 100)]
       const restMs = i > 0 ? rest : 0
       workoutTime = workoutTime.plus({
         milliseconds: restMs * i + setDuration * i,
@@ -54,7 +63,7 @@ function generateWorkout(date: string) {
       const sets: WorkoutSetSnapshotIn[] = Array.from({
         length: between(2, 5),
       }).map((_, i) => ({
-        exercise,
+        exercise: exerciseID,
         isWarmup: i === 0,
         reps: between(3, 12),
         weightMcg: convert(between(8, 40) * weightIncrementKg)
@@ -64,7 +73,7 @@ function generateWorkout(date: string) {
         createdAt: workoutTime.toMillis(),
       }))
 
-      return generateStep([exercise], sets)
+      return generateStep([exerciseID], sets)
     })
   }
 
@@ -83,7 +92,7 @@ function generateWorkout(date: string) {
       // console.log(workoutTime.toFormat('hh:mm'))
 
       return {
-        exercise: '44',
+        exercise: benchPressID,
         reps: between(3, 12),
         weightMcg,
         isWarmup: i === 0,
@@ -93,7 +102,7 @@ function generateWorkout(date: string) {
       }
     })
 
-    return generateStep(['44'], benchSets)
+    return generateStep([benchPressID], benchSets)
   }
 
   function generateCardioStep(date: string) {
@@ -133,7 +142,7 @@ function generateWorkout(date: string) {
       // console.log(workoutTime.toFormat('hh:mm'))
 
       return {
-        exercise: i % 2 === 0 ? '44' : '42',
+        exercise: i % 2 === 0 ? benchPressID : squatID,
         reps: between(3, 12),
         weightMcg,
         isWarmup: i === 0 || i === 1,
@@ -143,7 +152,7 @@ function generateWorkout(date: string) {
       }
     })
 
-    return generateStep(['44', '42'], sets)
+    return generateStep([benchPressID, squatID], sets)
   }
 
   const generateSteps = (date: string): WorkoutStepSnapshotIn[] => {

@@ -9,6 +9,7 @@ import {
 
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
+// TODO refactor so that it's not tightly and unknowingly coupled to actual nav
 const pages: (keyof AllStacksParamList)[] = [
   'Calendar',
   'ExerciseEdit',
@@ -25,6 +26,7 @@ const pages: (keyof AllStacksParamList)[] = [
   'WorkoutStep',
   'WorkoutFeedback',
   'UserFeedback',
+  'ExerciseDetails',
 ]
 
 function navigate<T extends RoutesWithParams>(

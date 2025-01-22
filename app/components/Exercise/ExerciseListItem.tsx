@@ -1,10 +1,12 @@
 import { observer } from 'mobx-react-lite'
 import React from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { Image, TouchableOpacity, View } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 import { Exercise } from 'app/db/models'
-import { Icon, IconButton, palettes, Text } from 'designSystem'
+import { Icon, IconButton, palettes, spacing, Text } from 'designSystem'
+import { exerciseImages } from '@/utils/exerciseImages'
+import { useStores } from '@/db/helpers/useStores'
 
 type Props = {
   exercise: Exercise
@@ -24,8 +26,16 @@ const ExerciseListItem: React.FC<Props> = ({
     theme: { colors },
   } = useAppTheme()
 
+  const { navStore } = useStores()
+  function handleLongPress() {
+    navStore.navigate('ExerciseDetails')
+  }
+
   return (
-    <TouchableOpacity onPress={() => onSelect(exercise)}>
+    <TouchableOpacity
+      onPress={() => onSelect(exercise)}
+      onLongPress={handleLongPress}
+    >
       <View
         style={{
           width: '100%',
@@ -33,11 +43,16 @@ const ExerciseListItem: React.FC<Props> = ({
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          paddingHorizontal: 8,
+          paddingHorizontal: spacing.xxs,
+          gap: spacing.xxs,
           height,
           backgroundColor: isSelected ? colors.secondary : 'transparent',
         }}
       >
+        <Image
+          style={{ height, width: height }}
+          source={exerciseImages[exercise.images[0]]}
+        />
         <Text
           style={{
             flex: 1,

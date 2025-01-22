@@ -2,16 +2,12 @@ import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { keepAlive } from 'mobx-utils'
 
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
-import {
-  Exercise,
-  ExerciseModel,
-  ExerciseSnapshotIn,
-  measurementDefaults,
-} from 'app/db/models'
-import exerciseSeedData from 'app/db/seeds/exercises-seed-data.json'
+import { Exercise, ExerciseModel, ExerciseSnapshotIn } from 'app/db/models'
 import { uniqueValues } from 'app/utils/array'
 import { isDev } from 'app/utils/isDev'
 import * as storage from 'app/utils/storage'
+
+import { exercises as exerciseSeedData } from '../seeds/exerciseSeed'
 
 export const ExerciseStoreModel = types
   .model('ExerciseStore')
@@ -32,20 +28,9 @@ export const ExerciseStoreModel = types
       }
     },
     async seed() {
-      console.log('seeding excercises')
+      console.log('seeding exercises')
 
-      const exercisesData: ExerciseSnapshotIn[] = exerciseSeedData.map(
-        ({ measurementType, ...exercise }, i): ExerciseSnapshotIn => {
-          return {
-            ...exercise,
-            guid: String(i),
-            measurements: Object.fromEntries(
-              measurementType.map(type => [type, measurementDefaults[type]])
-            ),
-          }
-        }
-      )
-      store.setProp('exercises', exercisesData)
+      store.exercises = Object.values(exerciseSeedData)
     },
     editExercise(updated: Exercise) {
       const mappedArray = store.exercises.map(e =>
