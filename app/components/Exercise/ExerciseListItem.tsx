@@ -6,6 +6,7 @@ import { useAppTheme } from '@/utils/useAppTheme'
 import { Exercise } from 'app/db/models'
 import { Icon, IconButton, palettes, spacing, Text } from 'designSystem'
 import { exerciseImages } from '@/utils/exerciseImages'
+import { useStores } from '@/db/helpers/useStores'
 
 type Props = {
   exercise: Exercise
@@ -25,8 +26,16 @@ const ExerciseListItem: React.FC<Props> = ({
     theme: { colors },
   } = useAppTheme()
 
+  const { navStore } = useStores()
+  function handleLongPress() {
+    navStore.navigate('ExerciseDetails')
+  }
+
   return (
-    <TouchableOpacity onPress={() => onSelect(exercise)}>
+    <TouchableOpacity
+      onPress={() => onSelect(exercise)}
+      onLongPress={handleLongPress}
+    >
       <View
         style={{
           width: '100%',

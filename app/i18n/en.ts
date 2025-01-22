@@ -154,6 +154,8 @@ const en = {
     light: 'Light',
     colorScheme: 'Color scheme',
     enableDetailedWorkoutSummary: 'Enable detailed workout summary',
+    tips: 'Tips',
+    instructions: 'Instructions',
   },
 }
 

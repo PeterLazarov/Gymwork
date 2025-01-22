@@ -64,6 +64,7 @@ export type AppStackParamList = {
 
   Welcome: undefined
   // 🔥 Your screens go here
+  ExerciseDetails: undefined
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
 
@@ -157,63 +158,6 @@ const AppStack = observer(function AppStack() {
         component={BottomNavigator}
       />
 
-      {/* <Stack.Screen
-        name="HomeStack"
-        options={{ animation: 'none' }}
-      >
-        {({ route, navigation }) => {
-          const HomeStack = createNativeStackNavigator()
-
-          return (
-            <TabsLayout>
-              <HomeStack.Navigator
-                initialRouteName="WorkoutStack"
-                screenOptions={{
-                  headerShown: false,
-                  animation: 'none',
-                }}
-              >
-                <HomeStack.Screen
-                  name="Review"
-                  component={Screens.ReviewScreen}
-                />
-
-                <HomeStack.Screen
-                  name="WorkoutStack"
-                  options={{ animation: 'none' }}
-                >
-                  {({ route, navigation }) => {
-                    const WorkoutStack = createNativeStackNavigator()
-                    return (
-                      <WorkoutStack.Navigator
-                        initialRouteName="Workout"
-                        screenOptions={{
-                          headerShown: false,
-                          animation: 'none',
-                        }}
-                      >
-                        <WorkoutStack.Screen
-                          name="Workout"
-                          component={Screens.WorkoutScreen}
-                        />
-                        <WorkoutStack.Screen
-                          name="WorkoutStep"
-                          component={Screens.WorkoutStepScreen}
-                        />
-                        <WorkoutStack.Screen
-                          name="WorkoutFeedback"
-                          component={Screens.WorkoutFeedbackScreen}
-                        />
-                      </WorkoutStack.Navigator>
-                    )
-                  }}
-                </HomeStack.Screen>
-              </HomeStack.Navigator>
-            </TabsLayout>
-          )
-        }}
-      </Stack.Screen> */}
-
       <Stack.Screen
         name="SaveTemplate"
         component={Screens.SaveTemplateScreen}
@@ -231,7 +175,15 @@ const AppStack = observer(function AppStack() {
         component={Screens.WelcomeScreen}
       />
 
+      <Stack.Screen
+        name="ExerciseDetails"
+        component={Screens.ExerciseDetailsScreen}
+        options={{ presentation: 'modal', headerShown: true }}
+      />
+
+      {/* ! ADD YOUR SCREENS TO NavStore pages */}
       {/** 🔥 Your screens go here */}
+      {/* ! ADD YOUR SCREENS TO NavStore pages */}
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
