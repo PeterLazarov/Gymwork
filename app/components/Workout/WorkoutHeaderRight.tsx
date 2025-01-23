@@ -147,7 +147,6 @@ const WorkoutHeaderRight: React.FC = () => {
 
       <MenuView
         ref={menuRef}
-        title="Menu Title"
         onPressAction={({ nativeEvent }) => {
           handleMenuPress(nativeEvent.event)
         }}
