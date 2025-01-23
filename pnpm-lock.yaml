@@ -26,6 +26,9 @@ importers:
       '@ptomasroos/react-native-multi-slider':
         specifier: ^2.2.2
         version: 2.2.2(react-native@0.76.3(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
+      '@react-native-menu/menu':
+        specifier: ^1.2.1
+        version: 1.2.1(react-native@0.76.3(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
       '@react-native-picker/picker':
         specifier: 2.9.0
         version: 2.9.0(react-native@0.76.3(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)
@@ -1468,6 +1471,12 @@ packages:
 
   '@react-native-community/cli-tools@15.1.3':
     resolution: {integrity: sha512-2RzoUKR+Y03ijBeeSoCSQihyN6dxy3fbHjraO4MheZZUzt/Yd1VMEDd0R5aa6rtiRDoknbHt45RL2GMa8MSaEA==}
+
+  '@react-native-menu/menu@1.2.1':
+    resolution: {integrity: sha512-ut3fLnhEDR1h1VFCr/Hyx7hQ0Btc7MOvF3LXuoIOZfvaepV2OUDhXPs6dI6YImUGZxabWymjWlyWqZ90gn4Dog==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
 
   '@react-native-picker/picker@2.9.0':
     resolution: {integrity: sha512-khEhIW/uhfMqq/+tvg4rEAiPGT8GX+Y6QydlP2TSMSmRHoSJK+ShXvXZXSr4Sii4imkj4BwvLunGywwtQDODqg==}
@@ -8549,6 +8558,11 @@ snapshots:
       semver: 7.6.3
       shell-quote: 1.8.2
       sudo-prompt: 9.2.1
+
+  '@react-native-menu/menu@1.2.1(react-native@0.76.3(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-native: 0.76.3(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.18)(react@18.3.1)
 
   '@react-native-picker/picker@2.9.0(react-native@0.76.3(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.18)(react@18.3.1))(react@18.3.1)':
     dependencies:

@@ -22,6 +22,7 @@ import {
   // StatusBar,
   useWindowDimensions,
   View,
+  Text,
 } from 'react-native'
 import { PaperProvider, Portal } from 'react-native-paper'
 
@@ -34,8 +35,15 @@ import { navThemes, paperThemes } from 'designSystem/theme'
 
 import Config from '../config'
 
-import { BottomNavigator } from './BottomNavigator'
+import {
+  BottomNavigator,
+  BottomTabParamList,
+  BottomTabsScreenProps,
+} from './BottomNavigator'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
+import WorkoutHeader from '@/components/Workout/WorkoutHeader'
+import WorkoutHeaderRight from '@/components/Workout/WorkoutHeaderRight'
+import { formatDateIso } from '@/utils/date'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -56,7 +64,7 @@ export type AppStackParamList = {
   ExerciseSelect: Screens.ExerciseSelectScreenParams
   SaveTemplate: Screens.SaveTemplateScreenParams
   TemplateSelect: undefined
-  HomeStack: undefined
+  HomeStack: BottomTabParamList
   Settings: undefined
   UserFeedback: {
     referrerPage: string
@@ -127,8 +135,8 @@ const AppStack = observer(function AppStack() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
-        animation: 'none',
+        headerShown: true,
+        // animation: 'none',
         // navigationBarColor: colors.background,
         navigationBarColor: isDark ? colors.shadow : colors.surface,
         contentStyle: {
@@ -155,6 +163,9 @@ const AppStack = observer(function AppStack() {
       />
       <Stack.Screen
         name="HomeStack"
+        options={props => ({
+          headerShown: false,
+        })}
         component={BottomNavigator}
       />
 

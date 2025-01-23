@@ -1,15 +1,19 @@
+import {
+  useNavigation,
+  UNSTABLE_usePreventRemove,
+} from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
+import { Alert } from 'react-native'
 
+import { Screen } from '@/components/ignite'
 import { useAppTheme } from '@/utils/useAppTheme'
 import WorkoutCommentsForm from 'app/components/WorkoutCommentsForm'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutComments } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { Button, ButtonText, Header, Icon, IconButton } from 'designSystem'
-import { Screen } from '@/components/ignite'
-
+import { Button, ButtonText, Icon, IconButton, spacing } from 'designSystem'
 export const WorkoutFeedbackScreen: React.FC = observer(() => {
   const {
     theme: { colors },
@@ -30,37 +34,34 @@ export const WorkoutFeedbackScreen: React.FC = observer(() => {
   const { showConfirm } = useDialogContext()
   const [comments, setComments] = useState<WorkoutComments>(workout?.comments)
 
-  function onBackPress() {
-    showConfirm?.({
-      message: translate('changesWillBeLost'),
-      onClose: () => showConfirm?.(undefined),
-      onConfirm: onBackConfirmed,
-    })
-  }
-
-  function onBackConfirmed() {
-    showConfirm?.(undefined)
-    goBack()
-  }
+  UNSTABLE_usePreventRemove(true, ({ data }) => {
+    // Prompt the user before leaving the screen
+    Alert.alert(translate('warning'), translate('changesWillBeLost'), [
+      {
+        text: translate('cancel'),
+        style: 'default',
+        isPreferred: true,
+        onPress: () => {
+          // Do nothing
+        },
+      },
+      {
+        text: translate('confirm'),
+        style: 'destructive',
+        onPress: () => navigation.dispatch(data.action),
+      },
+    ])
+  })
 
   function onCommentsSave() {
     workout?.saveComments(comments)
     goBack()
   }
 
-  return (
-    <Screen
-      safeAreaEdges={['bottom']}
-      contentContainerStyle={{ flex: 1 }}
-    >
-      <Header>
-        <IconButton onPress={onBackPress}>
-          <Icon
-            icon="chevron-back"
-            color={colors.onPrimary}
-          />
-        </IconButton>
-        <Header.Title title={translate('workoutComments')} />
+  const navigation = useNavigation()
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
         <IconButton onPress={onCommentsSave}>
           <Icon
             icon="checkmark"
@@ -68,8 +69,18 @@ export const WorkoutFeedbackScreen: React.FC = observer(() => {
             color={colors.onPrimary}
           />
         </IconButton>
-      </Header>
+      ),
+    })
+  }, [navigation])
 
+  return (
+    <Screen
+      safeAreaEdges={['top']}
+      contentContainerStyle={{
+        flex: 1,
+        paddingBottom: spacing.md,
+      }}
+    >
       <WorkoutCommentsForm
         comments={comments}
         onUpdate={setComments}

@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { ImageURISource, Platform } from 'react-native'
 import { AppleIcon } from 'react-native-bottom-tabs'
 
+import WorkoutHeaderRight from '@/components/Workout/WorkoutHeaderRight'
 import { translate } from '@/i18n'
 import { AppStackScreenProps, AppStackParamList } from '@/navigators'
 import * as Screens from '@/screens'
@@ -81,14 +82,30 @@ export function BottomNavigator(): JSX.Element {
           return (
             <WorkoutStack.Navigator
               initialRouteName="Workout"
-              screenOptions={{
-                headerShown: false,
-                animation: 'none',
-              }}
+              screenOptions={
+                {
+                  // headerShown: false,
+                  // animation: 'none',
+                }
+              }
             >
               <WorkoutStack.Screen
                 name="Workout"
                 component={Screens.WorkoutScreen}
+                options={{
+                  headerRight(props) {
+                    return (
+                      // <View
+                      //   style={{ height: 40, width: 40, backgroundColor: 'blue' }}
+                      // ></View>
+                      <WorkoutHeaderRight />
+                    )
+                  },
+                  // headerTitle(props) {
+                  //   console.log(props.c)
+                  //   return 'lalala'
+                  // },
+                }}
               />
               <WorkoutStack.Screen
                 name="WorkoutStep"
