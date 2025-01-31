@@ -4,74 +4,61 @@ import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 import { useAppTheme } from '@/utils/useAppTheme'
 
 import { Text } from './Text'
+import { useNavigation } from '@react-navigation/native'
+import { useLayoutEffect } from 'react'
 
 interface SubComponents {
   Title: React.FC<HeaderTitleProps>
 }
 
-export const Header: React.FC<ViewProps> & SubComponents = props => {
+export const Header: React.FC<ViewProps & { children: React.ReactNode }> &
+  SubComponents = props => {
   const {
     theme: { colors, spacing, isDark },
   } = useAppTheme()
-  const padding = spacing.sm
+  // const padding = spacing.sm
 
-  return (
-    <SafeAreaInsetsContext.Consumer>
-      {insets => (
-        <View
-          style={{
-            backgroundColor: isDark ? colors.shadow : colors.primary,
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: padding,
-            paddingBottom: padding,
-            paddingTop: (insets?.top ?? 0) + padding,
-            zIndex: 1,
-            width: '100%',
-          }}
-          {...props}
-        />
-      )}
-    </SafeAreaInsetsContext.Consumer>
-  )
+  const navigation = useNavigation()
+
+  useLayoutEffect(() => {
+    let top = navigation
+    while (navigation.getParent()) {
+      top = navigation.getParent()
+    }
+    top.setOptions({
+      headerRight(_) {
+        return props.children
+      },
+    })
+  }, [props.children])
+
+  return null
 }
 Header.displayName = 'Header'
 
 type HeaderTitleProps = {
   title: string
+  // nestingLevels:0,
   numberOfLines?: TextProps['numberOfLines']
 }
 const HeaderTitle: React.FC<HeaderTitleProps> = ({
   title,
+  // nestingLevelsm
   numberOfLines = 1,
 }) => {
-  const {
-    theme: {
-      colors,
-      isDark,
-      typography: { fontSize },
-    },
-  } = useAppTheme()
+  const navigation = useNavigation()
 
-  return (
-    <View
-      style={{
-        marginLeft: 10,
-        alignItems: 'flex-start',
-        flex: 1,
-      }}
-    >
-      <Text
-        style={{
-          color: isDark ? colors.onSurface : colors.onPrimary,
-          fontSize: fontSize.lg,
-        }}
-        numberOfLines={numberOfLines}
-      >
-        {title}
-      </Text>
-    </View>
-  )
+  useLayoutEffect(() => {
+    let top = navigation
+    while (navigation.getParent()) {
+      top = navigation.getParent()
+    }
+    top.setOptions({
+      title,
+    })
+  }, [title])
+
+  return null
 }
 HeaderTitle.displayName = 'HeaderTitle'
 Header.Title = HeaderTitle
