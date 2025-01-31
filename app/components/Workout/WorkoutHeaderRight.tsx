@@ -108,7 +108,7 @@ const WorkoutHeaderRight: React.FC = () => {
         return {
           id,
           title: obj.title,
-          titleColor: colors.onPrimary,
+          titleColor: colors.onSurface,
           state: obj.state,
         }
       })
@@ -128,6 +128,8 @@ const WorkoutHeaderRight: React.FC = () => {
           <MiniTimer
             n={Math.floor(timerStore.workoutTimer.timeElapsed.as('minutes'))}
             onPress={() => setShowWorkoutTimerModal(true)}
+            color={colors.onSurface}
+            backgroundColor={colors.surface}
           />
 
           <WorkoutTimerModal
@@ -141,7 +143,7 @@ const WorkoutHeaderRight: React.FC = () => {
       <IconButton onPress={openCalendar}>
         <Icon
           icon="calendar-sharp"
-          color={colors.onPrimary}
+          color={colors.onSurface}
         />
       </IconButton>
 
@@ -151,12 +153,16 @@ const WorkoutHeaderRight: React.FC = () => {
           handleMenuPress(nativeEvent.event)
         }}
         actions={menuActionsArray}
+        // themeVariant="dark"
+        // style={{
+        //   backgroundColor: 'red',
+        // }}
         shouldOpenOnLongPress={false}
       >
         <IconButton>
           <Icon
             icon="ellipsis-vertical"
-            color={colors.onPrimary}
+            color={colors.onSurface}
           />
         </IconButton>
       </MenuView>

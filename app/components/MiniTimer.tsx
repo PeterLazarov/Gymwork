@@ -6,12 +6,22 @@ import { fontSize, Icon, IconButton, Text } from 'designSystem'
 export type MiniTimerProps = {
   n: number
   onPress?(): void
+  color?: string
+  backgroundColor?: string
 }
 
-export default function MiniTimer({ n, onPress }: MiniTimerProps) {
+export default function MiniTimer({
+  n,
+  onPress,
+  color: _color,
+  backgroundColor: _bgColor,
+}: MiniTimerProps) {
   const {
     theme: { colors, isDark },
   } = useAppTheme()
+
+  const bgColor = _bgColor || (isDark ? colors.shadow : colors.surface)
+  const mainColor = _color || colors.primary
 
   return (
     <IconButton
@@ -22,7 +32,7 @@ export default function MiniTimer({ n, onPress }: MiniTimerProps) {
     >
       <Icon
         icon={'stopwatch-outline'}
-        color={colors.onPrimary}
+        color={mainColor}
         size="large"
       />
       <View
@@ -42,19 +52,20 @@ export default function MiniTimer({ n, onPress }: MiniTimerProps) {
         <View
           style={{
             // TODO refactor to onHeader?
-            backgroundColor: isDark ? colors.shadow : colors.primary,
+            backgroundColor: bgColor,
             width: 22,
             height: 22,
+            left: -0.25,
+            top: 0.9,
             alignItems: 'center',
             justifyContent: 'center',
-            top: 1,
             borderRadius: 100,
           }}
         >
           <Text
             style={{
               fontSize: String(n).length > 2 ? fontSize.xxs : fontSize.sm,
-              color: colors.onPrimary,
+              color: mainColor,
             }}
             numberOfLines={1}
             ellipsizeMode="clip"
