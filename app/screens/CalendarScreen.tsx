@@ -1,10 +1,10 @@
+import { MenuView } from '@react-native-menu/menu'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { Calendar } from 'react-native-calendario'
 import { MarkedDays } from 'react-native-month'
-import { Menu } from 'react-native-paper'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 import WorkoutModal from 'app/components/WorkoutModal'
@@ -31,7 +31,6 @@ export const CalendarScreen: React.FC = observer(() => {
   const { copyWorkoutMode } = useRouteParams('Calendar')
 
   const [openedWorkoutDialogDate, setOpenedWorkoutDialogDate] = useState('')
-  const [menuOpen, setMenuOpen] = useState(false)
 
   const markedDates = useMemo(
     () =>
@@ -84,11 +83,6 @@ export const CalendarScreen: React.FC = observer(() => {
     navigate('WorkoutStack', { screen: 'Workout' })
   }
 
-  function goToFeedback() {
-    setMenuOpen(false)
-    navigate('UserFeedback', { referrerPage: activeRoute ?? '?' })
-  }
-
   // ! must be a whole number
   const monthsToRender = useMemo(() => {
     const start = DateTime.fromISO(stateStore.firstRenderedDate)
@@ -104,31 +98,26 @@ export const CalendarScreen: React.FC = observer(() => {
     <>
       <EmptyLayout>
         <Header>
-          <IconButton onPress={onBackPress}>
-            <Icon
-              icon="chevron-back"
-              color={colors.onPrimary}
-            />
-          </IconButton>
-          <Header.Title title={translate('calendar')} />
-          <Menu
-            visible={menuOpen}
-            onDismiss={() => setMenuOpen(false)}
-            anchorPosition="bottom"
-            anchor={
-              <IconButton onPress={() => setMenuOpen(true)}>
-                <Icon
-                  icon="ellipsis-vertical"
-                  color={colors.onPrimary}
-                />
-              </IconButton>
-            }
+          <MenuView
+            onPressAction={({ nativeEvent }) => {
+              navigate('UserFeedback', { referrerPage: activeRoute ?? '?' })
+            }}
+            actions={[
+              {
+                id: 'goToFeedback',
+                title: translate('giveFeedback'),
+                titleColor: colors.onSurface,
+              },
+            ]}
+            shouldOpenOnLongPress={false}
           >
-            <Menu.Item
-              onPress={goToFeedback}
-              title={translate('giveFeedback')}
-            />
-          </Menu>
+            <IconButton>
+              <Icon
+                icon="ellipsis-vertical"
+                color={colors.onSurface}
+              />
+            </IconButton>
+          </MenuView>
         </Header>
 
         <Calendar
