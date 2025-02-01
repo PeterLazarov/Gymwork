@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions, View } from 'react-native'
 import { Menu } from 'react-native-paper'
 
+import { Screen } from '@/components/ignite'
 import { useAppTheme } from '@/utils/useAppTheme'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 import ExerciseView from 'app/components/ExerciseHistoryChart/ExerciseView'
@@ -135,10 +136,10 @@ export const ReviewScreen: React.FC = observer(() => {
         </MenuContainer>
       </Header>
 
-      <View
-        style={{
+      <Screen
+        safeAreaEdges={['top']}
+        contentContainerStyle={{
           flexGrow: 1,
-          position: 'relative',
           backgroundColor: colors.surface,
         }}
       >
@@ -165,7 +166,7 @@ export const ReviewScreen: React.FC = observer(() => {
             }}
           />
         )}
-      </View>
+      </Screen>
     </>
   )
 })
