@@ -39,7 +39,7 @@ function getExercises() {
         equipment,
         position,
         stance,
-        grip,
+        // grip,
         tips,
       }) => {
         const measurements: ExerciseMeasurementSnapshotIn = {

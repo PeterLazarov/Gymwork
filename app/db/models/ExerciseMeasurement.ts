@@ -1,4 +1,4 @@
-import { Instance, SnapshotOut, types } from 'mobx-state-tree'
+import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
 import 'react-native-get-random-values'
 
 import { withSetPropAction } from '../helpers/withSetPropAction'
@@ -135,6 +135,8 @@ export const ExerciseMeasurementModel = types
 
 export interface ExerciseMeasurement
   extends Instance<typeof ExerciseMeasurementModel> {}
+export interface ExerciseMeasurementSnapshotIn
+  extends SnapshotIn<typeof ExerciseMeasurementModel> {}
 export interface ExerciseMeasurementSnapshotOut
   extends SnapshotOut<typeof ExerciseMeasurementModel> {}
 
