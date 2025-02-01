@@ -22,7 +22,6 @@ import {
   // StatusBar,
   useWindowDimensions,
   View,
-  Text,
 } from 'react-native'
 import { PaperProvider, Portal } from 'react-native-paper'
 
@@ -35,15 +34,8 @@ import { navThemes, paperThemes } from 'designSystem/theme'
 
 import Config from '../config'
 
-import {
-  BottomNavigator,
-  BottomTabParamList,
-  BottomTabsScreenProps,
-} from './BottomNavigator'
+import { BottomNavigator, BottomTabParamList } from './BottomNavigator'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
-import WorkoutHeader from '@/components/Workout/WorkoutHeader'
-import WorkoutHeaderRight from '@/components/Workout/WorkoutHeaderRight'
-import { formatDateIso } from '@/utils/date'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
