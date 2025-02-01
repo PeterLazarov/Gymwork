@@ -1,3 +1,5 @@
+import convert from 'convert-units'
+import { DateTime, Duration } from 'luxon'
 import {
   Instance,
   SnapshotIn,
@@ -12,13 +14,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
 import { Exercise } from './Exercise'
-
-import { DateTime, Duration } from 'luxon'
-
 import { WorkoutSet } from './WorkoutSet'
 import { WorkoutStep, WorkoutStepModel } from './WorkoutStep'
-
-import convert from 'convert-units'
 
 const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
 // TODO dedupe
@@ -158,6 +155,12 @@ export const WorkoutModel = types
     },
     get hasIncompleteSets(): boolean {
       return this.allSets.some(set => set.completed === false)
+    },
+
+    get muscles(): string[] {
+      return Array.from(
+        new Set(this.exercises.flatMap(e => e.muscles))
+      ) as string[]
     },
   }))
   .actions(withSetPropAction)

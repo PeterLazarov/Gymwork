@@ -2,9 +2,11 @@ import { useMemo } from 'react'
 import { XmlProps } from 'react-native-svg'
 import { SvgCss } from 'react-native-svg/css'
 
+import { palettes } from 'designSystem'
+
 export interface MuscleMapProps extends Partial<XmlProps> {
-  back: boolean
   muscles: string[]
+  back?: boolean
   baseColor?: string
   inactiveColor?: string
   activeColor?: string
@@ -19,9 +21,9 @@ function getMappedClasses(muscles: string[]) {
 export const MuscleMap = ({
   muscles,
   back = false,
-  activeColor = 'white',
-  baseColor = 'black',
-  inactiveColor = 'gray',
+  activeColor = palettes.gold['80'],
+  baseColor = 'rgba(0,0,0,0.9)',
+  inactiveColor = 'rgba(255,255,255,0.5)',
   ...rest
 }: MuscleMapProps) => {
   const xmlWithCSS = useMemo(() => {
