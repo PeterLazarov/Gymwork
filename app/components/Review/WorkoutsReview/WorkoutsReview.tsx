@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Searchbar } from 'react-native-paper'
 
+import { TabHeightCompensation } from '@/navigators/constants'
 import EmptyState from 'app/components/EmptyState'
 import WorkoutModal from 'app/components/WorkoutModal'
 import { useStores } from 'app/db/helpers/useStores'
@@ -18,7 +19,6 @@ import {
 } from 'designSystem'
 
 import WorkoutReviewListItem from './WorkoutReviewListItem'
-import { TabHeightCompensation } from '@/navigators'
 
 const WorkoutsReview: React.FC = () => {
   const { workoutStore } = useStores()

@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 
+import { TabHeightCompensation } from '@/navigators/constants'
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, WorkoutSet } from 'app/db/models'
@@ -10,7 +11,6 @@ import { translate } from 'app/i18n'
 import { spacing } from 'designSystem'
 
 import RecordsListItem from './RecordsListItem'
-import { TabHeightCompensation } from '@/navigators'
 
 export type ExerciseRecordReviewProps = {
   exercise?: Exercise

@@ -2,12 +2,13 @@ import { ListRenderItemInfo } from '@shopify/flash-list'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 
+import { TabHeightCompensation } from '@/navigators/constants'
 import { useStores } from 'app/db/helpers/useStores'
 import { Workout, WorkoutStep } from 'app/db/models'
 import { IndicatedScrollList } from 'designSystem'
 
 import WorkoutStepCard from '../WorkoutStep/WorkoutStepCard'
-import { TabHeightCompensation } from '@/navigators/BottomNavigator'
+
 import { WorkoutBottomControlsHeight } from './WorkoutBottomControls'
 
 type Props = {

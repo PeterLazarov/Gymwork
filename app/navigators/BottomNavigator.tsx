@@ -6,7 +6,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { CompositeScreenProps } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { ImageURISource, Platform } from 'react-native'
+import { ImageURISource } from 'react-native'
 import { AppleIcon } from 'react-native-bottom-tabs'
 
 import WorkoutHeaderRight from '@/components/Workout/WorkoutHeaderRight'
@@ -36,13 +36,6 @@ export type BottomTabsScreenProps<T extends keyof BottomTabParamList> =
 // TODO remove type-hack BS
 const Tab: ReturnType<typeof createBottomTabNavigator<BottomTabParamList>> =
   createNativeBottomTabNavigator<BottomTabParamList>()
-
-// on iOS, the tabs float over the content. This is added as padding to compensate
-export const TabHeightCompensation =
-  Platform.select({
-    ios: 83,
-    android: 0, // TODO determine if thats really it
-  }) ?? 0
 
 export function BottomNavigator(): JSX.Element {
   const {

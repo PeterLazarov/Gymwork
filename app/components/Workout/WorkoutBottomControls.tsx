@@ -4,6 +4,7 @@ import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 // import { BlurView } from '@react-native-community/blur'
 
+import { TabHeightCompensation } from '@/navigators/constants'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import { formatDate } from 'app/utils/date'
@@ -11,7 +12,6 @@ import { Icon, Text } from 'designSystem'
 import { spacing } from 'designSystem/theme/spacing'
 
 import AddStepMenu from './AddStepMenu'
-import { TabHeightCompensation } from '@/navigators/BottomNavigator'
 
 export const WorkoutBottomControlsHeight = 72
 

@@ -2,13 +2,13 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
 
+// import { TabHeightCompensation } from '@/navigators/constants'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 import ExerciseControl from 'app/components/WorkoutStep/ExerciseControl'
 import ExerciseTrackView from 'app/components/WorkoutStep/ExerciseTrackView'
 import StepHeader from 'app/components/WorkoutStep/StepHeader'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
-import { TabHeightCompensation } from '@/navigators'
 
 export const WorkoutStepScreen: React.FC = observer(() => {
   const { stateStore, navStore } = useStores()

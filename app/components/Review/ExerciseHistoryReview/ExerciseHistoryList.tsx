@@ -2,6 +2,7 @@ import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import { getParentOfType } from 'mobx-state-tree'
 import React, { useCallback, useMemo } from 'react'
 
+import { TabHeightCompensation } from '@/navigators/constants'
 import { useStores } from 'app/db/helpers/useStores'
 import {
   Exercise,
@@ -12,7 +13,6 @@ import {
 } from 'app/db/models'
 
 import ExerciseHistoryListItem from './ExerciseHistoryListItem'
-import { TabHeightCompensation } from '@/navigators'
 
 type Props = {
   workouts: Workout[]

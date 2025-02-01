@@ -16,4 +16,4 @@ export * from './WorkoutFeedbackScreen'
 export * from './WorkoutStepScreen'
 
 // export other screens here
-export * from "./ExerciseDetailsScreen"
+export * from './ExerciseDetailsScreen'

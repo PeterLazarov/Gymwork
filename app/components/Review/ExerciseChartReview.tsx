@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
+import { TabHeightCompensation } from '@/navigators/constants'
 import ExerciseHistoryChart, {
   CHART_VIEW,
   CHART_VIEWS,
@@ -10,7 +11,6 @@ import ExerciseHistoryChart, {
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise } from 'app/db/models'
 import { spacing, ToggleGroupButton } from 'designSystem'
-import { TabHeightCompensation } from '@/navigators'
 
 export type ExerciseChartStatsProps = {
   exercise?: Exercise

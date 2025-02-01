@@ -3,6 +3,7 @@ import { getSnapshot } from 'mobx-state-tree'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { View } from 'react-native'
 
+import { TabHeightCompensation } from '@/navigators/constants'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import {
@@ -16,7 +17,6 @@ import { spacing } from 'designSystem/theme/spacing'
 import { SetEditActions } from './SetEditActions'
 import SetEditControls from './SetEditControls'
 import SetEditList from './SetEditList'
-import { TabHeightCompensation } from '@/navigators'
 
 const defaultReps = 10
 

@@ -1,10 +1,10 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import React, { useCallback } from 'react'
 
+import { TabHeightCompensation } from '@/navigators/constants'
 import { Exercise } from 'app/db/models'
 
 import ExerciseListItem from './ExerciseListItem'
-import { TabHeightCompensation } from '@/navigators/BottomNavigator'
 
 type Props = {
   exercises: Exercise[]
