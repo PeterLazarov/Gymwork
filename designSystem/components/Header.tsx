@@ -1,11 +1,11 @@
+import { useNavigation } from '@react-navigation/native'
+import { useLayoutEffect } from 'react'
 import { TextProps, View, ViewProps } from 'react-native'
 import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 
 import { Text } from './Text'
-import { useNavigation } from '@react-navigation/native'
-import { useLayoutEffect } from 'react'
 
 interface SubComponents {
   Title: React.FC<HeaderTitleProps>

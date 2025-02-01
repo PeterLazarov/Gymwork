@@ -2,11 +2,11 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Image, TouchableOpacity, View } from 'react-native'
 
+import { useStores } from '@/db/helpers/useStores'
+import { exerciseImages } from '@/utils/exerciseImages'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { Exercise } from 'app/db/models'
 import { Icon, IconButton, palettes, spacing, Text } from 'designSystem'
-import { exerciseImages } from '@/utils/exerciseImages'
-import { useStores } from '@/db/helpers/useStores'
 
 type Props = {
   exercise: Exercise

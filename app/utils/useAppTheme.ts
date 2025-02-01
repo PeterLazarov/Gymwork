@@ -64,7 +64,6 @@ export const useThemeProvider = (initialTheme: ThemeContexts = undefined) => {
     }
   }, [])
 
-
   const setThemeContextOverride = useCallback((newTheme: ThemeContexts) => {
     // Allows for smooth transition
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)

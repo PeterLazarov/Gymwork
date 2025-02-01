@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite'
 import { useMemo } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
+import { capitalize } from '@/utils/string'
 import { useAppTheme } from '@/utils/useAppTheme'
 import SettingsToggleItem from 'app/components/SettingsToggleItem'
 import { useDialogContext } from 'app/contexts/DialogContext'
@@ -19,7 +20,6 @@ import {
   spacing,
   Text,
 } from 'designSystem'
-import { capitalize } from '@/utils/string'
 
 export type SettingsScreenProps = AppStackScreenProps<'Settings'>
 

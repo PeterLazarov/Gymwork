@@ -1,13 +1,14 @@
-import { FC } from 'react'
 import { observer } from 'mobx-react-lite'
+import { FC } from 'react'
 import { Image, useWindowDimensions, View, ViewStyle } from 'react-native'
-import { AppStackScreenProps, useRouteParams } from '@/navigators'
+
 import { Screen, Text } from '@/components/ignite'
-import { exerciseImages } from '@/utils/exerciseImages'
 import { useStores } from '@/db/helpers/useStores'
-import { translate } from '@/i18n'
-import { fontSize, spacing } from 'designSystem'
 import { Exercise } from '@/db/models'
+import { translate } from '@/i18n'
+import { AppStackScreenProps, useRouteParams } from '@/navigators'
+import { exerciseImages } from '@/utils/exerciseImages'
+import { fontSize, spacing } from 'designSystem'
 
 export interface ExerciseDetailsScreenProps
   extends AppStackScreenProps<'ExerciseDetails'> {
