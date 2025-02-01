@@ -22,8 +22,8 @@ export const Header: React.FC<ViewProps & { children: React.ReactNode }> &
 
   useLayoutEffect(() => {
     let top = navigation
-    while (navigation.getParent()) {
-      top = navigation.getParent()
+    while (top.getParent()) {
+      top = top.getParent()
     }
     top.setOptions({
       headerRight(_) {
@@ -50,8 +50,8 @@ const HeaderTitle: React.FC<HeaderTitleProps> = ({
 
   useLayoutEffect(() => {
     let top = navigation
-    while (navigation.getParent()) {
-      top = navigation.getParent()
+    while (top.getParent()) {
+      top = top.getParent()
     }
     top.setOptions({
       title,
