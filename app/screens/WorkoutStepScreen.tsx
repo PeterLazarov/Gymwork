@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 
 // import { TabHeightCompensation } from '@/navigators/constants'
+import { Screen } from '@/components/ignite'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 import ExerciseControl from 'app/components/WorkoutStep/ExerciseControl'
 import ExerciseTrackView from 'app/components/WorkoutStep/ExerciseTrackView'
@@ -34,10 +35,11 @@ export const WorkoutStepScreen: React.FC = observer(() => {
 
   return (
     stateStore.focusedStep && (
-      <View
-        style={{
+      <Screen
+        safeAreaEdges={['bottom']}
+        contentContainerStyle={{
           flex: 1,
-          // paddingBottom: TabHeightCompensation
+          paddingBottom: 16, // TODO this should not be needed
         }}
       >
         <StepHeader
@@ -80,7 +82,7 @@ export const WorkoutStepScreen: React.FC = observer(() => {
             />
           </>
         )}
-      </View>
+      </Screen>
     )
   )
 })
