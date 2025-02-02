@@ -16,7 +16,7 @@ type Props = {
   swipeDisabled?: boolean
   tabHeight?: number
 }
-const TopTabs: React.FC<Props> = ({
+const TopNavigation: React.FC<Props> = ({
   tabsConfig,
   initialRouteName,
   tabWidth,
@@ -58,4 +58,4 @@ const TopTabs: React.FC<Props> = ({
   )
 }
 
-export default TopTabs
+export default TopNavigation

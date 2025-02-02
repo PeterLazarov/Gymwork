@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Dimensions, View } from 'react-native'
 import { Menu } from 'react-native-paper'
 
@@ -40,45 +40,48 @@ export const ReviewScreen: React.FC = observer(() => {
     }
   }, [stateStore.focusedExercise])
 
-  const tabsConfig: TabConfig[] = [
-    {
-      name: 'Workouts',
-      Component: WorkoutsReview,
-    },
-    {
-      name: 'Chart',
-      Component: () => (
-        <ExerciseView
-          openSelect={() => setExerciseSelectOpen(true)}
-          isExerciseSelected={!!selectedExercise}
-        >
-          <ExerciseChartReview exercise={selectedExercise} />
-        </ExerciseView>
-      ),
-    },
-    {
-      name: 'Records',
-      Component: () => (
-        <ExerciseView
-          openSelect={() => setExerciseSelectOpen(true)}
-          isExerciseSelected={!!selectedExercise}
-        >
-          <ExerciseRecordReview exercise={selectedExercise} />
-        </ExerciseView>
-      ),
-    },
-    {
-      name: 'History',
-      Component: () => (
-        <ExerciseView
-          openSelect={() => setExerciseSelectOpen(true)}
-          isExerciseSelected={!!selectedExercise}
-        >
-          <ExerciseHistoryReview exercise={selectedExercise} />
-        </ExerciseView>
-      ),
-    },
-  ]
+  const tabsConfig: TabConfig[] = useMemo(
+    () => [
+      {
+        name: 'Workouts',
+        Component: WorkoutsReview,
+      },
+      {
+        name: 'Chart',
+        Component: () => (
+          <ExerciseView
+            openSelect={() => setExerciseSelectOpen(true)}
+            isExerciseSelected={!!selectedExercise}
+          >
+            <ExerciseChartReview exercise={selectedExercise} />
+          </ExerciseView>
+        ),
+      },
+      {
+        name: 'Records',
+        Component: () => (
+          <ExerciseView
+            openSelect={() => setExerciseSelectOpen(true)}
+            isExerciseSelected={!!selectedExercise}
+          >
+            <ExerciseRecordReview exercise={selectedExercise} />
+          </ExerciseView>
+        ),
+      },
+      {
+        name: 'History',
+        Component: () => (
+          <ExerciseView
+            openSelect={() => setExerciseSelectOpen(true)}
+            isExerciseSelected={!!selectedExercise}
+          >
+            <ExerciseHistoryReview exercise={selectedExercise} />
+          </ExerciseView>
+        ),
+      },
+    ],
+    [selectedExercise]
+  )
 
   function onBack() {
     if (exerciseSelectOpen) {
@@ -87,6 +90,9 @@ export const ReviewScreen: React.FC = observer(() => {
       navStore.goBack()
     }
   }
+
+  // Changing this on the fly causes issues with the tabs
+  const initialRouteName = useRef(navStore.reviewLastTab || 'Records')
 
   return (
     <>
@@ -159,7 +165,7 @@ export const ReviewScreen: React.FC = observer(() => {
         {!exerciseSelectOpen && (
           <TopNavigation
             tabsConfig={tabsConfig}
-            initialRouteName={navStore.reviewLastTab || 'Records'}
+            initialRouteName={initialRouteName.current}
             tabWidth={Dimensions.get('screen').width / 3.5}
             onTabChange={tab => {
               navStore.setProp('reviewLastTab', tab)
