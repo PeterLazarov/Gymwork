@@ -36,6 +36,7 @@ import Config from '../config'
 
 import { BottomNavigator, BottomTabParamList } from './BottomNavigator'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -244,40 +245,42 @@ export const AppNavigator = observer(function AppNavigator(
           {...props}
           onStateChange={handleStateChange}
         >
-          <ErrorBoundary
-            fallback={({ error, resetError }) => (
-              <Screens.ErrorDetailsScreen
-                error={error}
-                resetError={resetError}
-              />
-            )}
-          >
-            <PortalProvider>
-              <Portal.Host>
-                <DialogContextProvider>
-                  {/* The bar at the top */}
-                  {/* <StatusBar
+          <GestureHandlerRootView>
+            <ErrorBoundary
+              fallback={({ error, resetError }) => (
+                <Screens.ErrorDetailsScreen
+                  error={error}
+                  resetError={resetError}
+                />
+              )}
+            >
+              <PortalProvider>
+                <Portal.Host>
+                  <DialogContextProvider>
+                    {/* The bar at the top */}
+                    {/* <StatusBar
                     backgroundColor={
                       colorScheme === 'light' ? colors.primary : colors.shadow
                     }
                     barStyle={'light-content'}
                   /> */}
-                  <AppStack />
-                </DialogContextProvider>
-              </Portal.Host>
+                    <AppStack />
+                  </DialogContextProvider>
+                </Portal.Host>
 
-              <View
-                ref={offscreenRef}
-                style={{
-                  position: 'absolute',
-                  zIndex: 1,
-                  left: screenDimensions.width,
-                }}
-              >
-                <PortalHost name="offscreen" />
-              </View>
-            </PortalProvider>
-          </ErrorBoundary>
+                <View
+                  ref={offscreenRef}
+                  style={{
+                    position: 'absolute',
+                    zIndex: 1,
+                    left: screenDimensions.width,
+                  }}
+                >
+                  <PortalHost name="offscreen" />
+                </View>
+              </PortalProvider>
+            </ErrorBoundary>
+          </GestureHandlerRootView>
         </NavigationContainer>
       </PaperProvider>
     </ThemeProvider>
