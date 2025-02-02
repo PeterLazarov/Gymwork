@@ -2,12 +2,8 @@ import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
 } from '@react-navigation/material-top-tabs'
-import { NavigationContainer } from '@react-navigation/native'
-import { useMemo } from 'react'
 
-import { useAppTheme } from '@/utils/useAppTheme'
 import { getActiveRouteName } from 'app/navigators'
-import { navThemes } from 'designSystem/theme'
 
 import { TabConfig } from './types'
 
@@ -29,60 +25,36 @@ const TopTabs: React.FC<Props> = ({
   swipeDisabled,
 }) => {
   const Tab = createMaterialTopTabNavigator()
-  const {
-    theme: { isDark },
-  } = useAppTheme()
-
-  const navTheme = useMemo(() => {
-    return navThemes[isDark ? 'DarkTheme' : 'LightTheme']
-  }, [isDark])
 
   return (
-    <NavigationContainer
-      linking={{
-        enabled: true,
-        prefixes: [
-          // TODO
-        ],
-      }}
-      independent
-      theme={navTheme}
-      onStateChange={state => {
-        if (state) {
+    <Tab.Navigator
+      initialRouteName={initialRouteName || tabsConfig[0]?.name}
+      screenListeners={{
+        state(e) {
+          const state = e.data.state
           const route = getActiveRouteName(state!)
           onTabChange?.(route)
-        }
+        },
       }}
+      screenOptions={{
+        tabBarScrollEnabled: true,
+        tabBarItemStyle: {
+          minWidth: tabWidth,
+          width: 'auto',
+          height: tabHeight,
+        },
+        swipeEnabled: !swipeDisabled,
+      }}
+      backBehavior="none"
     >
-      <Tab.Navigator
-        initialRouteName={initialRouteName || tabsConfig[0]?.name}
-        screenOptions={{
-          tabBarScrollEnabled: true,
-          tabBarItemStyle: {
-            minWidth: tabWidth,
-            width: 'auto',
-            height: tabHeight,
-            // backgroundColor: 'red',
-          },
-          tabBarStyle: {
-            // backgroundColor: 'blue',
-          },
-          swipeEnabled: !swipeDisabled,
-        }}
-        // style={{
-        //   backgroundColor: 'green',
-        // }}
-        backBehavior="none"
-      >
-        {tabsConfig.map(tab => (
-          <Tab.Screen
-            key={tab.name}
-            name={tab.name}
-            component={tab.Component}
-          />
-        ))}
-      </Tab.Navigator>
-    </NavigationContainer>
+      {tabsConfig.map(tab => (
+        <Tab.Screen
+          key={tab.name}
+          name={tab.name}
+          component={tab.Component}
+        />
+      ))}
+    </Tab.Navigator>
   )
 }
 

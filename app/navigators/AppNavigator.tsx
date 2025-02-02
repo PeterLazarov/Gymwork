@@ -238,23 +238,23 @@ export const AppNavigator = observer(function AppNavigator(
   return (
     <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <PaperProvider theme={paperTheme}>
-        <ErrorBoundary
-          fallback={({ error, resetError }) => (
-            <Screens.ErrorDetailsScreen
-              error={error}
-              resetError={resetError}
-            />
-          )}
+        <NavigationContainer
+          ref={navigationRef}
+          theme={navigationTheme}
+          {...props}
+          onStateChange={handleStateChange}
         >
-          <PortalProvider>
-            <Portal.Host>
-              <DialogContextProvider>
-                <NavigationContainer
-                  ref={navigationRef}
-                  theme={navigationTheme}
-                  {...props}
-                  onStateChange={handleStateChange}
-                >
+          <ErrorBoundary
+            fallback={({ error, resetError }) => (
+              <Screens.ErrorDetailsScreen
+                error={error}
+                resetError={resetError}
+              />
+            )}
+          >
+            <PortalProvider>
+              <Portal.Host>
+                <DialogContextProvider>
                   {/* The bar at the top */}
                   {/* <StatusBar
                     backgroundColor={
@@ -263,22 +263,22 @@ export const AppNavigator = observer(function AppNavigator(
                     barStyle={'light-content'}
                   /> */}
                   <AppStack />
-                </NavigationContainer>
-              </DialogContextProvider>
-            </Portal.Host>
+                </DialogContextProvider>
+              </Portal.Host>
 
-            <View
-              ref={offscreenRef}
-              style={{
-                position: 'absolute',
-                zIndex: 1,
-                left: screenDimensions.width,
-              }}
-            >
-              <PortalHost name="offscreen" />
-            </View>
-          </PortalProvider>
-        </ErrorBoundary>
+              <View
+                ref={offscreenRef}
+                style={{
+                  position: 'absolute',
+                  zIndex: 1,
+                  left: screenDimensions.width,
+                }}
+              >
+                <PortalHost name="offscreen" />
+              </View>
+            </PortalProvider>
+          </ErrorBoundary>
+        </NavigationContainer>
       </PaperProvider>
     </ThemeProvider>
   )
