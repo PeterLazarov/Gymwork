@@ -1,7 +1,4 @@
-import {
-  useNavigation,
-  UNSTABLE_usePreventRemove,
-} from '@react-navigation/native'
+import { useNavigation, usePreventRemove } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React, { useLayoutEffect, useState } from 'react'
 import { Alert } from 'react-native'
@@ -34,7 +31,7 @@ export const WorkoutFeedbackScreen: React.FC = observer(() => {
   const { showConfirm } = useDialogContext()
   const [comments, setComments] = useState<WorkoutComments>(workout?.comments)
 
-  UNSTABLE_usePreventRemove(true, ({ data }) => {
+  usePreventRemove(true, ({ data }) => {
     // Prompt the user before leaving the screen
     Alert.alert(translate('warning'), translate('changesWillBeLost'), [
       {
