@@ -42,7 +42,6 @@ const WorkoutsReview: React.FC = () => {
       e => e.muscleAreas
     ) as string[]
 
-    console.log({ filterMuscleAreas })
     const muscleAreaFilter = filterMuscleAreas.every(area =>
       workoutMuscleAreas.includes(area)
     )
