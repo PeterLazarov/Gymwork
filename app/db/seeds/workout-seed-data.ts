@@ -42,7 +42,7 @@ function generateStep(
   }
 }
 
-function generateWorkout(date: string) {
+function generateWorkout(date: string): WorkoutSnapshotIn {
   let workoutTime = DateTime.fromISO(date).set({
     hour: 8,
     minute: 0,
@@ -170,6 +170,13 @@ function generateWorkout(date: string) {
   return {
     date,
     steps: generateSteps(date),
+    notes: Array.from({ length: between(0, 20) })
+      .map(() => 'word')
+      .join(' ')
+      .trim(),
+    feeling: (['sad', 'neutral', 'happy', undefined] as const)[between(0, 3)],
+    pain: (['pain', 'discomfort', 'noPain', undefined] as const)[between(0, 3)],
+    rpe: between(0, 1) ? between(5, 10) : undefined,
   }
 }
 const workoutSeedData: WorkoutSnapshotIn[] = Array.from({

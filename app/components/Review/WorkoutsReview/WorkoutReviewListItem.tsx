@@ -1,20 +1,13 @@
 import { observer } from 'mobx-react-lite'
-import {
-  StyleSheet,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native'
+import { TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
 
 import { MuscleMap } from '@/components/MuscleMap/MuscleMap'
-import { useStores } from '@/db/helpers/useStores'
 import { useAppTheme } from '@/utils/useAppTheme'
-import WorkoutCommentsCard from 'app/components/Workout/WorkoutCommentsCard'
-import { Workout } from 'app/db/models'
+import { discomfortOptions, Workout } from 'app/db/models'
 import { formatDateIso } from 'app/utils/date'
 import { Text, ThemedStyle } from 'designSystem'
 import { palettes } from 'designSystem/theme/colors'
+import { translate } from '@/i18n'
 
 type WorkoutReviewListItemProps = {
   workout: Workout
@@ -26,119 +19,162 @@ const WorkoutReviewListItem: React.FC<WorkoutReviewListItemProps> = ({
   onPress,
 }) => {
   const { theme, themed } = useAppTheme()
-
-  const { settingsStore } = useStores()
-
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={styles.item}
+      style={themed($container)}
     >
-      <Text style={themed($title)}>{formatDateIso(workout.date, 'long')}</Text>
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <View>
+            <Text style={themed($title)}>
+              {formatDateIso(workout.date, 'long')}
+            </Text>
+          </View>
 
-      {settingsStore.enableDetailedWorkoutSummary && (
-        <View style={{ gap: theme.spacing.sm }}>
-          {/* Muscles */}
           <View
-            // eslint-disable-next-line react-native/no-color-literals
-            style={themed($section)}
+            style={{
+              flexDirection: 'row',
+            }}
           >
-            <Text style={{ flex: 1, textAlign: 'center' }}>Muscles</Text>
             <View
               style={{
-                flexDirection: 'row',
+                height: 80,
+                width: 60,
               }}
             >
-              <View
-                style={{
-                  maxHeight: 200,
-                  flex: 1,
-                }}
-              >
-                <MuscleMap
-                  muscles={workout.muscles}
-                  back={false}
-                  activeColor={palettes.gold['80']}
-                  inactiveColor={theme.colors.outline}
-                  baseColor={theme.colors.shadow}
-                />
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  maxHeight: 200,
-                }}
-              >
-                <MuscleMap
-                  muscles={workout.muscles}
-                  back={true}
-                  activeColor={palettes.gold['80']}
-                  inactiveColor={theme.colors.outline}
-                  baseColor={theme.colors.shadow}
-                />
-              </View>
+              <MuscleMap
+                muscles={workout.muscles}
+                back={false}
+                activeColor={palettes.gold['80']}
+                inactiveColor={theme.colors.outline}
+                baseColor={theme.colors.shadow}
+              />
             </View>
-          </View>
-
-          {/* Duration */}
-          <View style={themed($section)}>
-            <Text>Duration: {workout?.duration?.toFormat('hh:mm:ss')}</Text>
-            <Text>
-              Start: {workout.firstAddedSet.createdAt.toLocaleTimeString()}
-            </Text>
-            <Text>
-              End: {workout.lastAddedSet?.createdAt.toLocaleTimeString()}
-            </Text>
-          </View>
-
-          {/* Exercises */}
-          <View style={themed($section)}>
-            <View>
-              <Text>Exercises:</Text>
-            </View>
-            <View>
-              {workout.exercises.map(exercise => (
-                <Text
-                  key={exercise.guid}
-                  // style={{ fontSize: theme.typography.fontSize.xs }}
-                >
-                  {exercise.name}
-                </Text>
-              ))}
+            <View
+              style={{
+                height: 80,
+                width: 60,
+              }}
+            >
+              <MuscleMap
+                muscles={workout.muscles}
+                back={true}
+                activeColor={palettes.gold['80']}
+                inactiveColor={theme.colors.outline}
+                baseColor={theme.colors.shadow}
+              />
             </View>
           </View>
         </View>
-      )}
+      </View>
 
-      {workout.hasComments && (
-        <WorkoutCommentsCard
-          onPress={onPress}
-          workout={workout}
-          compactMode
-        />
+      {/* 3col */}
+      <View style={{ flex: 1, gap: theme.spacing.xs, flexDirection: 'row' }}>
+        {workout.duration !== undefined && (
+          <View style={themed($surface)}>
+            <Text
+              numberOfLines={1}
+              style={themed($surfaceTitle)}
+            >
+              {translate('duration')}
+            </Text>
+
+            <Text
+              numberOfLines={1}
+              style={themed($surfaceBodyBold)}
+            >
+              {translate('durationMinutes' as any, {
+                count: Math.ceil(workout.duration?.as('minutes')),
+              })}
+            </Text>
+          </View>
+        )}
+
+        {workout.rpe && (
+          <View style={themed($surface)}>
+            <Text
+              numberOfLines={1}
+              style={themed($surfaceTitle)}
+            >
+              {translate('difficulty')}
+            </Text>
+            <Text
+              numberOfLines={1}
+              style={themed($surfaceBodyBold)}
+            >
+              {translate('diffValue', { rpe: workout.rpe })}
+            </Text>
+          </View>
+        )}
+
+        {workout.pain && (
+          <View style={themed($surface)}>
+            <Text
+              numberOfLines={1}
+              style={themed($surfaceTitle)}
+            >
+              {translate('discomfort')}
+            </Text>
+
+            <Text
+              numberOfLines={1}
+              style={themed($surfaceBodyBold)}
+            >
+              {discomfortOptions[workout.pain].label}
+            </Text>
+          </View>
+        )}
+      </View>
+
+      {workout.comments.notes.length > 0 && (
+        <View style={themed($surface)}>
+          <Text>{workout.comments.notes}</Text>
+        </View>
       )}
     </TouchableOpacity>
   )
 }
 
-const styles = StyleSheet.create({
-  item: {
-    display: 'flex',
-    flex: 1,
-    justifyContent: 'center',
-    padding: 8,
-  },
+const $container: ThemedStyle<ViewStyle> = theme => ({
+  display: 'flex',
+  flex: 1,
+  justifyContent: 'center',
+  padding: theme.spacing.xs,
+  gap: theme.spacing.sm,
+  backgroundColor: theme.colors.background,
 })
 
-const $section: ThemedStyle<ViewStyle> = theme => ({
-  backgroundColor: theme.colors.surfaceContainer,
-  borderRadius: theme.spacing.sm,
-  padding: theme.spacing.lg,
-})
 const $title: ThemedStyle<TextStyle> = theme => ({
-  fontSize: theme.typography.fontSize.xl,
-  lineHeight: theme.typography.fontSize.xl * 3,
+  fontSize: theme.typography.fontSize.lg,
+  fontWeight: '500',
+  marginLeft: theme.spacing.sm,
   textAlign: 'center',
+})
+
+const $surface: ThemedStyle<ViewStyle> = theme => ({
+  backgroundColor: theme.colors.surfaceContainerLow,
+  borderRadius: theme.spacing.sm,
+  padding: theme.spacing.sm,
+  flex: 1,
+})
+
+const $surfaceTitle: ThemedStyle<TextStyle> = theme => ({
+  fontSize: theme.typography.fontSize.xs,
+  color: theme.colors.onSurfaceVariant,
+  textTransform: 'capitalize',
+})
+
+const $surfaceBodyBold: ThemedStyle<TextStyle> = theme => ({
+  fontSize: theme.typography.fontSize.sm,
+  fontWeight: '500',
+  color: theme.colors.onSurface,
 })
 
 export default observer(WorkoutReviewListItem)

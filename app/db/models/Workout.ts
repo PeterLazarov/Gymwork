@@ -48,7 +48,7 @@ export const WorkoutModel = types
     notes: '',
     feeling: types.maybe(types.enumeration('feeling', Object.values(feelings))),
     pain: types.maybe(types.enumeration('pain', Object.values(discomfort))),
-    rpe: types.maybe(types.number),
+    rpe: types.maybe(types.number), // TODO rename to effort?
 
     // TODO rename to timerStoppedAt?
     /** Used for timers */

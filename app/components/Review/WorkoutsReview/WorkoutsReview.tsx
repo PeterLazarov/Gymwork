@@ -67,10 +67,10 @@ const WorkoutsReview: React.FC = () => {
           workout={item}
           onPress={() => setOpenedWorkout(item)}
         />
-        <Divider
+        {/* <Divider
           orientation="horizontal"
           variant="neutral"
-        />
+        /> */}
       </>
     )
   }
@@ -101,7 +101,6 @@ const WorkoutsReview: React.FC = () => {
             data={filteredWorkouts}
             renderItem={renderItem}
             keyExtractor={workout => `${workout.date}_${workout.guid}`}
-            estimatedItemSize={157}
             contentContainerStyle={{ paddingBottom: TabHeightCompensation }}
           />
         ) : (
@@ -131,6 +130,7 @@ const styles = StyleSheet.create({
   },
   list: {
     flexBasis: 0,
+    // backgroundColor:
   },
   screen: {
     display: 'flex',

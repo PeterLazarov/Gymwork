@@ -153,9 +153,11 @@ const en = {
     dark: 'Dark',
     light: 'Light',
     colorScheme: 'Color scheme',
-    enableDetailedWorkoutSummary: 'Enable detailed workout summary',
     tips: 'Tips',
     instructions: 'Instructions',
+    durationMinutes: '{{count}} minute',
+    durationMinutes_one: '{{count}} minute',
+    durationMinutes_other: '{{count}} minutes',
   },
 }
 

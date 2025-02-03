@@ -168,23 +168,6 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = observer(() => {
           orientation="horizontal"
         />
 
-        <SettingsToggleItem
-          enabled={settingsStore.enableDetailedWorkoutSummary}
-          onToggle={() =>
-            settingsStore.setProp(
-              'enableDetailedWorkoutSummary',
-              !settingsStore.enableDetailedWorkoutSummary
-            )
-          }
-        >
-          {translate('enableDetailedWorkoutSummary')}
-        </SettingsToggleItem>
-
-        <Divider
-          variant="neutral"
-          orientation="horizontal"
-        />
-
         <TouchableOpacity
           style={styles.item}
           onPress={onExportData}
