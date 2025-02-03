@@ -1,8 +1,8 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useRef, useState } from 'react'
-import { Button, Modal, Platform, StyleSheet, View } from 'react-native'
-import { Searchbar, Chip } from 'react-native-paper'
+import { Button, Platform, StyleSheet, View } from 'react-native'
+import { Searchbar } from 'react-native-paper'
 import { TrueSheet } from '@lodev09/react-native-true-sheet'
 
 import { TabHeightCompensation } from '@/navigators/constants'
