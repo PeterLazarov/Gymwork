@@ -2,12 +2,12 @@ import { observer } from 'mobx-react-lite'
 import { TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
 
 import { MuscleMap } from '@/components/MuscleMap/MuscleMap'
+import { translate } from '@/i18n'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { discomfortOptions, Workout } from 'app/db/models'
 import { formatDateIso } from 'app/utils/date'
 import { Text, ThemedStyle } from 'designSystem'
 import { palettes } from 'designSystem/theme/colors'
-import { translate } from '@/i18n'
 
 type WorkoutReviewListItemProps = {
   workout: Workout
