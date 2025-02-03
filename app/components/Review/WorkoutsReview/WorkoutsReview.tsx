@@ -1,4 +1,4 @@
-import { ListRenderItemInfo } from '@shopify/flash-list'
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -11,12 +11,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import { Workout, discomfortOptions } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { searchString } from 'app/utils/string'
-import {
-  Divider,
-  FeedbackPickerOption,
-  IndicatedScrollList,
-  spacing,
-} from 'designSystem'
+import { FeedbackPickerOption, spacing } from 'designSystem'
 
 import WorkoutReviewListItem from './WorkoutReviewListItem'
 
@@ -97,7 +92,7 @@ const WorkoutsReview: React.FC = () => {
           ))}
         </View>
         {filteredWorkouts.length > 0 ? (
-          <IndicatedScrollList
+          <FlashList
             data={filteredWorkouts}
             renderItem={renderItem}
             keyExtractor={workout => `${workout.date}_${workout.guid}`}
