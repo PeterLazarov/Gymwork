@@ -1,17 +1,18 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Modal, StyleSheet, View } from 'react-native'
 import { Searchbar } from 'react-native-paper'
 
 import { TabHeightCompensation } from '@/navigators/constants'
+import { useAppTheme } from '@/utils/useAppTheme'
 import EmptyState from 'app/components/EmptyState'
 import WorkoutModal from 'app/components/WorkoutModal'
 import { useStores } from 'app/db/helpers/useStores'
 import { Workout, discomfortOptions } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { searchString } from 'app/utils/string'
-import { FeedbackPickerOption, spacing } from 'designSystem'
+import { FAB, FeedbackPickerOption, spacing, Text } from 'designSystem'
 
 import WorkoutReviewListItem from './WorkoutReviewListItem'
 
@@ -55,6 +56,13 @@ const WorkoutsReview: React.FC = () => {
     }
   }
 
+  const { theme } = useAppTheme()
+
+  function expandFilters() {
+    setModalVisible(true)
+  }
+  const [modalVisible, setModalVisible] = useState(false)
+
   const renderItem = ({ item }: ListRenderItemInfo<Workout>) => {
     return (
       <>
@@ -73,24 +81,6 @@ const WorkoutsReview: React.FC = () => {
   return (
     <>
       <View style={styles.screen}>
-        <Searchbar
-          placeholder={translate('search')}
-          onChangeText={setFilterString}
-          value={filterString}
-          mode="view"
-        />
-        <View style={styles.filterOptionList}>
-          {Object.values(discomfortOptions).map(option => (
-            <FeedbackPickerOption
-              key={option.value}
-              option={option}
-              isSelected={filterDiscomforedLevels.includes(option.value)}
-              onPress={() => onDiscomfortFilterPress(option.value)}
-              compactMode
-              style={styles.filterOption}
-            />
-          ))}
-        </View>
         {filteredWorkouts.length > 0 ? (
           <FlashList
             data={filteredWorkouts}
@@ -111,6 +101,39 @@ const WorkoutsReview: React.FC = () => {
           showComments
         />
       )}
+
+      <FAB
+        icon="filter"
+        onPress={expandFilters}
+        style={{ bottom: theme.spacing.lg, right: theme.spacing.lg }}
+      ></FAB>
+
+      <Modal
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false)
+        }}
+        presentationStyle="overFullScreen"
+      >
+        <Searchbar
+          placeholder={translate('search')}
+          onChangeText={setFilterString}
+          value={filterString}
+          mode="view"
+        />
+        <View style={styles.filterOptionList}>
+          {Object.values(discomfortOptions).map(option => (
+            <FeedbackPickerOption
+              key={option.value}
+              option={option}
+              isSelected={filterDiscomforedLevels.includes(option.value)}
+              onPress={() => onDiscomfortFilterPress(option.value)}
+              compactMode
+              style={styles.filterOption}
+            />
+          ))}
+        </View>
+      </Modal>
     </>
   )
 }
