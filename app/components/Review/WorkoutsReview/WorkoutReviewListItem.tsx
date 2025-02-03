@@ -159,7 +159,7 @@ const $title: ThemedStyle<TextStyle> = theme => ({
 })
 
 const $surface: ThemedStyle<ViewStyle> = theme => ({
-  backgroundColor: theme.colors.surfaceContainerLow,
+  backgroundColor: theme.colors.surfaceContainer,
   borderRadius: theme.spacing.sm,
   padding: theme.spacing.sm,
   flex: 1,
