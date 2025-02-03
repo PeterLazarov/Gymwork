@@ -62,16 +62,6 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = observer(() => {
 
   return (
     <EmptyLayout>
-      <Header>
-        <IconButton onPress={navStore.goBack}>
-          <Icon
-            icon="chevron-back"
-            color={colors.onPrimary}
-          />
-        </IconButton>
-        <Header.Title title={translate('settings')} />
-      </Header>
-
       <View style={{ flex: 1, padding: spacing.xs }}>
         <Select
           options={appearanceOptions}
