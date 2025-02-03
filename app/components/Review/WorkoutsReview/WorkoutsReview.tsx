@@ -105,8 +105,11 @@ const WorkoutsReview: React.FC = () => {
       <FAB
         icon="filter"
         onPress={expandFilters}
-        style={{ bottom: theme.spacing.lg, right: theme.spacing.lg }}
-      ></FAB>
+        style={{
+          bottom: theme.spacing.lg + TabHeightCompensation,
+          right: theme.spacing.lg,
+        }}
+      />
 
       <Modal
         visible={modalVisible}
