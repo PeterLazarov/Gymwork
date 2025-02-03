@@ -36,6 +36,7 @@
     "@expo/metro-runtime": "~4.0.0",
     "@gorhom/bottom-sheet": "^5.0.6",
     "@gorhom/portal": "^1.0.14",
+    "@lodev09/react-native-true-sheet": "^1.1.0",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-menu/menu": "^1.2.1",
     "@react-native-picker/picker": "2.9.0",

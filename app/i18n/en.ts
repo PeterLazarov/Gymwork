@@ -158,6 +158,7 @@ const en = {
     durationMinutes: '{{count}} minute',
     durationMinutes_one: '{{count}} minute',
     durationMinutes_other: '{{count}} minutes',
+    reset: 'Reset'
   },
 }
 

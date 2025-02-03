@@ -48,6 +48,11 @@ export const ExerciseStoreModel = types
         store.exercises.flatMap<string>(e => e.muscles)
       ).sort()
     },
+    get muscleAreaOptions() {
+      return uniqueValues(
+        store.exercises.flatMap<string>(e => e.muscleAreas)
+      ).sort()
+    },
     get exercisesMap() {
       const map: Record<Exercise['guid'], Exercise> = {}
 
@@ -84,6 +89,6 @@ export const ExerciseStoreModel = types
     return {}
   })
 
-export interface ExerciseStore extends Instance<typeof ExerciseStoreModel> {}
+export interface ExerciseStore extends Instance<typeof ExerciseStoreModel> { }
 export interface ExerciseStoreSnapshot
-  extends SnapshotOut<typeof ExerciseStoreModel> {}
+  extends SnapshotOut<typeof ExerciseStoreModel> { }
