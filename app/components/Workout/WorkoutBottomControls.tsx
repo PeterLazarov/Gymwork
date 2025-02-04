@@ -29,7 +29,8 @@ const WorkoutBottomControls = () => {
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: spacing.xs,
-        bottom: TabHeightCompensation,
+        // bottom: TabHeightCompensation,
+        bottom: 0,
         backgroundColor: colors.surface, // TODO ios blur
         maxHeight: WorkoutBottomControlsHeight,
       }}

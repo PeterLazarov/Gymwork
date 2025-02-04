@@ -70,7 +70,7 @@ export type AppStackParamList = {
 }
 
 export type HomeStackParamList = {
-  Review: undefined
+  Review: Screens.ReviewScreenParams
   WorkoutStack: undefined
 }
 
@@ -153,6 +153,10 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen
         name="ExerciseSelect"
         component={Screens.ExerciseSelectScreen}
+        options={{
+          // Does not display title. Useful when prev page would be a stack (HomeStack)
+          headerBackButtonDisplayMode: 'minimal',
+        }}
       />
       <Stack.Screen
         name="HomeStack"

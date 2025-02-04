@@ -16,7 +16,7 @@ import * as Screens from '@/screens'
 import { useAppTheme } from '@/utils/useAppTheme'
 
 export type BottomTabParamList = {
-  Review: undefined // TODO indicate top tab?
+  ReviewStack: undefined // TODO indicate top tab?
   WorkoutStack: undefined // TODO date?
 }
 
@@ -53,14 +53,31 @@ export function BottomNavigator(): JSX.Element {
       }}
     >
       <Tab.Screen
-        name="Review"
-        component={Screens.ReviewScreen}
+        name="ReviewStack"
+        // component={Screens.ReviewScreen}
         options={{
           tabBarLabel: translate('review'),
           tabBarIcon: ({ focused }) =>
             MaterialIcons.getImageSourceSync('history', 24, 'black')!,
         }}
-      />
+      >
+        {({ route, navigation }) => {
+          const ReviewStack = createNativeStackNavigator()
+
+          return (
+            <ReviewStack.Navigator
+              screenOptions={{
+                headerBackVisible: false,
+              }}
+            >
+              <ReviewStack.Screen
+                name="Review"
+                component={Screens.ReviewScreen}
+              />
+            </ReviewStack.Navigator>
+          )
+        }}
+      </Tab.Screen>
 
       <Tab.Screen
         name="WorkoutStack"
@@ -75,38 +92,33 @@ export function BottomNavigator(): JSX.Element {
           return (
             <WorkoutStack.Navigator
               initialRouteName="Workout"
-              screenOptions={
-                {
-                  // headerShown: false,
-                  // animation: 'none',
-                }
-              }
+              screenOptions={{
+                headerBackVisible: false,
+              }}
             >
               <WorkoutStack.Screen
                 name="Workout"
                 component={Screens.WorkoutScreen}
                 options={{
+                  headerBackVisible: true,
                   headerRight(props) {
-                    return (
-                      // <View
-                      //   style={{ height: 40, width: 40, backgroundColor: 'blue' }}
-                      // ></View>
-                      <WorkoutHeaderRight />
-                    )
+                    return <WorkoutHeaderRight />
                   },
-                  // headerTitle(props) {
-                  //   console.log(props.c)
-                  //   return 'lalala'
-                  // },
                 }}
               />
               <WorkoutStack.Screen
                 name="WorkoutStep"
                 component={Screens.WorkoutStepScreen}
+                options={{
+                  headerBackVisible: true,
+                }}
               />
               <WorkoutStack.Screen
                 name="WorkoutFeedback"
                 component={Screens.WorkoutFeedbackScreen}
+                options={{
+                  headerBackVisible: true,
+                }}
               />
             </WorkoutStack.Navigator>
           )

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
@@ -9,9 +9,11 @@ import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { useRouteParams } from 'app/navigators'
 import { FAB, Header, Icon, IconButton } from 'designSystem'
+import { Screen } from '@/components/ignite'
 
 export type ExerciseSelectScreenParams = {
   selectMode: WorkoutStep['type']
+  onSelect?: (exercises: Exercise[]) => void
 }
 export const ExerciseSelectScreen: React.FC = () => {
   const {
@@ -25,22 +27,23 @@ export const ExerciseSelectScreen: React.FC = () => {
   } = useStores()
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([])
 
-  const { selectMode } = useRouteParams('ExerciseSelect')
+  const { selectMode, onSelect } = useRouteParams('ExerciseSelect')
 
-  function createExercisesStep(exercises: Exercise[]) {
-    if (!stateStore.openedWorkout) {
-      workoutStore.createWorkout()
-    }
-    const newStep = stateStore.openedWorkout!.addStep(exercises, selectMode)
-    stateStore.setFocusedStep(newStep.guid)
-    stateStore.setProp('focusedExerciseGuid', newStep.exercises[0]?.guid)
+  // function createExercisesStep(exercises: Exercise[]) {
+  //   if (!stateStore.openedWorkout) {
+  //     workoutStore.createWorkout()
+  //   }
+  //   const newStep = stateStore.openedWorkout!.addStep(exercises, selectMode)
+  //   stateStore.setFocusedStep(newStep.guid)
+  //   stateStore.setProp('focusedExerciseGuid', newStep.exercises[0]?.guid)
 
-    navigate('WorkoutStep')
-  }
+  //   navigate('WorkoutStep')
+  // }
 
-  function onBackPress() {
-    navigate('WorkoutStack', { screen: 'Workout' })
-  }
+  // TODO remove?
+  // function onBackPress() {
+  //   navigate('WorkoutStack', { screen: 'Workout' })
+  // }
 
   function onAddExercisePress() {
     navigate('ExerciseEdit', {
@@ -54,50 +57,51 @@ export const ExerciseSelectScreen: React.FC = () => {
       : translate('selectExercises')
 
   return (
-    <EmptyLayout>
-      <View style={{ flex: 1, alignItems: 'center' }}>
-        <Header>
-          <IconButton onPress={onBackPress}>
-            <Icon
-              icon="chevron-back"
-              color={colors.onPrimary}
-            />
-          </IconButton>
-          <Header.Title
-            title={
-              selectMode === 'straightSet'
-                ? translate('selectExercise')
-                : supersetTitle
-            }
+    <Screen contentContainerStyle={{ flex: 1 }}>
+      {/* <View style={{ flex: 1, alignItems: 'center' }}> */}
+      <Header>
+        <IconButton onPress={onAddExercisePress}>
+          <Icon
+            icon="add"
+            size="large"
+            color={colors.onPrimary}
           />
-          <IconButton onPress={onAddExercisePress}>
-            <Icon
-              icon="add"
-              size="large"
-              color={colors.onPrimary}
-            />
-          </IconButton>
-        </Header>
+        </IconButton>
+      </Header>
+      <Header.Title
+        title={
+          selectMode === 'straightSet'
+            ? translate('selectExercise')
+            : supersetTitle
+        }
+      />
 
-        <View style={{ flex: 1 }}>
-          <ExerciseSelectLists
-            multiselect={selectMode === 'superSet'}
-            selected={selectedExercises}
-            onChange={
-              selectMode === 'superSet'
-                ? setSelectedExercises
-                : createExercisesStep
+      <View style={{ flex: 1 }}>
+        <ExerciseSelectLists
+          multiselect={selectMode === 'superSet'}
+          selected={selectedExercises}
+          onChange={
+            // selectMode === 'superSet'
+            //   ? setSelectedExercises
+            //   : createExercisesStep
+            exercises => {
+              setSelectedExercises(exercises)
+              onSelect?.(exercises)
             }
-          />
-        </View>
-        {selectMode === 'superSet' && (
-          <FAB
-            icon="check"
-            disabled={selectedExercises.length < 2}
-            onPress={() => createExercisesStep(selectedExercises)}
-          />
-        )}
+          }
+        />
       </View>
-    </EmptyLayout>
+      {selectMode === 'superSet' && (
+        <FAB
+          icon="check"
+          disabled={selectedExercises.length < 2}
+          onPress={() => {
+            Alert.alert('not implemented')
+            // createExercisesStep(selectedExercises)
+          }}
+        />
+      )}
+      {/* </View> */}
+    </Screen>
   )
 }

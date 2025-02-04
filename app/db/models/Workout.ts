@@ -111,7 +111,7 @@ export const WorkoutModel = types
     },
     get inferredHistoricalDuration(): Duration | undefined {
       // TODO do we need this???
-      console.log({ endedAt: self.endedAt })
+      // console.log({ endedAt: self.endedAt })
       if (!self.endedAt) return undefined
 
       const setsAddedAtDayOfWorkout = this.allSets
@@ -129,7 +129,7 @@ export const WorkoutModel = types
 
       return Duration.fromMillis(
         lastSet.createdAt.getTime() -
-          (firstSet.createdAt.getTime() - (firstSet.durationMs ?? 0))
+        (firstSet.createdAt.getTime() - (firstSet.durationMs ?? 0))
       ).plus(padding)
     },
     // TODO do we need this?
@@ -213,6 +213,6 @@ export const WorkoutModel = types
     },
   }))
 
-export interface Workout extends Instance<typeof WorkoutModel> {}
-export interface WorkoutSnapshotOut extends SnapshotOut<typeof WorkoutModel> {}
-export interface WorkoutSnapshotIn extends SnapshotIn<typeof WorkoutModel> {}
+export interface Workout extends Instance<typeof WorkoutModel> { }
+export interface WorkoutSnapshotOut extends SnapshotOut<typeof WorkoutModel> { }
+export interface WorkoutSnapshotIn extends SnapshotIn<typeof WorkoutModel> { }

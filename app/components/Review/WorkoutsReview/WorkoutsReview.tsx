@@ -1,7 +1,7 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useRef, useState } from 'react'
-import { Button, Platform, StyleSheet, View } from 'react-native'
+import { Button, FlatList, Platform, StyleSheet, View } from 'react-native'
 import { Searchbar } from 'react-native-paper'
 import { TrueSheet } from '@lodev09/react-native-true-sheet'
 
@@ -73,15 +73,6 @@ const WorkoutsReview: React.FC = () => {
 
   const { theme } = useAppTheme()
 
-  const renderItem = ({ item }: ListRenderItemInfo<Workout>) => {
-    return (
-      <WorkoutReviewListItem
-        workout={item}
-        onPress={() => setOpenedWorkout(item)}
-      />
-    )
-  }
-
   // filter logic
   const sheet = useRef<TrueSheet>(null)
 
@@ -107,9 +98,14 @@ const WorkoutsReview: React.FC = () => {
     <>
       <View style={styles.screen}>
         {filteredWorkouts.length > 0 ? (
-          <FlashList
+          <FlatList
             data={filteredWorkouts}
-            renderItem={renderItem}
+            renderItem={({ item }) => (
+              <WorkoutReviewListItem
+                workout={item}
+                onPress={() => setOpenedWorkout(item)}
+              />
+            )}
             keyExtractor={workout => `${workout.date}_${workout.guid}`}
             contentContainerStyle={{ paddingBottom: TabHeightCompensation }}
           />
@@ -131,7 +127,9 @@ const WorkoutsReview: React.FC = () => {
         icon="filter"
         onPress={showFilters}
         style={{
-          bottom: theme.spacing.lg + TabHeightCompensation,
+          // position: 'absolute',
+          bottom: theme.spacing.xl,
+          // + TabHeightCompensation,
           right: theme.spacing.lg,
         }}
       />

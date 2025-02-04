@@ -140,7 +140,8 @@ const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
       <View
         style={{
           position: 'absolute',
-          bottom: TabHeightCompensation,
+          // bottom: TabHeightCompensation,
+          bottom: 0,
           width: '100%',
           paddingHorizontal: spacing.xs,
         }}

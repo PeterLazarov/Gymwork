@@ -68,7 +68,7 @@ const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
     {
       name: translate('favorite'),
       Component: () => (
-        <View style={{ marginTop: searchBarHeight, flex: 1 }}>
+        <View style={{ height: 200, marginTop: searchBarHeight, flex: 1 }}>
           <FavoriteExercisesList {...props} />
         </View>
       ),
@@ -76,7 +76,7 @@ const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
     {
       name: translate('mostUsed'),
       Component: () => (
-        <View style={{ marginTop: searchBarHeight, flex: 1 }}>
+        <View style={{ height: 200, marginTop: searchBarHeight, flex: 1 }}>
           <MostUsedExercisesList {...props} />
         </View>
       ),
@@ -84,7 +84,7 @@ const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
     {
       name: translate('allExercises'),
       Component: () => (
-        <View style={{ marginTop: searchBarHeight, flex: 1 }}>
+        <View style={{ height: 200, marginTop: searchBarHeight, flex: 1 }}>
           <AllExercisesList {...props} />
         </View>
       ),
