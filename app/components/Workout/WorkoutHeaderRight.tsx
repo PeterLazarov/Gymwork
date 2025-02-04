@@ -58,9 +58,7 @@ const WorkoutHeaderRight: React.FC = () => {
     return {
       toggleCommentsCard: {
         fn: toggleCommentsCard,
-        title: translate(
-          showCommentsCard ? 'hideCommentsCard' : 'showCommentsCard'
-        ),
+        title: translate('showCommentsCard'),
         showIf: true,
         state: showCommentsCard ? 'on' : 'off',
       },
