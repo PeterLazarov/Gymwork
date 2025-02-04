@@ -42,6 +42,7 @@
 * Seed templates like Strong app https://youtu.be/VkHWqq715Qc?si=k3VepIvmuQXj-cBC&t=164
 * Workout summary card like Strong app https://youtu.be/VkHWqq715Qc?si=4vyHtvnlXpxzMSSl&t=169
 * Integrated 1RM calc
+* Advanced muscle toggle in settings that toggles between muscleAreas and muscles
 * Exercise instructions / visualisations
   - https://liftmanual.com/
   - https://github.com/wrkout/exercises.json

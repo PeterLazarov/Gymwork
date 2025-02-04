@@ -23,7 +23,7 @@ const ExerciseListItem: React.FC<Props> = ({
 }) => {
   const heartIcon = exercise.isFavorite ? 'heart' : 'heart-outlined'
   const {
-    theme: { colors },
+    theme: { colors, typography },
   } = useAppTheme()
 
   const { navStore } = useStores()
@@ -55,16 +55,34 @@ const ExerciseListItem: React.FC<Props> = ({
           style={{ height, width: height }}
           source={exerciseImages[exercise.images[0]]}
         />
-        <Text
+
+        <View
           style={{
             flex: 1,
-            flexWrap: 'wrap',
-            color: isSelected ? colors.onSecondary : colors.onSurface,
           }}
-          numberOfLines={1}
         >
-          {exercise.name}
-        </Text>
+          <Text
+            style={{
+              flexWrap: 'wrap',
+              color: isSelected ? colors.onSecondary : colors.onSurface,
+            }}
+            numberOfLines={1}
+          >
+            {exercise.name}
+          </Text>
+          <Text
+            style={{
+              // flex: 1,
+              flexWrap: 'wrap',
+              fontSize: typography.fontSize.xs,
+              color: colors.onSurfaceVariant,
+            }}
+            numberOfLines={1}
+          >
+            {exercise.muscleAreas.join(', ')}
+          </Text>
+        </View>
+
         <IconButton
           onPress={() => {
             exercise.setProp('isFavorite', !exercise.isFavorite)
