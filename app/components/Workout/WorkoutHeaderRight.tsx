@@ -153,11 +153,7 @@ const WorkoutHeaderRight: React.FC = () => {
         actions={menuActionsArray}
         shouldOpenOnLongPress={false}
       >
-        <IconButton
-          onPress={() => {
-            console.log('jknlk')
-          }}
-        >
+        <IconButton>
           <Icon
             icon="ellipsis-vertical"
             color={colors.onSurface}
