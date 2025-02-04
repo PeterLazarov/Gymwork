@@ -1,7 +1,6 @@
 import { MenuView, MenuComponentRef, MenuAction } from '@react-native-menu/menu'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useRef, useState } from 'react'
-import { Menu } from 'react-native-paper'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 import useBenchmark from '@/utils/useBenchmark'
@@ -10,10 +9,8 @@ import { translate } from 'app/i18n'
 import { useShareWorkout } from 'app/utils/useShareWorkout'
 import { Icon, IconButton } from 'designSystem'
 
-import HomeMenuItems from '../HomeMenuItems'
 import MiniTimer from '../MiniTimer'
 import WorkoutTimerModal from '../Timer/WorkoutTimerModal'
-import { Button, View } from 'react-native'
 
 const WorkoutHeaderRight: React.FC = () => {
   const {
