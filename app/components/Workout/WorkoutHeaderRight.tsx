@@ -13,6 +13,7 @@ import { Icon, IconButton } from 'designSystem'
 import HomeMenuItems from '../HomeMenuItems'
 import MiniTimer from '../MiniTimer'
 import WorkoutTimerModal from '../Timer/WorkoutTimerModal'
+import { Button, View } from 'react-native'
 
 const WorkoutHeaderRight: React.FC = () => {
   const {
@@ -60,7 +61,7 @@ const WorkoutHeaderRight: React.FC = () => {
         title: translate(
           showCommentsCard ? 'hideCommentsCard' : 'showCommentsCard'
         ),
-        showIf: Boolean(openedWorkout?.hasComments),
+        showIf: true,
         state: showCommentsCard ? 'on' : 'off',
       },
       saveTemplate: {
@@ -83,19 +84,19 @@ const WorkoutHeaderRight: React.FC = () => {
           navigate('Settings')
         },
         title: translate('settings'),
-        showIf: Boolean(openedWorkout),
+        showIf: true,
       },
       goToFeedback: {
         fn() {
           navigate('UserFeedback', { referrerPage: activeRoute ?? '?' })
         },
         title: translate('giveFeedback'),
-        showIf: Boolean(openedWorkout),
+        showIf: true,
       },
       performBenchmark: {
         fn: performBenchmark,
         title: translate('performBenchmark'),
-        showIf: Boolean(openedWorkout),
+        showIf: true,
       },
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -148,18 +149,17 @@ const WorkoutHeaderRight: React.FC = () => {
       </IconButton>
 
       <MenuView
-        ref={menuRef}
         onPressAction={({ nativeEvent }) => {
           handleMenuPress(nativeEvent.event)
         }}
         actions={menuActionsArray}
-        // themeVariant="dark"
-        // style={{
-        //   backgroundColor: 'red',
-        // }}
         shouldOpenOnLongPress={false}
       >
-        <IconButton>
+        <IconButton
+          onPress={() => {
+            console.log('jknlk')
+          }}
+        >
           <Icon
             icon="ellipsis-vertical"
             color={colors.onSurface}
