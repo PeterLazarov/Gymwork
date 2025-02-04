@@ -14,6 +14,7 @@ import WorkoutsReview from 'app/components/Review/WorkoutsReview'
 import { useStores } from 'app/db/helpers/useStores'
 import { useRouteParams } from '@/navigators'
 import { Exercise } from '@/db/models'
+import { Header, IconButton, Icon } from 'designSystem'
 
 export type ReviewScreenParams = {
   exercise?: Exercise['guid']
@@ -44,8 +45,33 @@ export const ReviewScreen: React.FC = observer(() => {
   const [segmentedControlIndex, setSegmentedControlIndex] = useState(0)
   const pagerRef = useRef<PagerView>(null)
 
+  function goToExerciseSelect() {
+    navStore.navigate('ExerciseSelect', {
+      selectMode: 'straightSet',
+      onSelect(exercises) {
+        // TODO fix type to allow this
+        navStore.navigate('HomeStack', {
+          screen: 'Review',
+          params: {
+            exercise: exercises[0].guid,
+          },
+        })
+      },
+    })
+  }
+
   return (
     <>
+      {/* TODO figure out why it doesnt work */}
+      <Header>
+        <IconButton onPress={goToExerciseSelect}>
+          <Icon
+            icon="list-outline"
+            color={colors.primary}
+          />
+        </IconButton>
+      </Header>
+
       <Screen
         contentContainerStyle={{
           flexGrow: 1,
@@ -76,18 +102,7 @@ export const ReviewScreen: React.FC = observer(() => {
           <View key="2">
             <ExerciseView
               openSelect={() => {
-                navStore.navigate('ExerciseSelect', {
-                  selectMode: 'straightSet',
-                  onSelect(exercises) {
-                    // TODO fix type to allow this
-                    navStore.navigate('HomeStack', {
-                      screen: 'Review',
-                      params: {
-                        exercise: exercises[0].guid,
-                      },
-                    })
-                  },
-                })
+                goToExerciseSelect()
               }}
               isExerciseSelected={!!selectedExercise}
             >
@@ -98,22 +113,7 @@ export const ReviewScreen: React.FC = observer(() => {
           <View key="3">
             <ExerciseView
               openSelect={() => {
-                console.log('navigating to ExerciseSelect')
-                navStore.navigate('ExerciseSelect', {
-                  selectMode: 'straightSet',
-                  onSelect(exercises) {
-                    // TODO fix type to allow this
-                    navStore.navigate('HomeStack', {
-                      screen: 'ReviewStack',
-                      params: {
-                        screen: 'Review',
-                        params: {
-                          exercise: exercises[0].guid,
-                        },
-                      },
-                    })
-                  },
-                })
+                goToExerciseSelect()
               }}
               isExerciseSelected={!!selectedExercise}
             >
@@ -123,20 +123,7 @@ export const ReviewScreen: React.FC = observer(() => {
 
           <View key="4">
             <ExerciseView
-              openSelect={() =>
-                navStore.navigate('ExerciseSelect', {
-                  selectMode: 'straightSet',
-                  onSelect(exercises) {
-                    // TODO fix type to allow this
-                    navStore.navigate('HomeStack', {
-                      screen: 'Review',
-                      params: {
-                        exercise: exercises[0].guid,
-                      },
-                    })
-                  },
-                })
-              }
+              openSelect={() => goToExerciseSelect()}
               isExerciseSelected={!!selectedExercise}
             >
               <ExerciseHistoryReview exercise={selectedExercise} />

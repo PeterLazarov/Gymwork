@@ -20,6 +20,7 @@ import {
   spacing,
   Text,
 } from 'designSystem'
+import { Screen } from '@/components/ignite'
 
 export type SettingsScreenProps = AppStackScreenProps<'Settings'>
 
@@ -61,122 +62,117 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = observer(() => {
   }
 
   return (
-    <EmptyLayout>
-      <View style={{ flex: 1, padding: spacing.xs }}>
-        <Select
-          options={appearanceOptions}
-          value={settingsStore.colorSchemePreference}
-          onChange={t => setThemeContextOverride(t ?? undefined)}
-          headerText={translate('colorScheme')}
-          label={translate('colorScheme')}
-        />
+    <Screen>
+      <Select
+        options={appearanceOptions}
+        value={settingsStore.colorSchemePreference}
+        onChange={t => setThemeContextOverride(t ?? undefined)}
+        headerText={translate('colorScheme')}
+        label={translate('colorScheme')}
+      />
 
-        <Divider
-          variant="neutral"
-          orientation="horizontal"
-        />
+      <Divider
+        variant="neutral"
+        orientation="horizontal"
+      />
 
-        <SettingsToggleItem
-          enabled={settingsStore.measureRest}
-          onToggle={() =>
-            settingsStore.setMeasureRest(!settingsStore.measureRest)
-          }
-        >
-          {translate('measureRest')}
-        </SettingsToggleItem>
+      <SettingsToggleItem
+        enabled={settingsStore.measureRest}
+        onToggle={() =>
+          settingsStore.setMeasureRest(!settingsStore.measureRest)
+        }
+      >
+        {translate('measureRest')}
+      </SettingsToggleItem>
 
-        <Divider
-          variant="neutral"
-          orientation="horizontal"
-        />
+      <Divider
+        variant="neutral"
+        orientation="horizontal"
+      />
 
-        <SettingsToggleItem
-          enabled={settingsStore.showCommentsCard}
-          onToggle={() =>
-            settingsStore.setProp(
-              'showCommentsCard',
-              !settingsStore.showCommentsCard
-            )
-          }
-        >
-          {translate('showCommentsCard')}
-        </SettingsToggleItem>
+      <SettingsToggleItem
+        enabled={settingsStore.showCommentsCard}
+        onToggle={() =>
+          settingsStore.setProp(
+            'showCommentsCard',
+            !settingsStore.showCommentsCard
+          )
+        }
+      >
+        {translate('showCommentsCard')}
+      </SettingsToggleItem>
 
-        <Divider
-          variant="neutral"
-          orientation="horizontal"
-        />
+      <Divider
+        variant="neutral"
+        orientation="horizontal"
+      />
 
-        <SettingsToggleItem
-          enabled={settingsStore.previewNextSet}
-          onToggle={() =>
-            settingsStore.setProp(
-              'previewNextSet',
-              !settingsStore.previewNextSet
-            )
-          }
-        >
-          {translate('previewNextSet')}
-        </SettingsToggleItem>
+      <SettingsToggleItem
+        enabled={settingsStore.previewNextSet}
+        onToggle={() =>
+          settingsStore.setProp('previewNextSet', !settingsStore.previewNextSet)
+        }
+      >
+        {translate('previewNextSet')}
+      </SettingsToggleItem>
 
-        <Divider
-          variant="neutral"
-          orientation="horizontal"
-        />
+      <Divider
+        variant="neutral"
+        orientation="horizontal"
+      />
 
-        <SettingsToggleItem
-          enabled={settingsStore.showWorkoutTimer}
-          onToggle={() =>
-            settingsStore.setProp(
-              'showWorkoutTimer',
-              !settingsStore.showWorkoutTimer
-            )
-          }
-        >
-          {translate('showWorkoutTimer')}
-        </SettingsToggleItem>
+      <SettingsToggleItem
+        enabled={settingsStore.showWorkoutTimer}
+        onToggle={() =>
+          settingsStore.setProp(
+            'showWorkoutTimer',
+            !settingsStore.showWorkoutTimer
+          )
+        }
+      >
+        {translate('showWorkoutTimer')}
+      </SettingsToggleItem>
 
-        <Divider
-          variant="neutral"
-          orientation="horizontal"
-        />
+      <Divider
+        variant="neutral"
+        orientation="horizontal"
+      />
 
-        <SettingsToggleItem
-          enabled={settingsStore.showSetCompletion}
-          onToggle={() =>
-            settingsStore.setProp(
-              'showSetCompletion',
-              !settingsStore.showSetCompletion
-            )
-          }
-        >
-          {translate('showSetCompletion')}
-        </SettingsToggleItem>
+      <SettingsToggleItem
+        enabled={settingsStore.showSetCompletion}
+        onToggle={() =>
+          settingsStore.setProp(
+            'showSetCompletion',
+            !settingsStore.showSetCompletion
+          )
+        }
+      >
+        {translate('showSetCompletion')}
+      </SettingsToggleItem>
 
-        <Divider
-          variant="neutral"
-          orientation="horizontal"
-        />
+      <Divider
+        variant="neutral"
+        orientation="horizontal"
+      />
 
-        <TouchableOpacity
-          style={styles.item}
-          onPress={onExportData}
-        >
-          <Text style={styles.itemLabel}>{translate('exportData')}</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.item}
+        onPress={onExportData}
+      >
+        <Text style={styles.itemLabel}>{translate('exportData')}</Text>
+      </TouchableOpacity>
 
-        <Divider
-          variant="neutral"
-          orientation="horizontal"
-        />
-        <TouchableOpacity
-          style={styles.item}
-          onPress={onRestoreData}
-        >
-          <Text style={styles.itemLabel}>{translate('restoreData')}</Text>
-        </TouchableOpacity>
-      </View>
-    </EmptyLayout>
+      <Divider
+        variant="neutral"
+        orientation="horizontal"
+      />
+      <TouchableOpacity
+        style={styles.item}
+        onPress={onRestoreData}
+      >
+        <Text style={styles.itemLabel}>{translate('restoreData')}</Text>
+      </TouchableOpacity>
+    </Screen>
   )
 })
 

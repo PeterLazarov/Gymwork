@@ -141,14 +141,23 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen
         name="Calendar"
         component={Screens.CalendarScreen}
+        options={{
+          headerBackButtonDisplayMode: 'minimal',
+        }}
       />
       <Stack.Screen
         name="Settings"
         component={Screens.SettingsScreen}
+        options={{
+          headerBackButtonDisplayMode: 'minimal',
+        }}
       />
       <Stack.Screen
         name="ExerciseEdit"
         component={Screens.ExerciseEditScreen}
+        options={{
+          headerBackButtonDisplayMode: 'minimal',
+        }}
       />
       <Stack.Screen
         name="ExerciseSelect"
@@ -169,18 +178,30 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen
         name="SaveTemplate"
         component={Screens.SaveTemplateScreen}
+        options={{
+          headerBackButtonDisplayMode: 'minimal',
+        }}
       />
       <Stack.Screen
         name="TemplateSelect"
         component={Screens.TemplateSelectScreen}
+        options={{
+          headerBackButtonDisplayMode: 'minimal',
+        }}
       />
       <Stack.Screen
         name="UserFeedback"
         component={Screens.UserFeedbackScreen}
+        options={{
+          headerBackButtonDisplayMode: 'minimal',
+        }}
       />
       <Stack.Screen
         name="Welcome"
         component={Screens.WelcomeScreen}
+        options={{
+          headerBackButtonDisplayMode: 'minimal',
+        }}
       />
 
       <Stack.Screen
