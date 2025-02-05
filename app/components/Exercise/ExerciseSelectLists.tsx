@@ -64,32 +64,35 @@ const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
     }
   }, [filterString])
 
-  const tabsConfig: TabConfig[] = [
-    {
-      name: translate('favorite'),
-      Component: () => (
-        <View style={{ height: 200, marginTop: searchBarHeight, flex: 1 }}>
-          <FavoriteExercisesList {...props} />
-        </View>
-      ),
-    },
-    {
-      name: translate('mostUsed'),
-      Component: () => (
-        <View style={{ height: 200, marginTop: searchBarHeight, flex: 1 }}>
-          <MostUsedExercisesList {...props} />
-        </View>
-      ),
-    },
-    {
-      name: translate('allExercises'),
-      Component: () => (
-        <View style={{ height: 200, marginTop: searchBarHeight, flex: 1 }}>
-          <AllExercisesList {...props} />
-        </View>
-      ),
-    },
-  ]
+  const tabsConfig = useMemo<TabConfig[]>(
+    () => [
+      {
+        name: translate('favorite'),
+        Component: () => (
+          <View style={{ height: 200, marginTop: searchBarHeight, flex: 1 }}>
+            <FavoriteExercisesList {...props} />
+          </View>
+        ),
+      },
+      {
+        name: translate('mostUsed'),
+        Component: () => (
+          <View style={{ height: 200, marginTop: searchBarHeight, flex: 1 }}>
+            <MostUsedExercisesList {...props} />
+          </View>
+        ),
+      },
+      {
+        name: translate('allExercises'),
+        Component: () => (
+          <View style={{ height: 200, marginTop: searchBarHeight, flex: 1 }}>
+            <AllExercisesList {...props} />
+          </View>
+        ),
+      },
+    ],
+    [searchBarHeight, props]
+  )
 
   return (
     <View style={{ flex: 1 }}>

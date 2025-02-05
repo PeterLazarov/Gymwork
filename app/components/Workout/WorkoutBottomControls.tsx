@@ -11,7 +11,7 @@ import { formatDate } from 'app/utils/date'
 import { Icon, Text } from 'designSystem'
 import { spacing } from 'designSystem/theme/spacing'
 
-import AddStepMenu from './AddStepMenu'
+import AddMenu from './AddMenu'
 
 export const WorkoutBottomControlsHeight = 72
 
@@ -59,7 +59,7 @@ const WorkoutBottomControls = () => {
         </View>
       </TouchableOpacity>
       <View style={{ flex: 1, alignItems: 'center' }}>
-        <AddStepMenu />
+        <AddMenu disabled={!stateStore.openedWorkout} />
       </View>
       <TouchableOpacity
         onPress={stateStore.incrementCurrentDate}

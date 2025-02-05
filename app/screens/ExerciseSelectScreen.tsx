@@ -63,7 +63,6 @@ export const ExerciseSelectScreen: React.FC = () => {
         <IconButton onPress={onAddExercisePress}>
           <Icon
             icon="add"
-            size="large"
             color={colors.onPrimary}
           />
         </IconButton>
@@ -85,6 +84,7 @@ export const ExerciseSelectScreen: React.FC = () => {
             //   ? setSelectedExercises
             //   : createExercisesStep
             exercises => {
+              console.log({ onSelect, exercises })
               setSelectedExercises(exercises)
               onSelect?.(exercises)
             }
