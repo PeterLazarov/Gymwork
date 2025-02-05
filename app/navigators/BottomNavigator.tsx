@@ -68,6 +68,8 @@ export function BottomNavigator(): JSX.Element {
             <ReviewStack.Navigator
               screenOptions={{
                 headerBackVisible: false,
+                headerTransparent: true,
+                headerBlurEffect: 'regular',
               }}
             >
               <ReviewStack.Screen
@@ -94,6 +96,8 @@ export function BottomNavigator(): JSX.Element {
               initialRouteName="Workout"
               screenOptions={{
                 headerBackVisible: false,
+                headerTransparent: true,
+                headerBlurEffect: 'regular',
               }}
             >
               <WorkoutStack.Screen

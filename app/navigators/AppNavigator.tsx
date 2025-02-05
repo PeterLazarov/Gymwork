@@ -135,6 +135,8 @@ const AppStack = observer(function AppStack() {
         contentStyle: {
           backgroundColor: isDark ? colors.shadow : colors.surface,
         },
+        headerTransparent: true,
+        headerBlurEffect: 'regular',
       }}
       initialRouteName={shouldShowWelcome ? 'Welcome' : 'HomeStack'}
     >
