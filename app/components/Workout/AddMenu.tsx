@@ -91,10 +91,10 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
       <TrueSheet
         ref={sheet}
         sizes={['auto', 'large']}
+        backgroundColor={colors.surfaceContainer}
         contentContainerStyle={{
           paddingTop: theme.spacing.md,
           paddingBottom: Platform.select({ ios: theme.spacing.md, android: 0 }),
-          backgroundColor: colors.surfaceContainer,
         }}
       >
         <View>
