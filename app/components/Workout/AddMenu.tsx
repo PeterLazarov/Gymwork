@@ -1,12 +1,13 @@
-import React, { useMemo, useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import React, { useMemo, useRef } from 'react'
+import { Platform, TouchableOpacity, View } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { BottomDrawer, Divider, FAB, spacing, Text } from 'designSystem'
+import { Divider, Icon, IconButton, spacing, Text } from 'designSystem'
 import { goBack } from '@/navigators'
 import { Exercise } from '@/db/models'
+import { TrueSheet } from '@lodev09/react-native-true-sheet'
 
 export interface AddMenuProps {
   disabled?: boolean
@@ -17,7 +18,6 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
     theme: { colors },
   } = useAppTheme()
 
-  const [visible, setVisible] = useState(false)
   const {
     stateStore,
     workoutStore,
@@ -70,29 +70,38 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
     return opts
   }, [stateStore.openedWorkout, addExercise, navigate])
 
-  const drawerPadding = spacing.lg
-  const optionHeight = 70
-  const drawerHeight = options.length * optionHeight + drawerPadding * 2
+  const { theme } = useAppTheme()
+  const sheet = useRef<TrueSheet>(null)
 
   return (
-    <View>
-      <BottomDrawer
-        visible={visible}
-        height={drawerHeight}
-        onCollapse={() => {
-          setVisible(false)
+    <>
+      <IconButton
+        style={{
+          backgroundColor: colors.primary,
+          borderRadius: 12,
+        }}
+        onPress={() => {
+          sheet.current?.present()
+        }}
+        disabled={disabled}
+      >
+        <Icon icon="add"></Icon>
+      </IconButton>
+
+      <TrueSheet
+        ref={sheet}
+        sizes={['auto', 'large']}
+        contentContainerStyle={{
+          paddingTop: theme.spacing.md,
+          paddingBottom: Platform.select({ ios: theme.spacing.md, android: 0 }),
+          backgroundColor: colors.surfaceContainer,
         }}
       >
-        <View
-          style={{
-            padding: drawerPadding,
-            backgroundColor: colors.surfaceContainerLow,
-          }}
-        >
+        <View>
           {options.map((option, i) => (
             <View
               key={option.text}
-              style={{ height: optionHeight }}
+              style={{ height: 70 }}
             >
               {i !== 0 && (
                 <Divider
@@ -103,7 +112,7 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
 
               <TouchableOpacity
                 onPress={() => {
-                  setVisible(false)
+                  sheet.current?.dismiss()
                   option.action()
                 }}
                 style={{
@@ -117,17 +126,8 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
             </View>
           ))}
         </View>
-      </BottomDrawer>
-
-      <FAB
-        icon="plus"
-        onPress={() => {
-          setVisible(true)
-        }}
-        disabled={disabled}
-        style={{ position: 'relative' }}
-      />
-    </View>
+      </TrueSheet>
+    </>
   )
 }
 

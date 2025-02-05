@@ -49,6 +49,7 @@ const IoniconsIcons = [
   'flame',
   'list-outline',
   'stopwatch-outline',
+  'add',
 ] as const satisfies readonly (keyof typeof Ionicons.glyphMap)[]
 type IonicIcon = (typeof IoniconsIcons)[number]
 
