@@ -66,7 +66,7 @@ const AppStack = createNativeStackNavigator({
     },
     Home: {
       options: {
-        headerShown: true,
+        headerShown: false,
         headerRight() {
           return <Links />
         },
@@ -111,6 +111,11 @@ const AppStack = createNativeStackNavigator({
               WorkoutStep: {
                 screen: Screens.WorkoutStepScreen,
                 linking: 'workout/:workoutId/step/:stepId',
+                options(props) {
+                  return {
+                    headerBackButtonDisplayMode: 'minimal',
+                  }
+                },
               },
               WorkoutFeedback: {
                 screen: Screens.WorkoutFeedbackScreen,

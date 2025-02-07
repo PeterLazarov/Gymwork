@@ -8,6 +8,9 @@ import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { HeaderRight, HeaderTitle, Icon, IconButton } from 'designSystem'
+import { useNavigation } from '@react-navigation/native'
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
+import { MenuViewWrapped } from 'designSystem/components/MenuViewWrapped'
 
 export type StepHeaderProps = {
   step: WorkoutStep
@@ -57,11 +60,6 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
     navigate('UserFeedback', { referrerPage: activeRoute ?? '?' })
   }
 
-  function goBack() {
-    stateStore.setProp('focusedStepGuid', '')
-    navigate('WorkoutStack', { screen: 'Workout' })
-  }
-
   const focusedStepName = useMemo(() => {
     const workout = stateStore.openedWorkout!
 
@@ -80,60 +78,46 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
   }, [stateStore.focusedStep!.exercise])
 
   return (
-    <HeaderRight>
-      {/* <IconButton onPress={goBack}>
-        <Icon
-          color={colors.onPrimary}
-          icon="chevron-back"
-        />
-      </IconButton> */}
+    <>
       <HeaderTitle
         title={focusedStepName}
         numberOfLines={1}
       />
 
-      {stateStore.focusedStepGuid && (
-        <Menu
-          visible={menuOpen}
-          onDismiss={() => setMenuOpen(false)}
-          anchorPosition="bottom"
-          anchor={
+      <HeaderRight>
+        {stateStore.focusedStepGuid && (
+          <MenuViewWrapped
+            actions={[
+              { title: translate('switchExercise'), fn: onSwitchExercisePress },
+              { title: translate('editExercise'), fn: onEditExercisePress },
+              {
+                title: translate('removeFromWorkout'),
+                fn: deleteSelectedExercises,
+              },
+              {
+                title: translate(
+                  stateStore.focusedExercise!.isFavorite
+                    ? 'removeFavorite'
+                    : 'setAsFavorite'
+                ),
+                fn: toggleFavoriteExercise,
+              },
+              {
+                title: translate('giveFeedback'),
+                fn: goToFeedback,
+              },
+            ]}
+          >
             <IconButton onPress={() => setMenuOpen(true)}>
               <Icon
                 icon="ellipsis-vertical"
                 color={colors.onPrimary}
               />
             </IconButton>
-          }
-        >
-          <Menu.Item
-            onPress={onSwitchExercisePress}
-            title={translate('switchExercise')}
-          />
-          <Menu.Item
-            onPress={onEditExercisePress}
-            title={translate('editExercise')}
-          />
-          <Menu.Item
-            onPress={deleteSelectedExercises}
-            title={translate('removeFromWorkout')}
-          />
-          <Menu.Item
-            onPress={toggleFavoriteExercise}
-            title={translate(
-              stateStore.focusedExercise!.isFavorite
-                ? 'removeFavorite'
-                : 'setAsFavorite'
-            )}
-          />
-
-          <Menu.Item
-            onPress={goToFeedback}
-            title={translate('giveFeedback')}
-          />
-        </Menu>
-      )}
-    </HeaderRight>
+          </MenuViewWrapped>
+        )}
+      </HeaderRight>
+    </>
   )
 }
 

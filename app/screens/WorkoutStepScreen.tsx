@@ -1,4 +1,4 @@
-import type { StaticScreenProps } from '@react-navigation/native'
+import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
@@ -11,6 +11,7 @@ import ExerciseTrackView from 'app/components/WorkoutStep/ExerciseTrackView'
 import StepHeader from 'app/components/WorkoutStep/StepHeader'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, Workout, WorkoutStep } from 'app/db/models'
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 
 export type WorkoutStepScreenProps = StaticScreenProps<{
   // workoutId: Workout['guid']
@@ -18,10 +19,15 @@ export type WorkoutStepScreenProps = StaticScreenProps<{
 }>
 
 export const WorkoutStepScreen: React.FC<WorkoutStepScreenProps> = observer(
-  () => {
+  props => {
     const { stateStore, navStore } = useStores()
 
     const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
+
+    // const nav = useNavigation()
+    // nav.setOptions({
+    //   headerTitle: 'qwe',
+    // } as NativeStackNavigationOptions)
 
     if (!stateStore.focusedStep || !stateStore.focusedExercise) {
       console.warn('REDIRECT - No step or exercise')

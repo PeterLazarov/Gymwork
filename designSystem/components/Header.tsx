@@ -10,9 +10,9 @@ export function HeaderRight(props: { children: React.ReactNode }) {
 
   useLayoutEffect(() => {
     let top = navigation
-    while (top.getParent()) {
-      top = top.getParent()
-    }
+    // while (top.getParent()) {
+    //   top = top.getParent()
+    // }
     top.setOptions({
       headerRight(defaultProps) {
         return (
@@ -65,9 +65,9 @@ export function HeaderTitle({
 
   useLayoutEffect(() => {
     let top = navigation
-    while (top.getParent()) {
-      top = top.getParent()
-    }
+    // while (top.getParent()) {
+    //   top = top.getParent()
+    // }
     top.setOptions({
       title,
     })
