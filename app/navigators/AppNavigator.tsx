@@ -151,6 +151,12 @@ const AppStack = createNativeStackNavigator({
         return <Links />
       },
     },
+    UserFeedback: {
+      screen: Screens.UserFeedbackScreen,
+      headerRight() {
+        return <Links />
+      },
+    },
   },
 })
 

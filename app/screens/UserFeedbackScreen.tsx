@@ -9,7 +9,7 @@ import UserFeedbackForm from 'app/components/UserFeedbackForm'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { EmptyLayout } from 'app/layouts/EmptyLayout'
+import { Screen } from '@/components/ignite'
 import { AirtableFeedback, airtableApi } from 'app/services/airtable'
 import {
   Button,
@@ -67,41 +67,44 @@ export const UserFeedbackScreen: React.FC<UserFeedbackScreenProps> = observer(
     }
 
     return (
-      <EmptyLayout>
-        <HeaderRight>
-          <IconButton onPress={goBack}>
-            <Icon
-              icon="chevron-back"
-              color={colors.onPrimary}
+      <>
+        <Screen
+          safeAreaEdges={['top', 'bottom']}
+          contentContainerStyle={{ flex: 1, paddingTop: 32 }} // TODO why does this go under the header?
+        >
+          <View
+            style={{
+              flex: 1,
+            }}
+          >
+            <UserFeedbackForm
+              feedback={feedback}
+              onUpdate={onUpdate}
             />
-          </IconButton>
-          <HeaderTitle title="Feedback" />
+          </View>
+
+          <Button
+            variant="primary"
+            onPress={onFeedbackSave}
+            disabled={!formValid}
+          >
+            <ButtonText variant="primary">{translate('save')}</ButtonText>
+          </Button>
+        </Screen>
+
+        <HeaderTitle title="Feedback" />
+        <HeaderRight>
           <IconButton
             onPress={onFeedbackSave}
             disabled={!formValid}
           >
             <Icon
               icon="checkmark"
-              size="large"
               color={colors.onPrimary}
             />
           </IconButton>
         </HeaderRight>
-
-        <View style={{ flex: 1 }}>
-          <UserFeedbackForm
-            feedback={feedback}
-            onUpdate={onUpdate}
-          />
-        </View>
-        <Button
-          variant="primary"
-          onPress={onFeedbackSave}
-          disabled={!formValid}
-        >
-          <ButtonText variant="primary">{translate('save')}</ButtonText>
-        </Button>
-      </EmptyLayout>
+      </>
     )
   }
 )

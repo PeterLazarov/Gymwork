@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { useMemo, useState } from 'react'
-import { Menu } from 'react-native-paper'
+import React, { useMemo } from 'react'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 import { useDialogContext } from 'app/contexts/DialogContext'
@@ -9,8 +8,8 @@ import { WorkoutStep } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { HeaderRight, HeaderTitle, Icon, IconButton } from 'designSystem'
 import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 import { MenuViewWrapped } from 'designSystem/components/MenuViewWrapped'
+import { getActiveRouteName } from '@/navigators'
 
 export type StepHeaderProps = {
   step: WorkoutStep
@@ -22,17 +21,23 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
     theme: { colors },
   } = useAppTheme()
 
-  const {
-    stateStore,
-    navStore: { navigate, activeRoute },
-  } = useStores()
+  const { stateStore } = useStores()
 
-  const [menuOpen, setMenuOpen] = useState(false)
+  const navigation = useNavigation()
+
   const { showSnackbar } = useDialogContext()
 
   const deleteSelectedExercises = () => {
     const undoDelete = stateStore.deleteFocusedStep()
-    navigate('WorkoutStack', { screen: 'Workout' })
+
+    navigation.navigate('Home', {
+      screen: 'WorkoutStack',
+      params: {
+        screen: 'Workout',
+        params: {},
+      },
+    })
+
     showSnackbar!({
       text: 'Exercise was removed from workout',
       actionText: 'Undo',
@@ -41,23 +46,23 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
   }
 
   const toggleFavoriteExercise = () => {
-    setMenuOpen(false)
     const exercise = stateStore.focusedExercise!
     exercise.setProp('isFavorite', !exercise.isFavorite)
   }
 
   function onSwitchExercisePress() {
-    setMenuOpen(false)
     onSwitchExercise()
   }
 
   function onEditExercisePress() {
-    setMenuOpen(false)
-    navigate('ExerciseEdit', {})
+    navigation.navigate('ExerciseEdit', {
+      exerciseId: stateStore.focusedExercise.guid,
+    })
   }
   function goToFeedback() {
-    setMenuOpen(false)
-    navigate('UserFeedback', { referrerPage: activeRoute ?? '?' })
+    navigation.navigate('UserFeedback', {
+      referrerPage: getActiveRouteName(navigation.getState()!),
+    })
   }
 
   const focusedStepName = useMemo(() => {
@@ -108,7 +113,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
               },
             ]}
           >
-            <IconButton onPress={() => setMenuOpen(true)}>
+            <IconButton>
               <Icon
                 icon="ellipsis-vertical"
                 color={colors.onPrimary}
