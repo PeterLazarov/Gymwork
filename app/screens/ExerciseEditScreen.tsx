@@ -20,8 +20,8 @@ import {
 } from 'designSystem'
 
 export type ExerciseEditScreenProps = StaticScreenProps<{
-  exerciseId: Exercise['guid']
-  createMode?: boolean
+  // If no ID, create mode enabled
+  exerciseId?: Exercise['guid']
 }>
 
 export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = observer(
@@ -33,7 +33,8 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = observer(
     const { exerciseStore } = useStores()
     const { navigate, goBack } = useNavigation()
 
-    const { createMode, exerciseId } = params
+    const { exerciseId } = params
+    const createMode = !exerciseId
 
     const [exercise, setExercise] = useState(
       createMode

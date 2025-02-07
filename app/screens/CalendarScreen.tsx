@@ -1,5 +1,5 @@
 import { MenuView } from '@react-native-menu/menu'
-import type { StaticScreenProps } from '@react-navigation/native'
+import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
@@ -24,11 +24,9 @@ export const CalendarScreen: React.FC<CalendarScreenParams> = observer(
       theme: { colors },
     } = useAppTheme()
 
-    const {
-      workoutStore,
-      stateStore,
-      navStore: { navigate, activeRoute },
-    } = useStores()
+    const { workoutStore, stateStore } = useStores()
+
+    const { navigate } = useNavigation()
 
     const { copyWorkoutMode } = params
 
@@ -68,7 +66,10 @@ export const CalendarScreen: React.FC<CalendarScreenParams> = observer(
     )
 
     function onBackPress() {
-      navigate('WorkoutStack', { screen: 'Workout' })
+      navigate('Home', {
+        screen: 'WorkoutStack',
+        params: { screen: 'Workout', params: {} },
+      })
     }
 
     function handleCalendarDayPress(date: Date) {
@@ -82,7 +83,10 @@ export const CalendarScreen: React.FC<CalendarScreenParams> = observer(
     }
     function goToDay(date: string) {
       stateStore.setOpenedDate(date)
-      navigate('WorkoutStack', { screen: 'Workout' })
+      navigate('Home', {
+        screen: 'WorkoutStack',
+        params: { screen: 'Workout', params: {} },
+      })
     }
 
     // ! must be a whole number
@@ -102,7 +106,7 @@ export const CalendarScreen: React.FC<CalendarScreenParams> = observer(
           <HeaderRight>
             <MenuView
               onPressAction={({ nativeEvent }) => {
-                navigate('UserFeedback', { referrerPage: activeRoute ?? '?' })
+                navigate('UserFeedback', { referrerPage: 'CalendarScreen' })
               }}
               actions={[
                 {

@@ -121,6 +121,12 @@ const AppStack = createNativeStackNavigator({
                 screen: Screens.WorkoutFeedbackScreen,
                 linking: 'workout/:workoutId/feedback',
               },
+              TemplateSelect: {
+                screen: Screens.TemplateSelectScreen,
+              },
+              SaveTemplate: {
+                screen: Screens.SaveTemplateScreen,
+              },
             },
           }),
         },
@@ -132,6 +138,9 @@ const AppStack = createNativeStackNavigator({
       headerRight() {
         return <Links />
       },
+    },
+    Calendar: {
+      screen: Screens.CalendarScreen,
     },
     // ExerciseSelect: {
     //   screen: Screens.ExerciseSelectScreen,

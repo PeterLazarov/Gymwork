@@ -21,10 +21,9 @@ export const WorkoutFeedbackScreen: React.FC<WorkoutFeedbackScreenProps> =
       theme: { colors },
     } = useAppTheme()
 
-    const {
-      stateStore,
-      navStore: { goBack },
-    } = useStores()
+    const { goBack } = useNavigation()
+
+    const { stateStore } = useStores()
     const workout = stateStore.openedWorkout
 
     if (!workout) {

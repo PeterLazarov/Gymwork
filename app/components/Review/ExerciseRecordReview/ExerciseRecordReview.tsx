@@ -11,17 +11,16 @@ import { translate } from 'app/i18n'
 import { spacing } from 'designSystem'
 
 import RecordsListItem from './RecordsListItem'
+import { useNavigation } from '@react-navigation/native'
 
 export type ExerciseRecordReviewProps = {
   exercise?: Exercise
 }
 
 const ExerciseRecordReview: React.FC<ExerciseRecordReviewProps> = props => {
-  const {
-    stateStore,
-    recordStore,
-    navStore: { navigate },
-  } = useStores()
+  const { stateStore, recordStore } = useStores()
+
+  const { navigate } = useNavigation()
 
   const exercise = props.exercise || stateStore.focusedExercise!
   const focusedExerciseRecords = recordStore.exerciseRecordsMap[exercise.guid]
@@ -42,7 +41,10 @@ const ExerciseRecordReview: React.FC<ExerciseRecordReviewProps> = props => {
     stateStore.setProp('highlightedSetGuid', set.guid)
     stateStore.setProp('focusedExerciseGuid', set.exercise.guid)
 
-    navigate('WorkoutStack', { screen: 'Workout' })
+    navigate('Home', {
+      screen: 'WorkoutStack',
+      params: { screen: 'Workout', params: {} },
+    })
   }
 
   return (

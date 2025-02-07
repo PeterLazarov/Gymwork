@@ -10,20 +10,23 @@ import { IndicatedScrollList } from 'designSystem'
 import WorkoutStepCard from '../WorkoutStep/WorkoutStepCard'
 
 import { WorkoutBottomControlsHeight } from './WorkoutBottomControls'
+import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   workout: Workout
 }
 
 const WorkoutStepList: React.FC<Props> = ({ workout }) => {
-  const {
-    stateStore,
-    navStore: { navigate },
-  } = useStores()
+  const { stateStore } = useStores()
+
+  const { navigate } = useNavigation()
 
   function onCardPress(stepGuid: string) {
     stateStore.setFocusedStep(stepGuid)
-    navigate('WorkoutStep')
+    navigate('Home', {
+      screen: 'WorkoutStack',
+      params: { screen: 'WorkoutStep', params: {} },
+    })
   }
 
   const renderItem = ({ item, index }: ListRenderItemInfo<WorkoutStep>) => {

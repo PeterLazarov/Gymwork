@@ -11,6 +11,7 @@ import { Icon, IconButton } from 'designSystem'
 
 import MiniTimer from '../MiniTimer'
 import WorkoutTimerModal from '../Timer/WorkoutTimerModal'
+import { useNavigation } from '@react-navigation/native'
 
 const WorkoutHeaderRight: React.FC = () => {
   const {
@@ -19,26 +20,25 @@ const WorkoutHeaderRight: React.FC = () => {
 
   const menuRef = useRef<MenuComponentRef>(null)
 
-  const {
-    stateStore,
-    settingsStore,
-    workoutStore,
-    navStore: { navigate, activeRoute },
-    timerStore,
-  } = useStores()
+  const { stateStore, settingsStore, workoutStore, timerStore } = useStores()
   const { openedWorkout } = stateStore
   const { showCommentsCard } = settingsStore
   const { performBenchmark } = useBenchmark()
 
   const [menuOpen, setMenuOpen] = useState(false)
 
+  const { navigate } = useNavigation()
+
   function openCalendar() {
-    navigate('Calendar')
+    navigate('Calendar', {})
   }
 
   function saveTemplate() {
     setMenuOpen(false)
-    navigate('SaveTemplate')
+    navigate('Home', {
+      screen: 'WorkoutStack',
+      params: { screen: 'SaveTemplate', params: {} },
+    })
   }
 
   function toggleCommentsCard() {

@@ -7,6 +7,8 @@ import { useAppTheme } from '@/utils/useAppTheme'
 
 import ExerciseSelectLists from './ExerciseSelectLists'
 
+// TODO FULL REFACTOR
+
 let promise: PromiseWithResolvers<Exercise[]>
 
 // Rough shitty guess -> real info

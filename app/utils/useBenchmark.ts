@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSetModel } from 'app/db/models'
+import { useNavigation } from '@react-navigation/native'
 
 let execution = 1
 const delay = (wait: number) =>
@@ -18,15 +19,19 @@ export default function useBenchmark() {
     stateStore,
     workoutStore,
     exerciseStore,
-    navStore: { navigate },
   } = useStores()
 
   async function performBenchmark() {
     const startingTime = Date.now()
 
+    const { navigate } = useNavigation()
+
     // go to today
     stateStore.setOpenedDate(DateTime.now().toISODate())
-    navigate('WorkoutStack', { screen: 'Workout' })
+    navigate('Home', {
+      screen: 'WorkoutStack',
+      params: { screen: 'Workout', params: {} },
+    })
 
     await delay(1000)
 
@@ -53,7 +58,10 @@ export default function useBenchmark() {
     set.setProp('reps', 12)
     newStep.addSet(set)
 
-    navigate('WorkoutStack', { screen: 'Workout' })
+    navigate('Home', {
+      screen: 'WorkoutStack',
+      params: { screen: 'Workout', params: {} },
+    })
 
     const finishTime = Date.now()
 

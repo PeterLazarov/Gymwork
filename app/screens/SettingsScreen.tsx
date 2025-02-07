@@ -26,7 +26,7 @@ const appearanceOptions = [
 
 export const SettingsScreen: React.FC<SettingsScreenProps> = observer(
   ({ route: { params } }) => {
-    const { settingsStore, navStore } = useStores()
+    const { settingsStore } = useStores()
 
     const {
       theme: { colors },

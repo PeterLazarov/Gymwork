@@ -7,6 +7,7 @@ import { exerciseImages } from '@/utils/exerciseImages'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { Exercise } from 'app/db/models'
 import { Icon, IconButton, palettes, spacing, Text } from 'designSystem'
+import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   exercise: Exercise
@@ -26,9 +27,9 @@ const ExerciseListItem: React.FC<Props> = ({
     theme: { colors, typography },
   } = useAppTheme()
 
-  const { navStore } = useStores()
+  const { navigate } = useNavigation()
   function handleLongPress() {
-    navStore.navigate('ExerciseDetails', { exercise })
+    navigate('ExerciseDetails', { exerciseId: exercise.guid })
   }
 
   return (

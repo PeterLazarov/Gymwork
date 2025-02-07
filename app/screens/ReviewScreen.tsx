@@ -1,5 +1,5 @@
 import SegmentedControl from '@react-native-segmented-control/segmented-control'
-import type { StaticScreenProps } from '@react-navigation/native'
+import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useRef, useState } from 'react'
 import { View } from 'react-native'
@@ -15,6 +15,10 @@ import ExerciseRecordReview from 'app/components/Review/ExerciseRecordReview'
 import WorkoutsReview from 'app/components/Review/WorkoutsReview'
 import { useStores } from 'app/db/helpers/useStores'
 import { HeaderRight, IconButton, Icon } from 'designSystem'
+import {
+  ExerciseSelectSheet,
+  showExerciseSelect,
+} from '@/components/Exercise/ExerciseSelectSheet'
 
 export type ReviewScreenProps = StaticScreenProps<{
   exercise?: Exercise['guid']
@@ -26,7 +30,7 @@ export const ReviewScreen: React.FC<ReviewScreenProps> = observer(
       theme: { colors },
     } = useAppTheme()
 
-    const { stateStore, navStore, exerciseStore } = useStores()
+    const { stateStore, exerciseStore } = useStores()
     const exercise = params?.exercise
 
     const [selectedExercise, setSelectedExercise] = useState(
@@ -47,19 +51,20 @@ export const ReviewScreen: React.FC<ReviewScreenProps> = observer(
     const [segmentedControlIndex, setSegmentedControlIndex] = useState(0)
     const pagerRef = useRef<PagerView>(null)
 
+    const { navigate } = useNavigation()
+
     function goToExerciseSelect() {
-      navStore.navigate('ExerciseSelect', {
-        selectMode: 'straightSet',
-        onSelect(exercises) {
-          // TODO fix type to allow this
-          navStore.navigate('HomeStack', {
-            screen: 'Review',
+      showExerciseSelect()
+        .then(exercises => {
+          navigate('Home', {
+            screen: 'ReviewStack',
             params: {
-              exercise: exercises[0].guid,
+              screen: 'Review',
+              params: { exercise: exercises[0].guid },
             },
           })
-        },
-      })
+        })
+        .catch()
     }
 
     return (
@@ -133,6 +138,8 @@ export const ReviewScreen: React.FC<ReviewScreenProps> = observer(
             </View>
           </PagerView>
         </Screen>
+
+        <ExerciseSelectSheet />
       </>
     )
   }

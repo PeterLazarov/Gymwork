@@ -13,16 +13,16 @@ import {
 } from 'app/db/models'
 
 import ExerciseHistoryListItem from './ExerciseHistoryListItem'
+import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   workouts: Workout[]
   exercise: Exercise
 }
 const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
-  const {
-    stateStore,
-    navStore: { navigate },
-  } = useStores()
+  const { stateStore } = useStores()
+
+  const { navigate } = useNavigation()
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<WorkoutStep>) => {
@@ -35,7 +35,10 @@ const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
           step={item}
           sets={stepSets[item.guid] ?? []}
           onPress={() => {
-            navigate('WorkoutStack', { screen: 'Workout' })
+            navigate('Home', {
+              screen: 'WorkoutStack',
+              params: { screen: 'Workout', params: { workoutId: item.guid } },
+            })
             stateStore.setOpenedDate(workout.date)
           }}
         />

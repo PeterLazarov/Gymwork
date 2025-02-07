@@ -8,6 +8,7 @@ import { useStores } from 'app/db/helpers/useStores'
 import WorkoutCommentsCard from './WorkoutCommentsCard'
 import WorkoutEmptyState from './WorkoutEmptyState'
 import WorkoutStepList from './WorkoutStepList'
+import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   date: string
@@ -17,11 +18,10 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
     theme: { colors },
   } = useAppTheme()
 
-  const {
-    workoutStore,
-    settingsStore,
-    navStore: { navigate },
-  } = useStores()
+  const { navigate } = useNavigation()
+
+  const { workoutStore, settingsStore } = useStores()
+
   const workout = workoutStore.dateWorkoutMap[date]
 
   return (
@@ -31,7 +31,12 @@ const WorkoutDayView: React.FC<Props> = ({ date }) => {
           {settingsStore.showCommentsCard && workout.hasComments && (
             <WorkoutCommentsCard
               workout={workout}
-              onPress={() => navigate('WorkoutFeedback')}
+              onPress={() =>
+                navigate('Home', {
+                  screen: 'WorkoutStack',
+                  params: { screen: 'WorkoutFeedback', params: {} },
+                })
+              }
               compactMode
             />
           )}

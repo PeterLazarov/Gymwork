@@ -12,11 +12,11 @@ import { formatDateIso, getDateRange } from 'app/utils/date'
 import { HorizontalScreenList } from 'designSystem'
 
 export type WorkoutScreenProps = StaticScreenProps<{
-  // workoutId: Workout['guid']
+  workoutId?: Workout['guid'] // TODO think this through
 }>
 
-export const WorkoutScreen: React.FC<WorkoutScreenProps> = observer(() => {
-  const { stateStore } = useStores()
+export const WorkoutScreen: React.FC<WorkoutScreenProps> = observer(props => {
+  const { stateStore, workoutStore } = useStores()
   const workoutList = useRef<FlatList<string>>(null)
 
   const dates = useMemo(() => {
@@ -28,7 +28,15 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = observer(() => {
 
   const { setOptions } = useNavigation()
 
-  const currentIndex = useRef(dates.indexOf(stateStore.openedDate))
+  const routeWorkout = useMemo(() => {
+    return props.route.params?.workoutId
+      ? workoutStore.workouts.find(w => w.guid === props.route.params.workoutId)
+      : undefined
+  }, [props.route.params?.workoutId, workoutStore.workouts])
+
+  const currentIndex = useRef(
+    dates.indexOf(routeWorkout?.date ?? stateStore.openedDate)
+  )
   function onScreenChange(index: number) {
     currentIndex.current = index
     stateStore.setOpenedDate(dates[index]!)

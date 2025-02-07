@@ -1,4 +1,4 @@
-import type { StaticScreenProps } from '@react-navigation/native'
+import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -19,14 +19,13 @@ import {
 export type WelcomeScreenProps = StaticScreenProps<{}>
 
 export const WelcomeScreen: React.FC<WelcomeScreenProps> = observer(() => {
-  const {
-    stateStore,
-    navStore: { navigate },
-  } = useStores()
+  const { stateStore } = useStores()
+
+  const { navigate } = useNavigation()
 
   function onStart() {
     stateStore.setProp('visitedWelcomeScreen', true)
-    navigate('HomeStack')
+    navigate('Home')
   }
 
   return (

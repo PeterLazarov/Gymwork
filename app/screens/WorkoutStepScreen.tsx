@@ -14,14 +14,15 @@ import { Exercise, Workout, WorkoutStep } from 'app/db/models'
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 
 export type WorkoutStepScreenProps = StaticScreenProps<{
+  // TODO
   // workoutId: Workout['guid']
-  // stepId: WorkoutStep['guid']
+  // stepId?: WorkoutStep['guid']
 }>
 
 export const WorkoutStepScreen: React.FC<WorkoutStepScreenProps> = observer(
   props => {
-    const { stateStore, navStore } = useStores()
-
+    const { stateStore } = useStores()
+    const { navigate } = useNavigation()
     const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
 
     // const nav = useNavigation()
@@ -31,7 +32,10 @@ export const WorkoutStepScreen: React.FC<WorkoutStepScreenProps> = observer(
 
     if (!stateStore.focusedStep || !stateStore.focusedExercise) {
       console.warn('REDIRECT - No step or exercise')
-      navStore.navigate('WorkoutStack', { screen: 'Workout' })
+      navigate('Home', {
+        screen: 'WorkoutStack',
+        params: { screen: 'Workout', params: {} },
+      })
       return null
     }
 

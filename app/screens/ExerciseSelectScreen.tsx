@@ -1,11 +1,10 @@
-import type { StaticScreenProps } from '@react-navigation/native'
+import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { Alert, View } from 'react-native'
 
 import { Screen } from '@/components/ignite'
 import { useAppTheme } from '@/utils/useAppTheme'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
-import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, WorkoutStep } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { FAB, HeaderRight, HeaderTitle, Icon, IconButton } from 'designSystem'
@@ -22,35 +21,14 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({
     theme: { colors },
   } = useAppTheme()
 
-  const {
-    stateStore,
-    workoutStore,
-    navStore: { navigate },
-  } = useStores()
+  const { navigate } = useNavigation()
+
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([])
 
   const { selectMode, onSelect } = params
 
-  // function createExercisesStep(exercises: Exercise[]) {
-  //   if (!stateStore.openedWorkout) {
-  //     workoutStore.createWorkout()
-  //   }
-  //   const newStep = stateStore.openedWorkout!.addStep(exercises, selectMode)
-  //   stateStore.setFocusedStep(newStep.guid)
-  //   stateStore.setProp('focusedExerciseGuid', newStep.exercises[0]?.guid)
-
-  //   navigate('WorkoutStep')
-  // }
-
-  // TODO remove?
-  // function onBackPress() {
-  //   navigate('WorkoutStack', { screen: 'Workout' })
-  // }
-
   function onAddExercisePress() {
-    navigate('ExerciseEdit', {
-      createMode: true,
-    })
+    navigate('ExerciseEdit', {})
   }
 
   const supersetTitle =

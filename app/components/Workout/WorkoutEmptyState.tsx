@@ -7,12 +7,12 @@ import { translate } from 'app/i18n'
 import { spacing } from 'designSystem/theme/spacing'
 
 import ActionCard from '../ActionCard'
+import { useNavigation } from '@react-navigation/native'
 
 const WorkoutEmptyState: React.FC = () => {
-  const {
-    workoutStore,
-    navStore: { navigate },
-  } = useStores()
+  const { navigate } = useNavigation()
+
+  const { workoutStore } = useStores()
   const hasWorkouts = workoutStore.workouts.length > 0
   const hasTemplates = workoutStore.workoutTemplates.length > 0
 
@@ -53,7 +53,10 @@ const WorkoutEmptyState: React.FC = () => {
   }
 
   function useTemplate() {
-    navigate('TemplateSelect')
+    navigate('Home', {
+      screen: 'WorkoutStack',
+      params: { screen: 'TemplateSelect', params: {} },
+    })
   }
 
   return (

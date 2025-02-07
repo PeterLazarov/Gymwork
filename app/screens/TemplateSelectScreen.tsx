@@ -1,4 +1,4 @@
-import type { StaticScreenProps } from '@react-navigation/native'
+import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 
@@ -11,7 +11,7 @@ import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import { HeaderRight, HeaderTitle, Icon, IconButton } from 'designSystem'
 
-export type TemplateSelectScreenProps = StaticScreenProps<undefined>
+export type TemplateSelectScreenProps = StaticScreenProps<{}>
 
 export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> =
   observer(() => {
@@ -19,20 +19,28 @@ export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> =
       theme: { colors },
     } = useAppTheme()
 
-    const {
-      workoutStore,
-      navStore: { navigate },
-    } = useStores()
+    const { navigate } = useNavigation()
+
+    const { workoutStore } = useStores()
 
     const { showConfirm } = useDialogContext()
 
     function handleSelect(template: WorkoutTemplate) {
       workoutStore.createWorkoutFromTemplate(template)
-      navigate('WorkoutStack', { screen: 'Workout' })
+      navigate('Home', {
+        screen: 'WorkoutStack',
+        params: { screen: 'Workout', params: {} },
+      })
     }
 
     function handleEdit(template: WorkoutTemplate) {
-      navigate('SaveTemplate', { edittingTemplate: template })
+      navigate('Home', {
+        screen: 'WorkoutStack',
+        params: {
+          screen: 'SaveTemplate',
+          params: { edittingTemplate: template },
+        },
+      })
     }
 
     function handleDelete(template: WorkoutTemplate) {
@@ -47,7 +55,10 @@ export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> =
     }
 
     function onBackPress() {
-      navigate('WorkoutStack', { screen: 'Workout' })
+      navigate('Home', {
+        screen: 'WorkoutStack',
+        params: { screen: 'Workout', params: {} },
+      })
     }
 
     return (

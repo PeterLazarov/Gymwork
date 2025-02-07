@@ -1,4 +1,4 @@
-import type { StaticScreenProps } from '@react-navigation/native'
+import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
@@ -27,10 +27,9 @@ export const UserFeedbackScreen: React.FC<UserFeedbackScreenProps> = observer(
   ({ route }) => {
     const { referrerPage } = route.params
 
-    const {
-      stateStore,
-      navStore: { goBack },
-    } = useStores()
+    const { stateStore } = useStores()
+
+    const { goBack } = useNavigation()
 
     const { showSnackbar } = useDialogContext()
 

@@ -1,4 +1,4 @@
-import type { StaticScreenProps } from '@react-navigation/native'
+import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import { getSnapshot } from 'mobx-state-tree'
 import React, { useState } from 'react'
@@ -30,11 +30,13 @@ export type SaveTemplateScreenProps = StaticScreenProps<{
 
 export const SaveTemplateScreen: React.FC<SaveTemplateScreenProps> = observer(
   ({ route: { params } }) => {
+    const { navigate, goBack } = useNavigation()
+
     const {
       theme: { colors },
     } = useAppTheme()
 
-    const { workoutStore, stateStore, navStore } = useStores()
+    const { workoutStore, stateStore } = useStores()
     const { edittingTemplate } = params
 
     const [template, setTemplate] = useState<WorkoutTemplate>(
@@ -46,7 +48,10 @@ export const SaveTemplateScreen: React.FC<SaveTemplateScreenProps> = observer(
 
     if (!edittingTemplate && !stateStore.openedWorkout?.steps) {
       console.warn('REDIRECT - No openedworkout steps')
-      navStore.navigate('WorkoutStack', { screen: 'Workout' })
+      navigate('Home', {
+        screen: 'WorkoutStack',
+        params: { screen: 'Workout', params: {} },
+      })
       return null
     }
     const [formValid, setFormValid] = useState(
@@ -64,7 +69,7 @@ export const SaveTemplateScreen: React.FC<SaveTemplateScreenProps> = observer(
 
     function onBackConfirmed() {
       showConfirm?.(undefined)
-      navStore.goBack()
+      goBack()
     }
 
     function onUpdate(updated: WorkoutTemplate, isValid: boolean) {
@@ -84,7 +89,7 @@ export const SaveTemplateScreen: React.FC<SaveTemplateScreenProps> = observer(
       showSnackbar!({
         text: translate('templateSaved'),
       })
-      navStore.goBack()
+      goBack()
     }
 
     return (

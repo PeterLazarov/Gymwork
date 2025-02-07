@@ -7,6 +7,7 @@ import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import { capitalize } from 'app/utils/string'
 import { Icon, IconButton, Text, fontSize, spacing } from 'designSystem'
+import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   duration?: string
@@ -16,10 +17,9 @@ const DayControl: React.FC<Props> = ({ duration }) => {
     theme: { colors, boxShadows },
   } = useAppTheme()
 
-  const {
-    stateStore,
-    navStore: { navigate },
-  } = useStores()
+  const { stateStore } = useStores()
+
+  const { navigate } = useNavigation()
 
   const luxonDate = DateTime.fromISO(stateStore.openedDate)
   const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })

@@ -20,6 +20,7 @@ import {
 import WorkoutCommentsCard from '../Workout/WorkoutCommentsCard'
 
 import WorkoutModalStepItem from './WorkoutModalStepItem'
+import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   open: boolean
@@ -35,15 +36,13 @@ const WorkoutModal: React.FC<Props> = ({
   mode,
   showComments,
 }) => {
-  const {
-    workoutStore,
-    stateStore,
-    navStore: { navigate },
-  } = useStores()
+  const { workoutStore, stateStore } = useStores()
   const [includeSets, setIncludeSets] = useState(true)
 
   const luxonDate = DateTime.fromISO(workout.date)
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
+
+  const { navigate } = useNavigation()
 
   const {
     theme: { colors },
@@ -55,7 +54,12 @@ const WorkoutModal: React.FC<Props> = ({
     } else if (mode === 'view') {
       stateStore.setOpenedDate(workout.date)
     }
-    navigate('WorkoutStack', { screen: 'Workout' })
+
+    navigate('Home', {
+      screen: 'WorkoutStack',
+      params: { screen: 'Workout', params: {} },
+    })
+
     onClose()
   }
 
