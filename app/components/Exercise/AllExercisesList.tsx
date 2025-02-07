@@ -1,5 +1,6 @@
+import { FlashList } from '@shopify/flash-list'
 import { observer } from 'mobx-react-lite'
-import { useMemo } from 'react'
+import { forwardRef, useMemo } from 'react'
 import { View } from 'react-native'
 
 import { useStores } from 'app/db/helpers/useStores'
@@ -10,46 +11,42 @@ import ExerciseList from './ExerciseList'
 
 const noop = () => {}
 
-type Props = {
+type AllExercisesListProps = {
   onSelect: (exercise: Exercise) => void
   selectedExercises: Exercise[]
   filterString: string
 }
-const AllExercisesList: React.FC<Props> = ({
-  onSelect,
-  selectedExercises,
-  filterString,
-}) => {
-  const { exerciseStore } = useStores()
 
-  const filteredExercises = useMemo(() => {
-    if (!filterString) {
-      return exerciseStore.exercises
-    }
+const AllExercisesList = forwardRef<FlashList<Exercise>, AllExercisesListProps>(
+  ({ onSelect, selectedExercises, filterString }, ref) => {
+    const { exerciseStore } = useStores()
 
-    const filtered = exerciseStore.exercises.filter((e: Exercise) => {
-      const exName = e.name.toLowerCase()
+    const filteredExercises = useMemo(() => {
+      if (!filterString) {
+        return exerciseStore.exercises
+      }
 
-      return searchString(
-        filterString,
-        word => exName.includes(word) || e.muscles.includes(word)
-      )
-    })
+      const filtered = exerciseStore.exercises.filter((e: Exercise) => {
+        const exName = e.name.toLowerCase()
 
-    return filtered
-  }, [filterString])
+        return searchString(
+          filterString,
+          word => exName.includes(word) || e.muscles.includes(word)
+        )
+      })
 
-  return (
-    <>
-      <View style={{ flex: 1, flexDirection: 'column' }}>
-        <ExerciseList
-          exercises={filteredExercises}
-          onSelect={onSelect ?? noop}
-          selectedExercises={selectedExercises}
-        />
-      </View>
-    </>
-  )
-}
+      return filtered
+    }, [filterString])
+
+    return (
+      <ExerciseList
+        ref={ref}
+        exercises={filteredExercises}
+        onSelect={onSelect ?? noop}
+        selectedExercises={selectedExercises}
+      />
+    )
+  }
+)
 
 export default observer(AllExercisesList)

@@ -1,3 +1,4 @@
+import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import { FC } from 'react'
 import { Image, useWindowDimensions, View, ViewStyle } from 'react-native'
@@ -6,22 +7,22 @@ import { Screen, Text } from '@/components/ignite'
 import { useStores } from '@/db/helpers/useStores'
 import { Exercise } from '@/db/models'
 import { translate } from '@/i18n'
-import { AppStackScreenProps, useRouteParams } from '@/navigators'
 import { exerciseImages } from '@/utils/exerciseImages'
 import { fontSize, spacing } from 'designSystem'
 
-export interface ExerciseDetailsScreenProps
-  extends AppStackScreenProps<'ExerciseDetails'> {
-  exercise: Exercise
-}
+export type ExerciseDetailsScreenProps = StaticScreenProps<{
+  exerciseId: Exercise['guid']
+}>
 
 export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = observer(
   function ExerciseDetailsScreen(props) {
-    const { exercise } = useRouteParams('ExerciseDetails')
-
-    const { navStore } = useStores()
+    const { exerciseStore } = useStores()
+    const exercise = exerciseStore.exercisesMap[props.route.params.exerciseId]
+    const { navigate } = useNavigation()
+    // TODO make these general?
+    // Make route params stringifyable, but computed, and then verified?
     if (!exercise) {
-      navStore.goBack()
+      navigate('Home')
       return null
     }
 

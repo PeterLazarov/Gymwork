@@ -1,21 +1,23 @@
+import type { StaticScreenProps } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { Alert, View } from 'react-native'
 
+import { Screen } from '@/components/ignite'
 import { useAppTheme } from '@/utils/useAppTheme'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, WorkoutStep } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { useRouteParams } from 'app/navigators'
-import { FAB, Header, Icon, IconButton } from 'designSystem'
-import { Screen } from '@/components/ignite'
+import { FAB, HeaderRight, HeaderTitle, Icon, IconButton } from 'designSystem'
 
-export type ExerciseSelectScreenParams = {
+export type ExerciseSelectScreenProps = StaticScreenProps<{
   selectMode: WorkoutStep['type']
   onSelect?: (exercises: Exercise[]) => void
-}
-export const ExerciseSelectScreen: React.FC = () => {
+}>
+
+export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({
+  route: { params },
+}) => {
   const {
     theme: { colors },
   } = useAppTheme()
@@ -27,7 +29,7 @@ export const ExerciseSelectScreen: React.FC = () => {
   } = useStores()
   const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([])
 
-  const { selectMode, onSelect } = useRouteParams('ExerciseSelect')
+  const { selectMode, onSelect } = params
 
   // function createExercisesStep(exercises: Exercise[]) {
   //   if (!stateStore.openedWorkout) {
@@ -59,15 +61,15 @@ export const ExerciseSelectScreen: React.FC = () => {
   return (
     <Screen contentContainerStyle={{ flex: 1 }}>
       {/* <View style={{ flex: 1, alignItems: 'center' }}> */}
-      <Header>
+      <HeaderRight>
         <IconButton onPress={onAddExercisePress}>
           <Icon
             icon="add"
             color={colors.onPrimary}
           />
         </IconButton>
-      </Header>
-      <Header.Title
+      </HeaderRight>
+      <HeaderTitle
         title={
           selectMode === 'straightSet'
             ? translate('selectExercise')

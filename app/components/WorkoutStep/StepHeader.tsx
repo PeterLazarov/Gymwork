@@ -7,7 +7,7 @@ import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { Header, Icon, IconButton } from 'designSystem'
+import { HeaderRight, HeaderTitle, Icon, IconButton } from 'designSystem'
 
 export type StepHeaderProps = {
   step: WorkoutStep
@@ -80,14 +80,14 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
   }, [stateStore.focusedStep!.exercise])
 
   return (
-    <Header>
-      <IconButton onPress={goBack}>
+    <HeaderRight>
+      {/* <IconButton onPress={goBack}>
         <Icon
           color={colors.onPrimary}
           icon="chevron-back"
         />
-      </IconButton>
-      <Header.Title
+      </IconButton> */}
+      <HeaderTitle
         title={focusedStepName}
         numberOfLines={1}
       />
@@ -133,7 +133,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
           />
         </Menu>
       )}
-    </Header>
+    </HeaderRight>
   )
 }
 

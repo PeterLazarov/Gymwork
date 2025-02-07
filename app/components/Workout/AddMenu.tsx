@@ -1,13 +1,19 @@
+import { TrueSheet } from '@lodev09/react-native-true-sheet'
+import { useNavigation } from '@react-navigation/native'
 import React, { useMemo, useRef } from 'react'
 import { Platform, TouchableOpacity, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { Exercise } from '@/db/models'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { Divider, Icon, IconButton, spacing, Text } from 'designSystem'
-import { goBack } from '@/navigators'
-import { Exercise } from '@/db/models'
-import { TrueSheet } from '@lodev09/react-native-true-sheet'
+import { Divider, Icon, IconButton, Text } from 'designSystem'
+
+import {
+  ExerciseSelectSheet,
+  showExerciseSelect,
+} from '../Exercise/ExerciseSelectSheet'
 
 export interface AddMenuProps {
   disabled?: boolean
@@ -17,12 +23,9 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
   const {
     theme: { colors },
   } = useAppTheme()
+  const { bottom: bottomInset } = useSafeAreaInsets()
 
-  const {
-    stateStore,
-    workoutStore,
-    navStore: { navigate },
-  } = useStores()
+  const { stateStore, workoutStore } = useStores()
 
   function createExercisesStep(exercises: Exercise[]) {
     if (!stateStore.openedWorkout) {
@@ -34,19 +37,19 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
     )
     stateStore.setFocusedStep(newStep.guid)
     stateStore.setProp('focusedExerciseGuid', newStep.exercises[0]?.guid)
-
-    // navigate('WorkoutStep')
   }
+  const navigation = useNavigation()
 
   const addExercise = () => {
-    navigate('ExerciseSelect', {
-      selectMode: 'straightSet',
-      // TODO onGoBack?
-      // would the previous page still be rendered when this is trigged though?
-      onSelect(exercises) {
-        createExercisesStep(exercises)
-        goBack()
-      },
+    showExerciseSelect().then(exercises => {
+      createExercisesStep(exercises)
+      navigation.navigate('Home', {
+        screen: 'WorkoutStack',
+        params: {
+          screen: 'WorkoutStep',
+          params: {},
+        },
+      })
     })
   }
 
@@ -64,24 +67,31 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
     if (stateStore.openedWorkout) {
       opts.push({
         text: translate('addComment'),
-        action: () => navigate('WorkoutFeedback'),
+        action: () =>
+          navigation.navigate('Home', {
+            screen: 'WorkoutStack',
+            params: {
+              screen: 'WorkoutFeedback',
+              params: {},
+            },
+          }),
       })
     }
     return opts
-  }, [stateStore.openedWorkout, addExercise, navigate])
+  }, [stateStore.openedWorkout, addExercise])
 
   const { theme } = useAppTheme()
-  const sheet = useRef<TrueSheet>(null)
+  const actionSheet = useRef<TrueSheet>(null)
 
   return (
     <>
       <IconButton
         style={{
-          backgroundColor: colors.primary,
-          borderRadius: 12,
+          backgroundColor: disabled ? colors.outlineVariant : colors.primary,
+          borderRadius: 12, // TODO add global rounding styles?
         }}
         onPress={() => {
-          sheet.current?.present()
+          actionSheet.current?.present()
         }}
         disabled={disabled}
       >
@@ -89,12 +99,12 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
       </IconButton>
 
       <TrueSheet
-        ref={sheet}
-        sizes={['auto', 'large']}
-        backgroundColor={colors.surfaceContainer}
+        ref={actionSheet}
+        sizes={['auto']}
+        blurTint="default"
         contentContainerStyle={{
-          paddingTop: theme.spacing.md,
-          paddingBottom: Platform.select({ ios: theme.spacing.md, android: 0 }),
+          paddingTop: bottomInset,
+          paddingBottom: bottomInset,
         }}
       >
         <View>
@@ -112,7 +122,7 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
 
               <TouchableOpacity
                 onPress={() => {
-                  sheet.current?.dismiss()
+                  actionSheet.current?.dismiss()
                   option.action()
                 }}
                 style={{
@@ -127,6 +137,8 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
           ))}
         </View>
       </TrueSheet>
+
+      <ExerciseSelectSheet />
     </>
   )
 }

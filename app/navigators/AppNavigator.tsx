@@ -4,18 +4,18 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
+import { createNativeBottomTabNavigator } from '@bottom-tabs/react-navigation'
 import { PortalHost, PortalProvider } from '@gorhom/portal'
+import MaterialIcons from '@react-native-vector-icons/material-icons'
 import {
   NavigationContainer,
   NavigationState,
-  RouteProp,
-  useRoute,
+  createStaticNavigation,
+  StaticParamList,
 } from '@react-navigation/native'
-import {
-  createNativeStackNavigator,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { ErrorBoundary } from '@sentry/react-native'
+import { upperFirst } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import { ComponentProps, useMemo } from 'react'
 import {
@@ -23,207 +23,141 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { PaperProvider, Portal } from 'react-native-paper'
 
+import { Links } from '@/components/Links'
 import { DialogContextProvider } from '@/contexts/DialogContext'
 import { useStores } from '@/db/helpers/useStores'
+import { translate } from '@/i18n'
 import * as Screens from '@/screens'
-import { useAppTheme, useThemeProvider } from '@/utils/useAppTheme'
+import { useThemeProvider } from '@/utils/useAppTheme'
 import { offscreenRef } from 'app/utils/useShareWorkout'
 import { navThemes, paperThemes } from 'designSystem/theme'
 
 import Config from '../config'
 
-import { BottomNavigator, BottomTabParamList } from './BottomNavigator'
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-
-/**
- * This type allows TypeScript to know what routes are defined in this navigator
- * as well as what properties (if any) they might take when navigating to them.
- *
- * If no params are allowed, pass through `undefined`. Generally speaking, we
- * recommend using your MobX-State-Tree store(s) to keep application state
- * rather than passing state through navigation params.
- *
- * For more information, see this documentation:
- *   https://reactnavigation.org/docs/params/
- *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
- *   https://reactnavigation.org/docs/typescript/#organizing-types
- */
-export type AppStackParamList = {
-  Calendar: Screens.CalendarScreenParams
-  ExerciseEdit: Screens.ExerciseEditScreenParams
-  ExerciseSelect: Screens.ExerciseSelectScreenParams
-  SaveTemplate: Screens.SaveTemplateScreenParams
-  TemplateSelect: undefined
-  HomeStack: BottomTabParamList
-  Settings: undefined
-  UserFeedback: {
-    referrerPage: string
-  }
-
-  Welcome: undefined
-  // 🔥 Your screens go here
-  ExerciseDetails: Screens.ExerciseDetailsScreenProps
-  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
-}
-
-export type HomeStackParamList = {
-  Review: Screens.ReviewScreenParams
-  WorkoutStack: undefined
-}
-
-export type WorkoutStackParamList = {
-  Workout: undefined
-  WorkoutStep: undefined
-  WorkoutFeedback: undefined
-}
-
-export type AllStacksParamList = AppStackParamList &
-  HomeStackParamList &
-  WorkoutStackParamList
-
-export type RoutesWithParams = {
-  [K in keyof AllStacksParamList]: AllStacksParamList[K] extends undefined
-    ? never
-    : K
-}[keyof AllStacksParamList]
-export type RoutesWithoutParams = keyof Omit<
-  AllStacksParamList,
-  RoutesWithParams
->
-
-// TODO? move to navigation utilities?
-export const useRouteParams = <T extends keyof AllStacksParamList>(
-  screen: T
-): AllStacksParamList[T] => {
-  const route = useRoute<RouteProp<AllStacksParamList, T>>()
-
-  return (route.params ?? {}) as AllStacksParamList[T]
-}
-
 /**
  * This is a list of all the route names that will exit the app if the back button
  * is pressed while in that screen. Only affects Android.
  */
 const exitRoutes = Config.exitRoutes
 
-export type AppStackScreenProps<T extends keyof AppStackParamList> =
-  NativeStackScreenProps<AppStackParamList, T>
+const AppStack = createNativeStackNavigator({
+  initialRouteName: 'Home',
+  screenOptions(props) {
+    return {
+      headerTransparent: true,
+      headerBlurEffect: 'regular',
 
-// Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createNativeStackNavigator<AppStackParamList>()
-
-const AppStack = observer(function AppStack() {
-  const { stateStore } = useStores()
-
-  const shouldShowWelcome = !__DEV__ && !stateStore.visitedWelcomeScreen
-
-  const {
-    theme: { colors, isDark },
-  } = useAppTheme()
-
-  // TODO native header?
-  return (
-    <Stack.Navigator
-      screenOptions={{
+      headerShown: true,
+      // TODO for testing
+      headerRight() {
+        return <Links />
+      },
+    }
+  },
+  screens: {
+    Welcome: {
+      screen: Screens.WelcomeScreen,
+      linking: 'welcome',
+      // if: !__DEV__ && !stateStore.visitedWelcomeScreen // TODO
+    },
+    Home: {
+      options: {
         headerShown: true,
-        // animation: 'none',
-        // navigationBarColor: colors.background,
-        navigationBarColor: isDark ? colors.shadow : colors.surface,
-        contentStyle: {
-          backgroundColor: isDark ? colors.shadow : colors.surface,
+        headerRight() {
+          return <Links />
         },
-        headerTransparent: true,
-        headerBlurEffect: 'regular',
-      }}
-      initialRouteName={shouldShowWelcome ? 'Welcome' : 'HomeStack'}
-    >
-      <Stack.Screen
-        name="Calendar"
-        component={Screens.CalendarScreen}
-        options={{
-          headerBackButtonDisplayMode: 'minimal',
-        }}
-      />
-      <Stack.Screen
-        name="Settings"
-        component={Screens.SettingsScreen}
-        options={{
-          headerBackButtonDisplayMode: 'minimal',
-        }}
-      />
-      <Stack.Screen
-        name="ExerciseEdit"
-        component={Screens.ExerciseEditScreen}
-        options={{
-          headerBackButtonDisplayMode: 'minimal',
-        }}
-      />
-      <Stack.Screen
-        name="ExerciseSelect"
-        component={Screens.ExerciseSelectScreen}
-        options={{
-          // Does not display title. Useful when prev page would be a stack (HomeStack)
-          headerBackButtonDisplayMode: 'minimal',
-        }}
-      />
-      <Stack.Screen
-        name="HomeStack"
-        options={props => ({
-          headerShown: false,
-        })}
-        component={BottomNavigator}
-      />
-
-      <Stack.Screen
-        name="SaveTemplate"
-        component={Screens.SaveTemplateScreen}
-        options={{
-          headerBackButtonDisplayMode: 'minimal',
-        }}
-      />
-      <Stack.Screen
-        name="TemplateSelect"
-        component={Screens.TemplateSelectScreen}
-        options={{
-          headerBackButtonDisplayMode: 'minimal',
-        }}
-      />
-      <Stack.Screen
-        name="UserFeedback"
-        component={Screens.UserFeedbackScreen}
-        options={{
-          headerBackButtonDisplayMode: 'minimal',
-        }}
-      />
-      <Stack.Screen
-        name="Welcome"
-        component={Screens.WelcomeScreen}
-        options={{
-          headerBackButtonDisplayMode: 'minimal',
-        }}
-      />
-
-      <Stack.Screen
-        name="ExerciseDetails"
-        component={Screens.ExerciseDetailsScreen}
-        options={({ route }) => ({
-          headerTitle: route.params?.exercise?.name,
-          presentation: 'modal',
-          headerShown: true,
-          animation: 'default',
-        })}
-      />
-
-      {/* ! ADD YOUR SCREENS TO NavStore pages */}
-      {/** 🔥 Your screens go here */}
-      {/* ! ADD YOUR SCREENS TO NavStore pages */}
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
-    </Stack.Navigator>
-  )
+      },
+      screen: createNativeBottomTabNavigator({
+        // Configured here instead of per-route because the library is buggy
+        screenOptions(props) {
+          const options = {
+            WorkoutStack: {
+              title: upperFirst(translate('workout')),
+              tabBarIcon: () =>
+                MaterialIcons.getImageSourceSync(
+                  'fitness-center',
+                  24,
+                  'black'
+                )!,
+            },
+            ReviewStack: {
+              title: upperFirst(translate('review')),
+              tabBarIcon: () =>
+                MaterialIcons.getImageSourceSync('history', 24, 'black')!,
+            },
+          }
+          const routeName = props.route.name as keyof typeof options
+          return options[routeName]
+        },
+        screens: {
+          ReviewStack: createNativeStackNavigator({
+            screens: {
+              Review: {
+                screen: Screens.ReviewScreen,
+                linking: 'review',
+              },
+            },
+          }),
+          WorkoutStack: createNativeStackNavigator({
+            screens: {
+              Workout: {
+                screen: Screens.WorkoutScreen,
+                linking: 'workout/:workoutId',
+              },
+              WorkoutStep: {
+                screen: Screens.WorkoutStepScreen,
+                linking: 'workout/:workoutId/step/:stepId',
+              },
+              WorkoutFeedback: {
+                screen: Screens.WorkoutFeedbackScreen,
+                linking: 'workout/:workoutId/feedback',
+              },
+            },
+          }),
+        },
+      }),
+    },
+    // common / duplicates?
+    Settings: {
+      screen: Screens.SettingsScreen,
+      headerRight() {
+        return <Links />
+      },
+    },
+    // ExerciseSelect: {
+    //   screen: Screens.ExerciseSelectScreen,
+    //   headerRight() {
+    //     return <Links />
+    //   },
+    // },
+    ExerciseEdit: {
+      screen: Screens.ExerciseEditScreen,
+      headerRight() {
+        return <Links />
+      },
+    },
+    ExerciseDetails: {
+      screen: Screens.ExerciseDetailsScreen,
+      headerRight() {
+        return <Links />
+      },
+    },
+  },
 })
+
+type RootStackParamList = StaticParamList<typeof AppStack>
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
+}
+
+const Navigation = createStaticNavigation(AppStack)
 
 export interface NavigationProps
   extends Partial<ComponentProps<typeof NavigationContainer>> {}
@@ -266,49 +200,51 @@ export const AppNavigator = observer(function AppNavigator(
   return (
     <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <PaperProvider theme={paperTheme}>
-        <NavigationContainer
-          ref={navigationRef}
-          theme={navigationTheme}
-          {...props}
-          onStateChange={handleStateChange}
-        >
-          <GestureHandlerRootView>
-            <ErrorBoundary
-              fallback={({ error, resetError }) => (
-                <Screens.ErrorDetailsScreen
-                  error={error}
-                  resetError={resetError}
-                />
-              )}
-            >
-              <PortalProvider>
-                <Portal.Host>
-                  <DialogContextProvider>
-                    {/* The bar at the top */}
-                    {/* <StatusBar
+        <GestureHandlerRootView>
+          <ErrorBoundary
+            fallback={({ error, resetError }) => (
+              <Screens.ErrorDetailsScreen
+                error={error}
+                resetError={resetError}
+              />
+            )}
+          >
+            <PortalProvider>
+              <Portal.Host>
+                <DialogContextProvider>
+                  {/* The bar at the top */}
+                  {/* <StatusBar
                     backgroundColor={
                       colorScheme === 'light' ? colors.primary : colors.shadow
                     }
                     barStyle={'light-content'}
                   /> */}
-                    <AppStack />
-                  </DialogContextProvider>
-                </Portal.Host>
+                  <Navigation
+                    linking={{
+                      enabled: true,
+                      prefixes: [''], // TODO
+                    }}
+                    ref={navigationRef}
+                    theme={navigationTheme}
+                    {...props}
+                    onStateChange={handleStateChange}
+                  />
+                </DialogContextProvider>
+              </Portal.Host>
 
-                <View
-                  ref={offscreenRef}
-                  style={{
-                    position: 'absolute',
-                    zIndex: 1,
-                    left: screenDimensions.width,
-                  }}
-                >
-                  <PortalHost name="offscreen" />
-                </View>
-              </PortalProvider>
-            </ErrorBoundary>
-          </GestureHandlerRootView>
-        </NavigationContainer>
+              <View
+                ref={offscreenRef}
+                style={{
+                  position: 'absolute',
+                  zIndex: 1,
+                  left: screenDimensions.width,
+                }}
+              >
+                <PortalHost name="offscreen" />
+              </View>
+            </PortalProvider>
+          </ErrorBoundary>
+        </GestureHandlerRootView>
       </PaperProvider>
     </ThemeProvider>
   )

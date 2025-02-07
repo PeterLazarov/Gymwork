@@ -5,19 +5,7 @@ import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 
-import { Text } from './Text'
-
-interface SubComponents {
-  Title: React.FC<HeaderTitleProps>
-}
-
-export const Header: React.FC<ViewProps & { children: React.ReactNode }> &
-  SubComponents = props => {
-  const {
-    theme: { colors, spacing, isDark },
-  } = useAppTheme()
-  // const padding = spacing.sm
-
+export function HeaderRight(props: { children: React.ReactNode }) {
   const navigation = useNavigation()
 
   useLayoutEffect(() => {
@@ -26,26 +14,53 @@ export const Header: React.FC<ViewProps & { children: React.ReactNode }> &
       top = top.getParent()
     }
     top.setOptions({
-      headerRight(_) {
-        return props.children
+      headerRight(defaultProps) {
+        return (
+          <>
+            {defaultProps.canGoBack && defaultProps.defaultHandler?.()}
+            {props.children}
+          </>
+        )
       },
     })
   }, [props.children])
 
   return null
 }
-Header.displayName = 'Header'
+
+export function HeaderLeft(props: { children: React.ReactNode }) {
+  const navigation = useNavigation()
+
+  useLayoutEffect(() => {
+    let top = navigation
+    while (top.getParent()) {
+      top = top.getParent()
+    }
+    top.setOptions({
+      headerLeft(defaultProps) {
+        return (
+          <>
+            {defaultProps.canGoBack && defaultProps.defaultHandler?.()}
+            {props.children}
+          </>
+        )
+      },
+    })
+  }, [props.children])
+
+  return null
+}
 
 type HeaderTitleProps = {
   title: string
   // nestingLevels:0,
   numberOfLines?: TextProps['numberOfLines']
 }
-const HeaderTitle: React.FC<HeaderTitleProps> = ({
+export function HeaderTitle({
   title,
   // nestingLevelsm
   numberOfLines = 1,
-}) => {
+}: HeaderTitleProps) {
   const navigation = useNavigation()
 
   useLayoutEffect(() => {
@@ -60,5 +75,3 @@ const HeaderTitle: React.FC<HeaderTitleProps> = ({
 
   return null
 }
-HeaderTitle.displayName = 'HeaderTitle'
-Header.Title = HeaderTitle

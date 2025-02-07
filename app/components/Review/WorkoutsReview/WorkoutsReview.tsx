@@ -1,9 +1,8 @@
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
+import { TrueSheet } from '@lodev09/react-native-true-sheet'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useRef, useState } from 'react'
 import { Button, FlatList, Platform, StyleSheet, View } from 'react-native'
 import { Searchbar } from 'react-native-paper'
-import { TrueSheet } from '@lodev09/react-native-true-sheet'
 
 import { TabHeightCompensation } from '@/navigators/constants'
 import { useAppTheme } from '@/utils/useAppTheme'
@@ -137,6 +136,7 @@ const WorkoutsReview: React.FC = () => {
       <TrueSheet
         ref={sheet}
         sizes={['auto', 'large']}
+        blurTint="regular"
         contentContainerStyle={{
           paddingTop: theme.spacing.md,
           paddingBottom: Platform.select({ ios: theme.spacing.md, android: 0 }),

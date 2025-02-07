@@ -1,15 +1,21 @@
 import { useNavigation } from '@react-navigation/native'
+import type { StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useMemo, useRef } from 'react'
 import { FlatList, ListRenderItemInfo, View } from 'react-native'
 
 import WorkoutBottomControls from '@/components/Workout/WorkoutBottomControls'
 import WorkoutDayView from '@/components/Workout/WorkoutDayView'
+import { Workout } from '@/db/models'
 import { useStores } from 'app/db/helpers/useStores'
 import { formatDateIso, getDateRange } from 'app/utils/date'
 import { HorizontalScreenList } from 'designSystem'
 
-export const WorkoutScreen = observer(() => {
+export type WorkoutScreenProps = StaticScreenProps<{
+  // workoutId: Workout['guid']
+}>
+
+export const WorkoutScreen: React.FC<WorkoutScreenProps> = observer(() => {
   const { stateStore } = useStores()
   const workoutList = useRef<FlatList<string>>(null)
 

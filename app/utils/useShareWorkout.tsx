@@ -9,7 +9,7 @@ import MiniTimer from 'app/components/MiniTimer'
 import WorkoutDayView from 'app/components/Workout/WorkoutDayView'
 import { Workout } from 'app/db/models'
 import { translate } from 'app/i18n'
-import { Header } from 'designSystem'
+import { HeaderRight, HeaderTitle } from 'designSystem'
 
 import { defaultIgnoredWarnings } from './ignoreWarnings'
 
@@ -48,8 +48,8 @@ export function useShareWorkout() {
         }}
         style={{ width: 480 }}
       >
-        <Header>
-          <Header.Title
+        <HeaderRight>
+          <HeaderTitle
             title={DateTime.fromISO(workout.date).toFormat('ccc, MMM dd, yyyy')}
           />
           <MiniTimer
@@ -57,7 +57,7 @@ export function useShareWorkout() {
               workout.inferredHistoricalDuration?.as('minutes') || 0
             )}
           />
-        </Header>
+        </HeaderRight>
         <WorkoutDayView date={workout.date} />
       </View>
     )

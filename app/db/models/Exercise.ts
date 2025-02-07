@@ -68,15 +68,15 @@ export const ExerciseModel = types
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
     name: types.string,
-    images: types.array(types.string),
-    equipment: types.array(types.string),
+    images: types.optional(types.array(types.string), []),
+    equipment: types.optional(types.array(types.string), []),
     position: types.maybe(types.string),
     stance: types.maybe(types.string),
-    instructions: types.array(types.string),
-    tips: types.maybe(types.array(types.string)),
-    muscleAreas: types.array(types.string),
+    instructions: types.optional(types.array(types.string), []),
+    tips: types.optional(types.maybe(types.array(types.string)), undefined),
+    muscleAreas: types.optional(types.array(types.string), []),
 
-    muscles: types.array(types.string),
+    muscles: types.optional(types.array(types.string), []),
     measurements: types.optional(ExerciseMeasurementModel, () => ({
       weight: measurementDefaults.weight,
       reps: measurementDefaults.reps,

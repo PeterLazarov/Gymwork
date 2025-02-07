@@ -89,6 +89,6 @@ export const ExerciseStoreModel = types
     return {}
   })
 
-export interface ExerciseStore extends Instance<typeof ExerciseStoreModel> { }
+export interface ExerciseStore extends Instance<typeof ExerciseStoreModel> {}
 export interface ExerciseStoreSnapshot
-  extends SnapshotOut<typeof ExerciseStoreModel> { }
+  extends SnapshotOut<typeof ExerciseStoreModel> {}

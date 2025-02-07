@@ -58,9 +58,11 @@ const WorkoutBottomControls = () => {
           </Text>
         </View>
       </TouchableOpacity>
+
       <View style={{ flex: 1, alignItems: 'center' }}>
         <AddMenu disabled={!stateStore.openedWorkout} />
       </View>
+
       <TouchableOpacity
         onPress={stateStore.incrementCurrentDate}
         style={{

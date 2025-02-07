@@ -1,3 +1,4 @@
+import type { StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
@@ -9,80 +10,87 @@ import ExerciseControl from 'app/components/WorkoutStep/ExerciseControl'
 import ExerciseTrackView from 'app/components/WorkoutStep/ExerciseTrackView'
 import StepHeader from 'app/components/WorkoutStep/StepHeader'
 import { useStores } from 'app/db/helpers/useStores'
-import { Exercise } from 'app/db/models'
+import { Exercise, Workout, WorkoutStep } from 'app/db/models'
 
-export const WorkoutStepScreen: React.FC = observer(() => {
-  const { stateStore, navStore } = useStores()
+export type WorkoutStepScreenProps = StaticScreenProps<{
+  // workoutId: Workout['guid']
+  // stepId: WorkoutStep['guid']
+}>
 
-  const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
+export const WorkoutStepScreen: React.FC<WorkoutStepScreenProps> = observer(
+  () => {
+    const { stateStore, navStore } = useStores()
 
-  if (!stateStore.focusedStep || !stateStore.focusedExercise) {
-    console.warn('REDIRECT - No step or exercise')
-    navStore.navigate('WorkoutStack', { screen: 'Workout' })
-    return null
-  }
+    const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
 
-  function switchExercise(exercise: Exercise) {
-    if (stateStore.focusedStep && stateStore.focusedExercise) {
-      stateStore.focusedStep.switchExercise(
-        exercise,
-        stateStore.focusedExercise
-      )
-      stateStore.setProp('focusedExerciseGuid', exercise.guid)
-      setExerciseSelectOpen(false)
+    if (!stateStore.focusedStep || !stateStore.focusedExercise) {
+      console.warn('REDIRECT - No step or exercise')
+      navStore.navigate('WorkoutStack', { screen: 'Workout' })
+      return null
     }
-  }
 
-  return (
-    stateStore.focusedStep && (
-      <Screen
-        safeAreaEdges={['bottom']}
-        contentContainerStyle={{
-          flex: 1,
-          paddingBottom: 16, // TODO this should not be needed
-        }}
-      >
-        <StepHeader
-          step={stateStore.focusedStep}
-          onSwitchExercise={() => setExerciseSelectOpen(true)}
-        />
+    function switchExercise(exercise: Exercise) {
+      if (stateStore.focusedStep && stateStore.focusedExercise) {
+        stateStore.focusedStep.switchExercise(
+          exercise,
+          stateStore.focusedExercise
+        )
+        stateStore.setProp('focusedExerciseGuid', exercise.guid)
+        setExerciseSelectOpen(false)
+      }
+    }
 
-        {exerciseSelectOpen && (
-          <ExerciseSelectLists
-            multiselect={false}
-            selected={[]}
-            onChange={([e]) => {
-              if (e) {
-                switchExercise(e)
-              }
-            }}
+    return (
+      stateStore.focusedStep && (
+        <Screen
+          safeAreaEdges={['bottom']}
+          contentContainerStyle={{
+            flex: 1,
+            paddingBottom: 16, // TODO this should not be needed
+          }}
+        >
+          <StepHeader
+            step={stateStore.focusedStep}
+            onSwitchExercise={() => setExerciseSelectOpen(true)}
           />
-        )}
 
-        {!exerciseSelectOpen && (
-          <>
-            {stateStore.focusedStep?.type === 'superSet' && (
-              <ExerciseControl
-                selectedIndex={
-                  stateStore.focusedExercise
-                    ? stateStore.focusedStep.exercises.indexOf(
-                        stateStore.focusedExercise
-                      )
-                    : -1
+          {exerciseSelectOpen && (
+            <ExerciseSelectLists
+              multiselect={false}
+              selected={[]}
+              onChange={([e]) => {
+                if (e) {
+                  switchExercise(e)
                 }
-                options={stateStore.focusedStep.exercises}
-                onChange={({ guid }) => {
-                  stateStore.setProp('focusedExerciseGuid', guid)
-                }}
-              />
-            )}
-            <ExerciseTrackView
-              exercise={stateStore.focusedExercise}
-              step={stateStore.focusedStep}
+              }}
             />
-          </>
-        )}
-      </Screen>
+          )}
+
+          {!exerciseSelectOpen && (
+            <>
+              {stateStore.focusedStep?.type === 'superSet' && (
+                <ExerciseControl
+                  selectedIndex={
+                    stateStore.focusedExercise
+                      ? stateStore.focusedStep.exercises.indexOf(
+                          stateStore.focusedExercise
+                        )
+                      : -1
+                  }
+                  options={stateStore.focusedStep.exercises}
+                  onChange={({ guid }) => {
+                    stateStore.setProp('focusedExerciseGuid', guid)
+                  }}
+                />
+              )}
+              <ExerciseTrackView
+                exercise={stateStore.focusedExercise}
+                step={stateStore.focusedStep}
+              />
+            </>
+          )}
+        </Screen>
+      )
     )
-  )
-})
+  }
+)

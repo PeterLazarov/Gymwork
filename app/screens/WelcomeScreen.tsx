@@ -1,3 +1,4 @@
+import type { StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -8,13 +9,16 @@ import { EmptyLayout } from 'app/layouts/EmptyLayout'
 import {
   Button,
   ButtonText,
-  Header,
+  HeaderRight,
+  HeaderTitle,
   Text,
   fontSize,
   spacing,
 } from 'designSystem'
 
-export const WelcomeScreen: React.FC = observer(() => {
+export type WelcomeScreenProps = StaticScreenProps<{}>
+
+export const WelcomeScreen: React.FC<WelcomeScreenProps> = observer(() => {
   const {
     stateStore,
     navStore: { navigate },
@@ -27,9 +31,7 @@ export const WelcomeScreen: React.FC = observer(() => {
 
   return (
     <EmptyLayout>
-      <Header>
-        <Header.Title title={translate('welcome')} />
-      </Header>
+      <HeaderTitle title={translate('welcome')} />
 
       <View style={styles.content}>
         <Text style={[styles.text, styles.bold]}>

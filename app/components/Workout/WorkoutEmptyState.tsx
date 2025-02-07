@@ -18,7 +18,7 @@ const WorkoutEmptyState: React.FC = () => {
 
   function startWorkout() {
     workoutStore.createWorkout()
-    navigate('ExerciseSelect')
+    // navigate('ExerciseSelect')
   }
 
   const secondaryActions = useMemo(() => {

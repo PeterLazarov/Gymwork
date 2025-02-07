@@ -1,3 +1,4 @@
+import type { StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 
@@ -8,64 +9,67 @@ import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutTemplate } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { Header, Icon, IconButton } from 'designSystem'
+import { HeaderRight, HeaderTitle, Icon, IconButton } from 'designSystem'
 
-export const TemplateSelectScreen: React.FC = observer(() => {
-  const {
-    theme: { colors },
-  } = useAppTheme()
+export type TemplateSelectScreenProps = StaticScreenProps<undefined>
 
-  const {
-    workoutStore,
-    navStore: { navigate },
-  } = useStores()
+export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> =
+  observer(() => {
+    const {
+      theme: { colors },
+    } = useAppTheme()
 
-  const { showConfirm } = useDialogContext()
+    const {
+      workoutStore,
+      navStore: { navigate },
+    } = useStores()
 
-  function handleSelect(template: WorkoutTemplate) {
-    workoutStore.createWorkoutFromTemplate(template)
-    navigate('WorkoutStack', { screen: 'Workout' })
-  }
+    const { showConfirm } = useDialogContext()
 
-  function handleEdit(template: WorkoutTemplate) {
-    navigate('SaveTemplate', { edittingTemplate: template })
-  }
+    function handleSelect(template: WorkoutTemplate) {
+      workoutStore.createWorkoutFromTemplate(template)
+      navigate('WorkoutStack', { screen: 'Workout' })
+    }
 
-  function handleDelete(template: WorkoutTemplate) {
-    showConfirm?.({
-      message: translate('templateWillBeDeleted'),
-      onClose: () => showConfirm?.(undefined),
-      onConfirm: () => {
-        workoutStore.removeTemplate(template)
-        showConfirm?.(undefined)
-      },
-    })
-  }
+    function handleEdit(template: WorkoutTemplate) {
+      navigate('SaveTemplate', { edittingTemplate: template })
+    }
 
-  function onBackPress() {
-    navigate('WorkoutStack', { screen: 'Workout' })
-  }
+    function handleDelete(template: WorkoutTemplate) {
+      showConfirm?.({
+        message: translate('templateWillBeDeleted'),
+        onClose: () => showConfirm?.(undefined),
+        onConfirm: () => {
+          workoutStore.removeTemplate(template)
+          showConfirm?.(undefined)
+        },
+      })
+    }
 
-  return (
-    <EmptyLayout>
-      <Header>
-        <IconButton
-          onPress={onBackPress}
-          //
-        >
-          <Icon
-            icon="chevron-back"
-            color={colors.onPrimary}
-          />
-        </IconButton>
-        <Header.Title title={translate('selectTemplate')} />
-      </Header>
+    function onBackPress() {
+      navigate('WorkoutStack', { screen: 'Workout' })
+    }
 
-      <TemplateList
-        onSelect={handleSelect}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
-      />
-    </EmptyLayout>
-  )
-})
+    return (
+      <EmptyLayout>
+        <HeaderRight>
+          <IconButton
+            onPress={onBackPress}
+            //
+          >
+            <Icon
+              icon="chevron-back"
+              color={colors.onPrimary}
+            />
+          </IconButton>
+          <HeaderTitle title={translate('selectTemplate')} />
+        </HeaderRight>
+
+        <TemplateList
+          onSelect={handleSelect}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+        />
+      </EmptyLayout>
+    )
+  })

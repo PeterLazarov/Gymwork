@@ -71,6 +71,9 @@ dependencies:
   '@uidotdev/usehooks':
     specifier: ^2.4.1
     version: 2.4.1(react-dom@18.3.1)(react@18.3.1)
+  '@ungap/with-resolvers':
+    specifier: ^0.1.0
+    version: 0.1.0
   '@wuba/react-native-echarts':
     specifier: ^2.0.2
     version: 2.0.2(@shopify/react-native-skia@1.5.0)(echarts@5.5.1)(react-native-gesture-handler@2.20.2)(react-native-svg@15.8.0)(react-native@0.76.6)(react@18.3.1)(zrender@5.6.0)
@@ -3902,6 +3905,10 @@ packages:
   /@ungap/structured-clone@1.2.1:
     resolution: {integrity: sha512-fEzPV3hSkSMltkw152tJKNARhOupqbH96MZWyRjNaYZOMIzbrTeQDG+MTc6Mr2pgzFQzFxAfmhGDNP5QK++2ZA==}
     dev: true
+
+  /@ungap/with-resolvers@0.1.0:
+    resolution: {integrity: sha512-g7f0IkJdPW2xhY7H4iE72DAsIyfuwEFc6JWc2tYFwKDMWWAF699vGjrM348cwQuOXgHpe1gWFe+Eiyjx/ewvvw==}
+    dev: false
 
   /@urql/core@4.0.11(graphql@16.8.1):
     resolution: {integrity: sha512-FFdY97vF5xnUrElcGw9erOLvtu+KGMLfwrLNDfv4IPgdp2IBsiGe+Kb7Aypfd3kH//BETewVSLm3+y2sSzjX6A==}

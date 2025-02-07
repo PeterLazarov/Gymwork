@@ -63,55 +63,27 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
       index,
     })
 
-    const translationX = useSharedValue(0)
-
-    const panGesture = Gesture.Pan()
-      .activeOffsetX([-25, 25]) // This ensures horizontal gestures are recognized only when dragging past the threshold
-      .failOffsetY([-10, 10]) // If the user is scrolling more vertically, we fail the horizontal gesture
-      .onUpdate(event => {
-        // Check if horizontal translation is significant (past threshold)
-        if (Math.abs(event.translationX) > 25) {
-          // Apply horizontal translation
-          translationX.value = event.translationX
-        }
-      })
-      .onEnd(() => {
-        // Reset translation when gesture ends
-        translationX.value = withSpring(0)
-      })
-
-    const animatedStyle = useAnimatedStyle(() => ({
-      transform: [{ translateX: translationX.value }],
-    }))
-
     return (
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <GestureDetector gesture={panGesture}>
-          <Animated.View
-            style={[
-              {
-                flex: 1,
-              },
-              animatedStyle,
-            ]}
-          >
-            <FlatList
-              ref={ref}
-              showsHorizontalScrollIndicator={false}
-              viewabilityConfig={viewabilityConfig}
-              onViewableItemsChanged={handleViewChange}
-              pagingEnabled
-              keyExtractor={(item, index) => String(index)}
-              getItemLayout={getItemLayout}
-              renderItem={renderItem}
-              horizontal
-              snapToAlignment="center"
-              initialScrollIndex={initialScrollIndex}
-              {...rest}
-            />
-          </Animated.View>
-        </GestureDetector>
-      </GestureHandlerRootView>
+      <Animated.View
+        style={{
+          flex: 1,
+        }}
+      >
+        <FlatList
+          ref={ref}
+          showsHorizontalScrollIndicator={false}
+          viewabilityConfig={viewabilityConfig}
+          onViewableItemsChanged={handleViewChange}
+          pagingEnabled
+          keyExtractor={(item, index) => String(index)}
+          getItemLayout={getItemLayout}
+          renderItem={renderItem}
+          horizontal
+          snapToAlignment="center"
+          initialScrollIndex={initialScrollIndex}
+          {...rest}
+        />
+      </Animated.View>
     )
   }
 )

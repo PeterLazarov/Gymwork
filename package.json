@@ -5,7 +5,7 @@
   "main": "expo/AppEntry.js",
   "scripts": {
     "compile": "tsc --noEmit -p . --pretty",
-    "format": "eslint . --fix",
+    "format": "prettier --write **/*.*",
     "lint": "eslint . --fix",
     "lint:check": "eslint .",
     "patch": "patch-package",
@@ -53,6 +53,7 @@
     "@shopify/react-native-skia": "1.5.0",
     "@types/convert-units": "^2.3.9",
     "@uidotdev/usehooks": "^2.4.1",
+    "@ungap/with-resolvers": "^0.1.0",
     "@wuba/react-native-echarts": "^2.0.2",
     "apisauce": "3.0.1",
     "convert-units": "^2.3.4",

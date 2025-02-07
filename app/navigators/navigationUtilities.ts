@@ -156,7 +156,6 @@ export function useNavigationPersistence(
   const restoreState = async () => {
     try {
       const initialUrl = await Linking.getInitialURL()
-
       // Only restore the state if app has not started from a deep link
       if (!initialUrl) {
         const state = (await storage.load(persistenceKey)) as

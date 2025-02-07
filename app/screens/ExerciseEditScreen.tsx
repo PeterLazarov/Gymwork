@@ -1,3 +1,4 @@
+import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { ScrollView } from 'react-native'
@@ -9,103 +10,117 @@ import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, ExerciseModel } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
-import { useRouteParams } from 'app/navigators'
-import { Button, ButtonText, Header, Icon, IconButton } from 'designSystem'
+import {
+  Button,
+  ButtonText,
+  HeaderRight,
+  HeaderTitle,
+  Icon,
+  IconButton,
+} from 'designSystem'
 
-export type ExerciseEditScreenParams = {
+export type ExerciseEditScreenProps = StaticScreenProps<{
+  exerciseId: Exercise['guid']
   createMode?: boolean
-}
-export const ExerciseEditScreen: React.FC = observer(() => {
-  const {
-    theme: { colors },
-  } = useAppTheme()
+}>
 
-  const { stateStore, exerciseStore, navStore } = useStores()
+export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = observer(
+  ({ route: { params } }) => {
+    const {
+      theme: { colors },
+    } = useAppTheme()
 
-  const { createMode } = useRouteParams('ExerciseEdit')
-  if (!createMode && !stateStore.focusedExercise) {
-    console.warn('REDIRECT - No focusedExercise')
-    navStore.navigate('ExerciseSelect')
-  }
+    const { exerciseStore } = useStores()
+    const { navigate, goBack } = useNavigation()
 
-  const [exercise, setExercise] = useState(
-    createMode ? ExerciseModel.create() : stateStore.focusedExercise
-  )
-  const [formValid, setFormValid] = useState(false)
+    const { createMode, exerciseId } = params
 
-  const { showConfirm } = useDialogContext()
-
-  function onBackPress() {
-    showConfirm?.({
-      message: translate('changesWillBeLost'),
-      onClose: () => showConfirm?.(undefined),
-      onConfirm: onBackConfirmed,
-    })
-  }
-
-  function onBackConfirmed() {
-    showConfirm?.(undefined)
-    navStore.goBack()
-  }
-
-  function onUpdate(updated: Exercise, isValid: boolean) {
-    setExercise(updated)
-    setFormValid(isValid)
-  }
-
-  function onComplete() {
-    if (!exercise) return
-
-    if (createMode) {
-      exerciseStore.createExercise(exercise)
-    } else {
-      exerciseStore.editExercise(exercise)
+    const [exercise, setExercise] = useState(
+      createMode
+        ? ExerciseModel.create({ name: '' })
+        : exerciseStore.exercisesMap[exerciseId]
+    )
+    if (!createMode && !exercise) {
+      console.warn('REDIRECT - No exercise to edit')
+      navigate('Home') // TODO instruct to navigate back?
     }
-    navStore.goBack()
-  }
 
-  return (
-    <EmptyLayout>
-      <Header>
-        <IconButton
-          onPress={onBackPress}
-          //
-        >
-          <Icon
-            icon="chevron-back"
-            color={colors.onPrimary}
+    const [formValid, setFormValid] = useState(false)
+
+    const { showConfirm } = useDialogContext()
+
+    function onBackPress() {
+      showConfirm?.({
+        message: translate('changesWillBeLost'),
+        onClose: () => showConfirm?.(undefined),
+        onConfirm: onBackConfirmed,
+      })
+    }
+
+    function onBackConfirmed() {
+      showConfirm?.(undefined)
+      goBack()
+    }
+
+    function onUpdate(updated: Exercise, isValid: boolean) {
+      setExercise(updated)
+      setFormValid(isValid)
+    }
+
+    function onComplete() {
+      if (!exercise) return
+
+      if (createMode) {
+        exerciseStore.createExercise(exercise)
+      } else {
+        exerciseStore.editExercise(exercise)
+      }
+      goBack()
+    }
+
+    return (
+      <EmptyLayout>
+        <HeaderRight>
+          <IconButton
+            onPress={onBackPress}
+            //
+          >
+            <Icon
+              icon="chevron-back"
+              color={colors.onPrimary}
+            />
+          </IconButton>
+          <HeaderTitle
+            title={translate(createMode ? 'createExercise' : 'editExercise')}
           />
-        </IconButton>
-        <Header.Title
-          title={translate(createMode ? 'createExercise' : 'editExercise')}
-        />
-        <IconButton
+          <IconButton
+            onPress={onComplete}
+            disabled={!formValid}
+            //
+          >
+            <Icon
+              icon="checkmark"
+              size="large"
+              color={colors.onPrimary}
+            />
+          </IconButton>
+        </HeaderRight>
+        <ScrollView style={{ flex: 1 }}>
+          {exercise && (
+            <ExerciseEditForm
+              exercise={exercise}
+              onUpdate={onUpdate}
+            />
+          )}
+        </ScrollView>
+        <Button
+          variant="primary"
           onPress={onComplete}
           disabled={!formValid}
-          //
         >
-          <Icon
-            icon="checkmark"
-            size="large"
-            color={colors.onPrimary}
-          />
-        </IconButton>
-      </Header>
-      <ScrollView style={{ flex: 1 }}>
-        {exercise && (
-          <ExerciseEditForm
-            exercise={exercise}
-            onUpdate={onUpdate}
-          />
-        )}
-      </ScrollView>
-      <Button
-        variant="primary"
-        onPress={onComplete}
-        disabled={!formValid}
-      >
-        <ButtonText variant="primary">{translate('save')}</ButtonText>
-      </Button>
-    </EmptyLayout>
-  )
-})
+          <ButtonText variant="primary">{translate('save')}</ButtonText>
+        </Button>
+      </EmptyLayout>
+    )
+  }
+)

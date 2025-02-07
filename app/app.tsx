@@ -36,34 +36,9 @@ import { ErrorBoundary } from './screens/ignite/ErrorScreen/ErrorBoundary'
 import * as storage from './utils/storage'
 // import { customFontsToLoad } from './igniteTheme'
 
-export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
+import '@ungap/with-resolvers'
 
-// Web linking configuration
-const prefix = Linking.createURL('/')
-const config = {
-  screens: {
-    Calendar: {
-      path: 'calendar',
-    },
-    Welcome: 'welcome',
-    HomeStack: {
-      screens: {
-        Review: {
-          // path: 'showroom/:queryIndex?/:itemIndex?',
-          path: 'review',
-        },
-        Workout: 'workout',
-      },
-    },
-    ExerciseEdit: 'exerciseEdit',
-    ExerciseSelect: 'exerciseSelect',
-    TemplateSelect: 'templateSelect',
-    SaveTemplate: 'saveTemplate',
-    Settings: 'settings',
-    UserFeedback: 'userFeedback',
-    WorkoutStep: 'workoutStep',
-  },
-}
+export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
 interface AppProps {
   hideSplashScreen: () => Promise<void>
@@ -114,11 +89,6 @@ function App(props: AppProps) {
     return null
   }
 
-  const linking = {
-    prefixes: [prefix],
-    config,
-  }
-
   // otherwise, we're ready to render the app
   return (
     <DBStoreInitializer>
@@ -126,7 +96,6 @@ function App(props: AppProps) {
         <ErrorBoundary catchErrors={Config.catchErrors}>
           <KeyboardProvider>
             <AppNavigator
-              linking={linking}
               initialState={initialNavigationState}
               onStateChange={onNavigationStateChange}
             />
