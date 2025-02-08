@@ -91,5 +91,5 @@ web-build/
 # Yarn
 .yarn/*
 
-# Extras
-*.swp
+# Odd files that appear in the linux machine
+*.sw*
