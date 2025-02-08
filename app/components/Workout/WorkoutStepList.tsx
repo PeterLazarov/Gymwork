@@ -23,6 +23,7 @@ const WorkoutStepList: React.FC<WorkoutStepListProps> = ({ workout }) => {
 
   function onCardPress(stepGuid: string) {
     stateStore.setFocusedStep(stepGuid)
+    console.log('navigating to step')
     navigate('Home', {
       screen: 'WorkoutStack',
       params: { screen: 'WorkoutStep', params: {} },

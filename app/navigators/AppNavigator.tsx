@@ -227,6 +227,8 @@ export const AppNavigator = observer(function AppNavigator(
     const { currentRouteName, previousRouteName } =
       props.onStateChange?.(state) ?? {}
 
+    console.log('stateChange', { previousRouteName, currentRouteName, state })
+
     navStore.setProp('activeRoute', currentRouteName)
   }
 
@@ -267,6 +269,12 @@ export const AppNavigator = observer(function AppNavigator(
                   theme={navigationTheme}
                   {...props}
                   onStateChange={handleStateChange}
+                  onUnhandledAction={e => {
+                    console.log('nav unhandled action', e)
+                  }}
+                  onReady={() => {
+                    console.log('nav ready')
+                  }}
                 />
               </DialogContextProvider>
             </Portal.Host>
