@@ -21,15 +21,15 @@ function between(min: number, max: number) {
 
 const benchPressID = Object.values(exercises).find(e =>
   e.name?.toLowerCase().includes('bench press')
-)?.guid!
+)?.guid
 
 const squatID = Object.values(exercises).find(e =>
   e.name?.toLowerCase().includes('squat')
-)?.guid!
+)?.guid
 
-const cardioExerciseID = Object.entries(exercises).find(([keyof, v]) =>
+const cardioExerciseID = Object.entries(exercises).find(([, v]) =>
   v.muscleAreas?.includes('Cardio')
-)?.[0]!
+)?.[0]
 
 function generateStep(
   exercises: string[],
@@ -108,7 +108,7 @@ function generateWorkout(date: string): WorkoutSnapshotIn {
   function generateCardioStep(date: string) {
     const cardioSets: WorkoutSetSnapshotIn[] = Array.from({
       length: between(1, 2),
-    }).map((_, i) => {
+    }).map(_ => {
       const km = between(1, 3)
       // const weight = between(0, 10) // not supported yet?
       const duration = km * between(4, 7)
