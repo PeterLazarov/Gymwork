@@ -45,7 +45,7 @@ export const ThemeContext = createContext<ThemeContextType>({
   },
 })
 
-const themeContextToTheme = (themeContext: ThemeContexts): Theme =>
+export const themeContextToTheme = (themeContext: ThemeContexts): Theme =>
   themeContext === 'dark' ? darkTheme : lightTheme
 
 const setImperativeTheming = (theme: Theme) => {

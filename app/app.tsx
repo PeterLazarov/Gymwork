@@ -93,14 +93,12 @@ function App(props: AppProps) {
   return (
     <DBStoreInitializer>
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <ErrorBoundary catchErrors={Config.catchErrors}>
-          <KeyboardProvider>
-            <AppNavigator
-              initialState={initialNavigationState}
-              onStateChange={onNavigationStateChange}
-            />
-          </KeyboardProvider>
-        </ErrorBoundary>
+        <KeyboardProvider>
+          <AppNavigator
+            initialState={initialNavigationState}
+            onStateChange={onNavigationStateChange}
+          />
+        </KeyboardProvider>
       </SafeAreaProvider>
     </DBStoreInitializer>
   )

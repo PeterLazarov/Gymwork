@@ -1,7 +1,7 @@
 import { MenuAction } from '@react-native-menu/menu'
 import { useNavigation } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 import useBenchmark from '@/utils/useBenchmark'
@@ -11,12 +11,12 @@ import { useShareWorkout } from 'app/utils/useShareWorkout'
 import { Icon, IconButton, MenuViewWrapped } from 'designSystem'
 
 import MiniTimer from '../MiniTimer'
-import WorkoutTimerModal from '../Timer/WorkoutTimerModal'
+import WorkoutTimerSettings from '../Timer/WorkoutTimerSettings'
+import { TrueSheet } from '@lodev09/react-native-true-sheet'
+import { Platform } from 'react-native'
 
 const WorkoutHeaderRight: React.FC = () => {
-  const {
-    theme: { colors },
-  } = useAppTheme()
+  const { theme } = useAppTheme()
 
   const { stateStore, settingsStore, workoutStore, timerStore } = useStores()
   const { openedWorkout } = stateStore
@@ -86,26 +86,20 @@ const WorkoutHeaderRight: React.FC = () => {
       .filter(action => action.showIf !== false)
       .map(({ showIf, ...action }) => ({
         ...action,
-        titleColor: colors.onSurface,
+        titleColor: theme.colors.onSurface,
       }))
-  }, [openedWorkout, showCommentsCard, colors.onSurface])
+  }, [openedWorkout, showCommentsCard, theme.colors.onSurface])
 
-  const [showWorkoutTimerModal, setShowWorkoutTimerModal] = useState(false)
+  const timerSettingsSheetRef = useRef<TrueSheet>(null)
   return (
     <>
       {settingsStore.showWorkoutTimer && (
         <>
           <MiniTimer
             n={Math.floor(timerStore.workoutTimer.timeElapsed.as('minutes'))}
-            onPress={() => setShowWorkoutTimerModal(true)}
-            color={colors.onSurface}
-            backgroundColor={colors.surface}
-          />
-
-          <WorkoutTimerModal
-            open={showWorkoutTimerModal}
-            onClose={() => setShowWorkoutTimerModal(false)}
-            timer={timerStore.workoutTimer}
+            onPress={() => timerSettingsSheetRef.current?.present()}
+            color={theme.colors.onSurface}
+            backgroundColor={theme.colors.surface}
           />
         </>
       )}
@@ -113,7 +107,7 @@ const WorkoutHeaderRight: React.FC = () => {
       <IconButton onPress={openCalendar}>
         <Icon
           icon="calendar-sharp"
-          color={colors.onSurface}
+          color={theme.colors.onSurface}
         />
       </IconButton>
 
@@ -124,10 +118,25 @@ const WorkoutHeaderRight: React.FC = () => {
         <IconButton>
           <Icon
             icon="ellipsis-vertical"
-            color={colors.onSurface}
+            color={theme.colors.onSurface}
           />
         </IconButton>
       </MenuViewWrapped>
+
+      <TrueSheet
+        ref={timerSettingsSheetRef}
+        sizes={['medium']}
+        backgroundColor={theme.colors.surfaceContainer}
+        contentContainerStyle={{
+          paddingTop: theme.spacing.md,
+          paddingBottom: Platform.select({
+            ios: theme.spacing.md,
+            android: 0,
+          }),
+        }}
+      >
+        <WorkoutTimerSettings timer={timerStore.workoutTimer} />
+      </TrueSheet>
     </>
   )
 }
