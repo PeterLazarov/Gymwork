@@ -8,14 +8,14 @@ import { spacing } from 'designSystem'
 
 import TemplateStepsList from './TemplateStepsList'
 
-type Props = {
+export type EditTemplateFormProps = {
   template: WorkoutTemplate
   steps: WorkoutStep[]
   onUpdate: (template: WorkoutTemplate, isValid: boolean) => void
   onUpdateSteps: (steps: WorkoutStep[]) => void
 }
 
-const ExerciseEditForm: React.FC<Props> = ({
+const ExerciseEditForm: React.FC<EditTemplateFormProps> = ({
   template,
   steps,
   onUpdate,

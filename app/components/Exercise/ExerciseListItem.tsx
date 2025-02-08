@@ -9,14 +9,14 @@ import { useAppTheme } from '@/utils/useAppTheme'
 import { Exercise } from 'app/db/models'
 import { Icon, IconButton, palettes, spacing, Text } from 'designSystem'
 
-type Props = {
+export type ExerciseListItemProps = {
   exercise: Exercise
   onSelect: (exercise: Exercise) => void
   isSelected: boolean
   height: number
 }
 
-const ExerciseListItem: React.FC<Props> = ({
+const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
   exercise,
   onSelect,
   isSelected,

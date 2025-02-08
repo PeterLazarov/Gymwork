@@ -6,12 +6,15 @@ import { HelperText, TextInput } from 'react-native-paper'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { AirtableFeedback } from 'app/services/airtable'
 
-type Props = {
+export type UserFeedbackFormProps = {
   feedback: AirtableFeedback
   onUpdate: (updated: AirtableFeedback, isValid: boolean) => void
 }
 
-const UserFeedbackForm: React.FC<Props> = ({ feedback, onUpdate }) => {
+const UserFeedbackForm: React.FC<UserFeedbackFormProps> = ({
+  feedback,
+  onUpdate,
+}) => {
   const {
     theme: { spacing },
   } = useAppTheme()

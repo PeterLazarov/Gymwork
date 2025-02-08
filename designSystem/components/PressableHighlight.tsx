@@ -3,11 +3,11 @@ import { TouchableHighlight, TouchableHighlightProps } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 
-type Props = TouchableHighlightProps & {
+export type PressableHighlightProps = TouchableHighlightProps & {
   underlay?: 'default' | 'darker'
 }
 
-const PressableHighlight: React.FC<Props> = ({
+const PressableHighlight: React.FC<PressableHighlightProps> = ({
   underlay = 'default',
   ...props
 }) => {

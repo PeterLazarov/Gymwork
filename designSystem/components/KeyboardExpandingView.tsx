@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { Keyboard } from 'react-native'
 import Animated, { useSharedValue } from 'react-native-reanimated'
 
-type Props = {
+export type KeyboardExpandingViewProps = {
   footerHeight?: number
 }
 
-export const KeyboardExpandingView: React.FC<Props> = ({
+export const KeyboardExpandingView: React.FC<KeyboardExpandingViewProps> = ({
   footerHeight = 0,
 }) => {
   // Used in older devices where useAnimatedKeyboard doesn't work. Tested on Nexus 4 API 23 emulator

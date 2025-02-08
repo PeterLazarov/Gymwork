@@ -4,12 +4,15 @@ import { View, StyleSheet } from 'react-native'
 import { WorkoutStep } from 'app/db/models'
 import { Text, Icon, IconButton } from 'designSystem'
 
-type Props = {
+export type TemplateStepsListItemProps = {
   step: WorkoutStep
   onStepRemove: (step: WorkoutStep) => void
 }
 
-const TemplateStepsListItem: React.FC<Props> = ({ step, onStepRemove }) => {
+const TemplateStepsListItem: React.FC<TemplateStepsListItemProps> = ({
+  step,
+  onStepRemove,
+}) => {
   const isSuperset = step.type === 'superSet'
   return (
     <View

@@ -4,11 +4,11 @@ import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import { Button, ButtonText, Icon } from 'designSystem'
 
-type Props = {
+export type ExportButtonProps = {
   createWorkout: () => void
 }
 
-export const ExportButton: React.FC<Props> = props => {
+export const ExportButton: React.FC<ExportButtonProps> = props => {
   const {
     theme: {
       colors,

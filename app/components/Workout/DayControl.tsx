@@ -9,10 +9,10 @@ import { useStores } from 'app/db/helpers/useStores'
 import { capitalize } from 'app/utils/string'
 import { Icon, IconButton, Text, fontSize, spacing } from 'designSystem'
 
-type Props = {
+export type DayControlProps = {
   duration?: string
 }
-const DayControl: React.FC<Props> = ({ duration }) => {
+const DayControl: React.FC<DayControlProps> = ({ duration }) => {
   const {
     theme: { colors, boxShadows },
   } = useAppTheme()

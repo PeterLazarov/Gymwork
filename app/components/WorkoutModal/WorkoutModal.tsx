@@ -22,14 +22,14 @@ import WorkoutCommentsCard from '../Workout/WorkoutCommentsCard'
 
 import WorkoutModalStepItem from './WorkoutModalStepItem'
 
-type Props = {
+export type WorkoutModalProps = {
   open: boolean
   workout: Workout
   onClose: () => void
   mode: 'copy' | 'view'
   showComments?: boolean
 }
-const WorkoutModal: React.FC<Props> = ({
+const WorkoutModal: React.FC<WorkoutModalProps> = ({
   open,
   workout,
   onClose,

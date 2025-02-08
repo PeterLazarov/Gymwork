@@ -4,11 +4,11 @@ import { SafeAreaInsetsContext } from 'react-native-safe-area-context'
 
 import { EmptyLayout } from './EmptyLayout'
 
-type Props = {
+export type SafeLayoutProps = {
   children?: ReactNode
   style?: ViewStyle
 }
-export const SafeLayout: React.FC<Props> = ({ children, style }) => {
+export const SafeLayout: React.FC<SafeLayoutProps> = ({ children, style }) => {
   return (
     <SafeAreaInsetsContext.Consumer>
       {insets => (

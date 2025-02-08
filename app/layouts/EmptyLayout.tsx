@@ -5,12 +5,12 @@ import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import { KeyboardExpandingView } from 'designSystem'
 
-type Props = {
+export type EmptyLayoutProps = {
   children?: ReactNode
   style?: ViewStyle
   hasFooter?: boolean
 }
-export const EmptyLayout: React.FC<Props> = ({
+export const EmptyLayout: React.FC<EmptyLayoutProps> = ({
   children,
   style,
   hasFooter,

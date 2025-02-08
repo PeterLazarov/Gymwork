@@ -14,7 +14,7 @@ import SetDataLabel from '../SetDataLabel'
 
 import SetEditItemButton from './SetEditItemButton'
 
-type Props = {
+export type SetEditItemProps = {
   set: WorkoutSet
   isRecord?: boolean
   number?: number
@@ -25,7 +25,7 @@ type Props = {
 
 const hideZeroRest = false
 
-const SetEditItem: React.FC<Props> = ({
+const SetEditItem: React.FC<SetEditItemProps> = ({
   set,
   isRecord,
   number,

@@ -5,13 +5,13 @@ import { TouchableOpacity, View } from 'react-native'
 import { WorkoutTemplate } from 'app/db/models'
 import { Text, Icon, IconButton, spacing } from 'designSystem'
 
-type Props = {
+export type TemplateListItemProps = {
   template: WorkoutTemplate
   onSelect: (template: WorkoutTemplate) => void
   onDelete: (template: WorkoutTemplate) => void
   onEdit: (template: WorkoutTemplate) => void
 }
-const ExerciseListItem: React.FC<Props> = ({
+const ExerciseListItem: React.FC<TemplateListItemProps> = ({
   template,
   onSelect,
   onDelete,

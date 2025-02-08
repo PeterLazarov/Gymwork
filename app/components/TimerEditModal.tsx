@@ -15,13 +15,18 @@ import {
   Text,
 } from 'designSystem'
 
-type Props = {
+export type TimerEditModalProps = {
   open: boolean
   onClose: () => void
   timer: Timer
   label?: string
 }
-const TimerEditModal: React.FC<Props> = ({ open, onClose, timer, label }) => {
+const TimerEditModal: React.FC<TimerEditModalProps> = ({
+  open,
+  onClose,
+  timer,
+  label,
+}) => {
   const {
     theme: { colors, spacing },
   } = useAppTheme()

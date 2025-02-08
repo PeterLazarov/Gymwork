@@ -21,7 +21,7 @@ import { spacing } from 'designSystem/theme/spacing'
 
 import SetEditItem from './SetEditItem'
 
-type Props = {
+export type SetEditListProps = {
   step: WorkoutStep
   sets: WorkoutSet[]
   selectedSet: WorkoutSet | null
@@ -30,7 +30,7 @@ type Props = {
   containerPaddingBottom?: number
 }
 
-const SetEditList: React.FC<Props> = ({
+const SetEditList: React.FC<SetEditListProps> = ({
   step,
   sets = [],
   selectedSet,

@@ -15,7 +15,7 @@ import {
   spacing,
 } from 'designSystem'
 
-type Props = {
+export type DurationInputProps = {
   value?: Duration
   onUpdate: (duration: Duration) => void
   hideHours?: boolean
@@ -24,7 +24,7 @@ type Props = {
 }
 
 export default observer(
-  forwardRef<TextInputRN, Props>(function DurationInput(
+  forwardRef<TextInputRN, DurationInputProps>(function DurationInput(
     { value, onUpdate, hideHours, onSubmitEditing, timer },
     ref
   ) {

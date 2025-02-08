@@ -15,11 +15,14 @@ import {
 
 import ExerciseHistoryListItem from './ExerciseHistoryListItem'
 
-type Props = {
+export type ExerciseHistoryListProps = {
   workouts: Workout[]
   exercise: Exercise
 }
-const ExerciseHistoryList: React.FC<Props> = ({ workouts, exercise }) => {
+const ExerciseHistoryList: React.FC<ExerciseHistoryListProps> = ({
+  workouts,
+  exercise,
+}) => {
   const { stateStore } = useStores()
 
   const { navigate } = useNavigation()

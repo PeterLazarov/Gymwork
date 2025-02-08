@@ -1,13 +1,12 @@
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import React, { useCallback, forwardRef } from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, ListRenderItemInfo } from 'react-native'
 
 import { TabHeightCompensation } from '@/navigators/constants'
 import { Exercise } from 'app/db/models'
 
 import ExerciseListItem from './ExerciseListItem'
 
-type Props = {
+export type ExerciseListProps = {
   exercises: Exercise[]
   onSelect: (exercise: Exercise) => void
   selectedExercises: Exercise[]
@@ -15,7 +14,7 @@ type Props = {
 
 const itemHeight = 64
 
-const ExerciseList = forwardRef<FlashList<Exercise>, Props>(
+const ExerciseList = forwardRef<FlatList<Exercise>, ExerciseListProps>(
   ({ exercises, onSelect, selectedExercises }, ref) => {
     const renderItem = useCallback(
       ({ item }: ListRenderItemInfo<Exercise>) => {
@@ -36,7 +35,7 @@ const ExerciseList = forwardRef<FlashList<Exercise>, Props>(
         ref={ref}
         nestedScrollEnabled={true}
         data={exercises}
-        estimatedItemSize={itemHeight}
+        // estimatedItemSize={itemHeight}
         renderItem={renderItem}
         keyExtractor={exercise => exercise.guid}
         contentContainerStyle={{ paddingBottom: TabHeightCompensation }}

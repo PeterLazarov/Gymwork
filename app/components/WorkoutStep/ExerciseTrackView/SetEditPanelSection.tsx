@@ -3,12 +3,15 @@ import { View } from 'react-native'
 
 import { Text, Divider, fontSize, spacing } from 'designSystem'
 
-type Props = {
+export type SetEditPanelSectionProps = {
   text: string
   children: ReactNode
 }
 
-const SetEditPanelSection: React.FC<Props> = ({ text, children }) => {
+const SetEditPanelSection: React.FC<SetEditPanelSectionProps> = ({
+  text,
+  children,
+}) => {
   return (
     <View style={{ gap: spacing.xxs }}>
       <View>

@@ -13,13 +13,13 @@ import {
   Text,
 } from 'designSystem'
 
-type Props = {
+export type WorkoutCommentsCardProps = {
   workout: Workout
   onPress?(): void
   compactMode?: boolean
 }
 
-const WorkoutCommentsCard: React.FC<Props> = ({
+const WorkoutCommentsCard: React.FC<WorkoutCommentsCardProps> = ({
   workout,
   onPress,
   compactMode,

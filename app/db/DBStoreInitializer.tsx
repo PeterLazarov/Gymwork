@@ -2,13 +2,15 @@ import { useEffect, useState } from 'react'
 
 import { useStores } from './helpers/useStores'
 
-type Props = {
+export type DBStoreInitializerProps = {
   children: React.ReactNode
 }
 
 let promise: Promise<void>
 
-const DBStoreInitializer: React.FC<Props> = ({ children }) => {
+const DBStoreInitializer: React.FC<DBStoreInitializerProps> = ({
+  children,
+}) => {
   const rootStore = useStores()
 
   promise = promise || rootStore.initializeStores()

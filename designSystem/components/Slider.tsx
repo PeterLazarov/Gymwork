@@ -7,13 +7,16 @@ import { LayoutChangeEvent, PanResponder, View } from 'react-native'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { spacing } from 'designSystem'
 
-type Props = Omit<MultiSliderProps, 'min' | 'max' | 'onValuesChange'> & {
+export type SliderProps = Omit<
+  MultiSliderProps,
+  'min' | 'max' | 'onValuesChange'
+> & {
   max: number
   min: number
   onValuesChange: NonNullable<MultiSliderProps['onValuesChange']>
 }
 
-const CustomSlider: React.FC<Props> = ({
+const CustomSlider: React.FC<SliderProps> = ({
   min,
   max,
   onValuesChange,

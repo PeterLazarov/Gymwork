@@ -5,7 +5,7 @@ import { ExerciseMeasurement, measurementUnits } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { Text, Select, ToggleSwitch } from 'designSystem'
 
-type Props = {
+export type ExerciseEditFormDistanceSectionProps = {
   measurementConfig: ExerciseMeasurement
   onFormChange: () => void
 }
@@ -13,10 +13,9 @@ type Props = {
 type distanceUnits =
   (typeof measurementUnits.distance)[keyof typeof measurementUnits.distance]
 
-const ExerciseEditFormDistanceSection: React.FC<Props> = ({
-  measurementConfig,
-  onFormChange,
-}) => {
+const ExerciseEditFormDistanceSection: React.FC<
+  ExerciseEditFormDistanceSectionProps
+> = ({ measurementConfig, onFormChange }) => {
   const distanceMeasurement = measurementConfig.distance!
   function setUnit(unit: distanceUnits) {
     distanceMeasurement.setProp('unit', unit)

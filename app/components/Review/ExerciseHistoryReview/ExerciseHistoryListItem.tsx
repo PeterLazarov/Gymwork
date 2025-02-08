@@ -7,13 +7,13 @@ import StepSetsList from 'app/components/WorkoutStep/StepSetsList'
 import { WorkoutSet, WorkoutStep } from 'app/db/models'
 import { Divider, Text, ThemedStyle } from 'designSystem'
 
-type Props = {
+export type ExerciseHistoryListItemProps = {
   date: string
   step: WorkoutStep
   sets: WorkoutSet[]
   onPress?(): void
 }
-const ExerciseHistoryListItem: React.FC<Props> = ({
+const ExerciseHistoryListItem: React.FC<ExerciseHistoryListItemProps> = ({
   date,
   step,
   sets,

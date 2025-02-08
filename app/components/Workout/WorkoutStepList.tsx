@@ -12,11 +12,11 @@ import WorkoutStepCard from '../WorkoutStep/WorkoutStepCard'
 
 import { WorkoutBottomControlsHeight } from './WorkoutBottomControls'
 
-type Props = {
+export type WorkoutStepListProps = {
   workout: Workout
 }
 
-const WorkoutStepList: React.FC<Props> = ({ workout }) => {
+const WorkoutStepList: React.FC<WorkoutStepListProps> = ({ workout }) => {
   const { stateStore } = useStores()
 
   const { navigate } = useNavigation()

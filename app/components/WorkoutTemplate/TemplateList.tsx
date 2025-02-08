@@ -7,12 +7,16 @@ import { WorkoutTemplate } from 'app/db/models'
 
 import TemplateListItem from './TemplateListItem'
 
-type Props = {
+export type TemplateListProps = {
   onSelect: (template: WorkoutTemplate) => void
   onDelete: (template: WorkoutTemplate) => void
   onEdit: (template: WorkoutTemplate) => void
 }
-const TemplateList: React.FC<Props> = ({ onSelect, onDelete, onEdit }) => {
+const TemplateList: React.FC<TemplateListProps> = ({
+  onSelect,
+  onDelete,
+  onEdit,
+}) => {
   const { workoutStore } = useStores()
   const templates = workoutStore.workoutTemplates
 

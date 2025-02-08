@@ -3,12 +3,12 @@ import { Platform, View } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 
-type Props = {
+export type BlurEffectProps = {
   height: number
   position: 'top' | 'bottom'
 }
 
-const BlurEffect: React.FC<Props> = ({ height, position }) => {
+const BlurEffect: React.FC<BlurEffectProps> = ({ height, position }) => {
   const {
     theme: { colors },
   } = useAppTheme()

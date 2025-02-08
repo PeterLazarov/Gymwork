@@ -2,7 +2,7 @@ import { View } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 
-type Props = {
+export type DividerProps = {
   orientation: 'horizontal' | 'vertical'
   variant: 'primary' | 'accent' | 'neutral'
 }

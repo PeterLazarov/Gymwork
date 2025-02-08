@@ -53,13 +53,13 @@ export const CHART_VIEWS = {
 export type CHART_VIEW_KEY = keyof typeof CHART_VIEWS
 export type CHART_VIEW = (typeof CHART_VIEWS)[CHART_VIEW_KEY]
 
-type Props = {
+export type ExerciseHistoryChartProps = {
   view: CHART_VIEW
   height?: number
   width?: number
   exercise: Exercise
 }
-const ExerciseHistoryChart: React.FC<Props> = ({
+const ExerciseHistoryChart: React.FC<ExerciseHistoryChartProps> = ({
   view,
   height,
   width,

@@ -10,10 +10,10 @@ import WorkoutCommentsCard from './WorkoutCommentsCard'
 import WorkoutEmptyState from './WorkoutEmptyState'
 import WorkoutStepList from './WorkoutStepList'
 
-type Props = {
+export type WorkoutDayViewProps = {
   date: string
 }
-const WorkoutDayView: React.FC<Props> = ({ date }) => {
+const WorkoutDayView: React.FC<WorkoutDayViewProps> = ({ date }) => {
   const {
     theme: { colors },
   } = useAppTheme()

@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { Text, fontSize as fontSizeToken, spacing } from 'designSystem'
 
-type Props = {
+export type SetDataLabelProps = {
   value?: string | number
   unit?: string
   isFocused?: boolean
@@ -13,7 +13,7 @@ type Props = {
   fixDecimals?: boolean
 }
 
-const SetDataLabel: React.FC<Props> = ({
+const SetDataLabel: React.FC<SetDataLabelProps> = ({
   value,
   unit,
   isFocused,
