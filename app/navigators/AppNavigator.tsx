@@ -38,6 +38,8 @@ import { navThemes, paperThemes } from 'designSystem/theme'
 import Config from '../config'
 
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
+import { HeaderRight } from 'designSystem'
+import WorkoutHeaderRight from '@/components/Workout/WorkoutHeaderRight'
 /**
  * This is a list of all the route names that will exit the app if the back button
  * is pressed while in that screen. Only affects Android.
@@ -107,6 +109,13 @@ const AppStack = createNativeStackNavigator({
               Workout: {
                 screen: Screens.WorkoutScreen,
                 linking: 'workout/:workoutId',
+                options(props) {
+                  return {
+                    headerRight() {
+                      return <WorkoutHeaderRight />
+                    },
+                  }
+                },
               },
               WorkoutStep: {
                 screen: Screens.WorkoutStepScreen,
