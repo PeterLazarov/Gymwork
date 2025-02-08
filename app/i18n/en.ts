@@ -102,7 +102,7 @@ const en = {
     hideCommentsCard: 'Hide comments card',
     showCommentsCard: 'Show comments card',
     difficulty: 'Difficulty',
-    diffValue: 'Diff: {{rpe}} / 10',
+    diffValue: '{{rpe}} / 10',
     seconds: 'Seconds',
     minutes: 'Minutes',
     hours: 'Hours',
