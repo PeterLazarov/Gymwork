@@ -1,4 +1,5 @@
 import { MenuView, MenuComponentRef, MenuAction } from '@react-native-menu/menu'
+import { useNavigation } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useRef, useState } from 'react'
 
@@ -11,7 +12,6 @@ import { Icon, IconButton } from 'designSystem'
 
 import MiniTimer from '../MiniTimer'
 import WorkoutTimerModal from '../Timer/WorkoutTimerModal'
-import { useNavigation } from '@react-navigation/native'
 
 const WorkoutHeaderRight: React.FC = () => {
   const {

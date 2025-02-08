@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { ListRenderItemInfo } from '@shopify/flash-list'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
@@ -10,7 +11,6 @@ import { IndicatedScrollList } from 'designSystem'
 import WorkoutStepCard from '../WorkoutStep/WorkoutStepCard'
 
 import { WorkoutBottomControlsHeight } from './WorkoutBottomControls'
-import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   workout: Workout

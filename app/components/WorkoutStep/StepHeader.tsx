@@ -1,15 +1,15 @@
+import { useNavigation } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 
+import { getActiveRouteName } from '@/navigators'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutStep } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { HeaderRight, HeaderTitle, Icon, IconButton } from 'designSystem'
-import { useNavigation } from '@react-navigation/native'
 import { MenuViewWrapped } from 'designSystem/components/MenuViewWrapped'
-import { getActiveRouteName } from '@/navigators'
 
 export type StepHeaderProps = {
   step: WorkoutStep

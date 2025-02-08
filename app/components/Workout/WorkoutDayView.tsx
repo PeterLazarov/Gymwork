@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
@@ -8,7 +9,6 @@ import { useStores } from 'app/db/helpers/useStores'
 import WorkoutCommentsCard from './WorkoutCommentsCard'
 import WorkoutEmptyState from './WorkoutEmptyState'
 import WorkoutStepList from './WorkoutStepList'
-import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   date: string

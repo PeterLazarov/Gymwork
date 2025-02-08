@@ -9,7 +9,7 @@ export function HeaderRight(props: { children: React.ReactNode }) {
   const navigation = useNavigation()
 
   useLayoutEffect(() => {
-    let top = navigation
+    const top = navigation
     // while (top.getParent()) {
     //   top = top.getParent()
     // }
@@ -64,7 +64,7 @@ export function HeaderTitle({
   const navigation = useNavigation()
 
   useLayoutEffect(() => {
-    let top = navigation
+    const top = navigation
     // while (top.getParent()) {
     //   top = top.getParent()
     // }

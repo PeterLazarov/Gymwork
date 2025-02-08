@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list'
 import { getParentOfType } from 'mobx-state-tree'
 import React, { useCallback, useMemo } from 'react'
@@ -13,7 +14,6 @@ import {
 } from 'app/db/models'
 
 import ExerciseHistoryListItem from './ExerciseHistoryListItem'
-import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   workouts: Workout[]

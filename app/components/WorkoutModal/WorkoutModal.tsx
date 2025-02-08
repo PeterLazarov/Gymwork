@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { DateTime } from 'luxon'
 import { useState } from 'react'
 import { ScrollView, View } from 'react-native'
@@ -20,7 +21,6 @@ import {
 import WorkoutCommentsCard from '../Workout/WorkoutCommentsCard'
 
 import WorkoutModalStepItem from './WorkoutModalStepItem'
-import { useNavigation } from '@react-navigation/native'
 
 type Props = {
   open: boolean

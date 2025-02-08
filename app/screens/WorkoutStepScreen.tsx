@@ -1,4 +1,5 @@
 import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { View } from 'react-native'
@@ -11,7 +12,6 @@ import ExerciseTrackView from 'app/components/WorkoutStep/ExerciseTrackView'
 import StepHeader from 'app/components/WorkoutStep/StepHeader'
 import { useStores } from 'app/db/helpers/useStores'
 import { Exercise, Workout, WorkoutStep } from 'app/db/models'
-import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 
 export type WorkoutStepScreenProps = StaticScreenProps<{
   // TODO
