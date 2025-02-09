@@ -6,11 +6,11 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated'
 
-type Props = {
+export type KeyboardExpandingViewProps = {
   footerHeight?: number
 }
 
-export const KeyboardExpandingView: React.FC<Props> = ({
+export const KeyboardExpandingView: React.FC<KeyboardExpandingViewProps> = ({
   footerHeight = 0,
 }) => {
   const keyboard = useAnimatedKeyboard()

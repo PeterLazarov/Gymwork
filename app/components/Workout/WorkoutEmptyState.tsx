@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
 import { Alert, View } from 'react-native'
@@ -7,7 +8,6 @@ import { translate } from 'app/i18n'
 import { spacing } from 'designSystem/theme/spacing'
 
 import ActionCard from '../ActionCard'
-import { useNavigation } from '@react-navigation/native'
 
 const WorkoutEmptyState: React.FC = () => {
   const { navigate } = useNavigation()

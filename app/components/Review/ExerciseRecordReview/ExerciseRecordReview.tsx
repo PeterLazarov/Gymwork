@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { computed } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo } from 'react'
@@ -11,7 +12,6 @@ import { translate } from 'app/i18n'
 import { spacing } from 'designSystem'
 
 import RecordsListItem from './RecordsListItem'
-import { useNavigation } from '@react-navigation/native'
 
 export type ExerciseRecordReviewProps = {
   exercise?: Exercise

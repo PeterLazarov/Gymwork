@@ -4,10 +4,10 @@ import { View } from 'react-native'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { Text } from 'designSystem'
 
-type Props = {
+export type EmptyStateProps = {
   text: string
 }
-const EmptyState: React.FC<Props> = ({ text }) => {
+const EmptyState: React.FC<EmptyStateProps> = ({ text }) => {
   const {
     theme: {
       colors,

@@ -3,12 +3,16 @@ import { Switch } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 
-interface Props {
+export interface ToggleSwitchProps {
   value: boolean
   onValueChange: (value: boolean) => void
   variant: 'primary' | 'critical'
 }
-const ToggleSwitch: React.FC<Props> = ({ value, onValueChange, variant }) => {
+const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
+  value,
+  onValueChange,
+  variant,
+}) => {
   const {
     theme: { colors },
   } = useAppTheme()

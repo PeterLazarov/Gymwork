@@ -14,7 +14,7 @@ import {
   StaticParamList,
 } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { ErrorBoundary } from '@sentry/react-native'
+import { ErrorBoundary as ErrorBoundarySentry } from '@sentry/react-native'
 import { upperFirst } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import { ComponentProps, useMemo } from 'react'
@@ -38,6 +38,9 @@ import { navThemes, paperThemes } from 'designSystem/theme'
 import Config from '../config'
 
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
+import { HeaderRight } from 'designSystem'
+import WorkoutHeaderRight from '@/components/Workout/WorkoutHeaderRight'
+import { ErrorBoundary as ErrorBoundaryIgnite } from '@/screens'
 /**
  * This is a list of all the route names that will exit the app if the back button
  * is pressed while in that screen. Only affects Android.
@@ -45,6 +48,23 @@ import { navigationRef, useBackButtonHandler } from './navigationUtilities'
 const exitRoutes = Config.exitRoutes
 
 const AppStack = createNativeStackNavigator({
+  screenLayout({ children }) {
+    return (
+      // TODO why the F do we have 2?
+      <ErrorBoundaryIgnite catchErrors={Config.catchErrors}>
+        <ErrorBoundarySentry
+          fallback={({ error, resetError }) => (
+            <Screens.ErrorDetailsScreen
+              error={error}
+              resetError={resetError}
+            />
+          )}
+        >
+          {children}
+        </ErrorBoundarySentry>
+      </ErrorBoundaryIgnite>
+    )
+  },
   initialRouteName: 'Home',
   screenOptions(props) {
     return {
@@ -107,6 +127,13 @@ const AppStack = createNativeStackNavigator({
               Workout: {
                 screen: Screens.WorkoutScreen,
                 linking: 'workout/:workoutId',
+                options(props) {
+                  return {
+                    headerRight(props) {
+                      return <WorkoutHeaderRight />
+                    },
+                  }
+                },
               },
               WorkoutStep: {
                 screen: Screens.WorkoutStepScreen,
@@ -200,6 +227,8 @@ export const AppNavigator = observer(function AppNavigator(
     const { currentRouteName, previousRouteName } =
       props.onStateChange?.(state) ?? {}
 
+    console.log('stateChange', { previousRouteName, currentRouteName, state })
+
     navStore.setProp('activeRoute', currentRouteName)
   }
 
@@ -221,49 +250,46 @@ export const AppNavigator = observer(function AppNavigator(
     <ThemeProvider value={{ themeScheme, setThemeContextOverride }}>
       <PaperProvider theme={paperTheme}>
         <GestureHandlerRootView>
-          <ErrorBoundary
-            fallback={({ error, resetError }) => (
-              <Screens.ErrorDetailsScreen
-                error={error}
-                resetError={resetError}
-              />
-            )}
-          >
-            <PortalProvider>
-              <Portal.Host>
-                <DialogContextProvider>
-                  {/* The bar at the top */}
-                  {/* <StatusBar
+          <PortalProvider>
+            <Portal.Host>
+              <DialogContextProvider>
+                {/* The bar at the top */}
+                {/* <StatusBar
                     backgroundColor={
                       colorScheme === 'light' ? colors.primary : colors.shadow
                     }
                     barStyle={'light-content'}
                   /> */}
-                  <Navigation
-                    linking={{
-                      enabled: true,
-                      prefixes: [''], // TODO
-                    }}
-                    ref={navigationRef}
-                    theme={navigationTheme}
-                    {...props}
-                    onStateChange={handleStateChange}
-                  />
-                </DialogContextProvider>
-              </Portal.Host>
+                <Navigation
+                  linking={{
+                    enabled: true,
+                    prefixes: [''], // TODO
+                  }}
+                  ref={navigationRef}
+                  theme={navigationTheme}
+                  {...props}
+                  onStateChange={handleStateChange}
+                  onUnhandledAction={e => {
+                    console.log('nav unhandled action', e)
+                  }}
+                  onReady={() => {
+                    console.log('nav ready')
+                  }}
+                />
+              </DialogContextProvider>
+            </Portal.Host>
 
-              <View
-                ref={offscreenRef}
-                style={{
-                  position: 'absolute',
-                  zIndex: 1,
-                  left: screenDimensions.width,
-                }}
-              >
-                <PortalHost name="offscreen" />
-              </View>
-            </PortalProvider>
-          </ErrorBoundary>
+            <View
+              ref={offscreenRef}
+              style={{
+                position: 'absolute',
+                zIndex: 1,
+                left: screenDimensions.width,
+              }}
+            >
+              <PortalHost name="offscreen" />
+            </View>
+          </PortalProvider>
         </GestureHandlerRootView>
       </PaperProvider>
     </ThemeProvider>

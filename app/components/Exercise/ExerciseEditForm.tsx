@@ -21,12 +21,15 @@ import ExerciseEditFormDistanceSection from './ExerciseEditFormDistanceSection'
 import ExerciseEditFormDurationSection from './ExerciseEditFormDurationSection'
 import ExerciseEditFormWeightSection from './ExerciseEditFormWeightSection'
 
-type Props = {
+export type ExerciseEditFormProps = {
   exercise: Exercise
   onUpdate: (updated: Exercise, isValid: boolean) => void
 }
 
-const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
+const ExerciseEditForm: React.FC<ExerciseEditFormProps> = ({
+  exercise,
+  onUpdate,
+}) => {
   const {
     theme: { spacing },
   } = useAppTheme()

@@ -1,8 +1,8 @@
+import { useNavigation } from '@react-navigation/native'
 import { DateTime } from 'luxon'
 
 import { useStores } from 'app/db/helpers/useStores'
 import { WorkoutSetModel } from 'app/db/models'
-import { useNavigation } from '@react-navigation/native'
 
 let execution = 1
 const delay = (wait: number) =>
@@ -15,11 +15,7 @@ const delay = (wait: number) =>
 const delaysInFunction = 2000
 
 export default function useBenchmark() {
-  const {
-    stateStore,
-    workoutStore,
-    exerciseStore,
-  } = useStores()
+  const { stateStore, workoutStore, exerciseStore } = useStores()
 
   async function performBenchmark() {
     const startingTime = Date.now()

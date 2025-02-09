@@ -95,7 +95,10 @@ const AddMenu: React.FC<AddMenuProps> = ({ disabled }) => {
         }}
         disabled={disabled}
       >
-        <Icon icon="add"></Icon>
+        <Icon
+          icon="add"
+          color={colors.background}
+        ></Icon>
       </IconButton>
 
       <TrueSheet

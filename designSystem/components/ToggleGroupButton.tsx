@@ -5,7 +5,7 @@ import { useAppTheme } from '@/utils/useAppTheme'
 
 import { Button, ButtonText } from '.'
 
-type Props = {
+export type ToggleGroupButtonProps = {
   buttons: {
     text: string
     value: string
@@ -16,7 +16,7 @@ type Props = {
   onChange: (value: string | undefined) => void
 }
 
-const ToggleGroupButton: React.FC<Props> = ({
+const ToggleGroupButton: React.FC<ToggleGroupButtonProps> = ({
   buttons,
   initialActiveIndex,
   containerStyle,

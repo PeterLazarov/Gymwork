@@ -8,12 +8,15 @@ import { Text, ThemedStyle } from 'designSystem'
 
 import TemplateStepsListItem from './TemplateStepsListItem'
 
-type Props = {
+export type TemplateStepsListProps = {
   steps: WorkoutStep[]
   onStepRemove: (step: WorkoutStep) => void
 }
 
-const TemplateStepsList: React.FC<Props> = ({ steps, onStepRemove }) => {
+const TemplateStepsList: React.FC<TemplateStepsListProps> = ({
+  steps,
+  onStepRemove,
+}) => {
   const {
     theme: {
       typography: { fontSize },

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { Image, TouchableOpacity, View } from 'react-native'
@@ -7,16 +8,15 @@ import { exerciseImages } from '@/utils/exerciseImages'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { Exercise } from 'app/db/models'
 import { Icon, IconButton, palettes, spacing, Text } from 'designSystem'
-import { useNavigation } from '@react-navigation/native'
 
-type Props = {
+export type ExerciseListItemProps = {
   exercise: Exercise
   onSelect: (exercise: Exercise) => void
   isSelected: boolean
   height: number
 }
 
-const ExerciseListItem: React.FC<Props> = ({
+const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
   exercise,
   onSelect,
   isSelected,

@@ -4,12 +4,12 @@ import { TouchableOpacity } from 'react-native'
 import EmptyState from 'app/components/EmptyState'
 import { translate } from 'app/i18n'
 
-type Props = {
+export type ExerciseViewProps = {
   children: ReactNode
   openSelect: () => void
   isExerciseSelected: boolean
 }
-const ExerciseView: React.FC<Props> = ({
+const ExerciseView: React.FC<ExerciseViewProps> = ({
   children,
   openSelect,
   isExerciseSelected,

@@ -3,7 +3,7 @@ import { Portal, Dialog } from 'react-native-paper'
 import { translate } from 'app/i18n'
 import { Text, Button, ButtonText } from 'designSystem'
 
-type Props = {
+export type ConfirmationDialogProps = {
   open: boolean
   message: string
   onConfirm: () => void
@@ -11,7 +11,7 @@ type Props = {
   cancelButtonText?: string
   confirmButtonText?: string
 }
-const ConfirmationDialog: React.FC<Props> = ({
+const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   open,
   message,
   onConfirm,

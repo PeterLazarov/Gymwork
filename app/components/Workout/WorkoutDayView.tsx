@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { View } from 'react-native'
@@ -8,12 +9,11 @@ import { useStores } from 'app/db/helpers/useStores'
 import WorkoutCommentsCard from './WorkoutCommentsCard'
 import WorkoutEmptyState from './WorkoutEmptyState'
 import WorkoutStepList from './WorkoutStepList'
-import { useNavigation } from '@react-navigation/native'
 
-type Props = {
+export type WorkoutDayViewProps = {
   date: string
 }
-const WorkoutDayView: React.FC<Props> = ({ date }) => {
+const WorkoutDayView: React.FC<WorkoutDayViewProps> = ({ date }) => {
   const {
     theme: { colors },
   } = useAppTheme()

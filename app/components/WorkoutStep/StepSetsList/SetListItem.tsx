@@ -11,7 +11,7 @@ import { Icon, Text, fontSize, palettes, spacing } from 'designSystem'
 
 import SetDataLabel from '../SetDataLabel'
 
-type Props = {
+export type SetListItemProps = {
   set: WorkoutSet
   measurements: ExerciseMeasurement
   letter?: string
@@ -21,7 +21,7 @@ type Props = {
   showSetCompletion?: boolean
 }
 
-const SetListItem: React.FC<Props> = ({
+const SetListItem: React.FC<SetListItemProps> = ({
   set,
   measurements,
   isFocused,

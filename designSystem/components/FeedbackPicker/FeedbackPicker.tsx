@@ -5,13 +5,13 @@ import { spacing } from 'designSystem'
 
 import FeedbackPickerOption, { FeedbackOption } from './FeedbackPickerOption'
 
-type Props = {
+export type FeedbackPickerProps = {
   selected?: string
   onChange: (feeling?: string) => void
   options: FeedbackOption[]
   defaultValue?: string
 }
-const FeedbackPicker: React.FC<Props> = ({
+const FeedbackPicker: React.FC<FeedbackPickerProps> = ({
   selected,
   onChange,
   options,

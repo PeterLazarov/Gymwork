@@ -13,12 +13,15 @@ import {
 import { TxKeyPath, translate } from 'app/i18n'
 import { FeedbackPicker, Text, ToggleGroupButton } from 'designSystem'
 
-type Props = {
+export type WorkoutCommentsFormProps = {
   comments: WorkoutComments
   onUpdate: (updated: WorkoutComments) => void
 }
 
-const WorkoutCommentsForm: React.FC<Props> = ({ comments, onUpdate }) => {
+const WorkoutCommentsForm: React.FC<WorkoutCommentsFormProps> = ({
+  comments,
+  onUpdate,
+}) => {
   const {
     theme: { colors, spacing },
   } = useAppTheme()

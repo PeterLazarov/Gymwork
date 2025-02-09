@@ -7,13 +7,13 @@ import {
   State,
 } from 'react-native-gesture-handler'
 
-type Props = {
+export type SwipeContainerProps = {
   children: ReactNode
   onSwipeLeft: (translateX: number) => void
   onSwipeRight: (translateX: number) => void
   horisontalThreshold?: number
 }
-const SwipeContainer: React.FC<Props> = ({
+const SwipeContainer: React.FC<SwipeContainerProps> = ({
   children,
   onSwipeLeft,
   onSwipeRight,

@@ -1,4 +1,5 @@
-import { MenuView, MenuComponentRef, MenuAction } from '@react-native-menu/menu'
+import { MenuAction } from '@react-native-menu/menu'
+import { useNavigation } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useRef, useState } from 'react'
 
@@ -7,25 +8,20 @@ import useBenchmark from '@/utils/useBenchmark'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { useShareWorkout } from 'app/utils/useShareWorkout'
-import { Icon, IconButton } from 'designSystem'
+import { Icon, IconButton, MenuViewWrapped } from 'designSystem'
 
 import MiniTimer from '../MiniTimer'
-import WorkoutTimerModal from '../Timer/WorkoutTimerModal'
-import { useNavigation } from '@react-navigation/native'
+import WorkoutTimerSettings from '../Timer/WorkoutTimerSettings'
+import { TrueSheet } from '@lodev09/react-native-true-sheet'
+import { Platform } from 'react-native'
 
 const WorkoutHeaderRight: React.FC = () => {
-  const {
-    theme: { colors },
-  } = useAppTheme()
-
-  const menuRef = useRef<MenuComponentRef>(null)
+  const { theme } = useAppTheme()
 
   const { stateStore, settingsStore, workoutStore, timerStore } = useStores()
   const { openedWorkout } = stateStore
   const { showCommentsCard } = settingsStore
   const { performBenchmark } = useBenchmark()
-
-  const [menuOpen, setMenuOpen] = useState(false)
 
   const { navigate } = useNavigation()
 
@@ -34,7 +30,6 @@ const WorkoutHeaderRight: React.FC = () => {
   }
 
   function saveTemplate() {
-    setMenuOpen(false)
     navigate('Home', {
       screen: 'WorkoutStack',
       params: { screen: 'SaveTemplate', params: {} },
@@ -42,96 +37,69 @@ const WorkoutHeaderRight: React.FC = () => {
   }
 
   function toggleCommentsCard() {
-    setMenuOpen(false)
     settingsStore.setProp('showCommentsCard', !showCommentsCard)
   }
 
   const deleteWorkout = () => {
-    setMenuOpen(false)
     workoutStore.removeWorkout(openedWorkout!)
   }
 
-  const menuActionsObj = useMemo(() => {
-    return {
-      toggleCommentsCard: {
-        fn: toggleCommentsCard,
-        title: translate('showCommentsCard'),
-        showIf: true,
-        state: showCommentsCard ? 'on' : 'off',
-      },
-      saveTemplate: {
-        fn: saveTemplate,
-        title: translate('saveAsTemplate'),
-        showIf: Boolean(openedWorkout),
-      },
-      deleteWorkout: {
-        fn: deleteWorkout,
-        title: translate('removeWorkout'),
-        showIf: Boolean(openedWorkout),
-      },
-      shareWorkout: {
-        fn: shareWorkout,
-        title: translate('shareWorkout'),
-        showIf: Boolean(openedWorkout),
-      },
-      goToSettings: {
-        fn() {
-          navigate('Settings')
-        },
-        title: translate('settings'),
-        showIf: true,
-      },
-      goToFeedback: {
-        fn() {
-          navigate('UserFeedback', { referrerPage: activeRoute ?? '?' })
-        },
-        title: translate('giveFeedback'),
-        showIf: true,
-      },
-      performBenchmark: {
-        fn: performBenchmark,
-        title: translate('performBenchmark'),
-        showIf: true,
-      },
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openedWorkout])
-
-  const menuActionsArray = useMemo((): MenuAction[] => {
-    return Object.entries(menuActionsObj)
-      .filter(([, { showIf }]) => showIf)
-      .map(([id, obj]): MenuAction => {
-        return {
-          id,
-          title: obj.title,
-          titleColor: colors.onSurface,
-          state: obj.state,
-        }
-      })
-  }, [menuActionsObj])
-
   const shareWorkout = useShareWorkout()
 
-  function handleMenuPress(actionID: keyof typeof menuActionsObj) {
-    menuActionsObj[actionID].fn(openedWorkout!)
-  }
+  const menuActions = useMemo(() => {
+    const actions = [
+      {
+        title: translate('showCommentsCard'),
+        fn: toggleCommentsCard,
+        state: showCommentsCard ? 'on' : 'off',
+      },
+      {
+        title: translate('saveAsTemplate'),
+        fn: saveTemplate,
+        showIf: Boolean(openedWorkout),
+      },
+      {
+        title: translate('removeWorkout'),
+        fn: deleteWorkout,
+        showIf: Boolean(openedWorkout),
+      },
+      {
+        title: translate('shareWorkout'),
+        fn: shareWorkout,
+        showIf: Boolean(openedWorkout),
+      },
+      {
+        title: translate('settings'),
+        fn: () => navigate('Settings', {}),
+      },
+      {
+        title: translate('giveFeedback'),
+        fn: () => navigate('UserFeedback', { referrerPage: 'Workout' }),
+      },
+      {
+        title: translate('performBenchmark'),
+        fn: performBenchmark,
+      },
+    ]
 
-  const [showWorkoutTimerModal, setShowWorkoutTimerModal] = useState(false)
+    return actions
+      .filter(action => action.showIf !== false)
+      .map(({ showIf, ...action }) => ({
+        ...action,
+        titleColor: theme.colors.onSurface,
+      }))
+  }, [openedWorkout, showCommentsCard, theme.colors.onSurface])
+
+  const timerSettingsSheetRef = useRef<TrueSheet>(null)
   return (
     <>
       {settingsStore.showWorkoutTimer && (
         <>
           <MiniTimer
             n={Math.floor(timerStore.workoutTimer.timeElapsed.as('minutes'))}
-            onPress={() => setShowWorkoutTimerModal(true)}
-            color={colors.onSurface}
-            backgroundColor={colors.surface}
-          />
-
-          <WorkoutTimerModal
-            open={showWorkoutTimerModal}
-            onClose={() => setShowWorkoutTimerModal(false)}
-            timer={timerStore.workoutTimer}
+            onPress={() => timerSettingsSheetRef.current?.present()}
+            color={theme.colors.onSurface}
+            backgroundColor={theme.colors.surface}
           />
         </>
       )}
@@ -139,24 +107,36 @@ const WorkoutHeaderRight: React.FC = () => {
       <IconButton onPress={openCalendar}>
         <Icon
           icon="calendar-sharp"
-          color={colors.onSurface}
+          color={theme.colors.onSurface}
         />
       </IconButton>
 
-      <MenuView
-        onPressAction={({ nativeEvent }) => {
-          handleMenuPress(nativeEvent.event)
-        }}
-        actions={menuActionsArray}
+      <MenuViewWrapped
+        actions={menuActions}
         shouldOpenOnLongPress={false}
       >
         <IconButton>
           <Icon
             icon="ellipsis-vertical"
-            color={colors.onSurface}
+            color={theme.colors.onSurface}
           />
         </IconButton>
-      </MenuView>
+      </MenuViewWrapped>
+
+      <TrueSheet
+        ref={timerSettingsSheetRef}
+        sizes={['medium']}
+        backgroundColor={theme.colors.surfaceContainer}
+        contentContainerStyle={{
+          paddingTop: theme.spacing.md,
+          paddingBottom: Platform.select({
+            ios: theme.spacing.md,
+            android: 0,
+          }),
+        }}
+      >
+        <WorkoutTimerSettings timer={timerStore.workoutTimer} />
+      </TrueSheet>
     </>
   )
 }

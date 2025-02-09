@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
@@ -7,12 +8,11 @@ import { useAppTheme } from '@/utils/useAppTheme'
 import { useStores } from 'app/db/helpers/useStores'
 import { capitalize } from 'app/utils/string'
 import { Icon, IconButton, Text, fontSize, spacing } from 'designSystem'
-import { useNavigation } from '@react-navigation/native'
 
-type Props = {
+export type DayControlProps = {
   duration?: string
 }
-const DayControl: React.FC<Props> = ({ duration }) => {
+const DayControl: React.FC<DayControlProps> = ({ duration }) => {
   const {
     theme: { colors, boxShadows },
   } = useAppTheme()

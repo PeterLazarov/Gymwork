@@ -18,14 +18,14 @@ export type FeedbackOption = {
   color: string
   value: string
 }
-type Props = {
+export type FeedbackPickerOptionProps = {
   isSelected?: boolean
   onPress?: (feeling: string) => void
   option: FeedbackOption
   compactMode?: boolean
   style?: StyleProp<ViewStyle>
 }
-const FeedbackPickerOption: React.FC<Props> = ({
+const FeedbackPickerOption: React.FC<FeedbackPickerOptionProps> = ({
   option,
   onPress,
   isSelected,

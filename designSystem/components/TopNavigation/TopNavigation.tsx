@@ -7,7 +7,7 @@ import { getActiveRouteName } from 'app/navigators'
 
 import { TabConfig } from './types'
 
-type Props = {
+export type TopNavigationProps = {
   tabsConfig: TabConfig[]
   initialRouteName?: string
   screenOptions?: MaterialTopTabNavigationOptions
@@ -16,7 +16,7 @@ type Props = {
   swipeDisabled?: boolean
   tabHeight?: number
 }
-const TopNavigation: React.FC<Props> = ({
+const TopNavigation: React.FC<TopNavigationProps> = ({
   tabsConfig,
   initialRouteName,
   tabWidth,

@@ -6,7 +6,7 @@ import { ExerciseMeasurement, measurementUnits } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { Text, NumberInput, Select, ToggleSwitch } from 'designSystem'
 
-type Props = {
+export type ExerciseEditFormWeightSectionProps = {
   measurementConfig: ExerciseMeasurement
   onFormChange: () => void
   weightIncError?: string
@@ -15,11 +15,9 @@ type Props = {
 type weightUnits =
   (typeof measurementUnits.weight)[keyof typeof measurementUnits.weight]
 
-const ExerciseEditFormWeightSection: React.FC<Props> = ({
-  measurementConfig,
-  onFormChange,
-  weightIncError,
-}) => {
+const ExerciseEditFormWeightSection: React.FC<
+  ExerciseEditFormWeightSectionProps
+> = ({ measurementConfig, onFormChange, weightIncError }) => {
   const weightMeasurement = measurementConfig.weight!
   function setUnit(unit: weightUnits) {
     weightMeasurement.setProp('unit', unit)

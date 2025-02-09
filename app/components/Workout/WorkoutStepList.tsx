@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { ListRenderItemInfo } from '@shopify/flash-list'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
@@ -10,19 +11,19 @@ import { IndicatedScrollList } from 'designSystem'
 import WorkoutStepCard from '../WorkoutStep/WorkoutStepCard'
 
 import { WorkoutBottomControlsHeight } from './WorkoutBottomControls'
-import { useNavigation } from '@react-navigation/native'
 
-type Props = {
+export type WorkoutStepListProps = {
   workout: Workout
 }
 
-const WorkoutStepList: React.FC<Props> = ({ workout }) => {
+const WorkoutStepList: React.FC<WorkoutStepListProps> = ({ workout }) => {
   const { stateStore } = useStores()
 
   const { navigate } = useNavigation()
 
   function onCardPress(stepGuid: string) {
     stateStore.setFocusedStep(stepGuid)
+    console.log('navigating to step')
     navigate('Home', {
       screen: 'WorkoutStack',
       params: { screen: 'WorkoutStep', params: {} },

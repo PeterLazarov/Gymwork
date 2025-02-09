@@ -5,12 +5,12 @@ import SetDataLabel from 'app/components/WorkoutStep/SetDataLabel'
 import { WorkoutSet } from 'app/db/models'
 import { spacing } from 'designSystem'
 
-type Props = {
+export type RecordsListItemProps = {
   set: WorkoutSet
   onPress: () => void
 }
 
-const RecordsListItem: React.FC<Props> = ({ set, onPress }) => {
+const RecordsListItem: React.FC<RecordsListItemProps> = ({ set, onPress }) => {
   const styles = useMemo(
     () => makeStyles(set.isWeakAssRecord),
     [set.isWeakAssRecord]

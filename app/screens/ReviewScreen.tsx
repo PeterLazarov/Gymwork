@@ -5,6 +5,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import { View } from 'react-native'
 import PagerView from 'react-native-pager-view'
 
+import {
+  ExerciseSelectSheet,
+  showExerciseSelect,
+} from '@/components/Exercise/ExerciseSelectSheet'
 import { Screen } from '@/components/ignite'
 import { Exercise } from '@/db/models'
 import { useAppTheme } from '@/utils/useAppTheme'
@@ -15,10 +19,6 @@ import ExerciseRecordReview from 'app/components/Review/ExerciseRecordReview'
 import WorkoutsReview from 'app/components/Review/WorkoutsReview'
 import { useStores } from 'app/db/helpers/useStores'
 import { HeaderRight, IconButton, Icon } from 'designSystem'
-import {
-  ExerciseSelectSheet,
-  showExerciseSelect,
-} from '@/components/Exercise/ExerciseSelectSheet'
 
 export type ReviewScreenProps = StaticScreenProps<{
   exercise?: Exercise['guid']

@@ -5,15 +5,14 @@ import { ExerciseMeasurement } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { Text, ToggleSwitch } from 'designSystem'
 
-type Props = {
+export type ExerciseEditFormDurationSectionProps = {
   measurementConfig: ExerciseMeasurement
   onFormChange: () => void
 }
 
-const ExerciseEditFormDurationSection: React.FC<Props> = ({
-  measurementConfig,
-  onFormChange,
-}) => {
+const ExerciseEditFormDurationSection: React.FC<
+  ExerciseEditFormDurationSectionProps
+> = ({ measurementConfig, onFormChange }) => {
   const durationMeasurement = measurementConfig.duration!
 
   function toggleMoreIsBetter(value: boolean) {

@@ -10,7 +10,7 @@ import {
 
 import SelectedLabel from './SelectedLabel'
 
-type Props = {
+export type MultiselectProps = {
   options: readonly SelectOption[]
   selectedValues: string[]
   onSelect: (selected: string[]) => void
@@ -20,7 +20,7 @@ type Props = {
   error?: boolean
 }
 
-const Multiselect: React.FC<Props> = ({
+const Multiselect: React.FC<MultiselectProps> = ({
   options,
   selectedValues,
   onSelect,

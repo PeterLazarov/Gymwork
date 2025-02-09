@@ -5,7 +5,7 @@ import { useAppTheme } from '@/utils/useAppTheme'
 
 import { Icon } from '.'
 
-type Props = {
+export type IncrementalButtonsProps = {
   value: number
   onChange(m: number): void
   children?: React.ReactNode
@@ -16,7 +16,7 @@ function isInvalidNumber(value?: number) {
   return [NaN, Infinity, -Infinity, undefined].includes(value)
 }
 
-const IncrementalButtons: React.FC<Props> = ({
+const IncrementalButtons: React.FC<IncrementalButtonsProps> = ({
   value,
   onChange,
   children,

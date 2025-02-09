@@ -9,11 +9,15 @@ const sizes = {
   md: 42,
   lg: 68,
 }
-type Props = Omit<TouchableHighlightProps, 'style'> & {
+export type IconButtonProps = Omit<TouchableHighlightProps, 'style'> & {
   style?: ViewStyle
   size?: keyof typeof sizes
 }
-const IconButton: React.FC<Props> = ({ style, size = 'md', ...props }) => (
+const IconButton: React.FC<IconButtonProps> = ({
+  style,
+  size = 'md',
+  ...props
+}) => (
   <TouchableOpacity
     style={{
       flexGrow: 0,

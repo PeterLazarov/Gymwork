@@ -3,13 +3,13 @@ import { View } from 'react-native'
 import { useAppTheme } from '@/utils/useAppTheme'
 import { Icon, IconButton, spacing, Text } from 'designSystem'
 
-type Props = {
+export type SelectedLabelProps = {
   selection: string
   hideRemove?: boolean
   onRemove?: (option: string) => void
 }
 
-const SelectedLabel: React.FC<Props> = ({
+const SelectedLabel: React.FC<SelectedLabelProps> = ({
   selection,
   hideRemove,
   onRemove,

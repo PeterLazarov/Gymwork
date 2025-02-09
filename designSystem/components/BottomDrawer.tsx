@@ -5,13 +5,13 @@ import Animated, { SlideInDown, SlideOutDown } from 'react-native-reanimated'
 
 import Backdrop from './Backdrop'
 
-type Props = {
+export type BottomDrawerProps = {
   visible: boolean
   height: number
   children: ReactNode
   onCollapse: () => void
 }
-const BottomDrawer: React.FC<Props> = ({
+const BottomDrawer: React.FC<BottomDrawerProps> = ({
   visible,
   height,
   children,

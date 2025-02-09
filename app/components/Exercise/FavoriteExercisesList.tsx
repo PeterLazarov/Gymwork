@@ -10,12 +10,12 @@ import EmptyState from '../EmptyState'
 
 import ExerciseList from './ExerciseList'
 
-type Props = {
+export type FavoriteExercisesListProps = {
   onSelect: (exercise: Exercise) => void
   selectedExercises: Exercise[]
   filterString: string
 }
-const FavoriteExercisesList: React.FC<Props> = ({
+const FavoriteExercisesList: React.FC<FavoriteExercisesListProps> = ({
   onSelect,
   selectedExercises,
   filterString,

@@ -12,12 +12,12 @@ import ExerciseList from './ExerciseList'
 
 const noop = () => {}
 
-type Props = {
+export type MostUsedExercisesListProps = {
   onSelect: (exercise: Exercise) => void
   selectedExercises: Exercise[]
   filterString: string
 }
-const MostUsedExercisesList: React.FC<Props> = ({
+const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
   onSelect,
   selectedExercises,
   filterString,
