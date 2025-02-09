@@ -1,8 +1,14 @@
 import SegmentedControl from '@react-native-segmented-control/segmented-control'
 import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
-import React, { useEffect, useRef, useState } from 'react'
-import { View } from 'react-native'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  Animated,
+  Dimensions,
+  useAnimatedValue,
+  View,
+  ViewStyle,
+} from 'react-native'
 import PagerView from 'react-native-pager-view'
 
 import {
@@ -45,13 +51,16 @@ export const ReviewScreen: React.FC<ReviewScreenProps> = observer(
       }
     }, [stateStore.focusedExercise])
 
-    // Changing this on the fly causes issues with the tabs
-    // const initialRouteName = useRef(navStore.reviewLastTab || 'Records')
-
     const [segmentedControlIndex, setSegmentedControlIndex] = useState(0)
     const pagerRef = useRef<PagerView>(null)
 
+    const windowWidth = Dimensions.get('window').width
+    const numberOfTabs = 4
+    const tabWidth = windowWidth / numberOfTabs
+    const translateXValue = useAnimatedValue(0)
+
     const { navigate } = useNavigation()
+    const handlePageScroll = useRef(true)
 
     function goToExerciseSelect() {
       showExerciseSelect()
@@ -93,20 +102,65 @@ export const ReviewScreen: React.FC<ReviewScreenProps> = observer(
               pagerRef.current?.setPage(i)
               setSegmentedControlIndex(i)
             }}
+            tabStyle={
+              {
+                // backgroundColor: 'blue',
+              }
+            }
+            sliderStyle={{
+              transform: [
+                {
+                  translateX: translateXValue.interpolate({
+                    inputRange: [0, numberOfTabs - 1],
+                    outputRange: [0, (numberOfTabs - 1) * tabWidth],
+                  }),
+                },
+              ],
+            }}
           />
 
           <PagerView
             style={{ flex: 1 }}
             initialPage={segmentedControlIndex}
             onPageSelected={page => {
-              setSegmentedControlIndex(page.nativeEvent.position)
+              const i = page.nativeEvent.position
+              setSegmentedControlIndex(i)
+              console.log('onPageSelected', i)
             }}
             ref={pagerRef}
+            onPageScroll={e => {
+              if (handlePageScroll.current) {
+                const { offset, position } = e.nativeEvent
+                const scrollValue = position + offset
+                translateXValue.setValue(scrollValue)
+                // console.log('onPageScroll')
+              }
+            }}
+            onPageScrollStateChanged={e => {
+              console.log(e.nativeEvent.pageScrollState, translateXValue._value)
+              switch (e.nativeEvent.pageScrollState) {
+                case 'settling':
+                  handlePageScroll.current = false
+                  const didScrollForward = translateXValue._value > 0.5
+                  Animated.spring(translateXValue, {
+                    toValue: segmentedControlIndex + (didScrollForward ? 1 : 0),
+                    useNativeDriver: true,
+                  }).start()
+
+                  break
+
+                default:
+                  handlePageScroll.current = true
+              }
+            }}
           >
             <View key="1">
               <WorkoutsReview />
             </View>
-            <View key="2">
+            <View
+              key="2"
+              style={{ flex: 1 }}
+            >
               <ExerciseView
                 openSelect={() => {
                   goToExerciseSelect()
@@ -117,7 +171,10 @@ export const ReviewScreen: React.FC<ReviewScreenProps> = observer(
               </ExerciseView>
             </View>
 
-            <View key="3">
+            <View
+              key="3"
+              style={{ flex: 1 }}
+            >
               <ExerciseView
                 openSelect={() => {
                   goToExerciseSelect()
@@ -128,7 +185,10 @@ export const ReviewScreen: React.FC<ReviewScreenProps> = observer(
               </ExerciseView>
             </View>
 
-            <View key="4">
+            <View
+              key="4"
+              style={{ flex: 1 }}
+            >
               <ExerciseView
                 openSelect={() => goToExerciseSelect()}
                 isExerciseSelected={!!selectedExercise}
