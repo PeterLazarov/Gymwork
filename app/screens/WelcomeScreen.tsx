@@ -15,6 +15,7 @@ import {
   fontSize,
   spacing,
 } from 'designSystem'
+import { Screen } from '@/components/ignite'
 
 export type WelcomeScreenProps = StaticScreenProps<{}>
 
@@ -29,7 +30,10 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = observer(() => {
   }
 
   return (
-    <EmptyLayout>
+    <Screen
+      safeAreaEdges={['bottom']}
+      contentContainerStyle={{ flex: 1 }}
+    >
       <HeaderTitle title={translate('welcome')} />
 
       <View style={styles.content}>
@@ -59,7 +63,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = observer(() => {
           {translate('startGymworking')}
         </ButtonText>
       </Button>
-    </EmptyLayout>
+    </Screen>
   )
 })
 

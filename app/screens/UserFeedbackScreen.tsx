@@ -19,6 +19,7 @@ import {
   Icon,
   IconButton,
 } from 'designSystem'
+import { useHeaderHeight } from '@react-navigation/elements'
 
 export type UserFeedbackScreenProps = StaticScreenProps<{
   referrerPage: string
@@ -30,6 +31,7 @@ export const UserFeedbackScreen: React.FC<UserFeedbackScreenProps> = observer(
     const { stateStore } = useStores()
 
     const { goBack } = useNavigation()
+    const headerHeight = useHeaderHeight()
 
     const { showSnackbar } = useDialogContext()
 
@@ -53,6 +55,7 @@ export const UserFeedbackScreen: React.FC<UserFeedbackScreenProps> = observer(
 
     function onFeedbackSave() {
       goBack()
+      // TODO i18n
       showSnackbar?.({
         text: 'Thank you for sending us feedback',
       })
@@ -68,8 +71,8 @@ export const UserFeedbackScreen: React.FC<UserFeedbackScreenProps> = observer(
     return (
       <>
         <Screen
-          safeAreaEdges={['top', 'bottom']}
-          contentContainerStyle={{ flex: 1, paddingTop: 32 }} // TODO why does this go under the header?
+          safeAreaEdges={['bottom']}
+          contentContainerStyle={{ flex: 1, paddingTop: headerHeight }}
         >
           <View
             style={{

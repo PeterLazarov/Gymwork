@@ -54,25 +54,9 @@ export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> =
       })
     }
 
-    function onBackPress() {
-      navigate('Home', {
-        screen: 'WorkoutStack',
-        params: { screen: 'Workout', params: {} },
-      })
-    }
-
     return (
       <EmptyLayout>
         <HeaderRight>
-          <IconButton
-            onPress={onBackPress}
-            //
-          >
-            <Icon
-              icon="chevron-back"
-              color={colors.onPrimary}
-            />
-          </IconButton>
           <HeaderTitle title={translate('selectTemplate')} />
         </HeaderRight>
 

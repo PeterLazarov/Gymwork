@@ -29,6 +29,10 @@ export const Links: React.FC = () => {
         name: 'ExerciseDetails',
         params: { exerciseId: 'e_animatic?_Ab Wheel Rollout' },
       },
+      UserFeedback: {
+        name: 'UserFeedback',
+        params: { referrerPage: 'dev' },
+      },
     }
     return obj
   }, [])

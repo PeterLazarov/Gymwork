@@ -1,6 +1,6 @@
 import { useScrollToTop } from '@react-navigation/native'
 import { StatusBar, StatusBarProps, StatusBarStyle } from 'expo-status-bar'
-import { ReactNode, useRef, useState } from 'react'
+import { ReactNode, useMemo, useRef, useState } from 'react'
 import {
   KeyboardAvoidingView,
   KeyboardAvoidingViewProps,
@@ -20,10 +20,15 @@ import {
   useSafeAreaInsetsStyle,
 } from '@/utils/useSafeAreaInsetsStyle'
 import { $styles } from 'designSystem'
+import { useHeaderHeight } from '@react-navigation/elements'
 
 export const DEFAULT_BOTTOM_OFFSET = 50
 
 interface BaseScreenProps {
+  /**
+   * Adds padding = headerHeight. Use if you don't want to utilize header blur
+   */
+  padHeader?: boolean
   /**
    * Children components.
    */
@@ -269,7 +274,13 @@ export function Screen(props: ScreenProps) {
     safeAreaEdges,
     StatusBarProps,
     statusBarStyle,
+    padHeader,
   } = props
+
+  const headerHeight = useHeaderHeight()
+  const paddingTop: StyleProp<ViewStyle> = useMemo(() => {
+    return { paddingTop: padHeader ? headerHeight : 0 }
+  }, [headerHeight, padHeader])
 
   const $containerInsets = useSafeAreaInsetsStyle(safeAreaEdges)
 
@@ -279,6 +290,7 @@ export function Screen(props: ScreenProps) {
         $containerStyle,
         { backgroundColor: backgroundColor || colors.background },
         $containerInsets,
+        paddingTop,
       ]}
     >
       <StatusBar

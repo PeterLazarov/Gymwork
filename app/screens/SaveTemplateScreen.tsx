@@ -59,18 +59,19 @@ export const SaveTemplateScreen: React.FC<SaveTemplateScreenProps> = observer(
     )
     const { showConfirm, showSnackbar } = useDialogContext()
 
-    function onBackPress() {
-      showConfirm?.({
-        message: translate('workoutWillNotBeSaved'),
-        onClose: () => showConfirm?.(undefined),
-        onConfirm: onBackConfirmed,
-      })
-    }
+    // TODO usePreventRemove
+    // function onBackPress() {
+    //   showConfirm?.({
+    //     message: translate('workoutWillNotBeSaved'),
+    //     onClose: () => showConfirm?.(undefined),
+    //     onConfirm: onBackConfirmed,
+    //   })
+    // }
 
-    function onBackConfirmed() {
-      showConfirm?.(undefined)
-      goBack()
-    }
+    // function onBackConfirmed() {
+    //   showConfirm?.(undefined)
+    //   goBack()
+    // }
 
     function onUpdate(updated: WorkoutTemplate, isValid: boolean) {
       setTemplate(updated)
@@ -96,12 +97,6 @@ export const SaveTemplateScreen: React.FC<SaveTemplateScreenProps> = observer(
       <EmptyLayout>
         <HeaderTitle title={translate('saveTemplate')} />
         <HeaderRight>
-          <IconButton onPress={onBackPress}>
-            <Icon
-              icon="chevron-back"
-              color={colors.onPrimary}
-            />
-          </IconButton>
           <IconButton
             onPress={onComplete}
             disabled={!formValid}

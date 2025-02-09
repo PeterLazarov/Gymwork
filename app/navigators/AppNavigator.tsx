@@ -66,7 +66,7 @@ const AppStack = createNativeStackNavigator({
     },
     Home: {
       options: {
-        headerShown: false,
+        headerShown: true,
         headerRight() {
           return <Links />
         },

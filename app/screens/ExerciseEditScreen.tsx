@@ -18,6 +18,7 @@ import {
   Icon,
   IconButton,
 } from 'designSystem'
+import { Screen } from '@/components/ignite'
 
 export type ExerciseEditScreenProps = StaticScreenProps<{
   // If no ID, create mode enabled
@@ -80,20 +81,14 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = observer(
     }
 
     return (
-      <EmptyLayout>
+      <Screen
+        padHeader={true}
+        contentContainerStyle={{ flex: 1 }}
+      >
+        <HeaderTitle
+          title={translate(createMode ? 'createExercise' : 'editExercise')}
+        />
         <HeaderRight>
-          <IconButton
-            onPress={onBackPress}
-            //
-          >
-            <Icon
-              icon="chevron-back"
-              color={colors.onPrimary}
-            />
-          </IconButton>
-          <HeaderTitle
-            title={translate(createMode ? 'createExercise' : 'editExercise')}
-          />
           <IconButton
             onPress={onComplete}
             disabled={!formValid}
@@ -101,7 +96,6 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = observer(
           >
             <Icon
               icon="checkmark"
-              size="large"
               color={colors.onPrimary}
             />
           </IconButton>
@@ -121,7 +115,7 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = observer(
         >
           <ButtonText variant="primary">{translate('save')}</ButtonText>
         </Button>
-      </EmptyLayout>
+      </Screen>
     )
   }
 )
