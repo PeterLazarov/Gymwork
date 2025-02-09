@@ -68,14 +68,13 @@ const AppStack = createNativeStackNavigator({
   initialRouteName: 'Home',
   screenOptions(props) {
     return {
-      headerTransparent: true,
-      headerBlurEffect: 'regular',
-
-      headerShown: true,
-      // TODO for testing
-      headerRight() {
-        return <Links />
-      },
+      // headerTransparent: true,
+      // headerBlurEffect: 'regular',
+      // headerShown: false,
+      // // TODO for testing
+      // headerRight() {
+      //   return <Links />
+      // },
     }
   },
   screens: {
@@ -86,10 +85,10 @@ const AppStack = createNativeStackNavigator({
     },
     Home: {
       options: {
-        headerShown: true,
-        headerRight() {
-          return <Links />
-        },
+        headerShown: false,
+        // headerRight() {
+        //   return <Links />
+        // },
       },
       screen: createNativeBottomTabNavigator({
         // Configured here instead of per-route because the library is buggy

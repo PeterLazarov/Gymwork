@@ -8,7 +8,7 @@ import { useAppTheme } from '@/utils/useAppTheme'
 import { Timer } from 'app/db/models/Timer'
 import { Icon, IconButton, NumberInput } from 'designSystem'
 
-import TimerEditModal from './TimerEditModal'
+import TimerEditSheet from './TimerEditSheet'
 
 export type RestInputProps = {
   timer?: Timer
@@ -124,7 +124,7 @@ const RestInput = forwardRef<TextInput, RestInputProps>(function RestInput(
         )}
       </View>
       {timer && (
-        <TimerEditModal
+        <TimerEditSheet
           open={settingDialogOpen}
           onClose={() => {
             setSettingDialogOpen(false)

@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import { View, ViewStyle } from 'react-native'
 
 import SelectButton from './SelectButton'
-import SelectOptionsModal from './SelectOptionsModal'
+import SelectOptionsSheet from './SelectOptionsSheet'
 import { SelectOption } from './types'
 
 type Props<T = unknown> = {
@@ -55,7 +55,7 @@ function Select<T>({
         onPress={openSelection}
         label={label}
       />
-      <SelectOptionsModal
+      <SelectOptionsSheet
         header={headerText || placeholder}
         open={selectionOpen}
         onClose={closeSelection}

@@ -6,10 +6,10 @@ import { spacing, Text } from 'designSystem'
 
 import StepSetsList from '../WorkoutStep/StepSetsList/StepSetsList'
 
-type WorkoutModalStepItemProps = {
+type WorkoutSheetStepItemProps = {
   step: WorkoutStep
 }
-const WorkoutModalStepItem: React.FC<WorkoutModalStepItemProps> = ({
+const WorkoutSheetStepItem: React.FC<WorkoutSheetStepItemProps> = ({
   step,
 }) => {
   const {
@@ -44,4 +44,4 @@ const WorkoutModalStepItem: React.FC<WorkoutModalStepItemProps> = ({
   )
 }
 
-export default WorkoutModalStepItem
+export default WorkoutSheetStepItem

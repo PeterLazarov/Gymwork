@@ -1,3 +1,3 @@
-import WorkoutModal from './WorkoutModal'
+import WorkoutSheet from './WorkoutSheet'
 
-export default WorkoutModal
+export default WorkoutSheet

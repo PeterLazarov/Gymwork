@@ -8,7 +8,7 @@ import { Calendar } from 'react-native-calendario'
 import { MarkedDays } from 'react-native-month'
 
 import { useAppTheme } from '@/utils/useAppTheme'
-import WorkoutModal from 'app/components/WorkoutModal'
+import WorkoutSheet from 'app/components/WorkoutModal'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
@@ -179,7 +179,7 @@ export const CalendarScreen: React.FC<CalendarScreenParams> = observer(
           />
         </EmptyLayout>
         {openedWorkoutDialogDate && (
-          <WorkoutModal
+          <WorkoutSheet
             open={!!openedWorkoutDialogDate}
             workout={workoutStore.dateWorkoutMap[openedWorkoutDialogDate]!}
             onClose={() => setOpenedWorkoutDialogDate('')}

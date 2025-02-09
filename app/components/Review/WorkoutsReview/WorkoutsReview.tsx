@@ -7,7 +7,7 @@ import { Searchbar } from 'react-native-paper'
 import { TabHeightCompensation } from '@/navigators/constants'
 import { useAppTheme } from '@/utils/useAppTheme'
 import EmptyState from 'app/components/EmptyState'
-import WorkoutModal from 'app/components/WorkoutModal'
+import WorkoutSheet from 'app/components/WorkoutModal'
 import { useStores } from 'app/db/helpers/useStores'
 import { Workout, discomfortOptions } from 'app/db/models'
 import { translate } from 'app/i18n'
@@ -92,6 +92,7 @@ const WorkoutsReview: React.FC = () => {
         : muscles.concat(muscle)
     )
   }
+  const workoutModalRef = useRef<TrueSheet>(null)
 
   return (
     <>
@@ -102,7 +103,10 @@ const WorkoutsReview: React.FC = () => {
             renderItem={({ item }) => (
               <WorkoutReviewListItem
                 workout={item}
-                onPress={() => setOpenedWorkout(item)}
+                onPress={() => {
+                  setOpenedWorkout(item)
+                  workoutModalRef.current?.present()
+                }}
               />
             )}
             keyExtractor={workout => `${workout.date}_${workout.guid}`}
@@ -112,15 +116,13 @@ const WorkoutsReview: React.FC = () => {
           <EmptyState text={translate('commentsLogEmpty')} />
         )}
       </View>
-      {openedWorkout && (
-        <WorkoutModal
-          open={!!openedWorkout}
-          workout={openedWorkout}
-          onClose={() => setOpenedWorkout(undefined)}
-          mode="view"
-          showComments
-        />
-      )}
+
+      <WorkoutSheet
+        ref={workoutModalRef}
+        workout={openedWorkout}
+        mode="view"
+        showComments
+      />
 
       <FAB
         icon="filter"
