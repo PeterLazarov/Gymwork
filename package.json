@@ -40,7 +40,7 @@
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-menu/menu": "^1.2.2",
     "@react-native-picker/picker": "2.9.0",
-    "@react-native-segmented-control/segmented-control": "^2.5.7",
+    "@react-native-segmented-control/segmented-control": "^2.5.4",
     "@react-native-vector-icons/common": "^11.0.0",
     "@react-native-vector-icons/material-icons": "^0.0.1",
     "@react-navigation/bottom-tabs": "^7.2.0",
