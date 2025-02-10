@@ -54,7 +54,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = observer(
     }
 
     return (
-      <Screen padHeader={true}>
+      <Screen padHeader={false}>
         <Select
           options={appearanceOptions}
           value={settingsStore.colorSchemePreference}
