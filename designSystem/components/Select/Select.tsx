@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { View, ViewStyle } from 'react-native'
 
 import SelectButton from './SelectButton'
 import SelectOptionsSheet from './SelectOptionsSheet'
 import { SelectOption } from './types'
+import { TrueSheet } from '@lodev09/react-native-true-sheet'
 
 type Props<T = unknown> = {
   options: SelectOption<T>[]
@@ -25,11 +26,6 @@ function Select<T>({
   label,
   containerStyle = {},
 }: Props<T>) {
-  const [selectionOpen, setSelectionOpen] = useState(false)
-
-  const openSelection = () => setSelectionOpen(true)
-  const closeSelection = () => setSelectionOpen(false)
-
   const getOptionLabel = (option: SelectOption): string => {
     return typeof option === 'string' ? option : option.label
   }
@@ -45,20 +41,24 @@ function Select<T>({
     const selectedValue = getOptionValue(option)
     if (selectedValue !== value) {
       onChange(selectedValue)
-      closeSelection()
+      sheetRef.current?.dismiss()
     }
   }
+
+  const sheetRef = useRef<TrueSheet>(null)
+
   return (
     <View style={{ ...containerStyle }}>
       <SelectButton
         text={selectedOption ? getOptionLabel(selectedOption) : placeholder}
-        onPress={openSelection}
+        onPress={() => sheetRef.current?.present()}
         label={label}
       />
       <SelectOptionsSheet
         header={headerText || placeholder}
-        open={selectionOpen}
-        onClose={closeSelection}
+        ref={sheetRef}
+        // open={selectionOpen}
+        // onClose={closeSelection}
         options={options}
         selectedValues={value === undefined ? [] : [value]}
         onOptionSelect={onOptionSelect}
