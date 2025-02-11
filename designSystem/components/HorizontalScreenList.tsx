@@ -7,16 +7,6 @@ import {
   ViewabilityConfig,
   ViewToken,
 } from 'react-native'
-import {
-  Gesture,
-  GestureDetector,
-  GestureHandlerRootView,
-} from 'react-native-gesture-handler'
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated'
 
 type LockedProps = 'onScroll' | 'getItemLayout' | 'horizontal'
 
@@ -64,26 +54,20 @@ const HorizontalScreenList = forwardRef<FlatList<any>, Props>(
     })
 
     return (
-      <Animated.View
-        style={{
-          flex: 1,
-        }}
-      >
-        <FlatList
-          ref={ref}
-          showsHorizontalScrollIndicator={false}
-          viewabilityConfig={viewabilityConfig}
-          onViewableItemsChanged={handleViewChange}
-          pagingEnabled
-          keyExtractor={(item, index) => String(index)}
-          getItemLayout={getItemLayout}
-          renderItem={renderItem}
-          horizontal
-          snapToAlignment="center"
-          initialScrollIndex={initialScrollIndex}
-          {...rest}
-        />
-      </Animated.View>
+      <FlatList
+        ref={ref}
+        showsHorizontalScrollIndicator={false}
+        viewabilityConfig={viewabilityConfig}
+        onViewableItemsChanged={handleViewChange}
+        pagingEnabled
+        keyExtractor={(item, index) => String(index)}
+        getItemLayout={getItemLayout}
+        renderItem={renderItem}
+        horizontal
+        // snapToAlignment="center"
+        initialScrollIndex={initialScrollIndex}
+        {...rest}
+      />
     )
   }
 )
