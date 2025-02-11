@@ -8,7 +8,7 @@ import useBenchmark from '@/utils/useBenchmark'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { useShareWorkout } from 'app/utils/useShareWorkout'
-import { Icon, IconButton, MenuViewWrapped } from 'designSystem'
+import { Icon, IconButton, MenuViewWrapped, ZeegoMenu } from 'designSystem'
 
 import MiniTimer from '../MiniTimer'
 import WorkoutTimerSettings from '../Timer/WorkoutTimerSettings'
@@ -122,6 +122,8 @@ const WorkoutHeaderRight: React.FC = () => {
           />
         </IconButton>
       </MenuViewWrapped>
+
+      <ZeegoMenu />
 
       <TrueSheet
         ref={timerSettingsSheetRef}
