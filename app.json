@@ -46,7 +46,6 @@
           "backgroundColor": "#191015"
         }
       ],
-      "react-native-bottom-tabs",
       [
         "expo-build-properties",
         {
