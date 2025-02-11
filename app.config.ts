@@ -19,8 +19,9 @@ module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
     ...config,
     plugins: [
       ...existingPlugins,
-      require('./plugins/withSplashScreen').withSplashScreen,
-      require('./plugins/withMaterialIcons').default,
+      // require('./plugins/withSplashScreen').withSplashScreen,
+      // require('./plugins/withMaterialIcons').default,
+      // require('./plugins/withChangeNativeAndroidTextToWhite').default,
     ],
   }
 }

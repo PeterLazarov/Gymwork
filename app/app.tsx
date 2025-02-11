@@ -10,33 +10,22 @@
  * The app navigation resides in ./app/navigators, so head over there
  * if you're interested in adding screens and navigators.
  */
-if (__DEV__) {
-  // Load Reactotron in development only.
-  // Note that you must be using metro's `inlineRequires` for this to work.
-  // If you turn it off in metro.config.js, you'll have to manually import it.
-  require('./devtools/ReactotronConfig.ts')
-}
-import './utils/gestureHandler'
-import * as Linking from 'expo-linking'
-import { useEffect, useState } from 'react'
+// if (__DEV__) {
+//   // Load Reactotron in development only.
+//   // Note that you must be using metro's `inlineRequires` for this to work.
+//   // If you turn it off in metro.config.js, you'll have to manually import it.
+//   require('./devtools/ReactotronConfig.ts')
+// }
+// import './utils/gestureHandler'
+import React, { useEffect, useState } from 'react'
 import { KeyboardProvider } from 'react-native-keyboard-controller'
-import {
-  initialWindowMetrics,
-  SafeAreaProvider,
-} from 'react-native-safe-area-context'
-
-import Config from './config'
-import DBStoreInitializer from './db/DBStoreInitializer'
-import { useInitialRootStore } from './db/helpers/useStores'
-import { initI18n } from './i18n'
-import './utils/ignoreWarnings'
+import { MenuView } from '@react-native-menu/menu'
+// import './utils/ignoreWarnings'
 // import { useFonts } from 'expo-font'
-import { AppNavigator, useNavigationPersistence } from './navigators'
-import { ErrorBoundary } from './screens/ignite/ErrorScreen/ErrorBoundary'
-import * as storage from './utils/storage'
 // import { customFontsToLoad } from './igniteTheme'
 
 import '@ungap/with-resolvers'
+import { Appearance, Button, View, Text } from 'react-native'
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
@@ -51,56 +40,45 @@ interface AppProps {
  */
 function App(props: AppProps) {
   const { hideSplashScreen } = props
-  const {
-    initialNavigationState,
-    onNavigationStateChange,
-    isRestored: isNavigationStateRestored,
-  } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY)
-
+  hideSplashScreen()
   // const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
   const [isI18nInitialized, setIsI18nInitialized] = useState(false)
 
-  useEffect(() => {
-    initI18n().then(() => setIsI18nInitialized(true))
-  }, [])
-
-  const { rehydrated } = useInitialRootStore(() => {
-    // This runs after the root store has been initialized and rehydrated.
-
-    // If your initialization scripts run very fast, it's good to show the splash screen for just a bit longer to prevent flicker.
-    // Slightly delaying splash screen hiding for better UX; can be customized or removed as needed,
-    // Note: (vanilla Android) The splash-screen will not appear if you launch your app via the terminal or Android Studio. Kill the app and launch it normally by tapping on the launcher icon. https://stackoverflow.com/a/69831106
-    // Note: (vanilla iOS) You might notice the splash-screen logo change size. This happens in debug/development mode. Try building the app for release.
-    setTimeout(hideSplashScreen, 500)
-  })
-
-  // Before we show the app, we have to wait for our state to be ready.
-  // In the meantime, don't render anything. This will be the background
-  // color set in native by rootView's background color.
-  // In iOS: application:didFinishLaunchingWithOptions:
-  // In Android: https://stackoverflow.com/a/45838109/204044
-  // You can replace with your own loading component if you wish.
-  if (
-    !rehydrated ||
-    !isNavigationStateRestored ||
-    !isI18nInitialized
-    // (!areFontsLoaded && !fontLoadError)
-  ) {
-    return null
-  }
-
-  // otherwise, we're ready to render the app
   return (
-    <DBStoreInitializer>
-      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <KeyboardProvider>
-          <AppNavigator
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
-          />
-        </KeyboardProvider>
-      </SafeAreaProvider>
-    </DBStoreInitializer>
+    <View style={{ backgroundColor: 'white', padding: 64, height: 200 }}>
+      <View>
+        <MenuView
+          actions={[
+            { title: 'qweqwe', titleColor: 'red' },
+            { title: 'abc', titleColor: 'white' },
+            { title: 'dfg ewq' },
+          ]}
+        >
+          <Button title="open menu" />
+        </MenuView>
+      </View>
+      <View>
+        <Text>Set color scheme to:</Text>
+        <Button
+          title="dark"
+          onPress={() => {
+            Appearance.setColorScheme('dark')
+          }}
+        />
+        <Button
+          title="light"
+          onPress={() => {
+            Appearance.setColorScheme('light')
+          }}
+        />
+        <Button
+          title="null"
+          onPress={() => {
+            Appearance.setColorScheme(null)
+          }}
+        />
+      </View>
+    </View>
   )
 }
 
