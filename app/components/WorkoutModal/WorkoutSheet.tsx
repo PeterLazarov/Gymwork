@@ -20,6 +20,7 @@ import {
 } from 'designSystem'
 
 import WorkoutCommentsCard from '../Workout/WorkoutCommentsCard'
+
 import WorkoutSheetStepItem from './WorkoutSheetStepItem'
 
 export interface WorkoutSheetProps extends TrueSheetProps {
@@ -29,14 +30,14 @@ export interface WorkoutSheetProps extends TrueSheetProps {
 }
 
 const WorkoutSheet = forwardRef<TrueSheet, WorkoutSheetProps>(
-  ({ mode, workout, showComments, ...rest }, sheetRef) => {
+  function WorkoutSheet({ mode, workout, showComments, ...rest }, sheetRef) {
     const { workoutStore, stateStore } = useStores()
     const [includeSets, setIncludeSets] = useState(true)
-    // const sheetRef = useRef<TrueSheet>(null)
-    const { bottom: bottomInset } = useSafeAreaInsets()
 
     const luxonDate = DateTime.fromISO(workout?.date)
-    const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
+    const label = luxonDate
+      ? luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
+      : ''
 
     const { navigate } = useNavigation()
 
