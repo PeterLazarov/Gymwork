@@ -31,9 +31,8 @@ export function showExerciseSelect(multiSelect = false): Promise<Exercise[]> {
 
 const exerciseListSheet = createRef<TrueSheet>()
 
-{
-  /* If scrolling breaks https://sheet.lodev09.com/guides/scrolling */
-}
+/* If scrolling breaks https://sheet.lodev09.com/guides/scrolling */
+
 export function ExerciseSelectSheet() {
   const [sheetSize, setSheetSize] = useState(initialSheetSize)
 
@@ -43,12 +42,12 @@ export function ExerciseSelectSheet() {
     <TrueSheet
       ref={exerciseListSheet}
       sizes={['large']}
-      backgroundColor={theme.colors.surfaceContainer}
       onPresent={({ value }) => {
         initialSheetSize = value
         setSheetSize(value)
       }}
       contentContainerStyle={{
+        backgroundColor: theme.colors.background,
         paddingTop: theme.spacing.md,
         paddingBottom: Platform.select({ ios: theme.spacing.md, android: 0 }),
       }}
