@@ -60,7 +60,7 @@
     "decamelize": "^6.0.0",
     "driftless": "^2.0.3",
     "echarts": "^5.4.3",
-    "expo": "~52.0.30",
+    "expo": "52.0.19",
     "expo-build-properties": "~0.13.2",
     "expo-constants": "~17.0.5",
     "expo-dev-client": "~5.0.11",

@@ -32,10 +32,7 @@ export class ErrorBoundary extends Component<Props, State> {
       return
     }
     // Catch errors in any components below and re-render with error message
-    this.setState({
-      error,
-      errorInfo,
-    })
+    this.setState({ error, errorInfo })
 
     // You can also log error messages to an error reporting service here
     // This is a great place to put BugSnag, Sentry, crashlytics, etc:
@@ -48,12 +45,12 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   // To avoid unnecessary re-renders
-  shouldComponentUpdate(
-    nextProps: Readonly<Props>,
-    nextState: Readonly<State>
-  ): boolean {
-    return nextState.error !== this.state.error
-  }
+  // shouldComponentUpdate(
+  //   nextProps: Readonly<Props>,
+  //   nextState: Readonly<State>
+  // ): boolean {
+  //   return nextState.error !== this.state.error
+  // }
 
   // Only enable if we're catching errors in the right environment
   isEnabled(): boolean {
