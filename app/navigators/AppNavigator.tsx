@@ -27,10 +27,12 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { PaperProvider, Portal } from 'react-native-paper'
 
 import { Links } from '@/components/Links'
+import WorkoutHeaderRight from '@/components/Workout/WorkoutHeaderRight'
 import { DialogContextProvider } from '@/contexts/DialogContext'
 import { useStores } from '@/db/helpers/useStores'
 import { translate } from '@/i18n'
 import * as Screens from '@/screens'
+import { ErrorBoundary as ErrorBoundaryIgnite } from '@/screens'
 import { useThemeProvider } from '@/utils/useAppTheme'
 import { offscreenRef } from 'app/utils/useShareWorkout'
 import { navThemes, paperThemes } from 'designSystem/theme'
@@ -38,9 +40,7 @@ import { navThemes, paperThemes } from 'designSystem/theme'
 import Config from '../config'
 
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
-import { HeaderRight } from 'designSystem'
-import WorkoutHeaderRight from '@/components/Workout/WorkoutHeaderRight'
-import { ErrorBoundary as ErrorBoundaryIgnite } from '@/screens'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 /**
  * This is a list of all the route names that will exit the app if the back button
  * is pressed while in that screen. Only affects Android.
@@ -48,6 +48,34 @@ import { ErrorBoundary as ErrorBoundaryIgnite } from '@/screens'
 const exitRoutes = Config.exitRoutes
 
 const AppStack = createNativeStackNavigator({
+  screenListeners(props) {
+    return {
+      beforeRemove: () => {
+        console.log('beforeRemove')
+      },
+      blur: () => {
+        console.log('blur')
+      },
+      focus: () => {
+        console.log('focus')
+      },
+      gestureCancel: () => {
+        console.log('gestureCancel')
+      },
+      sheetDetentChange: () => {
+        console.log('sheetDetentChange')
+      },
+      state: e => {
+        console.log('state', e)
+      },
+      transitionEnd: () => {
+        console.log('transitionEnd')
+      },
+      transitionStart: () => {
+        console.log('transitionStart')
+      },
+    }
+  },
   screenLayout({ children }) {
     return (
       // TODO why the F do we have 2?
@@ -65,18 +93,18 @@ const AppStack = createNativeStackNavigator({
       </ErrorBoundaryIgnite>
     )
   },
-  initialRouteName: 'Home',
-  screenOptions(props) {
-    return {
-      // headerTransparent: true,
-      // headerBlurEffect: 'regular',
-      // headerShown: false,
-      // // TODO for testing
-      // headerRight() {
-      //   return <Links />
-      // },
-    }
-  },
+  // initialRouteName: 'Home',
+  // screenOptions(props) {
+  //   return {
+  //     // headerTransparent: true,
+  //     // headerBlurEffect: 'regular',
+  //     // headerShown: false,
+  //     // // TODO for testing
+  //     // headerRight() {
+  //     //   return <Links />
+  //     // },
+  //   }
+  // },
   screens: {
     Welcome: {
       screen: Screens.WelcomeScreen,
@@ -90,23 +118,23 @@ const AppStack = createNativeStackNavigator({
         //   return <Links />
         // },
       },
-      screen: createNativeBottomTabNavigator({
+      screen: createBottomTabNavigator({
         // Configured here instead of per-route because the library is buggy
         screenOptions(props) {
           const options = {
             WorkoutStack: {
               title: upperFirst(translate('workout')),
-              tabBarIcon: () =>
-                MaterialIcons.getImageSourceSync(
-                  'fitness-center',
-                  24,
-                  'black'
-                )!,
+              // tabBarIcon: () =>
+              //   MaterialIcons.getImageSourceSync(
+              //     'fitness-center',
+              //     24,
+              //     'black'
+              //   )!,
             },
             ReviewStack: {
               title: upperFirst(translate('review')),
-              tabBarIcon: () =>
-                MaterialIcons.getImageSourceSync('history', 24, 'black')!,
+              // tabBarIcon: () =>
+              //   MaterialIcons.getImageSourceSync('history', 24, 'black')!,
             },
           }
           const routeName = props.route.name as keyof typeof options
@@ -115,46 +143,38 @@ const AppStack = createNativeStackNavigator({
         screens: {
           ReviewStack: createNativeStackNavigator({
             screens: {
-              Review: {
-                screen: Screens.ReviewScreen,
-                linking: 'review',
-              },
+              Review: { screen: Screens.ReviewScreen, linking: 'review' },
             },
           }),
-          WorkoutStack: createNativeStackNavigator({
-            screens: {
-              Workout: {
-                screen: Screens.WorkoutScreen,
-                linking: 'workout/:workoutId',
-                options(props) {
-                  return {
-                    headerRight(props) {
-                      return <WorkoutHeaderRight />
-                    },
-                  }
-                },
-              },
-              WorkoutStep: {
-                screen: Screens.WorkoutStepScreen,
-                linking: 'workout/:workoutId/step/:stepId',
-                options(props) {
-                  return {
-                    headerBackButtonDisplayMode: 'minimal',
-                  }
-                },
-              },
-              WorkoutFeedback: {
-                screen: Screens.WorkoutFeedbackScreen,
-                linking: 'workout/:workoutId/feedback',
-              },
-              TemplateSelect: {
-                screen: Screens.TemplateSelectScreen,
-              },
-              SaveTemplate: {
-                screen: Screens.SaveTemplateScreen,
-              },
-            },
-          }),
+          // WorkoutStack: createNativeStackNavigator({
+          //   screens: {
+          //     Workout: {
+          //       screen: Screens.WorkoutScreen,
+          //       linking: 'workout/:workoutId',
+          //       options(props) {
+          //         return {
+          //           headerRight(props) {
+          //             return <WorkoutHeaderRight />
+          //           },
+          //         }
+          //       },
+          //     },
+          //     WorkoutStep: {
+          //       screen: Screens.WorkoutStepScreen,
+          //       linking: 'workout/:workoutId/step/:stepId',
+          //       options(props) {
+          //         return { headerBackButtonDisplayMode: 'minimal' }
+          //       },
+          //     },
+          //     WorkoutFeedback: {
+          //       screen: Screens.WorkoutFeedbackScreen,
+          //       linking: 'workout/:workoutId/feedback',
+          //     },
+          //     TemplateSelect: { screen: Screens.TemplateSelectScreen },
+          //     SaveTemplate: { screen: Screens.SaveTemplateScreen },
+          //   },
+          // }),
+          WorkoutStack: { screen: () => null },
         },
       }),
     },
@@ -165,9 +185,7 @@ const AppStack = createNativeStackNavigator({
         return <Links />
       },
     },
-    Calendar: {
-      screen: Screens.CalendarScreen,
-    },
+    Calendar: { screen: Screens.CalendarScreen },
     // ExerciseSelect: {
     //   screen: Screens.ExerciseSelectScreen,
     //   headerRight() {
@@ -223,12 +241,10 @@ export const AppNavigator = observer(function AppNavigator(
   const { navStore } = useStores()
   function handleStateChange(state: NavigationState | undefined) {
     // @ts-ignore
-    const { currentRouteName, previousRouteName } =
-      props.onStateChange?.(state) ?? {}
-
-    console.log('stateChange', { previousRouteName, currentRouteName, state })
-
-    navStore.setProp('activeRoute', currentRouteName)
+    // const { currentRouteName, previousRouteName } =
+    //   props.onStateChange?.(state) ?? {}
+    // console.log('stateChange', { state: JSON.stringify(state, undefined, 2) })
+    // navStore.setProp('activeRoute', currentRouteName)
   }
 
   // const {

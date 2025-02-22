@@ -95,8 +95,8 @@ function App(props: AppProps) {
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <KeyboardProvider>
           <AppNavigator
-            initialState={initialNavigationState}
-            onStateChange={onNavigationStateChange}
+          // initialState={initialNavigationState}
+          // onStateChange={onNavigationStateChange}
           />
         </KeyboardProvider>
       </SafeAreaProvider>
