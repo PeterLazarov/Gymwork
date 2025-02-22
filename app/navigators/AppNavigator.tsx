@@ -115,10 +115,7 @@ const AppStack = createNativeStackNavigator({
         screens: {
           ReviewStack: createNativeStackNavigator({
             screens: {
-              Review: {
-                screen: Screens.ReviewScreen,
-                linking: 'review',
-              },
+              Review: { screen: Screens.ReviewScreen, linking: 'review' },
             },
           }),
           WorkoutStack: createNativeStackNavigator({
@@ -138,21 +135,15 @@ const AppStack = createNativeStackNavigator({
                 screen: Screens.WorkoutStepScreen,
                 linking: 'workout/:workoutId/step/:stepId',
                 options(props) {
-                  return {
-                    headerBackButtonDisplayMode: 'minimal',
-                  }
+                  return { headerBackButtonDisplayMode: 'minimal' }
                 },
               },
               WorkoutFeedback: {
                 screen: Screens.WorkoutFeedbackScreen,
                 linking: 'workout/:workoutId/feedback',
               },
-              TemplateSelect: {
-                screen: Screens.TemplateSelectScreen,
-              },
-              SaveTemplate: {
-                screen: Screens.SaveTemplateScreen,
-              },
+              TemplateSelect: { screen: Screens.TemplateSelectScreen },
+              SaveTemplate: { screen: Screens.SaveTemplateScreen },
             },
           }),
         },
@@ -165,9 +156,7 @@ const AppStack = createNativeStackNavigator({
         return <Links />
       },
     },
-    Calendar: {
-      screen: Screens.CalendarScreen,
-    },
+    Calendar: { screen: Screens.CalendarScreen },
     // ExerciseSelect: {
     //   screen: Screens.ExerciseSelectScreen,
     //   headerRight() {
@@ -225,8 +214,6 @@ export const AppNavigator = observer(function AppNavigator(
     // @ts-ignore
     const { currentRouteName, previousRouteName } =
       props.onStateChange?.(state) ?? {}
-
-    console.log('stateChange', { previousRouteName, currentRouteName, state })
 
     navStore.setProp('activeRoute', currentRouteName)
   }
