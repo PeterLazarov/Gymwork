@@ -34,9 +34,10 @@ const WorkoutSheet = forwardRef<TrueSheet, WorkoutSheetProps>(
     const { workoutStore, stateStore } = useStores()
     const [includeSets, setIncludeSets] = useState(true)
 
-    const luxonDate = DateTime.fromISO(workout?.date)
-    const label = luxonDate
-      ? luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
+    const label = workout?.date
+      ? DateTime.fromISO(workout?.date).toLocaleString(
+          DateTime.DATE_MED_WITH_WEEKDAY
+        )
       : ''
 
     const { navigate } = useNavigation()
