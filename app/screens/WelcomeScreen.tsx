@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
+import { Screen } from '@/components/ignite'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
 import { EmptyLayout } from 'app/layouts/EmptyLayout'
@@ -15,7 +16,6 @@ import {
   fontSize,
   spacing,
 } from 'designSystem'
-import { Screen } from '@/components/ignite'
 
 export type WelcomeScreenProps = StaticScreenProps<{}>
 

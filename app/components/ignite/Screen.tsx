@@ -1,3 +1,4 @@
+import { useHeaderHeight } from '@react-navigation/elements'
 import { useScrollToTop } from '@react-navigation/native'
 import { StatusBar, StatusBarProps, StatusBarStyle } from 'expo-status-bar'
 import { ReactNode, useMemo, useRef, useState } from 'react'
@@ -20,7 +21,6 @@ import {
   useSafeAreaInsetsStyle,
 } from '@/utils/useSafeAreaInsetsStyle'
 import { $styles } from 'designSystem'
-import { useHeaderHeight } from '@react-navigation/elements'
 
 export const DEFAULT_BOTTOM_OFFSET = 50
 

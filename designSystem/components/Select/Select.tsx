@@ -1,10 +1,10 @@
+import { TrueSheet } from '@lodev09/react-native-true-sheet'
 import React, { useMemo, useRef, useState } from 'react'
 import { View, ViewStyle } from 'react-native'
 
 import SelectButton from './SelectButton'
 import SelectOptionsSheet from './SelectOptionsSheet'
 import { SelectOption } from './types'
-import { TrueSheet } from '@lodev09/react-native-true-sheet'
 
 type Props<T = unknown> = {
   options: SelectOption<T>[]

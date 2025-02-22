@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { ScrollView } from 'react-native'
 
+import { Screen } from '@/components/ignite'
 import { useAppTheme } from '@/utils/useAppTheme'
 import ExerciseEditForm from 'app/components/Exercise/ExerciseEditForm'
 import { useDialogContext } from 'app/contexts/DialogContext'
@@ -18,7 +19,6 @@ import {
   Icon,
   IconButton,
 } from 'designSystem'
-import { Screen } from '@/components/ignite'
 
 export type ExerciseEditScreenProps = StaticScreenProps<{
   // If no ID, create mode enabled

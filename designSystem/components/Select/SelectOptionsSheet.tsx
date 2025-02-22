@@ -1,6 +1,6 @@
+import { TrueSheet, TrueSheetProps } from '@lodev09/react-native-true-sheet'
 import React, { forwardRef } from 'react'
 import { ScrollView, View } from 'react-native'
-import { TrueSheet, TrueSheetProps } from '@lodev09/react-native-true-sheet'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 import { translate } from 'app/i18n'

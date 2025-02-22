@@ -1,7 +1,9 @@
+import { TrueSheet } from '@lodev09/react-native-true-sheet'
 import { MenuAction } from '@react-native-menu/menu'
 import { useNavigation } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
 import React, { useMemo, useRef, useState } from 'react'
+import { Platform } from 'react-native'
 
 import { useAppTheme } from '@/utils/useAppTheme'
 import useBenchmark from '@/utils/useBenchmark'
@@ -12,8 +14,6 @@ import { Icon, IconButton, MenuViewWrapped } from 'designSystem'
 
 import MiniTimer from '../MiniTimer'
 import WorkoutTimerSettings from '../Timer/WorkoutTimerSettings'
-import { TrueSheet } from '@lodev09/react-native-true-sheet'
-import { Platform } from 'react-native'
 
 const WorkoutHeaderRight: React.FC = () => {
   const { theme } = useAppTheme()

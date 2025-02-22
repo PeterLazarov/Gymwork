@@ -43,12 +43,14 @@ function getExercises() {
         tips,
       }) => {
         // basically all that are not bodyweight?
-        const hasWeightMeasurement = ['Resistance', 'Free Weights'].includes(category) && !name.includes('Bodyweight')
-        const hasDurationMeasurement = muscleAreas.includes('Cardio') || name.includes('Hold')
+        const hasWeightMeasurement =
+          ['Resistance', 'Free Weights'].includes(category) &&
+          !name.includes('Bodyweight')
+        const hasDurationMeasurement =
+          muscleAreas.includes('Cardio') || name.includes('Hold')
 
         const measurements: ExerciseMeasurementSnapshotIn = {
-          weight:
-            hasWeightMeasurement ? measurementDefaults.weight : undefined,
+          weight: hasWeightMeasurement ? measurementDefaults.weight : undefined,
 
           reps: measurementDefaults.reps,
 

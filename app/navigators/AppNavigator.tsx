@@ -27,20 +27,20 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { PaperProvider, Portal } from 'react-native-paper'
 
 import { Links } from '@/components/Links'
+import WorkoutHeaderRight from '@/components/Workout/WorkoutHeaderRight'
 import { DialogContextProvider } from '@/contexts/DialogContext'
 import { useStores } from '@/db/helpers/useStores'
 import { translate } from '@/i18n'
 import * as Screens from '@/screens'
+import { ErrorBoundary as ErrorBoundaryIgnite } from '@/screens'
 import { useThemeProvider } from '@/utils/useAppTheme'
 import { offscreenRef } from 'app/utils/useShareWorkout'
+import { HeaderRight } from 'designSystem'
 import { navThemes, paperThemes } from 'designSystem/theme'
 
 import Config from '../config'
 
 import { navigationRef, useBackButtonHandler } from './navigationUtilities'
-import { HeaderRight } from 'designSystem'
-import WorkoutHeaderRight from '@/components/Workout/WorkoutHeaderRight'
-import { ErrorBoundary as ErrorBoundaryIgnite } from '@/screens'
 /**
  * This is a list of all the route names that will exit the app if the back button
  * is pressed while in that screen. Only affects Android.

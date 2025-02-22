@@ -1,3 +1,4 @@
+import { useHeaderHeight } from '@react-navigation/elements'
 import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
@@ -19,7 +20,6 @@ import {
   Icon,
   IconButton,
 } from 'designSystem'
-import { useHeaderHeight } from '@react-navigation/elements'
 
 export type UserFeedbackScreenProps = StaticScreenProps<{
   referrerPage: string
