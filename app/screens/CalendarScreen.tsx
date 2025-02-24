@@ -65,13 +65,6 @@ export const CalendarScreen: React.FC<CalendarScreenParams> = observer(
       [stateStore.openedDate]
     )
 
-    function onBackPress() {
-      navigate('Home', {
-        screen: 'WorkoutStack',
-        params: { screen: 'Workout', params: {} },
-      })
-    }
-
     function handleCalendarDayPress(date: Date) {
       const dateString = DateTime.fromISO(date.toISOString()).toISODate()!
       const didWorkoutOnDate = Object.keys(markedDates).includes(dateString)
@@ -85,7 +78,12 @@ export const CalendarScreen: React.FC<CalendarScreenParams> = observer(
       stateStore.setOpenedDate(date)
       navigate('Home', {
         screen: 'WorkoutStack',
-        params: { screen: 'Workout', params: {} },
+        params: {
+          screen: 'Workout',
+          params: {
+            workoutDate: date,
+          },
+        },
       })
     }
 

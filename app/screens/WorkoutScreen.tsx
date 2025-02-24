@@ -12,7 +12,7 @@ import { formatDateIso, getDateRange } from 'app/utils/date'
 import { HorizontalScreenList } from 'designSystem'
 
 export type WorkoutScreenProps = StaticScreenProps<{
-  workoutId?: Workout['guid'] // TODO think this through
+  workoutDate?: Workout['date'] // TODO think this through
 }>
 
 export const WorkoutScreen: React.FC<WorkoutScreenProps> = observer(props => {
@@ -29,10 +29,10 @@ export const WorkoutScreen: React.FC<WorkoutScreenProps> = observer(props => {
   const { setOptions } = useNavigation()
 
   const routeWorkout = useMemo(() => {
-    return props.route.params?.workoutId
-      ? workoutStore.workouts.find(w => w.guid === props.route.params.workoutId)
+    return props.route.params?.workoutDate
+      ? workoutStore.dateWorkoutMap[props.route.params.workoutDate]
       : undefined
-  }, [props.route.params?.workoutId, workoutStore.workouts])
+  }, [props.route.params?.workoutDate, workoutStore.dateWorkoutMap])
 
   const currentIndex = useRef(
     dates.indexOf(routeWorkout?.date ?? stateStore.openedDate)
