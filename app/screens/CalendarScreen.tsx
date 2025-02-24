@@ -1,8 +1,9 @@
+import { TrueSheet } from '@lodev09/react-native-true-sheet'
 import { MenuView } from '@react-native-menu/menu'
 import { useNavigation, type StaticScreenProps } from '@react-navigation/native'
 import { DateTime } from 'luxon'
 import { observer } from 'mobx-react-lite'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { useWindowDimensions } from 'react-native'
 import { Calendar } from 'react-native-calendario'
 import { MarkedDays } from 'react-native-month'
@@ -30,6 +31,7 @@ export const CalendarScreen: React.FC<CalendarScreenParams> = observer(
 
     const { copyWorkoutMode } = params
 
+    const workoutSheetRef = useRef<TrueSheet>(null)
     const [openedWorkoutDialogDate, setOpenedWorkoutDialogDate] = useState('')
 
     const markedDates = useMemo(
@@ -66,16 +68,20 @@ export const CalendarScreen: React.FC<CalendarScreenParams> = observer(
     )
 
     function handleCalendarDayPress(date: Date) {
+      console.log({ date })
       const dateString = DateTime.fromISO(date.toISOString()).toISODate()!
       const didWorkoutOnDate = Object.keys(markedDates).includes(dateString)
       if (didWorkoutOnDate) {
         setOpenedWorkoutDialogDate(dateString)
+        workoutSheetRef.current?.present()
       } else {
         goToDay(dateString)
       }
     }
     function goToDay(date: string) {
+      console.log('goToDay', date)
       stateStore.setOpenedDate(date)
+
       navigate('Home', {
         screen: 'WorkoutStack',
         params: {
@@ -176,14 +182,13 @@ export const CalendarScreen: React.FC<CalendarScreenParams> = observer(
             firstDayMonday
           />
         </EmptyLayout>
-        {openedWorkoutDialogDate && (
-          <WorkoutSheet
-            open={!!openedWorkoutDialogDate}
-            workout={workoutStore.dateWorkoutMap[openedWorkoutDialogDate]!}
-            onClose={() => setOpenedWorkoutDialogDate('')}
-            mode={copyWorkoutMode ? 'copy' : 'view'}
-          />
-        )}
+
+        <WorkoutSheet
+          ref={workoutSheetRef}
+          workout={workoutStore.dateWorkoutMap[openedWorkoutDialogDate]!}
+          onDismiss={() => setOpenedWorkoutDialogDate('')}
+          mode={copyWorkoutMode ? 'copy' : 'view'}
+        />
       </>
     )
   }
