@@ -1,7 +1,7 @@
 import { useNavigation, usePreventRemove } from '@react-navigation/native'
 import type { StaticScreenProps } from '@react-navigation/native'
 import { observer } from 'mobx-react-lite'
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import { Alert } from 'react-native'
 
 import { Screen } from '@/components/ignite'
@@ -34,27 +34,34 @@ export const WorkoutFeedbackScreen: React.FC<WorkoutFeedbackScreenProps> =
 
     const { showConfirm } = useDialogContext()
     const [comments, setComments] = useState<WorkoutComments>(workout?.comments)
+    const hasChanges = useRef(false)
 
-    usePreventRemove(true, ({ data }) => {
-      // Prompt the user before leaving the screen
-      Alert.alert(translate('warning'), translate('changesWillBeLost'), [
-        {
-          text: translate('cancel'),
-          style: 'default',
-          isPreferred: true,
-          onPress: () => {
-            // Do nothing
+    usePreventRemove(hasChanges.current, ({ data }) => {
+      if (!hasChanges.current) {
+        // TODO: useState on Save clisk isn't detected. Refactor so this condition is removed
+        navigation.dispatch(data.action)
+      } else {
+        // Prompt the user before leaving the screen
+        Alert.alert(translate('warning'), translate('changesWillBeLost'), [
+          {
+            text: translate('cancel'),
+            style: 'default',
+            isPreferred: true,
+            onPress: () => {
+              // Do nothing
+            },
           },
-        },
-        {
-          text: translate('confirm'),
-          style: 'destructive',
-          onPress: () => navigation.dispatch(data.action),
-        },
-      ])
+          {
+            text: translate('confirm'),
+            style: 'destructive',
+            onPress: () => navigation.dispatch(data.action),
+          },
+        ])
+      }
     })
 
     function onCommentsSave() {
+      hasChanges.current = false
       workout?.saveComments(comments)
       goBack()
     }
@@ -84,7 +91,10 @@ export const WorkoutFeedbackScreen: React.FC<WorkoutFeedbackScreenProps> =
       >
         <WorkoutCommentsForm
           comments={comments}
-          onUpdate={setComments}
+          onUpdate={comments => {
+            setComments(comments)
+            hasChanges.current = true
+          }}
         />
 
         <Button
