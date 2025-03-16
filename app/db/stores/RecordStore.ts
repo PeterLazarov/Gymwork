@@ -1,6 +1,6 @@
 import { Instance, SnapshotOut, getParent, types } from 'mobx-state-tree'
 import { keepAlive } from 'mobx-utils'
-import * as storage from 'app/utils/storage'
+
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
 import {
   Exercise,
@@ -11,7 +11,9 @@ import {
   WorkoutStep,
 } from 'app/db/models'
 import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
+import * as storage from 'app/utils/storage'
 import { markWeakAssRecords } from 'app/utils/workoutRecordsCalculator'
+
 import { RootStore } from './RootStore'
 
 export const RecordStoreModel = types
@@ -39,9 +41,8 @@ export const RecordStoreModel = types
     },
     async fetch() {
       if (self.records.length === 0) {
-        const records = await storage.load<ExerciseRecordSnapshotIn[]>(
-          'records'
-        )
+        const records =
+          await storage.load<ExerciseRecordSnapshotIn[]>('records')
 
         console.log('records in memory', records)
         if (records && records?.length > 0) {

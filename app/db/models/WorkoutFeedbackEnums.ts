@@ -1,4 +1,4 @@
-import { palettes } from 'designSystem/tokens/theme'
+import { palettes } from 'designSystem'
 
 export const feelingOptions = {
   sad: {
@@ -30,13 +30,13 @@ export const discomfortOptions = {
   },
   discomfort: {
     icon: 'warning-outline',
-    label: 'Mild discomfort',
+    label: 'Mild',
     color: palettes.amber.hue600,
     value: 'discomfort',
   },
   noPain: {
     icon: 'check',
-    label: 'No discomfort',
+    label: 'None',
     color: palettes.green['60'],
     value: 'noPain',
   },

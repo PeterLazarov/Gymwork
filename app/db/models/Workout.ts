@@ -1,3 +1,5 @@
+import convert from 'convert-units'
+import { DateTime, Duration } from 'luxon'
 import {
   Instance,
   SnapshotIn,
@@ -9,12 +11,11 @@ import {
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import { Exercise } from './Exercise'
 import { withSetPropAction } from '../helpers/withSetPropAction'
-import { DateTime, Duration } from 'luxon'
-import { WorkoutStep, WorkoutStepModel } from './WorkoutStep'
+
+import { Exercise } from './Exercise'
 import { WorkoutSet } from './WorkoutSet'
-import convert from 'convert-units'
+import { WorkoutStep, WorkoutStepModel } from './WorkoutStep'
 
 const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
 // TODO dedupe
@@ -47,7 +48,7 @@ export const WorkoutModel = types
     notes: '',
     feeling: types.maybe(types.enumeration('feeling', Object.values(feelings))),
     pain: types.maybe(types.enumeration('pain', Object.values(discomfort))),
-    rpe: types.maybe(types.number),
+    rpe: types.maybe(types.number), // TODO rename to effort?
 
     // TODO rename to timerStoppedAt?
     /** Used for timers */
@@ -110,7 +111,7 @@ export const WorkoutModel = types
     },
     get inferredHistoricalDuration(): Duration | undefined {
       // TODO do we need this???
-      console.log({ endedAt: self.endedAt })
+      // console.log({ endedAt: self.endedAt })
       if (!self.endedAt) return undefined
 
       const setsAddedAtDayOfWorkout = this.allSets
@@ -154,6 +155,12 @@ export const WorkoutModel = types
     },
     get hasIncompleteSets(): boolean {
       return this.allSets.some(set => set.completed === false)
+    },
+
+    get muscles(): string[] {
+      return Array.from(
+        new Set(this.exercises.flatMap(e => e.muscles))
+      ) as string[]
     },
   }))
   .actions(withSetPropAction)

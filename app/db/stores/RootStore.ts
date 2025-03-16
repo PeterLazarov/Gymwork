@@ -1,13 +1,14 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
+
 import { ExerciseStoreModel } from './ExerciseStore'
-import { StateStoreModel } from './StateStore'
-import { WorkoutStoreModel } from './WorkoutStore'
+import { NavStoreModel } from './NavStore'
 import { RecordStoreModel } from './RecordStore'
 import { SettingsStoreModel } from './SettingsStore'
-import { NavStoreModel } from './NavStore'
+import { StateStoreModel } from './StateStore'
 import { TimerStoreModel } from './TimerStore'
+import { WorkoutStoreModel } from './WorkoutStore'
 
 export const RootStoreModel = types
   .model('RootStore')

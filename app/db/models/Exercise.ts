@@ -3,6 +3,7 @@ import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from '../helpers/withSetPropAction'
+
 import {
   ExerciseMeasurementModel,
   measurementDefaults,
@@ -66,8 +67,16 @@ export const ExerciseModel = types
   .model('Exercise')
   .props({
     guid: types.optional(types.identifier, () => uuidv4()),
-    name: '',
-    muscles: types.array(types.string),
+    name: types.string,
+    images: types.optional(types.array(types.string), []),
+    equipment: types.optional(types.array(types.string), []),
+    position: types.maybe(types.string),
+    stance: types.maybe(types.string),
+    instructions: types.optional(types.array(types.string), []),
+    tips: types.optional(types.maybe(types.array(types.string)), undefined),
+    muscleAreas: types.optional(types.array(types.string), []),
+
+    muscles: types.optional(types.array(types.string), []),
     measurements: types.optional(ExerciseMeasurementModel, () => ({
       weight: measurementDefaults.weight,
       reps: measurementDefaults.reps,
