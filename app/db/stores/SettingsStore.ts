@@ -1,10 +1,15 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
-import { ColorSchemeName } from 'react-native'
+import { Appearance, ColorSchemeName } from 'react-native'
+// import * as SystemUI from 'expo-system-ui'
 
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
 const colorSchemes = ['dark', 'light'] satisfies ColorSchemeName[]
-
+let deviceColorScheme = Appearance.getColorScheme()
+ Appearance.addChangeListener(({ colorScheme }) => {
+   deviceColorScheme = colorScheme
+ })
+ 
 export const SettingsStoreModel = types
   .model('SettingsStore')
   .props({
@@ -22,7 +27,27 @@ export const SettingsStoreModel = types
   })
   .actions(withSetPropAction)
   .actions(self => ({
-    initialize() {},
+    initialize() {
+      if (self.colorSchemePreference) {
+        Appearance.setColorScheme?.(self.colorSchemePreference)
+      }
+
+      // const colorScheme = Appearance.getColorScheme()
+      // const colors = getColors(colorScheme)
+
+      // SystemUI.setBackgroundColorAsync(colors.surfaceContainerLow)
+    },
+
+    //   null or undefined sets it to 'light'
+    setColorSchemePreference(scheme: 'dark' | 'light' | undefined) {
+      self.colorSchemePreference = scheme
+      Appearance.setColorScheme?.(scheme ?? deviceColorScheme)
+
+      // const colorScheme = Appearance.getColorScheme()
+      // const colors = getColors(colorScheme)
+
+      // SystemUI.setBackgroundColorAsync(colors.surfaceContainerLow)
+    },
     setMeasureRest(measureRest: boolean) {
       self.measureRest = measureRest
     },

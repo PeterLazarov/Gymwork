@@ -24,7 +24,7 @@ export type SettingsScreenProps = StackScreenProps<'Settings'>
 const appearanceOptions = [
   { label: translate('on'), value: 'dark' as const },
   { label: translate('off'), value: 'light' as const },
-  { label: translate('auto'), value: null },
+  { label: translate('auto'), value: undefined },
 ]
 
 const SettingsScreen: React.FC<SettingsScreenProps> = () => {

@@ -69,3 +69,6 @@ Ideas
 
 - Bottom left, right, + row is similar to a music player's bottom row.
 - Share button and others could use icons similar to other apps
+
+
+* SettingsStore appearance: fix the shit
