@@ -119,6 +119,8 @@ const en = {
   startEmptyWorkout: 'Start Empty Workout',
   showWorkoutTimer: 'Show Workout Timer',
   showSetCompletion: 'Show Set Completion',
+  instructions: 'Instructions',
+  tips: 'Tips'
 }
 
 export default en

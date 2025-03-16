@@ -26,6 +26,9 @@ import Workout from 'app/screens/Workout'
 import ExerciseSelect, {
   ExerciseSelectScreenParams,
 } from 'app/screens/ExerciseSelect'
+import ExerciseDetails, {
+  ExerciseDetailsScreenParams,
+} from 'app/screens/ExerciseDetails'
 import ExerciseEdit, {
   ExerciseEditScreenParams,
 } from 'app/screens/ExerciseEdit'
@@ -57,6 +60,7 @@ export type AppStackParamList = {
   Calendar: CalendarScreenParams
   ExerciseEdit: ExerciseEditScreenParams
   ExerciseSelect: ExerciseSelectScreenParams
+  ExerciseDetails: ExerciseDetailsScreenParams
   SaveTemplate: SaveTemplateScreenParams
   TemplateSelect: undefined
   HomeStack: undefined
@@ -150,7 +154,10 @@ const AppStack = observer(function AppStack() {
           name="ExerciseSelect"
           component={ExerciseSelect}
         />
-
+        <Stack.Screen
+          name="ExerciseDetails"
+          component={ExerciseDetails}
+        />
         <Stack.Screen
           name="HomeStack"
           options={{ animation: 'none' }}
