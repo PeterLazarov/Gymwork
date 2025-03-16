@@ -48,6 +48,9 @@ export const ExerciseStoreModel = types
         store.exercises.flatMap<string>(e => e.muscles)
       ).sort()
     },
+    get exercisesSorted(){
+      return store.exercises.slice().sort((a,b)=> a.name.localeCompare(b.name))
+    },
     get muscleAreaOptions() {
       return uniqueValues(
         store.exercises.flatMap<string>(e => e.muscleAreas)

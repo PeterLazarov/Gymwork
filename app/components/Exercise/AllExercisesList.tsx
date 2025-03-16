@@ -23,10 +23,10 @@ const AllExercisesList: React.FC<Props> = ({
 
   const filteredExercises = useMemo(() => {
     if (!filterString) {
-      return exerciseStore.exercises
+      return exerciseStore.exercisesSorted
     }
 
-    const filtered = exerciseStore.exercises.filter((e: Exercise) => {
+    const filtered = exerciseStore.exercisesSorted.filter((e: Exercise) => {
       const exName = e.name.toLowerCase()
 
       return searchString(
