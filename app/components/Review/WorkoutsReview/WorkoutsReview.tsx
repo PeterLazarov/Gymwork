@@ -11,7 +11,6 @@ import { Workout, discomfortOptions } from 'app/db/models'
 import WorkoutReviewListItem from './WorkoutReviewListItem'
 import WorkoutModal from 'app/components/WorkoutModal'
 import {
-  Divider,
   FeedbackPickerOption,
   IndicatedScrollList,
   spacing,
@@ -65,10 +64,6 @@ const WorkoutsReview: React.FC = () => {
           workout={item}
           onPress={() => setOpenedWorkout(item)}
         />
-        <Divider
-          orientation="horizontal"
-          variant="neutral"
-        />
       </>
     )
   }
@@ -99,7 +94,6 @@ const WorkoutsReview: React.FC = () => {
             data={filteredWorkouts}
             renderItem={renderItem}
             keyExtractor={workout => `${workout.date}_${workout.guid}`}
-            estimatedItemSize={157}
           />
         ) : (
           <EmptyState text={translate('commentsLogEmpty')} />
@@ -132,6 +126,7 @@ const styles = StyleSheet.create({
   },
   list: {
     flexBasis: 0,
+    // backgroundColor:
   },
 })
 

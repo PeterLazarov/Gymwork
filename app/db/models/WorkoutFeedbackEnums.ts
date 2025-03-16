@@ -19,7 +19,7 @@ export const feelingOptions = {
     color: palettes.green['60'],
     value: 'happy',
   },
-}
+} as const
 
 export const discomfortOptions = {
   pain: {
@@ -40,4 +40,4 @@ export const discomfortOptions = {
     color: palettes.green['60'],
     value: 'noPain',
   },
-}
+} as const

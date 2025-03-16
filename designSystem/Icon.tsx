@@ -4,9 +4,10 @@ import {
   Ionicons,
   MaterialCommunityIcons,
 } from '@expo/vector-icons'
-import { StyleProp, TextStyle } from 'react-native'
-import { useColors } from './tokens'
 import { ReactNode } from 'react'
+import { StyleProp, TextStyle } from 'react-native'
+
+import { useColors } from './tokens'
 
 export const iconSizes = {
   small: 16,
@@ -48,6 +49,7 @@ const IoniconsIcons = [
   'flame',
   'list-outline',
   'stopwatch-outline',
+  'add',
 ] as const satisfies readonly (keyof typeof Ionicons.glyphMap)[]
 type IonicIcon = (typeof IoniconsIcons)[number]
 
@@ -100,6 +102,7 @@ export const Icon: React.FC<IconProps> = ({
   children,
 }) => {
   const colors = useColors()
+
   const color = _color ?? colors.onSurface
 
   return (

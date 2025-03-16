@@ -322,6 +322,7 @@ export const schemes = {
     surfaceContainer: palettes.neutral[90],
     surfaceContainerHigh: palettes.neutral[80],
     surfaceContainerHighest: palettes.neutral[70],
+    bodyBase: palettes.neutral[30]
   },
   dark: {
     // primary: palettes.primary[80],
@@ -377,6 +378,7 @@ export const schemes = {
     surfaceContainer: palettes.neutral[15],
     surfaceContainerHigh: palettes.neutral[25],
     surfaceContainerHighest: palettes.neutral[30],
+    bodyBase: palettes.neutral[30]
   },
 }
 

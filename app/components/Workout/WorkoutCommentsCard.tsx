@@ -79,7 +79,6 @@ const makeStyles = (colors: any, compactMode?: boolean) =>
       paddingBottom: compactMode ? spacing.xs : 0,
     },
     cardContent: {
-      alignItems: 'center',
       gap: spacing.xs,
     },
     notesContainer: {
