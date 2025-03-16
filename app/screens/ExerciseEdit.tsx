@@ -32,7 +32,9 @@ const ExerciseEditScreen: React.FC = () => {
   }
 
   const [exercise, setExercise] = useState(
-    createMode ? ExerciseModel.create() : stateStore.focusedExercise
+    createMode ? ExerciseModel.create({
+      name:''
+    }) : stateStore.focusedExercise
   )
   const [formValid, setFormValid] = useState(false)
 
