@@ -84,9 +84,9 @@ const en = {
   dataExportSuccess: 'Data successfully exported.',
   settings: 'Settings',
   appearance: 'Appearance',
-  darkMode: 'Dark Mode',
-  on: 'On',
-  off: 'Off',
+  theme: 'Theme',
+  dark: 'Dark',
+  light: 'Light',
   auto: 'Auto',
   moreIsBetter: 'More is better',
   rpe: {

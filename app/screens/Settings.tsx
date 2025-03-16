@@ -22,8 +22,8 @@ import SettingsToggleItem from 'app/components/SettingsToggleItem'
 export type SettingsScreenProps = StackScreenProps<'Settings'>
 
 const appearanceOptions = [
-  { label: translate('on'), value: 'dark' as const },
-  { label: translate('off'), value: 'light' as const },
+  { label: translate('dark'), value: 'dark' as const },
+  { label: translate('light'), value: 'light' as const },
   { label: translate('auto'), value: undefined },
 ]
 
@@ -71,8 +71,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
           options={appearanceOptions}
           value={settingsStore.colorSchemePreference}
           onChange={settingsStore.setColorSchemePreference}
-          headerText={translate('darkMode')}
-          label={translate('darkMode')}
+          headerText={translate('theme')}
+          label={translate('theme')}
         />
 
         <Divider
