@@ -8,7 +8,10 @@ interface SubComponents {
 }
 
 const padding = spacing.sm
-export const Header: React.FC<ViewProps> & SubComponents = props => {
+export const Header: React.FC<ViewProps> & SubComponents = ({
+  style,
+  ...otherProps
+}) => {
   const colors = useColors()
   const colorScheme = useColorScheme()
 
@@ -16,18 +19,21 @@ export const Header: React.FC<ViewProps> & SubComponents = props => {
     <SafeAreaInsetsContext.Consumer>
       {insets => (
         <View
-          style={{
-            backgroundColor:
-              colorScheme === 'light' ? colors.primary : colors.shadow,
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: padding,
-            paddingBottom: padding,
-            paddingTop: (insets?.top ?? 0) + padding,
-            zIndex: 1,
-            width: '100%',
-          }}
-          {...props}
+          style={[
+            {
+              backgroundColor:
+                colorScheme === 'light' ? colors.primary : colors.shadow,
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingHorizontal: padding,
+              paddingBottom: padding,
+              paddingTop: (insets?.top ?? 0) + padding,
+              zIndex: 1,
+              width: '100%',
+            },
+            style,
+          ]}
+          {...otherProps}
         />
       )}
     </SafeAreaInsetsContext.Consumer>

@@ -157,6 +157,9 @@ const AppStack = observer(function AppStack() {
         <Stack.Screen
           name="ExerciseDetails"
           component={ExerciseDetails}
+          options={{
+            presentation: 'modal',
+          }}
         />
         <Stack.Screen
           name="HomeStack"

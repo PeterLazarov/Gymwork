@@ -120,7 +120,8 @@ const en = {
   showWorkoutTimer: 'Show Workout Timer',
   showSetCompletion: 'Show Set Completion',
   instructions: 'Instructions',
-  tips: 'Tips'
+  tips: 'Tips',
+  exerciseDetails: 'Exercise Details'
 }
 
 export default en
