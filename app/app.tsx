@@ -39,8 +39,8 @@ function App() {
   }
 
   return (
-    <DBStoreInitializer>
-      <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <DBStoreInitializer>
         <AppNavigator
           linking={{
             enabled: true,
@@ -54,8 +54,8 @@ function App() {
           initialState={initialNavigationState}
           onStateChange={onNavigationStateChange}
         />
-      </GestureHandlerRootView>
-    </DBStoreInitializer>
+      </DBStoreInitializer>
+    </GestureHandlerRootView>
   )
 }
 
