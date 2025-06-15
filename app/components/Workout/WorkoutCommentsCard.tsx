@@ -85,6 +85,7 @@ const makeStyles = (colors: any, compactMode?: boolean) =>
       flexDirection: 'row',
       gap: spacing.sm,
       paddingTop: spacing.xs,
+      paddingHorizontal: compactMode ? spacing.xs : 0,
     },
     notes: {
       fontSize: fontSize.sm,
