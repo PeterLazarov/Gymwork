@@ -37,3 +37,13 @@ export const formatDate = (date: DateTime, format: keyof typeof dateFormats) => 
 
   return dateLabel
 }
+
+export const isDateLessThan = (date: string, comparedTo: string)=>{
+  const d1 = new Date(date);
+  const d2 = new Date(comparedTo);
+
+  d1.setUTCHours(0, 0, 0, 0);
+  d2.setUTCHours(0, 0, 0, 0);
+
+  return d1 < d2
+}

@@ -94,8 +94,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
 
     onFormChange()
   }
-  console.log(exerciseStore.muscleOptions)
-  console.log(exerciseStore.muscleAreaOptions)
+
   return (
     <View style={{ flex: 1, gap: 8, padding: 8 }}>
       <TextInput

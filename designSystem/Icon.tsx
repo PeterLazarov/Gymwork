@@ -66,6 +66,8 @@ const MCIcons = [
   'speedometer-medium',
   'speedometer',
   'sleep',
+  'filter',
+  'filter-outline',
 ] as const satisfies readonly (keyof typeof MaterialCommunityIcons.glyphMap)[]
 type MCIcon = (typeof MCIcons)[number]
 

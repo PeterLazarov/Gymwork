@@ -7,55 +7,43 @@ import { ListRenderItemInfo } from '@shopify/flash-list'
 import EmptyState from 'app/components/EmptyState'
 import { useStores } from 'app/db/helpers/useStores'
 import { translate } from 'app/i18n'
-import { Workout, discomfortOptions } from 'app/db/models'
+import { Workout } from 'app/db/models'
 import WorkoutReviewListItem from './WorkoutReviewListItem'
 import WorkoutModal from 'app/components/WorkoutModal'
-import {
-  FeedbackPickerOption,
-  IndicatedScrollList,
-  spacing,
-} from 'designSystem'
+import { Icon, IconButton, IndicatedScrollList, spacing } from 'designSystem'
 import { searchString } from 'app/utils/string'
+import WorkoutsFilterModal, {
+  FilterForm,
+  applyWorkoutFilter,
+  isFilterEmpty,
+} from './WorkoutsFilterModal'
 
 const WorkoutsReview: React.FC = () => {
   const { workoutStore } = useStores()
 
   const [filterString, setFilterString] = useState('')
-  const [filterDiscomforedLevels, setFilterDiscomforedLevels] = useState<
-    string[]
-  >([])
+  const [filter, setFilter] = useState<FilterForm>({})
+  const filterEmpty = isFilterEmpty(filter)
 
   function filterWorkout(workout: Workout) {
-    const discomfortFilter =
-      filterDiscomforedLevels.length === 0 ||
-      (workout.pain && filterDiscomforedLevels.includes(workout.pain))
+    const modalFilterPassed = applyWorkoutFilter(filter, workout)
 
-    const notesFilter =
+    const notesFilterPassed =
       filterString === '' ||
       (workout.notes !== '' &&
         searchString(filterString, word =>
           workout.notes.toLowerCase().includes(word)
         ))
 
-    return discomfortFilter && notesFilter
+    return modalFilterPassed && notesFilterPassed
   }
 
   const filteredWorkouts = useMemo(() => {
     return workoutStore.sortedReverseWorkouts.filter(filterWorkout)
-  }, [workoutStore.workouts, filterDiscomforedLevels, filterString])
+  }, [workoutStore.workouts, filter, filterString])
 
   const [openedWorkout, setOpenedWorkout] = useState<Workout | undefined>()
-
-  function onDiscomfortFilterPress(optionValue: string) {
-    const isSelected = filterDiscomforedLevels.includes(optionValue)
-    if (isSelected) {
-      setFilterDiscomforedLevels(oldValue =>
-        oldValue.filter(opt => opt !== optionValue)
-      )
-    } else {
-      setFilterDiscomforedLevels(oldValue => [...oldValue, optionValue])
-    }
-  }
+  const [filterModalOpen, setFilterModalOpen] = useState(false)
 
   const renderItem = ({ item }: ListRenderItemInfo<Workout>) => {
     return (
@@ -75,20 +63,15 @@ const WorkoutsReview: React.FC = () => {
           placeholder={translate('search')}
           onChangeText={setFilterString}
           value={filterString}
-          mode="view"
+          mode="bar"
+          right={() => (
+            <IconButton onPress={() => setFilterModalOpen(true)}>
+              {!filterEmpty && <Icon icon="filter" />}
+              {filterEmpty && <Icon icon="filter-outline" />}
+            </IconButton>
+          )}
+          style={{ borderRadius: 0 }}
         />
-        <View style={styles.filterOptionList}>
-          {Object.values(discomfortOptions).map(option => (
-            <FeedbackPickerOption
-              key={option.value}
-              option={option}
-              isSelected={filterDiscomforedLevels.includes(option.value)}
-              onPress={() => onDiscomfortFilterPress(option.value)}
-              compactMode
-              style={styles.filterOption}
-            />
-          ))}
-        </View>
         {filteredWorkouts.length > 0 ? (
           <IndicatedScrollList
             data={filteredWorkouts}
@@ -108,6 +91,11 @@ const WorkoutsReview: React.FC = () => {
           showComments
         />
       )}
+      <WorkoutsFilterModal
+        open={filterModalOpen}
+        closeModal={() => setFilterModalOpen(false)}
+        applyFilter={setFilter}
+      />
     </>
   )
 }

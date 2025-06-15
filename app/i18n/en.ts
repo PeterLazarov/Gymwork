@@ -14,6 +14,7 @@ const en = {
   weight: 'weight',
   distance: 'distance',
   duration: 'duration',
+  durationMinutes: 'minutes',
   updateSet: 'Update set',
   remove: 'Remove',
   calendar: 'Calendar',

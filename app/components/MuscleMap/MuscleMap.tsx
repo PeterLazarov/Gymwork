@@ -29,7 +29,7 @@ export const MuscleMap = ({
   const xmlWithCSS = useMemo(() => {
     const combined = muscles.concat(...muscleAreas)
     const activeClasses = getMappedClasses(combined)
-    console.log({ combined, activeClasses })
+
     const styleTag = `
     <style>
     #Base {fill:${baseColor};}
