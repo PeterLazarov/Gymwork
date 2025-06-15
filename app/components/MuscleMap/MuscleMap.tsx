@@ -5,6 +5,7 @@ import { SvgCss } from 'react-native-svg/css'
 export interface MuscleMapProps extends Partial<XmlProps> {
   back: boolean
   muscles: string[]
+  muscleAreas: string[]
   baseColor?: string
   inactiveColor?: string
   activeColor?: string
@@ -18,6 +19,7 @@ function getMappedClasses(muscles: string[]) {
 
 export const MuscleMap = ({
   muscles,
+  muscleAreas,
   back = false,
   activeColor = 'white',
   baseColor = 'black',
@@ -25,8 +27,9 @@ export const MuscleMap = ({
   ...rest
 }: MuscleMapProps) => {
   const xmlWithCSS = useMemo(() => {
-    const activeClasses = getMappedClasses(muscles)
-
+    const combined = muscles.concat(...muscleAreas)
+    const activeClasses = getMappedClasses(combined)
+    console.log({ combined, activeClasses })
     const styleTag = `
     <style>
     #Base {fill:${baseColor};}
@@ -48,7 +51,6 @@ export const MuscleMap = ({
     ></SvgCss>
   )
 }
-
 const mappings = {
   'Abductor Brevis': ['Hip-Abductors'],
   'Adductor Brevis': ['Hip-Adductors'],
@@ -94,6 +96,34 @@ const mappings = {
   'Triceps Brachii': ['Triceps'],
   'Wrist Extensors': ['Wrist-Extensors', 'Forearms'],
   'Wrist Flexors': ['Wrist-Flexors', 'Forearms'],
+  // New entries
+  Abdominals: ['Rectus-Abdominis', 'Obliques', 'Core'],
+  Abductors: ['Hip-Abductors'],
+  Adductors: ['Hip-Adductors'],
+  Arms: ['Biceps', 'Triceps', 'Upper-Arms', 'Forearms'],
+  Back: ['Latissimus-Dorsi', 'Erector-Spinae', 'Teres Major', 'Trapezius'],
+  Biceps: ['Biceps'],
+  Calves: ['Gastrocnemius', 'Soleus'],
+  Cardio: ['Cardio'],
+  'Cardio-Functional': ['Cardio', 'Full-Body'],
+  Chest: ['Pectoralis-Major-Clavicular', 'Pectoralis-Major-Sternocostal'],
+  Forearms: ['Brachioradialis', 'Wrist-Flexors', 'Wrist-Extensors'],
+  'Full Body': ['Full-Body'],
+  Glutes: ['Gluteus-Maximus', 'Hip-Abductors'],
+  Hamstrings: ['Hamstrings'],
+  'Hip Flexors': ['Hip-Flexors', 'Iliopsoas'],
+  Legs: [
+    'Quadriceps',
+    'Hamstrings',
+    'Calves',
+    'Hip-Abductors',
+    'Hip-Adductors',
+  ],
+  Neck: ['Sternocleidomastoid', 'Upper-Trapezius'],
+  Quads: ['Quadriceps'],
+  Shoulders: ['Anterior-Deltoid', 'Lateral-Deltoid', 'Posterior-Deltoid'],
+  Stretching: ['Stretching'],
+  Triceps: ['Triceps'],
 }
 
 const svgStart = `<svg id="target-muscle" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 600 960" xml:space="preserve">`

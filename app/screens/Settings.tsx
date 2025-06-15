@@ -129,6 +129,22 @@ const SettingsScreen: React.FC<SettingsScreenProps> = () => {
         />
 
         <SettingsToggleItem
+          enabled={settingsStore.scientificMuscleNames}
+          onToggle={() =>
+            settingsStore.setProp(
+              'scientificMuscleNames',
+              !settingsStore.scientificMuscleNames
+            )
+          }
+        >
+          {translate('scientificMuscleNames')}
+        </SettingsToggleItem>
+        <Divider
+          variant="neutral"
+          orientation="horizontal"
+        />
+
+        <SettingsToggleItem
           enabled={settingsStore.showWorkoutTimer}
           onToggle={() =>
             settingsStore.setProp(

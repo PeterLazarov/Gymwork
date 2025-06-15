@@ -51,6 +51,7 @@ const WorkoutReviewListItem: React.FC<WorkoutReviewListItemProps> = ({
             >
               <MuscleMap
                 muscles={workout.muscles}
+                muscleAreas={workout.muscleAreas}
                 back={false}
                 activeColor={palettes.gold['80']}
                 inactiveColor={colors.outline}
@@ -65,6 +66,7 @@ const WorkoutReviewListItem: React.FC<WorkoutReviewListItemProps> = ({
             >
               <MuscleMap
                 muscles={workout.muscles}
+                muscleAreas={workout.muscleAreas}
                 back={true}
                 activeColor={palettes.gold['80']}
                 inactiveColor={colors.outline}

@@ -20,6 +20,7 @@ export const SettingsStoreModel = types
     measureRest: false,
     showCommentsCard: true,
     previewNextSet: false,
+    scientificMuscleNames: false,
     showWorkoutTimer: true,
 
     // ! TODO Currenlty makes sense only for copyWorkout + includeSets!

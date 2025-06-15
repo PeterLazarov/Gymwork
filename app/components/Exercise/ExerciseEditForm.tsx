@@ -26,7 +26,7 @@ type Props = {
 }
 
 const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
-  const { exerciseStore } = useStores()
+  const { exerciseStore, settingsStore } = useStores()
 
   const edittedExercise = useMemo(() => {
     return ExerciseModel.create(getSnapshot(exercise))
@@ -40,7 +40,8 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   function runValidCheck(data: Exercise) {
     const nameInvalid = data.name.trim() === ''
     const weightIncrementInvalid = data.measurements.weight?.step === 0
-    const musclesInvalid = data.muscles.length === 0
+    const musclesInvalid =
+      data.muscles.length === 0 && data.muscleAreas.length === 0
     const measurementsInvalid = data.measurementNames.length === 0
 
     setNameError(nameInvalid ? 'Exercise name cannot be empty.' : '')
@@ -69,6 +70,10 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
     edittedExercise.setProp('muscles', selected as Exercise['muscles'])
     onFormChange()
   }
+  function onMuscleAreasChange(selected: string[]) {
+    edittedExercise.setProp('muscleAreas', selected as Exercise['muscleAreas'])
+    onFormChange()
+  }
   function onPropChange(
     field: keyof ExerciseSnapshotIn,
     measurementType: string
@@ -89,7 +94,8 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
 
     onFormChange()
   }
-
+  console.log(exerciseStore.muscleOptions)
+  console.log(exerciseStore.muscleAreaOptions)
   return (
     <View style={{ flex: 1, gap: 8, padding: 8 }}>
       <TextInput
@@ -107,14 +113,26 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
         </HelperText>
       )}
       <View style={{ flexDirection: 'row' }}>
-        <Multiselect
-          options={exerciseStore.muscleOptions}
-          selectedValues={edittedExercise.muscles}
-          onSelect={onMusclesChange}
-          containerStyle={{ flex: 1 }}
-          headerText={translate('muscleAreas')}
-          error={musclesError !== ''}
-        />
+        {settingsStore.scientificMuscleNames && (
+          <Multiselect
+            options={exerciseStore.muscleOptions}
+            selectedValues={edittedExercise.muscles}
+            onSelect={onMusclesChange}
+            containerStyle={{ flex: 1 }}
+            headerText={translate('muscles')}
+            error={musclesError !== ''}
+          />
+        )}
+        {!settingsStore.scientificMuscleNames && (
+          <Multiselect
+            options={exerciseStore.muscleAreaOptions}
+            selectedValues={edittedExercise.muscleAreas}
+            onSelect={onMuscleAreasChange}
+            containerStyle={{ flex: 1 }}
+            headerText={translate('muscleAreas')}
+            error={musclesError !== ''}
+          />
+        )}
         <IconButton
           onPress={onAddMusclePress}
           style={{ margin: spacing.xxs }}

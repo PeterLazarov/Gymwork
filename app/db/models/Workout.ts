@@ -162,6 +162,11 @@ export const WorkoutModel = types
         new Set(this.exercises.flatMap(e => e.muscles))
       ) as string[]
     },
+    get muscleAreas(): string[] {
+      return Array.from(
+        new Set(this.exercises.flatMap(e => e.muscleAreas))
+      ) as string[]
+    },
   }))
   .actions(withSetPropAction)
   .actions(workout => ({
