@@ -37,7 +37,11 @@ const SetEditItem: React.FC<Props> = ({
 
   const color = colors.onSurface
 
-  const symbol = set.isWarmup ? undefined : draft ? '+' : String(number)
+  function getSetSymbol() {
+    if (set.isWarmup) return
+
+    return settingsStore.previewNextSet && draft ? '+' : String(number)
+  }
 
   return (
     <View
@@ -65,7 +69,7 @@ const SetEditItem: React.FC<Props> = ({
         <SetEditItemButton
           icon={set.isWarmup ? 'yoga' : undefined}
           onPress={() => toggleSetWarmup(set)}
-          symbol={symbol}
+          symbol={getSetSymbol()}
           color={color}
         />
         <Icon
