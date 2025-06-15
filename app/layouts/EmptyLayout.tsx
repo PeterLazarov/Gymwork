@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { View, ViewStyle } from 'react-native'
+import { Platform, View, ViewStyle } from 'react-native'
 
 import { KeyboardExpandingView, useColors } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
@@ -16,6 +16,10 @@ export const EmptyLayout: React.FC<Props> = ({
 }) => {
   const colors = useColors()
   const { stateStore } = useStores()
+  //TODO: test if android version 26 is the cutoff
+  const renderExpandingView =
+    Platform.OS === 'ios' ||
+    (Platform.OS === 'android' && Platform.Version < 26)
 
   return (
     <View
@@ -28,9 +32,11 @@ export const EmptyLayout: React.FC<Props> = ({
       ]}
     >
       {children}
-      <KeyboardExpandingView
-        footerHeight={hasFooter ? stateStore.footerHeight : undefined}
-      />
+      {renderExpandingView && (
+        <KeyboardExpandingView
+          footerHeight={hasFooter ? stateStore.footerHeight : undefined}
+        />
+      )}
     </View>
   )
 }
