@@ -124,7 +124,8 @@ const en = {
   showSetCompletion: 'Show Set Completion',
   instructions: 'Instructions',
   tips: 'Tips',
-  exerciseDetails: 'Exercise Details'
+  exerciseDetails: 'Exercise Details',
+  workoutsCount: '{{count}} Workouts',
 }
 
 export default en

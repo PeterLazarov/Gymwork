@@ -10,7 +10,14 @@ import { translate } from 'app/i18n'
 import { Workout } from 'app/db/models'
 import WorkoutReviewListItem from './WorkoutReviewListItem'
 import WorkoutModal from 'app/components/WorkoutModal'
-import { Icon, IconButton, IndicatedScrollList, spacing } from 'designSystem'
+import {
+  Icon,
+  IconButton,
+  IndicatedScrollList,
+  Text,
+  spacing,
+  useColors,
+} from 'designSystem'
 import { searchString } from 'app/utils/string'
 import WorkoutsFilterModal, {
   FilterForm,
@@ -56,6 +63,9 @@ const WorkoutsReview: React.FC = () => {
     )
   }
 
+  const colors = useColors()
+  const styles = makeStyles(colors)
+
   return (
     <>
       <View style={styles.screen}>
@@ -73,11 +83,20 @@ const WorkoutsReview: React.FC = () => {
           style={{ borderRadius: 0 }}
         />
         {filteredWorkouts.length > 0 ? (
-          <IndicatedScrollList
-            data={filteredWorkouts}
-            renderItem={renderItem}
-            keyExtractor={workout => `${workout.date}_${workout.guid}`}
-          />
+          <>
+            <IndicatedScrollList
+              data={filteredWorkouts}
+              renderItem={renderItem}
+              keyExtractor={workout => `${workout.date}_${workout.guid}`}
+            />
+            <View style={styles.workoutCount}>
+              <Text>
+                {translate('workoutsCount', {
+                  count: filteredWorkouts.length,
+                })}
+              </Text>
+            </View>
+          </>
         ) : (
           <EmptyState text={translate('commentsLogEmpty')} />
         )}
@@ -99,23 +118,28 @@ const WorkoutsReview: React.FC = () => {
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    display: 'flex',
-    flexGrow: 1,
-  },
-  filterOptionList: {
-    flexDirection: 'row',
-    margin: spacing.xs,
-  },
-  filterOption: {
-    backgroundColor: 'transparent',
-  },
-  list: {
-    flexBasis: 0,
-    // backgroundColor:
-  },
-})
+const makeStyles = (colors: any) =>
+  StyleSheet.create({
+    screen: {
+      display: 'flex',
+      flexGrow: 1,
+    },
+    filterOptionList: {
+      flexDirection: 'row',
+      margin: spacing.xs,
+    },
+    filterOption: {
+      backgroundColor: 'transparent',
+    },
+    list: {
+      flexBasis: 0,
+      // backgroundColor:
+    },
+    workoutCount: {
+      alignItems: 'center',
+      paddingVertical: spacing.xxs,
+      backgroundColor: colors.surfaceVariant,
+    },
+  })
 
 export default observer(WorkoutsReview)
