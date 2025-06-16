@@ -53,7 +53,10 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
     setMenuOpen(false)
     navigate('UserFeedback', { referrerPage: activeRoute ?? '?' })
   }
-
+  function goToInstructions() {
+    setMenuOpen(false)
+    navigate('ExerciseDetails', { exerciseId: step.exercise!.guid })
+  }
   function goBack() {
     stateStore.setProp('focusedStepGuid', '')
     navigate('Workout')
@@ -128,6 +131,10 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, onSwitchExercise }) => {
                 ? 'removeFavorite'
                 : 'setAsFavorite'
             )}
+          />
+          <Menu.Item
+            onPress={goToInstructions}
+            title={translate('viewInstructions')}
           />
 
           <Menu.Item

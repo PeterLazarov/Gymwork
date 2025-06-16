@@ -126,6 +126,7 @@ const en = {
   tips: 'Tips',
   exerciseDetails: 'Exercise Details',
   workoutsCount: '{{count}} Workouts',
+  viewInstructions: 'View instructions'
 }
 
 export default en
