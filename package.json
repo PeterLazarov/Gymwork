@@ -109,7 +109,6 @@
     "react-native-web": "~0.19.13",
     "reanimated-bottom-sheet": "1.0.0-alpha.22",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.17",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
