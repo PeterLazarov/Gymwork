@@ -5,7 +5,10 @@ import {
 } from '@react-navigation/material-top-tabs'
 
 import { TabConfig } from './types'
-import { NavigationContainer } from '@react-navigation/native'
+import {
+  NavigationContainer,
+  NavigationIndependentTree,
+} from '@react-navigation/native'
 import { getActiveRouteName } from 'app/navigators'
 import { navThemes } from 'designSystem/tokens'
 import { useColorScheme } from 'react-native'
@@ -35,51 +38,53 @@ const TopTabs: React.FC<Props> = ({
   }, [colorScheme])
 
   return (
-    <NavigationContainer
-      linking={{
-        enabled: true,
-        prefixes: [
-          // TODO
-        ],
-      }}
-      independent
-      theme={navTheme}
-      onStateChange={state => {
-        if (state) {
-          const route = getActiveRouteName(state!)
-          onTabChange?.(route)
-        }
-      }}
-    >
-      <Tab.Navigator
-        initialRouteName={initialRouteName || tabsConfig[0]?.name}
-        screenOptions={{
-          tabBarScrollEnabled: true,
-          tabBarItemStyle: {
-            minWidth: tabWidth,
-            width: 'auto',
-            height: tabHeight,
-            // backgroundColor: 'red',
-          },
-          tabBarStyle: {
-            // backgroundColor: 'blue',
-          },
-          swipeEnabled: !swipeDisabled,
+    <NavigationIndependentTree>
+      <NavigationContainer
+        linking={{
+          enabled: true,
+          prefixes: [
+            // TODO
+          ],
         }}
-        style={{
-          backgroundColor: 'green',
+        independent
+        theme={navTheme}
+        onStateChange={state => {
+          if (state) {
+            const route = getActiveRouteName(state!)
+            onTabChange?.(route)
+          }
         }}
-        backBehavior="none"
       >
-        {tabsConfig.map(tab => (
-          <Tab.Screen
-            key={tab.name}
-            name={tab.name}
-            component={tab.Component}
-          />
-        ))}
-      </Tab.Navigator>
-    </NavigationContainer>
+        <Tab.Navigator
+          initialRouteName={initialRouteName || tabsConfig[0]?.name}
+          screenOptions={{
+            tabBarScrollEnabled: true,
+            tabBarItemStyle: {
+              minWidth: tabWidth,
+              width: 'auto',
+              height: tabHeight,
+              // backgroundColor: 'red',
+            },
+            tabBarStyle: {
+              // backgroundColor: 'blue',
+            },
+            swipeEnabled: !swipeDisabled,
+          }}
+          style={{
+            backgroundColor: 'green',
+          }}
+          backBehavior="none"
+        >
+          {tabsConfig.map(tab => (
+            <Tab.Screen
+              key={tab.name}
+              name={tab.name}
+              component={tab.Component}
+            />
+          ))}
+        </Tab.Navigator>
+      </NavigationContainer>
+    </NavigationIndependentTree>
   )
 }
 

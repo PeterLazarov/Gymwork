@@ -22,7 +22,7 @@ const WelcomeScreen: React.FC = () => {
 
   function onStart() {
     stateStore.setProp('visitedWelcomeScreen', true)
-    navigate('HomeStack')
+    navigate('Workout')
   }
 
   return (

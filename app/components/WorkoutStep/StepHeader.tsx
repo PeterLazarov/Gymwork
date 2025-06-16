@@ -2,11 +2,11 @@ import { observer } from 'mobx-react-lite'
 import React, { useMemo, useState } from 'react'
 import { Menu } from 'react-native-paper'
 
+import { useDialogContext } from 'app/contexts/DialogContext'
 import { useStores } from 'app/db/helpers/useStores'
+import { WorkoutStep } from 'app/db/models'
 import { translate } from 'app/i18n'
 import { Header, Icon, IconButton, useColors } from 'designSystem'
-import { useDialogContext } from 'app/contexts/DialogContext'
-import { WorkoutStep } from 'app/db/models'
 
 export type StepHeaderProps = {
   step: WorkoutStep

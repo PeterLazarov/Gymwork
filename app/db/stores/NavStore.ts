@@ -1,7 +1,7 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
 import {
-  AllStacksParamList,
+  AppStackParamList,
   navigationRef,
   RoutesWithoutParams,
   RoutesWithParams,
@@ -10,17 +10,15 @@ import {
 import { withSetPropAction } from '../helpers/withSetPropAction'
 
 // TODO refactor so that it's not tightly and unknowingly coupled to actual nav
-const pages: (keyof AllStacksParamList)[] = [
+const pages: (keyof AppStackParamList)[] = [
   'Calendar',
   'ExerciseEdit',
   'ExerciseSelect',
   'SaveTemplate',
   'TemplateSelect',
-  'HomeStack',
   'Settings',
 
   'Review',
-  'WorkoutStack',
 
   'Workout',
   'WorkoutStep',
@@ -31,13 +29,13 @@ const pages: (keyof AllStacksParamList)[] = [
 
 function navigate<T extends RoutesWithParams>(
   name: T,
-  params: AllStacksParamList[T]
+  params: AppStackParamList[T]
 ): void
 function navigate<T extends RoutesWithoutParams>(name: T): void
 function navigate<T extends RoutesWithParams | RoutesWithoutParams>(
   this: NavStore,
   name: T,
-  params?: AllStacksParamList[T]
+  params?: AppStackParamList[T]
 ): void {
   try {
     if (navigationRef.isReady()) {

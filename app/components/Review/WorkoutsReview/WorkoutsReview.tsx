@@ -54,12 +54,11 @@ const WorkoutsReview: React.FC = () => {
 
   const renderItem = ({ item }: ListRenderItemInfo<Workout>) => {
     return (
-      <>
-        <WorkoutReviewListItem
-          workout={item}
-          onPress={() => setOpenedWorkout(item)}
-        />
-      </>
+      <WorkoutReviewListItem
+        key={item.guid}
+        workout={item}
+        onPress={() => setOpenedWorkout(item)}
+      />
     )
   }
 

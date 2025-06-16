@@ -33,7 +33,7 @@ const ExerciseDetailsScreen: FC = () => {
   // TODO make these general?
   // Make route params stringifyable, but computed, and then verified?
   if (!exercise) {
-    navigate('HomeStack')
+    navigate('Workout')
     return null
   }
 
