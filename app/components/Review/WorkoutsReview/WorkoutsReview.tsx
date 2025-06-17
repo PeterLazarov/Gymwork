@@ -87,6 +87,7 @@ const WorkoutsReview: React.FC = () => {
               data={filteredWorkouts}
               renderItem={renderItem}
               keyExtractor={workout => `${workout.date}_${workout.guid}`}
+              estimatedItemSize={243}
             />
             <View style={styles.workoutCount}>
               <Text>

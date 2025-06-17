@@ -6,9 +6,9 @@ import {
   Header,
   Icon,
   IconButton,
-  TopNavigation,
   TabConfig,
   useColors,
+  TopTabs,
 } from 'designSystem'
 import { useStores } from 'app/db/helpers/useStores'
 import ExerciseSelectLists from 'app/components/Exercise/ExerciseSelectLists'
@@ -75,6 +75,10 @@ const ReviewScreen: React.FC = () => {
       ),
     },
   ]
+  const tabIndexMap: Record<string, number> = {}
+  tabsConfig.forEach((tab, index) => {
+    tabIndexMap[tab.name] = index
+  })
 
   function onBack() {
     if (exerciseSelectOpen) {
@@ -101,7 +105,7 @@ const ReviewScreen: React.FC = () => {
           title={
             exerciseSelectOpen
               ? translate('selectExercise')
-              : selectedExercise?.name ?? 'Review'
+              : (selectedExercise?.name ?? 'Review')
           }
         />
 
@@ -160,9 +164,9 @@ const ReviewScreen: React.FC = () => {
         )}
 
         {!exerciseSelectOpen && (
-          <TopNavigation
+          <TopTabs
             tabsConfig={tabsConfig}
-            initialRouteName={navStore.reviewLastTab || 'Records'}
+            initialTabIndex={tabIndexMap[navStore.reviewLastTab || 'Records']}
             tabWidth={Dimensions.get('screen').width / 3.5}
             onTabChange={tab => {
               navStore.setProp('reviewLastTab', tab)
