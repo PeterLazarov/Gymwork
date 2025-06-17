@@ -1,15 +1,15 @@
+import { ListRenderItemInfo } from '@shopify/flash-list'
 import { observer } from 'mobx-react-lite'
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Searchbar } from 'react-native-paper'
-import { ListRenderItemInfo } from '@shopify/flash-list'
 
 import EmptyState from 'app/components/EmptyState'
-import { useStores } from 'app/db/helpers/useStores'
-import { translate } from 'app/i18n'
-import { Workout } from 'app/db/models'
-import WorkoutReviewListItem from './WorkoutReviewListItem'
 import WorkoutModal from 'app/components/WorkoutModal'
+import { useStores } from 'app/db/helpers/useStores'
+import { Workout } from 'app/db/models'
+import { translate } from 'app/i18n'
+import { searchString } from 'app/utils/string'
 import {
   Icon,
   IconButton,
@@ -18,7 +18,7 @@ import {
   spacing,
   useColors,
 } from 'designSystem'
-import { searchString } from 'app/utils/string'
+import WorkoutReviewListItem from './WorkoutReviewListItem'
 import WorkoutsFilterModal, {
   FilterForm,
   applyWorkoutFilter,
@@ -52,7 +52,7 @@ const WorkoutsReview: React.FC = () => {
   const [openedWorkout, setOpenedWorkout] = useState<Workout | undefined>()
   const [filterModalOpen, setFilterModalOpen] = useState(false)
 
-  const renderItem = ({ item }: ListRenderItemInfo<Workout>) => {
+  const renderItem = useCallback(({ item }: ListRenderItemInfo<Workout>) => {
     return (
       <WorkoutReviewListItem
         key={item.guid}
@@ -60,10 +60,15 @@ const WorkoutsReview: React.FC = () => {
         onPress={() => setOpenedWorkout(item)}
       />
     )
-  }
+  }, [])
+
+  const keyExtractor = useCallback(
+    (workout: Workout) => `${workout.date}_${workout.guid}`,
+    []
+  )
 
   const colors = useColors()
-  const styles = makeStyles(colors)
+  const styles = useMemo(() => makeStyles(colors), [colors])
 
   return (
     <>
@@ -86,7 +91,7 @@ const WorkoutsReview: React.FC = () => {
             <IndicatedScrollList
               data={filteredWorkouts}
               renderItem={renderItem}
-              keyExtractor={workout => `${workout.date}_${workout.guid}`}
+              keyExtractor={keyExtractor}
               estimatedItemSize={243}
             />
             <View style={styles.workoutCount}>

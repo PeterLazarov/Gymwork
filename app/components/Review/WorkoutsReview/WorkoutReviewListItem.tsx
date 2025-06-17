@@ -1,11 +1,12 @@
 import { observer } from 'mobx-react-lite'
-import { TouchableOpacity, View, StyleSheet } from 'react-native'
+import React, { useMemo } from 'react'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 import { MuscleMap } from 'app/components/MuscleMap/MuscleMap'
 import { discomfortOptions, Workout } from 'app/db/models'
+import { translate } from 'app/i18n'
 import { formatDateIso } from 'app/utils/date'
 import { fontSize, palettes, spacing, Text, useColors } from 'designSystem'
-import { translate } from 'app/i18n'
 
 type WorkoutReviewListItemProps = {
   workout: Workout
@@ -19,54 +20,46 @@ const WorkoutReviewListItem: React.FC<WorkoutReviewListItemProps> = ({
   const colors = useColors()
   const styles = makeStyles(colors)
 
+  // Memoize MuscleMap props to avoid unnecessary re-renders
+  const muscles = useMemo(() => workout.muscles, [workout.muscles])
+  const muscleAreas = useMemo(() => workout.muscleAreas, [workout.muscleAreas])
+
+  // Move dynamic styles to useMemo
+  const muscleMapContainerStyle = useMemo(
+    () => [styles.muscleMapContainer],
+    [styles]
+  )
+  const rowStyle = useMemo(() => [styles.row], [styles])
+  const betweenStyle = useMemo(() => [styles.between], [styles])
+
   return (
     <TouchableOpacity
       onPress={onPress}
       style={styles.container}
     >
       <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
+        <View style={betweenStyle}>
           <View>
             <Text style={styles.title}>
               {formatDateIso(workout.date, 'long')}
             </Text>
           </View>
 
-          <View
-            style={{
-              flexDirection: 'row',
-            }}
-          >
-            <View
-              style={{
-                height: 80,
-                width: 60,
-              }}
-            >
+          <View style={rowStyle}>
+            <View style={muscleMapContainerStyle}>
               <MuscleMap
-                muscles={workout.muscles}
-                muscleAreas={workout.muscleAreas}
+                muscles={muscles}
+                muscleAreas={muscleAreas}
                 back={false}
                 activeColor={palettes.gold['80']}
                 inactiveColor={colors.outline}
                 baseColor={colors.bodyBase}
               />
             </View>
-            <View
-              style={{
-                height: 80,
-                width: 60,
-              }}
-            >
+            <View style={muscleMapContainerStyle}>
               <MuscleMap
-                muscles={workout.muscles}
-                muscleAreas={workout.muscleAreas}
+                muscles={muscles}
+                muscleAreas={muscleAreas}
                 back={true}
                 activeColor={palettes.gold['80']}
                 inactiveColor={colors.outline}
@@ -177,6 +170,19 @@ const makeStyles = (colors: any) =>
       fontWeight: '500',
       color: colors.onSurface,
     },
+    muscleMapContainer: {
+      height: 80,
+      width: 60,
+    },
+    row: {
+      flexDirection: 'row',
+    },
+    between: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
   })
 
-export default observer(WorkoutReviewListItem)
+// Wrap with React.memo in addition to observer
+export default React.memo(observer(WorkoutReviewListItem))

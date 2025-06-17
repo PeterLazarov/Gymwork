@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import { XmlProps } from 'react-native-svg'
 import { SvgCss } from 'react-native-svg/css'
 
@@ -17,7 +17,7 @@ function getMappedClasses(muscles: string[]) {
   )
 }
 
-export const MuscleMap = ({
+const MuscleMapComponent = ({
   muscles,
   muscleAreas,
   back = false,
@@ -26,11 +26,13 @@ export const MuscleMap = ({
   inactiveColor = 'gray',
   ...rest
 }: MuscleMapProps) => {
-  const xmlWithCSS = useMemo(() => {
-    const combined = muscles.concat(...muscleAreas)
-    const activeClasses = getMappedClasses(combined)
-
-    const styleTag = `
+  const combined = useMemo(
+    () => muscles.concat(...muscleAreas),
+    [muscles, muscleAreas]
+  )
+  const activeClasses = useMemo(() => getMappedClasses(combined), [combined])
+  const styleTag = useMemo(() => {
+    return `
     <style>
     #Base {fill:${baseColor};}
       #Front {opacity:${back ? 0 : 1};}
@@ -38,11 +40,12 @@ export const MuscleMap = ({
       .muscle { fill: ${inactiveColor}; }
       ${activeClasses.map(cls => `.${cls} { fill: ${activeColor}; }`).join(' ')}
     </style>`
-
+  }, [baseColor, back, inactiveColor, activeClasses, activeColor])
+  const xmlWithCSS = useMemo(() => {
     return `
     ${svgStart}${styleTag}${svgRest}
     `
-  }, [activeColor, back, baseColor, inactiveColor, muscles])
+  }, [styleTag])
 
   return (
     <SvgCss
@@ -51,6 +54,9 @@ export const MuscleMap = ({
     ></SvgCss>
   )
 }
+
+export const MuscleMap = memo(MuscleMapComponent)
+
 const mappings = {
   'Abductor Brevis': ['Hip-Abductors'],
   'Adductor Brevis': ['Hip-Adductors'],
