@@ -1,4 +1,5 @@
-import { Instance, SnapshotOut, types } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { Instance, SnapshotOut, types } = pkg
 
 import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 

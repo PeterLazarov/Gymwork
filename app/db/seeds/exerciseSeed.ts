@@ -1,6 +1,6 @@
 import {
-  ExerciseMeasurementSnapshotIn,
-  ExerciseSnapshotIn,
+  type ExerciseMeasurementSnapshotIn,
+  type ExerciseSnapshotIn,
   measurementDefaults,
 } from '../models/index.ts'
 

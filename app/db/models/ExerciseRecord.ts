@@ -1,4 +1,5 @@
-import {
+import pkg from 'mobx-state-tree'
+const {
   Instance,
   SnapshotIn,
   SnapshotOut,
@@ -7,7 +8,7 @@ import {
   getParentOfType,
   getSnapshot,
   types,
-} from 'mobx-state-tree'
+} = pkg
 import { v4 as uuidv4 } from 'uuid'
 
 import {
@@ -17,10 +18,10 @@ import {
 
 import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 import { RootStoreModel } from '../stores/RootStore.ts'
-import { WorkoutStore } from '../stores/WorkoutStore.ts'
+import { type WorkoutStore } from '../stores/WorkoutStore.ts'
 
 import { ExerciseModel } from './Exercise.ts'
-import { WorkoutSet, WorkoutSetModel } from './WorkoutSet.ts'
+import { type WorkoutSet, WorkoutSetModel } from './WorkoutSet.ts'
 
 import { autorun } from 'mobx'
 
@@ -131,6 +132,12 @@ export const ExerciseRecordModel = types
       )
     },
   }))
+
+export interface ExerciseRecord extends Instance<typeof ExerciseRecordModel> {}
+export interface ExerciseRecordSnapshotOut
+  extends SnapshotOut<typeof ExerciseRecordModel> {}
+export interface ExerciseRecordSnapshotIn
+  extends SnapshotIn<typeof ExerciseRecordModel> {}
 
 export interface ExerciseRecord extends Instance<typeof ExerciseRecordModel> {}
 export interface ExerciseRecordSnapshotOut

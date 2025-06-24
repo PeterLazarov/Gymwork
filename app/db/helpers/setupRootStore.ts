@@ -9,7 +9,8 @@
  *
  * @refresh reset
  */
-import { applySnapshot, IDisposer, onSnapshot } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { applySnapshot, IDisposer, onSnapshot } = pkg
 
 import * as storage from '../../utils/storage'
 import { RootStore, RootStoreSnapshot } from '../stores/RootStore'

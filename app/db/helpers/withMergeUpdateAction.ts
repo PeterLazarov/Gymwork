@@ -1,4 +1,5 @@
-import { IStateTreeNode, SnapshotIn } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { IStateTreeNode, SnapshotIn } = pkg
 
 /**
  * Allows editing multiple properties at once

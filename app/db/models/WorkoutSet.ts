@@ -1,4 +1,5 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { Instance, SnapshotIn, SnapshotOut, types } = pkg
 import { v4 as uuidv4 } from 'uuid'
 
 import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction.ts'

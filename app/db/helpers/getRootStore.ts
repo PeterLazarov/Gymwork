@@ -1,4 +1,5 @@
-import { getRoot, IStateTreeNode } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { getRoot, IStateTreeNode } = pkg
 
 import { RootStore, RootStoreModel } from '../stores/RootStore'
 

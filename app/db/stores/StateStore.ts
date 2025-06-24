@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { Instance, SnapshotOut, types, getParent } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { Instance, SnapshotOut, types, getParent } = pkg
 
 export const CHART_VIEWS = {
   '30D': '30D',
@@ -9,12 +10,16 @@ export const CHART_VIEWS = {
 } as const
 
 import { withSetPropAction } from '../helpers/withSetPropAction.ts'
-import { ExerciseRecord, Workout, WorkoutSetModel } from '../models/index.ts'
+import {
+  type ExerciseRecord,
+  type Workout,
+  WorkoutSetModel,
+} from '../models/index.ts'
 
-import { ExerciseStore } from './ExerciseStore.ts'
-import { RecordStore } from './RecordStore.ts'
-import { RootStore } from './RootStore.ts'
-import { WorkoutStore } from './WorkoutStore.ts'
+import { type ExerciseStore } from './ExerciseStore.ts'
+import { type RecordStore } from './RecordStore.ts'
+import { type RootStore } from './RootStore.ts'
+import { type WorkoutStore } from './WorkoutStore.ts'
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })

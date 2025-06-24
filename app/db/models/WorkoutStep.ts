@@ -1,11 +1,12 @@
-import {
+import pkg from 'mobx-state-tree'
+const {
   Instance,
   SnapshotIn,
   SnapshotOut,
   getParentOfType,
   getSnapshot,
   types,
-} from 'mobx-state-tree'
+} = pkg
 import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from '../helpers/withSetPropAction.ts'
@@ -13,14 +14,14 @@ import { RootStoreModel } from '../stores/RootStore.ts'
 import { alphabeticNumbering } from '../../utils/string.ts'
 import { getDataFieldForKey } from '../../utils/workoutRecordsCalculator.ts'
 
-import { RecordStore } from '../stores/RecordStore.ts'
+import { type RecordStore } from '../stores/RecordStore.ts'
 
-import { Exercise, ExerciseModel } from './Exercise.ts'
-import { ExerciseRecord } from './ExerciseRecord.ts'
+import { type Exercise, ExerciseModel } from './Exercise.ts'
+import { type ExerciseRecord } from './ExerciseRecord.ts'
 import {
-  WorkoutSet,
+  type WorkoutSet,
   WorkoutSetModel,
-  WorkoutSetSnapshotIn,
+  type WorkoutSetSnapshotIn,
 } from './WorkoutSet.ts'
 
 const stepType = {

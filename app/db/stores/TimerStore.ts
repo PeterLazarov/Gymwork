@@ -1,16 +1,19 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import convert from 'convert-units'
-import { difference } from 'lodash'
+// FIX: lodash import for CommonJS compatibility
+import pkg from 'lodash'
+const { difference } = pkg
 import { Duration } from 'luxon'
 import { reaction } from 'mobx'
-import { types, Instance, SnapshotOut, getParent } from 'mobx-state-tree'
+import pkgMST from 'mobx-state-tree'
+const { types, Instance, SnapshotOut, getParent } = pkgMST
 
 import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 
-import { Exercise } from '../models/index.ts'
+import { type Exercise } from '../models/index.ts'
 import { TimerModel } from '../models/Timer.ts'
 
-import { RootStore } from './RootStore.ts'
+import { type RootStore } from './RootStore.ts'
 
 // TODO dedupe
 const defaultDelay = convert(30).from('min').to('ms')

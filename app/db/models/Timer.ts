@@ -1,7 +1,8 @@
 import { setDriftlessInterval, clearDriftless } from 'driftless'
 import { Duration } from 'luxon'
 import { reaction } from 'mobx'
-import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { Instance, SnapshotIn, SnapshotOut, types } = pkg
 import { keepAlive } from 'mobx-utils'
 // import { Vibration } from 'react-native'
 

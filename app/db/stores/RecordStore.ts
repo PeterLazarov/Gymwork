@@ -1,19 +1,20 @@
-import { Instance, SnapshotOut, getParent, types } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { Instance, SnapshotOut, getParent, types } = pkg
 import { keepAlive } from 'mobx-utils'
 
 import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 import {
-  Exercise,
+  type Exercise,
   ExerciseRecordModel,
-  ExerciseRecordSnapshotIn,
-  ExerciseRecord,
-  WorkoutSet,
-  WorkoutStep,
+  type ExerciseRecordSnapshotIn,
+  type ExerciseRecord,
+  type WorkoutSet,
+  type WorkoutStep,
 } from '../models/index.ts'
 import { getRecords } from '../seeds/exercise-records-seed-generator.ts'
 import { markWeakAssRecords } from '../../utils/workoutRecordsCalculator.ts'
 
-import { RootStore } from './RootStore.ts'
+import { type RootStore } from './RootStore.ts'
 
 export const RecordStoreModel = types
   .model('RecordStore')

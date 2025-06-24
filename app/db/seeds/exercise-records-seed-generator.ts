@@ -1,10 +1,11 @@
-import { getSnapshot } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { getSnapshot } = pkg
 
 import {
-  ExerciseRecordSnapshotIn,
-  Workout,
-  WorkoutSet,
-  WorkoutSetSnapshotIn,
+  type ExerciseRecordSnapshotIn,
+  type Workout,
+  type WorkoutSet,
+  type WorkoutSetSnapshotIn,
 } from '../models/index.ts'
 
 export const getRecords = (workouts: Workout[]): ExerciseRecordSnapshotIn[] => {

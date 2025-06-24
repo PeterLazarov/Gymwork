@@ -1,4 +1,5 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { Instance, SnapshotIn, SnapshotOut, types } = pkg
 import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from '../helpers/withSetPropAction.ts'
@@ -6,7 +7,7 @@ import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 import {
   ExerciseMeasurementModel,
   measurementDefaults,
-  measurementName,
+  type measurementName,
 } from './ExerciseMeasurement.ts'
 
 // Should we group by multiple?

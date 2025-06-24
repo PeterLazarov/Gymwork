@@ -2,9 +2,9 @@ import convert from 'convert-units'
 import { DateTime } from 'luxon'
 
 import {
-  WorkoutSetSnapshotIn,
-  WorkoutSnapshotIn,
-  WorkoutStepSnapshotIn,
+  type WorkoutSetSnapshotIn,
+  type WorkoutSnapshotIn,
+  type WorkoutStepSnapshotIn,
 } from '../models/index.ts'
 
 import { exercises } from './exerciseSeed.ts'

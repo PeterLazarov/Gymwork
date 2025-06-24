@@ -5,6 +5,8 @@
   "main": "expo/AppEntry.js",
   "type": "module",
   "scripts": {
+    "generate": "node app/index.ts",
+    "start": "node dataExploration.ts"
   },
   "dependencies": {
     "@types/convert-units": "^2.3.9",

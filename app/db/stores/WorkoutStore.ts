@@ -1,23 +1,11 @@
-import { Instance, SnapshotOut, types, getParent } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { Instance, SnapshotOut, types, getParent } = pkg
 import { keepAlive } from 'mobx-utils'
 
 import { withSetPropAction } from '../helpers/withSetPropAction.ts'
-import {
-  WorkoutSet,
-  WorkoutModel,
-  WorkoutSnapshotIn,
-  Exercise,
-  Workout,
-  WorkoutSetSnapshotIn,
-  WorkoutTemplateModel,
-  WorkoutTemplateSnapshotIn,
-  WorkoutStepSnapshotIn,
-  WorkoutTemplate,
-  WorkoutStep,
-} from '../models/index.ts'
 import workoutSeedData from '../seeds/workout-seed-data.ts'
 
-import { RootStore } from './RootStore.ts'
+import { type RootStore } from './RootStore.ts'
 
 function getClonedIncompleteNoIdSets(
   sets: WorkoutSet[]
@@ -32,8 +20,8 @@ function getClonedIncompleteNoIdSets(
 export const WorkoutStoreModel = types
   .model('WorkoutStore')
   .props({
-    workouts: types.array(WorkoutModel),
-    workoutTemplates: types.array(WorkoutTemplateModel),
+    workouts: types.array(types.late(() => WorkoutModel)),
+    workoutTemplates: types.array(types.late(() => WorkoutTemplateModel)),
   })
   .views(store => ({
     get rootStore(): RootStore {
@@ -184,6 +172,21 @@ export const WorkoutStoreModel = types
     keepAlive(self, 'exerciseSetsHistoryMap')
     return {}
   })
+
+// Import models after model definition to avoid circular dependency issues
+import {
+  type WorkoutSet,
+  type WorkoutSnapshotIn,
+  type Exercise,
+  type Workout,
+  type WorkoutSetSnapshotIn,
+  type WorkoutTemplateSnapshotIn,
+  type WorkoutStepSnapshotIn,
+  type WorkoutTemplate,
+  type WorkoutStep,
+  WorkoutModel,
+  WorkoutTemplateModel,
+} from '../models/index.ts'
 
 export interface WorkoutStore extends Instance<typeof WorkoutStoreModel> {}
 export interface WorkoutStoreSnapshot

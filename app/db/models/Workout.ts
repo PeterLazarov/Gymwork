@@ -1,20 +1,19 @@
 import convert from 'convert-units'
 import { DateTime, Duration } from 'luxon'
-import {
-  Instance,
-  SnapshotIn,
-  SnapshotOut,
-  getSnapshot,
-  recordPatches,
-  types,
-} from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { Instance, SnapshotIn, SnapshotOut, getSnapshot, recordPatches, types } =
+  pkg
 import { v4 as uuidv4 } from 'uuid'
 
 import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 
-import { Exercise } from './Exercise.ts'
-import { WorkoutSet } from './WorkoutSet.ts'
-import { WorkoutStep, WorkoutStepModel } from './WorkoutStep.ts'
+import { type Exercise } from './Exercise.ts'
+import { type WorkoutSet } from './WorkoutSet.ts'
+import {
+  type WorkoutStep,
+  type WorkoutStep,
+  WorkoutStepModel,
+} from './WorkoutStep.ts'
 
 const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
 // TODO dedupe
@@ -217,6 +216,9 @@ export const WorkoutModel = types
     },
   }))
 
+export interface Workout extends Instance<typeof WorkoutModel> {}
+export interface WorkoutSnapshotOut extends SnapshotOut<typeof WorkoutModel> {}
+export interface WorkoutSnapshotIn extends SnapshotIn<typeof WorkoutModel> {}
 export interface Workout extends Instance<typeof WorkoutModel> {}
 export interface WorkoutSnapshotOut extends SnapshotOut<typeof WorkoutModel> {}
 export interface WorkoutSnapshotIn extends SnapshotIn<typeof WorkoutModel> {}

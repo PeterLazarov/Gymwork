@@ -1,10 +1,5 @@
-import {
-  Instance,
-  SnapshotIn,
-  SnapshotOut,
-  types,
-  // getIdentifier,
-} from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { Instance, SnapshotIn, SnapshotOut, types } = pkg
 import { v4 as uuidv4 } from 'uuid'
 
 import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction.ts'
@@ -24,6 +19,10 @@ export const WorkoutTemplateModel = types
 
 export interface WorkoutTemplate
   extends Instance<typeof WorkoutTemplateModel> {}
+export interface WorkoutTemplateSnapshotOut
+  extends SnapshotOut<typeof WorkoutTemplateModel> {}
+export interface WorkoutTemplateSnapshotIn
+  extends SnapshotIn<typeof WorkoutTemplateModel> {}
 export interface WorkoutTemplateSnapshotOut
   extends SnapshotOut<typeof WorkoutTemplateModel> {}
 export interface WorkoutTemplateSnapshotIn

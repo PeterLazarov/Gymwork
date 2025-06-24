@@ -1,8 +1,17 @@
-import { Instance, SnapshotOut, types } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { Instance, SnapshotOut, types } = pkg
 import { keepAlive } from 'mobx-utils'
 
+// FIX: lodash import for CommonJS compatibility
+import pkgLodash from 'lodash'
+const { difference } = pkgLodash
+
 import { withSetPropAction } from '../helpers/withSetPropAction.ts'
-import { Exercise, ExerciseModel, ExerciseSnapshotIn } from '../models/index.ts'
+import {
+  type Exercise,
+  ExerciseModel,
+  type ExerciseSnapshotIn,
+} from '../models/index.ts'
 import { uniqueValues } from '../../utils/array.ts'
 
 import { exercises as exerciseSeedData } from '../seeds/exerciseSeed.ts'
