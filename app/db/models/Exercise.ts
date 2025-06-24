@@ -1,14 +1,13 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
-import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import { withSetPropAction } from '../helpers/withSetPropAction'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 
 import {
   ExerciseMeasurementModel,
   measurementDefaults,
   measurementName,
-} from './ExerciseMeasurement'
+} from './ExerciseMeasurement.ts'
 
 // Should we group by multiple?
 const groupingCombinations: {

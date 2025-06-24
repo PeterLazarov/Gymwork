@@ -1,7 +1,7 @@
-import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
-import 'react-native-get-random-values'
+import pkg from 'mobx-state-tree'
+const { Instance, SnapshotIn, SnapshotOut, types } = pkg
 
-import { withSetPropAction } from '../helpers/withSetPropAction'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 
 // TODO? would this be better as an enum?
 export const measurementUnits = {

@@ -8,14 +8,13 @@ import {
   recordPatches,
   types,
 } from 'mobx-state-tree'
-import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import { withSetPropAction } from '../helpers/withSetPropAction'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 
-import { Exercise } from './Exercise'
-import { WorkoutSet } from './WorkoutSet'
-import { WorkoutStep, WorkoutStepModel } from './WorkoutStep'
+import { Exercise } from './Exercise.ts'
+import { WorkoutSet } from './WorkoutSet.ts'
+import { WorkoutStep, WorkoutStepModel } from './WorkoutStep.ts'
 
 const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
 // TODO dedupe

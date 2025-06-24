@@ -2,7 +2,7 @@ import {
   ExerciseRecord,
   WorkoutSetSnapshotIn,
   measurementName,
-} from 'app/db/models'
+} from '../db/models/index.ts'
 
 export const markWeakAssRecords = (
   exerciseAllRecords: ExerciseRecord

@@ -1,14 +1,13 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 
-import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 
-import { ExerciseStoreModel } from './ExerciseStore'
-import { NavStoreModel } from './NavStore'
-import { RecordStoreModel } from './RecordStore'
-import { SettingsStoreModel } from './SettingsStore'
-import { StateStoreModel } from './StateStore'
-import { TimerStoreModel } from './TimerStore'
-import { WorkoutStoreModel } from './WorkoutStore'
+import { ExerciseStoreModel } from './ExerciseStore.ts'
+import { RecordStoreModel } from './RecordStore.ts'
+import { SettingsStoreModel } from './SettingsStore.ts'
+import { StateStoreModel } from './StateStore.ts'
+import { TimerStoreModel } from './TimerStore.ts'
+import { WorkoutStoreModel } from './WorkoutStore.ts'
 
 export const RootStoreModel = types
   .model('RootStore')
@@ -18,7 +17,6 @@ export const RootStoreModel = types
     stateStore: types.optional(StateStoreModel, {}),
     recordStore: types.optional(RecordStoreModel, {}),
     settingsStore: types.optional(SettingsStoreModel, {}),
-    navStore: types.optional(NavStoreModel, {}),
     timerStore: types.optional(TimerStoreModel, {}),
   })
   .actions(withSetPropAction)
@@ -37,7 +35,6 @@ export const RootStoreModel = types
         .then(() => self.recordStore.fetch())
         .then(() => self.stateStore.initialize())
         .then(() => self.settingsStore.initialize())
-        .then(() => self.navStore.initialize())
         .then(() => self.recordStore.initialize())
         .then(() => self.timerStore.initialize())
     },

@@ -2,9 +2,9 @@ import {
   ExerciseMeasurementSnapshotIn,
   ExerciseSnapshotIn,
   measurementDefaults,
-} from '../models'
+} from '../models/index.ts'
 
-import _data from './exercisesAnimatic.json'
+import _data from './exercisesAnimatic.json' with { type: 'json' }
 
 export type NormalizedEntry = {
   name: string

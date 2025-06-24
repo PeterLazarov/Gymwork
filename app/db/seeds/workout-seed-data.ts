@@ -5,11 +5,11 @@ import {
   WorkoutSetSnapshotIn,
   WorkoutSnapshotIn,
   WorkoutStepSnapshotIn,
-} from '../models'
+} from '../models/index.ts'
 
-import { exercises } from './exerciseSeed'
+import { exercises } from './exerciseSeed.ts'
 
-const numberOfWorkouts = 20
+const numberOfWorkouts = 1000
 const today = DateTime.fromISO(DateTime.now().toISODate()!)
 const weightIncrementKg = 2.5
 const setDuration = 100 * 1000

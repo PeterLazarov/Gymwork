@@ -1,4 +1,5 @@
-import { IStateTreeNode, SnapshotIn } from 'mobx-state-tree'
+import pkg from 'mobx-state-tree'
+const { IStateTreeNode, SnapshotIn } = pkg
 
 /**
  * If you include this in your model in an action() block just under your props,

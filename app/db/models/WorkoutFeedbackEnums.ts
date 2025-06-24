@@ -1,22 +1,22 @@
-import { palettes } from 'designSystem'
+// import { palettes } from 'designSystem'
 
 export const feelingOptions = {
   sad: {
     icon: 'emoji-sad',
     label: 'Bad',
-    color: palettes.coral.hue600,
+    color: 'coral',
     value: 'sad',
   },
   neutral: {
     icon: 'emoji-happy',
     label: 'Good',
-    color: palettes.amber.hue600,
+    color: 'amber',
     value: 'neutral',
   },
   happy: {
     icon: 'grin-stars',
     label: 'Great',
-    color: palettes.green['60'],
+    color: 'green',
     value: 'happy',
   },
 } as const
@@ -25,19 +25,19 @@ export const discomfortOptions = {
   pain: {
     icon: 'alert-decagram-outline',
     label: 'Severe / Pain',
-    color: palettes.coral.hue600,
+    color: 'coral',
     value: 'pain',
   },
   discomfort: {
     icon: 'warning-outline',
     label: 'Mild',
-    color: palettes.amber.hue600,
+    color: 'amber',
     value: 'discomfort',
   },
   noPain: {
     icon: 'check',
     label: 'None',
-    color: palettes.green['60'],
+    color: 'green',
     value: 'noPain',
   },
 } as const

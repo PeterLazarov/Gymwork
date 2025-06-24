@@ -3,9 +3,9 @@ import { Duration } from 'luxon'
 import { reaction } from 'mobx'
 import { Instance, SnapshotIn, SnapshotOut, types } from 'mobx-state-tree'
 import { keepAlive } from 'mobx-utils'
-import { Vibration } from 'react-native'
+// import { Vibration } from 'react-native'
 
-import { withSetPropAction } from '../helpers/withSetPropAction'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 
 // Default durations
 const defaultDuration = Duration.fromDurationLike({ minutes: 0 })
@@ -85,7 +85,7 @@ export const TimerModel = types
         self.timeLeft.toMillis() <= 0 &&
         !didVibrate
       ) {
-        Vibration.vibrate(1000) // TODO make this work
+        // Vibration.vibrate(1000) // TODO make this work
         didVibrate = true
       }
     }

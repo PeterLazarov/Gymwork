@@ -5,12 +5,12 @@ import { Duration } from 'luxon'
 import { reaction } from 'mobx'
 import { types, Instance, SnapshotOut, getParent } from 'mobx-state-tree'
 
-import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 
-import { Exercise } from '../models'
-import { TimerModel } from '../models/Timer'
+import { Exercise } from '../models/index.ts'
+import { TimerModel } from '../models/Timer.ts'
 
-import { RootStore } from './RootStore'
+import { RootStore } from './RootStore.ts'
 
 // TODO dedupe
 const defaultDelay = convert(30).from('min').to('ms')

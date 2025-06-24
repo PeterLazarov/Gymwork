@@ -1,7 +1,7 @@
 import { Instance, SnapshotOut, types, getParent } from 'mobx-state-tree'
 import { keepAlive } from 'mobx-utils'
 
-import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 import {
   WorkoutSet,
   WorkoutModel,
@@ -14,12 +14,10 @@ import {
   WorkoutStepSnapshotIn,
   WorkoutTemplate,
   WorkoutStep,
-} from 'app/db/models'
-import workoutSeedData from 'app/db/seeds/workout-seed-data'
-import { isDev } from 'app/utils/isDev'
-import * as storage from 'app/utils/storage'
+} from '../models/index.ts'
+import workoutSeedData from '../seeds/workout-seed-data.ts'
 
-import { RootStore } from './RootStore'
+import { RootStore } from './RootStore.ts'
 
 function getClonedIncompleteNoIdSets(
   sets: WorkoutSet[]
@@ -116,21 +114,7 @@ export const WorkoutStoreModel = types
   .actions(withSetPropAction)
   .actions(self => ({
     async fetch() {
-      if (self.workouts.length === 0) {
-        const workouts = await storage.load<WorkoutSnapshotIn[]>('workouts')
-        const workoutTemplates =
-          await storage.load<WorkoutTemplateSnapshotIn[]>('workoutTemplates')
-
-        console.log('workouts in memory', workouts)
-        if (workoutTemplates && workoutTemplates?.length > 0) {
-          self.setProp('workoutTemplates', workoutTemplates)
-        }
-        if (workouts && workouts?.length > 0) {
-          self.setProp('workouts', workouts)
-        } else if (isDev) {
-          await this.seed()
-        }
-      }
+      await this.seed()
     },
     async seed() {
       console.log('seeding workouts')

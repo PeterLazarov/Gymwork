@@ -5,13 +5,12 @@ import {
   types,
   // getIdentifier,
 } from 'mobx-state-tree'
-import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction'
-import { withSetPropAction } from '../helpers/withSetPropAction'
+import { withMergeUpdateAction } from '../helpers/withMergeUpdateAction.ts'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 
-import { WorkoutStepModel } from './WorkoutStep'
+import { WorkoutStepModel } from './WorkoutStep.ts'
 
 export const WorkoutTemplateModel = types
   .model('WorkoutTemplate')

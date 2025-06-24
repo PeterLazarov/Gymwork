@@ -5,7 +5,7 @@ import {
   Workout,
   WorkoutSet,
   WorkoutSetSnapshotIn,
-} from 'app/db/models'
+} from '../models/index.ts'
 
 export const getRecords = (workouts: Workout[]): ExerciseRecordSnapshotIn[] => {
   const records: ExerciseRecordSnapshotIn[] = []

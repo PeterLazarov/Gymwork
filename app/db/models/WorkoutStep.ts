@@ -6,19 +6,22 @@ import {
   getSnapshot,
   types,
 } from 'mobx-state-tree'
-import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
-import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
-import { RootStoreModel } from 'app/db/stores/RootStore'
-import { alphabeticNumbering } from 'app/utils/string'
-import { getDataFieldForKey } from 'app/utils/workoutRecordsCalculator'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
+import { RootStoreModel } from '../stores/RootStore.ts'
+import { alphabeticNumbering } from '../../utils/string.ts'
+import { getDataFieldForKey } from '../../utils/workoutRecordsCalculator.ts'
 
-import { RecordStore } from '../stores/RecordStore'
+import { RecordStore } from '../stores/RecordStore.ts'
 
-import { Exercise, ExerciseModel } from './Exercise'
-import { ExerciseRecord } from './ExerciseRecord'
-import { WorkoutSet, WorkoutSetModel, WorkoutSetSnapshotIn } from './WorkoutSet'
+import { Exercise, ExerciseModel } from './Exercise.ts'
+import { ExerciseRecord } from './ExerciseRecord.ts'
+import {
+  WorkoutSet,
+  WorkoutSetModel,
+  WorkoutSetSnapshotIn,
+} from './WorkoutSet.ts'
 
 const stepType = {
   straightSet: 'straightSet',

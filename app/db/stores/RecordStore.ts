@@ -1,7 +1,7 @@
 import { Instance, SnapshotOut, getParent, types } from 'mobx-state-tree'
 import { keepAlive } from 'mobx-utils'
 
-import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
 import {
   Exercise,
   ExerciseRecordModel,
@@ -9,12 +9,11 @@ import {
   ExerciseRecord,
   WorkoutSet,
   WorkoutStep,
-} from 'app/db/models'
-import { getRecords } from 'app/db/seeds/exercise-records-seed-generator'
-import * as storage from 'app/utils/storage'
-import { markWeakAssRecords } from 'app/utils/workoutRecordsCalculator'
+} from '../models/index.ts'
+import { getRecords } from '../seeds/exercise-records-seed-generator.ts'
+import { markWeakAssRecords } from '../../utils/workoutRecordsCalculator.ts'
 
-import { RootStore } from './RootStore'
+import { RootStore } from './RootStore.ts'
 
 export const RecordStoreModel = types
   .model('RecordStore')
@@ -40,17 +39,7 @@ export const RecordStoreModel = types
       keepAlive(self, 'exerciseRecordsMap')
     },
     async fetch() {
-      if (self.records.length === 0) {
-        const records =
-          await storage.load<ExerciseRecordSnapshotIn[]>('records')
-
-        console.log('records in memory', records)
-        if (records && records?.length > 0) {
-          self.setProp('records', records)
-        } else {
-          await this.determineRecords()
-        }
-      }
+      await this.determineRecords()
     },
     async determineRecords() {
       console.log('calculating records')

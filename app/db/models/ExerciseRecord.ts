@@ -8,20 +8,19 @@ import {
   getSnapshot,
   types,
 } from 'mobx-state-tree'
-import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
 import {
   getDataFieldForKey,
   markWeakAssRecords,
-} from 'app/utils/workoutRecordsCalculator'
+} from '../../utils/workoutRecordsCalculator.ts'
 
-import { withSetPropAction } from '../helpers/withSetPropAction'
-import { RootStoreModel } from '../stores/RootStore'
-import { WorkoutStore } from '../stores/WorkoutStore'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
+import { RootStoreModel } from '../stores/RootStore.ts'
+import { WorkoutStore } from '../stores/WorkoutStore.ts'
 
-import { ExerciseModel } from './Exercise'
-import { WorkoutSet, WorkoutSetModel } from './WorkoutSet'
+import { ExerciseModel } from './Exercise.ts'
+import { WorkoutSet, WorkoutSetModel } from './WorkoutSet.ts'
 
 import { autorun } from 'mobx'
 

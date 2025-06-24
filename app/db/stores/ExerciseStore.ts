@@ -1,13 +1,11 @@
 import { Instance, SnapshotOut, types } from 'mobx-state-tree'
 import { keepAlive } from 'mobx-utils'
 
-import { withSetPropAction } from 'app/db/helpers/withSetPropAction'
-import { Exercise, ExerciseModel, ExerciseSnapshotIn } from 'app/db/models'
-import { uniqueValues } from 'app/utils/array'
-import { isDev } from 'app/utils/isDev'
-import * as storage from 'app/utils/storage'
+import { withSetPropAction } from '../helpers/withSetPropAction.ts'
+import { Exercise, ExerciseModel, ExerciseSnapshotIn } from '../models/index.ts'
+import { uniqueValues } from '../../utils/array.ts'
 
-import { exercises as exerciseSeedData } from '../seeds/exerciseSeed'
+import { exercises as exerciseSeedData } from '../seeds/exerciseSeed.ts'
 
 export const ExerciseStoreModel = types
   .model('ExerciseStore')
@@ -17,15 +15,7 @@ export const ExerciseStoreModel = types
   .actions(withSetPropAction)
   .actions(store => ({
     async fetch() {
-      if (store.exercises.length === 0) {
-        const exercises = await storage.load<ExerciseSnapshotIn[]>('exercises')
-
-        if (exercises && exercises?.length > 0 && !isDev) {
-          store.setProp('exercises', exercises)
-        } else {
-          await this.seed()
-        }
-      }
+      await this.seed()
     },
     async seed() {
       console.log('seeding exercises')
@@ -48,8 +38,10 @@ export const ExerciseStoreModel = types
         store.exercises.flatMap<string>(e => e.muscles)
       ).sort()
     },
-    get exercisesSorted(){
-      return store.exercises.slice().sort((a,b)=> a.name.localeCompare(b.name))
+    get exercisesSorted() {
+      return store.exercises
+        .slice()
+        .sort((a, b) => a.name.localeCompare(b.name))
     },
     get muscleAreaOptions() {
       return uniqueValues(
