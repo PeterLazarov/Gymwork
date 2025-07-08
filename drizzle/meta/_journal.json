@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1751558671769,
+      "tag": "0000_mysterious_rawhide_kid",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1751827851150,
+      "tag": "0001_young_masque",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1751910298541,
+      "tag": "0002_cheerful_molecule_man",
+      "breakpoints": true
+    }
+  ]
+}

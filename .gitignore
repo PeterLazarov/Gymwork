@@ -41,7 +41,7 @@ yarn-error.log
 # BUCK
 buck-out/
 \.buckd/
-# *.keystore
+*.keystore
 !debug.keystore
 
 # fastlane
@@ -71,6 +71,7 @@ buck-out/
 bin/Exponent.app
 /android
 /ios
+expo-env.d.ts
 
 ## Secrets
 npm-debug.*
@@ -86,3 +87,11 @@ web-build/
 !env.js
 
 /coverage
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
