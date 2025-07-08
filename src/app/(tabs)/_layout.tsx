@@ -14,6 +14,7 @@ export default function TabLayout() {
       // activeIndicatorColor={"brown"}
       // tabBarInactiveTintColor={"green"}
       translucent={true}
+      initialRouteName="home"
     >
       <NativeTabs.Screen
         name="review"
@@ -25,7 +26,7 @@ export default function TabLayout() {
       />
 
       <NativeTabs.Screen
-        name="index"
+        name="home"
         options={{
           title: "Home",
           tabBarIcon: () => (Platform.OS === "ios" ? { sfSymbol: "house" } : homeIconSource),

@@ -11,6 +11,7 @@ import {
 
 import { Screen } from "@/components/Ignite/Screen"
 import { Text } from "@/components/Ignite/Text"
+import { DevControls } from "@/components/DevControls"
 
 export default function SettingsScreen() {
   // Define placeholder values for the required variables
@@ -35,7 +36,7 @@ export default function SettingsScreen() {
         moveEnabled={moveEnabled}
         onMoveItem={(from, to) => alert(`moved item at index ${from} to index ${to}`)}
         onDeleteItem={(item) => alert(`deleted item at index: ${item}`)}
-        style={{ minHeight: "100%" }}
+        style={{ minHeight: "50%" }}
         listStyle="automatic"
         deleteEnabled={deleteEnabled}
         selectEnabled={selectEnabled}
@@ -52,6 +53,8 @@ export default function SettingsScreen() {
           />
         ))}
       </List>
+
+      <DevControls />
     </Screen>
   )
 }

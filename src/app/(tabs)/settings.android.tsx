@@ -5,6 +5,7 @@ import { ListItem } from "@/components/Ignite/ListItem"
 import { ListView } from "@/components/Ignite/ListView"
 import { Screen } from "@/components/Ignite/Screen"
 import { useAppTheme } from "@/theme/context"
+import { DevControls } from "@/components/DevControls"
 
 const data = [
   { text: "Profile", systemImage: "person" },
@@ -17,7 +18,7 @@ export default function SettingsScreen() {
 
   return (
     <Screen safeAreaEdges={["top"]}>
-      <View style={{ width: "100%", height: "100%" }}>
+      <View style={{ width: "50%", height: "100%" }}>
         <ListView
           data={data}
           estimatedItemSize={56}
@@ -45,6 +46,8 @@ export default function SettingsScreen() {
           )}
         />
       </View>
+
+      <DevControls />
     </Screen>
   )
 }
