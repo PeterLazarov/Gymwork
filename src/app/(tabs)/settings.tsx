@@ -27,7 +27,7 @@ export default function SettingsScreen() {
   ]
 
   return (
-    <Screen safeAreaEdges={["top"]} style={{ backgroundColor: "gray" }}>
+    <Screen safeAreaEdges={["top"]}>
       <List
         scrollEnabled={false}
         editModeEnabled={editModeEnabled}
