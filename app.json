@@ -34,6 +34,15 @@
     "bundler": "metro"
   },
   "plugins": [
+    "react-native-bottom-tabs",
+    [
+      "expo-build-properties",
+      {
+        "ios": {
+          "useFrameworks": "static"
+        }
+      }
+    ],
     "expo-localization",
     "expo-font",
     [
