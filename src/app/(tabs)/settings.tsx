@@ -1,17 +1,7 @@
-import {
-  Button as SwiftButton,
-  Label,
-  Section,
-  List,
-  LabelPrimitive,
-  Button,
-  ButtonPrimitive,
-  Switch,
-} from "@expo/ui/swift-ui"
+import { List, Switch } from "@expo/ui/swift-ui"
 
-import { Screen } from "@/components/Ignite/Screen"
-import { Text } from "@/components/Ignite/Text"
 import { DevControls } from "@/components/DevControls"
+import { Screen } from "@/components/Ignite/Screen"
 
 export default function SettingsScreen() {
   // Define placeholder values for the required variables
@@ -19,12 +9,24 @@ export default function SettingsScreen() {
   const moveEnabled = false
   const deleteEnabled = false
   const selectEnabled = true
-  const color = "black"
 
   const data = [
-    { text: "Profile", systemImage: "person" },
-    { text: "Notifications", systemImage: "bell" },
-    { text: "Privacy", systemImage: "lock" },
+    { text: "Track Rest", description: "Rest tracking lalala" },
+    {
+      text: "Track RPE",
+      description:
+        "RPE (Rated Percieved Exertion) is a measure of difficulty. 10 means you had nothing left in the tank.",
+    },
+    {
+      text: "Track Workout Duration",
+      description:
+        "Workout duration starts upon completion of the first set and ends at the last one",
+    },
+    {
+      text: "Show Scientific Muscle Names",
+      description:
+        "Workout duration starts upon completion of the first set and ends at the last one",
+    },
   ]
 
   return (
@@ -48,8 +50,9 @@ export default function SettingsScreen() {
             onValueChange={(checked) => {
               // setChecked(checked)
             }}
-            label={item.text}
+            label={item.text + item.description}
             variant="switch"
+            // style={{ flex: 1, width: 300, height: 50 }}
           />
         ))}
       </List>

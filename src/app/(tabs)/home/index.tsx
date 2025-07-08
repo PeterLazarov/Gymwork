@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useMemo, useState } from "react"
 import { View, ScrollView, Dimensions } from "react-native"
 import { useRouter } from "expo-router"
 import { Button, Label } from "@expo/ui/swift-ui"
@@ -7,6 +7,7 @@ import { chunk } from "lodash"
 import { AppleIcon } from "react-native-bottom-tabs"
 
 import { BigButtonIos } from "@/components/BigButton.ios"
+import { ExerciseSelect } from "@/components/ExerciseSelect"
 import { ListView } from "@/components/Ignite/ListView"
 import { Screen } from "@/components/Ignite/Screen"
 import { WorkoutOverviewContinueCard } from "@/components/WorkoutOverviewContinueCard"
@@ -19,11 +20,33 @@ import { useAppTheme } from "@/theme/context"
 
 const templateCardHeight = 100
 
+const todayWorkouts: Array<SelectWorkout> = Array.from({ length: 2 }).map(
+  (_, i): SelectWorkout => ({
+    id: `${i}qweqwe`,
+    name: `Workout ${new Date().toISOString()}`,
+    completed_at: null,
+    created_at: Date.now(),
+    notes: null,
+    scheduled_for: null,
+    started_at: null,
+    template_id: null,
+  }),
+)
+const templates: Array<InsertTemplateWorkout> = Array.from({ length: 8 }, (_, i) => ({
+  id: "123" + i,
+  name: `Template ${i}`,
+  created_at: Date.now() - i,
+  notes: "tons",
+}))
+
 export default function Home() {
   const { theme } = useAppTheme()
   const router = useRouter()
 
+  const [isExerciseSelectVisible, setIsExerciseSelectVisible] = useState(false)
+
   async function startWorkout() {
+    setIsExerciseSelectVisible(true)
     // await drizzleDB
     //   .insert(workouts)
     //   .values({
@@ -47,30 +70,12 @@ export default function Home() {
   }, [])
   // const { data: todayWorkouts } = useLiveQuery(todayWorkoutsQuery, [workouts])
 
-  const todayWorkouts: Array<SelectWorkout> = Array.from({ length: 10 }).map(
-    (_, i): SelectWorkout => ({
-      id: `${i}qweqwe`,
-      name: `Workout ${new Date().toISOString()}`,
-      completed_at: null,
-      created_at: Date.now(),
-      notes: null,
-      scheduled_for: null,
-      started_at: null,
-      template_id: null,
-    }),
-  )
-  const templates: Array<InsertTemplateWorkout> = Array.from({ length: 100 }, (_, i) => ({
-    id: "123" + i,
-    name: `Template ${i}`,
-    created_at: Date.now() - i,
-    notes: "tons",
-  }))
-
   return (
     <Screen>
       <View
         style={{
           height: "100%",
+          zIndex: 1,
           paddingVertical: theme.spacing.md,
           justifyContent: "space-between",
           gap: theme.spacing.md,
@@ -91,7 +96,7 @@ export default function Home() {
             }}
           >
             <Label
-              title="Start Workout From Template"
+              title={templates.length ? "Start Workout From Template" : "Create Workout Templates"}
               systemImage={"list.bullet.rectangle" as AppleIcon["sfSymbol"]}
             />
             <Button
@@ -201,6 +206,14 @@ export default function Home() {
           Start Empty Workout
         </BigButtonIos>
       </View>
+
+      <ExerciseSelect
+        isVisible={isExerciseSelectVisible}
+        onSelect={(id) => {
+          // TODO
+        }}
+        setIsVisible={setIsExerciseSelectVisible}
+      />
     </Screen>
   )
 }
