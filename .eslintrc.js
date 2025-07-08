@@ -9,11 +9,11 @@ module.exports = {
     "expo",
     // `jsx-runtime` must come after `expo` or it will be overridden
     "plugin:react/jsx-runtime",
-    "prettier",
+    // "prettier",
   ],
   plugins: ["reactotron", "prettier"],
   rules: {
-    "prettier/prettier": "warn",
+    // "prettier/prettier": "warn",
     // typescript-eslint
     "@typescript-eslint/array-type": 0,
     "@typescript-eslint/ban-ts-comment": 0,

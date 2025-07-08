@@ -3,5 +3,6 @@
   "semi": false,
   "singleQuote": false,
   "trailingComma": "all",
-  "quoteProps": "consistent"
+  "quoteProps": "consistent",
+  "singleAttributePerLine": true
 }
