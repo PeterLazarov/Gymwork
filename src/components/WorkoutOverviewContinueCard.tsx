@@ -17,7 +17,7 @@ export function WorkoutOverviewContinueCard(props: WorkoutOverviewContinueCardPr
     <View
       style={[
         {
-          borderRadius: theme.spacing.lg,
+          borderRadius: theme.rounding.md,
           padding: theme.spacing.md,
           backgroundColor: Platform.select({
             ios: PlatformColor("systemGray5"),

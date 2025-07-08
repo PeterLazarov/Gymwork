@@ -14,7 +14,7 @@ export function WorkoutTemplateCard(props: WorkoutTemplateCardProps) {
     <View
       style={[
         {
-          borderRadius: theme.spacing.lg,
+          borderRadius: theme.rounding.md,
           padding: theme.spacing.md,
           backgroundColor: Platform.select({
             ios: PlatformColor("systemGray5"),

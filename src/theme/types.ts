@@ -6,6 +6,7 @@ import { spacing as spacingLight } from "./spacing"
 import { spacing as spacingDark } from "./spacingDark"
 import { timing } from "./timing"
 import { typography } from "./typography"
+import { rounding } from "./rounding"
 
 // This supports "light" and "dark" themes by default. If undefined, it'll use the system theme
 export type ImmutableThemeContextModeT = "light" | "dark"
@@ -16,7 +17,7 @@ export type ThemeContextModeT = ImmutableThemeContextModeT | undefined
 export type Colors = typeof colorsLight | typeof colorsDark
 // The spacing type needs to take into account the different spacing values for light and dark themes.
 export type Spacing = typeof spacingLight | typeof spacingDark
-
+export type Rounding.= typeof rounding
 // These two are consistent across themes.
 export type Timing = typeof timing
 export type Typography = typeof typography
@@ -28,6 +29,7 @@ export interface Theme {
   typography: Typography
   timing: Timing
   isDark: boolean
+  rounding: 
 }
 
 /**

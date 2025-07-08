@@ -1,5 +1,6 @@
 import { colors as colorsLight } from "./colors"
 import { colors as colorsDark } from "./colorsDark"
+import { rounding } from "./rounding"
 import { spacing as spacingLight } from "./spacing"
 import { spacing as spacingDark } from "./spacingDark"
 import { timing } from "./timing"
@@ -12,6 +13,7 @@ export const lightTheme: Theme = {
   spacing: spacingLight,
   typography,
   timing,
+  rounding,
   isDark: false,
 }
 export const darkTheme: Theme = {
@@ -19,5 +21,6 @@ export const darkTheme: Theme = {
   spacing: spacingDark,
   typography,
   timing,
+  rounding,
   isDark: true,
 }
