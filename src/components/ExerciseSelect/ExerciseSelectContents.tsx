@@ -1,6 +1,8 @@
-import { useEffect } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Image, PlatformColor, View } from "react-native"
+import { Button, Label } from "@expo/ui/swift-ui"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
+import { AppleIcon } from "react-native-bottom-tabs"
 import Animated, { Easing, useSharedValue, withTiming } from "react-native-reanimated"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
@@ -19,6 +21,8 @@ import { Text } from "../Ignite/Text"
 // If the search was left open when the sheet was closed, the state is somehow preserved
 const searchMargin = 46
 const negativeMargin = -10 // fills space when search is collapse upward
+const listElementHeight = 64
+const bottomOverlayHeight = 120
 
 export function ExerciseSelectContents() {
   const { theme } = useAppTheme()
@@ -109,13 +113,17 @@ export function ExerciseSelectContents() {
     })
   }, [searchOpen])
 
+  const [selected, setSelected] = useState<Record<string, boolean>>({})
+  const nSelected = useMemo(() => Object.keys(selected).length, [selected])
+
   return (
     <Screen safeAreaEdges={["top"]}>
       <Animated.View
         style={{
           marginTop: animatedMargin,
           marginBottom: -negativeMargin,
-          backgroundColor: PlatformColor(IosPlatformColor.systemBackground),
+          // backgroundColor: PlatformColor(IosPlatformColor.systemBackground),
+          backgroundColor: theme.colors.background,
           height: "100%",
         }}
       >
@@ -127,53 +135,90 @@ export function ExerciseSelectContents() {
         >
           <ListView
             contentInset={{
-              bottom: (searchOpen ? 0 : searchMargin) + bottom + theme.spacing.xxl,
+              bottom:
+                (searchOpen ? 0 : searchMargin) + bottom + theme.spacing.xl + bottomOverlayHeight,
             }}
             scrollIndicatorInsets={{
-              bottom: (searchOpen ? 0 : searchMargin) + bottom + theme.spacing.xxl,
+              bottom:
+                (searchOpen ? 0 : searchMargin) + bottom + theme.spacing.xl + bottomOverlayHeight,
             }}
+            extraData={selected}
+            ItemSeparatorComponent={() => <View style={{ height: theme.spacing.xxs }}></View>}
             renderItem={({ item }) => (
               <ListItem
                 style={{
                   flexGrow: 1,
-                  height: 64,
-                  overflow: "hidden",
+                  height: listElementHeight,
+                  paddingVertical: theme.spacing.sm,
+                  paddingHorizontal: theme.spacing.md,
                   gap: theme.spacing.sm,
+
+                  flexDirection: "row",
+                  alignItems: "center",
+
+                  backgroundColor:
+                    item.id in selected ? PlatformColor(IosPlatformColor.systemGray5) : undefined,
                 }}
                 containerStyle={{
-                  position: "relative",
+                  borderColor: "purple",
+                  // borderWidth: 2,
+                  borderStyle: "dashed",
                 }}
                 onPress={(e) => {
-                  // TODO
-                  console.log(e)
+                  setSelected((obj) => {
+                    const wasSelected = item.id in obj
+                    if (wasSelected) {
+                      delete obj[item.id]
+                    } else {
+                      obj[item.id] = true
+                    }
+
+                    return { ...obj }
+                  })
+                  console.log({ selected })
                 }}
                 LeftComponent={
                   <Image
-                    width={64}
-                    height={64}
-                    style={{ height: 64, width: 96 }}
+                    width={listElementHeight * 1.5}
+                    height={listElementHeight}
+                    style={{
+                      height: listElementHeight,
+                      width: listElementHeight * 1.5,
+                    }}
                     source={exerciseImages[item.images[0]]}
                   />
                 }
               >
-                <View
-                  style={{
-                    flexDirection: "column",
-                    position: "absolute",
-                  }}
-                >
-                  <Text
-                    preset="formLabel"
-                    numberOfLines={1}
+                <View>
+                  {/* This view below is normally sized( as tall as expected) */}
+                  <View
+                    style={{
+                      flexDirection: "column",
+                      height: listElementHeight,
+                      marginTop: -theme.spacing.md - theme.spacing.xxs,
+
+                      alignContent: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    {item.name}
-                  </Text>
-                  <Text
-                    preset="formHelper"
-                    numberOfLines={1}
-                  >
-                    {item.exerciseMuscleAreas.map((e) => e.muscleArea.name).join(" / ")}
-                  </Text>
+                    <Text
+                      preset="formLabel"
+                      weight="normal"
+                      numberOfLines={1}
+                    >
+                      {item.name}
+                    </Text>
+
+                    <Text
+                      preset="formHelper"
+                      weight="light"
+                      style={{ marginTop: -theme.spacing.xxs }}
+                      size="xs"
+                      numberOfLines={1}
+                    >
+                      {item.exerciseMuscleAreas.map((e) => e.muscleArea.name).join(" / ")}
+                    </Text>
+                  </View>
                 </View>
               </ListItem>
             )}
@@ -181,6 +226,68 @@ export function ExerciseSelectContents() {
           ></ListView>
         </View>
       </Animated.View>
+
+      <View
+        style={{
+          position: "absolute",
+          bottom: bottom + 32, // 32 accounts for being inside the sheet
+          zIndex: 1,
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingBottom: bottom,
+          paddingTop: theme.spacing.md,
+          paddingHorizontal: theme.spacing.md,
+          height: bottomOverlayHeight,
+          width: "100%",
+          backgroundColor: PlatformColor(IosPlatformColor.systemGray6),
+          flexDirection: "column",
+        }}
+      >
+        <Label
+          title={
+            nSelected
+              ? `${nSelected} Exercise${nSelected === 1 ? "" : "s"} Selected`
+              : "Select Items"
+          }
+        ></Label>
+        <View
+          style={{
+            flexDirection: "row",
+            gap: theme.spacing.md,
+            paddingHorizontal: theme.spacing.lg,
+          }}
+        >
+          <Button
+            disabled={nSelected === 0}
+            variant="accessoryBarAction"
+            style={{
+              marginTop: 6,
+              marginRight: -12,
+            }}
+            onPress={() => {
+              setSelected({})
+            }}
+            systemImage={"xmark.circle" as AppleIcon["sfSymbol"]}
+          >
+            {" "}
+          </Button>
+          <Button
+            disabled={nSelected < 2}
+            variant="bordered"
+            systemImage={"link" as AppleIcon["sfSymbol"]}
+          >
+            Superset
+          </Button>
+
+          <Button
+            disabled={nSelected === 0}
+            variant="borderedProminent"
+            systemImage="list.bullet"
+          >
+            Add Exercises
+          </Button>
+        </View>
+      </View>
     </Screen>
   )
 }

@@ -119,6 +119,10 @@ export default function Home() {
               snapToAlignment="start"
               snapToInterval={Dimensions.get("window").width / 2 - theme.spacing.md}
               contentContainerStyle={{ paddingHorizontal: theme.spacing.md }}
+              estimatedListSize={{
+                height: templateCardHeight,
+                width: Dimensions.get("window").width / 2 - theme.spacing.md * 2,
+              }}
               renderItem={({ item: items }) => (
                 <View
                   style={{

@@ -115,6 +115,8 @@ export function ExerciseSelect(props: ExerciseSelectProps) {
               name="exerciseSelect"
               component={ExerciseSelectContents}
               options={{
+                // headerLargeTitle: true,
+                // title: "3 selected",
                 headerTitle(props) {
                   return <Text></Text>
                 },
