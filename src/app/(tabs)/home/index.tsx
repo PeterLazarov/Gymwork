@@ -7,7 +7,7 @@ import { chunk } from "lodash"
 import { AppleIcon } from "react-native-bottom-tabs"
 
 import { BigButtonIos } from "@/components/BigButton.ios"
-import { ExerciseSelect } from "@/components/ExerciseSelect"
+import { ExerciseSelect } from "@/components/ExerciseSelect/ExerciseSelect"
 import { ListView } from "@/components/Ignite/ListView"
 import { Screen } from "@/components/Ignite/Screen"
 import { WorkoutOverviewContinueCard } from "@/components/WorkoutOverviewContinueCard"
