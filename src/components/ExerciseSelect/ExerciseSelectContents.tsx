@@ -178,6 +178,8 @@ export function ExerciseSelectContents() {
                   console.log({ selected })
                 }}
                 LeftComponent={
+                  // TODO fallback image
+                  // TODO images remove bg
                   <Image
                     width={listElementHeight * 1.5}
                     height={listElementHeight}
