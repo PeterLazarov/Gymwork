@@ -191,14 +191,20 @@ export default function Home() {
           </View>
         )}
 
-        <BigButtonIos
-          style={{ marginHorizontal: theme.spacing.md }}
-          systemImage="plus"
-          variant="borderedProminent"
-          onPress={startWorkout}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
         >
-          Start Empty Workout
-        </BigButtonIos>
+          <Button
+            variant="borderedProminent"
+            onPress={startWorkout}
+            systemImage="plus"
+          >
+            Start Empty Workout
+          </Button>
+        </View>
       </View>
 
       <ExerciseSelect
