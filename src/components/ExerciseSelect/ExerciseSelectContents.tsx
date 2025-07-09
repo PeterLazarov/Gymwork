@@ -86,8 +86,12 @@ export function ExerciseSelectContents() {
           },
         },
       },
+      // TODO implement different sorting mechanisms
+      orderBy(fields, operators) {
+        return sortDirection === "ASC" ? operators.asc(fields.name) : operators.desc(fields.name)
+      },
     }),
-    [exercises, searchString, area, equipment],
+    [exercises, searchString, area, equipment, sortDirection],
   )
 
   useEffect(() => {

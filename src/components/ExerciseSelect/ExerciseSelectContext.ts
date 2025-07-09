@@ -4,7 +4,12 @@ import { SelectMuscleArea, SelectEquipment } from "@/db/sqlite/schema"
 
 export const ExerciseSelectContext = createContext<ExerciseSelectContextType | undefined>(undefined)
 
-export const sortTypes = ["Name", "Last Performed", "Most Performed"] as const
+export const sortTypes = [
+  "Name",
+  // TODO
+  // "Last Performed",
+  // "Most Performed"
+] as const
 export type SortType = (typeof sortTypes)[number]
 
 export const sortDirections = ["ASC", "DESC"] as const
