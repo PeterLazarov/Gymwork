@@ -18,16 +18,20 @@ import { ListView } from "./Ignite/ListView"
 import { Screen } from "./Ignite/Screen"
 import { Text } from "./Ignite/Text"
 
+let time = 0
+
 export interface ExerciseSelectProps {
   isVisible: boolean
   setIsVisible(b: boolean): void
   onSelect(id: string): void
 }
 
-// Add context for searchOpen
+// Add context for searchOpen and searchString
 interface ExerciseSelectContextType {
   searchOpen: boolean
   setSearchOpen: React.Dispatch<React.SetStateAction<boolean>>
+  searchString: string
+  setSearchString: React.Dispatch<React.SetStateAction<string>>
 }
 const ExerciseSelectContext = createContext<ExerciseSelectContextType | undefined>(undefined)
 
@@ -42,8 +46,16 @@ function SheetContents() {
   const { theme } = useAppTheme()
   const { bottom } = useSafeAreaInsets()
   const { drizzleDB } = useDB()
+
+  const { searchOpen, searchString } = useExerciseSelectContext()
+
   const { data } = useLiveQuery(
     drizzleDB.query.exercises.findMany({
+      where: searchString
+        ? (fields, operators) => {
+            return operators.like(fields.name, `%${searchString}%`)
+          }
+        : undefined,
       columns: {
         id: true,
         name: true,
@@ -62,11 +74,12 @@ function SheetContents() {
         },
       },
     }),
-    [exercises],
+    [exercises, searchString],
   )
 
-  // Access searchOpen from context
-  const { searchOpen } = useExerciseSelectContext()
+  useEffect(() => {
+    console.log("query & update time ", Date.now() - time)
+  }, [data])
 
   // Animated margin
   const animatedMargin = useRef(new Animated.Value(48)).current
@@ -176,6 +189,8 @@ export function ExerciseSelect(props: ExerciseSelectProps) {
   }, [props.isVisible])
 
   const [searchOpen, setSearchOpen] = useState(initSearchOpen)
+  const [searchString, setSearchString] = useState("")
+
   useEffect(() => {
     initSearchOpen = searchOpen
   }, [searchOpen])
@@ -188,7 +203,9 @@ export function ExerciseSelect(props: ExerciseSelectProps) {
         props.setIsVisible(false)
       }}
     >
-      <ExerciseSelectContext.Provider value={{ searchOpen, setSearchOpen }}>
+      <ExerciseSelectContext.Provider
+        value={{ searchOpen, setSearchOpen, searchString, setSearchString }}
+      >
         <View
           style={{
             height: height - top,
@@ -239,8 +256,9 @@ export function ExerciseSelect(props: ExerciseSelectProps) {
 
                   placement: "stacked",
                   onChangeText(e) {
-                    // TODO
-                    console.log(e.nativeEvent.text)
+                    time = Date.now()
+                    // Use context setter
+                    setSearchString(e.nativeEvent.text)
                   },
                 },
               }}
