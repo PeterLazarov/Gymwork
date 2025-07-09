@@ -26,6 +26,9 @@ importers:
       '@legendapp/list':
         specifier: ^1.1.4
         version: 1.1.4(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@lodev09/react-native-true-sheet':
+        specifier: ^2.0.5
+        version: 2.0.5(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@react-native-vector-icons/common':
         specifier: ^12.0.1
         version: 12.0.1(@react-native-vector-icons/get-image@12.0.1(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
@@ -137,9 +140,6 @@ importers:
       react-native-screens:
         specifier: ~4.11.1
         version: 4.11.1(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
-      react-native-search-bar:
-        specifier: ^3.5.1
-        version: 3.5.1(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       react-native-web:
         specifier: ^0.20.0
         version: 0.20.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1487,6 +1487,12 @@ packages:
 
   '@legendapp/list@1.1.4':
     resolution: {integrity: sha512-Q+eLlMilmV2F8/orcR+0XFq543Up3V06WXqG/lpGqowo5reSXsjVCo7dQWNpvU+1+stb87SeAHw9k130DKa+iw==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
+  '@lodev09/react-native-true-sheet@2.0.5':
+    resolution: {integrity: sha512-io836GkxMDL48/oHiSvo0/WeiaOrCBwGTsCxVaydF6aHcbewDD/gFcLvJKLIZ7raQqiymZLiSKGWLwNAPKlIrw==}
     peerDependencies:
       react: '*'
       react-native: '*'
@@ -4771,12 +4777,6 @@ packages:
       react: '*'
       react-native: '*'
 
-  react-native-search-bar@3.5.1:
-    resolution: {integrity: sha512-L+y2gQZstApb2DavE8se6Mzj3CgxZiHxM0DezAdT4kb6+kV4+WeTN8jPxvrP6zgwbGcjuYKaHrASKnBmhuWmhA==}
-    peerDependencies:
-      react: '>=15.1 || >=16.0.0'
-      react-native: '>=0.40'
-
   react-native-web@0.20.0:
     resolution: {integrity: sha512-OOSgrw+aON6R3hRosCau/xVxdLzbjEcsLysYedka0ZON4ZZe6n9xgeN9ZkoejhARM36oTlUgHIQqxGutEJ9Wxg==}
     peerDependencies:
@@ -7380,6 +7380,11 @@ snapshots:
       react: 19.0.0
       react-native: 0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)
       use-sync-external-store: 1.5.0(react@19.0.0)
+
+  '@lodev09/react-native-true-sheet@2.0.5(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      react: 19.0.0
+      react-native: 0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)
 
   '@napi-rs/wasm-runtime@0.2.11':
     dependencies:
@@ -11308,12 +11313,6 @@ snapshots:
       react-native: 0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)
       react-native-is-edge-to-edge: 1.2.1(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       warn-once: 0.1.1
-
-  react-native-search-bar@3.5.1(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0):
-    dependencies:
-      prop-types: 15.8.1
-      react: 19.0.0
-      react-native: 0.79.5(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)
 
   react-native-web@0.20.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:

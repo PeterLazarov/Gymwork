@@ -47,6 +47,7 @@ export default function Home() {
 
   async function startWorkout() {
     setIsExerciseSelectVisible(true)
+    // TODO
     // await drizzleDB
     //   .insert(workouts)
     //   .values({
@@ -79,7 +80,6 @@ export default function Home() {
           paddingVertical: theme.spacing.md,
           justifyContent: "space-between",
           gap: theme.spacing.md,
-          // backgroundColor: "green",
         }}
       >
         {/* Workout templates */}
@@ -110,13 +110,7 @@ export default function Home() {
             </Button>
           </View>
 
-          <View
-            style={
-              {
-                // flexShrink: 1,
-              }
-            }
-          >
+          <View>
             <ListView
               data={chunk(templates, 3)}
               horizontal

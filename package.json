@@ -7,6 +7,7 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
+    "ios:device": "expo run:ios --device",
     "web": "expo start --web",
     "bundle:web": "npx expo export --platform web",
     "serve:web": "npx serve dist",
@@ -35,6 +36,7 @@
     "@expo/ui": "0.1.1-alpha.10",
     "@expo/vector-icons": "^14.1.0",
     "@legendapp/list": "^1.1.4",
+    "@lodev09/react-native-true-sheet": "^2.0.5",
     "@react-native-vector-icons/common": "^12.0.1",
     "@react-native-vector-icons/get-image": "^12.0.1",
     "@react-native-vector-icons/material-icons": "^12.0.1",
@@ -72,7 +74,6 @@
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
-    "react-native-search-bar": "^3.5.1",
     "react-native-web": "^0.20.0",
     "swiftui-react-native": "^6.3.3"
   },

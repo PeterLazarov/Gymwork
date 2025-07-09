@@ -17,6 +17,10 @@ https://orm.drizzle.team/docs/connect-op-sqlite
 https://expo.dev/blog/modern-sqlite-for-react-native-apps
 https://orm.drizzle.team/docs/connect-expo-sqlite
 
+## Components to try
+
+// TO TRY https://rnas.vercel.app/
+
 ## Other SQLite + reactivity approaches
 
 ```tree
