@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, createContext, useContext } from "react"
-import { PlatformColor, useWindowDimensions, View, Animated } from "react-native"
+import { Image, PlatformColor, useWindowDimensions, View, Animated } from "react-native"
 import { Button } from "@expo/ui/swift-ui"
 import { TrueSheet } from "@lodev09/react-native-true-sheet"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
@@ -10,6 +10,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { exercises } from "@/db/sqlite/schema"
 import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
+import { exerciseImages } from "@/utils/exerciseImages"
 import { IosPlatformColor } from "@/utils/iosColors"
 
 import { ListItem } from "./Ignite/ListItem"
@@ -42,12 +43,25 @@ function SheetContents() {
   const { bottom } = useSafeAreaInsets()
   const { drizzleDB } = useDB()
   const { data } = useLiveQuery(
-    drizzleDB
-      .select({
-        id: exercises.id,
-        name: exercises.name,
-      })
-      .from(exercises),
+    drizzleDB.query.exercises.findMany({
+      columns: {
+        id: true,
+        name: true,
+        images: true,
+      },
+      with: {
+        exerciseMuscleAreas: {
+          columns: {},
+          with: {
+            muscleArea: {
+              columns: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    }),
     [exercises],
   )
 
@@ -89,12 +103,48 @@ function SheetContents() {
             }}
             renderItem={({ item }) => (
               <ListItem
-                style={{ paddingHorizontal: theme.spacing.md }}
-                text={item.name}
+                style={{
+                  flexGrow: 1,
+                  height: 64,
+                  overflow: "hidden",
+                  gap: theme.spacing.sm,
+                }}
+                containerStyle={{
+                  position: "relative",
+                }}
                 onPress={(e) => {
+                  // TODO
                   console.log(e)
                 }}
-              ></ListItem>
+                LeftComponent={
+                  <Image
+                    width={64}
+                    height={64}
+                    style={{ height: 64, width: 96 }}
+                    source={exerciseImages[item.images[0]]}
+                  />
+                }
+              >
+                <View
+                  style={{
+                    flexDirection: "column",
+                    position: "absolute",
+                  }}
+                >
+                  <Text
+                    preset="formLabel"
+                    numberOfLines={1}
+                  >
+                    {item.name}
+                  </Text>
+                  <Text
+                    preset="formHelper"
+                    numberOfLines={1}
+                  >
+                    {item.exerciseMuscleAreas.map((e) => e.muscleArea.name).join(" / ")}
+                  </Text>
+                </View>
+              </ListItem>
             )}
             data={data}
           ></ListView>

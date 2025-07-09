@@ -73,7 +73,11 @@ export const Text = forwardRef(function Text(props: TextProps, ref: ForwardedRef
   ]
 
   return (
-    <RNText {...rest} style={$styles} ref={ref}>
+    <RNText
+      {...rest}
+      style={$styles}
+      ref={ref}
+    >
       {content}
     </RNText>
   )
@@ -98,6 +102,10 @@ const $baseStyle: ThemedStyle<TextStyle> = (theme) => ({
   ...$fontWeightStyles.normal,
   color: theme.colors.text,
 })
+const $helperStyle: ThemedStyle<TextStyle> = (theme) => ({
+  ...$baseStyle,
+  color: theme.colors.textDim,
+})
 
 const $presets: Record<Presets, ThemedStyleArray<TextStyle>> = {
   default: [$baseStyle],
@@ -111,6 +119,7 @@ const $presets: Record<Presets, ThemedStyleArray<TextStyle>> = {
   ],
   subheading: [$baseStyle, { ...$sizeStyles.lg, ...$fontWeightStyles.medium }],
   formLabel: [$baseStyle, { ...$fontWeightStyles.medium }],
-  formHelper: [$baseStyle, { ...$sizeStyles.sm, ...$fontWeightStyles.normal }],
+  // formHelper: [$baseStyle, { ...$sizeStyles.sm, ...$fontWeightStyles.normal }],
+  formHelper: [$helperStyle, { ...$sizeStyles.xs, ...$fontWeightStyles.normal }],
 }
 const $rtlStyle: TextStyle = isRTL ? { writingDirection: "rtl" } : {}
