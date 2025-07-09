@@ -4,7 +4,7 @@ import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 import Animated, { Easing, useSharedValue, withTiming } from "react-native-reanimated"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { exercises } from "@/db/sqlite/schema"
+import { exercise_equipment, exercise_muscle_areas, exercises } from "@/db/sqlite/schema"
 import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
 import { exerciseImages } from "@/utils/exerciseImages"
@@ -32,11 +32,43 @@ export function ExerciseSelectContents() {
 
   const { data } = useLiveQuery(
     drizzleDB.query.exercises.findMany({
-      where: searchString
-        ? (fields, operators) => {
-            return operators.like(fields.name, `%${searchString}%`)
-          }
-        : undefined,
+      where(fields, operators) {
+        const searchStringFilter = searchString
+          ? operators.like(fields.name, `%${searchString}%`)
+          : null
+
+        const areaFilter = area
+          ? operators.exists(
+              drizzleDB
+                .select()
+                .from(exercise_muscle_areas)
+                .where(
+                  operators.and(
+                    operators.eq(exercise_muscle_areas.exercise_id, fields.id),
+                    operators.eq(exercise_muscle_areas.muscle_area_id, area),
+                  ),
+                ),
+            )
+          : null
+
+        const equipmentFilter = equipment
+          ? operators.exists(
+              drizzleDB
+                .select()
+                .from(exercise_equipment)
+                .where(
+                  operators.and(
+                    operators.eq(exercise_equipment.exercise_id, fields.id),
+                    operators.eq(exercise_equipment.equipment_id, equipment),
+                  ),
+                ),
+            )
+          : null
+
+        const filters = [searchStringFilter, equipmentFilter, areaFilter].filter((f) => f !== null)
+
+        return filters.length ? operators.and(...filters) : undefined
+      },
       columns: {
         id: true,
         name: true,
@@ -55,7 +87,7 @@ export function ExerciseSelectContents() {
         },
       },
     }),
-    [exercises, searchString],
+    [exercises, searchString, area, equipment],
   )
 
   useEffect(() => {
