@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, createContext, useContext } from "react"
-import { Image, PlatformColor, useWindowDimensions, View, Animated } from "react-native"
+import { Image, PlatformColor, useWindowDimensions, View } from "react-native"
 import { Button } from "@expo/ui/swift-ui"
 import { TrueSheet } from "@lodev09/react-native-true-sheet"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 import { AppleIcon } from "react-native-bottom-tabs"
+import Animated, { Easing, useSharedValue, withSpring, withTiming } from "react-native-reanimated"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { exercises } from "@/db/sqlite/schema"
@@ -26,7 +27,7 @@ export interface ExerciseSelectProps {
   onSelect(id: string): void
 }
 
-// Add context for searchOpen and searchString
+// Context shared between ExerciseSelect (the parent/header) and SheetContents (list)
 interface ExerciseSelectContextType {
   searchOpen: boolean
   setSearchOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -42,133 +43,10 @@ function useExerciseSelectContext() {
   return ctx
 }
 
-function SheetContents() {
-  const { theme } = useAppTheme()
-  const { bottom } = useSafeAreaInsets()
-  const { drizzleDB } = useDB()
-
-  const { searchOpen, searchString } = useExerciseSelectContext()
-
-  const { data } = useLiveQuery(
-    drizzleDB.query.exercises.findMany({
-      where: searchString
-        ? (fields, operators) => {
-            return operators.like(fields.name, `%${searchString}%`)
-          }
-        : undefined,
-      columns: {
-        id: true,
-        name: true,
-        images: true,
-      },
-      with: {
-        exerciseMuscleAreas: {
-          columns: {},
-          with: {
-            muscleArea: {
-              columns: {
-                name: true,
-              },
-            },
-          },
-        },
-      },
-    }),
-    [exercises, searchString],
-  )
-
-  useEffect(() => {
-    console.log("query & update time ", Date.now() - time)
-  }, [data])
-
-  // Animated margin
-  const animatedMargin = useRef(new Animated.Value(48)).current
-
-  useEffect(() => {
-    Animated.timing(animatedMargin, {
-      toValue: searchOpen ? 0 : 48,
-      duration: 200,
-      useNativeDriver: false,
-    }).start()
-  }, [searchOpen])
-
-  return (
-    <Screen safeAreaEdges={["top"]}>
-      <Animated.View
-        style={{
-          marginTop: animatedMargin,
-          backgroundColor: PlatformColor(IosPlatformColor.systemBackground),
-          height: "100%",
-        }}
-      >
-        {/* Exercise list */}
-        <View
-          style={{
-            flexGrow: 1,
-          }}
-        >
-          <ListView
-            contentInset={{
-              bottom: (searchOpen ? 0 : 48) + bottom + theme.spacing.xxl,
-            }}
-            scrollIndicatorInsets={{
-              bottom: (searchOpen ? 0 : 48) + bottom + theme.spacing.xxl,
-            }}
-            renderItem={({ item }) => (
-              <ListItem
-                style={{
-                  flexGrow: 1,
-                  height: 64,
-                  overflow: "hidden",
-                  gap: theme.spacing.sm,
-                }}
-                containerStyle={{
-                  position: "relative",
-                }}
-                onPress={(e) => {
-                  // TODO
-                  console.log(e)
-                }}
-                LeftComponent={
-                  <Image
-                    width={64}
-                    height={64}
-                    style={{ height: 64, width: 96 }}
-                    source={exerciseImages[item.images[0]]}
-                  />
-                }
-              >
-                <View
-                  style={{
-                    flexDirection: "column",
-                    position: "absolute",
-                  }}
-                >
-                  <Text
-                    preset="formLabel"
-                    numberOfLines={1}
-                  >
-                    {item.name}
-                  </Text>
-                  <Text
-                    preset="formHelper"
-                    numberOfLines={1}
-                  >
-                    {item.exerciseMuscleAreas.map((e) => e.muscleArea.name).join(" / ")}
-                  </Text>
-                </View>
-              </ListItem>
-            )}
-            data={data}
-          ></ListView>
-        </View>
-      </Animated.View>
-    </Screen>
-  )
-}
-
 // If the search was left open when the sheet was closed, the state is somehow preserved
 let initSearchOpen = false
+const searchMargin = 46
+const negativeMargin = -10 // fills space when search is collapse upward
 
 export function ExerciseSelect(props: ExerciseSelectProps) {
   const Stack = createNativeStackNavigator()
@@ -267,5 +145,131 @@ export function ExerciseSelect(props: ExerciseSelectProps) {
         </View>
       </ExerciseSelectContext.Provider>
     </TrueSheet>
+  )
+}
+
+function SheetContents() {
+  const { theme } = useAppTheme()
+  const { bottom } = useSafeAreaInsets()
+  const { drizzleDB } = useDB()
+
+  const { searchOpen, searchString } = useExerciseSelectContext()
+
+  const { data } = useLiveQuery(
+    drizzleDB.query.exercises.findMany({
+      where: searchString
+        ? (fields, operators) => {
+            return operators.like(fields.name, `%${searchString}%`)
+          }
+        : undefined,
+      columns: {
+        id: true,
+        name: true,
+        images: true,
+      },
+      with: {
+        exerciseMuscleAreas: {
+          columns: {},
+          with: {
+            muscleArea: {
+              columns: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    }),
+    [exercises, searchString],
+  )
+
+  useEffect(() => {
+    console.log("query & update time ", Date.now() - time)
+  }, [data])
+
+  // Animated margin
+  const animatedMargin = useSharedValue(initSearchOpen ? negativeMargin : searchMargin)
+
+  useEffect(() => {
+    // Timings similar to iOS native animation
+    animatedMargin.value = withTiming(searchOpen ? negativeMargin : searchMargin, {
+      duration: 300,
+      easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+    })
+  }, [searchOpen])
+
+  return (
+    <Screen safeAreaEdges={["top"]}>
+      <Animated.View
+        style={{
+          marginTop: animatedMargin,
+          marginBottom: -negativeMargin,
+          backgroundColor: PlatformColor(IosPlatformColor.systemBackground),
+          height: "100%",
+        }}
+      >
+        {/* Exercise list */}
+        <View
+          style={{
+            flexGrow: 1,
+          }}
+        >
+          <ListView
+            contentInset={{
+              bottom: (searchOpen ? 0 : searchMargin) + bottom + theme.spacing.xxl,
+            }}
+            scrollIndicatorInsets={{
+              bottom: (searchOpen ? 0 : searchMargin) + bottom + theme.spacing.xxl,
+            }}
+            renderItem={({ item }) => (
+              <ListItem
+                style={{
+                  flexGrow: 1,
+                  height: 64,
+                  overflow: "hidden",
+                  gap: theme.spacing.sm,
+                }}
+                containerStyle={{
+                  position: "relative",
+                }}
+                onPress={(e) => {
+                  // TODO
+                  console.log(e)
+                }}
+                LeftComponent={
+                  <Image
+                    width={64}
+                    height={64}
+                    style={{ height: 64, width: 96 }}
+                    source={exerciseImages[item.images[0]]}
+                  />
+                }
+              >
+                <View
+                  style={{
+                    flexDirection: "column",
+                    position: "absolute",
+                  }}
+                >
+                  <Text
+                    preset="formLabel"
+                    numberOfLines={1}
+                  >
+                    {item.name}
+                  </Text>
+                  <Text
+                    preset="formHelper"
+                    numberOfLines={1}
+                  >
+                    {item.exerciseMuscleAreas.map((e) => e.muscleArea.name).join(" / ")}
+                  </Text>
+                </View>
+              </ListItem>
+            )}
+            data={data}
+          ></ListView>
+        </View>
+      </Animated.View>
+    </Screen>
   )
 }
