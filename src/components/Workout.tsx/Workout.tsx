@@ -30,10 +30,14 @@ export default function Workout({ workoutId, ...rest }: WorkoutProps) {
   const [scrollViewOpacity, setScrollViewOpacity] = useState(0)
 
   useEffect(() => {
-    setDeleteEnabled(false)
-    delay(0).then(() => {
-      setScrollViewOpacity(1)
-    })
+    delay(0)
+      .then(() => {
+        setDeleteEnabled(false)
+        // return delay(0)
+      })
+      .then(() => {
+        setScrollViewOpacity(1)
+      })
   }, [])
 
   const { data } = useLiveQuery(
