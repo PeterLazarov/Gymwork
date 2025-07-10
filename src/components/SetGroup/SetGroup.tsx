@@ -1,10 +1,8 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo } from "react"
 import { View } from "react-native"
-import { List, Switch } from "@expo/ui/swift-ui"
+import { List } from "@expo/ui/swift-ui"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
-import { TextField } from "swiftui-react-native"
 
-import { SelectSetGroup } from "@/db/sqlite/schema"
 import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
 
@@ -41,13 +39,6 @@ export function SetGroup({
 
   // TODO get from exercise config
   const headerCols = ["Set #", "KG", "Reps", "RPE", "Done"]
-
-  // ! Unless you hack your way around it
-  useEffect(() => {
-    setTimeout(() => {
-      // setDeleteEnabled(false)
-    }, 50)
-  }, [])
 
   const { data } = useLiveQuery(
     drizzleDB.query.set_groups.findFirst({
@@ -132,9 +123,6 @@ export function SetGroup({
           ],
           flexDirection: "row",
           marginRight: iosListMargin,
-        }}
-        onLayout={(e) => {
-          console.log(e.nativeEvent.layout)
         }}
       >
         {headerCols.map((col, i) => (

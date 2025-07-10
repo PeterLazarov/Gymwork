@@ -9,6 +9,7 @@ import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
 
 import { Text } from "../Ignite/Text"
+import { delay } from "@/utils/delay"
 
 export interface WorkoutProps extends ViewProps {
   workoutId: string
@@ -25,6 +26,15 @@ export default function Workout({ workoutId, ...rest }: WorkoutProps) {
   const {
     theme: { rounding, spacing },
   } = useAppTheme()
+
+  const [scrollViewOpacity, setScrollViewOpacity] = useState(0)
+
+  useEffect(() => {
+    setDeleteEnabled(false)
+    delay(0).then(() => {
+      setScrollViewOpacity(1)
+    })
+  }, [])
 
   const { data } = useLiveQuery(
     drizzleDB.query.workouts.findFirst({
@@ -82,6 +92,7 @@ export default function Workout({ workoutId, ...rest }: WorkoutProps) {
       <ScrollView
         style={{
           flex: 1,
+          opacity: scrollViewOpacity,
           // backgroundColor: "brown",
         }}
       >
