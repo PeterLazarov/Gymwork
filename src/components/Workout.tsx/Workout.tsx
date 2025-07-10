@@ -83,10 +83,10 @@ export default function Workout({ workoutId, ...rest }: WorkoutProps) {
         <View style={{ width: 200 }}>
           <Switch
             label="Delete"
-            value={deleteEnabled}
+            value={scrollViewOpacity === 1 ? deleteEnabled : false}
             variant="button"
             onValueChange={(value) => {
-              setDeleteEnabled(value)
+              setDeleteEnabled((v) => !v)
               setMoveEnabled(false)
             }}
           ></Switch>
