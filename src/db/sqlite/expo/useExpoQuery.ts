@@ -26,6 +26,11 @@ export function useExpoQuery<T extends { all: () => any }>(
   tables?: string[],
 ): Awaited<ReturnType<T["all"]>>
 
+/**
+ * Allows subscribing to any SQL query
+ * @param query A complete SQL string with the params included, or a Drizzle select/query (.toSQL)
+ * @param tables String array with the table names such as ["sets"]
+ */
 export function useExpoQuery(query: any, tables: string[] = defaultTables): any[] {
   const [data, setData] = useState<any[]>([])
   const latestReq = useRef(0)

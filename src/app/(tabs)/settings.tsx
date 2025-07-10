@@ -12,6 +12,7 @@ export default function SettingsScreen() {
 
   const data = [
     { text: "Track Rest", description: "Rest tracking lalala" },
+    { text: "First Day of he week" },
     {
       text: "Track RPE",
       description:

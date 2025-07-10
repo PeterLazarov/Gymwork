@@ -32,8 +32,6 @@ export function ExerciseSelectContents() {
   const { searchOpen, searchString, sortDirection, sortType, area, equipment } =
     useExerciseSelectContext()
 
-  console.log({ searchOpen, searchString, sortDirection, sortType, area, equipment })
-
   const { data } = useLiveQuery(
     drizzleDB.query.exercises.findMany({
       where(fields, operators) {
@@ -122,7 +120,6 @@ export function ExerciseSelectContents() {
         style={{
           marginTop: animatedMargin,
           marginBottom: -negativeMargin,
-          // backgroundColor: PlatformColor(IosPlatformColor.systemBackground),
           backgroundColor: theme.colors.background,
           height: "100%",
         }}
@@ -175,7 +172,6 @@ export function ExerciseSelectContents() {
 
                     return { ...obj }
                   })
-                  console.log({ selected })
                 }}
                 LeftComponent={
                   // TODO fallback image

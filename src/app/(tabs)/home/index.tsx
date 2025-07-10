@@ -15,6 +15,7 @@ import { WorkoutTemplateCard } from "@/components/WorkoutTemplateCard"
 import { InsertTemplateWorkout, SelectWorkout, workouts } from "@/db/sqlite/schema"
 import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
+import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 
 // Inspiration - shortcuts / podcasts apps
 
@@ -70,6 +71,14 @@ export default function Home() {
       )
   }, [])
   // const { data: todayWorkouts } = useLiveQuery(todayWorkoutsQuery, [workouts])
+
+  const { data: testWorkout } = useLiveQuery(
+    drizzleDB.query.workouts.findFirst({
+      columns: {
+        id: true,
+      },
+    }),
+  )
 
   return (
     <Screen>
@@ -207,6 +216,17 @@ export default function Home() {
             systemImage="plus"
           >
             Start Empty Workout
+          </Button>
+
+          <Button
+            variant="borderedProminent"
+            disabled={!testWorkout?.id}
+            onPress={() => {
+              router.push(`/(tabs)/home/${testWorkout?.id}`, {})
+            }}
+            systemImage="plus"
+          >
+            Go to test workout
           </Button>
         </View>
       </View>

@@ -142,7 +142,6 @@ export function ExerciseSelect(props: ExerciseSelectProps) {
                             selectedIndex={filterAreaIndex === null ? null : filterAreaIndex + 1}
                             onOptionSelected={({ nativeEvent: { index } }) => {
                               // Accounts for deselection (null option)
-                              console.log("area ", index)
                               if (index === 0) {
                                 setFilterAreaIndex(null)
                                 return

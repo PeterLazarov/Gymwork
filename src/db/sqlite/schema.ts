@@ -172,6 +172,19 @@ export const sets = sqliteTable("sets", {
   rpe: integer("rpe"), // 1-10
 
   completed_at: integer(),
+
+  // GymWork can do this via tags IMO, but maybe failure is good to capture?
+  // But then again, we'll do that via different sets right?
+  // fail one, complete another to designate which is planned and which accomplished?
+
+  // hevy style
+  // type: text({'warmup', 'normal', 'failure', 'drop'})
+
+  // fitNotes status style
+  // -completed_at
+  // status: text({ enum: ['completed', 'failed', 'warmup'] })
+  // status_changed_at: integer(),
+
   created_at: timestamp_col,
 })
 
