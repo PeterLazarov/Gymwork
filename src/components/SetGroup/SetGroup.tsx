@@ -27,6 +27,8 @@ const listRowInnerHeight = 36
 const listOuterRowInnerHeight = 44 // ?44?
 const exerciseNameHeight = 24
 
+const testColors = ["red", "green", "blue", "orange", "purple", "gray", "black", "teal"]
+
 export function SetGroup({
   setGroupId,
   deleteEnabled,
@@ -101,9 +103,9 @@ export function SetGroup({
       {/* Exercise name */}
       <Text
         style={{
-          textAlign: "center",
-          width: "100%",
-          paddingHorizontal: iosListHorizontalMargin,
+          alignSelf: "center",
+          // backgroundColor: "red",
+          // transform: [{ translateX: -listAligningTranslate }],
           height: exerciseNameHeight,
         }}
         preset="subheading"
@@ -121,13 +123,11 @@ export function SetGroup({
           paddingHorizontal: iosListHorizontalMargin,
           transform: [
             {
-              translateX:
-                -listAligningTranslate +
-                (deleteEnabled
-                  ? iosListDeleteModeMargin
-                  : moveEnabled
-                    ? -iosListMoveModeMargin
-                    : 0),
+              translateX: deleteEnabled
+                ? iosListDeleteModeMargin
+                : moveEnabled
+                  ? -iosListMoveModeMargin
+                  : 0,
             },
           ],
           flexDirection: "row",
@@ -137,7 +137,7 @@ export function SetGroup({
           console.log(e.nativeEvent.layout)
         }}
       >
-        {headerCols.map((col) => (
+        {headerCols.map((col, i) => (
           <Text
             key={col}
             style={{
@@ -145,6 +145,7 @@ export function SetGroup({
               height: 24,
               marginTop: 8,
               textAlign: "center",
+              // backgroundColor: testColors[i],
             }}
             numberOfLines={1}
             text={col}
@@ -167,10 +168,10 @@ export function SetGroup({
         deleteEnabled={deleteEnabled}
         selectEnabled={selectEnabled}
       >
-        {data?.sets.map((set, index) => (
+        {data?.sets.map((set, i) => (
           // set rows
           <View
-            key={index}
+            key={i}
             style={{
               flexDirection: "row",
               // backgroundColor: "red",
@@ -181,10 +182,12 @@ export function SetGroup({
               style={{
                 flex: 1,
                 height: listRowInnerHeight,
-                transform: [{ translateX: moveEnabled || deleteEnabled ? -20 : 0 }],
-                // backgroundColor: "blue",
+                transform: [
+                  { translateX: listAligningTranslate + (moveEnabled || deleteEnabled ? -20 : 0) },
+                ],
                 justifyContent: "center",
                 alignItems: "center",
+                // backgroundColor: "blue",
               }}
             >
               <Text>{set.position}</Text>
@@ -193,7 +196,9 @@ export function SetGroup({
               style={{
                 flex: 1,
                 height: listRowInnerHeight,
-                transform: [{ translateX: moveEnabled || deleteEnabled ? -20 : 0 }],
+                transform: [
+                  { translateX: listAligningTranslate + (moveEnabled || deleteEnabled ? -20 : 0) },
+                ],
 
                 justifyContent: "center",
                 alignItems: "center",
@@ -206,7 +211,9 @@ export function SetGroup({
               style={{
                 flex: 1,
                 height: listRowInnerHeight,
-                transform: [{ translateX: moveEnabled || deleteEnabled ? -20 : 0 }],
+                transform: [
+                  { translateX: listAligningTranslate + (moveEnabled || deleteEnabled ? -20 : 0) },
+                ],
 
                 justifyContent: "center",
                 alignItems: "center",
@@ -219,7 +226,9 @@ export function SetGroup({
               style={{
                 flex: 1,
                 height: listRowInnerHeight,
-                transform: [{ translateX: moveEnabled || deleteEnabled ? -20 : 0 }],
+                transform: [
+                  { translateX: listAligningTranslate + (moveEnabled || deleteEnabled ? -20 : 0) },
+                ],
 
                 justifyContent: "center",
                 alignItems: "center",
@@ -232,11 +241,13 @@ export function SetGroup({
               style={{
                 flex: 1,
                 height: listRowInnerHeight,
-                transform: [{ translateX: moveEnabled || deleteEnabled ? -20 : 0 }],
+                transform: [
+                  { translateX: listAligningTranslate + (moveEnabled || deleteEnabled ? -20 : 0) },
+                ],
 
                 justifyContent: "center",
                 alignItems: "center",
-                // backgroundColor: "browna",
+                // backgroundColor: "brown",
               }}
             >
               <Text>{set.completed_at ? "Yes" : "No"}</Text>
