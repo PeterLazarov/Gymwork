@@ -3,6 +3,7 @@ import { View, ScrollView, Dimensions } from "react-native"
 import { useRouter } from "expo-router"
 import { Button, Label } from "@expo/ui/swift-ui"
 import { and, gte, lte } from "drizzle-orm"
+import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 import { chunk } from "lodash"
 import { AppleIcon } from "react-native-bottom-tabs"
 
@@ -15,13 +16,12 @@ import { WorkoutTemplateCard } from "@/components/WorkoutTemplateCard"
 import { InsertTemplateWorkout, SelectWorkout, workouts } from "@/db/sqlite/schema"
 import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
-import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 
 // Inspiration - shortcuts / podcasts apps
 
 const templateCardHeight = 100
 
-const todayWorkouts: Array<SelectWorkout> = Array.from({ length: 2 }).map(
+const todayWorkouts: Array<SelectWorkout> = Array.from({ length: 3 }).map(
   (_, i): SelectWorkout => ({
     id: `${i}qweqwe`,
     name: `Workout ${new Date().toISOString()}`,
@@ -33,7 +33,7 @@ const todayWorkouts: Array<SelectWorkout> = Array.from({ length: 2 }).map(
     template_id: null,
   }),
 )
-const templates: Array<InsertTemplateWorkout> = Array.from({ length: 8 }, (_, i) => ({
+const templates: Array<InsertTemplateWorkout> = Array.from({ length: 19 }, (_, i) => ({
   id: "123" + i,
   name: `Template ${i}`,
   created_at: Date.now() - i,
@@ -45,6 +45,9 @@ export default function Home() {
   const router = useRouter()
 
   const [isExerciseSelectVisible, setIsExerciseSelectVisible] = useState(false)
+
+  const showTemplateListOverlap = templates.length > 1
+  const showContinueListOverlap = todayWorkouts.length > 1
 
   async function startWorkout() {
     setIsExerciseSelectVisible(true)
@@ -126,16 +129,20 @@ export default function Home() {
               showsHorizontalScrollIndicator={false}
               decelerationRate="fast"
               snapToAlignment="start"
-              snapToInterval={Dimensions.get("window").width / 2 - theme.spacing.md}
+              snapToInterval={
+                Dimensions.get("window").width / 2 -
+                (showTemplateListOverlap ? theme.spacing.md : theme.spacing.xs)
+              }
               contentContainerStyle={{ paddingHorizontal: theme.spacing.md }}
               estimatedListSize={{
                 height: templateCardHeight,
-                width: Dimensions.get("window").width / 2 - theme.spacing.md * 2,
+                width:
+                  Dimensions.get("window").width / 2 -
+                  theme.spacing.md * (showTemplateListOverlap ? 2 : 1.5),
               }}
               renderItem={({ item: items }) => (
                 <View
                   style={{
-                    // backgroundColor: "red",
                     gap: theme.spacing.md,
                   }}
                 >
@@ -144,7 +151,9 @@ export default function Home() {
                       style={{
                         height: templateCardHeight,
                         marginRight: theme.spacing.md,
-                        width: Dimensions.get("window").width / 2 - theme.spacing.md * 2,
+                        width:
+                          Dimensions.get("window").width / 2 -
+                          theme.spacing.md * (showTemplateListOverlap ? 2 : 1.5),
                       }}
                       key={item.name}
                       template={item}
@@ -177,21 +186,25 @@ export default function Home() {
               horizontal
               showsHorizontalScrollIndicator={false}
               bounces
-              snapToInterval={Dimensions.get("window").width - theme.spacing.md * 2}
+              snapToInterval={
+                Dimensions.get("window").width -
+                theme.spacing.md * (1 + (showContinueListOverlap ? 1 : 0))
+              }
               snapToAlignment="start"
               decelerationRate="fast"
               style={{ flexGrow: 1, zIndex: 0 }}
               contentContainerStyle={{
                 gap: theme.spacing.md,
                 paddingHorizontal: theme.spacing.md,
-                // backgroundColor: "red",
               }}
             >
               {todayWorkouts?.length ? (
                 todayWorkouts.map((workout) => (
                   <WorkoutOverviewContinueCard
                     style={{
-                      width: Dimensions.get("window").width - theme.spacing.md * 3,
+                      width:
+                        Dimensions.get("window").width -
+                        theme.spacing.md * (2 + (showContinueListOverlap ? 1 : 0)),
                     }}
                     key={workout.id}
                     workout={workout}
