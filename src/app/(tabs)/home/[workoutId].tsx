@@ -4,9 +4,16 @@ import { Screen } from "@/components/Ignite/Screen"
 import { Text } from "@/components/Ignite/Text"
 import Workout from "@/components/Workout.tsx/Workout"
 import { rounding } from "@/theme/rounding"
+import { useHeader } from "@/utils/useHeader"
 
 export default function WorkoutScreen() {
   const { workoutId } = useLocalSearchParams<{ workoutId: string }>()
+  useHeader(
+    {
+      title: workoutId,
+    },
+    [workoutId],
+  )
 
   return (
     <Screen

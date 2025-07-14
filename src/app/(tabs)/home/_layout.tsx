@@ -15,7 +15,13 @@ export default function HomeStack() {
       }}
     >
       {/* Optionally configure static options outside the route.*/}
-      <Stack.Screen name="home" options={{}} />
+      <Stack.Screen
+        name="index"
+        options={{
+          title: "Home",
+        }}
+      />
+      <Stack.Screen name="[workoutId]" />
     </Stack>
   )
 }

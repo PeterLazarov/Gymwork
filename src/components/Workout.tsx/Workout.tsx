@@ -1,15 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { ScrollView, View, ViewProps } from "react-native"
-import { List, Switch } from "@expo/ui/swift-ui"
+import { Switch } from "@expo/ui/swift-ui"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
-import { TextField } from "swiftui-react-native"
 
 import { SetGroup } from "@/components/SetGroup/SetGroup"
 import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
+import { delay } from "@/utils/delay"
 
 import { Text } from "../Ignite/Text"
-import { delay } from "@/utils/delay"
 
 export interface WorkoutProps extends ViewProps {
   workoutId: string
