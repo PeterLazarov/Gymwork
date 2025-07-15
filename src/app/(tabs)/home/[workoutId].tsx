@@ -127,6 +127,7 @@ export default function WorkoutScreen() {
               moveEnabled={moveEnabled}
               deleteEnabled={deleteEnabled}
               selectEnabled={false}
+              style={{ marginBottom: 16 }}
             ></SetGroup2>
           ))}
         </ScrollView>

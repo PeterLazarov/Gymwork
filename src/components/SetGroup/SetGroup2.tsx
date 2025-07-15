@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useMemo } from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, ViewStyle } from "react-native"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 import type { SortableGridRenderItem } from "react-native-sortables"
 import Sortable from "react-native-sortables"
@@ -9,6 +9,10 @@ import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
 import { Text } from "../Ignite/Text"
 import { rounding } from "@/theme/rounding"
+import { Button } from "@expo/ui/swift-ui"
+import { AppleIcon } from "react-native-bottom-tabs"
+
+import Animated, { FadeIn, FadeOut, LinearTransition } from "react-native-reanimated"
 
 const DATA = Array.from({ length: 12 }, (_, index) => `Item ${index + 1}`)
 
@@ -18,6 +22,7 @@ export interface SetGroup2Props {
   moveEnabled: boolean
   deleteEnabled: boolean
   selectEnabled: boolean
+  style?: ViewStyle
 }
 
 export function SetGroup2({
@@ -26,6 +31,7 @@ export function SetGroup2({
   editModeEnabled,
   moveEnabled,
   selectEnabled,
+  style,
 }: SetGroup2Props) {
   const {
     theme: { rounding, spacing },
@@ -70,54 +76,90 @@ export function SetGroup2({
   const renderItem = useCallback<SortableGridRenderItem<SelectSet>>(
     ({ item }) => (
       // row
-      <View style={styles.card}>
-        <Text style={[styles.cell, { width: 16, backgroundColor: "red" }]}>123</Text>
-        <Text style={[styles.cell, { width: 48, backgroundColor: "blue" }]}>123</Text>
-        <Text style={[styles.cell, { width: 32, backgroundColor: "red" }]}>123</Text>
-        <Text style={[styles.cell, { width: 64, backgroundColor: "green" }]}>123</Text>
-        <Text style={[styles.cell, { width: 32, backgroundColor: "red" }]}>123</Text>
-        <Text style={[styles.cell, { width: 32, backgroundColor: "brown" }]}>123</Text>
+      <View style={styles.row}>
+        {deleteEnabled && (
+          <Animated.View layout={LinearTransition.duration(1000)}>
+            <Button
+              systemImage={"delete.backward" as AppleIcon["sfSymbol"]}
+              onPress={() => {
+                alert("deleted ")
+              }}
+              children=" "
+            ></Button>
+          </Animated.View>
+        )}
+
+        <Animated.View
+          layout={LinearTransition.duration(1000)}
+          style={[styles.cell, { width: 16, backgroundColor: "red" }]}
+        >
+          <Text>123</Text>
+        </Animated.View>
+        <Animated.View
+          layout={LinearTransition.duration(1000)}
+          style={[styles.cell, { width: 48, backgroundColor: "blue" }]}
+        >
+          <Text>123</Text>
+        </Animated.View>
+        <Animated.View
+          layout={LinearTransition.duration(1000)}
+          style={[styles.cell, { width: 32, backgroundColor: "red" }]}
+        >
+          <Text>123</Text>
+        </Animated.View>
+        <Animated.View
+          layout={LinearTransition.duration(1000)}
+          style={[styles.cell, { width: 64, backgroundColor: "green" }]}
+        >
+          <Text>123</Text>
+        </Animated.View>
+        <Animated.View
+          layout={LinearTransition.duration(1000)}
+          style={[styles.cell, { width: 32, backgroundColor: "red" }]}
+        >
+          <Text>123</Text>
+        </Animated.View>
+        <Animated.View
+          layout={LinearTransition.duration(1000)}
+          style={[styles.cell, { width: 32, backgroundColor: "brown" }]}
+        >
+          <Text>123</Text>
+        </Animated.View>
       </View>
     ),
-    [],
+    [deleteEnabled],
   )
 
   return (
-    // TODO only display if sets >0
-    <View>
-      {/* heading */}
-      <Text preset="formLabel">{data?.sets[0]?.exercise?.name}</Text>
-
-      {/* thead */}
-      <View style={styles.card}>
-        <Text style={[styles.cell, { width: 16, backgroundColor: "red" }]}>Set #</Text>
-        <Text style={[styles.cell, { width: 48, backgroundColor: "blue" }]}>Previous</Text>
-        <Text style={[styles.cell, { width: 32, backgroundColor: "red" }]}>Reps</Text>
-        <Text style={[styles.cell, { width: 64, backgroundColor: "green" }]}>Weight</Text>
-        <Text style={[styles.cell, { width: 32, backgroundColor: "red" }]}>RPE</Text>
-        <Text style={[styles.cell, { width: 32, backgroundColor: "brown" }]}>Done?</Text>
-      </View>
-
-      {/* tbody */}
+    <View style={style}>
       <Sortable.Grid
+        // key={Number(deleteEnabled)}
         columns={1}
         data={data?.sets ?? []}
         renderItem={renderItem}
         rowGap={0}
         columnGap={0}
+        sortEnabled={moveEnabled}
+        // Check if properly configured
+        hapticsEnabled={true}
+        // itemEntering={}
+        // itemExiting={}
+
+        rowHeight={40}
+        // rows={data?.sets.length || 0}
       />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  card: {
+  row: {
     alignItems: "center",
-    backgroundColor: "#36877F",
-    borderRadius: rounding.sm,
+    // backgroundColor: "#36877F",
+    // borderRadius: rounding.sm,
     flexDirection: "row",
     height: 40,
-    justifyContent: "center",
+    // justifyContent: "center",
   },
   cell: {
     flexGrow: 1,
