@@ -21,6 +21,15 @@ https://orm.drizzle.team/docs/connect-expo-sqlite
 
 // TO TRY https://rnas.vercel.app/
 
+## Reordering components to try
+
+- https://github.com/computerjazz/react-native-draggable-flatlist
+- https://github.com/computerjazz/react-native-swipeable-item
+
+- https://github.com/MatiPl01/react-native-sortables
+- https://github.com/entropyconquers/react-native-reanimated-dnd
+- https://github.com/SHISME/react-native-draggable-grid
+
 ## Other SQLite + reactivity approaches
 
 ```tree
