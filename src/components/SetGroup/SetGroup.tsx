@@ -84,7 +84,7 @@ export function SetGroup({
             <View
               key={i}
               style={{
-                backgroundColor: "red",
+                // backgroundColor: "red",
                 // height: listRowInnerHeight,
                 width: widthPosition,
               }}
@@ -110,7 +110,7 @@ export function SetGroup({
             <View
               key={i}
               style={{
-                backgroundColor: "brown",
+                // backgroundColor: "brown",
 
                 width: widthPrev,
               }}
@@ -135,7 +135,7 @@ export function SetGroup({
             <View
               key={i}
               style={{
-                backgroundColor: "yellow",
+                // backgroundColor: "yellow",
 
                 width: widthWeight,
               }}
@@ -161,7 +161,7 @@ export function SetGroup({
             <View
               key={i}
               style={{
-                backgroundColor: "green",
+                // backgroundColor: "green",
 
                 width: widthReps,
               }}
@@ -187,7 +187,7 @@ export function SetGroup({
             <View
               key={i}
               style={{
-                backgroundColor: "blue",
+                // backgroundColor: "blue",
 
                 width: widthRPE,
               }}
@@ -213,7 +213,7 @@ export function SetGroup({
             <View
               key={i}
               style={{
-                backgroundColor: "brown",
+                // backgroundColor: "brown",
 
                 width: widthCompletion,
               }}
@@ -330,7 +330,7 @@ export function SetGroup({
               marginTop: 8,
               textAlign: "center",
               ...col.styles,
-              backgroundColor: testColors[i],
+              // backgroundColor: testColors[i],
             }}
             numberOfLines={1}
             text={col.label}
@@ -359,7 +359,7 @@ export function SetGroup({
             key={i}
             style={{
               flexDirection: "row",
-              backgroundColor: "dodgerBlue",
+              // backgroundColor: "dodgerBlue",
               marginRight: iosListMargin,
               height: listRowInnerHeight,
             }}
