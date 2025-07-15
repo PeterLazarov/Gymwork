@@ -1,8 +1,9 @@
-import { useEffect, useMemo } from "react"
-import { View } from "react-native"
+import { ReactNode, useEffect, useMemo } from "react"
+import { useWindowDimensions, View } from "react-native"
 import { List } from "@expo/ui/swift-ui"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 
+import { SelectSet } from "@/db/sqlite/schema"
 import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
 
@@ -36,9 +37,203 @@ export function SetGroup({
 }: SetGroupProps) {
   const { drizzleDB } = useDB()
   const { theme } = useAppTheme()
+  const { width } = useWindowDimensions()
 
   // TODO get from exercise config
-  const headerCols = ["Set #", "KG", "Reps", "RPE", "Done"]
+  // const headerCols = ["Set #", "KG", "Reps", "RPE", "Done"]
+  const columns: Array<{
+    renderItem: (item: SelectSet, i: number) => ReactNode
+    label: string
+    styles: {
+      width: number
+      flexGrow?: number
+    }
+  }> = useMemo(() => {
+    const tableWidth = width - iosListHorizontalMargin // 20
+    let widthLeft = tableWidth
+
+    let widthPosition = 40
+    widthLeft -= widthPosition
+
+    let widthPrev = 80
+    widthLeft -= widthPrev
+
+    let widthWeight = 50
+    widthLeft -= widthWeight
+
+    let widthReps = 40
+    widthLeft -= widthReps
+
+    let widthRPE = 32
+    widthLeft -= widthRPE
+
+    let widthCompletion = 32
+    widthLeft -= widthRPE
+
+    widthPosition += widthLeft / 6
+    widthPrev += widthLeft / 6
+    widthWeight += widthLeft / 6
+    widthReps += widthLeft / 6
+    widthRPE += widthLeft / 6
+    widthCompletion += widthLeft / 6
+
+    return [
+      {
+        renderItem(item, i) {
+          return (
+            <View
+              key={i}
+              style={{
+                backgroundColor: "red",
+                // height: listRowInnerHeight,
+                width: widthPosition,
+              }}
+            >
+              <Text
+                style={{ textAlign: "center" }}
+                key={item.id + "_set"}
+              >
+                {item["position"]}
+              </Text>
+            </View>
+          )
+        },
+
+        label: "Set #",
+        styles: {
+          width: widthPosition,
+        },
+      },
+      {
+        renderItem(item, i) {
+          return (
+            <View
+              key={i}
+              style={{
+                backgroundColor: "brown",
+
+                width: widthPrev,
+              }}
+            >
+              <Text
+                style={{ textAlign: "center" }}
+                key={item.id + "_idk"}
+              >
+                {`${(item.weight_mcg ?? 0) / 1_000_000_000} x ${item.reps}`}
+              </Text>
+            </View>
+          )
+        },
+        label: "Previous",
+        styles: {
+          width: widthPrev,
+        },
+      },
+      {
+        renderItem(item, i) {
+          return (
+            <View
+              key={i}
+              style={{
+                backgroundColor: "yellow",
+
+                width: widthWeight,
+              }}
+            >
+              <Text
+                style={{ textAlign: "center" }}
+                key={item.id + "_weight"}
+              >
+                {(item["weight_mcg"] ?? 0) / 1_000_000_000}
+              </Text>
+            </View>
+          )
+        },
+
+        label: "KG", // can be +kg, -kg etc
+        styles: {
+          width: widthWeight,
+        },
+      },
+      {
+        renderItem(item, i) {
+          return (
+            <View
+              key={i}
+              style={{
+                backgroundColor: "green",
+
+                width: widthReps,
+              }}
+            >
+              <Text
+                style={{ textAlign: "center" }}
+                key={item.id + "_reps"}
+              >
+                {item["reps"]}
+              </Text>
+            </View>
+          )
+        },
+
+        label: "Reps",
+        styles: {
+          width: widthReps,
+        },
+      },
+      {
+        renderItem(item, i) {
+          return (
+            <View
+              key={i}
+              style={{
+                backgroundColor: "blue",
+
+                width: widthRPE,
+              }}
+            >
+              <Text
+                style={{ textAlign: "center" }}
+                key={item.id + "_rpe"}
+              >
+                {item["rpe"]}
+              </Text>
+            </View>
+          )
+        },
+
+        label: "RPE",
+        styles: {
+          width: widthRPE,
+        },
+      },
+      {
+        renderItem(item, i) {
+          return (
+            <View
+              key={i}
+              style={{
+                backgroundColor: "brown",
+
+                width: widthCompletion,
+              }}
+            >
+              <Text
+                style={{ textAlign: "center" }}
+                key={item.id + "_idk"}
+              >
+                {item["completed_at"]} compl
+              </Text>
+            </View>
+          )
+        },
+        label: "Done?",
+        styles: {
+          width: widthCompletion,
+        },
+      },
+    ]
+  }, [])
 
   const { data } = useLiveQuery(
     drizzleDB.query.set_groups.findFirst({
@@ -118,25 +313,27 @@ export function SetGroup({
                 ? iosListDeleteModeMargin
                 : moveEnabled
                   ? -iosListMoveModeMargin
-                  : 0,
+                  : -listAligningTranslate,
             },
           ],
           flexDirection: "row",
           marginRight: iosListMargin,
         }}
       >
-        {headerCols.map((col, i) => (
+        {columns.map((col, i) => (
           <Text
-            key={col}
+            key={i}
             style={{
-              flex: 1,
+              // flex: 1,
+
               height: 24,
               marginTop: 8,
               textAlign: "center",
-              // backgroundColor: testColors[i],
+              ...col.styles,
+              backgroundColor: testColors[i],
             }}
             numberOfLines={1}
-            text={col}
+            text={col.label}
           ></Text>
         ))}
       </View>
@@ -162,84 +359,12 @@ export function SetGroup({
             key={i}
             style={{
               flexDirection: "row",
-              // backgroundColor: "red",
+              backgroundColor: "dodgerBlue",
               marginRight: iosListMargin,
+              height: listRowInnerHeight,
             }}
           >
-            <View
-              style={{
-                flex: 1,
-                height: listRowInnerHeight,
-                transform: [
-                  { translateX: listAligningTranslate + (moveEnabled || deleteEnabled ? -20 : 0) },
-                ],
-                justifyContent: "center",
-                alignItems: "center",
-                // backgroundColor: "blue",
-              }}
-            >
-              <Text>{set.position}</Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                height: listRowInnerHeight,
-                transform: [
-                  { translateX: listAligningTranslate + (moveEnabled || deleteEnabled ? -20 : 0) },
-                ],
-
-                justifyContent: "center",
-                alignItems: "center",
-                // backgroundColor: "green",
-              }}
-            >
-              <Text>{set.weight_mcg! / 1_000_000_000}</Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                height: listRowInnerHeight,
-                transform: [
-                  { translateX: listAligningTranslate + (moveEnabled || deleteEnabled ? -20 : 0) },
-                ],
-
-                justifyContent: "center",
-                alignItems: "center",
-                // backgroundColor: "yellow",
-              }}
-            >
-              <Text>{set.reps}</Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                height: listRowInnerHeight,
-                transform: [
-                  { translateX: listAligningTranslate + (moveEnabled || deleteEnabled ? -20 : 0) },
-                ],
-
-                justifyContent: "center",
-                alignItems: "center",
-                // backgroundColor: "blue",
-              }}
-            >
-              <Text>{set.rpe}</Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                height: listRowInnerHeight,
-                transform: [
-                  { translateX: listAligningTranslate + (moveEnabled || deleteEnabled ? -20 : 0) },
-                ],
-
-                justifyContent: "center",
-                alignItems: "center",
-                // backgroundColor: "brown",
-              }}
-            >
-              <Text>{set.completed_at ? "Yes" : "No"}</Text>
-            </View>
+            {columns.map((col, i) => col.renderItem(set, i))}
           </View>
         ))}
       </List>
