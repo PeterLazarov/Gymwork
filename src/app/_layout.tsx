@@ -11,6 +11,7 @@ import { initI18n } from "@/i18n"
 import { ThemeProvider as ThemeProviderIgnite, useAppTheme } from "@/theme/context"
 import { customFontsToLoad } from "@/theme/typography"
 import { loadDateFnsLocale } from "@/utils/formatDate"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -56,7 +57,9 @@ export default function Root() {
           <RootLayoutChild>
             <ExpoSQLiteProvider>
               <DrizzleProvider>
-                <Slot />
+                <GestureHandlerRootView>
+                  <Slot />
+                </GestureHandlerRootView>
               </DrizzleProvider>
             </ExpoSQLiteProvider>
           </RootLayoutChild>

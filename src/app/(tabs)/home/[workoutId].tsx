@@ -6,7 +6,8 @@ import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 
 import { Screen } from "@/components/Ignite/Screen"
 import { Text } from "@/components/Ignite/Text"
-import { SetGroup } from "@/components/SetGroup/SetGroup"
+import { SetGroup2 } from "@/components/SetGroup/SetGroup2"
+// import { SetGroup } from "@/components/SetGroup/SetGroup"
 import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
 import { delay } from "@/utils/delay"
@@ -119,14 +120,14 @@ export default function WorkoutScreen() {
           }}
         >
           {workout?.setGroups.map(({ id }) => (
-            <SetGroup
+            <SetGroup2
               key={id}
               setGroupId={id}
               editModeEnabled={true}
               moveEnabled={moveEnabled}
               deleteEnabled={deleteEnabled}
               selectEnabled={false}
-            ></SetGroup>
+            ></SetGroup2>
           ))}
         </ScrollView>
       </View>
