@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useMemo } from "react"
-import { useWindowDimensions, View } from "react-native"
+import { useWindowDimensions, View, ViewStyle } from "react-native"
 import { List } from "@expo/ui/swift-ui"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 
@@ -38,6 +38,20 @@ export function SetGroup({
   const { drizzleDB } = useDB()
   const { theme } = useAppTheme()
   const { width } = useWindowDimensions()
+
+  const modeTransform = useMemo((): ViewStyle => {
+    return {
+      transform: [
+        {
+          translateX: deleteEnabled
+            ? iosListDeleteModeMargin
+            : moveEnabled
+              ? -iosListMoveModeMargin
+              : -listAligningTranslate,
+        },
+      ],
+    }
+  }, [deleteEnabled, moveEnabled])
 
   // TODO get from exercise config
   // const headerCols = ["Set #", "KG", "Reps", "RPE", "Done"]
@@ -87,6 +101,7 @@ export function SetGroup({
                 // backgroundColor: "red",
                 // height: listRowInnerHeight,
                 width: widthPosition,
+                ...modeTransform,
               }}
             >
               <Text
@@ -113,6 +128,7 @@ export function SetGroup({
                 // backgroundColor: "brown",
 
                 width: widthPrev,
+                ...modeTransform,
               }}
             >
               <Text
@@ -138,6 +154,7 @@ export function SetGroup({
                 // backgroundColor: "yellow",
 
                 width: widthWeight,
+                ...modeTransform,
               }}
             >
               <Text
@@ -164,6 +181,7 @@ export function SetGroup({
                 // backgroundColor: "green",
 
                 width: widthReps,
+                ...modeTransform,
               }}
             >
               <Text
@@ -190,6 +208,7 @@ export function SetGroup({
                 // backgroundColor: "blue",
 
                 width: widthRPE,
+                ...modeTransform,
               }}
             >
               <Text
@@ -216,6 +235,7 @@ export function SetGroup({
                 // backgroundColor: "brown",
 
                 width: widthCompletion,
+                ...modeTransform,
               }}
             >
               <Text
@@ -307,17 +327,10 @@ export function SetGroup({
           height: listRowInnerHeight,
           width: "100%",
           paddingHorizontal: iosListHorizontalMargin,
-          transform: [
-            {
-              translateX: deleteEnabled
-                ? iosListDeleteModeMargin
-                : moveEnabled
-                  ? -iosListMoveModeMargin
-                  : -listAligningTranslate,
-            },
-          ],
+
           flexDirection: "row",
           marginRight: iosListMargin,
+          ...modeTransform,
         }}
       >
         {columns.map((col, i) => (
