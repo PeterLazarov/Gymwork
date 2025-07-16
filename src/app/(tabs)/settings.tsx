@@ -51,7 +51,7 @@ export default function SettingsScreen() {
             onValueChange={(checked) => {
               // setChecked(checked)
             }}
-            label={item.text + item.description}
+            label={item.text}
             variant="switch"
             // style={{ flex: 1, width: 300, height: 50 }}
           />
