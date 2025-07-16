@@ -1,6 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useWindowDimensions, View } from "react-native"
-import { Button, ContextMenu, Picker } from "@expo/ui/swift-ui"
+import {
+  Button,
+  ButtonPrimitive,
+  ContextMenu,
+  Label,
+  LabelPrimitive,
+  Picker,
+  PickerPrimitive,
+} from "@expo/ui/swift-ui"
 import { TrueSheet } from "@lodev09/react-native-true-sheet"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
@@ -11,7 +19,13 @@ import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
 
 import { ExerciseSelectContents } from "./ExerciseSelectContents"
-import { ExerciseSelectContext, SortDirection, SortType, sortTypes } from "./ExerciseSelectContext"
+import {
+  ExerciseSelectContext,
+  SortDirection,
+  sortDirections,
+  SortType,
+  sortTypes,
+} from "./ExerciseSelectContext"
 import { Text } from "../Ignite/Text"
 
 // If the search was left open when the sheet was closed, the state is somehow preserved
@@ -203,6 +217,7 @@ export function ExerciseSelect(props: ExerciseSelectProps) {
                 headerRight() {
                   return (
                     <>
+                      {/* TODO separate direction menu as in Reminders app top-right - sort by */}
                       <ContextMenu
                         style={{
                           width: sortBtnSize,
@@ -212,30 +227,26 @@ export function ExerciseSelect(props: ExerciseSelectProps) {
                       >
                         <ContextMenu.Items>
                           {sortTypes.map((type) => (
-                            <Button
-                              key={type}
-                              systemImage={
-                                sortType === type
-                                  ? sortDirection === "ASC"
-                                    ? "chevron.down"
-                                    : "chevron.up"
-                                  : undefined
-                              }
-                              onPress={() => {
-                                setSortType(type)
-                                setSortDirection(
-                                  sortType === type
-                                    ? sortDirection === "ASC"
-                                      ? "DESC"
-                                      : "ASC"
-                                    : "ASC",
-                                )
+                            <Picker
+                              // TODO option labels varied by sort type as in Reminders App
+                              options={sortTypes as any as string[]}
+                              selectedIndex={sortTypes.indexOf(sortType)}
+                              onOptionSelected={({ nativeEvent }) => {
+                                setSortType(sortTypes[nativeEvent.index])
                               }}
-                            >
-                              {type}
-                            </Button>
+                            />
                           ))}
+
+                          <Picker
+                            // TODO option labels varied by sort type as in Reminders App
+                            options={["Ascending", "Descending"]}
+                            selectedIndex={sortDirections.indexOf(sortDirection)}
+                            onOptionSelected={({ nativeEvent }) => {
+                              setSortDirection(nativeEvent.index === 0 ? "ASC" : "DESC")
+                            }}
+                          />
                         </ContextMenu.Items>
+
                         <ContextMenu.Trigger>
                           <Button
                             systemImage={"arrow.up.arrow.down" as AppleIcon["sfSymbol"]}
