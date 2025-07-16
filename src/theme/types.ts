@@ -29,7 +29,7 @@ export interface Theme {
   typography: Typography
   timing: Timing
   isDark: boolean
-  rounding: 
+  rounding: typeof rounding
 }
 
 /**

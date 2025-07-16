@@ -228,6 +228,7 @@ export function ExerciseSelect(props: ExerciseSelectProps) {
                         <ContextMenu.Items>
                           {sortTypes.map((type) => (
                             <Picker
+                              key={type}
                               // TODO option labels varied by sort type as in Reminders App
                               options={sortTypes as any as string[]}
                               selectedIndex={sortTypes.indexOf(sortType)}

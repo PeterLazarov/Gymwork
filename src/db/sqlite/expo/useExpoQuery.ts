@@ -50,7 +50,7 @@ export function useExpoQuery(query: any, tables: string[] = defaultTables): any[
 
     const fetchRows = () => {
       sqlite
-        .getAllAsync(sql, params)
+        .getFirstAsync(sql, params)
         .then((rows) => {
           if (isActive.current && reqId === latestReq.current) {
             setData(rows)
