@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react"
-import { View, ScrollView, Dimensions } from "react-native"
+import { View, ScrollView, FlatList, useWindowDimensions } from "react-native"
 import { useRouter } from "expo-router"
 import { Button, Label } from "@expo/ui/swift-ui"
 import { and, gte, lte } from "drizzle-orm"
@@ -7,19 +7,19 @@ import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 import { chunk } from "lodash"
 import { AppleIcon } from "react-native-bottom-tabs"
 
-import { BigButtonIos } from "@/components/BigButton.ios"
 import { ExerciseSelect } from "@/components/ExerciseSelect/ExerciseSelect"
-import { ListView } from "@/components/Ignite/ListView"
 import { Screen } from "@/components/Ignite/Screen"
 import { WorkoutOverviewContinueCard } from "@/components/WorkoutOverviewContinueCard"
 import { WorkoutTemplateCard } from "@/components/WorkoutTemplateCard"
 import { InsertTemplateWorkout, SelectWorkout, workouts } from "@/db/sqlite/schema"
 import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
+import { spacing } from "@/theme/spacing"
 
 // Inspiration - shortcuts / podcasts apps
 
 const templateCardHeight = 100
+const templateCardRows = 3
 
 const todayWorkouts: Array<SelectWorkout> = Array.from({ length: 3 }).map(
   (_, i): SelectWorkout => ({
@@ -33,21 +33,44 @@ const todayWorkouts: Array<SelectWorkout> = Array.from({ length: 3 }).map(
     template_id: null,
   }),
 )
-const templates: Array<InsertTemplateWorkout> = Array.from({ length: 19 }, (_, i) => ({
+const templates: Array<InsertTemplateWorkout> = Array.from({ length: 15 }, (_, i) => ({
   id: "123" + i,
   name: `Template ${i}`,
   created_at: Date.now() - i,
   notes: "tons",
 }))
 
+const listSpacing = spacing.sm
+const templateCardCols = 2
+const overlapSize = spacing.xxs
+const listHorizontalPadding = spacing.md
+
 export default function Home() {
   const { theme } = useAppTheme()
   const router = useRouter()
+  const { width } = useWindowDimensions()
+  const { drizzleDB } = useDB()
+
+  // const { data: todayWorkouts } = useLiveQuery(todayWorkoutsQuery, [workouts])
+  const { data: testWorkout } = useLiveQuery(
+    drizzleDB.query.workouts.findFirst({
+      columns: {
+        id: true,
+      },
+    }),
+  )
 
   const [isExerciseSelectVisible, setIsExerciseSelectVisible] = useState(false)
 
-  const showTemplateListOverlap = templates.length > 1
-  const showContinueListOverlap = todayWorkouts.length > 1
+  // TODO rename to templateListIsScrollable
+  const templateListScrollable = useMemo(
+    () => templates.length > templateCardCols * templateCardRows,
+    [templates.length],
+  )
+  const continueWorkoutListScrollable = useMemo(
+    () => todayWorkouts.length > 1,
+    [todayWorkouts.length],
+  )
 
   async function startWorkout() {
     setIsExerciseSelectVisible(true)
@@ -61,7 +84,6 @@ export default function Home() {
     // TODO
     // router.navigate("/(tabs)/expo/(SQLite)/workout")
   }
-  const { drizzleDB } = useDB()
   const todayWorkoutsQuery = useMemo(() => {
     return drizzleDB
       .select()
@@ -73,15 +95,34 @@ export default function Home() {
         ),
       )
   }, [])
-  // const { data: todayWorkouts } = useLiveQuery(todayWorkoutsQuery, [workouts])
 
-  const { data: testWorkout } = useLiveQuery(
-    drizzleDB.query.workouts.findFirst({
-      columns: {
-        id: true,
-      },
-    }),
-  )
+  const templateCardWidth = useMemo(() => {
+    let allCardsWidth = width
+    allCardsWidth -= listSpacing * (templateCardCols - 1)
+    allCardsWidth -= listHorizontalPadding // left padding
+
+    if (templateListScrollable)
+      return (allCardsWidth - overlapSize - listSpacing) / templateCardCols // right spacing
+
+    return (allCardsWidth - listHorizontalPadding) / templateCardCols
+  }, [templateListScrollable, width])
+
+  const workoutCardWidth = useMemo(() => {
+    let allCardsWidth = width
+    allCardsWidth -= listHorizontalPadding // left padding
+
+    if (continueWorkoutListScrollable) return allCardsWidth - overlapSize - listSpacing // right spacing
+
+    return allCardsWidth - listHorizontalPadding
+  }, [continueWorkoutListScrollable, width])
+
+  console.log({
+    width,
+    templateCardWidth,
+    listSpacing,
+    listHorizontalPadding,
+    templateListScrollable,
+  })
 
   return (
     <Screen>
@@ -123,37 +164,30 @@ export default function Home() {
           </View>
 
           <View>
-            <ListView
-              data={chunk(templates, 3)}
+            {/* Flashlist does not size properly */}
+            <FlatList
+              data={chunk(templates, templateCardRows)}
               horizontal
               showsHorizontalScrollIndicator={false}
               decelerationRate="fast"
               snapToAlignment="start"
-              snapToInterval={
-                Dimensions.get("window").width / 2 -
-                (showTemplateListOverlap ? theme.spacing.md : theme.spacing.xs)
-              }
-              contentContainerStyle={{ paddingHorizontal: theme.spacing.md }}
-              estimatedListSize={{
-                height: templateCardHeight,
-                width:
-                  Dimensions.get("window").width / 2 -
-                  theme.spacing.md * (showTemplateListOverlap ? 2 : 1.5),
+              snapToInterval={templateCardWidth + listSpacing}
+              contentContainerStyle={{
+                paddingHorizontal: listHorizontalPadding,
               }}
+              ItemSeparatorComponent={(x) => <View style={{ height: 0, width: listSpacing }} />}
               renderItem={({ item: items }) => (
                 <View
                   style={{
-                    gap: theme.spacing.md,
+                    gap: listSpacing,
+                    width: templateCardWidth,
                   }}
                 >
                   {items.map((item) => (
                     <WorkoutTemplateCard
                       style={{
                         height: templateCardHeight,
-                        marginRight: theme.spacing.md,
-                        width:
-                          Dimensions.get("window").width / 2 -
-                          theme.spacing.md * (showTemplateListOverlap ? 2 : 1.5),
+                        width: templateCardWidth,
                       }}
                       key={item.name}
                       template={item}
@@ -186,25 +220,20 @@ export default function Home() {
               horizontal
               showsHorizontalScrollIndicator={false}
               bounces
-              snapToInterval={
-                Dimensions.get("window").width -
-                theme.spacing.md * (1 + (showContinueListOverlap ? 1 : 0))
-              }
+              snapToInterval={workoutCardWidth + listSpacing}
               snapToAlignment="start"
               decelerationRate="fast"
               style={{ flexGrow: 1, zIndex: 0 }}
               contentContainerStyle={{
-                gap: theme.spacing.md,
-                paddingHorizontal: theme.spacing.md,
+                gap: listSpacing,
+                paddingHorizontal: listHorizontalPadding,
               }}
             >
               {todayWorkouts?.length ? (
                 todayWorkouts.map((workout) => (
                   <WorkoutOverviewContinueCard
                     style={{
-                      width:
-                        Dimensions.get("window").width -
-                        theme.spacing.md * (2 + (showContinueListOverlap ? 1 : 0)),
+                      width: workoutCardWidth,
                     }}
                     key={workout.id}
                     workout={workout}
