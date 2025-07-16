@@ -27,7 +27,8 @@
     "build:android:sim": "eas build --profile development --platform android --local",
     "build:android:dev": "eas build --profile development:device --platform android --local",
     "build:android:preview": "eas build --profile preview --platform android --local",
-    "build:android:prod": "eas build --profile production --platform android --local"
+    "build:android:prod": "eas build --profile production --platform android --local",
+    "drizzle":"npx drizzle-kit generate"
   },
   "dependencies": {
     "@bottom-tabs/react-navigation": "^0.9.2",

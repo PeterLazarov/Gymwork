@@ -22,7 +22,7 @@ const timestamp_col = integer().notNull().default(timestamp_col_default_time_sql
 
 // Configs & Mostly constant data
 export const record_calculation_configs = sqliteTable("record_calculation_configs", {
-  id: integer().primaryKey(),
+  id: integer().primaryKey({ autoIncrement: true }),
 
   measurement_column: text({ enum: METRICS }),
   measurement_sort_direction: text({ enum: ["asc", "desc"] })
@@ -36,17 +36,17 @@ export const record_calculation_configs = sqliteTable("record_calculation_config
 })
 
 export const equipment = sqliteTable("equipment", {
-  id: text().primaryKey(),
+  id: integer().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
 })
 
 export const muscles = sqliteTable("muscles", {
-  id: text().primaryKey(),
+  id: integer().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
 })
 
 export const muscle_areas = sqliteTable("muscle_areas", {
-  id: text().primaryKey(),
+  id: integer().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
 })
 
@@ -61,7 +61,7 @@ export const metrics = sqliteTable("metrics", {
 // Templates
 
 export const workout_templates = sqliteTable("workout_templates", {
-  id: text().primaryKey(),
+  id: integer().primaryKey({ autoIncrement: true }),
 
   name: text().notNull(),
   notes: text(),
@@ -71,7 +71,7 @@ export const workout_templates = sqliteTable("workout_templates", {
 
 // Does it have to be a part of a workout?
 export const set_group_templates = sqliteTable("set_group_templates", {
-  id: text().primaryKey(),
+  id: integer().primaryKey({ autoIncrement: true }),
 
   name: text().notNull(),
   type: text({ enum: ["plain", "superset", "circuit", "emom", "amrap", "custom"] }).notNull(),
@@ -83,10 +83,10 @@ export const set_group_templates = sqliteTable("set_group_templates", {
 export const workout_templates_to_set_group_templates = sqliteTable(
   "workout_templates_to_set_group_templates",
   {
-    workout_template_id: text()
+    workout_template_id: integer()
       .notNull()
       .references(() => workout_templates.id, { onDelete: "cascade" }), // e.g. 'weight_mcg'
-    set_group_template_id: text()
+    set_group_template_id: integer()
       .notNull()
       .references(() => set_group_templates.id, { onDelete: "cascade" }),
   },
@@ -94,11 +94,11 @@ export const workout_templates_to_set_group_templates = sqliteTable(
 )
 
 export const set_templates = sqliteTable("set_templates", {
-  id: text().primaryKey(),
-  set_group_template_id: text()
+  id: integer().primaryKey({ autoIncrement: true }),
+  set_group_template_id: integer()
     .notNull() // should this really not be nullable?
     .references(() => set_group_templates.id, { onDelete: "cascade" }),
-  exercise_id: text()
+  exercise_id: integer()
     .references(() => exercises.id, { onDelete: "restrict" })
     .notNull(), // references exercises.id
 
@@ -121,8 +121,8 @@ export const set_templates = sqliteTable("set_templates", {
 // Execution (Logs / Performed)
 
 export const workouts = sqliteTable("workouts", {
-  id: text().primaryKey(),
-  template_id: text().references(() => workout_templates.id, { onDelete: "set null" }),
+  id: integer().primaryKey({ autoIncrement: true }),
+  template_id: integer().references(() => workout_templates.id, { onDelete: "set null" }),
 
   name: text(),
   notes: text(),
@@ -135,11 +135,11 @@ export const workouts = sqliteTable("workouts", {
 
 // GROUPS (e.g., supersets, circuits)
 export const set_groups = sqliteTable("set_groups", {
-  id: text().primaryKey(),
-  workout_id: text()
+  id: integer().primaryKey({ autoIncrement: true }),
+  workout_id: integer()
     .notNull()
     .references(() => workouts.id, { onDelete: "cascade" }),
-  template_id: text().references(() => set_group_templates.id, { onDelete: "set null" }),
+  template_id: integer().references(() => set_group_templates.id, { onDelete: "set null" }),
 
   name: text(),
   type: text({ enum: ["plain", "superset", "circuit", "emom", "amrap", "custom"] }).notNull(),
@@ -151,14 +151,14 @@ export const set_groups = sqliteTable("set_groups", {
 })
 
 export const sets = sqliteTable("sets", {
-  id: text().primaryKey(),
-  set_group_id: text()
+  id: integer().primaryKey({ autoIncrement: true }),
+  set_group_id: integer()
     .notNull()
     .references(() => set_groups.id, { onDelete: "cascade" }),
-  exercise_id: text()
+  exercise_id: integer()
     .references(() => exercises.id)
     .notNull(), // references exercises.id
-  template_id: text().references(() => set_templates.id, { onDelete: "restrict" }),
+  template_id: integer().references(() => set_templates.id, { onDelete: "restrict" }),
 
   position: integer().notNull(), // position in set_group
 
@@ -191,7 +191,7 @@ export const sets = sqliteTable("sets", {
 // Exercises
 
 export const exercises = sqliteTable("exercises", {
-  id: text().primaryKey(),
+  id: integer().primaryKey({ autoIncrement: true }),
 
   name: text().notNull(),
   is_favorite: integer({ mode: "boolean" }).notNull().default(false),
@@ -213,7 +213,7 @@ export const exercise_metrics = sqliteTable(
     metric_id: text({ enum: METRICS })
       .notNull()
       .references(() => metrics.id, { onDelete: "cascade" }), // e.g. 'weight_mcg'
-    exercise_id: text()
+    exercise_id: integer()
       .notNull()
       .references(() => exercises.id, { onDelete: "cascade" }),
   },
@@ -223,10 +223,10 @@ export const exercise_metrics = sqliteTable(
 export const exercise_equipment = sqliteTable(
   "exercise_equipment",
   {
-    exercise_id: text()
+    exercise_id: integer()
       .notNull()
       .references(() => exercises.id, { onDelete: "cascade" }),
-    equipment_id: text()
+    equipment_id: integer()
       .notNull()
       .references(() => equipment.id, { onDelete: "cascade" }),
   },
@@ -236,10 +236,10 @@ export const exercise_equipment = sqliteTable(
 export const exercise_muscles = sqliteTable(
   "exercise_muscles",
   {
-    exercise_id: text()
+    exercise_id: integer()
       .notNull()
       .references(() => exercises.id, { onDelete: "cascade" }),
-    muscle_id: text()
+    muscle_id: integer()
       .notNull()
       .references(() => muscles.id, { onDelete: "cascade" }),
   },
@@ -249,10 +249,10 @@ export const exercise_muscles = sqliteTable(
 export const exercise_muscle_areas = sqliteTable(
   "exercise_muscle_areas",
   {
-    exercise_id: text()
+    exercise_id: integer()
       .notNull()
       .references(() => exercises.id, { onDelete: "cascade" }),
-    muscle_area_id: text()
+    muscle_area_id: integer()
       .notNull()
       .references(() => muscle_areas.id, { onDelete: "cascade" }),
   },
@@ -264,12 +264,12 @@ export const exercise_muscle_areas = sqliteTable(
 export const discomfort_logs = sqliteTable(
   "discomfort_logs",
   {
-    workout_id: text()
+    workout_id: integer()
       // .notNull()
       .references(() => workouts.id, { onDelete: "set null" }),
-    set_id: text().references(() => sets.id),
+    set_id: integer().references(() => sets.id),
     // TODO rename to muscle area? or rename muscleArea to bodypart?
-    muscle_area_id: text()
+    muscle_area_id: integer()
       // .notNull()
       .references(() => muscle_areas.id, { onDelete: "set null" }),
     severity: integer().notNull(), // e.g. 1–10 pain scale
@@ -282,7 +282,7 @@ export const discomfort_logs = sqliteTable(
 
 // Tags
 export const tags = sqliteTable("tags", {
-  id: text().primaryKey(),
+  id: integer().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
   category: text(), // optional: 'exercise', 'workout', 'set', etc.
   color: text(),
@@ -294,10 +294,10 @@ function getEntityTagTable(tableName: string, table: SQLiteTableWithColumns<any>
   return sqliteTable(
     `${tableName.slice(0, -1)}_tags`,
     {
-      tag_id: text()
+      tag_id: integer()
         .notNull()
         .references(() => tags.id, { onDelete: "cascade" }),
-      entity_id: text()
+      entity_id: integer()
         .notNull()
         .references(() => table.id, { onDelete: "cascade" }),
 
