@@ -56,6 +56,7 @@
     "expo-localization": "~16.1.5",
     "expo-router": "~5.1.3",
     "expo-splash-screen": "~0.30.9",
+    "expo-symbols": "~0.4.5",
     "expo-system-ui": "~5.0.9",
     "i18next": "^23.14.0",
     "intl-pluralrules": "^2.0.1",
@@ -114,6 +115,11 @@
       "exclude": [
         "@shopify/flash-list"
       ]
+    }
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "drizzle-orm": "patches/drizzle-orm.patch"
     }
   }
 }

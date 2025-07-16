@@ -1,0 +1,44 @@
+diff --git a/expo-sqlite/query.js b/expo-sqlite/query.js
+index 0c18a4277bc2864c3717a7713914a7263eaba787..6dadf6300dae489c7a467efb64d3ff02fb920786 100644
+--- a/expo-sqlite/query.js
++++ b/expo-sqlite/query.js
+@@ -5,7 +5,22 @@ import { SQL } from "../sql/sql.js";
+ import { getTableConfig, getViewConfig, SQLiteTable, SQLiteView } from "../sqlite-core/index.js";
+ import { SQLiteRelationalQuery } from "../sqlite-core/query-builders/query.js";
+ import { Subquery } from "../subquery.js";
+-const useLiveQuery = (query, deps = []) => {
++
++const getJoinedTableNames = (query) => {
++  if (query.config.with) {
++    return Object.keys(query.config.with).map(
++      (relation) => query.tableConfig.relations[relation].referencedTableName,
++    );
++  } else if (query.config.joins) {
++    return query.config.joins.map(
++      (join) => join.table[Symbol.for("drizzle:BaseName")],
++    );
++  } else {
++    return [];
++  }
++};
++
++const useLiveQuery = (query, deps = [], tables = []) => {
+   const [data, setData] = useState(
+     is(query, SQLiteRelationalQuery) && query.mode === "first" ? void 0 : []
+   );
+@@ -24,9 +39,13 @@ const useLiveQuery = (query, deps = []) => {
+     };
+     query.then(handleData).catch(setError);
+     if (is(entity, SQLiteTable) || is(entity, SQLiteView)) {
+-      const config = is(entity, SQLiteTable) ? getTableConfig(entity) : getViewConfig(entity);
++      const config = is(entity, SQLiteTable)
++        ? getTableConfig(entity)
++        : getViewConfig(entity);
++      const relationTableNames = getJoinedTableNames(query);
++      const listeningTables = [config.name, ...relationTableNames];
+       listener = addDatabaseChangeListener(({ tableName }) => {
+-        if (config.name === tableName) {
++        if (listeningTables.includes(tableName)) {
+           query.then(handleData).catch(setError);
+         }
+       });
