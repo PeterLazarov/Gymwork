@@ -47,6 +47,8 @@ export interface SetGroup2Props {
   style?: ViewStyle
 }
 
+let time = 0
+
 export function SetGroup2({
   setGroupId,
   deleteEnabled,
@@ -132,7 +134,7 @@ export function SetGroup2({
   // )
 
   useEffect(() => {
-    Date.now()
+    console.log(Date.now() - time)
   }, [data])
 
   const translateX = useSharedValue(0)
@@ -144,6 +146,8 @@ export function SetGroup2({
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [{ translateX: withSpring(translateX.value) }],
   }))
+
+  console.log([PlatformColor("systemGreen"), PlatformColor("systemGray4")])
 
   const renderItem = useCallback<SortableGridRenderItem<SelectSet>>(
     ({ item }) => (
@@ -202,7 +206,7 @@ export function SetGroup2({
             },
           ]}
         >
-          <TouchableOpacity
+          {/* <TouchableOpacity
             key={item.id}
             style={{
               backgroundColor: item.completed_at
@@ -230,7 +234,38 @@ export function SetGroup2({
                   : PlatformColor("tertiaryLabel")
               }
             ></SymbolView>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+
+          <View
+            style={{
+              // backgroundColor: "yellow",
+              width: 32,
+              height: 32,
+              overflow: "hidden",
+            }}
+          >
+            <Button
+              systemImage="checkmark"
+              children=""
+              style={{
+                minHeight: 32,
+                minWidth: 32 + 8,
+
+                // alignSelf: "flex-end",
+              }}
+              color={
+                item.completed_at ? PlatformColor("systemGreen") : PlatformColor("systemGray4")
+              }
+              onPress={() => {
+                time = Date.now()
+                drizzleDB
+                  .update(sets)
+                  .set({ completed_at: item.completed_at ? null : Date.now() })
+                  .where(eq(sets.id, item.id))
+                  .execute()
+              }}
+            ></Button>
+          </View>
         </View>
       </Animated.View>
     ),
