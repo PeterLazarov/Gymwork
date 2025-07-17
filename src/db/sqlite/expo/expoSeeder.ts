@@ -474,6 +474,8 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
           throw err
         })
     }
+
+    i++
   }
 }
 
