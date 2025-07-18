@@ -6,9 +6,8 @@ import { DrizzleDBType } from "@/db/useDB"
 import type __state from "../../../data/GymWork_state.json"
 import _state from "../../../data/GymWork_state_large.json"
 import { METRICS, UNIT } from "../constants"
-import { InsertSetGroup, schema } from "../schema"
-import { ExpoSQLiteDatabase } from "drizzle-orm/expo-sqlite"
-import { useSQLiteContext } from "expo-sqlite"
+import { type InsertSetGroup, schema } from "../schema"
+import type { useSQLiteContext } from "expo-sqlite"
 
 const {
   //  configs
@@ -73,6 +72,10 @@ const DEFAULT_METRICS: {
   { id: "distance_mm", display_name: "Distance", unit: "m", round_to: 1000 }, // 1 m
   { id: "rest_ms", display_name: "Rest", unit: "s", round_to: 1000 }, // 1 s
 ]
+
+function between(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
 
 export async function seedMetrics(db: DrizzleDBType) {
   await db
@@ -160,7 +163,12 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
     throw err
   })
 
-  await drizzleDB.delete(record_calculation_configs).execute().catch(console.log)
+  await drizzleDB
+    .delete(record_calculation_configs)
+    .execute()
+    .catch((e) => {
+      console.log("record recalc conf delete error", e)
+    })
   await populateRecordConfigs(drizzleDB).catch((err) => {
     console.error(err)
     throw err
@@ -170,7 +178,7 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
     new Set(state.exerciseStore.exercises.map((e) => e.muscleAreas).flat()),
   ).map((muscleArea, i): typeof muscle_areas.$inferInsert => {
     return {
-      // id: String(i), // TODO?
+      // id: i+1, // TODO?
       name: muscleArea,
     }
   })
@@ -185,15 +193,15 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
   console.log("inserted muscle areas")
 
   // Used as a fallback
-  const [firstMuscleArea] = await drizzleDB
-    .select()
-    .from(muscle_areas)
-    .limit(1)
-    .execute()
-    .catch((e) => {
-      console.error(e)
-      return []
-    })
+  // const [firstMuscleArea] = await drizzleDB
+  //   .select()
+  //   .from(muscle_areas)
+  //   .limit(1)
+  //   .execute()
+  //   .catch((e) => {
+  //     console.error(e)
+  //     return []
+  //   })
 
   const _muscles = Array.from(
     new Set(state.exerciseStore.exercises.map((e) => e.muscles).flat()),
@@ -233,7 +241,6 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
 
   // Position and stance are not implemented
 
-  let i = 0
   for (const e of state.exerciseStore.exercises) {
     const _exercise = {
       // id: e.guid,
@@ -246,25 +253,26 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
       record_config_id: computeFlags(e),
     }
 
-    await drizzleDB
+    const exerciseInsertQuery = await drizzleDB
       .insert(exercises)
       .values(_exercise)
       .execute()
       .catch((err) => {
-        console.error(err)
+        console.error("ex", err)
         throw err
       })
+    const exerciseId = exerciseInsertQuery!.lastInsertRowId
 
     if ("weight" in e.measurements) {
       await drizzleDB
         .insert(exercise_metrics)
         .values({
-          exercise_id: i + 1,
+          exercise_id: exerciseId,
           metric_id: METRICS[0],
         })
         .execute()
         .catch((err) => {
-          console.error(err)
+          console.error("metrics weight", err)
           throw err
         })
     }
@@ -272,12 +280,12 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
       await drizzleDB
         .insert(exercise_metrics)
         .values({
-          exercise_id: i + 1,
+          exercise_id: exerciseId,
           metric_id: METRICS[1],
         })
         .execute()
         .catch((err) => {
-          console.error(err)
+          console.error("metrics reps", err)
           throw err
         })
     }
@@ -285,12 +293,12 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
       await drizzleDB
         .insert(exercise_metrics)
         .values({
-          exercise_id: i + 1,
+          exercise_id: exerciseId,
           metric_id: METRICS[2],
         })
         .execute()
         .catch((err) => {
-          console.error(err)
+          console.error("metrics duration", err)
           throw err
         })
     }
@@ -298,12 +306,12 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
       await drizzleDB
         .insert(exercise_metrics)
         .values({
-          exercise_id: i + 1,
+          exercise_id: exerciseId,
           metric_id: METRICS[3],
         })
         .execute()
         .catch((err) => {
-          console.error(err)
+          console.error("metrics distance", err)
           throw err
         })
     }
@@ -316,7 +324,7 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         .limit(1)
         .execute()
         .catch((err) => {
-          console.error(err)
+          console.error("equipment", err)
           throw err
         })
 
@@ -324,11 +332,11 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         .insert(exercise_equipment)
         .values({
           equipment_id: db_equipment_record.id,
-          exercise_id: i + 1,
+          exercise_id: exerciseId,
         })
         .execute()
         .catch((err) => {
-          console.error(err)
+          console.error("ex_equipment", err)
           throw err
         })
     }
@@ -341,7 +349,7 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         .limit(1)
         .execute()
         .catch((err) => {
-          console.error(err)
+          console.error("db_muscles_record", err)
           throw err
         })
 
@@ -349,11 +357,11 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         .insert(exercise_muscles)
         .values({
           muscle_id: db_muscles_record.id,
-          exercise_id: i + 1,
+          exercise_id: exerciseId,
         })
         .execute()
         .catch((err) => {
-          console.error(err)
+          console.error("exercise_muscles", err)
           throw err
         })
     }
@@ -366,7 +374,7 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         .limit(1)
         .execute()
         .catch((err) => {
-          console.error(err)
+          console.error("db_muscleAreas_record", err)
           throw err
         })
 
@@ -374,44 +382,43 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         .insert(exercise_muscle_areas)
         .values({
           muscle_area_id: db_muscleAreas_record.id,
-          exercise_id: i + 1,
+          exercise_id: exerciseId,
         })
         .execute()
         .catch((err) => {
-          console.error(err)
+          console.error("exercise_muscle_areas", err)
           throw err
         })
     }
 
-    i++
+    console.log("inserted exercise ", exerciseId)
   }
   console.log("added exercises, equipment, muscles, muscle areas")
 
-  i = 0
   for (const workout of state.workoutStore.workouts) {
-    await drizzleDB
+    const insertWorkoutQuery = await drizzleDB
       .insert(workouts)
       .values({
-        // id: workout.guid,
         created_at: new Date(workout.date).getTime(),
         notes: workout.notes,
       })
       .execute()
       .catch((err) => {
-        console.error(err)
+        console.error("insert workouts", err)
         throw err
       })
+    const workoutId = insertWorkoutQuery.lastInsertRowId
+    console.log({ workoutId })
 
-    const setGroupAddPromises = workout.steps.map(async (step, j) => {
+    for (let stepIndex = 0; stepIndex < workout.steps.length; stepIndex++) {
       const set_group_obj: InsertSetGroup = {
-        // id: step.guid,
         type: "plain" as const,
-        workout_id: i + 1,
-        position: j,
+        workout_id: workoutId,
+        position: stepIndex,
       }
 
       // ! this times out on web sometimes
-      await drizzleDB
+      const runResult = await drizzleDB
         .insert(set_groups)
         .values(set_group_obj)
         .catch((err) => {
@@ -420,62 +427,44 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
             obj: set_group_obj,
           })
         })
+      const setGroupId = runResult!.lastInsertRowId
 
-      // ! this times out on web sometimes
-      const setGroupsPromise = step.sets.map(async (set, k) => {
-        return drizzleDB
-          .insert(sets)
-          .values({
-            // id: set.guid,
-            position: k,
-            rpe: workout.rpe,
-            reps: "reps" in set ? set.reps : null,
-            weight_mcg: "weightMcg" in set ? set.weightMcg : null,
-            duration_ms: "durationMs" in set ? set.durationMs : null,
-            distance_mm: "distanceMm" in set ? set.distanceMm : null,
-            rest_ms: "restMs" in set ? set.restMs : null,
-            is_warmup: set.isWarmup,
-            exercise_id:
-              state.exerciseStore.exercises.findIndex((e) => e.guid === set.exercise)! + 1, // TODO
-            // workout_id: state.workoutStore.workouts.findIndex(w => w.guid === workout.guid)! + 1,
-            set_group_id: j + 1,
-            // completed_at: new Date(set.completedAt),
-            completed_at: null,
-          })
+      const step = workout.steps[stepIndex]
+      const groupSets = step.sets.map((set, i) => ({
+        position: i,
+        rpe: workout.rpe,
+        reps: "reps" in set ? set.reps : null,
+        weight_mcg: "weightMcg" in set ? set.weightMcg : null,
+        duration_ms: "durationMs" in set ? set.durationMs : null,
+        distance_mm: "distanceMm" in set ? set.distanceMm : null,
+        rest_ms: "restMs" in set ? set.restMs : null,
+        is_warmup: set.isWarmup,
+        exercise_id: state.exerciseStore.exercises.findIndex((e) => e.guid === set.exercise)! + 1, // TODO
+        set_group_id: setGroupId,
+        // completed_at: new Date(set.completedAt),
+        completed_at: null,
+      }))
 
-          .execute()
-          .catch((err) => {
-            console.error(err)
-            throw err
-          })
-      })
-
-      return setGroupsPromise
-    })
-
-    await Promise.all(setGroupAddPromises.flat()).catch((err) => {
-      console.error(err)
-      throw err
-    })
+      await drizzleDB.insert(sets).values(groupSets)
+    }
 
     if (workout.pain) {
       await drizzleDB
         .insert(discomfort_logs)
         .values({
-          workout_id: state.workoutStore.workouts.findIndex((w) => w.guid === workout.guid)! + 1,
-          muscle_area_id: firstMuscleArea.id, // TODO?
+          workout_id: workoutId,
+          muscle_area_id: 1, // TODO?
           severity: 5, // TODO?
           notes: workout.notes,
           // recorded_at: new Date(workout.endedAt).toISOString(),
         })
         .execute()
         .catch((err) => {
-          console.error(err)
+          console.error("discomfort_logs", err)
+          debugger
           throw err
         })
     }
-
-    i++
   }
 }
 
@@ -497,18 +486,17 @@ export async function dropAllTables(db: DrizzleDBType) {
 }
 
 export async function clearAll(db: DrizzleDBType, sqlite: ReturnType<typeof useSQLiteContext>) {
-  // sqlite.nativeDatabase.
-  // return Promise.all(
-  //   Object.values(schema).map((table) =>
-  //     db
-  //       .delete(table)
-  //       .execute()
-  //       .catch((err) => {
-  //         console.error(err)
-  //         throw err
-  //       }),
-  //   ),
-  // )
+  return Promise.all(
+    Object.values(schema).map((table) =>
+      db
+        .delete(table)
+        .execute()
+        .catch((err) => {
+          console.error(err)
+          throw err
+        }),
+    ),
+  )
 
-  dropAllTables(db)
+  // dropAllTables(db)
 }
