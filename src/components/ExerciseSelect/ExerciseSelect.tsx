@@ -15,7 +15,7 @@ import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 import { AppleIcon } from "react-native-bottom-tabs"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { useDB } from "@/db/useDB"
+import { useDB } from "@/db/sqlite/useDB"
 import { useAppTheme } from "@/theme/context"
 
 import { ExerciseSelectContents } from "./ExerciseSelectContents"

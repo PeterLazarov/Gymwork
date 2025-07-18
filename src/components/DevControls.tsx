@@ -2,7 +2,7 @@ import { View } from "react-native"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 
 import { clearAll, seedAll } from "@/db/sqlite/expo/expoSeeder"
-import { useDB } from "@/db/useDB"
+import { useDB } from "@/db/sqlite/useDB"
 
 import { Button } from "./Ignite/Button"
 

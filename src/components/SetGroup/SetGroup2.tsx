@@ -5,7 +5,7 @@ import type { SortableGridRenderItem } from "react-native-sortables"
 import Sortable from "react-native-sortables"
 
 import { SelectSet, SelectSetGroup, sets } from "@/db/sqlite/schema"
-import { useDB } from "@/db/useDB"
+import { useDB } from "@/db/sqlite/useDB"
 import { useAppTheme } from "@/theme/context"
 import { Text } from "../Ignite/Text"
 import { Button } from "@expo/ui/swift-ui"
@@ -15,8 +15,8 @@ import Animated, { useSharedValue, withTiming } from "react-native-reanimated"
 import { IosPlatformColor } from "@/utils/iosColors"
 import { eq } from "drizzle-orm"
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { QUERY_KEYS } from "@/db/tanstack/QUERY_KEYS"
 import { queryClient } from "../Providers/TanstackQueryProvider"
+import { queries } from "@/services/queries"
 
 const DATA = Array.from({ length: 12 }, (_, index) => `Item ${index + 1}`)
 
@@ -45,42 +45,40 @@ export function SetGroup2({
 
   const { drizzleDB } = useDB()
 
-  const { data } = useQuery({
-    queryKey: [QUERY_KEYS.SET_GROUPS, setGroupId],
+  // const { data } = useQuery({
+  //   queryKey: [QUERY_KEYS.SET_GROUPS, setGroupId],
 
-    // initialData: [],
-    queryFn() {
-      const q = drizzleDB.query.set_groups.findFirst({
-        where(fields, operators) {
-          return operators.eq(fields.id, setGroupId)
-        },
-        with: {
-          sets: {
-            with: {
-              exercise: {
-                columns: {
-                  name: true,
-                },
-                with: {
-                  exerciseMetrics: {
-                    with: {
-                      metric: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      })
+  //   // initialData: [],
+  //   queryFn() {
+  //     const q = drizzleDB.query.set_groups.findFirst({
+  //       where(fields, operators) {
+  //         return operators.eq(fields.id, setGroupId)
+  //       },
+  //       with: {
+  //         sets: {
+  //           with: {
+  //             exercise: {
+  //               columns: {
+  //                 name: true,
+  //               },
+  //               with: {
+  //                 exerciseMetrics: {
+  //                   with: {
+  //                     metric: true,
+  //                   },
+  //                 },
+  //               },
+  //             },
+  //           },
+  //         },
+  //       },
+  //     })
 
-      return q
-    },
-  })
+  //     return q
+  //   },
+  // })
 
-  useEffect(() => {
-    console.log("data fetched for id ", setGroupId)
-  }, [data])
+  const { data } = useQuery(queries.setGroups.detail(setGroupId))
 
   const toggleSetCompletionMutation = useMutation({
     mutationFn: (item: SelectSet) => {

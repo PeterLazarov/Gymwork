@@ -4,7 +4,7 @@ import { List } from "@expo/ui/swift-ui"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 
 import { SelectSet } from "@/db/sqlite/schema"
-import { useDB } from "@/db/useDB"
+import { useDB } from "@/db/sqlite/useDB"
 import { useAppTheme } from "@/theme/context"
 
 import { Text } from "../Ignite/Text"

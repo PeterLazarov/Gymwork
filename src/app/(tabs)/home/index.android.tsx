@@ -4,7 +4,7 @@ import { Button } from "@/components/Ignite/Button"
 import { Screen } from "@/components/Ignite/Screen"
 import { Text } from "@/components/Ignite/Text"
 import { clearAll, seedAll } from "@/db/sqlite/expo/expoSeeder"
-import { useDB } from "@/db/useDB"
+import { useDB } from "@/db/sqlite/useDB"
 import { useAppTheme } from "@/theme/context"
 
 export default function Home() {

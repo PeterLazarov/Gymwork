@@ -12,7 +12,7 @@ import { Screen } from "@/components/Ignite/Screen"
 import { WorkoutOverviewContinueCard } from "@/components/WorkoutOverviewContinueCard"
 import { WorkoutTemplateCard } from "@/components/WorkoutTemplateCard"
 import { InsertTemplateWorkout, SelectWorkout, workouts } from "@/db/sqlite/schema"
-import { useDB } from "@/db/useDB"
+import { useDB } from "@/db/sqlite/useDB"
 import { useAppTheme } from "@/theme/context"
 import { spacing } from "@/theme/spacing"
 

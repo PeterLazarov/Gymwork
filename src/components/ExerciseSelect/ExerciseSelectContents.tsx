@@ -7,7 +7,7 @@ import Animated, { Easing, useSharedValue, withTiming } from "react-native-reani
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { exercise_equipment, exercise_muscle_areas, exercises } from "@/db/sqlite/schema"
-import { useDB } from "@/db/useDB"
+import { useDB } from "@/db/sqlite/useDB"
 import { useAppTheme } from "@/theme/context"
 import { exerciseImages } from "@/utils/exerciseImages"
 import { IosPlatformColor } from "@/utils/iosColors"

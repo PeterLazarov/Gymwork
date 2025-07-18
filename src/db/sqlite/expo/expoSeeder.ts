@@ -1,7 +1,7 @@
 import { eq, sql } from "drizzle-orm"
 
 import { Exercise } from "@/data/types"
-import { DrizzleDBType } from "@/db/useDB"
+import { DrizzleDBType } from "@/db/sqlite/useDB"
 
 import type __state from "../../../data/GymWork_state.json"
 import _state from "../../../data/GymWork_state_large.json"
