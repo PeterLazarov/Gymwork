@@ -12,6 +12,7 @@ import { ThemeProvider as ThemeProviderIgnite, useAppTheme } from "@/theme/conte
 import { customFontsToLoad } from "@/theme/typography"
 import { loadDateFnsLocale } from "@/utils/formatDate"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { TanstackQueryProvider } from "@/components/Providers/TanstackQueryProvider"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -58,7 +59,9 @@ export default function Root() {
             <ExpoSQLiteProvider>
               <DrizzleProvider>
                 <GestureHandlerRootView>
-                  <Slot />
+                  <TanstackQueryProvider>
+                    <Slot />
+                  </TanstackQueryProvider>
                 </GestureHandlerRootView>
               </DrizzleProvider>
             </ExpoSQLiteProvider>

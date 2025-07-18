@@ -10,6 +10,7 @@ module.exports = {
     // `jsx-runtime` must come after `expo` or it will be overridden
     "plugin:react/jsx-runtime",
     // "prettier",
+    "plugin:@tanstack/query/recommended",
   ],
   plugins: ["reactotron", "prettier"],
   rules: {

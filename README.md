@@ -17,6 +17,10 @@ https://orm.drizzle.team/docs/connect-op-sqlite
 https://expo.dev/blog/modern-sqlite-for-react-native-apps
 https://orm.drizzle.team/docs/connect-expo-sqlite
 
+## WatermelonDB
+
+Issues: Expo support requires a fork!
+
 ## Components to try
 
 // TO TRY https://rnas.vercel.app/
