@@ -13,7 +13,7 @@ import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 import type { SortableGridRenderItem } from "react-native-sortables"
 import Sortable from "react-native-sortables"
 
-import { SelectSet, set_groups, sets } from "@/db/sqlite/schema"
+import { SelectSet, SelectSetGroup, set_groups, sets } from "@/db/sqlite/schema"
 import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
 import { Text } from "../Ignite/Text"
@@ -39,7 +39,7 @@ import { delay } from "@/utils/delay"
 const DATA = Array.from({ length: 12 }, (_, index) => `Item ${index + 1}`)
 
 export interface SetGroup2Props {
-  setGroupId: string
+  setGroupId: SelectSetGroup["id"]
   editModeEnabled: boolean
   moveEnabled: boolean
   deleteEnabled: boolean
@@ -74,14 +74,6 @@ export function SetGroup2({
             exercise: {
               columns: {
                 name: true,
-
-                created_at: false,
-                id: false,
-                images: false,
-                instructions: false,
-                is_favorite: false,
-                record_config_id: false,
-                tips: false,
               },
               with: {
                 exerciseMetrics: {
@@ -98,62 +90,17 @@ export function SetGroup2({
     [setGroupId],
   )
 
-  // const data2 = useExpoQuery(
-  //   drizzleDB.query.set_groups.findFirst({
-  //     where(fields, operators) {
-  //       return operators.eq(fields.id, setGroupId)
-  //     },
-  //     with: {
-  //       sets: {
-  //         with: {
-  //           exercise: {
-  //             columns: {
-  //               name: true,
-
-  //               created_at: false,
-  //               id: false,
-  //               images: false,
-  //               instructions: false,
-  //               is_favorite: false,
-  //               record_config_id: false,
-  //               tips: false,
-  //             },
-  //             with: {
-  //               exerciseMetrics: {
-  //                 with: {
-  //                   metric: true,
-  //                 },
-  //               },
-  //             },
-  //           },
-  //         },
-  //       },
-  //     },
-  //   }),
-  //   ["sets"],
-  // )
-
-  useEffect(() => {
-    console.log(Date.now() - time)
-  }, [data])
-
   const translateX = useSharedValue(0)
   useEffect(() => {
     translateX.value = withTiming(deleteEnabled ? 32 : 0, { duration: 300 })
-    // translateX.value = withSpring(deleteEnabled ? 32 : 0, { duration: 500 })
   }, [deleteEnabled])
-
-  const animatedStyles = useAnimatedStyle(() => ({
-    transform: [{ translateX: withSpring(translateX.value) }],
-  }))
-
-  console.log([PlatformColor("systemGreen"), PlatformColor("systemGray4")])
 
   const renderItem = useCallback<SortableGridRenderItem<SelectSet>>(
     ({ item }) => (
-      // row
-      // <View style={[styles.row, animatedStyles]}>
-      <Animated.View style={[styles.row, { transform: [{ translateX }] }]}>
+      <Animated.View
+        style={[styles.row, { transform: [{ translateX }] }]}
+        key={item.id}
+      >
         <View
           style={{
             position: "absolute",
@@ -206,36 +153,6 @@ export function SetGroup2({
             },
           ]}
         >
-          {/* <TouchableOpacity
-            key={item.id}
-            style={{
-              backgroundColor: item.completed_at
-                ? PlatformColor("systemGreen")
-                : PlatformColor("quaternarySystemFill"),
-              padding: spacing.xxs,
-              borderRadius: rounding.md,
-            }}
-            onPress={async () => {
-              // wtf... less time than this and the animation breaks
-              // await delay(170)
-
-              drizzleDB
-                .update(sets)
-                .set({ completed_at: item.completed_at ? null : Date.now() })
-                .where(eq(sets.id, item.id))
-                .execute()
-            }}
-          >
-            <SymbolView
-              name="checkmark"
-              tintColor={
-                item.completed_at
-                  ? PlatformColor("systemBackground")
-                  : PlatformColor("tertiaryLabel")
-              }
-            ></SymbolView>
-          </TouchableOpacity> */}
-
           <View
             style={{
               // backgroundColor: "yellow",
@@ -320,7 +237,7 @@ export function SetGroup2({
 const styles = StyleSheet.create({
   row: {
     alignItems: "center",
-    // backgroundColor: "#36877F",
+    backgroundColor: "#36877F",
     // borderRadius: rounding.sm,
     flexDirection: "row",
     height: 40,

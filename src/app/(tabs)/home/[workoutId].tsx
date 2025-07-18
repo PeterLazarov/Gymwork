@@ -23,7 +23,7 @@ export default function WorkoutScreen() {
   const { data: workout } = useLiveQuery(
     drizzleDB.query.workouts.findFirst({
       where(fields, operators) {
-        return operators.eq(fields.id, workoutId)
+        return operators.eq(fields.id, Number(workoutId))
       },
       with: {
         setGroups: {
@@ -116,7 +116,6 @@ export default function WorkoutScreen() {
           style={{
             flex: 1,
             opacity: scrollViewOpacity,
-            // backgroundColor: "brown",
           }}
         >
           {workout?.setGroups.map(({ id }) => (
