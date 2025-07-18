@@ -1,40 +1,22 @@
-import { ReactNode, useCallback, useEffect, useMemo } from "react"
-import {
-  View,
-  StyleSheet,
-  ViewStyle,
-  PlatformColor,
-  Image,
-  Pressable,
-  TouchableHighlight,
-  TouchableOpacity,
-} from "react-native"
+import { useCallback, useEffect } from "react"
+import { View, StyleSheet, ViewStyle, PlatformColor } from "react-native"
 import { useLiveQuery } from "drizzle-orm/expo-sqlite"
 import type { SortableGridRenderItem } from "react-native-sortables"
 import Sortable from "react-native-sortables"
 
-import { SelectSet, SelectSetGroup, set_groups, sets } from "@/db/sqlite/schema"
+import { SelectSet, SelectSetGroup, sets } from "@/db/sqlite/schema"
 import { useDB } from "@/db/useDB"
 import { useAppTheme } from "@/theme/context"
 import { Text } from "../Ignite/Text"
-import { rounding } from "@/theme/rounding"
 import { Button } from "@expo/ui/swift-ui"
 import { AppleIcon } from "react-native-bottom-tabs"
-import { SymbolView, SymbolViewProps, SFSymbol } from "expo-symbols"
 
-import Animated, {
-  FadeIn,
-  FadeOut,
-  LinearTransition,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from "react-native-reanimated"
+import Animated, { useSharedValue, withTiming } from "react-native-reanimated"
 import { IosPlatformColor } from "@/utils/iosColors"
 import { eq } from "drizzle-orm"
-import { useExpoQuery } from "@/db/sqlite/expo/useExpoQuery"
-import { delay } from "@/utils/delay"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { QUERY_KEYS } from "@/db/tanstack/QUERY_KEYS"
+import { queryClient } from "../Providers/TanstackQueryProvider"
 
 const DATA = Array.from({ length: 12 }, (_, index) => `Item ${index + 1}`)
 
@@ -63,32 +45,56 @@ export function SetGroup2({
 
   const { drizzleDB } = useDB()
 
-  const { data } = useLiveQuery(
-    drizzleDB.query.set_groups.findFirst({
-      where(fields, operators) {
-        return operators.eq(fields.id, setGroupId)
-      },
-      with: {
-        sets: {
-          with: {
-            exercise: {
-              columns: {
-                name: true,
-              },
-              with: {
-                exerciseMetrics: {
-                  with: {
-                    metric: true,
+  const { data } = useQuery({
+    queryKey: [QUERY_KEYS.SET_GROUPS, setGroupId],
+
+    // initialData: [],
+    queryFn() {
+      const q = drizzleDB.query.set_groups.findFirst({
+        where(fields, operators) {
+          return operators.eq(fields.id, setGroupId)
+        },
+        with: {
+          sets: {
+            with: {
+              exercise: {
+                columns: {
+                  name: true,
+                },
+                with: {
+                  exerciseMetrics: {
+                    with: {
+                      metric: true,
+                    },
                   },
                 },
               },
             },
           },
         },
-      },
-    }),
-    [setGroupId],
-  )
+      })
+
+      return q
+    },
+  })
+
+  useEffect(() => {
+    console.log("data fetched for id ", setGroupId)
+  }, [data])
+
+  const toggleSetCompletionMutation = useMutation({
+    mutationFn: (item: SelectSet) => {
+      return drizzleDB
+        .update(sets)
+        .set({ completed_at: item.completed_at ? null : Date.now() })
+        .where(eq(sets.id, item.id))
+        .execute()
+    },
+    onSuccess: (data, variables, ctx) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.SET_GROUPS, variables.set_group_id] })
+    },
+  })
 
   const translateX = useSharedValue(0)
   useEffect(() => {
@@ -175,11 +181,8 @@ export function SetGroup2({
               }
               onPress={() => {
                 time = Date.now()
-                drizzleDB
-                  .update(sets)
-                  .set({ completed_at: item.completed_at ? null : Date.now() })
-                  .where(eq(sets.id, item.id))
-                  .execute()
+
+                toggleSetCompletionMutation.mutate(item)
               }}
             ></Button>
           </View>

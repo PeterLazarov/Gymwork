@@ -116,14 +116,6 @@ export default function Home() {
     return allCardsWidth - listHorizontalPadding
   }, [continueWorkoutListScrollable, width])
 
-  console.log({
-    width,
-    templateCardWidth,
-    listSpacing,
-    listHorizontalPadding,
-    templateListScrollable,
-  })
-
   return (
     <Screen>
       <View
