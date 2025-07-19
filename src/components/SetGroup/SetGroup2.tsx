@@ -17,6 +17,7 @@ import { eq } from "drizzle-orm"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { queryClient } from "../Providers/TanstackQueryProvider"
 import { queries } from "@/services/queries"
+import { useToggleSet } from "@/services/mutations"
 
 const DATA = Array.from({ length: 12 }, (_, index) => `Item ${index + 1}`)
 
@@ -46,21 +47,7 @@ export function SetGroup2({
   const { drizzleDB } = useDB()
 
   const { data } = useQuery(queries.setGroups.detail(setGroupId))
-
-  const toggleSetCompletionMutation = useMutation({
-    mutationFn: (item: SelectSet) => {
-      return drizzleDB
-        .update(sets)
-        .set({ completed_at: item.completed_at ? null : Date.now() })
-        .where(eq(sets.id, item.id))
-        .execute()
-    },
-    onSuccess: (data, variables, ctx) => {
-      queryClient.invalidateQueries({
-        queryKey: queries.setGroups.detail(variables.set_group_id).queryKey,
-      })
-    },
-  })
+  const toggleSetCompletion = useToggleSet().mutate
 
   const translateX = useSharedValue(0)
   useEffect(() => {
@@ -148,7 +135,7 @@ export function SetGroup2({
               onPress={() => {
                 time = Date.now()
 
-                toggleSetCompletionMutation.mutate(item)
+                toggleSetCompletion(item)
               }}
             ></Button>
           </View>
