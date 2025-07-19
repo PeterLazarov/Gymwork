@@ -45,39 +45,6 @@ export function SetGroup2({
 
   const { drizzleDB } = useDB()
 
-  // const { data } = useQuery({
-  //   queryKey: [QUERY_KEYS.SET_GROUPS, setGroupId],
-
-  //   // initialData: [],
-  //   queryFn() {
-  //     const q = drizzleDB.query.set_groups.findFirst({
-  //       where(fields, operators) {
-  //         return operators.eq(fields.id, setGroupId)
-  //       },
-  //       with: {
-  //         sets: {
-  //           with: {
-  //             exercise: {
-  //               columns: {
-  //                 name: true,
-  //               },
-  //               with: {
-  //                 exerciseMetrics: {
-  //                   with: {
-  //                     metric: true,
-  //                   },
-  //                 },
-  //               },
-  //             },
-  //           },
-  //         },
-  //       },
-  //     })
-
-  //     return q
-  //   },
-  // })
-
   const { data } = useQuery(queries.setGroups.detail(setGroupId))
 
   const toggleSetCompletionMutation = useMutation({
@@ -89,8 +56,9 @@ export function SetGroup2({
         .execute()
     },
     onSuccess: (data, variables, ctx) => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.SET_GROUPS, variables.set_group_id] })
+      queryClient.invalidateQueries({
+        queryKey: queries.setGroups.detail(variables.set_group_id).queryKey,
+      })
     },
   })
 
@@ -238,7 +206,7 @@ export function SetGroup2({
 const styles = StyleSheet.create({
   row: {
     alignItems: "center",
-    backgroundColor: "#36877F",
+    // backgroundColor: "#36877F",
     // borderRadius: rounding.sm,
     flexDirection: "row",
     height: 40,

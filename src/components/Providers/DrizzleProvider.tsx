@@ -11,10 +11,14 @@ import { allRelations } from "@/db/sqlite/relations"
 import { schema } from "@/db/sqlite/schema"
 
 import migrations from "../../../drizzle/migrations.js"
-import { DBContext } from "../../db/sqlite/useDB"
-import { generateQueries, queries } from "@/services/queries"
+import { DBContext, DrizzleDBType } from "../../db/sqlite/useDB"
 
 const ignoreOnWeb = true
+
+let _drizzle: DrizzleDBType
+export function getDrizzle(): DrizzleDBType {
+  return _drizzle
+}
 
 export default function DrizzleProvider({ children }: { children: React.ReactNode }) {
   const sqlite = useSQLiteContext()
@@ -28,7 +32,7 @@ export default function DrizzleProvider({ children }: { children: React.ReactNod
   // https://docs.expo.dev/versions/latest/sdk/sqlite/#executing-pragma-queries
   useEffect(() => {
     // A workaround for the fact that SQLite is provided async because of web compat setup
-    Object.assign(queries, generateQueries(drizzleDB))
+    _drizzle = drizzleDB
 
     sqlite
       .execAsync("PRAGMA journal_mode = WAL")
