@@ -1,13 +1,13 @@
 import { eq, sql } from "drizzle-orm"
 
 import { Exercise } from "@/data/types"
-import { DrizzleDBType } from "@/db/sqlite/useDB"
+import { DrizzleDBType } from "@/db/useDB"
 
+import type { useSQLiteContext } from "expo-sqlite"
 import type __state from "../../../data/GymWork_state.json"
 import _state from "../../../data/GymWork_state_large.json"
 import { METRICS, UNIT } from "../constants"
 import { type InsertSetGroup, schema } from "../schema"
-import type { useSQLiteContext } from "expo-sqlite"
 
 const {
   //  configs

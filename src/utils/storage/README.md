@@ -1,200 +1,177 @@
-# Storage Implementation
+# Simple Storage for App Settings
 
-This directory contains the storage implementation for the app, using **expo-sqlite** with **Drizzle ORM**.
+This directory provides a lightweight key-value storage system for **app-level settings and preferences**.
 
-## Overview
+## Purpose
 
-The storage system provides a simple key-value store backed by SQLite. It includes:
+**Use this storage for:**
+- ✅ App theme preferences
+- ✅ UI state (last selected tab, scroll position)
+- ✅ User preferences and settings
+- ✅ Feature flags
+- ✅ Simple key-value data
 
-- **Database Layer** (`db.ts`): Database operations using Drizzle ORM
-- **Schema** (`schema.ts`): Database schema definition
-- **React Hooks** (`hooks.ts`): React hooks for persistent state management
-- **Tests** (`storage.test.ts`): Comprehensive test suite
-- **Main Export** (`index.ts`): Convenient re-exports
+**DO NOT use this storage for:**
+- ❌ Workout data (exercises, sets, workouts)
+- ❌ Complex relational data
+- ❌ Data that needs queries and relationships
 
-## Usage
+> **For workout data**, use the main database via `useDB()` hook from `@/db/useDB`.
 
-### Direct Storage Operations
+## Two Storage Systems in This App
 
-```typescript
-import { getValue, setValue, deleteValue, clearAll, getAllKeys } from "@/utils/storage"
+| Storage System | Database File | Purpose | Import From |
+|----------------|---------------|---------|-------------|
+| **Simple Storage** | `storage.db` | App settings & preferences | `@/utils/storage` |
+| **Main Database** | `db.db` | Exercises, workouts, sets | `@/db/useDB` |
 
-// Save and load strings
-setValue("key", "value")
-const value = getValue("key") // "value"
-
-// Save and load objects (JSON serialize/deserialize yourself)
-setValue("user", JSON.stringify({ name: "John", age: 30 }))
-const user = JSON.parse(getValue("user")!) // { name: "John", age: 30 }
-
-// Delete a key
-deleteValue("key")
-
-// Get all keys
-const keys = getAllKeys()
-
-// Clear all data
-clearAll()
-```
+## Quick Start
 
 ### React Hooks (Recommended)
 
-For stateful components, use the provided hooks:
+Use these hooks like `useState`, but with automatic persistence:
 
 ```typescript
 import { useStorageString, useStorageNumber, useStorageBoolean } from "@/utils/storage"
 
-function MyComponent() {
-  // String values
-  const [name, setName] = useStorageString("user.name")
+function SettingsScreen() {
+  // String value with default
+  const [theme, setTheme] = useStorageString("app.theme", "light")
 
-  // Number values
-  const [age, setAge] = useStorageNumber("user.age")
+  // Number value with default
+  const [selectedTab, setSelectedTab] = useStorageNumber("app.lastTab", 0)
 
-  // Boolean values
-  const [isActive, setIsActive] = useStorageBoolean("user.active")
+  // Boolean value with default
+  const [notifications, setNotifications] = useStorageBoolean("app.notifications", true)
 
   return (
     <View>
-      <Text>{name}</Text>
-      <Button onPress={() => setName("New Name")} />
+      <Button onPress={() => setTheme(theme === "light" ? "dark" : "light")}>
+        Toggle Theme ({theme})
+      </Button>
+
+      <Switch value={notifications} onValueChange={setNotifications} />
     </View>
   )
 }
 ```
 
-### Advanced: Direct Database Access
+### Direct Operations
 
-For complex queries, use Drizzle ORM directly:
-
-```typescript
-import { db, schema } from "@/utils/storage"
-import { eq, like } from "drizzle-orm"
-
-// Query the database
-const results = db
-  .select()
-  .from(schema.keyValueStorage)
-  .where(like(schema.keyValueStorage.key, "user.%"))
-  .all()
-
-// Get specific keys
-const userKeys = db
-  .select()
-  .from(schema.keyValueStorage)
-  .where(eq(schema.keyValueStorage.key, "user.name"))
-  .get()
-```
-
-## Database Schema
-
-The storage uses a simple key-value table:
-
-```sql
-CREATE TABLE key_value_storage (
-  key TEXT PRIMARY KEY NOT NULL,
-  value TEXT NOT NULL
-);
-```
-
-## Extending the Schema
-
-To add more tables or complex data structures:
-
-1. Add new table definitions to `schema.ts`
-2. Update `db.ts` to include initialization logic
-3. Create new functions for querying the new tables
-4. Export them from `index.ts` or create separate modules
-
-Example:
+For non-React code or advanced usage:
 
 ```typescript
-// schema.ts
-export const users = sqliteTable("users", {
-  id: integer("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull(),
-})
+import { getValue, setValue, deleteValue, clearAll, getAllKeys } from "@/utils/storage"
 
-// db.ts
-export function initializeDatabase() {
-  expoDb.execSync(`
-    CREATE TABLE IF NOT EXISTS key_value_storage (
-      key TEXT PRIMARY KEY NOT NULL,
-      value TEXT NOT NULL
-    );
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY,
-      name TEXT NOT NULL,
-      email TEXT NOT NULL
-    );
-  `)
+// Set a value
+setValue("user.language", "en")
+
+// Get a value (returns null if not found)
+const language = getValue("user.language") // "en"
+
+// Save objects (JSON serialize/deserialize)
+setValue("user.prefs", JSON.stringify({ fontSize: 16, sound: true }))
+const prefs = JSON.parse(getValue("user.prefs")!)
+
+// Delete a value
+deleteValue("user.language")
+
+// Get all keys
+const allKeys = getAllKeys() // ["app.theme", "app.lastTab", ...]
+
+// Clear everything (use carefully!)
+clearAll()
+```
+
+## Example: Working with Workout Data
+
+For workout data, use the main database instead:
+
+```typescript
+import { useDB } from "@/db/useDB"
+import { useState, useEffect } from "react"
+
+function ExerciseListScreen() {
+  const { drizzleDB } = useDB()
+  const [exercises, setExercises] = useState([])
+
+  useEffect(() => {
+    async function loadExercises() {
+      const results = await drizzleDB.query.exercises.findMany({
+        orderBy: (exercises, { asc }) => [asc(exercises.name)],
+      })
+      setExercises(results)
+    }
+    loadExercises()
+  }, [drizzleDB])
+
+  return (
+    <FlatList
+      data={exercises}
+      renderItem={({ item }) => <ExerciseItem exercise={item} />}
+    />
+  )
 }
 ```
 
-## API
+## Implementation Details
 
-### Core Functions
+- **Database**: SQLite via expo-sqlite
+- **ORM**: Drizzle ORM for type-safe queries
+- **Initialization**: Lazy (only initializes when first used)
+- **Schema**: Simple `key_value_storage` table with TEXT primary key
+- **Thread-safe**: Yes (SQLite handles concurrency)
 
-- `getValue(key: string): string | null` - Get a value by key
-- `setValue(key: string, value: string): void` - Set a value by key
-- `deleteValue(key: string): void` - Delete a value by key
-- `getAllKeys(): string[]` - Get all keys in storage
-- `clearAll(): void` - Clear all data from storage
+## Files
 
-### React Hooks
+- `db.ts` - Core storage operations with lazy initialization
+- `schema.ts` - Drizzle schema definition
+- `hooks.ts` - React hooks for persistent state
+- `index.ts` - Convenient exports
+- `storage.test.ts` - Test suite
 
-- `useStorageString(key: string, initialValue?: string)` - Hook for string values
-- `useStorageNumber(key: string, initialValue?: number)` - Hook for number values
-- `useStorageBoolean(key: string, initialValue?: boolean)` - Hook for boolean values
+## API Reference
 
-All hooks return a tuple `[value, setValue]` similar to `useState`.
+### Functions
 
-## Benefits of SQLite + Drizzle
+- `getValue(key: string): string | null` - Get value by key
+- `setValue(key: string, value: string): void` - Set/update value
+- `deleteValue(key: string): void` - Delete value by key
+- `getAllKeys(): string[]` - Get all storage keys
+- `clearAll(): void` - Delete all values
 
-- ✅ Type-safe queries with Drizzle ORM
-- ✅ Support for complex queries and relationships
-- ✅ Better debugging and data inspection
-- ✅ Native to Expo (no additional native modules)
-- ✅ Supports migrations for schema changes
-- ✅ More performant for complex data structures
+### Hooks
 
-## Drizzle Kit
+- `useStorageString(key: string, initialValue?: string)` - String value with persistence
+- `useStorageNumber(key: string, initialValue?: number)` - Number value with persistence
+- `useStorageBoolean(key: string, initialValue?: boolean)` - Boolean value with persistence
 
-Drizzle Kit is included as a dev dependency. You can use it to generate migrations:
+All hooks return `[value, setValue]` tuple like `useState`.
 
-```bash
-# Generate migrations
-npx drizzle-kit generate:sqlite
+## Naming Conventions
 
-# Push schema changes
-npx drizzle-kit push:sqlite
+Use dot notation for organized keys:
+
+```typescript
+// App-level settings
+"app.theme"
+"app.language"
+"app.firstLaunch"
+
+// User preferences
+"user.name"
+"user.email"
+"user.settings.notifications"
+
+// Feature flags
+"features.betaMode"
+"features.advancedStats"
 ```
-
-See `drizzle.config.ts` in the project root for configuration.
 
 ## Testing
 
-Run the storage tests:
+Run tests with:
 
 ```bash
-npm test -- storage.test.ts
+npm test storage.test.ts
 ```
-
-The tests ensure all storage operations work correctly and data persists between operations.
-
-## Migration from MMKV
-
-If you're migrating from MMKV:
-
-| Old MMKV API | New API |
-|--------------|---------|
-| `useMMKVString(key)` | `useStorageString(key)` |
-| `storage.getString(key)` | `getValue(key)` |
-| `storage.set(key, value)` | `setValue(key, value)` |
-| `storage.delete(key)` | `deleteValue(key)` |
-| `storage.clearAll()` | `clearAll()` |
-| `storage.getAllKeys()` | `getAllKeys()` |
-
-The main difference is that the new API is function-based rather than object-based, and all functions are directly imported from `@/utils/storage`.
-

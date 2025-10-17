@@ -1,6 +1,6 @@
-import { createContext, useContext } from "react"
 import { drizzle } from "drizzle-orm/expo-sqlite"
-import { useSQLiteContext } from "node_modules/expo-sqlite/build/hooks"
+import { useSQLiteContext } from "expo-sqlite"
+import { createContext, useContext } from "react"
 
 import { allRelations } from "@/db/relations"
 import { schema } from "@/db/schema"

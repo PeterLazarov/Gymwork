@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from "react"
-import { addDatabaseChangeListener } from "expo-sqlite"
 import { EventEmitter } from "events"
+import { addDatabaseChangeListener } from "expo-sqlite"
+import { useEffect, useMemo, useRef, useState } from "react"
 
-import { useDB } from "@/db/sqlite/useDB"
+import { useDB } from "@/db/useDB"
 
 const emitter = new EventEmitter<{
   update: [rowId: number, table: string]

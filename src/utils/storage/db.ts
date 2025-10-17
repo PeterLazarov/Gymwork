@@ -1,39 +1,56 @@
 import { eq } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/expo-sqlite"
-import { openDatabaseSync } from "expo-sqlite/next"
+import { openDatabaseSync } from "expo-sqlite"
 import * as schema from "./schema"
 
-// Open the database
-const expoDb = openDatabaseSync("storage.db", { enableChangeListener: false })
+// Lazy initialization
+let db: ReturnType<typeof drizzle<typeof schema>> | null = null
+let expoDb: ReturnType<typeof openDatabaseSync> | null = null
 
-// Create the drizzle instance
-export const db = drizzle(expoDb, { schema })
+function initializeDatabase() {
+  if (db) return db
 
-// Initialize the database by creating tables
-export function initializeDatabase() {
   try {
+    // Open the database for simple app settings storage
+    expoDb = openDatabaseSync("storage.db", { enableChangeListener: false })
+
+    // Create tables if they don't exist
     expoDb.execSync(`
       CREATE TABLE IF NOT EXISTS key_value_storage (
         key TEXT PRIMARY KEY NOT NULL,
         value TEXT NOT NULL
       );
     `)
+
+    // Create the drizzle instance
+    db = drizzle(expoDb, { schema })
+
+    return db
   } catch (error) {
-    console.error("Failed to initialize database:", error)
+    console.error("Failed to initialize storage database:", error)
+    throw error
   }
 }
 
-// Initialize database on import
-initializeDatabase()
+function getDb() {
+  if (!db) {
+    initializeDatabase()
+  }
+  return db!
+}
 
 /**
- * Get all keys from the database
+ * Get all keys from the storage
  */
 export function getAllKeys(): string[] {
   try {
-    const results = db.select({ key: schema.keyValueStorage.key }).from(schema.keyValueStorage).all()
+    const database = getDb()
+    const results = database.select({ key: schema.keyValueStorage.key })
+      .from(schema.keyValueStorage)
+      .all()
     return results.map((r) => r.key)
-  } catch {
+  } catch (error) {
+    console.error("Failed to get all keys:", error)
     return []
   }
 }
@@ -43,23 +60,26 @@ export function getAllKeys(): string[] {
  */
 export function getValue(key: string): string | null {
   try {
-    const result = db
+    const database = getDb()
+    const result = database
       .select({ value: schema.keyValueStorage.value })
       .from(schema.keyValueStorage)
       .where(eq(schema.keyValueStorage.key, key))
       .get()
     return result?.value ?? null
-  } catch {
+  } catch (error) {
+    console.error(`Failed to get value for key ${key}:`, error)
     return null
   }
 }
 
 /**
- * Set a value by key
+ * Set a value by key (creates or updates)
  */
 export function setValue(key: string, value: string): void {
   try {
-    db.insert(schema.keyValueStorage)
+    const database = getDb()
+    database.insert(schema.keyValueStorage)
       .values({ key, value })
       .onConflictDoUpdate({
         target: schema.keyValueStorage.key,
@@ -76,18 +96,22 @@ export function setValue(key: string, value: string): void {
  */
 export function deleteValue(key: string): void {
   try {
-    db.delete(schema.keyValueStorage).where(eq(schema.keyValueStorage.key, key)).run()
+    const database = getDb()
+    database.delete(schema.keyValueStorage)
+      .where(eq(schema.keyValueStorage.key, key))
+      .run()
   } catch (error) {
     console.error(`Failed to delete value for key ${key}:`, error)
   }
 }
 
 /**
- * Clear all values
+ * Clear all values from storage
  */
 export function clearAll(): void {
   try {
-    db.delete(schema.keyValueStorage).run()
+    const database = getDb()
+    database.delete(schema.keyValueStorage).run()
   } catch (error) {
     console.error("Failed to clear all values:", error)
   }

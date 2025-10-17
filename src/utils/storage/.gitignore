@@ -1,0 +1,5 @@
+# Ignore the storage database file
+storage.db
+storage.db-shm
+storage.db-wal
+
