@@ -1,19 +1,44 @@
 import { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
-import { Screen } from "@/components/Ignite/Screen"
-import { Text } from "@/components/Ignite/Text"
+import { Button } from "@/components/Button" // @demo remove-current-line
+import { Screen } from "@/components/Screen"
+import { Text } from "@/components/Text"
+import { useAuth } from "@/context/AuthContext" // @demo remove-current-line
 import { isRTL } from "@/i18n"
+import type { AppStackScreenProps } from "@/navigators/navigationTypes" // @demo remove-current-line
+import type { ThemedStyle } from "@/theme/types"
 import { useAppTheme } from "@/theme/context"
 import { $styles } from "@/theme/styles"
-import type { ThemedStyle } from "@/theme/types"
+import { useHeader } from "@/utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
 const welcomeLogo = require("@assets/images/logo.png")
 const welcomeFace = require("@assets/images/welcome-face.png")
 
-export const WelcomeScreen: FC = function WelcomeScreen() {
+interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {} // @demo remove-current-line
+
+// @demo replace-next-line export const WelcomeScreen: FC = function WelcomeScreen(
+export const WelcomeScreen: FC<WelcomeScreenProps> = function WelcomeScreen(
+  _props, // @demo remove-current-line
+) {
   const { themed, theme } = useAppTheme()
+  // @demo remove-block-start
+  const { navigation } = _props
+  const { logout } = useAuth()
+
+  function goNext() {
+    navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
+  }
+
+  useHeader(
+    {
+      rightTx: "common:logOut",
+      onRightPress: logout,
+    },
+    [logout],
+  )
+  // @demo remove-block-end
 
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
@@ -38,6 +63,14 @@ export const WelcomeScreen: FC = function WelcomeScreen() {
 
       <View style={themed([$bottomContainer, $bottomContainerInsets])}>
         <Text tx="welcomeScreen:postscript" size="md" />
+        {/* @demo remove-block-start */}
+        <Button
+          testID="next-screen-button"
+          preset="reversed"
+          tx="welcomeScreen:letsGo"
+          onPress={goNext}
+        />
+        {/* @demo remove-block-end */}
       </View>
     </Screen>
   )

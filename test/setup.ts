@@ -40,7 +40,7 @@ jest.mock("expo-localization", () => ({
   getLocales: () => [{ languageTag: "en-US", textDirection: "ltr" }],
 }))
 
-jest.mock("../src/i18n/index.ts", () => ({
+jest.mock("../app/i18n/index.ts", () => ({
   i18n: {
     isInitialized: true,
     language: "en",

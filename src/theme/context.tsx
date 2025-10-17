@@ -1,31 +1,30 @@
 import {
-  createContext,
-  FC,
-  PropsWithChildren,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
+    DarkTheme as NavDarkTheme,
+    DefaultTheme as NavDefaultTheme,
+    Theme as NavTheme,
+} from "@react-navigation/native"
+import {
+    createContext,
+    FC,
+    PropsWithChildren,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
 } from "react"
 import { StyleProp, useColorScheme } from "react-native"
-import {
-  DarkTheme as NavDarkTheme,
-  DefaultTheme as NavDefaultTheme,
-  Theme as NavTheme,
-} from "@react-navigation/native"
-import { useMMKVString } from "react-native-mmkv"
 
-import { storage } from "@/utils/storage"
+import { useStorageString } from "@/utils/storage"
 
 import { setImperativeTheming } from "./context.utils"
 import { darkTheme, lightTheme } from "./theme"
 import type {
-  AllowedStylesT,
-  ImmutableThemeContextModeT,
-  Theme,
-  ThemeContextModeT,
-  ThemedFnT,
-  ThemedStyle,
+    AllowedStylesT,
+    ImmutableThemeContextModeT,
+    Theme,
+    ThemeContextModeT,
+    ThemedFnT,
+    ThemedStyle,
 } from "./types"
 
 export type ThemeContextType = {
@@ -58,7 +57,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
   // The operating system theme:
   const systemColorScheme = useColorScheme()
   // Our saved theme context: can be "light", "dark", or undefined (system theme)
-  const [themeScheme, setThemeScheme] = useMMKVString("ignite.themeScheme", storage)
+  const [themeScheme, setThemeScheme] = useStorageString("ignite.themeScheme")
 
   /**
    * This function is used to set the theme context and is exported from the useAppTheme() hook.
@@ -75,7 +74,7 @@ export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
 
   /**
    * initialContext is the theme context passed in from the app.tsx file and always takes precedence.
-   * themeScheme is the value from MMKV. If undefined, we fall back to the system theme
+   * themeScheme is the value from storage. If undefined, we fall back to the system theme
    * systemColorScheme is the value from the device. If undefined, we fall back to "light"
    */
   const themeContext: ImmutableThemeContextModeT = useMemo(() => {

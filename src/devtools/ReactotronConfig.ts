@@ -3,13 +3,10 @@
  * free desktop app for inspecting and debugging your React Native app.
  * @see https://github.com/infinitered/reactotron
  */
-import { Platform, NativeModules } from "react-native"
-import { router } from "expo-router"
+import { NativeModules, Platform } from "react-native"
 import { ArgType } from "reactotron-core-client"
-import { ReactotronReactNative } from "reactotron-react-native"
-import mmkvPlugin from "reactotron-react-native-mmkv"
 
-import { storage } from "@/utils/storage"
+import { goBack, navigate, resetRoot } from "@/navigators/navigationUtilities"
 
 import { Reactotron } from "./ReactotronClient"
 
@@ -20,8 +17,6 @@ const reactotron = Reactotron.configure({
     Reactotron.clear()
   },
 })
-
-reactotron.use(mmkvPlugin<ReactotronReactNative>({ storage }))
 
 if (Platform.OS !== "web") {
   reactotron.useReactNative({
@@ -52,6 +47,16 @@ reactotron.onCustomCommand({
   },
 })
 
+reactotron.onCustomCommand({
+  title: "Reset Navigation State",
+  description: "Resets the navigation state",
+  command: "resetNavigation",
+  handler: () => {
+    Reactotron.log("resetting navigation state")
+    resetRoot({ index: 0, routes: [] })
+  },
+})
+
 reactotron.onCustomCommand<[{ name: "route"; type: ArgType.String }]>({
   command: "navigateTo",
   handler: (args) => {
@@ -59,7 +64,7 @@ reactotron.onCustomCommand<[{ name: "route"; type: ArgType.String }]>({
     if (route) {
       Reactotron.log(`Navigating to: ${route}`)
       // @ts-ignore
-      router.push(route)
+      navigate(route as any) // this should be tied to the navigator, but since this is for debugging, we can navigate to illegal routes
     } else {
       Reactotron.log("Could not navigate. No route provided.")
     }
@@ -75,7 +80,7 @@ reactotron.onCustomCommand({
   command: "goBack",
   handler: () => {
     Reactotron.log("Going back")
-    router.back()
+    goBack()
   },
 })
 

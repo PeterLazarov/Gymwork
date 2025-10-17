@@ -1,10 +1,12 @@
 import { ExpoConfig, ConfigContext } from "@expo/config"
 
 /**
- * Use ts-node here so we can use TypeScript for our Config Plugins
- * and not have to compile them to JavaScript
+ * Use tsx/cjs here so we can use TypeScript for our Config Plugins
+ * and not have to compile them to JavaScript.
+ * 
+ * See https://docs.expo.dev/config-plugins/plugins/#add-typescript-support-and-convert-to-dynamic-app-config
  */
-require("ts-node/register")
+import "tsx/cjs"
 
 /**
  * @param config ExpoConfig coming from the static config app.json if it exists
@@ -33,34 +35,7 @@ module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
           },
         ],
       },
-      // infoPlist: {
-      //   UIAppFonts: [
-      //     "AntDesign.ttf",
-      //     "Entypo.ttf",
-      //     "EvilIcons.ttf",
-      //     "Feather.ttf",
-      //     "FontAwesome.ttf",
-      //     "FontAwesome5_Brands.ttf",
-      //     "FontAwesome5_Regular.ttf",
-      //     "FontAwesome5_Solid.ttf",
-      //     "FontAwesome6_Brands.ttf",
-      //     "FontAwesome6_Regular.ttf",
-      //     "FontAwesome6_Solid.ttf",
-      //     "Foundation.ttf",
-      //     "Ionicons.ttf",
-      //     "MaterialIcons.ttf",
-      //     "MaterialCommunityIcons.ttf",
-      //     "SimpleLineIcons.ttf",
-      //     "Octicons.ttf",
-      //     "Zocial.ttf",
-      //     "Fontisto.ttf",
-      //   ],
-      // },
     },
-    plugins: [
-      ...existingPlugins,
-      require("./plugins/withSplashScreen").withSplashScreen,
-      require("./plugins/withMaterialIcons").default,
-    ],
+    plugins: [...existingPlugins],
   }
 }

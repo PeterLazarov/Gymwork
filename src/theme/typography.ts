@@ -49,14 +49,6 @@ const fonts = {
     // Android only font.
     normal: "monospace",
   },
-  defaultSans: {
-    thin: "sans-serif",
-    light: "sans-serif",
-    normal: "sans-serif",
-    medium: "sans-serif",
-    semiBold: "sans-serif",
-    bold: "sans-serif",
-  },
 }
 
 export const typography = {
@@ -67,22 +59,13 @@ export const typography = {
   /**
    * The primary font. Used in most places.
    */
-  // primary: fonts.spaceGrotesk,
-  primary: Platform.select({
-    ios: fonts.helveticaNeue,
-    android: fonts.sansSerif,
-    default: fonts.defaultSans,
-  }),
+  primary: fonts.spaceGrotesk,
   /**
    * An alternate font used for perhaps titles and stuff.
    */
-  secondary: Platform.select({
-    ios: fonts.helveticaNeue,
-    android: fonts.sansSerif,
-    default: fonts.defaultSans,
-  }),
+  secondary: Platform.select({ ios: fonts.helveticaNeue, android: fonts.sansSerif }),
   /**
    * Lets get fancy with a monospace font!
    */
-  code: Platform.select({ ios: fonts.courier, android: fonts.monospace, default: fonts.monospace }),
+  code: Platform.select({ ios: fonts.courier, android: fonts.monospace }),
 }

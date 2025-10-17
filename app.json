@@ -1,7 +1,7 @@
 {
-  "name": "gymwork",
-  "slug": "gymwork",
-  "scheme": "gymwork",
+  "name": "HelloWorld",
+  "slug": "HelloWorld",
+  "scheme": "helloworld",
   "version": "1.0.0",
   "orientation": "portrait",
   "userInterfaceStyle": "automatic",
@@ -16,7 +16,7 @@
   ],
   "android": {
     "icon": "./assets/images/app-icon-android-legacy.png",
-    "package": "com.gymwork",
+    "package": "com.helloworld",
     "adaptiveIcon": {
       "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
       "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
@@ -27,22 +27,13 @@
   "ios": {
     "icon": "./assets/images/app-icon-ios.png",
     "supportsTablet": true,
-    "bundleIdentifier": "com.gymwork"
+    "bundleIdentifier": "com.helloworld"
   },
   "web": {
     "favicon": "./assets/images/app-icon-web-favicon.png",
     "bundler": "metro"
   },
   "plugins": [
-    "react-native-bottom-tabs",
-    [
-      "expo-build-properties",
-      {
-        "ios": {
-          "useFrameworks": "static"
-        }
-      }
-    ],
     "expo-localization",
     "expo-font",
     [
@@ -63,15 +54,14 @@
         }
       }
     ],
-    "expo-router"
+    "expo-build-properties"
   ],
   "experiments": {
-    "tsconfigPaths": true,
-    "typedRoutes": true
+    "tsconfigPaths": true
   },
   "extra": {
     "ignite": {
-      "version": "11.0.0"
+      "version": "UNKNOWN"
     }
   }
 }

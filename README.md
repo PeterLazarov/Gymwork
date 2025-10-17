@@ -1,40 +1,30 @@
-# Testing Databases
+# Welcome to your new ignited app!
 
-## MMKV
+> The latest and greatest boilerplate for Infinite Red opinions
 
-## MMKV (reactive)
+This is the boilerplate that [Infinite Red](https://infinite.red) uses as a way to test bleeding-edge changes to our React Native stack.
 
-## [OP SQLite + Drizzle](https://github.com/OP-Engineering/op-sqlite)
+- [Quick start documentation](https://github.com/infinitered/ignite/blob/master/docs/boilerplate/Boilerplate.md)
+- [Full documentation](https://github.com/infinitered/ignite/blob/master/docs/README.md)
 
-https://orm.drizzle.team/docs/connect-op-sqlite
+## Getting Started
 
-## [Nitro SQLite ? Drizzle](https://github.com/margelo/react-native-nitro-sqlite)
+```bash
+yarn
+yarn start
+```
 
-## [Turbo SQLite ? drizzle](https://github.com/hsjoberg/react-native-turbo-sqlite)
+To make things work on your local simulator, or on your phone, you need first to [run `eas build`](https://github.com/infinitered/ignite/blob/master/docs/expo/EAS.md). We have many shortcuts on `package.json` to make it easier:
 
-## [Expo SQLite + Drizzle?](https://github.com/expo/expo/tree/main/packages/expo-sqlite)
+```bash
+yarn build:ios:sim # build for ios simulator
+yarn build:ios:device # build for ios device
+yarn build:ios:prod # build for ios device
+```
 
-https://expo.dev/blog/modern-sqlite-for-react-native-apps
-https://orm.drizzle.team/docs/connect-expo-sqlite
+### `./assets` directory
 
-## WatermelonDB
-
-Issues: Expo support requires a fork!
-
-## Components to try
-
-// TO TRY https://rnas.vercel.app/
-
-## Reordering components to try
-
-- https://github.com/computerjazz/react-native-draggable-flatlist
-- https://github.com/computerjazz/react-native-swipeable-item
-
-- https://github.com/MatiPl01/react-native-sortables
-- https://github.com/entropyconquers/react-native-reanimated-dnd
-- https://github.com/SHISME/react-native-draggable-grid
-
-## Other SQLite + reactivity approaches
+This directory is designed to organize and store various assets, making it easy for you to manage and use them in your application. The assets are further categorized into subdirectories, including `icons` and `images`:
 
 ```tree
 assets
@@ -85,4 +75,3 @@ Read our [Upgrade Guide](https://ignitecookbook.com/docs/recipes/UpdatingIgnite)
 💬 Join us on [Slack](https://join.slack.com/t/infiniteredcommunity/shared_invite/zt-1f137np4h-zPTq_CbaRFUOR_glUFs2UA) to discuss.
 
 📰 Make our Editor-in-chief happy by [reading the React Native Newsletter](https://reactnativenewsletter.com/).
-https://github.com/livestorejs/livestore
