@@ -2,14 +2,12 @@ import { sql } from "drizzle-orm"
 import {
   integer,
   primaryKey,
+  real,
   sqliteTable,
   SQLiteTableWithColumns,
-  text,
+  sqliteView,
+  text
 } from "drizzle-orm/sqlite-core"
-
-import { METRICS, ALL_UNITS } from "./constants"
-
-// TODO
 
 const timestamp_col_default_time_sql = () =>
   sql`(strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer))`
@@ -17,268 +15,138 @@ const timestamp_col_default_time_sql = () =>
 // ms precision
 const timestamp_col = integer().notNull().default(timestamp_col_default_time_sql())
 
-// second precision
-// const isoDateTimeCol = text().default(sql`CURRENT TIMESTAMP`)
-
-// Configs & Mostly constant data
-export const record_calculation_configs = sqliteTable("record_calculation_configs", {
+// Configs & Settings
+export const settings = sqliteTable("settings", {
   id: integer().primaryKey({ autoIncrement: true }),
-
-  measurement_column: text({ enum: METRICS }),
-  measurement_sort_direction: text({ enum: ["asc", "desc"] })
+  theme: text({ enum: ["light", "dark"] })
     .notNull()
-    .default("desc"),
-
-  grouping_column: text({ enum: METRICS }),
-  grouping_sort_direction: text({ enum: ["asc", "desc"] })
-    .notNull()
-    .default("desc"),
+    .default("light"),
+  scientific_muscle_names_enabled: integer({ mode: "boolean" }).notNull().default(false),
+  show_set_completion: integer({ mode: "boolean" }).notNull().default(true),
+  preview_next_set: integer({ mode: "boolean" }).notNull().default(true),
+  measure_rest: integer({ mode: "boolean" }).notNull().default(true),
+  show_comments_card: integer({ mode: "boolean" }).notNull().default(true),
+  show_workout_timer: integer({ mode: "boolean" }).notNull().default(true),
+  created_at: timestamp_col,
+  updated_at: timestamp_col,
 })
 
-export const equipment = sqliteTable("equipment", {
+// Exercises - Tuby structure
+export const exercises = sqliteTable("exercises", {
   id: integer().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
-})
 
-export const muscles = sqliteTable("muscles", {
-  id: integer().primaryKey({ autoIncrement: true }),
-  name: text().notNull(),
-})
+  // JSON arrays for related data
+  images: text({ mode: "json" }).$type<string[]>().default(sql`'[]'`),
+  equipment: text({ mode: "json" }).$type<string[]>().default(sql`'[]'`),
+  muscle_areas: text({ mode: "json" }).$type<string[]>().default(sql`'[]'`),
+  muscles: text({ mode: "json" }).$type<string[]>().default(sql`'[]'`),
+  instructions: text({ mode: "json" }).$type<string[]>().default(sql`'[]'`),
+  tips: text({ mode: "json" }).$type<string[]>(),
 
-export const muscle_areas = sqliteTable("muscle_areas", {
-  id: integer().primaryKey({ autoIncrement: true }),
-  name: text().notNull(),
-})
+  position: text(),
+  stance: text(),
 
-// weight, duration, distance, reps, rest
-export const metrics = sqliteTable("metrics", {
-  id: text({ enum: METRICS }).primaryKey(), // e.g. 'weight_mcg' TODO units in name?
-  display_name: text().notNull(), // e.g. 'Weight'
-  unit: text({ enum: ALL_UNITS }).notNull(), // e.g. 'kg'
-  round_to: integer().notNull(), // e.g. 5000
-})
-
-// Templates
-
-export const workout_templates = sqliteTable("workout_templates", {
-  id: integer().primaryKey({ autoIncrement: true }),
-
-  name: text().notNull(),
-  notes: text(),
+  is_favorite: integer({ mode: "boolean" }).notNull().default(false),
 
   created_at: timestamp_col,
+  updated_at: timestamp_col,
 })
 
-// Does it have to be a part of a workout?
-export const set_group_templates = sqliteTable("set_group_templates", {
+export const exercise_measurements = sqliteTable("exercise_measurements", {
   id: integer().primaryKey({ autoIncrement: true }),
-
-  name: text().notNull(),
-  type: text({ enum: ["plain", "superset", "circuit", "emom", "amrap", "custom"] }).notNull(),
-  position: integer().notNull(),
-
-  created_at: timestamp_col,
-})
-
-export const workout_templates_to_set_group_templates = sqliteTable(
-  "workout_templates_to_set_group_templates",
-  {
-    workout_template_id: integer()
-      .notNull()
-      .references(() => workout_templates.id, { onDelete: "cascade" }), // e.g. 'weight_mcg'
-    set_group_template_id: integer()
-      .notNull()
-      .references(() => set_group_templates.id, { onDelete: "cascade" }),
-  },
-  (t) => [primaryKey({ columns: [t.workout_template_id, t.set_group_template_id] })],
-)
-
-export const set_templates = sqliteTable("set_templates", {
-  id: integer().primaryKey({ autoIncrement: true }),
-  set_group_template_id: integer()
-    .notNull() // should this really not be nullable?
-    .references(() => set_group_templates.id, { onDelete: "cascade" }),
   exercise_id: integer()
-    .references(() => exercises.id, { onDelete: "restrict" })
-    .notNull(), // references exercises.id
+    .notNull()
+    .references(() => exercises.id, { onDelete: "cascade" }),
 
-  name: text(),
+  measurement_type: text({ enum: ["weight", "duration", "reps", "distance", "speed", "rest"] }).notNull(),
+  unit: text().notNull(), // e.g., 'kg', 'lb', 'ms', 'mm', 'kph'
 
-  position: integer().notNull(), // position in set_group
-
-  is_warmup: integer({ mode: "boolean" }).notNull().default(false),
-  reps: integer(),
-  weight_mcg: integer(),
-  distance_mm: integer(),
-  duration_ms: integer(),
-  rest_ms: integer(),
-
-  rpe: integer("rpe"), // 1-10
+  more_is_better: integer({ mode: "boolean" }).notNull().default(true),
+  step_value: real(), // e.g., 2.5 for weight increments
+  min_value: real(),
+  max_value: real(),
 
   created_at: timestamp_col,
+  updated_at: timestamp_col,
 })
 
-// Execution (Logs / Performed)
-
+// Workouts - unified structure with is_template flag
 export const workouts = sqliteTable("workouts", {
   id: integer().primaryKey({ autoIncrement: true }),
-  template_id: integer().references(() => workout_templates.id, { onDelete: "set null" }),
 
   name: text(),
   notes: text(),
+  date: integer(), // date as timestamp
 
-  scheduled_for: integer(),
-  started_at: integer(),
-  completed_at: integer(),
+  feeling: text(),
+  pain: text(),
+  rpe: integer(), // 1-10
+
+  ended_at: integer(),
+  duration_ms: integer(),
+
+  is_template: integer({ mode: "boolean" }).notNull().default(false),
+
   created_at: timestamp_col,
+  updated_at: timestamp_col,
 })
 
-// GROUPS (e.g., supersets, circuits)
-export const set_groups = sqliteTable("set_groups", {
+// Workout Steps (replaces set_groups)
+export const workout_steps = sqliteTable("workout_steps", {
   id: integer().primaryKey({ autoIncrement: true }),
   workout_id: integer()
     .notNull()
     .references(() => workouts.id, { onDelete: "cascade" }),
-  template_id: integer().references(() => set_group_templates.id, { onDelete: "set null" }),
 
-  name: text(),
-  type: text({ enum: ["plain", "superset", "circuit", "emom", "amrap", "custom"] }).notNull(),
+  step_type: text({ enum: ["plain", "superset", "circuit", "emom", "amrap", "custom"] }).notNull(),
   position: integer().notNull(),
 
-  started_at: integer(),
-  completed_at: integer(),
   created_at: timestamp_col,
+  updated_at: timestamp_col,
 })
 
-export const sets = sqliteTable("sets", {
+// Join table for exercises in workout steps
+export const workout_step_exercises = sqliteTable("workout_step_exercises", {
   id: integer().primaryKey({ autoIncrement: true }),
-  set_group_id: integer()
+  workout_step_id: integer()
     .notNull()
-    .references(() => set_groups.id, { onDelete: "cascade" }),
+    .references(() => workout_steps.id, { onDelete: "cascade" }),
   exercise_id: integer()
-    .references(() => exercises.id)
-    .notNull(), // references exercises.id
-  template_id: integer().references(() => set_templates.id, { onDelete: "restrict" }),
+    .notNull()
+    .references(() => exercises.id, { onDelete: "cascade" }),
 
-  position: integer().notNull(), // position in set_group
+  created_at: timestamp_col,
+  updated_at: timestamp_col,
+})
+
+// Workout Sets (replaces sets)
+export const workout_sets = sqliteTable("workout_sets", {
+  id: integer().primaryKey({ autoIncrement: true }),
+  workout_step_id: integer()
+    .notNull()
+    .references(() => workout_steps.id, { onDelete: "cascade" }),
+  exercise_id: integer()
+    .notNull()
+    .references(() => exercises.id, { onDelete: "cascade" }),
 
   is_warmup: integer({ mode: "boolean" }).notNull().default(false),
+  date: integer().notNull(), // denormalized for easier querying
+  is_weak_ass_record: integer({ mode: "boolean" }).notNull().default(false),
+
+  // Measurements
   reps: integer(),
   weight_mcg: integer(),
   distance_mm: integer(),
   duration_ms: integer(),
+  speed_kph: real(),
   rest_ms: integer(),
-
-  rpe: integer("rpe"), // 1-10
 
   completed_at: integer(),
 
-  // GymWork can do this via tags IMO, but maybe failure is good to capture?
-  // But then again, we'll do that via different sets right?
-  // fail one, complete another to designate which is planned and which accomplished?
-
-  // hevy style
-  // type: text({'warmup', 'normal', 'failure', 'drop'})
-
-  // fitNotes status style
-  // -completed_at
-  // status: text({ enum: ['completed', 'failed', 'warmup'] })
-  // status_changed_at: integer(),
-
   created_at: timestamp_col,
+  updated_at: timestamp_col,
 })
-
-// Exercises
-
-export const exercises = sqliteTable("exercises", {
-  id: integer().primaryKey({ autoIncrement: true }),
-
-  name: text().notNull(),
-  is_favorite: integer({ mode: "boolean" }).notNull().default(false),
-
-  tips: text({ mode: "json" }).$type<string[]>(),
-  instructions: text({ mode: "json" }).$type<string[]>(),
-  images: text({ mode: "json" }).$type<string[]>(),
-
-  record_config_id: integer()
-    .notNull()
-    .references(() => record_calculation_configs.id, { onDelete: "restrict" }),
-
-  created_at: timestamp_col,
-})
-
-export const exercise_metrics = sqliteTable(
-  "exercise_metrics",
-  {
-    metric_id: text({ enum: METRICS })
-      .notNull()
-      .references(() => metrics.id, { onDelete: "cascade" }), // e.g. 'weight_mcg'
-    exercise_id: integer()
-      .notNull()
-      .references(() => exercises.id, { onDelete: "cascade" }),
-  },
-  (t) => [primaryKey({ columns: [t.exercise_id, t.metric_id] })],
-)
-
-export const exercise_equipment = sqliteTable(
-  "exercise_equipment",
-  {
-    exercise_id: integer()
-      .notNull()
-      .references(() => exercises.id, { onDelete: "cascade" }),
-    equipment_id: integer()
-      .notNull()
-      .references(() => equipment.id, { onDelete: "cascade" }),
-  },
-  (t) => [primaryKey({ columns: [t.exercise_id, t.equipment_id] })],
-)
-
-export const exercise_muscles = sqliteTable(
-  "exercise_muscles",
-  {
-    exercise_id: integer()
-      .notNull()
-      .references(() => exercises.id, { onDelete: "cascade" }),
-    muscle_id: integer()
-      .notNull()
-      .references(() => muscles.id, { onDelete: "cascade" }),
-  },
-  (t) => [primaryKey({ columns: [t.exercise_id, t.muscle_id] })],
-)
-
-export const exercise_muscle_areas = sqliteTable(
-  "exercise_muscle_areas",
-  {
-    exercise_id: integer()
-      .notNull()
-      .references(() => exercises.id, { onDelete: "cascade" }),
-    muscle_area_id: integer()
-      .notNull()
-      .references(() => muscle_areas.id, { onDelete: "cascade" }),
-  },
-  (t) => [primaryKey({ columns: [t.exercise_id, t.muscle_area_id] })],
-)
-
-// Feedback / Health
-
-export const discomfort_logs = sqliteTable(
-  "discomfort_logs",
-  {
-    workout_id: integer()
-      // .notNull()
-      .references(() => workouts.id, { onDelete: "set null" }),
-    set_id: integer().references(() => sets.id),
-    // TODO rename to muscle area? or rename muscleArea to bodypart?
-    muscle_area_id: integer()
-      // .notNull()
-      .references(() => muscle_areas.id, { onDelete: "set null" }),
-    severity: integer().notNull(), // e.g. 1–10 pain scale
-    notes: text(), // optional freeform comment
-
-    created_at: timestamp_col, // when user logged it
-  },
-  (t) => [primaryKey({ columns: [t.workout_id, t.muscle_area_id, t.created_at] })],
-)
 
 // Tags
 export const tags = sqliteTable("tags", {
@@ -288,6 +156,7 @@ export const tags = sqliteTable("tags", {
   color: text(),
 
   created_at: timestamp_col,
+  updated_at: timestamp_col,
 })
 
 function getEntityTagTable(tableName: string, table: SQLiteTableWithColumns<any>) {
@@ -302,144 +171,277 @@ function getEntityTagTable(tableName: string, table: SQLiteTableWithColumns<any>
         .references(() => table.id, { onDelete: "cascade" }),
 
       created_at: timestamp_col,
+      updated_at: timestamp_col,
     },
     (t) => [primaryKey({ columns: [t.tag_id, t.entity_id] })],
   )
 }
 
-export const workout_templates_tags = getEntityTagTable("workout_templates", workout_templates)
-export const set_group_templates_tags = getEntityTagTable(
-  "set_group_templates",
-  set_group_templates,
-)
-export const set_templates_tags = getEntityTagTable("set_templates", set_templates)
-
 export const workouts_tags = getEntityTagTable("workouts", workouts)
-export const set_groups_tags = getEntityTagTable("set_groups", set_groups)
-export const sets_tags = getEntityTagTable("sets", sets)
-
+export const workout_steps_tags = getEntityTagTable("workout_steps", workout_steps)
+export const workout_sets_tags = getEntityTagTable("workout_sets", workout_sets)
 export const exercises_tags = getEntityTagTable("exercises", exercises)
 
+// Views
+
+/**
+ * Exercise Records View
+ * Calculates personal records for each exercise based on their measurement types.
+ * Groups by the first metric and measures by the second metric.
+ */
+export const exercise_records = sqliteView("exercise_records").as((qb) => {
+  return qb
+    .$with("exercise_measurement_types")
+    .as(
+      qb
+        .select({
+          exercise_id: exercise_measurements.exercise_id,
+          measurement_types: sql<string>`group_concat(${exercise_measurements.measurement_type})`.as(
+            "measurement_types",
+          ),
+        })
+        .from(exercise_measurements)
+        .groupBy(exercise_measurements.exercise_id),
+    )
+    .$with("measurement_sets")
+    .as((qb) =>
+      qb
+        .select({
+          id: workout_sets.id,
+          exercise_id: workout_sets.exercise_id,
+          reps: workout_sets.reps,
+          weight_mcg: workout_sets.weight_mcg,
+          distance_mm: workout_sets.distance_mm,
+          duration_ms: workout_sets.duration_ms,
+          speed_kph: workout_sets.speed_kph,
+          date: workout_sets.date,
+          measurement_types: sql<string>`emt.measurement_types`,
+          // Determine grouping value based on measurement type combination
+          grouping_value: sql<number>`
+            CASE
+              WHEN emt.measurement_types = 'weight' THEN ${workout_sets.weight_mcg}
+              WHEN emt.measurement_types = 'duration' THEN ${workout_sets.duration_ms}
+              WHEN emt.measurement_types = 'reps' THEN ${workout_sets.reps}
+              WHEN emt.measurement_types = 'distance' THEN ${workout_sets.distance_mm}
+              WHEN emt.measurement_types IN ('weight,duration', 'duration,weight') THEN ${workout_sets.weight_mcg}
+              WHEN emt.measurement_types IN ('reps,weight', 'weight,reps') THEN ${workout_sets.reps}
+              WHEN emt.measurement_types IN ('duration,reps', 'reps,duration') THEN ${workout_sets.duration_ms}
+              WHEN emt.measurement_types IN ('weight,distance', 'distance,weight') THEN ${workout_sets.weight_mcg}
+              WHEN emt.measurement_types IN ('distance,duration', 'duration,distance') THEN ${workout_sets.distance_mm}
+              WHEN emt.measurement_types IN ('reps,distance', 'distance,reps') THEN ${workout_sets.reps}
+              ELSE NULL
+            END
+          `.as("grouping_value"),
+          // Determine measurement value (what we're optimizing for)
+          measurement_value: sql<number>`
+            CASE
+              WHEN emt.measurement_types = 'weight' THEN ${workout_sets.weight_mcg}
+              WHEN emt.measurement_types = 'duration' THEN -${workout_sets.duration_ms}
+              WHEN emt.measurement_types = 'reps' THEN ${workout_sets.reps}
+              WHEN emt.measurement_types = 'distance' THEN ${workout_sets.distance_mm}
+              WHEN emt.measurement_types IN ('weight,duration', 'duration,weight') THEN -${workout_sets.duration_ms}
+              WHEN emt.measurement_types IN ('reps,weight', 'weight,reps') THEN ${workout_sets.weight_mcg}
+              WHEN emt.measurement_types IN ('duration,reps', 'reps,duration') THEN ${workout_sets.reps}
+              WHEN emt.measurement_types IN ('weight,distance', 'distance,weight') THEN ${workout_sets.distance_mm}
+              WHEN emt.measurement_types IN ('distance,duration', 'duration,distance') THEN -${workout_sets.duration_ms}
+              WHEN emt.measurement_types IN ('reps,distance', 'distance,reps') THEN ${workout_sets.distance_mm}
+              ELSE NULL
+            END
+          `.as("measurement_value"),
+          measuring_metric_type: sql<string>`
+            CASE
+              WHEN emt.measurement_types = 'weight' THEN 'weight'
+              WHEN emt.measurement_types = 'duration' THEN 'duration'
+              WHEN emt.measurement_types = 'reps' THEN 'reps'
+              WHEN emt.measurement_types = 'distance' THEN 'distance'
+              WHEN emt.measurement_types IN ('weight,duration', 'duration,weight') THEN 'duration'
+              WHEN emt.measurement_types IN ('reps,weight', 'weight,reps') THEN 'weight'
+              WHEN emt.measurement_types IN ('duration,reps', 'reps,duration') THEN 'reps'
+              WHEN emt.measurement_types IN ('weight,distance', 'distance,weight') THEN 'distance'
+              WHEN emt.measurement_types IN ('distance,duration', 'duration,distance') THEN 'duration'
+              WHEN emt.measurement_types IN ('reps,distance', 'distance,reps') THEN 'distance'
+              ELSE NULL
+            END
+          `.as("measuring_metric_type"),
+        })
+        .from(workout_sets)
+        .innerJoin(
+          sql`exercise_measurement_types emt`,
+          sql`${workout_sets.exercise_id} = emt.exercise_id`,
+        )
+        .where(sql`${workout_sets.is_warmup} = 0`),
+    )
+    .$with("ranked_sets")
+    .as((qb) =>
+      qb
+        .select({
+          id: sql`ms.id`,
+          exercise_id: sql`ms.exercise_id`,
+          reps: sql`ms.reps`,
+          weight_mcg: sql`ms.weight_mcg`,
+          distance_mm: sql`ms.distance_mm`,
+          duration_ms: sql`ms.duration_ms`,
+          speed_kph: sql`ms.speed_kph`,
+          date: sql`ms.date`,
+          measurement_types: sql`ms.measurement_types`,
+          grouping_value: sql`ms.grouping_value`,
+          measurement_value: sql`ms.measurement_value`,
+          measuring_metric_type: sql`ms.measuring_metric_type`,
+          more_is_better: exercise_measurements.more_is_better,
+          rank: sql<number>`
+            ROW_NUMBER() OVER (
+              PARTITION BY ms.exercise_id, ms.grouping_value
+              ORDER BY
+                CASE
+                  WHEN ${exercise_measurements.more_is_better} = 1 THEN ms.measurement_value
+                  ELSE -ms.measurement_value
+                END DESC,
+                ms.date DESC
+            )
+          `.as("rank"),
+        })
+        .from(sql`measurement_sets ms`)
+        .leftJoin(
+          exercise_measurements,
+          sql`ms.exercise_id = ${exercise_measurements.exercise_id} AND ms.measuring_metric_type = ${exercise_measurements.measurement_type}`,
+        ),
+    )
+    .select({
+      record_id: sql`id`,
+      exercise_id: sql`exercise_id`,
+      reps: sql`reps`,
+      weight_mcg: sql`weight_mcg`,
+      distance_mm: sql`distance_mm`,
+      duration_ms: sql`duration_ms`,
+      speed_kph: sql`speed_kph`,
+      date: sql`date`,
+      grouping_value: sql`grouping_value`,
+      measurement_value: sql`measurement_value`,
+    })
+    .from(sql`ranked_sets`)
+    .where(sql`rank = 1`)
+    .orderBy(sql`exercise_id, grouping_value`)
+})
+
+/**
+ * Muscle Area Stats View
+ * Shows workout count and percentage for each muscle area.
+ */
+export const muscle_area_stats = sqliteView("muscle_area_stats").as((qb) => {
+  return qb
+    .$with("workout_muscle_areas")
+    .as(
+      qb
+        .selectDistinct({
+          workout_id: workouts.id,
+          muscle_area: sql<string>`json_each.value`.as("muscle_area"),
+        })
+        .from(workouts)
+        .innerJoin(workout_steps, sql`${workout_steps.workout_id} = ${workouts.id}`)
+        .innerJoin(
+          workout_step_exercises,
+          sql`${workout_step_exercises.workout_step_id} = ${workout_steps.id}`,
+        )
+        .innerJoin(exercises, sql`${exercises.id} = ${workout_step_exercises.exercise_id}`)
+        .innerJoin(
+          sql`json_each(${exercises.muscle_areas})`,
+          sql`1=1`, // Always true, just for joining
+        )
+        .where(sql`${workouts.is_template} = 0`),
+    )
+    .$with("total_workouts")
+    .as(
+      qb
+        .select({
+          count: sql<number>`COUNT(*)`.as("count"),
+        })
+        .from(workouts)
+        .where(sql`${workouts.is_template} = 0`),
+    )
+    .select({
+      muscle_area: sql<string>`wma.muscle_area`,
+      workout_count: sql<number>`COUNT(DISTINCT wma.workout_id)`.as("workout_count"),
+      percentage: sql<number>`ROUND(
+        (CAST(COUNT(DISTINCT wma.workout_id) AS REAL) / CAST(tw.count AS REAL)) * 100,
+        2
+      )`.as("percentage"),
+      total_workouts: sql<number>`tw.count`.as("total_workouts"),
+    })
+    .from(sql`workout_muscle_areas wma`)
+    .crossJoin(sql`total_workouts tw`)
+    .groupBy(sql`wma.muscle_area, tw.count`)
+    .orderBy(sql`percentage DESC`)
+})
+
 export const schema = {
-  //  configs
-  record_calculation_configs,
-  equipment,
-  muscles,
-  muscle_areas,
-  metrics,
-
-  // templates
-  workout_templates,
-  set_group_templates,
-  set_templates,
-
-  // performed
-  workouts,
-  set_groups,
-  sets,
+  // settings
+  settings,
 
   // exercises
   exercises,
-  exercise_metrics,
-  exercise_equipment,
-  exercise_muscles,
-  exercise_muscle_areas,
+  exercise_measurements,
 
-  // health
-  discomfort_logs,
+  // workouts
+  workouts,
+  workout_steps,
+  workout_step_exercises,
+  workout_sets,
 
-  // Tags
+  // tags
   tags,
-  workout_templates_tags,
-  set_group_templates_tags,
-  set_templates_tags,
   workouts_tags,
-  set_groups_tags,
-  sets_tags,
+  workout_steps_tags,
+  workout_sets_tags,
   exercises_tags,
 
-  workout_templates_set_group_templates: workout_templates_to_set_group_templates,
+  // views
+  exercise_records,
+  muscle_area_stats,
 }
 
 // Types
 
-// Configs
-export type SelectRecordCalculationConfig = typeof record_calculation_configs.$inferSelect
-export type InsertRecordCalculationConfig = typeof record_calculation_configs.$inferInsert
-
-export type SelectEquipment = typeof equipment.$inferSelect
-export type InsertEquipment = typeof equipment.$inferInsert
-
-export type SelectMuscle = typeof muscles.$inferSelect
-export type InsertMuscle = typeof muscles.$inferInsert
-
-export type SelectMuscleArea = typeof muscle_areas.$inferSelect
-export type InsertMuscleArea = typeof muscle_areas.$inferInsert
-
-export type SelectMetric = typeof metrics.$inferSelect
-export type InsertMetric = typeof metrics.$inferInsert
-
-// Templates
-export type SelectTemplateWorkout = typeof workout_templates.$inferSelect
-export type InsertTemplateWorkout = typeof workout_templates.$inferInsert
-
-export type SelectTemplateSetGroup = typeof set_group_templates.$inferSelect
-export type InsertTemplateSetGroup = typeof set_group_templates.$inferInsert
-
-export type SelectTemplateSet = typeof set_templates.$inferSelect
-export type InsertTemplateSet = typeof set_templates.$inferInsert
-
-// Executed (Logs)
-export type SelectWorkout = typeof workouts.$inferSelect
-export type InsertWorkout = typeof workouts.$inferInsert
-
-export type SelectSetGroup = typeof set_groups.$inferSelect
-export type InsertSetGroup = typeof set_groups.$inferInsert
-
-export type SelectSet = typeof sets.$inferSelect
-export type InsertSet = typeof sets.$inferInsert
+// Settings
+export type SelectSettings = typeof settings.$inferSelect
+export type InsertSettings = typeof settings.$inferInsert
 
 // Exercises
 export type SelectExercise = typeof exercises.$inferSelect
 export type InsertExercise = typeof exercises.$inferInsert
 
-export type SelectExerciseMetric = typeof exercise_metrics.$inferSelect
-export type InsertExerciseMetric = typeof exercise_metrics.$inferInsert
+export type SelectExerciseMeasurement = typeof exercise_measurements.$inferSelect
+export type InsertExerciseMeasurement = typeof exercise_measurements.$inferInsert
 
-export type SelectExerciseEquipment = typeof exercise_equipment.$inferSelect
-export type InsertExerciseEquipment = typeof exercise_equipment.$inferInsert
+// Workouts
+export type SelectWorkout = typeof workouts.$inferSelect
+export type InsertWorkout = typeof workouts.$inferInsert
 
-export type SelectExerciseMuscle = typeof exercise_muscles.$inferSelect
-export type InsertExerciseMuscle = typeof exercise_muscles.$inferInsert
+export type SelectWorkoutStep = typeof workout_steps.$inferSelect
+export type InsertWorkoutStep = typeof workout_steps.$inferInsert
 
-export type SelectExerciseMuscleArea = typeof exercise_muscle_areas.$inferSelect
-export type InsertExerciseMuscleArea = typeof exercise_muscle_areas.$inferInsert
+export type SelectWorkoutStepExercise = typeof workout_step_exercises.$inferSelect
+export type InsertWorkoutStepExercise = typeof workout_step_exercises.$inferInsert
 
-// Health
-export type SelectDiscomfortLog = typeof discomfort_logs.$inferSelect
-export type InsertDiscomfortLog = typeof discomfort_logs.$inferInsert
+export type SelectWorkoutSet = typeof workout_sets.$inferSelect
+export type InsertWorkoutSet = typeof workout_sets.$inferInsert
 
 // Tags
 export type SelectTag = typeof tags.$inferSelect
 export type InsertTag = typeof tags.$inferInsert
 
-export type SelectTemplateWorkoutTag = typeof workout_templates_tags.$inferSelect
-export type InsertTemplateWorkoutTag = typeof workout_templates_tags.$inferInsert
-
-export type SelectTemplateset_groupTag = typeof set_group_templates_tags.$inferSelect
-export type InsertTemplateset_groupTag = typeof set_group_templates_tags.$inferInsert
-
-export type SelectTemplateSetTag = typeof set_templates_tags.$inferSelect
-export type InsertTemplateSetTag = typeof set_templates_tags.$inferInsert
-
 export type SelectWorkoutTag = typeof workouts_tags.$inferSelect
 export type InsertWorkoutTag = typeof workouts_tags.$inferInsert
 
-export type Selectset_groupTag = typeof set_groups_tags.$inferSelect
-export type Insertset_groupTag = typeof set_groups_tags.$inferInsert
+export type SelectWorkoutStepTag = typeof workout_steps_tags.$inferSelect
+export type InsertWorkoutStepTag = typeof workout_steps_tags.$inferInsert
 
-export type SelectSetTag = typeof sets_tags.$inferSelect
-export type InsertSetTag = typeof sets_tags.$inferInsert
+export type SelectWorkoutSetTag = typeof workout_sets_tags.$inferSelect
+export type InsertWorkoutSetTag = typeof workout_sets_tags.$inferInsert
 
 export type SelectExerciseTag = typeof exercises_tags.$inferSelect
 export type InsertExerciseTag = typeof exercises_tags.$inferInsert
+
+// Views
+export type SelectExerciseRecord = typeof exercise_records.$inferSelect
+
+export type SelectMuscleAreaStat = typeof muscle_area_stats.$inferSelect

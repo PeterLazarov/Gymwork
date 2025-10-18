@@ -28,10 +28,11 @@ export function DBProvider({ children }: DBProviderProps) {
         const sqlite = openDatabaseSync(SQLiteDBName, {
           enableChangeListener: true,
         })
-
+        const config = { schema: { ...schema, ...allRelations } }
+        console.log({ config })
+        console.log({ sqlite })
         // Create drizzle instance
-        const drizzleDB = drizzle(sqlite, { schema: { ...schema, ...allRelations } })
-
+        const drizzleDB = drizzle(sqlite, config)
         // Check if database is already populated
         const existingExercises = await drizzleDB
           .select()
@@ -72,4 +73,3 @@ export function DBProvider({ children }: DBProviderProps) {
 
   return <DBContext.Provider value={db}>{children}</DBContext.Provider>
 }
-
