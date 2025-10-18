@@ -3,6 +3,7 @@ import { openDatabaseSync, SQLiteDatabase } from "expo-sqlite"
 import { ReactNode, useEffect, useState } from "react"
 
 import { SQLiteDBName } from "./constants"
+import { createTables } from "./expo/createTables"
 import { seedSimple } from "./expo/simpleSeed"
 import { allRelations } from "./relations"
 import { schema } from "./schema"
@@ -28,6 +29,10 @@ export function DBProvider({ children }: DBProviderProps) {
         const sqlite = openDatabaseSync(SQLiteDBName, {
           enableChangeListener: true,
         })
+
+        // Create tables if they don't exist
+        createTables(sqlite)
+
         const config = { schema: { ...schema, ...allRelations } }
         console.log({ config })
         console.log({ sqlite })
