@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/expo-sqlite"
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin"
-import { openDatabaseSync } from "expo-sqlite"
+import { deleteDatabaseAsync, openDatabaseSync } from "expo-sqlite"
 import { useEffect, useState } from "react"
 
 import migrations from "../../drizzle/migrations.js"
@@ -49,14 +49,16 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
   // Only seed after both pragmas and migrations are complete
   useEffect(() => {
     if (success && pragmasComplete && !seedingComplete) {
-      seedAll(drizzleDB)
-        .then(() => {
-          console.log("Seeding completed successfully")
-          setSeedingComplete(true)
-        })
-        .catch((err) => {
-          console.error("Seeding failed:", err)
-        })
+      // deleteDatabaseAsync(SQLiteDBName).then(() => {
+      // seedAll(drizzleDB)
+      //   .then(() => {
+      //     console.log("Seeding completed successfully")
+      //     setSeedingComplete(true)
+      //   })
+      //   .catch((err) => {
+      //     console.error("Seeding failed:", err)
+      //   })
+      // })
     }
   }, [success, pragmasComplete, seedingComplete])
 

@@ -35,26 +35,6 @@ CREATE TABLE `exercise_tags` (
 	FOREIGN KEY (`entity_id`) REFERENCES `exercises`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
-CREATE TABLE `settings` (
-	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`theme` text DEFAULT 'light' NOT NULL,
-	`scientific_muscle_names_enabled` integer DEFAULT false NOT NULL,
-	`show_set_completion` integer DEFAULT true NOT NULL,
-	`preview_next_set` integer DEFAULT true NOT NULL,
-	`measure_rest` integer DEFAULT true NOT NULL,
-	`show_comments_card` integer DEFAULT true NOT NULL,
-	`show_workout_timer` integer DEFAULT true NOT NULL,
-	`created_at` integer DEFAULT (strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer)) NOT NULL
-);
---> statement-breakpoint
-CREATE TABLE `tags` (
-	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`name` text NOT NULL,
-	`category` text,
-	`color` text,
-	`created_at` integer DEFAULT (strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer)) NOT NULL
-);
---> statement-breakpoint
 CREATE TABLE `sets` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`workout_step_id` integer NOT NULL,
@@ -74,13 +54,33 @@ CREATE TABLE `sets` (
 	FOREIGN KEY (`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
-CREATE TABLE `workout_set_tags` (
+CREATE TABLE `set_tags` (
 	`tag_id` integer NOT NULL,
 	`entity_id` integer NOT NULL,
 	`created_at` integer DEFAULT (strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer)) NOT NULL,
 	PRIMARY KEY(`tag_id`, `entity_id`),
 	FOREIGN KEY (`tag_id`) REFERENCES `tags`(`id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`entity_id`) REFERENCES `sets`(`id`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
+CREATE TABLE `settings` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`theme` text DEFAULT 'light' NOT NULL,
+	`scientific_muscle_names_enabled` integer DEFAULT false NOT NULL,
+	`show_set_completion` integer DEFAULT true NOT NULL,
+	`preview_next_set` integer DEFAULT true NOT NULL,
+	`measure_rest` integer DEFAULT true NOT NULL,
+	`show_comments_card` integer DEFAULT true NOT NULL,
+	`show_workout_timer` integer DEFAULT true NOT NULL,
+	`created_at` integer DEFAULT (strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer)) NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE `tags` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`name` text NOT NULL,
+	`category` text,
+	`color` text,
+	`created_at` integer DEFAULT (strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer)) NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `workout_step_exercises` (

@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "37a014d6-118b-4d55-a022-415706903bce",
+  "id": "4d3c2d33-29c7-4683-9ae5-0ecb11e0810a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "exercise_metrics": {
@@ -79,8 +79,12 @@
           "name": "exercise_metrics_exercise_id_exercises_id_fk",
           "tableFrom": "exercise_metrics",
           "tableTo": "exercises",
-          "columnsFrom": ["exercise_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "exercise_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -222,8 +226,12 @@
           "name": "exercise_tags_tag_id_tags_id_fk",
           "tableFrom": "exercise_tags",
           "tableTo": "tags",
-          "columnsFrom": ["tag_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "tag_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -231,16 +239,228 @@
           "name": "exercise_tags_entity_id_exercises_id_fk",
           "tableFrom": "exercise_tags",
           "tableTo": "exercises",
-          "columnsFrom": ["entity_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "entity_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "exercise_tags_tag_id_entity_id_pk": {
-          "columns": ["tag_id", "entity_id"],
+          "columns": [
+            "tag_id",
+            "entity_id"
+          ],
           "name": "exercise_tags_tag_id_entity_id_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "sets": {
+      "name": "sets",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "workout_step_id": {
+          "name": "workout_step_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "exercise_id": {
+          "name": "exercise_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "is_warmup": {
+          "name": "is_warmup",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "date": {
+          "name": "date",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "is_weak_ass_record": {
+          "name": "is_weak_ass_record",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "reps": {
+          "name": "reps",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "weight_mcg": {
+          "name": "weight_mcg",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "distance_mm": {
+          "name": "distance_mm",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "duration_ms": {
+          "name": "duration_ms",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "speed_kph": {
+          "name": "speed_kph",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "rest_ms": {
+          "name": "rest_ms",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "completed_at": {
+          "name": "completed_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer))"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sets_workout_step_id_workout_steps_id_fk": {
+          "name": "sets_workout_step_id_workout_steps_id_fk",
+          "tableFrom": "sets",
+          "tableTo": "workout_steps",
+          "columnsFrom": [
+            "workout_step_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "sets_exercise_id_exercises_id_fk": {
+          "name": "sets_exercise_id_exercises_id_fk",
+          "tableFrom": "sets",
+          "tableTo": "exercises",
+          "columnsFrom": [
+            "exercise_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "set_tags": {
+      "name": "set_tags",
+      "columns": {
+        "tag_id": {
+          "name": "tag_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "entity_id": {
+          "name": "entity_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer))"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "set_tags_tag_id_tags_id_fk": {
+          "name": "set_tags_tag_id_tags_id_fk",
+          "tableFrom": "set_tags",
+          "tableTo": "tags",
+          "columnsFrom": [
+            "tag_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "set_tags_entity_id_sets_id_fk": {
+          "name": "set_tags_entity_id_sets_id_fk",
+          "tableFrom": "set_tags",
+          "tableTo": "sets",
+          "columnsFrom": [
+            "entity_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "set_tags_tag_id_entity_id_pk": {
+          "columns": [
+            "tag_id",
+            "entity_id"
+          ],
+          "name": "set_tags_tag_id_entity_id_pk"
         }
       },
       "uniqueConstraints": {},
@@ -373,192 +593,6 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "sets": {
-      "name": "sets",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": true
-        },
-        "workout_step_id": {
-          "name": "workout_step_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "exercise_id": {
-          "name": "exercise_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "is_warmup": {
-          "name": "is_warmup",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": false
-        },
-        "date": {
-          "name": "date",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "is_weak_ass_record": {
-          "name": "is_weak_ass_record",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": false
-        },
-        "reps": {
-          "name": "reps",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "weight_mcg": {
-          "name": "weight_mcg",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "distance_mm": {
-          "name": "distance_mm",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "duration_ms": {
-          "name": "duration_ms",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "speed_kph": {
-          "name": "speed_kph",
-          "type": "real",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "rest_ms": {
-          "name": "rest_ms",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "completed_at": {
-          "name": "completed_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer))"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "sets_workout_step_id_workout_steps_id_fk": {
-          "name": "sets_workout_step_id_workout_steps_id_fk",
-          "tableFrom": "sets",
-          "tableTo": "workout_steps",
-          "columnsFrom": ["workout_step_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "sets_exercise_id_exercises_id_fk": {
-          "name": "sets_exercise_id_exercises_id_fk",
-          "tableFrom": "sets",
-          "tableTo": "exercises",
-          "columnsFrom": ["exercise_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "workout_set_tags": {
-      "name": "workout_set_tags",
-      "columns": {
-        "tag_id": {
-          "name": "tag_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "entity_id": {
-          "name": "entity_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false,
-          "default": "(strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer))"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "workout_set_tags_tag_id_tags_id_fk": {
-          "name": "workout_set_tags_tag_id_tags_id_fk",
-          "tableFrom": "workout_set_tags",
-          "tableTo": "tags",
-          "columnsFrom": ["tag_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "workout_set_tags_entity_id_sets_id_fk": {
-          "name": "workout_set_tags_entity_id_sets_id_fk",
-          "tableFrom": "workout_set_tags",
-          "tableTo": "sets",
-          "columnsFrom": ["entity_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "workout_set_tags_tag_id_entity_id_pk": {
-          "columns": ["tag_id", "entity_id"],
-          "name": "workout_set_tags_tag_id_entity_id_pk"
-        }
-      },
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
     "workout_step_exercises": {
       "name": "workout_step_exercises",
       "columns": {
@@ -598,8 +632,12 @@
           "name": "workout_step_exercises_workout_step_id_workout_steps_id_fk",
           "tableFrom": "workout_step_exercises",
           "tableTo": "workout_steps",
-          "columnsFrom": ["workout_step_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "workout_step_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -607,8 +645,12 @@
           "name": "workout_step_exercises_exercise_id_exercises_id_fk",
           "tableFrom": "workout_step_exercises",
           "tableTo": "exercises",
-          "columnsFrom": ["exercise_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "exercise_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -663,8 +705,12 @@
           "name": "workout_steps_workout_id_workouts_id_fk",
           "tableFrom": "workout_steps",
           "tableTo": "workouts",
-          "columnsFrom": ["workout_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "workout_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -705,8 +751,12 @@
           "name": "workout_step_tags_tag_id_tags_id_fk",
           "tableFrom": "workout_step_tags",
           "tableTo": "tags",
-          "columnsFrom": ["tag_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "tag_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -714,15 +764,22 @@
           "name": "workout_step_tags_entity_id_workout_steps_id_fk",
           "tableFrom": "workout_step_tags",
           "tableTo": "workout_steps",
-          "columnsFrom": ["entity_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "entity_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "workout_step_tags_tag_id_entity_id_pk": {
-          "columns": ["tag_id", "entity_id"],
+          "columns": [
+            "tag_id",
+            "entity_id"
+          ],
           "name": "workout_step_tags_tag_id_entity_id_pk"
         }
       },
@@ -850,8 +907,12 @@
           "name": "workout_tags_tag_id_tags_id_fk",
           "tableFrom": "workout_tags",
           "tableTo": "tags",
-          "columnsFrom": ["tag_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "tag_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -859,15 +920,22 @@
           "name": "workout_tags_entity_id_workouts_id_fk",
           "tableFrom": "workout_tags",
           "tableTo": "workouts",
-          "columnsFrom": ["entity_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "entity_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "workout_tags_tag_id_entity_id_pk": {
-          "columns": ["tag_id", "entity_id"],
+          "columns": [
+            "tag_id",
+            "entity_id"
+          ],
           "name": "workout_tags_tag_id_entity_id_pk"
         }
       },
