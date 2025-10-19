@@ -27,5 +27,6 @@ config.resolver.unstable_conditionNames = ["require", "default", "browser"]
 // This helps support certain popular third-party libraries
 // such as Firebase that use the extension cjs.
 config.resolver.sourceExts.push("cjs")
+config.resolver.sourceExts.push("sql")
 
 module.exports = config

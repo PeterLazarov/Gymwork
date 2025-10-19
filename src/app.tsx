@@ -24,8 +24,8 @@ import { useEffect, useState } from "react"
 import { KeyboardProvider } from "react-native-keyboard-controller"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 
-import { AuthProvider } from "./context/AuthContext"; // @demo remove-current-line
-import { DBProvider } from "./db/DBProvider"
+import { AuthProvider } from "./context/AuthContext" // @demo remove-current-line
+import DBProvider from "./db/DBProvider"
 import { initI18n } from "./i18n"
 import { AppNavigator } from "./navigators/AppNavigator"
 import { useNavigationPersistence } from "./navigators/navigationUtilities"
@@ -48,7 +48,6 @@ const config = {
         DemoShowroom: {
           path: "showroom/:queryIndex?/:itemIndex?",
         },
-        DemoDebug: "debug",
         DemoPodcastList: "podcast",
         DemoCommunity: "community",
       },
