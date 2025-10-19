@@ -4,8 +4,8 @@
   "id": "37a014d6-118b-4d55-a022-415706903bce",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "exercise_measurements": {
-      "name": "exercise_measurements",
+    "exercise_metrics": {
+      "name": "exercise_metrics",
       "columns": {
         "id": {
           "name": "id",
@@ -75,16 +75,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "exercise_measurements_exercise_id_exercises_id_fk": {
-          "name": "exercise_measurements_exercise_id_exercises_id_fk",
-          "tableFrom": "exercise_measurements",
+        "exercise_metrics_exercise_id_exercises_id_fk": {
+          "name": "exercise_metrics_exercise_id_exercises_id_fk",
+          "tableFrom": "exercise_metrics",
           "tableTo": "exercises",
-          "columnsFrom": [
-            "exercise_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["exercise_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -226,12 +222,8 @@
           "name": "exercise_tags_tag_id_tags_id_fk",
           "tableFrom": "exercise_tags",
           "tableTo": "tags",
-          "columnsFrom": [
-            "tag_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["tag_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -239,22 +231,15 @@
           "name": "exercise_tags_entity_id_exercises_id_fk",
           "tableFrom": "exercise_tags",
           "tableTo": "exercises",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "exercise_tags_tag_id_entity_id_pk": {
-          "columns": [
-            "tag_id",
-            "entity_id"
-          ],
+          "columns": ["tag_id", "entity_id"],
           "name": "exercise_tags_tag_id_entity_id_pk"
         }
       },
@@ -388,8 +373,8 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "workout_sets": {
-      "name": "workout_sets",
+    "sets": {
+      "name": "sets",
       "columns": {
         "id": {
           "name": "id",
@@ -495,29 +480,21 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "workout_sets_workout_step_id_workout_steps_id_fk": {
-          "name": "workout_sets_workout_step_id_workout_steps_id_fk",
-          "tableFrom": "workout_sets",
+        "sets_workout_step_id_workout_steps_id_fk": {
+          "name": "sets_workout_step_id_workout_steps_id_fk",
+          "tableFrom": "sets",
           "tableTo": "workout_steps",
-          "columnsFrom": [
-            "workout_step_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["workout_step_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "workout_sets_exercise_id_exercises_id_fk": {
-          "name": "workout_sets_exercise_id_exercises_id_fk",
-          "tableFrom": "workout_sets",
+        "sets_exercise_id_exercises_id_fk": {
+          "name": "sets_exercise_id_exercises_id_fk",
+          "tableFrom": "sets",
           "tableTo": "exercises",
-          "columnsFrom": [
-            "exercise_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["exercise_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -558,35 +535,24 @@
           "name": "workout_set_tags_tag_id_tags_id_fk",
           "tableFrom": "workout_set_tags",
           "tableTo": "tags",
-          "columnsFrom": [
-            "tag_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["tag_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "workout_set_tags_entity_id_workout_sets_id_fk": {
-          "name": "workout_set_tags_entity_id_workout_sets_id_fk",
+        "workout_set_tags_entity_id_sets_id_fk": {
+          "name": "workout_set_tags_entity_id_sets_id_fk",
           "tableFrom": "workout_set_tags",
-          "tableTo": "workout_sets",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "tableTo": "sets",
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "workout_set_tags_tag_id_entity_id_pk": {
-          "columns": [
-            "tag_id",
-            "entity_id"
-          ],
+          "columns": ["tag_id", "entity_id"],
           "name": "workout_set_tags_tag_id_entity_id_pk"
         }
       },
@@ -632,12 +598,8 @@
           "name": "workout_step_exercises_workout_step_id_workout_steps_id_fk",
           "tableFrom": "workout_step_exercises",
           "tableTo": "workout_steps",
-          "columnsFrom": [
-            "workout_step_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["workout_step_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -645,12 +607,8 @@
           "name": "workout_step_exercises_exercise_id_exercises_id_fk",
           "tableFrom": "workout_step_exercises",
           "tableTo": "exercises",
-          "columnsFrom": [
-            "exercise_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["exercise_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -705,12 +663,8 @@
           "name": "workout_steps_workout_id_workouts_id_fk",
           "tableFrom": "workout_steps",
           "tableTo": "workouts",
-          "columnsFrom": [
-            "workout_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["workout_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -751,12 +705,8 @@
           "name": "workout_step_tags_tag_id_tags_id_fk",
           "tableFrom": "workout_step_tags",
           "tableTo": "tags",
-          "columnsFrom": [
-            "tag_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["tag_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -764,22 +714,15 @@
           "name": "workout_step_tags_entity_id_workout_steps_id_fk",
           "tableFrom": "workout_step_tags",
           "tableTo": "workout_steps",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "workout_step_tags_tag_id_entity_id_pk": {
-          "columns": [
-            "tag_id",
-            "entity_id"
-          ],
+          "columns": ["tag_id", "entity_id"],
           "name": "workout_step_tags_tag_id_entity_id_pk"
         }
       },
@@ -907,12 +850,8 @@
           "name": "workout_tags_tag_id_tags_id_fk",
           "tableFrom": "workout_tags",
           "tableTo": "tags",
-          "columnsFrom": [
-            "tag_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["tag_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -920,22 +859,15 @@
           "name": "workout_tags_entity_id_workouts_id_fk",
           "tableFrom": "workout_tags",
           "tableTo": "workouts",
-          "columnsFrom": [
-            "entity_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["entity_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "workout_tags_tag_id_entity_id_pk": {
-          "columns": [
-            "tag_id",
-            "entity_id"
-          ],
+          "columns": ["tag_id", "entity_id"],
           "name": "workout_tags_tag_id_entity_id_pk"
         }
       },

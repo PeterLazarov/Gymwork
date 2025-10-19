@@ -1,12 +1,12 @@
 import { relations } from "drizzle-orm"
 
 import {
-  exercise_measurements,
+  exercise_metrics,
   exercises,
   exercises_tags,
+  sets,
+  sets_tags,
   tags,
-  workout_sets,
-  workout_sets_tags,
   workout_step_exercises,
   workout_steps,
   workout_steps_tags,
@@ -16,16 +16,16 @@ import {
 
 // Exercises relations
 export const exercisesRelations = relations(exercises, ({ many }) => ({
-  exerciseMeasurements: many(exercise_measurements),
+  exerciseMetrics: many(exercise_metrics),
   workoutStepExercises: many(workout_step_exercises),
-  workoutSets: many(workout_sets),
+  sets: many(sets),
   exercisesTags: many(exercises_tags),
 }))
 
 // Exercise measurements relations
-export const exerciseMeasurementsRelations = relations(exercise_measurements, ({ one }) => ({
+export const exerciseMetricsRelations = relations(exercise_metrics, ({ one }) => ({
   exercise: one(exercises, {
-    fields: [exercise_measurements.exercise_id],
+    fields: [exercise_metrics.exercise_id],
     references: [exercises.id],
   }),
 }))
@@ -59,19 +59,19 @@ export const workoutStepExercisesRelations = relations(workout_step_exercises, (
 }))
 
 // Workout sets relations
-export const workoutSetsRelations = relations(workout_sets, ({ one, many }) => ({
+export const setsRelations = relations(sets, ({ one, many }) => ({
   exercise: one(exercises, {
-    fields: [workout_sets.exercise_id],
+    fields: [sets.exercise_id],
     references: [exercises.id],
   }),
-  workoutSetsTags: many(workout_sets_tags),
+  setsTags: many(sets_tags),
 }))
 
 // Tags relations
 export const tagsRelations = relations(tags, ({ many }) => ({
   workoutsTags: many(workouts_tags),
   workoutStepsTags: many(workout_steps_tags),
-  workoutSetsTags: many(workout_sets_tags),
+  setsTags: many(sets_tags),
   exercisesTags: many(exercises_tags),
 }))
 
@@ -100,14 +100,14 @@ export const workoutStepsTagsRelations = relations(workout_steps_tags, ({ one })
 }))
 
 // Workout sets tags relations
-export const workoutSetsTagsRelations = relations(workout_sets_tags, ({ one }) => ({
+export const setsTagsRelations = relations(sets_tags, ({ one }) => ({
   tag: one(tags, {
-    fields: [workout_sets_tags.tag_id],
+    fields: [sets_tags.tag_id],
     references: [tags.id],
   }),
-  workoutSet: one(workout_sets, {
-    fields: [workout_sets_tags.entity_id],
-    references: [workout_sets.id],
+  set: one(sets, {
+    fields: [sets_tags.entity_id],
+    references: [sets.id],
   }),
 }))
 
@@ -125,15 +125,15 @@ export const exercisesTagsRelations = relations(exercises_tags, ({ one }) => ({
 
 export const allRelations = {
   exercisesRelations,
-  exerciseMeasurementsRelations,
+  exerciseMetricsRelations,
   workoutsRelations,
   workoutStepsRelations,
   workoutStepExercisesRelations,
-  workoutSetsRelations,
+  setsRelations,
   tagsRelations,
   workoutsTagsRelations,
   workoutStepsTagsRelations,
-  workoutSetsTagsRelations,
+  setsTagsRelations,
   exercisesTagsRelations,
 }
 

@@ -1,4 +1,4 @@
-CREATE TABLE `exercise_measurements` (
+CREATE TABLE `exercise_metrics` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`exercise_id` integer NOT NULL,
 	`measurement_type` text NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE `tags` (
 	`created_at` integer DEFAULT (strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer)) NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE `workout_sets` (
+CREATE TABLE `sets` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`workout_step_id` integer NOT NULL,
 	`exercise_id` integer NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE `workout_set_tags` (
 	`created_at` integer DEFAULT (strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer)) NOT NULL,
 	PRIMARY KEY(`tag_id`, `entity_id`),
 	FOREIGN KEY (`tag_id`) REFERENCES `tags`(`id`) ON UPDATE no action ON DELETE cascade,
-	FOREIGN KEY (`entity_id`) REFERENCES `workout_sets`(`id`) ON UPDATE no action ON DELETE cascade
+	FOREIGN KEY (`entity_id`) REFERENCES `sets`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `workout_step_exercises` (

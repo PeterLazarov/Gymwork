@@ -63,7 +63,7 @@ export const exercises = sqliteTable("exercises", {
   updated_at: timestamp_col,
 })
 
-export const exercise_measurements = sqliteTable("exercise_measurements", {
+export const exercise_metrics = sqliteTable("exercise_metrics", {
   id: integer().primaryKey({ autoIncrement: true }),
   exercise_id: integer()
     .notNull()
@@ -133,7 +133,7 @@ export const workout_step_exercises = sqliteTable("workout_step_exercises", {
 })
 
 // Workout Sets (replaces sets)
-export const workout_sets = sqliteTable("workout_sets", {
+export const sets = sqliteTable("sets", {
   id: integer().primaryKey({ autoIncrement: true }),
   workout_step_id: integer()
     .notNull()
@@ -191,7 +191,7 @@ function getEntityTagTable(tableName: string, table: SQLiteTableWithColumns<any>
 
 export const workouts_tags = getEntityTagTable("workouts", workouts)
 export const workout_steps_tags = getEntityTagTable("workout_steps", workout_steps)
-export const workout_sets_tags = getEntityTagTable("workout_sets", workout_sets)
+export const sets_tags = getEntityTagTable("sets", sets)
 export const exercises_tags = getEntityTagTable("exercises", exercises)
 
 // Views
@@ -204,10 +204,10 @@ export const exercises_tags = getEntityTagTable("exercises", exercises)
 
 // CREATE VIEW public.exercise_records AS
 //  WITH exercise_measurement_types AS (
-//          SELECT exercise_measurements.exercise_id,
-//             array_agg(exercise_measurements.measurement_type) AS measurement_types
-//            FROM public.exercise_measurements
-//           GROUP BY exercise_measurements.exercise_id
+//          SELECT exercise_metrics.exercise_id,
+//             array_agg(exercise_metrics.measurement_type) AS measurement_types
+//            FROM public.exercise_metrics
+//           GROUP BY exercise_metrics.exercise_id
 //         ), measurement_sets AS (
 //          SELECT ws.id,
 //             ws.exercise_id,
@@ -257,7 +257,7 @@ export const exercises_tags = getEntityTagTable("exercises", exercises)
 //                     WHEN '{reps,distance}' THEN 'distance'
 //                     ELSE NULL
 //                 END AS measuring_metric_type
-//            FROM (public.workout_sets ws
+//            FROM (public.sets ws
 //              JOIN exercise_measurement_types emt ON ((ws.exercise_id = emt.exercise_id)))
 //           WHERE (ws.is_warmup = false)
 //         ), ranked_sets AS (
@@ -280,7 +280,7 @@ export const exercises_tags = getEntityTagTable("exercises", exercises)
 //                     ELSE (- ms.measurement_value)
 //                 END DESC, ms.date DESC) AS rank
 //            FROM (measurement_sets ms
-//              LEFT JOIN public.exercise_measurements em ON (((ms.exercise_id = em.exercise_id) AND (ms.measuring_metric_type = (em.measurement_type)))))
+//              LEFT JOIN public.exercise_metrics em ON (((ms.exercise_id = em.exercise_id) AND (ms.measuring_metric_type = (em.measurement_type)))))
 //         )
 //  SELECT id AS record_id,
 //     exercise_id,
@@ -296,23 +296,27 @@ export const exercises_tags = getEntityTagTable("exercises", exercises)
 //   WHERE (rank = 1)
 //   ORDER BY exercise_id, grouping_value;
 
-const exercise_records = sqliteView('exercise_records', {
-  record_id: integer().notNull().references(() => workout_sets.id),
-  exercise_id: integer().notNull().references(() => exercises.id),
+const exercise_records = sqliteView("exercise_records", {
+  record_id: integer()
+    .notNull()
+    .references(() => sets.id),
+  exercise_id: integer()
+    .notNull()
+    .references(() => exercises.id),
   reps: integer(),
-  weight_mcg:  integer(),
-  distance_mm:  integer(),
-  duration_ms:  integer(),
+  weight_mcg: integer(),
+  distance_mm: integer(),
+  duration_ms: integer(),
   speed_kph: real(),
   date: integer().notNull(),
   grouping_value: integer().notNull(),
-  measurement_value: integer().notNull()
+  measurement_value: integer().notNull(),
 }).as(sql`
   WITH exercise_measurement_types AS (
-          SELECT exercise_measurements.exercise_id,
-             array_agg(exercise_measurements.measurement_type) AS measurement_types
-            FROM ${exercise_measurements}
-           GROUP BY exercise_measurements.exercise_id
+          SELECT exercise_metrics.exercise_id,
+             array_agg(exercise_metrics.measurement_type) AS measurement_types
+            FROM ${exercise_metrics}
+           GROUP BY exercise_metrics.exercise_id
          ), measurement_sets AS (
           SELECT ws.id,
              ws.exercise_id,
@@ -362,7 +366,7 @@ const exercise_records = sqliteView('exercise_records', {
                   WHEN emt.measurement_types IN ('reps,distance', 'distance,reps') THEN 'distance'
                   ELSE NULL
                 END AS measuring_metric_type
-            FROM (${workout_sets} ws
+            FROM (${sets} ws
               JOIN exercise_measurement_types emt ON ((ws.exercise_id = emt.exercise_id)))
            WHERE (ws.is_warmup = false)
          ), ranked_sets AS (
@@ -385,7 +389,7 @@ const exercise_records = sqliteView('exercise_records', {
                      ELSE (- ms.measurement_value)
                  END DESC, ms.date DESC) AS rank
             FROM (measurement_sets ms
-              LEFT JOIN public.exercise_measurements em ON (((ms.exercise_id = em.exercise_id) AND (ms.measuring_metric_type = (em.measurement_type)))))
+              LEFT JOIN public.exercise_metrics em ON (((ms.exercise_id = em.exercise_id) AND (ms.measuring_metric_type = (em.measurement_type)))))
          )
   SELECT id AS record_id,
      exercise_id,
@@ -400,8 +404,7 @@ const exercise_records = sqliteView('exercise_records', {
     FROM ranked_sets
    WHERE (rank = 1)
    ORDER BY exercise_id, grouping_value;
-`);
-  
+`)
 
 // export const exercise_records = sqliteView("exercise_records").as((qb) => {
 //   return qb
@@ -409,57 +412,57 @@ const exercise_records = sqliteView('exercise_records', {
 //     .as(
 //       qb
 //         .select({
-//           exercise_id: exercise_measurements.exercise_id,
+//           exercise_id: exercise_metrics.exercise_id,
 //           measurement_types:
-//             sql<string>`group_concat(${exercise_measurements.measurement_type})`.as(
+//             sql<string>`group_concat(${exercise_metrics.measurement_type})`.as(
 //               "measurement_types",
 //             ),
 //         })
-//         .from(exercise_measurements)
-//         .groupBy(exercise_measurements.exercise_id),
+//         .from(exercise_metrics)
+//         .groupBy(exercise_metrics.exercise_id),
 //     )
 //     .$with("measurement_sets")
 //     .as((qb) =>
 //       qb
 //         .select({
-//           id: workout_sets.id,
-//           exercise_id: workout_sets.exercise_id,
-//           reps: workout_sets.reps,
-//           weight_mcg: workout_sets.weight_mcg,
-//           distance_mm: workout_sets.distance_mm,
-//           duration_ms: workout_sets.duration_ms,
-//           speed_kph: workout_sets.speed_kph,
-//           date: workout_sets.date,
+//           id: sets.id,
+//           exercise_id: sets.exercise_id,
+//           reps: sets.reps,
+//           weight_mcg: sets.weight_mcg,
+//           distance_mm: sets.distance_mm,
+//           duration_ms: sets.duration_ms,
+//           speed_kph: sets.speed_kph,
+//           date: sets.date,
 //           measurement_types: sql<string>`emt.measurement_types`,
 //           // Determine grouping value based on measurement type combination
 //           grouping_value: sql<number>`
 //             CASE
-//               WHEN emt.measurement_types = 'weight' THEN ${workout_sets.weight_mcg}
-//               WHEN emt.measurement_types = 'duration' THEN ${workout_sets.duration_ms}
-//               WHEN emt.measurement_types = 'reps' THEN ${workout_sets.reps}
-//               WHEN emt.measurement_types = 'distance' THEN ${workout_sets.distance_mm}
-//               WHEN emt.measurement_types IN ('weight,duration', 'duration,weight') THEN ${workout_sets.weight_mcg}
-//               WHEN emt.measurement_types IN ('reps,weight', 'weight,reps') THEN ${workout_sets.reps}
-//               WHEN emt.measurement_types IN ('duration,reps', 'reps,duration') THEN ${workout_sets.duration_ms}
-//               WHEN emt.measurement_types IN ('weight,distance', 'distance,weight') THEN ${workout_sets.weight_mcg}
-//               WHEN emt.measurement_types IN ('distance,duration', 'duration,distance') THEN ${workout_sets.distance_mm}
-//               WHEN emt.measurement_types IN ('reps,distance', 'distance,reps') THEN ${workout_sets.reps}
+//               WHEN emt.measurement_types = 'weight' THEN ${sets.weight_mcg}
+//               WHEN emt.measurement_types = 'duration' THEN ${sets.duration_ms}
+//               WHEN emt.measurement_types = 'reps' THEN ${sets.reps}
+//               WHEN emt.measurement_types = 'distance' THEN ${sets.distance_mm}
+//               WHEN emt.measurement_types IN ('weight,duration', 'duration,weight') THEN ${sets.weight_mcg}
+//               WHEN emt.measurement_types IN ('reps,weight', 'weight,reps') THEN ${sets.reps}
+//               WHEN emt.measurement_types IN ('duration,reps', 'reps,duration') THEN ${sets.duration_ms}
+//               WHEN emt.measurement_types IN ('weight,distance', 'distance,weight') THEN ${sets.weight_mcg}
+//               WHEN emt.measurement_types IN ('distance,duration', 'duration,distance') THEN ${sets.distance_mm}
+//               WHEN emt.measurement_types IN ('reps,distance', 'distance,reps') THEN ${sets.reps}
 //               ELSE NULL
 //             END
 //           `.as("grouping_value"),
 //           // Determine measurement value (what we're optimizing for)
 //           measurement_value: sql<number>`
 //             CASE
-//               WHEN emt.measurement_types = 'weight' THEN ${workout_sets.weight_mcg}
-//               WHEN emt.measurement_types = 'duration' THEN -${workout_sets.duration_ms}
-//               WHEN emt.measurement_types = 'reps' THEN ${workout_sets.reps}
-//               WHEN emt.measurement_types = 'distance' THEN ${workout_sets.distance_mm}
-//               WHEN emt.measurement_types IN ('weight,duration', 'duration,weight') THEN -${workout_sets.duration_ms}
-//               WHEN emt.measurement_types IN ('reps,weight', 'weight,reps') THEN ${workout_sets.weight_mcg}
-//               WHEN emt.measurement_types IN ('duration,reps', 'reps,duration') THEN ${workout_sets.reps}
-//               WHEN emt.measurement_types IN ('weight,distance', 'distance,weight') THEN ${workout_sets.distance_mm}
-//               WHEN emt.measurement_types IN ('distance,duration', 'duration,distance') THEN -${workout_sets.duration_ms}
-//               WHEN emt.measurement_types IN ('reps,distance', 'distance,reps') THEN ${workout_sets.distance_mm}
+//               WHEN emt.measurement_types = 'weight' THEN ${sets.weight_mcg}
+//               WHEN emt.measurement_types = 'duration' THEN -${sets.duration_ms}
+//               WHEN emt.measurement_types = 'reps' THEN ${sets.reps}
+//               WHEN emt.measurement_types = 'distance' THEN ${sets.distance_mm}
+//               WHEN emt.measurement_types IN ('weight,duration', 'duration,weight') THEN -${sets.duration_ms}
+//               WHEN emt.measurement_types IN ('reps,weight', 'weight,reps') THEN ${sets.weight_mcg}
+//               WHEN emt.measurement_types IN ('duration,reps', 'reps,duration') THEN ${sets.reps}
+//               WHEN emt.measurement_types IN ('weight,distance', 'distance,weight') THEN ${sets.distance_mm}
+//               WHEN emt.measurement_types IN ('distance,duration', 'duration,distance') THEN -${sets.duration_ms}
+//               WHEN emt.measurement_types IN ('reps,distance', 'distance,reps') THEN ${sets.distance_mm}
 //               ELSE NULL
 //             END
 //           `.as("measurement_value"),
@@ -479,12 +482,12 @@ const exercise_records = sqliteView('exercise_records', {
 //             END
 //           `.as("measuring_metric_type"),
 //         })
-//         .from(workout_sets)
+//         .from(sets)
 //         .innerJoin(
 //           sql`exercise_measurement_types emt`,
-//           sql`${workout_sets.exercise_id} = emt.exercise_id`,
+//           sql`${sets.exercise_id} = emt.exercise_id`,
 //         )
-//         .where(sql`${workout_sets.is_warmup} = 0`),
+//         .where(sql`${sets.is_warmup} = 0`),
 //     )
 //     .$with("ranked_sets")
 //     .as((qb) =>
@@ -502,13 +505,13 @@ const exercise_records = sqliteView('exercise_records', {
 //           grouping_value: sql`ms.grouping_value`,
 //           measurement_value: sql`ms.measurement_value`,
 //           measuring_metric_type: sql`ms.measuring_metric_type`,
-//           more_is_better: exercise_measurements.more_is_better,
+//           more_is_better: exercise_metrics.more_is_better,
 //           rank: sql<number>`
 //             ROW_NUMBER() OVER (
 //               PARTITION BY ms.exercise_id, ms.grouping_value
 //               ORDER BY
 //                 CASE
-//                   WHEN ${exercise_measurements.more_is_better} = 1 THEN ms.measurement_value
+//                   WHEN ${exercise_metrics.more_is_better} = 1 THEN ms.measurement_value
 //                   ELSE -ms.measurement_value
 //                 END DESC,
 //                 ms.date DESC
@@ -517,8 +520,8 @@ const exercise_records = sqliteView('exercise_records', {
 //         })
 //         .from(sql`measurement_sets ms`)
 //         .leftJoin(
-//           exercise_measurements,
-//           sql`ms.exercise_id = ${exercise_measurements.exercise_id} AND ms.measuring_metric_type = ${exercise_measurements.measurement_type}`,
+//           exercise_metrics,
+//           sql`ms.exercise_id = ${exercise_metrics.exercise_id} AND ms.measuring_metric_type = ${exercise_metrics.measurement_type}`,
 //         ),
 //     )
 //     .select({
@@ -615,19 +618,19 @@ export const schema = {
 
   // exercises
   exercises,
-  exercise_measurements,
+  exercise_metrics,
 
   // workouts
   workouts,
   workout_steps,
   workout_step_exercises,
-  workout_sets,
+  sets,
 
   // tags
   tags,
   workouts_tags,
   workout_steps_tags,
-  workout_sets_tags,
+  sets_tags,
   exercises_tags,
 
   // views
@@ -645,8 +648,8 @@ export type InsertSettings = typeof settings.$inferInsert
 export type SelectExercise = typeof exercises.$inferSelect
 export type InsertExercise = typeof exercises.$inferInsert
 
-export type SelectExerciseMeasurement = typeof exercise_measurements.$inferSelect
-export type InsertExerciseMeasurement = typeof exercise_measurements.$inferInsert
+export type SelectExerciseMetric = typeof exercise_metrics.$inferSelect
+export type InsertExerciseMetric = typeof exercise_metrics.$inferInsert
 
 // Workouts
 export type SelectWorkout = typeof workouts.$inferSelect
@@ -658,8 +661,8 @@ export type InsertWorkoutStep = typeof workout_steps.$inferInsert
 export type SelectWorkoutStepExercise = typeof workout_step_exercises.$inferSelect
 export type InsertWorkoutStepExercise = typeof workout_step_exercises.$inferInsert
 
-export type SelectWorkoutSet = typeof workout_sets.$inferSelect
-export type InsertWorkoutSet = typeof workout_sets.$inferInsert
+export type SelectSet = typeof sets.$inferSelect
+export type InsertSet = typeof sets.$inferInsert
 
 // Tags
 export type SelectTag = typeof tags.$inferSelect
@@ -671,8 +674,8 @@ export type InsertWorkoutTag = typeof workouts_tags.$inferInsert
 export type SelectWorkoutStepTag = typeof workout_steps_tags.$inferSelect
 export type InsertWorkoutStepTag = typeof workout_steps_tags.$inferInsert
 
-export type SelectWorkoutSetTag = typeof workout_sets_tags.$inferSelect
-export type InsertWorkoutSetTag = typeof workout_sets_tags.$inferInsert
+export type SelectSetTag = typeof sets_tags.$inferSelect
+export type InsertSetTag = typeof sets_tags.$inferInsert
 
 export type SelectExerciseTag = typeof exercises_tags.$inferSelect
 export type InsertExerciseTag = typeof exercises_tags.$inferInsert

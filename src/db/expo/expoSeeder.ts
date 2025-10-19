@@ -1,256 +1,52 @@
-import { eq, sql } from "drizzle-orm"
+import { sql } from "drizzle-orm"
 
-import { Exercise } from "@/data/types"
-import { DrizzleDBType } from "@/db/useDB"
+import { DrizzleDBType } from "@/src/db/useDB"
 
 import type { useSQLiteContext } from "expo-sqlite"
-import type __state from "../../../data/GymWork_state.json"
-import _state from "../../../data/GymWork_state_large.json"
-import { METRICS, UNIT } from "../constants"
-import { type InsertSetGroup, schema } from "../schema"
+import type __state from "../../data/data.json"
+import _state from "../../data/data_large.json"
+import { schema } from "../schema"
 
 const {
-  //  configs
-  record_calculation_configs,
-  equipment,
-  muscles,
-  muscle_areas,
-  metrics,
-
-  // templates
-  // workout_templates,
-  // set_group_templates,
-  // set_templates,
-
-  // performed
+  // workouts
   workouts,
-  set_groups,
+  workout_steps,
   sets,
+  workout_step_exercises,
 
   // exercises
   exercises,
   exercise_metrics,
-  exercise_equipment,
-  exercise_muscles,
-  exercise_muscle_areas,
 
-  // health
-  discomfort_logs,
-
-  // Tags
-  // tags,
-  // workout_templates_tags,
-  // set_group_templates_tags,
-  // set_templates_tags,
-  // workouts_tags,
-  // set_groups_tags,
-  // sets_tags,
-  // exercises_tags,
+  // tags
+  tags,
+  workouts_tags,
+  workout_steps_tags,
+  sets_tags,
+  exercises_tags,
 } = schema
 
 const state = _state as typeof __state
-
-function computeFlags(e: Exercise, measureRest = true) {
-  return (
-    ((e.measurements.weight ? 1 : 0) << 0) |
-    ((e.measurements.reps != null ? 1 : 0) << 1) |
-    ((e.measurements.duration != null ? 1 : 0) << 2) |
-    ((e.measurements.distance != null ? 1 : 0) << 3) |
-    ((measureRest ? 1 : 0) << 4)
-  )
-}
-
-const DEFAULT_METRICS: {
-  id: (typeof METRICS)[number]
-  display_name: string
-  unit: UNIT
-  round_to: number
-}[] = [
-  { id: "weight_mcg", display_name: "Weight", unit: "kg", round_to: 2500_000 }, // 2.5kg
-  { id: "reps", display_name: "Reps", unit: "count", round_to: 1 }, //
-  { id: "duration_ms", display_name: "Duration", unit: "s", round_to: 1000 }, // 1 s
-  { id: "distance_mm", display_name: "Distance", unit: "m", round_to: 1000 }, // 1 m
-  { id: "rest_ms", display_name: "Rest", unit: "s", round_to: 1000 }, // 1 s
-]
 
 function between(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-export async function seedMetrics(db: DrizzleDBType) {
-  await db
-    .delete(metrics)
-    .execute()
-    .catch(() => {
-      console.error("metrics delete error")
-    })
-
-  await db
-    .insert(metrics)
-    .values(DEFAULT_METRICS)
-    .execute()
-    .catch((err) => {
-      console.error(err)
-      throw err
-    })
-}
-
-// Prefill with defaults (run this once, e.g., in a migration)
-export async function populateRecordConfigs(drizzleDB: DrizzleDBType) {
-  const configs = [
-    [0, null, "desc", null, "desc"],
-    [1, "weight_mcg", "desc", null, "desc"],
-    [2, "reps", "desc", null, "desc"],
-    [3, "weight_mcg", "desc", "reps", "desc"],
-    [4, "duration_ms", "desc", null, "desc"],
-    [5, "duration_ms", "desc", "weight_mcg", "desc"],
-    [6, "duration_ms", "desc", "reps", "desc"],
-    [7, "weight_mcg", "desc", "reps", "desc"],
-    [8, "distance_mm", "desc", null, "desc"],
-    [9, "distance_mm", "desc", null, "desc"],
-    [10, "distance_mm", "desc", "reps", "desc"],
-    [11, "weight_mcg", "desc", "reps", "desc"],
-    [12, "duration_ms", "asc", "distance_mm", "desc"],
-    [13, "duration_ms", "asc", "distance_mm", "desc"],
-    [14, "duration_ms", "asc", "reps", "desc"],
-    [15, "weight_mcg", "desc", "reps", "desc"],
-    [16, "weight_mcg", "desc", null, "desc"],
-    [17, "reps", "desc", null, "desc"],
-    [18, "weight_mcg", "desc", "reps", "desc"],
-    [19, "duration_ms", "desc", null, "desc"],
-    [20, "duration_ms", "desc", "weight_mcg", "desc"],
-    [21, "duration_ms", "desc", "reps", "desc"],
-    [22, "weight_mcg", "desc", "reps", "desc"],
-    [23, "distance_mm", "desc", null, "desc"],
-    [24, "distance_mm", "desc", null, "desc"],
-    [25, "distance_mm", "desc", "reps", "desc"],
-    [26, "weight_mcg", "desc", "reps", "desc"],
-    [27, "duration_ms", "desc", "distance_mm", "desc"],
-    [28, "duration_ms", "desc", "distance_mm", "desc"],
-    [29, "duration_ms", "desc", "reps", "desc"],
-    [30, "weight_mcg", "desc", "reps", "desc"],
-    [31, "weight_mcg", "desc", "reps", "desc"],
-  ].map(
-    ([
-      id,
-      measurement_column,
-      measurement_sort_direction,
-      grouping_column,
-      grouping_sort_direction,
-    ]) =>
-      ({
-        id,
-        grouping_column,
-        measurement_column,
-        grouping_sort_direction,
-        measurement_sort_direction,
-      }) as {
-        id: number
-        grouping_column: (typeof METRICS)[number]
-        measurement_column: (typeof METRICS)[number]
-        grouping_sort_direction: "asc" | "desc"
-        measurement_sort_direction: "asc" | "desc"
-      },
-  )
-
-  return drizzleDB.insert(record_calculation_configs).values(configs).run()
-}
-
 // assuming `state` is imported or passed in
 export async function seedAll(drizzleDB: DrizzleDBType) {
-  await seedMetrics(drizzleDB).catch((err) => {
-    console.error(err)
-    throw err
-  })
-
-  await drizzleDB
-    .delete(record_calculation_configs)
-    .execute()
-    .catch((e) => {
-      console.log("record recalc conf delete error", e)
-    })
-  await populateRecordConfigs(drizzleDB).catch((err) => {
-    console.error(err)
-    throw err
-  })
-
-  const _muscleAreas = Array.from(
-    new Set(state.exerciseStore.exercises.map((e) => e.muscleAreas).flat()),
-  ).map((muscleArea, i): typeof muscle_areas.$inferInsert => {
-    return {
-      // id: i+1, // TODO?
-      name: muscleArea,
-    }
-  })
-  await drizzleDB
-    .insert(muscle_areas)
-    .values(_muscleAreas)
-    .execute()
-    .catch((err) => {
-      console.error(err)
-      throw err
-    })
-  console.log("inserted muscle areas")
-
-  // Used as a fallback
-  // const [firstMuscleArea] = await drizzleDB
-  //   .select()
-  //   .from(muscle_areas)
-  //   .limit(1)
-  //   .execute()
-  //   .catch((e) => {
-  //     console.error(e)
-  //     return []
-  //   })
-
-  const _muscles = Array.from(
-    new Set(state.exerciseStore.exercises.map((e) => e.muscles).flat()),
-  ).map((muscle, i): typeof muscles.$inferInsert => {
-    return {
-      // id: String(i), // TODO?
-      name: muscle,
-    }
-  })
-  await drizzleDB
-    .insert(muscles)
-    .values(_muscles)
-    .execute()
-    .catch((err) => {
-      console.error(err)
-      throw err
-    })
-  console.log("inserted muscles")
-
-  const _equipment = Array.from(
-    new Set(state.exerciseStore.exercises.map((e) => e.equipment).flat()),
-  ).map((_equipment, i): typeof equipment.$inferInsert => {
-    return {
-      // id: String(i), // TODO?
-      name: _equipment,
-    }
-  })
-  await drizzleDB
-    .insert(equipment)
-    .values(_equipment)
-    .execute()
-    .catch((err) => {
-      console.error(err)
-      throw err
-    })
-  console.log("inserted equipment")
-
-  // Position and stance are not implemented
-
+  // Insert exercises with their data as JSON arrays
   for (const e of state.exerciseStore.exercises) {
-    const _exercise = {
-      // id: e.guid,
+    const _exercise: typeof exercises.$inferInsert = {
       name: e.name,
       is_favorite: false,
       tips: e.tips,
       instructions: e.instructions,
       images: e.images,
-
-      record_config_id: computeFlags(e),
+      equipment: e.equipment,
+      muscles: e.muscles,
+      muscle_areas: e.muscleAreas,
+      position: null,
+      stance: null,
     }
 
     const exerciseInsertQuery = await drizzleDB
@@ -263,12 +59,18 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
       })
     const exerciseId = exerciseInsertQuery!.lastInsertRowId
 
+    // Insert exercise metrics
     if ("weight" in e.measurements) {
       await drizzleDB
         .insert(exercise_metrics)
         .values({
           exercise_id: exerciseId,
-          metric_id: METRICS[0],
+          measurement_type: "weight",
+          unit: "kg",
+          more_is_better: true,
+          step_value: 2.5,
+          min_value: 0,
+          max_value: null,
         })
         .execute()
         .catch((err) => {
@@ -281,7 +83,12 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         .insert(exercise_metrics)
         .values({
           exercise_id: exerciseId,
-          metric_id: METRICS[1],
+          measurement_type: "reps",
+          unit: "count",
+          more_is_better: true,
+          step_value: 1,
+          min_value: 0,
+          max_value: null,
         })
         .execute()
         .catch((err) => {
@@ -294,7 +101,12 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         .insert(exercise_metrics)
         .values({
           exercise_id: exerciseId,
-          metric_id: METRICS[2],
+          measurement_type: "duration",
+          unit: "ms",
+          more_is_better: false, // Less time is usually better for duration
+          step_value: 1000,
+          min_value: 0,
+          max_value: null,
         })
         .execute()
         .catch((err) => {
@@ -307,7 +119,12 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         .insert(exercise_metrics)
         .values({
           exercise_id: exerciseId,
-          metric_id: METRICS[3],
+          measurement_type: "distance",
+          unit: "mm",
+          more_is_better: true,
+          step_value: 1000,
+          min_value: 0,
+          max_value: null,
         })
         .execute()
         .catch((err) => {
@@ -316,91 +133,20 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         })
     }
 
-    for (const e_equipment of e.equipment) {
-      const [db_equipment_record] = await drizzleDB
-        .select()
-        .from(equipment)
-        .where(eq(equipment.name, e_equipment))
-        .limit(1)
-        .execute()
-        .catch((err) => {
-          console.error("equipment", err)
-          throw err
-        })
-
-      await drizzleDB
-        .insert(exercise_equipment)
-        .values({
-          equipment_id: db_equipment_record.id,
-          exercise_id: exerciseId,
-        })
-        .execute()
-        .catch((err) => {
-          console.error("ex_equipment", err)
-          throw err
-        })
-    }
-
-    for (const e_muscle of e.muscles) {
-      const [db_muscles_record] = await drizzleDB
-        .select()
-        .from(muscles)
-        .where(eq(muscles.name, e_muscle))
-        .limit(1)
-        .execute()
-        .catch((err) => {
-          console.error("db_muscles_record", err)
-          throw err
-        })
-
-      await drizzleDB
-        .insert(exercise_muscles)
-        .values({
-          muscle_id: db_muscles_record.id,
-          exercise_id: exerciseId,
-        })
-        .execute()
-        .catch((err) => {
-          console.error("exercise_muscles", err)
-          throw err
-        })
-    }
-
-    for (const e_muscleArea of e.muscleAreas) {
-      const [db_muscleAreas_record] = await drizzleDB
-        .select()
-        .from(muscle_areas)
-        .where(eq(muscle_areas.name, e_muscleArea))
-        .limit(1)
-        .execute()
-        .catch((err) => {
-          console.error("db_muscleAreas_record", err)
-          throw err
-        })
-
-      await drizzleDB
-        .insert(exercise_muscle_areas)
-        .values({
-          muscle_area_id: db_muscleAreas_record.id,
-          exercise_id: exerciseId,
-        })
-        .execute()
-        .catch((err) => {
-          console.error("exercise_muscle_areas", err)
-          throw err
-        })
-    }
-
     console.log("inserted exercise ", exerciseId)
   }
-  console.log("added exercises, equipment, muscles, muscle areas")
+  console.log("added exercises")
 
   for (const workout of state.workoutStore.workouts) {
+    const workoutDate = new Date(workout.date).getTime()
     const insertWorkoutQuery = await drizzleDB
       .insert(workouts)
       .values({
-        created_at: new Date(workout.date).getTime(),
+        date: workoutDate,
         notes: workout.notes,
+        rpe: workout.rpe,
+        pain: workout.pain,
+        is_template: false,
       })
       .execute()
       .catch((err) => {
@@ -411,59 +157,67 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
     console.log({ workoutId })
 
     for (let stepIndex = 0; stepIndex < workout.steps.length; stepIndex++) {
-      const set_group_obj: InsertSetGroup = {
-        type: "plain" as const,
+      const workout_step_obj: typeof workout_steps.$inferInsert = {
+        step_type: "plain" as const,
         workout_id: workoutId,
         position: stepIndex,
       }
 
       // ! this times out on web sometimes
       const runResult = await drizzleDB
-        .insert(set_groups)
-        .values(set_group_obj)
+        .insert(workout_steps)
+        .values(workout_step_obj)
         .catch((err) => {
           console.log({
             err,
-            obj: set_group_obj,
+            obj: workout_step_obj,
           })
         })
-      const setGroupId = runResult!.lastInsertRowId
+      const workoutStepId = runResult!.lastInsertRowId
 
       const step = workout.steps[stepIndex]
+
+      // Get the exercise IDs for this step
+      const exerciseIds = new Set<number>()
+      for (const set of step.sets) {
+        const exerciseIndex = state.exerciseStore.exercises.findIndex(
+          (e) => e.guid === set.exercise,
+        )
+        if (exerciseIndex !== -1) {
+          exerciseIds.add(exerciseIndex + 1)
+        }
+      }
+
+      // Insert workout_step_exercises for each unique exercise in this step
+      for (const exerciseId of exerciseIds) {
+        await drizzleDB
+          .insert(workout_step_exercises)
+          .values({
+            workout_step_id: workoutStepId,
+            exercise_id: exerciseId,
+          })
+          .execute()
+          .catch((err) => {
+            console.error("insert workout_step_exercises", err)
+            throw err
+          })
+      }
+
       const groupSets = step.sets.map((set, i) => ({
-        position: i,
-        rpe: workout.rpe,
+        workout_step_id: workoutStepId,
+        exercise_id: state.exerciseStore.exercises.findIndex((e) => e.guid === set.exercise)! + 1,
         reps: "reps" in set ? set.reps : null,
         weight_mcg: "weightMcg" in set ? set.weightMcg : null,
         duration_ms: "durationMs" in set ? set.durationMs : null,
         distance_mm: "distanceMm" in set ? set.distanceMm : null,
         rest_ms: "restMs" in set ? set.restMs : null,
         is_warmup: set.isWarmup,
-        exercise_id: state.exerciseStore.exercises.findIndex((e) => e.guid === set.exercise)! + 1, // TODO
-        set_group_id: setGroupId,
-        // completed_at: new Date(set.completedAt),
+        date: workoutDate, // Denormalized for easier querying
+        is_weak_ass_record: false,
         completed_at: null,
       }))
 
       await drizzleDB.insert(sets).values(groupSets)
-    }
-
-    if (workout.pain) {
-      await drizzleDB
-        .insert(discomfort_logs)
-        .values({
-          workout_id: workoutId,
-          muscle_area_id: 1, // TODO?
-          severity: 5, // TODO?
-          notes: workout.notes,
-          // recorded_at: new Date(workout.endedAt).toISOString(),
-        })
-        .execute()
-        .catch((err) => {
-          console.error("discomfort_logs", err)
-          debugger
-          throw err
-        })
     }
   }
 }

@@ -1,7 +1,7 @@
 import { schema } from "../schema"
 import { DrizzleDBType } from "../useDB"
 
-const { exercises, exercise_measurements } = schema
+const { exercises, exercise_metrics } = schema
 
 const DEFAULT_EXERCISES = [
   {
@@ -167,7 +167,7 @@ export async function seedSimple(drizzleDB: DrizzleDBType) {
       // Insert measurements for this exercise
       for (const measurement of exerciseData.measurements) {
         await drizzleDB
-          .insert(exercise_measurements)
+          .insert(exercise_metrics)
           .values({
             exercise_id: exercise.id,
             measurement_type: measurement.measurement_type,

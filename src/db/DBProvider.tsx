@@ -1,20 +1,17 @@
 import { drizzle } from "drizzle-orm/expo-sqlite"
-import { openDatabaseSync, SQLiteDatabase } from "expo-sqlite"
-import { ReactNode, useEffect, useState } from "react"
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin"
+import { openDatabaseSync } from "expo-sqlite"
+import { useEffect, useState } from "react"
 
+import migrations from "../../drizzle/migrations.js"
 import { SQLiteDBName } from "./constants"
-import { createTables } from "./expo/createTables"
 import { seedSimple } from "./expo/simpleSeed"
 import { allRelations } from "./relations"
 import { schema } from "./schema"
 import { DBContext, DrizzleDBType } from "./useDB"
-import migrations from "../../drizzle/migrations.js"
 
-import { ActivityIndicator, View, Text } from "react-native"
-
-const ignoreOnWeb = true
+import { ActivityIndicator, Text, View } from "react-native"
 
 let _drizzle: DrizzleDBType
 export function getDrizzle(): DrizzleDBType {
@@ -31,9 +28,9 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
 
   const [pragmasComplete, setPragmasComplete] = useState(false)
 
-  // Enable performance optimizations
-  // https://docs.expo.dev/versions/latest/sdk/sqlite/#executing-pragma-queries
-  // A workaround for the fact that SQLite is provided async because of web compat setup
+  useEffect(() => {
+    seedSimple(drizzleDB)
+  }, [])
   _drizzle = drizzleDB
 
   sqlite
