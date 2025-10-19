@@ -6,12 +6,12 @@ import { useEffect, useState } from "react"
 
 import migrations from "../../drizzle/migrations.js"
 import { SQLiteDBName } from "./constants"
-import { seedSimple } from "./expo/simpleSeed"
 import { allRelations } from "./relations"
 import { schema } from "./schema"
 import { DBContext, DrizzleDBType } from "./useDB"
 
 import { ActivityIndicator, Text, View } from "react-native"
+import { seedAll } from "./expo/expoSeeder"
 
 let _drizzle: DrizzleDBType
 export function getDrizzle(): DrizzleDBType {
@@ -27,26 +27,51 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
   useDrizzleStudio(sqlite)
 
   const [pragmasComplete, setPragmasComplete] = useState(false)
+  const [seedingComplete, setSeedingComplete] = useState(false)
 
-  useEffect(() => {
-    seedSimple(drizzleDB)
-  }, [])
   _drizzle = drizzleDB
 
-  sqlite
-    .execAsync("PRAGMA journal_mode = WAL")
-    .then(() => {
-      sqlite.execAsync("PRAGMA foreign_keys = ON")
-    })
-    .then(() => {
-      setPragmasComplete(true)
-    })
+  // Set pragmas first
+  useEffect(() => {
+    sqlite
+      .execAsync("PRAGMA journal_mode = WAL")
+      .then(() => sqlite.execAsync("PRAGMA foreign_keys = ON"))
+      .then(() => {
+        setPragmasComplete(true)
+      })
+      .catch((err) => {
+        console.error("Error setting pragmas:", err)
+      })
+  }, [])
 
   const { success, error } = useMigrations(drizzleDB, migrations)
+
+  // Only seed after both pragmas and migrations are complete
+  useEffect(() => {
+    if (success && pragmasComplete && !seedingComplete) {
+      seedAll(drizzleDB)
+        .then(() => {
+          console.log("Seeding completed successfully")
+          setSeedingComplete(true)
+        })
+        .catch((err) => {
+          console.error("Seeding failed:", err)
+        })
+    }
+  }, [success, pragmasComplete, seedingComplete])
 
   if (error) {
     console.log("drizzle error")
     return <Text> error {error.message}</Text>
+  }
+
+  if (!pragmasComplete) {
+    return (
+      <View>
+        <Text>Setting up database...</Text>
+        <ActivityIndicator size="large" />
+      </View>
+    )
   }
 
   if (!success) {
@@ -58,10 +83,10 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
     )
   }
 
-  if (!pragmasComplete) {
+  if (!seedingComplete) {
     return (
       <View>
-        <Text>Optimization is in progress...</Text>
+        <Text>Loading data...</Text>
         <ActivityIndicator size="large" />
       </View>
     )
