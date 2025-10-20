@@ -641,46 +641,46 @@ export const schema = {
 // Types
 
 // Settings
-export type SelectSettings = typeof settings.$inferSelect
+export type Settings = typeof settings.$inferSelect
 export type InsertSettings = typeof settings.$inferInsert
 
 // Exercises
-export type SelectExercise = typeof exercises.$inferSelect
+export type Exercise = typeof exercises.$inferSelect
 export type InsertExercise = typeof exercises.$inferInsert
 
-export type SelectExerciseMetric = typeof exercise_metrics.$inferSelect
+export type ExerciseMetric = typeof exercise_metrics.$inferSelect
 export type InsertExerciseMetric = typeof exercise_metrics.$inferInsert
 
 // Workouts
-export type SelectWorkout = typeof workouts.$inferSelect
+export type Workout = typeof workouts.$inferSelect
 export type InsertWorkout = typeof workouts.$inferInsert
 
-export type SelectWorkoutStep = typeof workout_steps.$inferSelect
+export type WorkoutStep = typeof workout_steps.$inferSelect
 export type InsertWorkoutStep = typeof workout_steps.$inferInsert
 
-export type SelectWorkoutStepExercise = typeof workout_step_exercises.$inferSelect
+export type WorkoutStepExercise = typeof workout_step_exercises.$inferSelect
 export type InsertWorkoutStepExercise = typeof workout_step_exercises.$inferInsert
 
-export type SelectSet = typeof sets.$inferSelect
+export type Set = typeof sets.$inferSelect
 export type InsertSet = typeof sets.$inferInsert
 
 // Tags
-export type SelectTag = typeof tags.$inferSelect
+export type Tag = typeof tags.$inferSelect
 export type InsertTag = typeof tags.$inferInsert
 
-export type SelectWorkoutTag = typeof workouts_tags.$inferSelect
+export type WorkoutTag = typeof workouts_tags.$inferSelect
 export type InsertWorkoutTag = typeof workouts_tags.$inferInsert
 
-export type SelectWorkoutStepTag = typeof workout_steps_tags.$inferSelect
+export type WorkoutStepTag = typeof workout_steps_tags.$inferSelect
 export type InsertWorkoutStepTag = typeof workout_steps_tags.$inferInsert
 
-export type SelectSetTag = typeof sets_tags.$inferSelect
+export type SetTag = typeof sets_tags.$inferSelect
 export type InsertSetTag = typeof sets_tags.$inferInsert
 
-export type SelectExerciseTag = typeof exercises_tags.$inferSelect
+export type ExerciseTag = typeof exercises_tags.$inferSelect
 export type InsertExerciseTag = typeof exercises_tags.$inferInsert
 
 // Views
-export type SelectExerciseRecord = typeof exercise_records
+export type ExerciseRecord = typeof exercise_records
 
 // export type SelectMuscleAreaStat = typeof muscle_area_stats.$inferSelect

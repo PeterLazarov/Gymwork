@@ -8,7 +8,7 @@ import { BackHandler, Linking, Platform } from "react-native"
 
 import Config from "@/config"
 import type { PersistNavigationConfig } from "@/config/config.base"
-import { getValue, setValue } from "@/utils/storage"
+import { getValue, setValue } from "@/utils/ignite/storage"
 import { useIsMounted } from "@/utils/useIsMounted"
 
 import type { AppStackParamList, NavigationProps } from "./navigationTypes"

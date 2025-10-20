@@ -1,6 +1,6 @@
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo } from "react"
 
-import { useStorageString } from "@/utils/storage"
+import { useStorageString } from "@/utils/ignite/storage"
 
 export type AuthContextType = {
   isAuthenticated: boolean

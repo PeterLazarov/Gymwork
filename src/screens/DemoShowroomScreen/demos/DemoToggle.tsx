@@ -3,9 +3,9 @@ import { useState } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 
 import { Text } from "@/components/Text"
-import { Checkbox, CheckboxToggleProps } from "@/components/Toggle/Checkbox"
-import { Radio, RadioToggleProps } from "@/components/Toggle/Radio"
-import { Switch, SwitchToggleProps } from "@/components/Toggle/Switch"
+import { Checkbox, CheckboxToggleProps } from "@/components/ignite/Toggle/Checkbox"
+import { Radio, RadioToggleProps } from "@/components/ignite/Toggle/Radio"
+import { Switch, SwitchToggleProps } from "@/components/ignite/Toggle/Switch"
 import { translate } from "@/i18n/translate"
 import type { ThemedStyle } from "@/theme/types"
 import { $styles } from "@/theme/styles"
@@ -16,17 +16,35 @@ import { DemoUseCase } from "../DemoUseCase"
 
 function ControlledCheckbox(props: CheckboxToggleProps) {
   const [value, setValue] = useState(props.value || false)
-  return <Checkbox {...props} value={value} onPress={() => setValue(!value)} />
+  return (
+    <Checkbox
+      {...props}
+      value={value}
+      onPress={() => setValue(!value)}
+    />
+  )
 }
 
 function ControlledRadio(props: RadioToggleProps) {
   const [value, setValue] = useState(props.value || false)
-  return <Radio {...props} value={value} onPress={() => setValue(!value)} />
+  return (
+    <Radio
+      {...props}
+      value={value}
+      onPress={() => setValue(!value)}
+    />
+  )
 }
 
 function ControlledSwitch(props: SwitchToggleProps) {
   const [value, setValue] = useState(props.value || false)
-  return <Switch {...props} value={value} onPress={() => setValue(!value)} />
+  return (
+    <Switch
+      {...props}
+      value={value}
+      onPress={() => setValue(!value)}
+    />
+  )
 }
 
 const $centeredOneThirdCol: ViewStyle = {
@@ -74,36 +92,102 @@ export const DemoToggle: Demo = {
       <ControlledRadio containerStyle={$centeredOneThirdCol} />
       <ControlledSwitch containerStyle={$centeredOneThirdCol} />
       <DemoDivider style={{ width: "100%" }} />
-      <ControlledCheckbox value containerStyle={$centeredOneThirdCol} />
-      <ControlledRadio value containerStyle={$centeredOneThirdCol} />
-      <ControlledSwitch value containerStyle={$centeredOneThirdCol} />
-      <Text preset="formHelper" style={themed($centeredText)}>
+      <ControlledCheckbox
+        value
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledRadio
+        value
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledSwitch
+        value
+        containerStyle={$centeredOneThirdCol}
+      />
+      <Text
+        preset="formHelper"
+        style={themed($centeredText)}
+      >
         {translate("demoToggle:useCase.statuses.noStatus")}
       </Text>
 
-      <DemoDivider size={24} style={{ width: "100%" }} />
+      <DemoDivider
+        size={24}
+        style={{ width: "100%" }}
+      />
 
-      <ControlledCheckbox status="error" containerStyle={$centeredOneThirdCol} />
-      <ControlledRadio status="error" containerStyle={$centeredOneThirdCol} />
-      <ControlledSwitch status="error" containerStyle={$centeredOneThirdCol} />
+      <ControlledCheckbox
+        status="error"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledRadio
+        status="error"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledSwitch
+        status="error"
+        containerStyle={$centeredOneThirdCol}
+      />
       <DemoDivider style={{ width: "100%" }} />
-      <ControlledCheckbox value status="error" containerStyle={$centeredOneThirdCol} />
-      <ControlledRadio value status="error" containerStyle={$centeredOneThirdCol} />
-      <ControlledSwitch value status="error" containerStyle={$centeredOneThirdCol} />
-      <Text preset="formHelper" style={themed($centeredText)}>
+      <ControlledCheckbox
+        value
+        status="error"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledRadio
+        value
+        status="error"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledSwitch
+        value
+        status="error"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <Text
+        preset="formHelper"
+        style={themed($centeredText)}
+      >
         {translate("demoToggle:useCase.statuses.errorStatus")}
       </Text>
 
-      <DemoDivider size={24} style={{ width: "100%" }} />
+      <DemoDivider
+        size={24}
+        style={{ width: "100%" }}
+      />
 
-      <ControlledCheckbox status="disabled" containerStyle={$centeredOneThirdCol} />
-      <ControlledRadio status="disabled" containerStyle={$centeredOneThirdCol} />
-      <ControlledSwitch status="disabled" containerStyle={$centeredOneThirdCol} />
+      <ControlledCheckbox
+        status="disabled"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledRadio
+        status="disabled"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledSwitch
+        status="disabled"
+        containerStyle={$centeredOneThirdCol}
+      />
       <DemoDivider style={{ width: "100%" }} />
-      <ControlledCheckbox value status="disabled" containerStyle={$centeredOneThirdCol} />
-      <ControlledRadio value status="disabled" containerStyle={$centeredOneThirdCol} />
-      <ControlledSwitch value status="disabled" containerStyle={$centeredOneThirdCol} />
-      <Text preset="formHelper" style={themed($centeredText)}>
+      <ControlledCheckbox
+        value
+        status="disabled"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledRadio
+        value
+        status="disabled"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <ControlledSwitch
+        value
+        status="disabled"
+        containerStyle={$centeredOneThirdCol}
+      />
+      <Text
+        preset="formHelper"
+        style={themed($centeredText)}
+      >
         {translate("demoToggle:useCase.statuses.disabledStatus")}
       </Text>
     </DemoUseCase>,
@@ -196,7 +280,10 @@ export const DemoToggle: Demo = {
           borderColor: theme.colors.palette.accent500,
         }}
       />
-      <Text preset="formHelper" style={themed($centeredText)}>
+      <Text
+        preset="formHelper"
+        style={themed($centeredText)}
+      >
         {translate("demoToggle:useCase.styling.outerWrapper")}
       </Text>
 
@@ -245,7 +332,10 @@ export const DemoToggle: Demo = {
           paddingRight: 10,
         }}
       />
-      <Text preset="formHelper" style={themed($centeredText)}>
+      <Text
+        preset="formHelper"
+        style={themed($centeredText)}
+      >
         {translate("demoToggle:useCase.styling.innerWrapper")}
       </Text>
 
@@ -315,11 +405,17 @@ export const DemoToggle: Demo = {
         accessibilityMode="icon"
       />
 
-      <Text preset="formHelper" style={themed($centeredText)}>
+      <Text
+        preset="formHelper"
+        style={themed($centeredText)}
+      >
         {translate("demoToggle:useCase.styling.inputDetail")}
       </Text>
 
-      <DemoDivider size={32} style={{ width: "100%" }} />
+      <DemoDivider
+        size={32}
+        style={{ width: "100%" }}
+      />
 
       <View style={{ width: "100%" }}>
         <ControlledRadio
@@ -335,7 +431,10 @@ export const DemoToggle: Demo = {
         />
       </View>
 
-      <DemoDivider size={24} style={{ width: "100%" }} />
+      <DemoDivider
+        size={24}
+        style={{ width: "100%" }}
+      />
 
       <View style={{ width: "100%" }}>
         <ControlledRadio

@@ -26,7 +26,7 @@ import { EmptyState } from "@/components/EmptyState"
 import { Icon } from "@/components/Icon"
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
-import { Switch } from "@/components/Toggle/Switch"
+import { Switch } from "@/components/ignite/Toggle/Switch"
 import { useEpisodes, useEpisode } from "@/context/EpisodeContext"
 import { isRTL } from "@/i18n"
 import { translate } from "@/i18n/translate"
@@ -79,7 +79,11 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
   }
 
   return (
-    <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$styles.flex1}>
+    <Screen
+      preset="fixed"
+      safeAreaEdges={["top"]}
+      contentContainerStyle={$styles.flex1}
+    >
       <FlatList<EpisodeItem>
         contentContainerStyle={themed([$styles.container, $listContentContainer])}
         data={episodesForList}
@@ -109,7 +113,10 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
         }
         ListHeaderComponent={
           <View style={themed($heading)}>
-            <Text preset="heading" tx="demoPodcastListScreen:title" />
+            <Text
+              preset="heading"
+              tx="demoPodcastListScreen:title"
+            />
             {(favoritesOnly || episodesForList.length > 0) && (
               <View style={themed($toggle)}>
                 <Switch
@@ -125,7 +132,10 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
           </View>
         }
         renderItem={({ item }) => (
-          <EpisodeCard episode={item} onPressFavorite={() => toggleFavorite(item)} />
+          <EpisodeCard
+            episode={item}
+            onPressFavorite={() => toggleFavorite(item)}
+          />
         )}
       />
     </Screen>
@@ -278,7 +288,12 @@ const EpisodeCard = ({
           : parsedTitleAndSubtitle.title
       }
       {...accessibilityHintProps}
-      RightComponent={<Image source={imageUri} style={themed($itemThumbnail)} />}
+      RightComponent={
+        <Image
+          source={imageUri}
+          style={themed($itemThumbnail)}
+        />
+      }
       FooterComponent={
         <Button
           onPress={handlePressFavorite}
