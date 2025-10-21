@@ -3,11 +3,11 @@ import { ReactNode, forwardRef, ForwardedRef } from "react"
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
 import { TOptions } from "i18next"
 
-import { isRTL, TxKeyPath } from "@/i18n"
-import { translate } from "@/i18n/translate"
-import type { ThemedStyle, ThemedStyleArray } from "@/theme/types"
-import { useAppTheme } from "@/theme/context"
-import { typography } from "@/theme/typography"
+import { isRTL, TxKeyPath } from "@/ignite/i18n"
+import { translate } from "@/ignite/i18n/translate"
+import type { ThemedStyle, ThemedStyleArray } from "@/ignite/theme/types"
+import { useAppTheme } from "@/ignite/theme/context"
+import { typography } from "@/ignite/theme/typography"
 
 type Sizes = keyof typeof $sizeStyles
 type Weights = keyof typeof typography.primary
@@ -73,7 +73,11 @@ export const Text = forwardRef(function Text(props: TextProps, ref: ForwardedRef
   ]
 
   return (
-    <RNText {...rest} style={$styles} ref={ref}>
+    <RNText
+      {...rest}
+      style={$styles}
+      ref={ref}
+    >
       {content}
     </RNText>
   )

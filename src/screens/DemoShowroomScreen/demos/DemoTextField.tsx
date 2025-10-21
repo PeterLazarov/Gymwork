@@ -3,7 +3,7 @@ import { TextStyle, ViewStyle } from "react-native"
 
 import { Icon } from "@/components/Icon"
 import { TextField } from "@/components/TextField"
-import type { ThemedStyle } from "@/theme/types"
+import type { ThemedStyle } from "@/ignite/theme/types"
 
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "./types"
@@ -120,7 +120,13 @@ export const DemoTextField: Demo = {
         labelTxOptions={{ prop: "label" }}
         helperTx="demoTextField:useCase.passingContent.rightAccessory.helper"
         helperTxOptions={{ prop: "helper" }}
-        RightAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} size={21} />}
+        RightAccessory={(props) => (
+          <Icon
+            icon="ladybug"
+            containerStyle={props.style}
+            size={21}
+          />
+        )}
       />
 
       <DemoDivider size={24} />
@@ -131,7 +137,13 @@ export const DemoTextField: Demo = {
         helperTx="demoTextField:useCase.passingContent.leftAccessory.helper"
         helperTxOptions={{ prop: "helper" }}
         value="Eiusmod exercitation mollit elit magna occaecat eiusmod Lorem minim veniam."
-        LeftAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} size={21} />}
+        LeftAccessory={(props) => (
+          <Icon
+            icon="ladybug"
+            containerStyle={props.style}
+            size={21}
+          />
+        )}
       />
 
       <DemoDivider size={24} />
@@ -143,7 +155,13 @@ export const DemoTextField: Demo = {
         helperTxOptions={{ prop: "helper" }}
         value="Eiusmod exercitation mollit elit magna occaecat eiusmod Lorem minim veniam. Laborum Lorem velit velit minim irure ad in ut adipisicing consectetur."
         multiline
-        RightAccessory={(props) => <Icon icon="ladybug" containerStyle={props.style} size={21} />}
+        RightAccessory={(props) => (
+          <Icon
+            icon="ladybug"
+            containerStyle={props.style}
+            size={21}
+          />
+        )}
       />
     </DemoUseCase>,
 

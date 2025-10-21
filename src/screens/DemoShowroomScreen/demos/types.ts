@@ -1,6 +1,6 @@
 import { ReactElement } from "react"
-import { TxKeyPath } from "@/i18n"
-import type { Theme } from "@/theme/types"
+import { TxKeyPath } from "@/ignite/i18n"
+import type { Theme } from "@/ignite/theme/types"
 
 export interface Demo {
   name: string

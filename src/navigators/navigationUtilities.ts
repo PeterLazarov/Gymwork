@@ -6,8 +6,8 @@ import {
 import { useEffect, useRef, useState } from "react"
 import { BackHandler, Linking, Platform } from "react-native"
 
-import Config from "@/config"
-import type { PersistNavigationConfig } from "@/config/config.base"
+import Config from "@/ignite/config"
+import type { PersistNavigationConfig } from "@/ignite/config/config.base"
 import { getValue, setValue } from "@/utils/ignite/storage"
 import { useIsMounted } from "@/utils/useIsMounted"
 

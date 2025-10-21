@@ -3,8 +3,8 @@ import { TextStyle, View, ViewStyle } from "react-native"
 
 import { Header } from "@/components/Header"
 import { Icon } from "@/components/Icon"
-import type { ThemedStyle } from "@/theme/types"
-import { $styles } from "@/theme/styles"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { $styles } from "@/ignite/theme/styles"
 
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "./types"
@@ -90,7 +90,12 @@ export const DemoHeader: Demo = {
         LeftActionComponent={
           <View style={themed([$styles.row, $customLeftAction])}>
             {Array.from({ length: 20 }, (x, i) => i).map((i) => (
-              <Icon key={i} icon="ladybug" color={theme.colors.palette.neutral100} size={20} />
+              <Icon
+                key={i}
+                icon="ladybug"
+                color={theme.colors.palette.neutral100}
+                size={20}
+              />
             ))}
           </View>
         }

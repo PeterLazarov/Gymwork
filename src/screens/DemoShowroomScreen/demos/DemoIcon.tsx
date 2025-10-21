@@ -3,8 +3,8 @@ import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
 import { Icon, iconRegistry, type IconTypes } from "@/components/Icon"
 import { Text } from "@/components/Text"
-import type { ThemedStyle } from "@/theme/types"
-import { $styles } from "@/theme/styles"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { $styles } from "@/ignite/theme/styles"
 
 import { Demo } from "./types"
 import { DemoUseCase } from "../DemoUseCase"
@@ -44,10 +44,20 @@ export const DemoIcon: Demo = {
       itemStyle={$styles.flexWrap}
     >
       {Object.keys(iconRegistry).map((icon) => (
-        <View key={icon} style={themed($iconTile)}>
-          <Icon icon={icon as IconTypes} color={theme.colors.tint} size={35} />
+        <View
+          key={icon}
+          style={themed($iconTile)}
+        >
+          <Icon
+            icon={icon as IconTypes}
+            color={theme.colors.tint}
+            size={35}
+          />
 
-          <Text size="xs" style={themed($iconTileLabel)}>
+          <Text
+            size="xs"
+            style={themed($iconTileLabel)}
+          >
             {icon}
           </Text>
         </View>
@@ -59,10 +69,25 @@ export const DemoIcon: Demo = {
       description="demoIcon:useCase.size.description"
       layout="row"
     >
-      <Icon icon="ladybug" containerStyle={themed($demoIconContainer)} />
-      <Icon icon="ladybug" size={35} containerStyle={themed($demoIconContainer)} />
-      <Icon icon="ladybug" size={50} containerStyle={themed($demoIconContainer)} />
-      <Icon icon="ladybug" size={75} containerStyle={themed($demoIconContainer)} />
+      <Icon
+        icon="ladybug"
+        containerStyle={themed($demoIconContainer)}
+      />
+      <Icon
+        icon="ladybug"
+        size={35}
+        containerStyle={themed($demoIconContainer)}
+      />
+      <Icon
+        icon="ladybug"
+        size={50}
+        containerStyle={themed($demoIconContainer)}
+      />
+      <Icon
+        icon="ladybug"
+        size={75}
+        containerStyle={themed($demoIconContainer)}
+      />
     </DemoUseCase>,
 
     <DemoUseCase

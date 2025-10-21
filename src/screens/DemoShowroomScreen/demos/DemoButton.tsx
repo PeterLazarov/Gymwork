@@ -4,8 +4,8 @@ import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button } from "@/components/Button"
 import { Icon } from "@/components/Icon"
 import { Text } from "@/components/Text"
-import { translate } from "@/i18n/translate"
-import type { ThemedStyle } from "@/theme/types"
+import { translate } from "@/ignite/i18n/translate"
+import type { ThemedStyle } from "@/ignite/theme/types"
 
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "./types"
@@ -79,7 +79,11 @@ export const DemoButton: Demo = {
       <Button
         preset="filled"
         RightAccessory={(props) => (
-          <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
+          <Icon
+            containerStyle={props.style}
+            style={$iconStyle}
+            icon="ladybug"
+          />
         )}
       >
         {translate("demoButton:useCase.passingContent.rightAccessory")}
@@ -89,7 +93,11 @@ export const DemoButton: Demo = {
       <Button
         preset="filled"
         LeftAccessory={(props) => (
-          <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
+          <Icon
+            containerStyle={props.style}
+            style={$iconStyle}
+            icon="ladybug"
+          />
         )}
       >
         {translate("demoButton:useCase.passingContent.leftAccessory")}
@@ -114,10 +122,18 @@ export const DemoButton: Demo = {
       <Button
         preset="reversed"
         RightAccessory={(props) => (
-          <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
+          <Icon
+            containerStyle={props.style}
+            style={$iconStyle}
+            icon="ladybug"
+          />
         )}
         LeftAccessory={(props) => (
-          <Icon containerStyle={props.style} style={$iconStyle} icon="ladybug" />
+          <Icon
+            containerStyle={props.style}
+            style={$iconStyle}
+            icon="ladybug"
+          />
         )}
       >
         {translate("demoButton:useCase.passingContent.multiLine")}
@@ -133,7 +149,10 @@ export const DemoButton: Demo = {
       </Button>
       <DemoDivider />
 
-      <Button preset="filled" textStyle={themed($customButtonTextStyle)}>
+      <Button
+        preset="filled"
+        textStyle={themed($customButtonTextStyle)}
+      >
         {translate("demoButton:useCase.styling.styleText")}
       </Button>
       <DemoDivider />

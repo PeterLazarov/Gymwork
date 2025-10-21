@@ -9,8 +9,8 @@ import { Text } from "@/components/Text"
 import { TextField, type TextFieldAccessoryProps } from "@/components/TextField"
 import { useAuth } from "@/context/AuthContext"
 import type { AppStackScreenProps } from "@/navigators/navigationTypes"
-import type { ThemedStyle } from "@/theme/types"
-import { useAppTheme } from "@/theme/context"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { useAppTheme } from "@/ignite/theme/context"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
 
@@ -75,10 +75,24 @@ export const LoginScreen: FC<LoginScreenProps> = () => {
       contentContainerStyle={themed($screenContentContainer)}
       safeAreaEdges={["top", "bottom"]}
     >
-      <Text testID="login-heading" tx="loginScreen:logIn" preset="heading" style={themed($logIn)} />
-      <Text tx="loginScreen:enterDetails" preset="subheading" style={themed($enterDetails)} />
+      <Text
+        testID="login-heading"
+        tx="loginScreen:logIn"
+        preset="heading"
+        style={themed($logIn)}
+      />
+      <Text
+        tx="loginScreen:enterDetails"
+        preset="subheading"
+        style={themed($enterDetails)}
+      />
       {attemptsCount > 2 && (
-        <Text tx="loginScreen:hint" size="sm" weight="light" style={themed($hint)} />
+        <Text
+          tx="loginScreen:hint"
+          size="sm"
+          weight="light"
+          style={themed($hint)}
+        />
       )}
 
       <TextField

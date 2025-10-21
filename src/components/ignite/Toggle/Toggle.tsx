@@ -13,9 +13,9 @@ import {
   ViewStyle,
 } from "react-native"
 
-import type { ThemedStyle } from "@/theme/types"
-import { useAppTheme } from "@/theme/context"
-import { $styles } from "@/theme/styles"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { useAppTheme } from "@/ignite/theme/context"
+import { $styles } from "@/ignite/theme/styles"
 
 import { Text, TextProps } from "../Text"
 
@@ -181,7 +181,12 @@ export function Toggle<T>(props: ToggleProps<T>) {
       onPress={handlePress}
     >
       <View style={$inputWrapperStyles}>
-        {labelPosition === "left" && <FieldLabel<T> {...props} labelPosition={labelPosition} />}
+        {labelPosition === "left" && (
+          <FieldLabel<T>
+            {...props}
+            labelPosition={labelPosition}
+          />
+        )}
 
         <ToggleInput
           on={!!value}
@@ -192,7 +197,12 @@ export function Toggle<T>(props: ToggleProps<T>) {
           detailStyle={props.inputDetailStyle ?? {}}
         />
 
-        {labelPosition === "right" && <FieldLabel<T> {...props} labelPosition={labelPosition} />}
+        {labelPosition === "right" && (
+          <FieldLabel<T>
+            {...props}
+            labelPosition={labelPosition}
+          />
+        )}
       </View>
 
       {!!(helper || helperTx) && (

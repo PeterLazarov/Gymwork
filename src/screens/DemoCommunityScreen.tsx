@@ -4,11 +4,11 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { ListItem } from "@/components/ListItem"
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
-import { isRTL } from "@/i18n"
+import { isRTL } from "@/ignite/i18n"
 import { DemoTabScreenProps } from "@/navigators/navigationTypes"
-import type { ThemedStyle } from "@/theme/types"
-import { useAppTheme } from "@/theme/context"
-import { $styles } from "@/theme/styles"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { useAppTheme } from "@/ignite/theme/context"
+import { $styles } from "@/ignite/theme/styles"
 import { openLinkInBrowser } from "@/utils/openLinkInBrowser"
 
 const chainReactLogo = require("@assets/images/demo/cr-logo.png")
@@ -20,12 +20,29 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
   function DemoCommunityScreen(_props) {
     const { themed } = useAppTheme()
     return (
-      <Screen preset="scroll" contentContainerStyle={$styles.container} safeAreaEdges={["top"]}>
-        <Text preset="heading" tx="demoCommunityScreen:title" style={themed($title)} />
-        <Text tx="demoCommunityScreen:tagLine" style={themed($tagline)} />
+      <Screen
+        preset="scroll"
+        contentContainerStyle={$styles.container}
+        safeAreaEdges={["top"]}
+      >
+        <Text
+          preset="heading"
+          tx="demoCommunityScreen:title"
+          style={themed($title)}
+        />
+        <Text
+          tx="demoCommunityScreen:tagLine"
+          style={themed($tagline)}
+        />
 
-        <Text preset="subheading" tx="demoCommunityScreen:joinUsOnSlackTitle" />
-        <Text tx="demoCommunityScreen:joinUsOnSlack" style={themed($description)} />
+        <Text
+          preset="subheading"
+          tx="demoCommunityScreen:joinUsOnSlackTitle"
+        />
+        <Text
+          tx="demoCommunityScreen:joinUsOnSlack"
+          style={themed($description)}
+        />
         <ListItem
           tx="demoCommunityScreen:joinSlackLink"
           leftIcon="slack"
@@ -37,7 +54,10 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           tx="demoCommunityScreen:makeIgniteEvenBetterTitle"
           style={themed($sectionTitle)}
         />
-        <Text tx="demoCommunityScreen:makeIgniteEvenBetter" style={themed($description)} />
+        <Text
+          tx="demoCommunityScreen:makeIgniteEvenBetter"
+          style={themed($description)}
+        />
         <ListItem
           tx="demoCommunityScreen:contributeToIgniteLink"
           leftIcon="github"
@@ -50,14 +70,20 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           tx="demoCommunityScreen:theLatestInReactNativeTitle"
           style={themed($sectionTitle)}
         />
-        <Text tx="demoCommunityScreen:theLatestInReactNative" style={themed($description)} />
+        <Text
+          tx="demoCommunityScreen:theLatestInReactNative"
+          style={themed($description)}
+        />
         <ListItem
           tx="demoCommunityScreen:reactNativeRadioLink"
           bottomSeparator
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
             <View style={[$styles.row, themed($logoContainer)]}>
-              <Image source={reactNativeRadioLogo} style={$logo} />
+              <Image
+                source={reactNativeRadioLogo}
+                style={$logo}
+              />
             </View>
           }
           onPress={() => openLinkInBrowser("https://reactnativeradio.com/")}
@@ -68,7 +94,10 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
             <View style={[$styles.row, themed($logoContainer)]}>
-              <Image source={reactNativeNewsletterLogo} style={$logo} />
+              <Image
+                source={reactNativeNewsletterLogo}
+                style={$logo}
+              />
             </View>
           }
           onPress={() => openLinkInBrowser("https://reactnativenewsletter.com/")}
@@ -79,7 +108,10 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
             <View style={[$styles.row, themed($logoContainer)]}>
-              <Image source={reactNativeLiveLogo} style={$logo} />
+              <Image
+                source={reactNativeLiveLogo}
+                style={$logo}
+              />
             </View>
           }
           onPress={() => openLinkInBrowser("https://rn.live/")}
@@ -89,7 +121,10 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           LeftComponent={
             <View style={[$styles.row, themed($logoContainer)]}>
-              <Image source={chainReactLogo} style={$logo} />
+              <Image
+                source={chainReactLogo}
+                style={$logo}
+              />
             </View>
           }
           onPress={() => openLinkInBrowser("https://cr.infinite.red/")}
@@ -99,7 +134,10 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> =
           tx="demoCommunityScreen:hireUsTitle"
           style={themed($sectionTitle)}
         />
-        <Text tx="demoCommunityScreen:hireUs" style={themed($description)} />
+        <Text
+          tx="demoCommunityScreen:hireUs"
+          style={themed($description)}
+        />
         <ListItem
           tx="demoCommunityScreen:hireUsLink"
           leftIcon="clap"

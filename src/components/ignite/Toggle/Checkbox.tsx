@@ -1,8 +1,8 @@
 import { useEffect, useRef, useCallback } from "react"
 import { Image, ImageStyle, Animated, StyleProp, View, ViewStyle } from "react-native"
 
-import { useAppTheme } from "@/theme/context"
-import { $styles } from "@/theme/styles"
+import { useAppTheme } from "@/ignite/theme/context"
+import { $styles } from "@/ignite/theme/styles"
 
 import { iconRegistry, IconTypes } from "../Icon"
 import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
@@ -29,10 +29,21 @@ interface CheckboxInputProps extends BaseToggleInputProps<CheckboxToggleProps> {
 export function Checkbox(props: CheckboxToggleProps) {
   const { icon, ...rest } = props
   const checkboxInput = useCallback(
-    (toggleProps: CheckboxInputProps) => <CheckboxInput {...toggleProps} icon={icon} />,
+    (toggleProps: CheckboxInputProps) => (
+      <CheckboxInput
+        {...toggleProps}
+        icon={icon}
+      />
+    ),
     [icon],
   )
-  return <Toggle accessibilityRole="checkbox" {...rest} ToggleInput={checkboxInput} />
+  return (
+    <Toggle
+      accessibilityRole="checkbox"
+      {...rest}
+      ToggleInput={checkboxInput}
+    />
+  )
 }
 
 function CheckboxInput(props: CheckboxInputProps) {

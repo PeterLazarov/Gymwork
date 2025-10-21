@@ -2,10 +2,10 @@ import { useEffect, useMemo, useRef, useCallback } from "react"
 import { Animated, Image, ImageStyle, Platform, StyleProp, View, ViewStyle } from "react-native"
 
 import { iconRegistry } from "@/components/Icon"
-import { isRTL } from "@/i18n"
-import type { ThemedStyle } from "@/theme/types"
-import { useAppTheme } from "@/theme/context"
-import { $styles } from "@/theme/styles"
+import { isRTL } from "@/ignite/i18n"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { useAppTheme } from "@/ignite/theme/context"
+import { $styles } from "@/ignite/theme/styles"
 
 import { $inputOuterBase, BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
 
@@ -34,11 +34,20 @@ export function Switch(props: SwitchToggleProps) {
   const { accessibilityMode, ...rest } = props
   const switchInput = useCallback(
     (toggleProps: SwitchInputProps) => (
-      <SwitchInput {...toggleProps} accessibilityMode={accessibilityMode} />
+      <SwitchInput
+        {...toggleProps}
+        accessibilityMode={accessibilityMode}
+      />
     ),
     [accessibilityMode],
   )
-  return <Toggle accessibilityRole="switch" {...rest} ToggleInput={switchInput} />
+  return (
+    <Toggle
+      accessibilityRole="switch"
+      {...rest}
+      ToggleInput={switchInput}
+    />
+  )
 }
 
 function SwitchInput(props: SwitchInputProps) {
@@ -153,8 +162,14 @@ function SwitchInput(props: SwitchInputProps) {
         ]}
       />
 
-      <SwitchAccessibilityLabel {...props} role="on" />
-      <SwitchAccessibilityLabel {...props} role="off" />
+      <SwitchAccessibilityLabel
+        {...props}
+        role="on"
+      />
+      <SwitchAccessibilityLabel
+        {...props}
+        role="off"
+      />
 
       <Animated.View
         style={[

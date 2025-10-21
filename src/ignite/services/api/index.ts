@@ -11,8 +11,8 @@ import {
   create,
 } from "apisauce"
 
-import Config from "@/config"
-import type { EpisodeItem } from "@/services/api/types" // @demo remove-current-line
+import Config from "@/ignite/config"
+import type { EpisodeItem } from "@/ignite/services/api/types" // @demo remove-current-line
 
 import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem" // @demo remove-current-line
 import type {

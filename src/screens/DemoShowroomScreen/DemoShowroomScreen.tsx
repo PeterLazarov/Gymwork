@@ -15,12 +15,12 @@ import { Drawer } from "react-native-drawer-layout"
 import { ListItem } from "@/components/ListItem"
 import { Screen } from "@/components/Screen"
 import { Text } from "@/components/Text"
-import { TxKeyPath, isRTL } from "@/i18n"
-import { translate } from "@/i18n/translate"
+import { TxKeyPath, isRTL } from "@/ignite/i18n"
+import { translate } from "@/ignite/i18n/translate"
 import { DemoTabParamList, DemoTabScreenProps } from "@/navigators/navigationTypes"
-import type { ThemedStyle } from "@/theme/types"
-import { useAppTheme } from "@/theme/context"
-import { $styles } from "@/theme/styles"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { useAppTheme } from "@/ignite/theme/context"
+import { $styles } from "@/ignite/theme/styles"
 import { useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
 import * as Demos from "./demos"
@@ -210,7 +210,10 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         renderDrawerContent={() => (
           <View style={themed([$drawer, $drawerInsets])}>
             <View style={themed($logoContainer)}>
-              <Image source={logo} style={$logoImage} />
+              <Image
+                source={logo}
+                style={$logoImage}
+              />
             </View>
             <FlatList<DemoListItem["item"]>
               ref={menuRef}
@@ -259,14 +262,20 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
             renderSectionFooter={() => <View style={themed($demoUseCasesSpacer)} />}
             ListHeaderComponent={
               <View style={themed($heading)}>
-                <Text preset="heading" tx="demoShowroomScreen:jumpStart" />
+                <Text
+                  preset="heading"
+                  tx="demoShowroomScreen:jumpStart"
+                />
               </View>
             }
             onScrollToIndexFailed={scrollToIndexFailed}
             renderSectionHeader={({ section }) => {
               return (
                 <View>
-                  <Text preset="heading" style={themed($demoItemName)}>
+                  <Text
+                    preset="heading"
+                    style={themed($demoItemName)}
+                  >
                     {section.name}
                   </Text>
                   <Text style={themed($demoItemDescription)}>{translate(section.description)}</Text>

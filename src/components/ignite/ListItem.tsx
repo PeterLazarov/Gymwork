@@ -8,9 +8,9 @@ import {
   ViewStyle,
 } from "react-native"
 
-import type { ThemedStyle } from "@/theme/types"
-import { useAppTheme } from "@/theme/context"
-import { $styles } from "@/theme/styles"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { useAppTheme } from "@/ignite/theme/context"
+import { $styles } from "@/ignite/theme/styles"
 
 import { Icon, IconTypes } from "./Icon"
 import { Text, TextProps } from "./Text"
@@ -151,8 +151,14 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
   const Wrapper = isTouchable ? TouchableOpacity : View
 
   return (
-    <View ref={ref} style={themed($containerStyles)}>
-      <Wrapper {...TouchableOpacityProps} style={$touchableStyles}>
+    <View
+      ref={ref}
+      style={themed($containerStyles)}
+    >
+      <Wrapper
+        {...TouchableOpacityProps}
+        style={$touchableStyles}
+      >
         <ListItemAction
           side="left"
           size={height}
@@ -161,7 +167,13 @@ export const ListItem = forwardRef<View, ListItemProps>(function ListItem(
           Component={LeftComponent}
         />
 
-        <Text {...TextProps} tx={tx} text={text} txOptions={txOptions} style={themed($textStyles)}>
+        <Text
+          {...TextProps}
+          tx={tx}
+          text={text}
+          txOptions={txOptions}
+          style={themed($textStyles)}
+        >
           {children}
         </Text>
 

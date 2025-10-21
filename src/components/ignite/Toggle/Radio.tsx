@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react"
 import { StyleProp, View, ViewStyle, Animated } from "react-native"
 
-import { useAppTheme } from "@/theme/context"
-import { $styles } from "@/theme/styles"
+import { useAppTheme } from "@/ignite/theme/context"
+import { $styles } from "@/ignite/theme/styles"
 
 import { $inputOuterBase, BaseToggleInputProps, ToggleProps, Toggle } from "./Toggle"
 
@@ -21,7 +21,13 @@ interface RadioInputProps extends BaseToggleInputProps<RadioToggleProps> {}
  * @returns {JSX.Element} The rendered `Radio` component.
  */
 export function Radio(props: RadioToggleProps) {
-  return <Toggle accessibilityRole="radio" {...props} ToggleInput={RadioInput} />
+  return (
+    <Toggle
+      accessibilityRole="radio"
+      {...props}
+      ToggleInput={RadioInput}
+    />
+  )
 }
 
 function RadioInput(props: RadioInputProps) {

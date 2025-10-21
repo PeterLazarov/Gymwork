@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key, react-native/no-inline-styles */
 import { Text } from "@/components/Text"
-import { translate } from "@/i18n/translate"
+import { translate } from "@/ignite/i18n/translate"
 
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "./types"

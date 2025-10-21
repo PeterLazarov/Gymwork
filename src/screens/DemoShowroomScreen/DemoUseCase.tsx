@@ -2,11 +2,11 @@ import { ReactNode } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 
 import { Text } from "@/components/Text"
-import type { TxKeyPath } from "@/i18n"
-import { translate } from "@/i18n/translate"
-import type { ThemedStyle } from "@/theme/types"
-import { useAppTheme } from "@/theme/context"
-import { $styles } from "@/theme/styles"
+import type { TxKeyPath } from "@/ignite/i18n"
+import { translate } from "@/ignite/i18n/translate"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { useAppTheme } from "@/ignite/theme/context"
+import { $styles } from "@/ignite/theme/styles"
 
 interface DemoUseCaseProps {
   name: TxKeyPath

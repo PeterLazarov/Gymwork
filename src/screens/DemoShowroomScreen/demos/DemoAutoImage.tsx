@@ -3,9 +3,9 @@ import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
 import { AutoImage } from "@/components/AutoImage"
 import { Text } from "@/components/Text"
-import { translate } from "@/i18n/translate"
-import type { ThemedStyle } from "@/theme/types"
-import { $styles } from "@/theme/styles"
+import { translate } from "@/ignite/i18n/translate"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { $styles } from "@/ignite/theme/styles"
 
 import { DemoDivider } from "../DemoDivider"
 import { Demo } from "./types"
@@ -115,7 +115,11 @@ export const DemoAutoImage: Demo = {
         />
       </View>
 
-      <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
+      <Text
+        weight="bold"
+        size="xs"
+        style={themed($aspectRatioDescription)}
+      >
         {translate("demoAutoImage:useCase.scaledToFitDimensions.heightAuto")}
       </Text>
 
@@ -164,7 +168,11 @@ export const DemoAutoImage: Demo = {
         </View>
       </View>
 
-      <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
+      <Text
+        weight="bold"
+        size="xs"
+        style={themed($aspectRatioDescription)}
+      >
         {translate("demoAutoImage:useCase.scaledToFitDimensions.widthAuto")}
       </Text>
 
@@ -220,7 +228,11 @@ export const DemoAutoImage: Demo = {
         />
       </View>
 
-      <Text weight="bold" size="xs" style={themed($aspectRatioDescription)}>
+      <Text
+        weight="bold"
+        size="xs"
+        style={themed($aspectRatioDescription)}
+      >
         {translate("demoAutoImage:useCase.scaledToFitDimensions.bothManual")}
       </Text>
     </DemoUseCase>,

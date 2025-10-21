@@ -2,8 +2,8 @@ import { Pressable, PressableProps, ViewStyle, Platform } from "react-native"
 import { useDrawerProgress } from "react-native-drawer-layout"
 import Animated, { interpolate, interpolateColor, useAnimatedStyle } from "react-native-reanimated"
 
-import { isRTL } from "@/i18n"
-import { useAppTheme } from "@/theme/context"
+import { isRTL } from "@/ignite/i18n"
+import { useAppTheme } from "@/ignite/theme/context"
 
 interface DrawerIconButtonProps extends PressableProps {}
 
@@ -85,7 +85,10 @@ export function DrawerIconButton(props: DrawerIconButtonProps) {
   })
 
   return (
-    <AnimatedPressable {...PressableProps} style={[$container, animatedContainerStyles]}>
+    <AnimatedPressable
+      {...PressableProps}
+      style={[$container, animatedContainerStyles]}
+    >
       <Animated.View style={[$topBar, animatedTopBarStyles]} />
 
       <Animated.View style={[themed($middleBar), animatedMiddleBarStyles]} />

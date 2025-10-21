@@ -4,12 +4,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { Icon } from "@/components/Icon"
 import { EpisodeProvider } from "@/context/EpisodeContext"
-import { translate } from "@/i18n/translate"
+import { translate } from "@/ignite/i18n/translate"
 import { DemoCommunityScreen } from "@/screens/DemoCommunityScreen"
 import { DemoPodcastListScreen } from "@/screens/DemoPodcastListScreen"
 import { DemoShowroomScreen } from "@/screens/DemoShowroomScreen/DemoShowroomScreen"
-import type { ThemedStyle } from "@/theme/types"
-import { useAppTheme } from "@/theme/context"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { useAppTheme } from "@/ignite/theme/context"
 
 import type { DemoTabParamList } from "./navigationTypes"
 

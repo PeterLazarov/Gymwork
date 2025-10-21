@@ -8,9 +8,9 @@ import {
   ViewStyle,
 } from "react-native"
 
-import { useAppTheme } from "@/theme/context"
-import { $styles } from "@/theme/styles"
-import type { ThemedStyle, ThemedStyleArray } from "@/theme/types"
+import { useAppTheme } from "@/ignite/theme/context"
+import { $styles } from "@/ignite/theme/styles"
+import type { ThemedStyle, ThemedStyleArray } from "@/ignite/theme/types"
 
 import { Text, TextProps } from "./Text"
 
@@ -158,10 +158,19 @@ export function Button(props: ButtonProps) {
       {(state) => (
         <>
           {!!LeftAccessory && (
-            <LeftAccessory style={$leftAccessoryStyle} pressableState={state} disabled={disabled} />
+            <LeftAccessory
+              style={$leftAccessoryStyle}
+              pressableState={state}
+              disabled={disabled}
+            />
           )}
 
-          <Text tx={tx} text={text} txOptions={txOptions} style={$textStyle(state)}>
+          <Text
+            tx={tx}
+            text={text}
+            txOptions={txOptions}
+            style={$textStyle(state)}
+          >
             {children}
           </Text>
 

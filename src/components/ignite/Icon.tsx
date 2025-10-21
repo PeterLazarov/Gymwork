@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from "react-native"
 
-import { useAppTheme } from "@/theme/context"
+import { useAppTheme } from "@/ignite/theme/context"
 
 export type IconTypes = keyof typeof iconRegistry
 
@@ -70,8 +70,14 @@ export function PressableIcon(props: PressableIconProps) {
   ]
 
   return (
-    <TouchableOpacity {...pressableProps} style={$containerStyleOverride}>
-      <Image style={$imageStyle} source={iconRegistry[icon]} />
+    <TouchableOpacity
+      {...pressableProps}
+      style={$containerStyleOverride}
+    >
+      <Image
+        style={$imageStyle}
+        source={iconRegistry[icon]}
+      />
     </TouchableOpacity>
   )
 }
@@ -103,8 +109,14 @@ export function Icon(props: IconProps) {
   ]
 
   return (
-    <View {...viewProps} style={$containerStyleOverride}>
-      <Image style={$imageStyle} source={iconRegistry[icon]} />
+    <View
+      {...viewProps}
+      style={$containerStyleOverride}
+    >
+      <Image
+        style={$imageStyle}
+        source={iconRegistry[icon]}
+      />
     </View>
   )
 }
