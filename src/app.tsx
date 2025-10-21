@@ -1,15 +1,4 @@
 /* eslint-disable import/first */
-/**
- * Welcome to the main entry point of the app. In this file, we'll
- * be kicking off our app.
- *
- * Most of this file is boilerplate and you shouldn't need to modify
- * it very often. But take some time to look through and understand
- * what is going on here.
- *
- * The app navigation resides in ./app/navigators, so head over there
- * if you're interested in adding screens and navigators.
- */
 if (__DEV__) {
   // Load Reactotron in development only.
   // Note that you must be using metro's `inlineRequires` for this to work.
@@ -24,14 +13,14 @@ import { useEffect, useState } from "react"
 import { KeyboardProvider } from "react-native-keyboard-controller"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 
-import { AuthProvider } from "./context/AuthContext" // @demo remove-current-line
-import DBProvider from "./db/DBProvider"
+import DBProvider from "@/db/DBProvider"
 import { initI18n } from "./i18n"
 import { AppNavigator } from "./navigators/AppNavigator"
 import { useNavigationPersistence } from "./navigators/navigationUtilities"
 import { ThemeProvider } from "./theme/context"
 import { customFontsToLoad } from "./theme/typography"
 import { loadDateFnsLocale } from "./utils/formatDate"
+import { OpenedDateProvider } from "@/context/OpenedDateContext"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -95,21 +84,17 @@ export function App() {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <KeyboardProvider>
-        {/* @demo remove-block-start */}
-        <AuthProvider>
-          {/* @demo remove-block-end */}
-          <DBProvider>
-            <ThemeProvider>
+        <DBProvider>
+          <ThemeProvider>
+            <OpenedDateProvider>
               <AppNavigator
                 linking={linking}
                 initialState={initialNavigationState}
                 onStateChange={onNavigationStateChange}
               />
-            </ThemeProvider>
-          </DBProvider>
-          {/* @demo remove-block-start */}
-        </AuthProvider>
-        {/* @demo remove-block-end */}
+            </OpenedDateProvider>
+          </ThemeProvider>
+        </DBProvider>
       </KeyboardProvider>
     </SafeAreaProvider>
   )

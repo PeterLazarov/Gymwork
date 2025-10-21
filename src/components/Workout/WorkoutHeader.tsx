@@ -6,20 +6,17 @@ import { formatDateIso, translate, useShareWorkout } from "@/utils"
 import { Header, Icon, IconButton, useColors } from "@/designSystem"
 // import HomeMenuItems from "../HomeMenuItems"
 import { MiniTimer } from "../MiniTimer"
+import { DayControl } from "./DayControls"
+import { useOpenedDate } from "@/context/OpenedDateContext"
 // import WorkoutTimerModal from "../Timer/WorkoutTimerModal"
 
-type Props = {
-  date: string
-}
-export const WorkoutHeader: React.FC<Props> = ({ date }) => {
+export const WorkoutHeader: React.FC = () => {
   const colors = useColors()
 
-  const { openedWorkout } = stateStore
   const { showCommentsCard } = settingsStore
 
   const [menuOpen, setMenuOpen] = useState(false)
-
-  const dateLabel = formatDateIso(date, "long")
+  const { openedDateLabel } = useOpenedDate()
 
   function openCalendar() {
     // navigate("Calendar")
@@ -44,7 +41,7 @@ export const WorkoutHeader: React.FC<Props> = ({ date }) => {
   const shareWorkout = useShareWorkout()
   return (
     <Header>
-      <Header.Title title={dateLabel} />
+      <Header.Title title={openedDateLabel} />
 
       {/* {settingsStore.showWorkoutTimer && (
         <>

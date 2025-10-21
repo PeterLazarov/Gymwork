@@ -12,7 +12,7 @@ type Props = {
   compactMode?: boolean
 }
 
-export const WorkoutCommentsCard: React.FC<Props> = ({ workout, onPress, compactMode }) => {
+export const CommentsCard: React.FC<Props> = ({ workout, onPress, compactMode }) => {
   const colors = useColors()
 
   const styles = useMemo(() => makeStyles(colors, compactMode), [colors, compactMode])

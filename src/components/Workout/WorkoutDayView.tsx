@@ -2,23 +2,21 @@ import React from "react"
 import { View } from "react-native"
 
 // import { useStores } from "app/db/helpers/useStores"
-import WorkoutStepList from "./WorkoutStepList"
+import { WorkoutStepList } from "./WorkoutStepList"
 import WorkoutEmptyState from "./WorkoutEmptyState"
-import CommentsCard from "./CommentsCard"
+import { CommentsCard } from "./CommentsCard"
 import { useColors } from "@/designSystem"
+import { useOpenedDate } from "@/context/OpenedDateContext"
 
-type Props = {
-  date: string
-}
-export const WorkoutDayView: React.FC<Props> = ({ date }) => {
+export const WorkoutDayView: React.FC = () => {
   const colors = useColors()
-
+  const { openedDate } = useOpenedDate()
   // const {
   //   workoutStore,
   //   settingsStore,
   //   navStore: { navigate },
   // } = useStores()
-  const workout = workoutStore.dateWorkoutMap[date]
+  const workout = workoutStore.dateWorkoutMap[openedDate]
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.surfaceContainer }}>
@@ -40,5 +38,3 @@ export const WorkoutDayView: React.FC<Props> = ({ date }) => {
     </View>
   )
 }
-
-export default observer(WorkoutDayView)

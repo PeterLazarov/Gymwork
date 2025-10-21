@@ -3,7 +3,7 @@ import { FAB as FABPaper, FABProps } from "react-native-paper"
 
 import { useColors } from "@/designSystem"
 
-const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
+export const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
   const colors = useColors()
 
   return (
@@ -23,5 +23,3 @@ const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
     />
   )
 }
-
-export default FAB
