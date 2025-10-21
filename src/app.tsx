@@ -9,18 +9,22 @@ import "./utils/gestureHandler"
 
 import { useFonts } from "expo-font"
 import * as Linking from "expo-linking"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { KeyboardProvider } from "react-native-keyboard-controller"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
+import { PaperProvider, Portal } from "react-native-paper"
 
 import DBProvider from "@/db/DBProvider"
 import { initI18n } from "./ignite/i18n"
-import { AppNavigator } from "./navigators/AppNavigator"
+import { AppNavigator } from "@/navigators/AppNavigator"
 import { useNavigationPersistence } from "./navigators/navigationUtilities"
 import { ThemeProvider } from "./ignite/theme/context"
 import { customFontsToLoad } from "./ignite/theme/typography"
-import { loadDateFnsLocale } from "./utils/formatDate"
+// import { loadDateFnsLocale } from "./utils/formatDate"
 import { OpenedDateProvider } from "@/context/OpenedDateContext"
+import { useColorScheme } from "react-native"
+import { paperThemes } from "@/designSystem"
+import { DialogContextProvider } from "@/context/DialogContext"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -44,11 +48,6 @@ const config = {
   },
 }
 
-/**
- * This is the root component of our app.
- * @param {AppProps} props - The props for the `App` component.
- * @returns {JSX.Element} The rendered `App` component.
- */
 export function App() {
   const {
     initialNavigationState,
@@ -60,9 +59,8 @@ export function App() {
   const [isI18nInitialized, setIsI18nInitialized] = useState(false)
 
   useEffect(() => {
-    initI18n()
-      .then(() => setIsI18nInitialized(true))
-      .then(() => loadDateFnsLocale())
+    initI18n().then(() => setIsI18nInitialized(true))
+    // .then(() => loadDateFnsLocale())
   }, [])
 
   // Before we show the app, we have to wait for our state to be ready.
@@ -79,19 +77,24 @@ export function App() {
     prefixes: [prefix],
     config,
   }
+  const colorScheme = useColorScheme()!
+  const paperTheme = useMemo(() => {
+    return paperThemes[colorScheme]
+  }, [colorScheme])
 
-  // otherwise, we're ready to render the app
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <KeyboardProvider>
         <DBProvider>
           <ThemeProvider>
             <OpenedDateProvider>
-              <AppNavigator
-                linking={linking}
-                initialState={initialNavigationState}
-                onStateChange={onNavigationStateChange}
-              />
+              <PaperProvider theme={paperTheme}>
+                <AppNavigator
+                  linking={linking}
+                  initialState={initialNavigationState}
+                  onStateChange={onNavigationStateChange}
+                />
+              </PaperProvider>
             </OpenedDateProvider>
           </ThemeProvider>
         </DBProvider>

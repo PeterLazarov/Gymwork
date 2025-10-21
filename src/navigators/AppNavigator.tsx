@@ -1,22 +1,19 @@
-/**
- * The app navigator (formerly "AppNavigator" and "MainNavigator") is used for the primary
- * navigation flows of your app.
- * Generally speaking, it will contain an auth flow (registration, login, forgot password)
- * and a "main" flow which the user will use once logged in.
- */
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { PortalHost, PortalProvider } from "@gorhom/portal"
+import { View, useWindowDimensions } from "react-native"
+import { ErrorBoundary } from "@sentry/react-native"
 
 import Config from "@/ignite/config"
-import { useAuth } from "@/context/AuthContext" // @demo remove-current-line
-import { ErrorBoundary } from "@/screens/ErrorScreen/ErrorBoundary"
-import { LoginScreen } from "@/screens/LoginScreen" // @demo remove-current-line
 import { WelcomeScreen } from "@/screens/WelcomeScreen"
 import { useAppTheme } from "@/ignite/theme/context"
-
-import { DemoNavigator } from "./DemoNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import type { AppStackParamList, NavigationProps } from "./navigationTypes"
+import { Portal } from "react-native-paper"
+import { DialogContextProvider } from "@/context/DialogContext"
+import { ErrorDetails } from "@/screens/ErrorDetails"
+import { WorkoutScreen } from "@/screens/WorkoutScreen"
+import { offscreenRef } from "@/utils/useShareWorkout"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -24,16 +21,14 @@ import type { AppStackParamList, NavigationProps } from "./navigationTypes"
  */
 const exitRoutes = Config.exitRoutes
 
-// Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
 const AppStack = () => {
-  // @demo remove-block-start
-  const { isAuthenticated } = useAuth()
-  // @demo remove-block-end
   const {
     theme: { colors },
   } = useAppTheme()
+
+  const hasVisitedWelcome = false
 
   return (
     <Stack.Navigator
@@ -44,33 +39,16 @@ const AppStack = () => {
           backgroundColor: colors.background,
         },
       }}
-      initialRouteName={isAuthenticated ? "Welcome" : "Login"} // @demo remove-current-line
+      initialRouteName={hasVisitedWelcome ? "Welcome" : "Workout"}
     >
-      {/* @demo remove-block-start */}
-      {isAuthenticated ? (
-        <>
-          {/* @demo remove-block-end */}
-          <Stack.Screen
-            name="Welcome"
-            component={WelcomeScreen}
-          />
-          {/* @demo remove-block-start */}
-          <Stack.Screen
-            name="Demo"
-            component={DemoNavigator}
-          />
-        </>
-      ) : (
-        <>
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-          />
-        </>
-      )}
-      {/* @demo remove-block-end */}
-      {/** 🔥 Your screens go here */}
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
+      <Stack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+      />
+      <Stack.Screen
+        name="Workout"
+        component={WorkoutScreen}
+      />
     </Stack.Navigator>
   )
 }
@@ -79,6 +57,7 @@ export const AppNavigator = (props: NavigationProps) => {
   const { navigationTheme } = useAppTheme()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
+  const screenDimensions = useWindowDimensions()
 
   return (
     <NavigationContainer
@@ -86,9 +65,33 @@ export const AppNavigator = (props: NavigationProps) => {
       theme={navigationTheme}
       {...props}
     >
-      <ErrorBoundary catchErrors={Config.catchErrors}>
-        <AppStack />
-      </ErrorBoundary>
+      <PortalProvider>
+        <Portal.Host>
+          <DialogContextProvider>
+            <ErrorBoundary
+              fallback={({ error, resetError }) => (
+                <ErrorDetails
+                  error={error}
+                  resetError={resetError}
+                />
+              )}
+            >
+              <AppStack />
+            </ErrorBoundary>
+          </DialogContextProvider>
+        </Portal.Host>
+
+        <View
+          ref={offscreenRef}
+          style={{
+            position: "absolute",
+            zIndex: 1,
+            left: screenDimensions.width,
+          }}
+        >
+          <PortalHost name="offscreen" />
+        </View>
+      </PortalProvider>
     </NavigationContainer>
   )
 }
