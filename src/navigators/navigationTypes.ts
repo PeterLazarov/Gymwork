@@ -4,8 +4,11 @@ import {
   CompositeScreenProps,
   NavigationContainer,
   NavigatorScreenParams,
+  RouteProp,
+  useRoute,
 } from "@react-navigation/native"
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
+import { CalendarScreenParams } from "@/screens/CalendarScreen"
 
 // Demo Tab Navigator types
 export type DemoTabParamList = {
@@ -21,6 +24,7 @@ export type AppStackParamList = {
   Login: undefined
   Demo: NavigatorScreenParams<DemoTabParamList>
   Workout: undefined
+  Calendar: CalendarScreenParams
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }
@@ -37,3 +41,11 @@ export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScre
 
 export interface NavigationProps
   extends Partial<ComponentProps<typeof NavigationContainer<AppStackParamList>>> {}
+
+
+  export const useRouteParams = <T extends keyof AppStackParamList>(
+    screen: T
+  ): AppStackParamList[T] => {
+    const route = useRoute<RouteProp<AppStackParamList, T>>()
+    return (route.params ?? {}) as AppStackParamList[T]
+  }

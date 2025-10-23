@@ -1,6 +1,5 @@
 import React, { useMemo } from "react"
-import { StyleSheet, View, ViewStyle } from "react-native"
-import { Pressable, PressableProps } from "react-native-gesture-handler"
+import { Pressable, PressableProps, StyleSheet, View, ViewStyle } from "react-native"
 
 import { Text } from "./Text"
 import { useColors, spacing } from "../tokens"

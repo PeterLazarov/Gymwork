@@ -43,7 +43,7 @@ export const OpenedWorkoutProvider: FC<PropsWithChildren<OpenedWorkoutProviderPr
 
   const workoutQuery = useWorkoutFullQuery(openedDateObject.toMillis())
 
-  const fetchWorkout = async () => {
+  async function fetchWorkout() {
     setIsLoadingWorkout(true)
     try {
       const result = await workoutQuery()

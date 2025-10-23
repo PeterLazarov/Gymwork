@@ -1,6 +1,5 @@
-import { PressableProps } from "react-native-gesture-handler"
 import { ReactNode } from "react"
-import { Pressable } from "react-native"
+import { Pressable, PressableProps } from "react-native"
 
 import { useColors } from "../tokens/colors"
 import { Text } from "./Text"

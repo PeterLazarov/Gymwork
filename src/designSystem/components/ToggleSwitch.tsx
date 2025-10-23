@@ -8,7 +8,7 @@ interface Props {
   onValueChange: (value: boolean) => void
   variant: "primary" | "critical"
 }
-const ToggleSwitch: React.FC<Props> = ({ value, onValueChange, variant }) => {
+export const ToggleSwitch: React.FC<Props> = ({ value, onValueChange, variant }) => {
   const colors = useColors()
 
   const thumbActiveColor = variant === "critical" ? colors.error : colors.primary
@@ -26,5 +26,3 @@ const ToggleSwitch: React.FC<Props> = ({ value, onValueChange, variant }) => {
     />
   )
 }
-
-export default ToggleSwitch

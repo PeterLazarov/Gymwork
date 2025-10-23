@@ -113,6 +113,9 @@ importers:
       react-native:
         specifier: 0.81.4
         version: 0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0)
+      react-native-calendario:
+        specifier: ^3.5.2
+        version: 3.5.2(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       react-native-drawer-layout:
         specifier: ^4.0.1
         version: 4.1.13(react-native-gesture-handler@2.28.0(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-reanimated@4.1.3(@babel/core@7.28.4)(react-native-worklets@0.6.1(@babel/core@7.28.4)(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
@@ -125,6 +128,9 @@ importers:
       react-native-keyboard-controller:
         specifier: 1.18.5
         version: 1.18.5(react-native-reanimated@4.1.3(@babel/core@7.28.4)(react-native-worklets@0.6.1(@babel/core@7.28.4)(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
+      react-native-month:
+        specifier: ^1.7.0
+        version: 1.7.0(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       react-native-paper:
         specifier: ^5.14.5
         version: 5.14.5(react-native-safe-area-context@5.6.0(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
@@ -4736,6 +4742,9 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  moment@2.30.1:
+    resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
+
   ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
 
@@ -5131,6 +5140,12 @@ packages:
   react-is@19.2.0:
     resolution: {integrity: sha512-x3Ax3kNSMIIkyVYhWPyO09bu0uttcAIoecO/um/rKGQ4EltYWVYtyiGkS/3xMynrbVQdS69Jhlv8FXUEZehlzA==}
 
+  react-native-calendario@3.5.2:
+    resolution: {integrity: sha512-1NdcA0RwAnpskZ8ArC1JrIWjv6/1iofCLUXohpKNlBBJ90bylUMfWuB5ebexuCXAK2TaiZhZcPI3p7WRhVPWfA==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
   react-native-drawer-layout@4.1.13:
     resolution: {integrity: sha512-WeTBUmPJ/ss2r2+Tuxr8Xl3u6/AM5vTg1mlt/+/4qu6vQM+szwR6RQXchB4wxI1OLROBiqYxKlmaZ2tooCZGog==}
     peerDependencies:
@@ -5163,6 +5178,18 @@ packages:
       react: '*'
       react-native: '*'
       react-native-reanimated: '>=3.0.0'
+
+  react-native-month@1.6.3:
+    resolution: {integrity: sha512-Rs4k2R8AwbwMKRH3Mm3RGN6OBBRFoIINHFvFtyQeL9MCQ2+jKgTh9+D+cWAU2i1hwWo6qqeJ6SzclW31l1/nyg==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+
+  react-native-month@1.7.0:
+    resolution: {integrity: sha512-u8on3kgYI+VzcWpSemnhaJgGSaJ9V1o25YvuNOeHaSi3hQ9A65fBKCRsU3wB8qpHRXm4axzdx5xorVJoxxHM9w==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
 
   react-native-paper-dates@0.22.50:
     resolution: {integrity: sha512-sIjtdbqBiPpiP3dKMmu6hNmXFBQC9Zv7kRfWR/g/GpZAmuKAFQJIeDhdvbxoyd541ywhelIhpNSLC9PQvTA65A==}
@@ -11794,6 +11821,8 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
+  moment@2.30.1: {}
+
   ms@2.0.0: {}
 
   ms@2.1.3: {}
@@ -12168,6 +12197,13 @@ snapshots:
 
   react-is@19.2.0: {}
 
+  react-native-calendario@3.5.2(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0):
+    dependencies:
+      moment: 2.30.1
+      react: 19.1.0
+      react-native: 0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0)
+      react-native-month: 1.6.3(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
+
   react-native-drawer-layout@4.1.13(react-native-gesture-handler@2.28.0(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-reanimated@4.1.3(@babel/core@7.28.4)(react-native-worklets@0.6.1(@babel/core@7.28.4)(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0):
     dependencies:
       react: 19.1.0
@@ -12200,6 +12236,16 @@ snapshots:
       react-native: 0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0)
       react-native-is-edge-to-edge: 1.2.1(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
       react-native-reanimated: 4.1.3(@babel/core@7.28.4)(react-native-worklets@0.6.1(@babel/core@7.28.4)(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
+
+  react-native-month@1.6.3(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-native: 0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0)
+
+  react-native-month@1.7.0(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-native: 0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0)
 
   react-native-paper-dates@0.22.50(react-native-paper@5.14.5(react-native-safe-area-context@5.6.0(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native-safe-area-context@5.6.0(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0))(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0):
     dependencies:
