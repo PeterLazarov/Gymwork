@@ -1,6 +1,5 @@
 import React, { useEffect } from "react"
 import { Keyboard } from "react-native"
-
 import Animated, { useSharedValue } from "react-native-reanimated"
 
 type Props = {

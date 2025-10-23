@@ -1,8 +1,8 @@
+import convert from "convert-units"
 import { forwardRef, useState } from "react"
 import { TextInput, View } from "react-native"
-import convert from "convert-units"
 
-import { DistanceUnit, measurementUnits } from "app/db/models"
+import { DistanceUnit, measurementUnits } from "@/constants/units"
 import { NumberInput, NumberInputProps, Select, spacing } from "@/designSystem"
 
 type _Props = {
@@ -20,8 +20,9 @@ const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(function Dista
 
   const formattedDistance = convert(value).from(unit).to(internalUnit)
 
-  // TODO fix type issue
-  function onChangeInternal(distance: number) {
+  function onChangeInternal(distance: number | undefined) {
+    if (distance === undefined) return
+
     const standardizedValue = convert(distance).from(internalUnit).to(unit)
 
     onChange(standardizedValue)

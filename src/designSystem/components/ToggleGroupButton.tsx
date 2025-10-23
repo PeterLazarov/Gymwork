@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { View, ViewStyle } from "react-native"
 
-import { Button, useColors } from "@/designSystem"
+import { Button } from "./Button"
+import { useColors } from "../tokens/colors"
 
 type Props = {
   buttons: {

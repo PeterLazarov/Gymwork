@@ -1,7 +1,11 @@
 import React, { useState } from "react"
 import { View, ViewStyle } from "react-native"
 
-import { Icon, IconButton, Text, Select, spacing, useColors, SelectOption } from "@/designSystem"
+import { Icon } from "./Icon"
+import { IconButton } from "./IconButton"
+import { Text } from "./Text"
+import { Select, SelectOption } from "./Select"
+import { spacing, useColors } from "../tokens"
 
 type MultiselectProps = {
   options: readonly SelectOption[]

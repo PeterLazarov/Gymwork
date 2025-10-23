@@ -2,7 +2,7 @@ import { Entypo, FontAwesome6, Ionicons, MaterialCommunityIcons } from "@expo/ve
 import { ReactNode } from "react"
 import { StyleProp, TextStyle } from "react-native"
 
-import { useColors } from "@/designSystem"
+import { useColors } from "../tokens/colors"
 
 export const iconSizes = {
   small: 16,

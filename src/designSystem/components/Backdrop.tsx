@@ -1,6 +1,7 @@
 import { Pressable } from "react-native"
-import { useColors } from "@/designSystem"
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated"
+
+import { useColors } from "../tokens/colors"
 
 export type BackdropProps = {
   onPress(): void

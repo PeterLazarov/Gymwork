@@ -1,7 +1,7 @@
 import React from "react"
 import { FAB as FABPaper, FABProps } from "react-native-paper"
 
-import { useColors } from "@/designSystem"
+import { useColors } from "../tokens/colors"
 
 export const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
   const colors = useColors()

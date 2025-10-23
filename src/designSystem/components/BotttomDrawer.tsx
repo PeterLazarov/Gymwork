@@ -2,7 +2,8 @@ import React, { ReactNode, useEffect, useMemo } from "react"
 import { BackHandler, useWindowDimensions } from "react-native"
 import { Portal } from "react-native-paper"
 import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated"
-import { Backdrop } from "@/designSystem"
+
+import { Backdrop } from "./Backdrop"
 
 type Props = {
   visible: boolean
@@ -53,7 +54,7 @@ export const BottomDrawer: React.FC<Props> = ({ visible, height, children, onCol
             {children}
           </Animated.View>
 
-          <Backdrop onPress={onCollapse}></Backdrop>
+          <Backdrop onPress={onCollapse} />
         </>
       )}
     </Portal>

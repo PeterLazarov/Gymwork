@@ -13,22 +13,33 @@ type WorkoutModelType = Workout & {
 }
 
 export class WorkoutModel {
-  declare id: number
-  declare name: string | null
-  declare notes: string | null
-  declare date: number | null
-  declare feeling: string | null
-  declare pain: string | null
-  declare rpe: number | null
-  declare ended_at: number | null
-  declare duration_ms: number | null
-  declare is_template: boolean
-  declare created_at: number
-  declare updated_at: number
+  id: number
+  name: string | null
+  notes: string | null
+  date: number | null
+  feeling: string | null
+  pain: string | null
+  rpe: number | null
+  endedAt: number | null
+  durationMs: number | null
+  isTemplate: boolean
+  createdAt: number
+  updatedAt: number
   workoutSteps: WorkoutStepModel[]
 
   constructor(data: WorkoutModelType) {
-    Object.assign(this, data)
+    this.id = data.id
+    this.name = data.name
+    this.notes = data.notes
+    this.date = data.date
+    this.feeling = data.feeling
+    this.pain = data.pain
+    this.rpe = data.rpe
+    this.endedAt = data.ended_at
+    this.durationMs = data.duration_ms
+    this.isTemplate = data.is_template
+    this.createdAt = data.created_at
+    this.updatedAt = data.updated_at
     this.workoutSteps = data.workoutSteps.map((step) => WorkoutStepModel.from(step))
   }
 
@@ -37,11 +48,7 @@ export class WorkoutModel {
   }
 
   get isComplete(): boolean {
-    return this.ended_at !== null
-  }
-
-  get duration(): number | null {
-    return this.duration_ms
+    return this.endedAt !== null
   }
 
   get hasIncompleteSets(): boolean {

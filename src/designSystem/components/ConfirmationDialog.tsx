@@ -1,6 +1,7 @@
 import { Portal, Dialog } from "react-native-paper"
 
-import { Text, Button } from "@/designSystem"
+import { Text } from "./Text"
+import { Button } from "./Button"
 import { translate } from "@/utils"
 
 type Props = {

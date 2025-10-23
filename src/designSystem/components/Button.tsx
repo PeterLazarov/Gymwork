@@ -1,7 +1,9 @@
 import { PressableProps } from "react-native-gesture-handler"
 import { ReactNode } from "react"
-import { Text, useColors } from "@/designSystem"
 import { Pressable } from "react-native"
+
+import { useColors } from "../tokens/colors"
+import { Text } from "./Text"
 
 type ButtonVariants = {
   variant: "primary" | "accent" | "neutral" | "critical" | "tertiary"

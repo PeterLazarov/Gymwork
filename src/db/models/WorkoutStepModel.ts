@@ -12,44 +12,34 @@ type WorkoutStepModelType = WorkoutStep & {
 }
 
 export class WorkoutStepModel {
-  declare id: number
-  declare workout_id: number
-  declare step_type: "plain" | "superset" | "circuit" | "emom" | "amrap" | "custom"
-  declare position: number
-  declare created_at: number
-  declare updated_at: number
-  declare workoutStepExercises: WorkoutStepModelType["workoutStepExercises"]
+  id: number
+  workoutId: number
+  stepType: "plain" | "superset" | "circuit" | "emom" | "amrap" | "custom"
+  position: number
+  createdAt: number
+  updatedAt: number
+  workoutStepExercises: WorkoutStepModelType["workoutStepExercises"]
   exercises: ExerciseModel[]
   sets: SetModel[]
 
   constructor(data: WorkoutStepModelType) {
-    Object.assign(this, data)
+    this.id = data.id
+    this.workoutId = data.workout_id
+    this.stepType = data.step_type
+    this.position = data.position
+    this.createdAt = data.created_at
+    this.updatedAt = data.updated_at
+    this.workoutStepExercises = data.workoutStepExercises
     this.exercises = data.workoutStepExercises.map((wse) => ExerciseModel.from(wse.exercise))
     this.sets = data.sets.map((set) => SetModel.from(set))
   }
 
   get isPlain(): boolean {
-    return this.step_type === "plain"
+    return this.stepType === "plain"
   }
 
   get isSuperset(): boolean {
-    return this.step_type === "superset"
-  }
-
-  get isCircuit(): boolean {
-    return this.step_type === "circuit"
-  }
-
-  get isEmom(): boolean {
-    return this.step_type === "emom"
-  }
-
-  get isAmrap(): boolean {
-    return this.step_type === "amrap"
-  }
-
-  get isCustom(): boolean {
-    return this.step_type === "custom"
+    return this.stepType === "superset"
   }
 
   get completedSets(): SetModel[] {
@@ -65,15 +55,15 @@ export class WorkoutStepModel {
   }
 
   get hasWarmupSets(): boolean {
-    return this.sets.some((set) => set.is_warmup)
+    return this.sets.some((set) => set.isWarmup)
   }
 
   getSetsForExercise(exerciseId: number): SetModel[] {
-    return this.sets.filter((set) => set.exercise_id === exerciseId)
+    return this.sets.filter((set) => set.exerciseId === exerciseId)
   }
 
   getCompletedSetsForExercise(exerciseId: number): SetModel[] {
-    return this.completedSets.filter((set) => set.exercise_id === exerciseId)
+    return this.completedSets.filter((set) => set.exerciseId === exerciseId)
   }
 
   static from(workoutStep: WorkoutStepModelType): WorkoutStepModel {

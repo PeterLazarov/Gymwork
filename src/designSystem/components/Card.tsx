@@ -1,8 +1,9 @@
 import React, { useMemo } from "react"
 import { StyleSheet, View, ViewStyle } from "react-native"
-
-import { Text, useColors, spacing } from "@/designSystem"
 import { Pressable, PressableProps } from "react-native-gesture-handler"
+
+import { Text } from "./Text"
+import { useColors, spacing } from "../tokens"
 
 export type CardProps = Omit<PressableProps, "containerStyle"> & {
   title?: string

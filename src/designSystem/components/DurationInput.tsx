@@ -1,8 +1,12 @@
 import { forwardRef, RefObject, useEffect, useMemo, useRef } from "react"
 import { View, TextInput as TextInputRN } from "react-native"
-
-import { Text, NumberInput, fontSize, Icon, IconButton, spacing } from "@/designSystem"
 import { Duration } from "luxon"
+
+import { Text } from "./Text"
+import { NumberInput } from "./NumberInput"
+import { Icon } from "./Icon"
+import { IconButton } from "./IconButton"
+import { fontSize, spacing } from "../tokens"
 import { Timer } from "app/db/models/Timer"
 import { manageInputFocus, translate } from "@/utils"
 

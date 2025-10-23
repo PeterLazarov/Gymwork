@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState } from "react"
 import { TextInput as TextInputRN } from "react-native"
 import { TextInput, TextInputProps } from "react-native-paper"
 
-import { useColors } from "@/designSystem"
+import { useColors } from "../tokens/colors"
 
 type _NumberInputProps = {
   value?: number

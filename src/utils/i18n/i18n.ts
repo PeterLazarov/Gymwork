@@ -1,57 +1,67 @@
-import * as Localization from 'expo-localization'
-import i18n from 'i18n-js'
-import { I18nManager } from 'react-native'
+import * as Localization from "expo-localization"
+import { I18n } from "i18n-js"
+import { I18nManager } from "react-native"
 
-// if English isn't your default language, move Translations to the appropriate language file.
-import en, { Translations } from './en'
-import decamelize from 'decamelize'
-import { capitalize } from '@/utils'
+import { capitalize, decamelize } from "@/utils"
+import en, { Translations } from "./en"
 
-i18n.fallbacks = true
-i18n.missingTranslation = scope => {
-  console.warn(`Missing Translation: ${scope}`)
+const translations = { en, "en-US": en }
 
-  return capitalize(
-    decamelize(scope, { preserveConsecutiveUppercase: true, separator: ' ' })
-  )
+const i18n = new I18n(translations)
+
+i18n.enableFallback = true
+i18n.defaultLocale = "en-US"
+
+const originalTranslate = i18n.t.bind(i18n)
+const customTranslate = <T = string>(
+  scope: string | readonly string[],
+  options?: any,
+): string | T => {
+  const result = originalTranslate(scope, { ...options, missingBehavior: "guess" })
+
+  let scopeString: string
+  if (Array.isArray(scope)) {
+    scopeString = scope.join(".")
+  } else {
+    scopeString = scope as string
+  }
+
+  if (result === scopeString || (typeof result === "string" && result.startsWith("[missing"))) {
+    console.warn(`Missing Translation: ${scopeString}`)
+    return capitalize(
+      decamelize(scopeString, { preserveConsecutiveUppercase: true, separator: " " }),
+    ) as T
+  }
+
+  return result
 }
+i18n.t = customTranslate
 
-// to use regional locales use { "en-US": enUS } etc
-i18n.translations = { en, 'en-US': en }
-
-const fallbackLocale = 'en-US'
+const fallbackLocale = "en-US"
 const systemLocale = Localization.getLocales()[0]
-const systemLocaleTag = systemLocale?.languageTag ?? 'en-US'
+const systemLocaleTag = systemLocale?.languageTag ?? "en-US"
 
-if (Object.prototype.hasOwnProperty.call(i18n.translations, systemLocaleTag)) {
-  // if specific locales like en-FI or en-US is available, set it
+const availableTranslations = Object.keys(translations)
+
+if (availableTranslations.includes(systemLocaleTag)) {
   i18n.locale = systemLocaleTag
 } else {
-  // otherwise try to fallback to the general locale (dropping the -XX suffix)
-  const generalLocale = systemLocaleTag.split('-')[0]
-  if (Object.prototype.hasOwnProperty.call(i18n.translations, generalLocale)) {
+  const generalLocale = systemLocaleTag.split("-")[0]
+  if (availableTranslations.includes(generalLocale)) {
     i18n.locale = generalLocale
   } else {
     i18n.locale = fallbackLocale
   }
 }
 
-// handle RTL languages
-export const isRTL = systemLocale?.textDirection === 'rtl'
+export const isRTL = systemLocale?.textDirection === "rtl"
 I18nManager.allowRTL(isRTL)
 I18nManager.forceRTL(isRTL)
 
-/**
- * Builds up valid keypaths for translations.
- */
 export type TxKeyPath = RecursiveKeyOf<Translations>
 
-// via: https://stackoverflow.com/a/65333050
 type RecursiveKeyOf<TObj extends object> = {
-  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<
-    TObj[TKey],
-    `${TKey}`
-  >
+  [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`>
 }[keyof TObj & (string | number)]
 
 type RecursiveKeyOfInner<TObj extends object> = {
@@ -61,11 +71,10 @@ type RecursiveKeyOfInner<TObj extends object> = {
   >
 }[keyof TObj & (string | number)]
 
-type RecursiveKeyOfHandleValue<
-  TValue,
-  Text extends string
-> = TValue extends any[]
+type RecursiveKeyOfHandleValue<TValue, Text extends string> = TValue extends any[]
   ? Text
   : TValue extends object
-  ? Text | `${Text}${RecursiveKeyOfInner<TValue>}`
-  : Text
+    ? Text | `${Text}${RecursiveKeyOfInner<TValue>}`
+    : Text
+
+export default i18n

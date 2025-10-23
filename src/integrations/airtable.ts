@@ -1,28 +1,27 @@
-import { ApisauceInstance, create } from 'apisauce'
-import Config from "react-native-config";
+import { ApisauceInstance, create } from "apisauce"
+import Constants from "expo-constants"
 
 export type AirtableFeedback = {
-    date: string
-    user: string
-    comments: string
-    createdAt: string
-  }
-  
-  export interface ApiConfig {
-    /**
-     * The URL of the api.
-     */
-    url: string
-  
-    /**
-     * Milliseconds before we timeout the request.
-     */
-    timeout: number
-  }
-  
+  date: string
+  user: string
+  comments: string
+  createdAt: string
+}
+
+export interface ApiConfig {
+  /**
+   * The URL of the api.
+   */
+  url: string
+
+  /**
+   * Milliseconds before we timeout the request.
+   */
+  timeout: number
+}
 
 export const DEFAULT_API_CONFIG: ApiConfig = {
-  url: Config.AIRTABLE_URL!,
+  url: Constants.expoConfig?.extra?.AIRTABLE_URL || process.env.AIRTABLE_URL || "",
   timeout: 10000,
 }
 
@@ -36,22 +35,24 @@ export class AirtableApi {
       baseURL: this.config.url,
       timeout: this.config.timeout,
       headers: {
-        Authorization: `Bearer ${Config.AIRTABLE_SECRET}`,
-        Accept: 'application/json',
+        Authorization: `Bearer ${Constants.expoConfig?.extra?.AIRTABLE_SECRET || process.env.AIRTABLE_SECRET}`,
+        Accept: "application/json",
       },
     })
   }
 
   async sendFeedback(feedback: AirtableFeedback): Promise<any> {
-    return this.apisauce.post('', {
-      records: [{
-        fields: {
-          User: feedback.user,
-          Comments: feedback.comments,
-          Date: feedback.date,
-          CreatedAt: feedback.createdAt
-        }
-      }]
+    return this.apisauce.post("", {
+      records: [
+        {
+          fields: {
+            User: feedback.user,
+            Comments: feedback.comments,
+            Date: feedback.date,
+            CreatedAt: feedback.createdAt,
+          },
+        },
+      ],
     })
   }
 }

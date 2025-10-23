@@ -3,7 +3,7 @@ import { FlashList, FlashListProps, FlashListRef } from "@shopify/flash-list"
 import { NativeScrollEvent, NativeSyntheticEvent, Platform, View } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 
-import { useColors } from "@/designSystem"
+import { useColors } from "../tokens/colors"
 
 export const IndicatedScrollList = forwardRef<FlashListRef<any>, FlashListProps<any>>(
   function IndicatedScrollList({ onScroll, onContentSizeChange, onLayout, ...otherProps }, ref) {

@@ -1,7 +1,9 @@
 import React, { useMemo, useState } from "react"
 import { Platform, Pressable, StyleProp, StyleSheet, View, ViewStyle } from "react-native"
 
-import { Icon, IconProps, Text, fontSize, spacing, useColors } from "@/designSystem"
+import { Icon, IconProps } from "./Icon"
+import { Text } from "./Text"
+import { fontSize, spacing, useColors } from "../tokens"
 
 interface SubComponents {
   Option: React.FC<PickerOptionProps>

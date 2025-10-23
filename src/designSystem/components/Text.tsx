@@ -1,5 +1,4 @@
 import { useMemo } from "react"
-// eslint-disable-next-line no-restricted-imports
 import { Text as TextRn, TextProps as TextRnProps, StyleSheet } from "react-native"
 
 import { fontSize, useColors } from "../tokens"

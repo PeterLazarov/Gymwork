@@ -53,7 +53,7 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
       // seedAll(drizzleDB)
       //   .then(() => {
       //     console.log("Seeding completed successfully")
-      //     setSeedingComplete(true)
+      setSeedingComplete(true)
       //   })
       //   .catch((err) => {
       //     console.error("Seeding failed:", err)

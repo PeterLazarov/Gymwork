@@ -1,8 +1,10 @@
 import React, { forwardRef } from "react"
-import { TextInput, TextInputProps } from "react-native-paper"
-
-import { Icon, NumberInput, spacing, useColors } from "@/designSystem"
 import { Pressable, StyleProp, View, ViewStyle, TextInput as TextInputRN } from "react-native"
+import { TextInputProps } from "react-native-paper"
+
+import { Icon } from "./Icon"
+import { NumberInput } from "./NumberInput"
+import { spacing, useColors } from "../tokens"
 
 type _IncrementNumberEditor = {
   value?: number

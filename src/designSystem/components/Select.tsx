@@ -1,16 +1,12 @@
 import React, { useMemo, useState } from "react"
 import { Dimensions, Pressable, ScrollView, View, ViewStyle } from "react-native"
-import { TextInput, Portal, Modal } from "react-native-paper"
+import { Modal, Portal, TextInput } from "react-native-paper"
 
-import { Button, Divider, Text, fontSize, spacing, useColors } from "@/designSystem"
+import { Button } from "./Button"
+import { Divider } from "./Divider"
+import { Text } from "./Text"
+import { fontSize, spacing, useColors } from "../tokens"
 import { translate } from "@/utils"
-
-interface SubComponents {
-  Button: SelectButtonProps
-  OptionsModal: OptionsModalProps
-  ListItem: ListItemProps
-  Option: SelectOption
-}
 
 export type SelectOption<T = unknown> =
   | string
@@ -19,7 +15,7 @@ export type SelectOption<T = unknown> =
       label: string
     }
 
-type SelectProps<T = unknown> = SubComponents & {
+type SelectProps<T = unknown> = {
   options: SelectOption<T>[]
   value?: T
   onChange: (selected: T) => void

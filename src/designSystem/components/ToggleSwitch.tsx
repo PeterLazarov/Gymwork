@@ -1,7 +1,7 @@
 import { Switch } from "react-native"
 import React from "react"
 
-import { useColors } from "@/designSystem"
+import { useColors } from "../tokens/colors"
 
 interface Props {
   value: boolean

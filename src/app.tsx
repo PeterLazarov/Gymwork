@@ -5,8 +5,6 @@ if (__DEV__) {
   // If you turn it off in metro.config.js, you'll have to manually import it.
   require("./devtools/ReactotronConfig.ts")
 }
-import "./utils/gestureHandler"
-
 import { useFonts } from "expo-font"
 import * as Linking from "expo-linking"
 import { useEffect, useMemo, useState } from "react"
@@ -63,6 +61,11 @@ export function App() {
     // .then(() => loadDateFnsLocale())
   }, [])
 
+  const colorScheme = useColorScheme()!
+  const paperTheme = useMemo(() => {
+    return paperThemes[colorScheme]
+  }, [colorScheme])
+
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
   // color set in native by rootView's background color.
@@ -77,10 +80,6 @@ export function App() {
     prefixes: [prefix],
     config,
   }
-  const colorScheme = useColorScheme()!
-  const paperTheme = useMemo(() => {
-    return paperThemes[colorScheme]
-  }, [colorScheme])
 
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>

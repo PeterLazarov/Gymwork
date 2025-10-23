@@ -5,23 +5,36 @@ type ExerciseModelType = Exercise & {
 }
 
 export class ExerciseModel {
-  declare id: number
-  declare name: string
-  declare images: string[]
-  declare equipment: string[]
-  declare muscle_areas: string[]
-  declare muscles: string[]
-  declare instructions: string[]
-  declare tips: string[] | null
-  declare position: string | null
-  declare stance: string | null
-  declare is_favorite: boolean
-  declare created_at: number
-  declare updated_at: number
-  declare exerciseMetrics: ExerciseMetric[]
+  id: number
+  name: string
+  images: string[]
+  equipment: string[]
+  muscleAreas: string[]
+  muscles: string[]
+  instructions: string[]
+  tips: string[]
+  position: string | null
+  stance: string | null
+  isFavorite: boolean
+  createdAt: number
+  updatedAt: number
+  exerciseMetrics: ExerciseMetric[]
 
   constructor(data: ExerciseModelType) {
-    Object.assign(this, data)
+    this.id = data.id
+    this.name = data.name
+    this.images = data.images || []
+    this.equipment = data.equipment || []
+    this.muscleAreas = data.muscle_areas!
+    this.muscles = data.muscles!
+    this.instructions = data.instructions || []
+    this.tips = data.tips || []
+    this.position = data.position
+    this.stance = data.stance
+    this.isFavorite = data.is_favorite
+    this.createdAt = data.created_at
+    this.updatedAt = data.updated_at
+    this.exerciseMetrics = data.exerciseMetrics!
   }
 
   get hasImages(): boolean {
@@ -37,7 +50,7 @@ export class ExerciseModel {
   }
 
   get primaryMuscleArea(): string | undefined {
-    return this.muscle_areas[0]
+    return this.muscleAreas[0]
   }
 
   get primaryMuscle(): string | undefined {
@@ -83,7 +96,7 @@ export class ExerciseModel {
   }
 
   targetsMuscleArea(muscleArea: string): boolean {
-    return this.muscle_areas.includes(muscleArea)
+    return this.muscleAreas.includes(muscleArea)
   }
 
   targetsMuscle(muscle: string): boolean {

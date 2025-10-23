@@ -1,5 +1,5 @@
 import { View } from "react-native"
-import { useColors } from "@/designSystem"
+import { useColors } from "../tokens/colors"
 
 type Props = {
   orientation: "horizontal" | "vertical"

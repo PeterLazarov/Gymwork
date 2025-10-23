@@ -1,9 +1,9 @@
-import { ExpoConfig, ConfigContext } from "@expo/config"
+import { ConfigContext, ExpoConfig } from "@expo/config"
 
 /**
  * Use tsx/cjs here so we can use TypeScript for our Config Plugins
  * and not have to compile them to JavaScript.
- * 
+ *
  * See https://docs.expo.dev/config-plugins/plugins/#add-typescript-support-and-convert-to-dynamic-app-config
  */
 import "tsx/cjs"
@@ -19,6 +19,11 @@ module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
 
   return {
     ...config,
+    extra: {
+      ...config.extra,
+      AIRTABLE_URL: process.env.AIRTABLE_URL,
+      AIRTABLE_SECRET: process.env.AIRTABLE_SECRET,
+    },
     ios: {
       ...config.ios,
       // This privacyManifests is to get you started.
