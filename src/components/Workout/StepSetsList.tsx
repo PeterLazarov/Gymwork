@@ -1,24 +1,31 @@
-import { WorkoutStep, Set, ExerciseMetric } from "@/db/schema"
+import { useSetting } from "@/context/SettingContext"
+import { ExerciseModel } from "@/db/models/ExerciseModel"
+import { SetModel } from "@/db/models/SetModel"
+import { WorkoutModel } from "@/db/models/WorkoutModel"
+import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
+import { useRecordsQuery } from "@/db/queries/useRecordsQuery"
 import { Icon, Text, fontSize, palettes, spacing, useColors } from "@/designSystem"
 import { getFormatedDuration, translate } from "@/utils"
 import React, { useMemo } from "react"
 import { StyleSheet, View } from "react-native"
 
 export type StepSetsListProps = {
-  step: WorkoutStep
-  sets: Set[]
+  step: WorkoutStepModel
+  sets: SetModel[]
   hideSupersetLetters?: boolean
+  workout: WorkoutModel
 }
 
 export const StepSetsList: React.FC<StepSetsListProps> = ({
   step,
   sets,
   hideSupersetLetters = false,
+  workout,
 }) => {
-  const stepRecords = computed(() => recordStore.getRecordsForStep(step)).get()
+  const { showSetCompletion: showSetCompletionSetting } = useSetting()
+  const stepRecords = useRecordsQuery(step.id)
   // TODO deduplicate
-  const showSetCompletion =
-    settingsStore.showSetCompletion && getParentOfType(step, WorkoutModel).hasIncompleteSets
+  const showSetCompletion = showSetCompletionSetting && workout.hasIncompleteSets
 
   return (
     <>
@@ -26,9 +33,9 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
         <SetItem
           key={set.id}
           set={set}
-          metrics={set.exercise.metrics}
+          exercise={set.exercise}
           isRecord={stepRecords.some(({ id }) => id === set.id)}
-          isFocused={stateStore.highlightedSetGuid === set.id}
+          // isFocused={stateStore.highlightedSetGuid === set.id}
           letter={hideSupersetLetters ? undefined : step.exerciseLettering[set.exercise.id]}
           number={step.setNumberMap[set.id]}
           showSetCompletion={showSetCompletion}
@@ -39,8 +46,8 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
 }
 
 type SetItemProps = {
-  set: Set
-  metrics: ExerciseMetric
+  set: SetModel
+  exercise: ExerciseModel
   letter?: string
   number?: number
   isFocused?: boolean
@@ -50,7 +57,7 @@ type SetItemProps = {
 
 const SetItem: React.FC<SetItemProps> = ({
   set,
-  metrics,
+  exercise,
   isFocused,
   isRecord,
   letter,
@@ -84,36 +91,36 @@ const SetItem: React.FC<SetItemProps> = ({
           />
         )}
       </View>
-      {metrics.reps && (
+      {exercise.metricTypes.includes("reps") && (
         <SetMetricLabel
-          value={set.reps}
+          value={set.reps!}
           unit={translate("reps")}
           isFocused={isFocused}
         />
       )}
-      {metrics.weight && (
+      {exercise.metricTypes.includes("weight") && (
         <SetMetricLabel
-          value={set.weight}
-          unit={metrics.weight!.unit}
+          value={set.weight!}
+          unit={exercise.getMetricByType("weight")!.unit}
           isFocused={isFocused}
         />
       )}
-      {metrics.distance && (
+      {exercise.metricTypes.includes("distance") && (
         <SetMetricLabel
-          value={set.distance}
-          unit={metrics.distance.unit}
+          value={set.distance!}
+          unit={exercise.getMetricByType("distance")!.unit}
           isFocused={isFocused}
         />
       )}
-      {metrics.duration && set.duration !== undefined && (
+      {exercise.metricTypes.includes("duration") && (
         <SetMetricLabel
-          value={getFormatedDuration(set.duration)}
+          value={getFormatedDuration(set.duration_ms!)}
           isFocused={isFocused}
         />
       )}
-      {metrics.measureRest && set.rest !== undefined && (
+      {exercise.metricTypes.includes("rest") && (
         <SetMetricLabel
-          value={getFormatedDuration(set.rest)}
+          value={getFormatedDuration(set.rest_ms!)}
           isFocused={isFocused}
         />
       )}
@@ -122,7 +129,7 @@ const SetItem: React.FC<SetItemProps> = ({
         <Icon
           size="small"
           icon={"check"}
-          color={set.completed ? color : colors.outlineVariant}
+          color={set.isComplete ? color : colors.outlineVariant}
         />
       )}
     </View>

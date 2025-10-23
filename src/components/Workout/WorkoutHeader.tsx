@@ -1,35 +1,34 @@
 import React, { useState } from "react"
 import { Menu } from "react-native-paper"
 
-// import { useStores } from "app/db/helpers/useStores"
-import { formatDateIso, translate, useShareWorkout } from "@/utils"
 import { Header, Icon, IconButton, useColors } from "@/designSystem"
+import { translate, useShareWorkout } from "@/utils"
 // import HomeMenuItems from "../HomeMenuItems"
-import { MiniTimer } from "../MiniTimer"
-import { DayControl } from "./DayControls"
-import { useOpenedDate } from "@/context/OpenedDateContext"
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { useSetting } from "@/context/SettingContext"
 // import WorkoutTimerModal from "../Timer/WorkoutTimerModal"
+import { navigate } from "@/navigators/navigationUtilities"
 
 export const WorkoutHeader: React.FC = () => {
   const colors = useColors()
 
-  const { showCommentsCard } = settingsStore
+  const { showCommentsCard, setShowCommentsCard, showWorkoutTimer } = useSetting()
 
   const [menuOpen, setMenuOpen] = useState(false)
-  const { openedDateLabel } = useOpenedDate()
+  const { openedDateLabel, openedWorkout } = useOpenedWorkout()
 
   function openCalendar() {
-    // navigate("Calendar")
+    navigate("Calendar")
   }
 
   function saveTemplate() {
     setMenuOpen(false)
-    // navigate("SaveTemplate")
+    navigate("SaveTemplate")
   }
 
   function toggleCommentsCard() {
     setMenuOpen(false)
-    // settingsStore.setProp("showCommentsCard", !showCommentsCard)
+    setShowCommentsCard(!showCommentsCard)
   }
 
   const deleteWorkout = () => {
@@ -43,9 +42,9 @@ export const WorkoutHeader: React.FC = () => {
     <Header>
       <Header.Title title={openedDateLabel} />
 
-      {/* {settingsStore.showWorkoutTimer && (
+      {showWorkoutTimer && (
         <>
-          <MiniTimer
+          {/* <MiniTimer
             n={Math.floor(timerStore.workoutTimer.timeElapsed.as("minutes"))}
             onPress={() => setShowWorkoutTimerModal(true)}
           />
@@ -54,9 +53,9 @@ export const WorkoutHeader: React.FC = () => {
             open={showWorkoutTimerModal}
             onClose={() => setShowWorkoutTimerModal(false)}
             timer={timerStore.workoutTimer}
-          />
+          /> */}
         </>
-      )} */}
+      )}
 
       <IconButton
         onPress={openCalendar}

@@ -1,15 +1,14 @@
-import React from "react"
 import { usePortal } from "@gorhom/portal"
 import { shareAsync } from "expo-sharing"
+import { DateTime } from "luxon"
+import React from "react"
 import { Alert, LogBox, View } from "react-native"
 import { captureRef } from "react-native-view-shot"
-import { DateTime } from "luxon"
 
-import { MiniTimer } from "@/components/MiniTimer"
-import { Workout } from "@/db/schema"
+import { WorkoutDayView } from "@/components/Workout/WorkoutDayView"
+import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { Header } from "@/designSystem"
 import { defaultIgnoredWarnings, translate } from "@/utils"
-import WorkoutDayView from "@/components/Workout/WorkoutDayView"
 
 export const offscreenRef = React.createRef<View>()
 
@@ -19,7 +18,7 @@ const waitingTime = 500
 export function useShareWorkout() {
   const { addPortal, removePortal } = usePortal("offscreen")
 
-  return async (workout: Workout) => {
+  return async (workout: WorkoutModel) => {
     let handle: NodeJS.Timeout
 
     let resolve: () => void
@@ -45,10 +44,10 @@ export function useShareWorkout() {
         style={{ width: 480 }}
       >
         <Header>
-          <Header.Title title={DateTime.fromISO(workout.date).toFormat("ccc, MMM dd, yyyy")} />
-          <MiniTimer n={Math.floor(workout.inferredHistoricalDuration?.as("minutes") || 0)} />
+          <Header.Title title={DateTime.fromMillis(workout.date!).toFormat("ccc, MMM dd, yyyy")} />
+          {/* <MiniTimer n={Math.floor(workout.inferredHistoricalDuration?.as("minutes") || 0)} /> */}
         </Header>
-        <WorkoutDayView date={workout.date} />
+        <WorkoutDayView workout={workout} />
       </View>,
     )
 

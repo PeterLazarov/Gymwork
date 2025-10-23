@@ -11,20 +11,20 @@ import { useFonts } from "expo-font"
 import * as Linking from "expo-linking"
 import { useEffect, useMemo, useState } from "react"
 import { KeyboardProvider } from "react-native-keyboard-controller"
+import { PaperProvider } from "react-native-paper"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
-import { PaperProvider, Portal } from "react-native-paper"
 
 import DBProvider from "@/db/DBProvider"
-import { initI18n } from "./ignite/i18n"
 import { AppNavigator } from "@/navigators/AppNavigator"
-import { useNavigationPersistence } from "./navigators/navigationUtilities"
+import { initI18n } from "./ignite/i18n"
 import { ThemeProvider } from "./ignite/theme/context"
 import { customFontsToLoad } from "./ignite/theme/typography"
+import { useNavigationPersistence } from "./navigators/navigationUtilities"
 // import { loadDateFnsLocale } from "./utils/formatDate"
-import { OpenedDateProvider } from "@/context/OpenedDateContext"
-import { useColorScheme } from "react-native"
+import { OpenedWorkoutProvider } from "@/context/OpenedWorkoutContext"
 import { paperThemes } from "@/designSystem"
-import { DialogContextProvider } from "@/context/DialogContext"
+import { useColorScheme } from "react-native"
+import { SettingProvider } from "./context/SettingContext"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -87,15 +87,17 @@ export function App() {
       <KeyboardProvider>
         <DBProvider>
           <ThemeProvider>
-            <OpenedDateProvider>
-              <PaperProvider theme={paperTheme}>
-                <AppNavigator
-                  linking={linking}
-                  initialState={initialNavigationState}
-                  onStateChange={onNavigationStateChange}
-                />
-              </PaperProvider>
-            </OpenedDateProvider>
+            <OpenedWorkoutProvider>
+              <SettingProvider>
+                <PaperProvider theme={paperTheme}>
+                  <AppNavigator
+                    linking={linking}
+                    initialState={initialNavigationState}
+                    onStateChange={onNavigationStateChange}
+                  />
+                </PaperProvider>
+              </SettingProvider>
+            </OpenedWorkoutProvider>
           </ThemeProvider>
         </DBProvider>
       </KeyboardProvider>

@@ -84,7 +84,7 @@ type FontAwesome6Icon = (typeof FontAwesome6)[number]
 
 // todo: get typing of all ant design icons
 export type IconProps = {
-  icon: IonicIcon | MCIcon | EntypoIcon // TODO re-add FontAwesomeIcon
+  icon: IonicIcon | MCIcon | EntypoIcon | FontAwesome6Icon
   size?: keyof typeof iconSizes
   color?: string
   style?: StyleProp<TextStyle>

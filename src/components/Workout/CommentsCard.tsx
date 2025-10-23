@@ -1,13 +1,13 @@
 import React, { useMemo } from "react"
 import { StyleSheet, View } from "react-native"
 
-import { Text, Card, FeedbackPicker, fontSize, useColors, spacing } from "@/designSystem"
-import { translate } from "@/utils"
-import { Workout } from "@/db/schema"
 import { discomfortOptions, feelingOptions } from "@/db/enums"
+import { WorkoutModel } from "@/db/models/WorkoutModel"
+import { Card, FeedbackPicker, fontSize, spacing, Text, useColors } from "@/designSystem"
+import { translate } from "@/utils"
 
 type Props = {
-  workout: Workout
+  workout: WorkoutModel
   onPress?(): void
   compactMode?: boolean
 }

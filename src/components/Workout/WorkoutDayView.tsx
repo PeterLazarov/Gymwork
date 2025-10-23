@@ -1,28 +1,26 @@
 import React from "react"
 import { View } from "react-native"
 
-// import { useStores } from "app/db/helpers/useStores"
-import { WorkoutStepList } from "./WorkoutStepList"
-import WorkoutEmptyState from "./WorkoutEmptyState"
-import { CommentsCard } from "./CommentsCard"
+import { useSetting } from "@/context/SettingContext"
+import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { useColors } from "@/designSystem"
-import { useOpenedDate } from "@/context/OpenedDateContext"
+import { navigate } from "@/navigators/navigationUtilities"
+import { CommentsCard } from "./CommentsCard"
+import { WorkoutEmptyState } from "./WorkoutEmptyState"
+import { WorkoutStepList } from "./WorkoutStepList"
 
-export const WorkoutDayView: React.FC = () => {
+type Props = {
+  workout: WorkoutModel | null
+}
+export const WorkoutDayView: React.FC<Props> = ({ workout }) => {
   const colors = useColors()
-  const { openedDate } = useOpenedDate()
-  // const {
-  //   workoutStore,
-  //   settingsStore,
-  //   navStore: { navigate },
-  // } = useStores()
-  const workout = workoutStore.dateWorkoutMap[openedDate]
+  const { showCommentsCard } = useSetting()
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.surfaceContainer }}>
       {workout ? (
         <>
-          {settingsStore.showCommentsCard && workout.hasComments && (
+          {showCommentsCard && workout.hasComments && (
             <CommentsCard
               workout={workout}
               onPress={() => navigate("WorkoutFeedback")}

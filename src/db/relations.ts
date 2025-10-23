@@ -44,6 +44,7 @@ export const workoutStepsRelations = relations(workout_steps, ({ one, many }) =>
   }),
   workoutStepExercises: many(workout_step_exercises),
   workoutStepsTags: many(workout_steps_tags),
+  sets: many(sets),
 }))
 
 // Workout step exercises relations
@@ -65,6 +66,10 @@ export const setsRelations = relations(sets, ({ one, many }) => ({
     references: [exercises.id],
   }),
   setsTags: many(sets_tags),
+  workoutStep: one(workout_steps, {
+    fields: [sets.workout_step_id],
+    references: [workout_steps.id],
+  }),
 }))
 
 // Tags relations

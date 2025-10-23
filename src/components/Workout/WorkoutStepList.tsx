@@ -1,32 +1,29 @@
-import { observer } from "mobx-react-lite"
-import React from "react"
 import { ListRenderItemInfo } from "@shopify/flash-list"
+import React from "react"
 
-// import { useStores } from "app/db/helpers/useStores"
+import { WorkoutModel } from "@/db/models/WorkoutModel"
+import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
 import { Card, CardProps, IndicatedScrollList, spacing } from "@/designSystem"
-import { Workout, WorkoutStep } from "@/db/schema"
+import { navigate } from "@/navigators/navigationUtilities"
+import { StepSetsList } from "./StepSetsList"
 
 type Props = {
-  workout: Workout
+  workout: WorkoutModel
 }
 
 export const WorkoutStepList: React.FC<Props> = ({ workout }) => {
-  //   const {
-  //     stateStore,
-  //     navStore: { navigate },
-  //   } = useStores()
-
-  function onCardPress(stepGuid: string) {
-    // stateStore.setFocusedStep(stepGuid)
+  function onCardPress(stepId: number) {
+    // stateStore.setFocusedStep(stepId)
     navigate("WorkoutStep")
   }
 
-  const renderItem = ({ item, index }: ListRenderItemInfo<WorkoutStep>) => {
-    const isLast = index === workout.steps.length - 1
+  const renderItem = ({ item, index }: ListRenderItemInfo<WorkoutStepModel>) => {
+    const isLast = index === workout.workoutSteps.length - 1
     return (
       <WorkoutStepCard
         step={item}
-        onPress={() => onCardPress(item.guid)}
+        workout={workout}
+        onPress={() => onCardPress(item.id)}
         containerStyle={{
           marginBottom: isLast ? 0 : undefined,
         }}
@@ -36,23 +33,22 @@ export const WorkoutStepList: React.FC<Props> = ({ workout }) => {
 
   return (
     <IndicatedScrollList
-      data={workout.steps.slice()}
+      data={workout.workoutSteps.slice()}
       renderItem={renderItem}
-      keyExtractor={(item) => `${workout!.date}_${item.guid}`}
-      estimatedItemSize={140}
+      keyExtractor={(item) => `${workout!.date}_${item.id}`}
     />
   )
 }
 
 export type WorkoutStepCardProps = {
-  step: WorkoutStep
+  step: WorkoutStepModel
+  workout: WorkoutModel
 } & Partial<CardProps>
 
-const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, ...rest }) => {
-  const title =
-    step.type === "straightSet"
-      ? step.exercise!.name
-      : step.exercises.map((e) => `${step.exerciseLettering[e.guid]}. ${e.name}`).join("\n")
+const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, workout, ...rest }) => {
+  const title = step.isPlain
+    ? step.exercises[0].name
+    : step.exercises.map((e) => `${e.name}`).join("\n")
 
   return (
     <Card
@@ -61,6 +57,7 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, ...rest }) => {
         <StepSetsList
           step={step}
           sets={step.sets}
+          workout={workout}
         />
       }
       {...rest}

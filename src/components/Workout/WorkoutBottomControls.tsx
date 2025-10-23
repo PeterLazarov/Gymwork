@@ -1,14 +1,14 @@
 import React from "react"
 import { TouchableOpacity, View } from "react-native"
 
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { Icon, spacing, Text, useColors } from "@/designSystem"
 import { formatDate } from "@/utils"
-import { Icon, Text, useColors, spacing } from "@/designSystem"
 import { AddStepMenu } from "./AddStepMenu"
-import { useOpenedDate } from "@/context/OpenedDateContext"
 
 export const WorkoutBottomControls = () => {
   const colors = useColors()
-  const { openedDateObject, incrementDate, decrementDate } = useOpenedDate()
+  const { openedDateObject, incrementDate, decrementDate } = useOpenedWorkout()
 
   return (
     <View

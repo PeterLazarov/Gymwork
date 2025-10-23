@@ -1,17 +1,15 @@
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { BottomDrawer, Divider, FAB, spacing, Text, useColors } from "@/designSystem"
+import { navigate } from "@/navigators/navigationUtilities"
+import { translate } from "@/utils"
 import React, { useState } from "react"
 import { Pressable, View } from "react-native"
-import { Text, BottomDrawer, Divider, FAB, useColors, spacing } from "@/designSystem"
-import { translate } from "@/utils"
-import { useStores } from "app/db/helpers/useStores"
 
 export const AddStepMenu = () => {
   const colors = useColors()
 
   const [visible, setVisible] = useState(false)
-  const {
-    stateStore,
-    navStore: { navigate },
-  } = useStores()
+  const { openedWorkout } = useOpenedWorkout()
 
   function expand() {
     setVisible(true)
@@ -37,7 +35,7 @@ export const AddStepMenu = () => {
     },
   ]
 
-  if (stateStore.openedWorkout) {
+  if (openedWorkout) {
     options.push({
       text: translate("addComment"),
       action: () => navigate("WorkoutFeedback"),
