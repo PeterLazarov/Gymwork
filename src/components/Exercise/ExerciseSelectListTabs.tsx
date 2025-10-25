@@ -57,32 +57,20 @@ export const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
       selectedExercises,
       filterString,
     }
-  }, [filterString])
+  }, [filterString, selectedExercises])
 
   const tabsConfig: TabConfig[] = [
     {
       name: translate("favorite"),
-      Component: () => (
-        <View style={{ marginTop: searchBarHeight, flex: 1 }}>
-          <FavoriteExercisesList {...props} />
-        </View>
-      ),
+      Component: () => <FavoriteExercisesList {...props} />,
     },
     {
       name: translate("mostUsed"),
-      Component: () => (
-        <View style={{ marginTop: searchBarHeight, flex: 1 }}>
-          <MostUsedExercisesList {...props} />
-        </View>
-      ),
+      Component: () => <MostUsedExercisesList {...props} />,
     },
     {
       name: translate("allExercises"),
-      Component: () => (
-        <View style={{ marginTop: searchBarHeight, flex: 1 }}>
-          <AllExercisesList {...props} />
-        </View>
-      ),
+      Component: () => <AllExercisesList {...props} />,
     },
   ]
 
@@ -91,8 +79,6 @@ export const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
       <View
         style={{
           zIndex: 1,
-          position: "absolute",
-          top: tabHeight,
           width: "100%",
         }}
       >
@@ -107,7 +93,7 @@ export const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
       </View>
 
       <TopNavigation
-        initialRouteName={exerciseSelectLastTab || "Favorite"}
+        initialRouteName={exerciseSelectLastTab || "All Exercises"}
         tabsConfig={tabsConfig}
         tabWidth={Dimensions.get("screen").width / tabsConfig.length}
         tabHeight={tabHeight}

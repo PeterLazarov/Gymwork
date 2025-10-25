@@ -44,6 +44,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, onSelect, select
     [selectedExercises],
   )
 
+  console.log(exercises.length)
   return (
     <FlashList
       data={exercises}
@@ -73,7 +74,6 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
   function handleLongPress() {
     navigate("ExerciseDetails", { exerciseId: exercise.id })
   }
-
   const imageUri = exercise.images?.[0]
 
   return (
@@ -158,11 +158,15 @@ export const AllExercisesList: React.FC<AllExercisesListProps> = ({
   const [exercises, setExercises] = useState<ExerciseModel[]>([])
 
   useEffect(() => {
-    exercisesQuery({ filterString }).then((result) => {
-      const items = result.map((item) => new ExerciseModel(item))
-      setExercises(items)
-    })
-  }, [filterString])
+    exercisesQuery({ filterString })
+      .then((result) => {
+        const items = result.map((item) => new ExerciseModel(item))
+        setExercises(items)
+      })
+      .catch((error) => {
+        console.error("Error fetching exercises:", error)
+      })
+  }, [filterString, exercisesQuery])
 
   return (
     <>
@@ -192,11 +196,15 @@ export const FavoriteExercisesList: React.FC<FavoriteExercisesListProps> = ({
   const [exercises, setExercises] = useState<ExerciseModel[]>([])
 
   useEffect(() => {
-    exercisesQuery({ isFavorite: true, filterString }).then((result) => {
-      const items = result.map((item) => new ExerciseModel(item))
-      setExercises(items)
-    })
-  }, [filterString])
+    exercisesQuery({ isFavorite: true, filterString })
+      .then((result) => {
+        const items = result.map((item) => new ExerciseModel(item))
+        setExercises(items)
+      })
+      .catch((error) => {
+        console.error("Error fetching favorite exercises:", error)
+      })
+  }, [filterString, exercisesQuery])
 
   return (
     <>
@@ -227,11 +235,15 @@ export const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
   const [exercises, setExercises] = useState<ExerciseModel[]>([])
 
   useEffect(() => {
-    mostUsedExercises({ limit: 10, filterString }).then((result) => {
-      const items = result.map((item) => new ExerciseModel(item))
-      setExercises(items)
-    })
-  }, [filterString])
+    mostUsedExercises({ limit: 10, filterString })
+      .then((result) => {
+        const items = result.map((item) => new ExerciseModel(item))
+        setExercises(items)
+      })
+      .catch((error) => {
+        console.error("Error fetching most used exercises:", error)
+      })
+  }, [filterString, mostUsedExercises])
 
   return (
     <>

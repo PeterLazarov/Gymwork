@@ -20,7 +20,7 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   const [showSetCompletion, setShowSetCompletion] = useState<boolean>(false)
   const [showWorkoutTimer, setShowWorkoutTimer] = useState<boolean>(false)
 
-  const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState<string>("Favorite")
+  const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState<string>("All Exercises")
 
   const value = {
     showCommentsCard,

@@ -5,18 +5,16 @@
   "version": "1.0.0",
   "orientation": "portrait",
   "userInterfaceStyle": "automatic",
-  "icon": "./assets/images/app-icon-all.png",
+  "icon": "./assets/pen-logo.png",
   "updates": {
     "fallbackToCacheTimeout": 0
   },
   "newArchEnabled": true,
   "jsEngine": "hermes",
-  "assetBundlePatterns": [
-    "**/*"
-  ],
+  "assetBundlePatterns": ["**/*"],
   "android": {
-    "icon": "./assets/images/app-icon-android-legacy.png",
-    "package": "com.helloworld",
+    "icon": "./assets/pen-logo.png",
+    "package": "com.gymwork",
     "adaptiveIcon": {
       "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
       "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
@@ -25,12 +23,12 @@
     "edgeToEdgeEnabled": true
   },
   "ios": {
-    "icon": "./assets/images/app-icon-ios.png",
+    "icon": "./assets/images/app-icon-android-legacy.png",
     "supportsTablet": true,
-    "bundleIdentifier": "com.helloworld"
+    "bundleIdentifier": "com.gymwork"
   },
   "web": {
-    "favicon": "./assets/images/app-icon-web-favicon.png",
+    "favicon": "./assets/images/app-icon-ios.png",
     "bundler": "metro"
   },
   "plugins": [

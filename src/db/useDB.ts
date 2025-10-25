@@ -14,6 +14,8 @@ export const DBContext = createContext<null | {
 
 export function useDB() {
   const ctx = useContext(DBContext)
-  if (!ctx) throw new Error("useDBContext must be used within a DBProvider")
+  if (!ctx) {
+    throw new Error("useDB must be used within a DBProvider")
+  }
   return ctx
 }

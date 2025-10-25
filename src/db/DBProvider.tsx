@@ -2,7 +2,7 @@ import { drizzle } from "drizzle-orm/expo-sqlite"
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin"
 import { deleteDatabaseAsync, openDatabaseSync } from "expo-sqlite"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import migrations from "../../drizzle/migrations"
 import { SQLiteDBName } from "./constants"
@@ -19,47 +19,64 @@ export function getDrizzle(): DrizzleDBType {
 }
 
 export default function DBProvider({ children }: { children: React.ReactNode }) {
-  const sqlite = openDatabaseSync(SQLiteDBName, {
-    enableChangeListener: true,
-  })
-  const drizzleDB = drizzle(sqlite, { schema: { ...schema, ...allRelations } })
+  const sqliteRef = useRef<ReturnType<typeof openDatabaseSync> | null>(null)
+  const drizzleDBRef = useRef<DrizzleDBType | null>(null)
 
-  useDrizzleStudio(sqlite)
-
+  const [dbInitialized, setDbInitialized] = useState(false)
   const [pragmasComplete, setPragmasComplete] = useState(false)
   const [seedingComplete, setSeedingComplete] = useState(false)
 
-  _drizzle = drizzleDB
+  if (!sqliteRef.current) {
+    try {
+      const db = openDatabaseSync(SQLiteDBName, {
+        enableChangeListener: true,
+      })
+      sqliteRef.current = db
+      const drizzle_db = drizzle(db, { schema: { ...schema, ...allRelations } })
+      drizzleDBRef.current = drizzle_db
+      _drizzle = drizzle_db
+      setDbInitialized(true)
+    } catch (error) {
+      console.error("Error opening database:", error)
+    }
+  }
+
+  useDrizzleStudio(sqliteRef.current!)
 
   // Set pragmas first
   useEffect(() => {
-    sqlite
+    if (!sqliteRef.current) return
+
+    sqliteRef.current
       .execAsync("PRAGMA journal_mode = WAL")
-      .then(() => sqlite.execAsync("PRAGMA foreign_keys = ON"))
+      .then(() => sqliteRef.current!.execAsync("PRAGMA foreign_keys = ON"))
       .then(() => {
         setPragmasComplete(true)
       })
       .catch((err) => {
         console.error("Error setting pragmas:", err)
       })
-  }, [])
+  }, [dbInitialized])
 
-  const { success, error } = useMigrations(drizzleDB, migrations)
+  const { success, error } = useMigrations(drizzleDBRef.current!, migrations)
 
   useEffect(() => {
     async function seedProcess() {
+      if (!drizzleDBRef.current) return
+
       if (false) {
         await deleteDatabaseAsync(SQLiteDBName)
       }
-      const result = await drizzleDB.select().from(schema.exercises).limit(1).execute()
+      const result = await drizzleDBRef.current.select().from(schema.exercises).limit(1).execute()
 
+      console.log({ result })
       if (result.length > 0) {
         console.log("Database already has data, skipping seeding")
         setSeedingComplete(true)
         return Promise.resolve()
       } else {
         console.log("Database is empty, starting seeding...")
-        seedAll(drizzleDB)
+        seedAll(drizzleDBRef.current)
           .then(() => {
             console.log("Seeding completed successfully")
             setSeedingComplete(true)
@@ -70,7 +87,9 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
           })
       }
     }
-    if (success && pragmasComplete && !seedingComplete) {
+    console.log({ success, pragmasComplete, seedingComplete })
+    if (success && pragmasComplete && !seedingComplete && drizzleDBRef.current) {
+      console.log("start SEEDIING")
       seedProcess()
     }
   }, [success, pragmasComplete, seedingComplete])
@@ -78,6 +97,15 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
   if (error) {
     console.log("drizzle error")
     return <Text> error {error.message}</Text>
+  }
+
+  if (!dbInitialized) {
+    return (
+      <View>
+        <Text>Opening database...</Text>
+        <ActivityIndicator size="large" />
+      </View>
+    )
   }
 
   if (!pragmasComplete) {
@@ -107,5 +135,9 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
     )
   }
 
-  return <DBContext.Provider value={{ sqlite, drizzleDB }}>{children}</DBContext.Provider>
+  return (
+    <DBContext.Provider value={{ sqlite: sqliteRef.current!, drizzleDB: drizzleDBRef.current! }}>
+      {children}
+    </DBContext.Provider>
+  )
 }
