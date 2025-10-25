@@ -36,8 +36,9 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
           exercise={set.exercise}
           isRecord={stepRecords.some(({ id }) => id === set.id)}
           // isFocused={stateStore.highlightedSetGuid === set.id}
-          letter={hideSupersetLetters ? undefined : step.exerciseLettering[set.exercise.id]}
-          number={step.setNumberMap[set.id]}
+          // letter={hideSupersetLetters ? undefined : step.exerciseLettering[set.exercise.id]}
+          // number={step.setNumberMap[set.id]}
+          number={i + 1} // TODO remove this once we have the step number map
           showSetCompletion={showSetCompletion}
         />
       ))}
@@ -114,13 +115,13 @@ const SetItem: React.FC<SetItemProps> = ({
       )}
       {exercise.metricTypes.includes("duration") && (
         <SetMetricLabel
-          value={getFormatedDuration(set.duration_ms!)}
+          value={getFormatedDuration(set.durationMs!)}
           isFocused={isFocused}
         />
       )}
       {exercise.metricTypes.includes("rest") && (
         <SetMetricLabel
-          value={getFormatedDuration(set.rest_ms!)}
+          value={getFormatedDuration(set.restMs!)}
           isFocused={isFocused}
         />
       )}

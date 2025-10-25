@@ -7,6 +7,8 @@ export type SettingContextType = {
   setShowSetCompletion: (show: boolean) => void
   showWorkoutTimer: boolean
   setShowWorkoutTimer: (show: boolean) => void
+  exerciseSelectLastTab: string
+  setExerciseSelectLastTab: (tab: string) => void
 }
 
 export const SettingContext = createContext<SettingContextType | null>(null)
@@ -18,6 +20,8 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   const [showSetCompletion, setShowSetCompletion] = useState<boolean>(false)
   const [showWorkoutTimer, setShowWorkoutTimer] = useState<boolean>(false)
 
+  const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState<string>("Favorite")
+
   const value = {
     showCommentsCard,
     setShowCommentsCard,
@@ -25,6 +29,8 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     setShowSetCompletion,
     showWorkoutTimer,
     setShowWorkoutTimer,
+    exerciseSelectLastTab,
+    setExerciseSelectLastTab,
   }
 
   return <SettingContext.Provider value={value}>{children}</SettingContext.Provider>

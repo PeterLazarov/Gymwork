@@ -1,3 +1,4 @@
+import { muscleAreaToMusclesMapping, muscleSvgMappings } from "@/constants/muscleMappings"
 import { memo, useMemo } from "react"
 import { XmlProps } from "react-native-svg"
 import { SvgCss } from "react-native-svg/css"
@@ -17,13 +18,11 @@ function getMappedClasses(muscles: string[]) {
       muscles.flatMap((m) => {
         const normalized = m.trim().replace(/\s+/g, " ")
 
-        // First check if it's a direct muscle
         const muscleSvgClasses = muscleSvgMappings[normalized as keyof typeof muscleSvgMappings]
         if (muscleSvgClasses) {
           return muscleSvgClasses
         }
 
-        // If it's a muscle area, get all muscles in that area and their SVG classes
         const musclesInArea =
           muscleAreaToMusclesMapping[normalized as keyof typeof muscleAreaToMusclesMapping]
         if (musclesInArea) {

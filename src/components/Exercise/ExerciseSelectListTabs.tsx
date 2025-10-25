@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from "react"
 import { Dimensions, View } from "react-native"
 
-import { TopNavigation, TabConfig } from "@/designSystem"
-import { useStores } from "app/db/helpers/useStores"
-import { Searchbar } from "react-native-paper"
-import { translate } from "@/utils"
-import { AllExercisesList, FavoriteExercisesList, MostUsedExercisesList } from "./ExerciseLists"
+import { useSetting } from "@/context/SettingContext"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
+import { TabConfig, TopNavigation } from "@/designSystem"
+import { translate } from "@/utils"
+import { Searchbar } from "react-native-paper"
+import { AllExercisesList, FavoriteExercisesList, MostUsedExercisesList } from "./ExerciseLists"
 
 type ExerciseSelectListsProps = {
   multiselect: boolean
@@ -24,7 +24,7 @@ export const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
 }) => {
   const [selectedExercises, setSelectedExercises] = useState<ExerciseModel[]>(selected)
 
-  const { navStore } = useStores()
+  const { exerciseSelectLastTab, setExerciseSelectLastTab } = useSetting()
 
   const [filterString, setFilterString] = useState("")
 
@@ -107,13 +107,11 @@ export const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
       </View>
 
       <TopNavigation
-        initialRouteName={navStore.exerciseSelectLastTab || "Favorite"}
+        initialRouteName={exerciseSelectLastTab || "Favorite"}
         tabsConfig={tabsConfig}
         tabWidth={Dimensions.get("screen").width / tabsConfig.length}
         tabHeight={tabHeight}
-        onTabChange={(tab) => {
-          navStore.setProp("exerciseSelectLastTab", tab)
-        }}
+        onTabChange={(tab) => setExerciseSelectLastTab(tab)}
       />
     </View>
   )
