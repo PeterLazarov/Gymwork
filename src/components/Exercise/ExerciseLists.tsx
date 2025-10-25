@@ -1,23 +1,23 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Image, Pressable, View } from "react-native"
 
-import { useStores } from "app/db/helpers/useStores"
-import { searchString, translate } from "@/utils"
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list"
+import { ExerciseModel } from "@/db/models/ExerciseModel"
+import { useExercisesQuery, useMostUsedExercisesQuery } from "@/db/queries/useExercisesQuery"
+import { useUpdateExerciseQuery } from "@/db/queries/useUpdateExerciseQuery"
 import {
-  Text,
+  EmptyState,
+  fontSize,
   Icon,
   IconButton,
   palettes,
   spacing,
+  Text,
   useColors,
-  fontSize,
-  EmptyState,
 } from "@/designSystem"
-import { exerciseImages } from "@/utils/exerciseImages"
-import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { navigate } from "@/navigators/navigationUtilities"
-import { useExercisesQuery } from "@/db/queries/useExercisesQuery"
+import { translate } from "@/utils"
+import { exerciseImages } from "@/utils/exerciseImages"
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list"
 
 const noop = () => {}
 
@@ -48,7 +48,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, onSelect, select
     <FlashList
       data={exercises}
       renderItem={renderItem}
-      keyExtractor={(exercise) => exercise.id}
+      keyExtractor={(exercise) => exercise.id.toString()}
     />
   )
 }
@@ -68,6 +68,7 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
 }) => {
   const heartIcon = exercise.isFavorite ? "heart" : "heart-outlined"
   const colors = useColors()
+  const updateExercise = useUpdateExerciseQuery()
 
   function handleLongPress() {
     navigate("ExerciseDetails", { exerciseId: exercise.id })
@@ -129,7 +130,7 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
 
         <IconButton
           onPress={() => {
-            exercise.setProp("isFavorite", !exercise.isFavorite)
+            updateExercise(exercise.id, { is_favorite: !exercise.isFavorite })
           }}
         >
           <Icon
@@ -221,27 +222,22 @@ export const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const { workoutStore } = useStores()
+  const mostUsedExercises = useMostUsedExercisesQuery()
 
-  const filteredExercises = useMemo(() => {
-    if (!filterString) {
-      return workoutStore.mostUsedExercises
-    }
+  const [exercises, setExercises] = useState<ExerciseModel[]>([])
 
-    const filtered = workoutStore.mostUsedExercises.filter((e: ExerciseModel) => {
-      const exName = e.name.toLowerCase()
-
-      return searchString(filterString, (word) => exName.includes(word) || e.muscles.includes(word))
+  useEffect(() => {
+    mostUsedExercises({ limit: 10, filterString }).then((result) => {
+      const items = result.map((item) => new ExerciseModel(item))
+      setExercises(items)
     })
-
-    return filtered
   }, [filterString])
 
   return (
     <>
-      {workoutStore.mostUsedExercises.length > 0 ? (
+      {exercises.length > 0 ? (
         <ExerciseList
-          exercises={filteredExercises}
+          exercises={exercises}
           onSelect={onSelect}
           selectedExercises={selectedExercises}
         />

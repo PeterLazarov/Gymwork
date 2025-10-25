@@ -1,17 +1,16 @@
 import React, { useState } from "react"
 import { View } from "react-native"
 
-import { translate } from "@/utils"
+import { ExerciseSelectLists } from "@/components/Exercise/ExerciseSelectListTabs"
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { ExerciseModel } from "@/db/models/ExerciseModel"
+import { useInsertExerciseInWorkoutQuery } from "@/db/queries/useInsertExerciseInWorkoutQuery"
+import { useInsertWorkoutQuery } from "@/db/queries/useInsertWorkoutQuery"
+import { WorkoutStep } from "@/db/schema"
 import { FAB, Header, Icon, IconButton, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
-import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
-import { WorkoutStep } from "@/db/schema"
-import { ExerciseSelectLists } from "@/components/Exercise/ExerciseSelectListTabs"
-import { ExerciseModel } from "@/db/models/ExerciseModel"
-import { useInsertWorkoutQuery } from "@/db/queries/useInsertWorkoutQuery"
-import { WorkoutModel } from "@/db/models/WorkoutModel"
-import { useInsertExerciseInWorkoutQuery } from "@/db/queries/useInsertExerciseInWorkoutQuery"
+import { translate } from "@/utils"
 
 export type ExerciseSelectScreenParams = {
   selectMode: WorkoutStep["step_type"]
@@ -28,13 +27,13 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
   const { selectMode } = useRouteParams("ExerciseSelect")
 
   async function createExercisesStep(exercises: ExerciseModel[]) {
-    let workout = openedWorkout
-    if (!workout) {
+    let workoutId = openedWorkout?.id
+    if (!workoutId) {
       const result = await insertWorkout({ date: openedDateObject.toMillis() })
-      workout = new WorkoutModel(result)
+      workoutId = result.lastInsertRowId
     }
 
-    await insertExerciseInWorkout(exercises[0].id, workout.id)
+    await insertExerciseInWorkout(exercises[0].id, workoutId)
 
     navigation.navigate("Workout")
   }
