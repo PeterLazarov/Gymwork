@@ -8,6 +8,13 @@
       "when": 1760895708240,
       "tag": "0000_awesome_grandmaster",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1729891200000,
+      "tag": "0001_create_exercise_records_view",
+      "breakpoints": true
     }
   ]
 }

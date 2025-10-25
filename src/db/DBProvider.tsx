@@ -32,7 +32,9 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
         enableChangeListener: true,
       })
       sqliteRef.current = db
-      const drizzle_db = drizzle(db, { schema: { ...schema, ...allRelations } })
+      const drizzle_db = drizzle(db, {
+        schema: { ...schema, ...allRelations },
+      })
       drizzleDBRef.current = drizzle_db
       _drizzle = drizzle_db
       setDbInitialized(true)
