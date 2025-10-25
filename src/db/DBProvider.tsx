@@ -1,6 +1,5 @@
 import { drizzle } from "drizzle-orm/expo-sqlite"
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
-import { useDrizzleStudio } from "expo-drizzle-studio-plugin"
 import { deleteDatabaseAsync, openDatabaseSync } from "expo-sqlite"
 import { useEffect, useRef, useState } from "react"
 
@@ -19,133 +18,108 @@ export function getDrizzle(): DrizzleDBType {
 }
 
 export default function DBProvider({ children }: { children: React.ReactNode }) {
-  const sqliteRef = useRef<ReturnType<typeof openDatabaseSync> | null>(null)
-  const drizzleDBRef = useRef<DrizzleDBType | null>(null)
+  const [isReady, setIsReady] = useState(false)
+  const dbRef = useRef<DrizzleDBType | null>(null)
+  const sqliteRef = useRef<any | null>(null)
 
-  const [dbInitialized, setDbInitialized] = useState(false)
-  const [pragmasComplete, setPragmasComplete] = useState(false)
-  const [seedingComplete, setSeedingComplete] = useState(false)
-  const [dbDeleted, setDbDeleted] = useState(false)
+  const FORCE_DELETE_DB = false
 
-  // TODO: Set back to false after database is recreated with views
-  const FORCE_DELETE_DB = true
-
-  // Delete database before opening if needed
   useEffect(() => {
-    if (FORCE_DELETE_DB && !dbDeleted) {
-      console.log("🗑️ Deleting old database to apply new migrations...")
-      deleteDatabaseAsync(SQLiteDBName)
-        .then(() => {
-          console.log("✅ Database deleted, will now initialize fresh...")
-          setDbDeleted(true)
-        })
-        .catch((err) => {
-          console.error("Error deleting database:", err)
-          // Even if delete fails, mark as deleted to proceed
-          setDbDeleted(true)
-        })
-      return
-    }
-    if (!FORCE_DELETE_DB) {
-      setDbDeleted(true)
-    }
-  }, [dbDeleted, FORCE_DELETE_DB])
+    const initDB = async () => {
+      try {
+        if (FORCE_DELETE_DB) {
+          console.log("🗑️ Deleting old database...")
+          await deleteDatabaseAsync(SQLiteDBName)
+          console.log("✅ Database deleted")
+        }
 
-  // Initialize database after deletion check
-  if (!sqliteRef.current && dbDeleted) {
-    try {
-      const db = openDatabaseSync(SQLiteDBName, {
-        enableChangeListener: true,
-      })
-      sqliteRef.current = db
-      const drizzle_db = drizzle(db, {
-        schema: { ...schema, ...allRelations },
-      })
-      drizzleDBRef.current = drizzle_db
-      _drizzle = drizzle_db
-      setDbInitialized(true)
-    } catch (error) {
-      console.error("Error opening database:", error)
+        console.log("📂 Opening database...")
+        const sqlite = openDatabaseSync(SQLiteDBName, { enableChangeListener: true })
+
+        await sqlite.execAsync("PRAGMA journal_mode = WAL")
+        await sqlite.execAsync("PRAGMA foreign_keys = ON")
+
+        const db = drizzle(sqlite, { schema: { ...schema, ...allRelations } })
+        dbRef.current = db
+        sqliteRef.current = sqlite
+        _drizzle = db
+
+        console.log("✅ Database initialized")
+        setIsReady(true)
+      } catch (error) {
+        console.error("❌ Database initialization failed:", error)
+      }
     }
+
+    initDB()
+  }, [])
+
+  if (!isReady || !dbRef.current || !sqliteRef.current) {
+    return (
+      <View>
+        <Text>Initializing database...</Text>
+        <ActivityIndicator size="large" />
+      </View>
+    )
   }
 
-  useDrizzleStudio(sqliteRef.current!)
+  return (
+    <DBProviderInitialised
+      db={dbRef.current}
+      sqlite={sqliteRef.current}
+    >
+      {children}
+    </DBProviderInitialised>
+  )
+}
 
-  // Set pragmas first
+function DBProviderInitialised({
+  db,
+  sqlite,
+  children,
+}: {
+  db: DrizzleDBType
+  sqlite: any
+  children: React.ReactNode
+}) {
+  const [seedingComplete, setSeedingComplete] = useState(false)
+
+  const { success, error } = useMigrations(db, migrations)
+
+  // Seed data after migrations
   useEffect(() => {
-    if (!sqliteRef.current) return
+    if (!success || seedingComplete) return
 
-    sqliteRef.current
-      .execAsync("PRAGMA journal_mode = WAL")
-      .then(() => sqliteRef.current!.execAsync("PRAGMA foreign_keys = ON"))
-      .then(() => {
-        setPragmasComplete(true)
-      })
-      .catch((err) => {
-        console.error("Error setting pragmas:", err)
-      })
-  }, [dbInitialized])
+    const seed = async () => {
+      const result = await db.select().from(schema.exercises).limit(1)
 
-  const { success, error } = useMigrations(drizzleDBRef.current!, migrations)
-
-  useEffect(() => {
-    async function seedProcess() {
-      if (!drizzleDBRef.current) return
-
-      const result = await drizzleDBRef.current.select().from(schema.exercises).limit(1).execute()
-
-      console.log({ result })
       if (result.length > 0) {
         console.log("Database already has data, skipping seeding")
         setSeedingComplete(true)
-        return Promise.resolve()
       } else {
         console.log("Database is empty, starting seeding...")
-        seedAll(drizzleDBRef.current)
-          .then(() => {
-            console.log("Seeding completed successfully")
-            setSeedingComplete(true)
-          })
-          .catch((err) => {
-            console.error("Seeding failed:", err)
-            setSeedingComplete(true)
-          })
+        try {
+          await seedAll(db)
+          console.log("✅ Seeding completed")
+          setSeedingComplete(true)
+        } catch (err) {
+          console.error("❌ Seeding failed:", err)
+          setSeedingComplete(true)
+        }
       }
     }
-    console.log({ success, pragmasComplete, seedingComplete })
-    if (success && pragmasComplete && !seedingComplete && drizzleDBRef.current) {
-      console.log("start SEEDIING")
-      seedProcess()
-    }
-  }, [success, pragmasComplete, seedingComplete])
+
+    seed()
+  }, [success, seedingComplete, db])
 
   if (error) {
-    console.log("drizzle error")
-    return <Text> error {error.message}</Text>
-  }
-
-  if (!dbInitialized) {
-    return (
-      <View>
-        <Text>Opening database...</Text>
-        <ActivityIndicator size="large" />
-      </View>
-    )
-  }
-
-  if (!pragmasComplete) {
-    return (
-      <View>
-        <Text>Setting up database...</Text>
-        <ActivityIndicator size="large" />
-      </View>
-    )
+    return <Text>Migration error: {error.message}</Text>
   }
 
   if (!success) {
     return (
       <View>
-        <Text>Migration is in progress...</Text>
+        <Text>Running migrations...</Text>
         <ActivityIndicator size="large" />
       </View>
     )
@@ -160,9 +134,5 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
     )
   }
 
-  return (
-    <DBContext.Provider value={{ sqlite: sqliteRef.current!, drizzleDB: drizzleDBRef.current! }}>
-      {children}
-    </DBContext.Provider>
-  )
+  return <DBContext.Provider value={{ sqlite, drizzleDB: db }}>{children}</DBContext.Provider>
 }
