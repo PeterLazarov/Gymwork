@@ -25,8 +25,34 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
   const [dbInitialized, setDbInitialized] = useState(false)
   const [pragmasComplete, setPragmasComplete] = useState(false)
   const [seedingComplete, setSeedingComplete] = useState(false)
+  const [dbDeleted, setDbDeleted] = useState(false)
 
-  if (!sqliteRef.current) {
+  // TODO: Set back to false after database is recreated with views
+  const FORCE_DELETE_DB = true
+
+  // Delete database before opening if needed
+  useEffect(() => {
+    if (FORCE_DELETE_DB && !dbDeleted) {
+      console.log("🗑️ Deleting old database to apply new migrations...")
+      deleteDatabaseAsync(SQLiteDBName)
+        .then(() => {
+          console.log("✅ Database deleted, will now initialize fresh...")
+          setDbDeleted(true)
+        })
+        .catch((err) => {
+          console.error("Error deleting database:", err)
+          // Even if delete fails, mark as deleted to proceed
+          setDbDeleted(true)
+        })
+      return
+    }
+    if (!FORCE_DELETE_DB) {
+      setDbDeleted(true)
+    }
+  }, [dbDeleted, FORCE_DELETE_DB])
+
+  // Initialize database after deletion check
+  if (!sqliteRef.current && dbDeleted) {
     try {
       const db = openDatabaseSync(SQLiteDBName, {
         enableChangeListener: true,
@@ -66,9 +92,6 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
     async function seedProcess() {
       if (!drizzleDBRef.current) return
 
-      if (false) {
-        await deleteDatabaseAsync(SQLiteDBName)
-      }
       const result = await drizzleDBRef.current.select().from(schema.exercises).limit(1).execute()
 
       console.log({ result })
