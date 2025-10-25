@@ -9,6 +9,7 @@ import {
 } from "@react-navigation/native"
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 import { CalendarScreenParams } from "@/screens/CalendarScreen"
+import { ExerciseSelectScreenParams } from "@/screens/ExerciseSelect"
 
 // Demo Tab Navigator types
 export type DemoTabParamList = {
@@ -25,6 +26,7 @@ export type AppStackParamList = {
   Demo: NavigatorScreenParams<DemoTabParamList>
   Workout: undefined
   Calendar: CalendarScreenParams
+  ExerciseSelect: ExerciseSelectScreenParams
   // 🔥 Your screens go here
   // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
 }

@@ -17,7 +17,7 @@ export const AddStepMenu = () => {
 
   const addExercise = () => {
     navigate("ExerciseSelect", {
-      selectMode: "straightSet",
+      selectMode: "plain",
     })
   }
 
@@ -30,7 +30,7 @@ export const AddStepMenu = () => {
       text: translate("addSuperset"),
       action: () =>
         navigate("ExerciseSelect", {
-          selectMode: "superSet",
+          selectMode: "superset",
         }),
     },
   ]
