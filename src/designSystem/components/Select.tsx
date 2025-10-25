@@ -2,11 +2,11 @@ import React, { useMemo, useState } from "react"
 import { Dimensions, Pressable, ScrollView, View, ViewStyle } from "react-native"
 import { Modal, Portal, TextInput } from "react-native-paper"
 
+import { translate } from "@/utils"
+import { fontSize, spacing, useColors } from "../tokens"
 import { Button } from "./Button"
 import { Divider } from "./Divider"
 import { Text } from "./Text"
-import { fontSize, spacing, useColors } from "../tokens"
-import { translate } from "@/utils"
 
 export type SelectOption<T = unknown> =
   | string
@@ -43,15 +43,15 @@ export function Select<T>({
   const getOptionLabel = (option: SelectOption): string => {
     return typeof option === "string" ? option : option.label
   }
-  const getOptionValue = (option: SelectOption): T => {
-    return typeof option === "string" ? option : option.value
+  const getOptionValue = (option: SelectOption<T>): T => {
+    return typeof option === "string" ? (option as T) : option.value
   }
   const selectedOption = useMemo(
     () => options.find((opt) => getOptionValue(opt) === value),
     [value],
   )
 
-  const onOptionSelect = (option: SelectOption) => {
+  const onOptionSelect = (option: SelectOption<T>) => {
     const selectedValue = getOptionValue(option)
     if (selectedValue !== value) {
       onChange(selectedValue)
@@ -225,7 +225,7 @@ function ListItem<T = unknown>({
     return typeof option === "string" ? option : option.label
   }
   const getOptionValue = (option: SelectOption<T>): T => {
-    return typeof option === "string" ? option : option.value
+    return typeof option === "string" ? (option as T) : option.value
   }
 
   const value = getOptionValue(option)

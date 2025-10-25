@@ -1,23 +1,23 @@
 import React, { useState } from "react"
 import { View, ViewStyle } from "react-native"
 
+import { spacing, useColors } from "../tokens"
 import { Icon } from "./Icon"
 import { IconButton } from "./IconButton"
-import { Text } from "./Text"
 import { Select, SelectOption } from "./Select"
-import { spacing, useColors } from "../tokens"
+import { Text } from "./Text"
 
-type MultiselectProps = {
-  options: readonly SelectOption[]
-  selectedValues: string[]
-  onSelect: (selected: string[]) => void
+type MultiselectProps<T = unknown> = {
+  options: readonly SelectOption<T>[]
+  selectedValues: T[]
+  onSelect: (selected: T[]) => void
   headerText?: string
   containerStyle?: ViewStyle
   hideSelectedItemsRemove?: boolean
   error?: boolean
 }
 
-export const Multiselect: React.FC<MultiselectProps> = ({
+export function Multiselect<T>({
   options,
   selectedValues,
   onSelect,
@@ -25,24 +25,24 @@ export const Multiselect: React.FC<MultiselectProps> = ({
   containerStyle = {},
   hideSelectedItemsRemove,
   error,
-}) => {
+}: MultiselectProps<T>) {
   const [selectionOpen, setSelectionOpen] = useState(false)
 
   const openSelection = () => setSelectionOpen(true)
   const closeSelection = () => setSelectionOpen(false)
 
-  const getOptionValue = (option: SelectOption): string =>
-    typeof option === "string" ? option : option.value
+  const getOptionValue = (option: SelectOption<T>): T =>
+    typeof option === "string" ? (option as T) : option.value
 
-  const getOptionLabel = (option: SelectOption): string =>
+  const getOptionLabel = (option: SelectOption<T>): string =>
     typeof option === "string" ? option : option.label
 
-  const removeSelection = (selection: string) => {
+  const removeSelection = (selection: T) => {
     const filtered = selectedValues.filter((value) => value !== selection)
     onSelect(filtered)
   }
 
-  const onOptionSelect = (option: SelectOption) => {
+  const onOptionSelect = (option: SelectOption<T>) => {
     const optionValue = getOptionValue(option)
 
     if (selectedValues.includes(optionValue)) {
@@ -66,12 +66,13 @@ export const Multiselect: React.FC<MultiselectProps> = ({
           error={error}
         />
         <View style={{ flexDirection: "row", gap: spacing.xs, flexWrap: "wrap" }}>
-          {selectedValues.map((selectedValue) => {
+          {selectedValues.map((selectedValue, index) => {
             const option = options.find((opt) => getOptionValue(opt) === selectedValue)
+            const label = option ? getOptionLabel(option) : String(selectedValue)
             return (
               <SelectedLabel
-                key={selectedValue}
-                selection={option ? getOptionLabel(option) : selectedValue}
+                key={`${selectedValue}-${index}`}
+                selection={label}
                 onRemove={() => removeSelection(selectedValue)}
                 hideRemove={hideSelectedItemsRemove}
               />

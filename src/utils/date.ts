@@ -1,27 +1,26 @@
-import { DateTime, Interval } from 'luxon'
-import { capitalize } from './string'
+import { DateTime, Interval } from "luxon"
+import { capitalize } from "./string"
 
 export const getDateRange = (from: string, to: string) => {
   const range = [from, to] as const
 
-  const interval = Interval.fromDateTimes(
-    DateTime.fromISO(from),
-    DateTime.fromISO(to)
-  )
+  const interval = Interval.fromDateTimes(DateTime.fromISO(from), DateTime.fromISO(to))
 
   const result = interval
     .splitBy({ days: 1 })
-    .map(d => d.start!.toISODate()!)
+    .map((d) => d.start!.toISODate()!)
     .concat(range[1])
 
   return result
 }
 
 const dateFormats = {
-  short: 'MMM dd',
-  long: 'ccc, MMM dd, yyyy'
+  short: "MMM dd",
+  long: "ccc, MMM dd, yyyy",
 }
-
+export const msToIsoDate = (ms: number) => {
+  return DateTime.fromMillis(ms).toISODate()!
+}
 export const formatDateIso = (dateIso: string, format: keyof typeof dateFormats) => {
   const date = DateTime.fromISO(dateIso)
 
@@ -29,21 +28,21 @@ export const formatDateIso = (dateIso: string, format: keyof typeof dateFormats)
 }
 export const formatDate = (date: DateTime, format: keyof typeof dateFormats) => {
   const today = DateTime.now().set({ hour: 0, minute: 0, second: 0 })
-  const todayDiff = Math.round(date.diff(today, 'days').days)
+  const todayDiff = Math.round(date.diff(today, "days").days)
   const dateLabel =
     Math.abs(todayDiff) < 2
-      ? capitalize(date.toRelativeCalendar({ unit: 'days' })!)
+      ? capitalize(date.toRelativeCalendar({ unit: "days" })!)
       : date.toFormat(dateFormats[format])
 
   return dateLabel
 }
 
-export const isDateLessThan = (date: string, comparedTo: string)=>{
-  const d1 = new Date(date);
-  const d2 = new Date(comparedTo);
+export const isDateLessThan = (date: string, comparedTo: string) => {
+  const d1 = new Date(date)
+  const d2 = new Date(comparedTo)
 
-  d1.setUTCHours(0, 0, 0, 0);
-  d2.setUTCHours(0, 0, 0, 0);
+  d1.setUTCHours(0, 0, 0, 0)
+  d2.setUTCHours(0, 0, 0, 0)
 
   return d1 < d2
 }

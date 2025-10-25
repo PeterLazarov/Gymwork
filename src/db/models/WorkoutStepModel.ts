@@ -58,6 +58,16 @@ export class WorkoutStepModel {
     return this.sets.some((set) => set.isWarmup)
   }
 
+  get exerciseSetsMap(): Record<string, SetModel[]> {
+    return this.exercises.reduce(
+      (acc, exercise) => {
+        acc[exercise.id] = this.getSetsForExercise(exercise.id)
+        return acc
+      },
+      {} as Record<string, SetModel[]>,
+    )
+  }
+
   getSetsForExercise(exerciseId: number): SetModel[] {
     return this.sets.filter((set) => set.exerciseId === exerciseId)
   }

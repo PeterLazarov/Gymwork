@@ -1,16 +1,16 @@
 import { DateTime } from "luxon"
-import { ScrollView, View } from "react-native"
-import { Portal, Modal } from "react-native-paper"
 import { useState } from "react"
+import { ScrollView, View } from "react-native"
+import { Modal, Portal } from "react-native-paper"
 
-import { useStores } from "app/db/helpers/useStores"
-import { Text, Button, Divider, ToggleSwitch, fontSize, useColors, spacing } from "@/designSystem"
-import { translate } from "@/utils"
-import { CommentsCard } from "./CommentsCard"
-import { WorkoutModel } from "@/db/models/WorkoutModel"
-import { navigate } from "@/navigators/navigationUtilities"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
+import { useWorkoutCopy } from "@/db/queries/useWorkoutCopy"
+import { Button, Divider, Text, ToggleSwitch, fontSize, spacing, useColors } from "@/designSystem"
+import { navigate } from "@/navigators/navigationUtilities"
+import { msToIsoDate, translate } from "@/utils"
+import { CommentsCard } from "./CommentsCard"
 import { StepSetsList } from "./StepSetsList"
 
 type Props = {
@@ -21,9 +21,9 @@ type Props = {
   showComments?: boolean
 }
 export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, showComments }) => {
-  const { workoutStore } = useStores()
   const [includeSets, setIncludeSets] = useState(true)
   const { setOpenedDate } = useOpenedWorkout()
+  const copyWorkout = useWorkoutCopy()
 
   const luxonDate = DateTime.fromMillis(workout.date!)
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
@@ -32,10 +32,9 @@ export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, sh
 
   const onActionPress = () => {
     if (mode === "copy") {
-      workoutStore.copyWorkout(workout!, includeSets)
+      copyWorkout(workout!, includeSets)
     } else if (mode === "view") {
-      // TODO: feels like shit
-      setOpenedDate(DateTime.fromMillis(workout.date!).toISODate()!)
+      setOpenedDate(msToIsoDate(workout.date!))
     }
     navigate("Workout")
     onClose()
@@ -152,7 +151,7 @@ const StepItem: React.FC<StepItemProps> = ({ step, workout }) => {
           </Text>
           <StepSetsList
             step={step}
-            sets={step.exerciseSetsMap[exercise.guid] || []}
+            sets={step.exerciseSetsMap[exercise.id]}
             workout={workout}
             hideSupersetLetters
           />

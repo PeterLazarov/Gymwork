@@ -41,12 +41,12 @@ export const OpenedWorkoutProvider: FC<PropsWithChildren<OpenedWorkoutProviderPr
       ? openedDateObject.toRelativeCalendar({ unit: "days" })!
       : openedDateObject.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
-  const workoutQuery = useWorkoutFullQuery(openedDateObject.toMillis())
+  const workoutQuery = useWorkoutFullQuery()
 
   async function fetchWorkout() {
     setIsLoadingWorkout(true)
     try {
-      const result = await workoutQuery()
+      const result = await workoutQuery(openedDateObject.toMillis())
       if (result) {
         setOpenedWorkout(WorkoutModel.from(result))
       } else {

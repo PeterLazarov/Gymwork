@@ -14,6 +14,8 @@ import { DialogContextProvider } from "@/context/DialogContext"
 import { ErrorDetails } from "@/screens/ErrorDetails"
 import { WorkoutScreen } from "@/screens/WorkoutScreen"
 import { offscreenRef } from "@/utils/useShareWorkout"
+import { CalendarScreen } from "@/screens/CalendarScreen"
+import { ExerciseSelectScreen } from "@/screens/ExerciseSelect"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -48,6 +50,14 @@ const AppStack = () => {
       <Stack.Screen
         name="Workout"
         component={WorkoutScreen}
+      />
+      <Stack.Screen
+        name="Calendar"
+        component={CalendarScreen}
+      />
+      <Stack.Screen
+        name="ExerciseSelect"
+        component={ExerciseSelectScreen}
       />
     </Stack.Navigator>
   )

@@ -8,8 +8,8 @@ import { BackHandler, Linking, Platform } from "react-native"
 
 import Config from "@/ignite/config"
 import type { PersistNavigationConfig } from "@/ignite/config/config.base"
-import { getValue, setValue } from "@/utils/ignite/storage"
 import { useIsMounted } from "@/utils"
+import { getValue, setValue } from "@/utils/ignite/storage"
 
 import type { AppStackParamList, NavigationProps } from "./navigationTypes"
 
@@ -172,13 +172,16 @@ export function useNavigationPersistence(persistenceKey: string) {
  * use this to navigate without the navigation
  * prop. If you have access to the navigation prop, do not use this.
  * @see {@link https://reactnavigation.org/docs/navigating-without-navigation-prop/}
- * @param {unknown} name - The name of the route to navigate to.
- * @param {unknown} params - The params to pass to the route.
+ * @param {keyof AppStackParamList} name - The name of the route to navigate to.
+ * @param {AppStackParamList[RouteName]} params - The params to pass to the route.
  */
-export function navigate(name: unknown, params?: unknown) {
+export function navigate<RouteName extends keyof AppStackParamList>(
+  name: RouteName,
+  params?: AppStackParamList[RouteName],
+) {
   if (navigationRef.isReady()) {
-    // @ts-expect-error
-    navigationRef.navigate(name as never, params as never)
+    // @ts-expect-error - React Navigation's internal types require complex overload handling
+    navigationRef.navigate(name, params)
   }
 }
 

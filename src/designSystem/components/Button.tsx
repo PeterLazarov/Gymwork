@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { Pressable, PressableProps } from "react-native"
+import { Pressable, PressableProps, StyleProp, ViewStyle } from "react-native"
 
 import { useColors } from "../tokens/colors"
 import { Text } from "./Text"
@@ -8,11 +8,12 @@ type ButtonVariants = {
   variant: "primary" | "accent" | "neutral" | "critical" | "tertiary"
   type?: "filled" | "outline"
 }
-type ButtonProps = PressableProps &
+type ButtonProps = Omit<PressableProps, "style"> &
   ButtonVariants & {
     size?: "default" | "small"
     children?: ReactNode | string
     text?: string
+    style?: StyleProp<ViewStyle>
   }
 
 const buttonSizes = {
@@ -53,7 +54,6 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <Pressable
-      activeOpacity={0.4}
       style={[
         {
           justifyContent: "center",

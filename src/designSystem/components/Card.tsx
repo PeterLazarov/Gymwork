@@ -1,13 +1,14 @@
 import React, { useMemo } from "react"
-import { Pressable, PressableProps, StyleSheet, View, ViewStyle } from "react-native"
+import { Pressable, PressableProps, StyleProp, StyleSheet, View, ViewStyle } from "react-native"
 
+import { spacing, useColors } from "../tokens"
 import { Text } from "./Text"
-import { useColors, spacing } from "../tokens"
 
-export type CardProps = Omit<PressableProps, "containerStyle"> & {
+export type CardProps = Omit<PressableProps, "containerStyle" | "style"> & {
   title?: string
   content: React.ReactNode
   containerStyle?: ViewStyle
+  style?: StyleProp<ViewStyle>
 }
 
 export const Card: React.FC<CardProps> = ({

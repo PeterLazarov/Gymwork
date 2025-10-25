@@ -1,16 +1,19 @@
 import { DateTime } from "luxon"
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
+import { useWindowDimensions } from "react-native"
 import { Calendar } from "react-native-calendario"
 import { MarkedDays } from "react-native-month"
-import { useWindowDimensions } from "react-native"
 import { Menu } from "react-native-paper"
 
-import { Header, Icon, IconButton, useColors, fontSize } from "@/designSystem"
-import { BaseLayout } from "@/layouts/BaseLayout"
-import { translate } from "@/utils"
-import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
-import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { WorkoutModal } from "@/components/Workout/WorkoutModal"
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { WorkoutModel } from "@/db/models/WorkoutModel"
+import { useAllWorkoutsQuery, WorkoutResult } from "@/db/queries/useAllWorkoutIdsQuery"
+import { useWorkoutFullQuery } from "@/db/queries/useWorkoutFullQuery"
+import { fontSize, Header, Icon, IconButton, useColors } from "@/designSystem"
+import { BaseLayout } from "@/layouts/BaseLayout"
+import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
+import { msToIsoDate, translate } from "@/utils"
 
 export type CalendarScreenParams = {
   copyWorkoutMode?: boolean
@@ -20,35 +23,54 @@ interface CalendarScreenProps extends AppStackScreenProps<"Calendar"> {}
 export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) => {
   const colors = useColors()
 
-  const { workoutStore, stateStore } = useStores()
-  const { openedDate, openedDateObject, openedWorkout } = useOpenedWorkout()
+  const { openedDateObject, setOpenedDate } = useOpenedWorkout()
+  const getWorkouts = useAllWorkoutsQuery()
+  const workoutFullQuery = useWorkoutFullQuery()
+  const [markedDates, setMarkedDates] = useState<MarkedDays>({})
 
   const { copyWorkoutMode } = useRouteParams("Calendar")
-  const [openedWorkoutDialogDate, setOpenedWorkoutDialogDate] = useState("")
+  const [openedWorkout, setOpenedWorkout] = useState<WorkoutModel | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const markedDates = useMemo(
-    () =>
-      workoutStore.workouts.reduce((acc, curr) => {
-        if (!(curr.date in acc)) {
-          acc[curr.date] = {}
-        }
-        acc[curr.date]!.dots = [
-          {
-            color: colors.tertiary,
-            selectedColor: colors.onTertiary,
-          },
-        ]
+  const [workouts, setWorkouts] = useState<WorkoutResult[]>([])
 
-        return acc
-      }, {} as MarkedDays),
-    [workoutStore.workouts, openedDate, openedWorkout],
-  )
+  useEffect(() => {
+    getWorkouts().then((results: WorkoutResult[]) => {
+      setWorkouts(results)
 
-  const startingMonth = useMemo(
-    () => DateTime.fromISO(stateStore.firstRenderedDate).minus({ month: 1 }),
-    [stateStore.firstRenderedDate],
-  )
+      setMarkedDates(
+        results.reduce((acc, curr) => {
+          const isoDate = msToIsoDate(curr.date!)
+          if (!(isoDate in acc)) {
+            acc[isoDate] = {}
+          }
+          acc[isoDate]!.dots = [
+            {
+              color: colors.tertiary,
+              selectedColor: colors.onTertiary,
+            },
+          ]
+
+          return acc
+        }, {} as MarkedDays),
+      )
+    })
+  }, [])
+
+  const firstRenderedDate = useMemo(() => {
+    if (workouts.length === 0) return null
+    return DateTime.fromMillis(workouts[0].date!)
+  }, [workouts])
+
+  const startingMonth = useMemo(() => {
+    if (!firstRenderedDate) {
+      const now = DateTime.now()
+      const today = now.set({ hour: 0, minute: 0, second: 0 })
+      return today.minus({ month: 1 })
+    }
+
+    return firstRenderedDate?.minus({ month: 1 })
+  }, [firstRenderedDate])
 
   const lastDayOfNextMonth = useMemo(
     () => DateTime.now().plus({ month: 1 }).endOf("month").toJSDate(),
@@ -60,16 +82,21 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
   }
 
   function handleCalendarDayPress(date: Date) {
-    const dateString = DateTime.fromISO(date.toISOString()).toISODate()!
+    const dateLuxon = DateTime.fromISO(date.toISOString())
+    const dateString = dateLuxon.toISODate()!
     const didWorkoutOnDate = Object.keys(markedDates).includes(dateString)
+
     if (didWorkoutOnDate) {
-      setOpenedWorkoutDialogDate(dateString)
+      workoutFullQuery(dateLuxon.toMillis()).then((workout) => {
+        setOpenedWorkout(WorkoutModel.from(workout!))
+      })
     } else {
       goToDay(dateString)
     }
   }
+
   function goToDay(date: string) {
-    stateStore.setOpenedDate(date)
+    setOpenedDate(date)
     navigation.navigate("Workout")
   }
 
@@ -80,9 +107,10 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
 
   // ! must be a whole number
   const monthsToRender = useMemo(() => {
-    const start = DateTime.fromISO(stateStore.firstRenderedDate)
-    const end = DateTime.fromISO(stateStore.lastRenderedDate)
-    const diff = end.diff(start)
+    if (!firstRenderedDate) return 3
+
+    const end = DateTime.fromMillis(workouts[workouts.length - 1].date!)
+    const diff = end.diff(firstRenderedDate)
 
     return Math.ceil(diff.as("months"))
   }, [])
@@ -178,11 +206,11 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
           firstDayMonday
         />
       </BaseLayout>
-      {openedWorkoutDialogDate && (
+      {openedWorkout && (
         <WorkoutModal
-          open={!!openedWorkoutDialogDate}
-          workout={workoutStore.dateWorkoutMap[openedWorkoutDialogDate]!}
-          onClose={() => setOpenedWorkoutDialogDate("")}
+          open={!!openedWorkout}
+          workout={openedWorkout}
+          onClose={() => setOpenedWorkout(null)}
           mode={copyWorkoutMode ? "copy" : "view"}
         />
       )}

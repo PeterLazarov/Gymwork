@@ -1,8 +1,8 @@
 import { useDB } from "../useDB"
 
-export const useWorkoutFullQuery = (openedDateMs: number) => {
+export const useWorkoutFullQuery = () => {
   const { drizzleDB } = useDB()
-  return () =>
+  return (openedDateMs: number) =>
     drizzleDB.query.workouts.findFirst({
       where: (workouts, { and, eq }) =>
         and(eq(workouts.date, openedDateMs), eq(workouts.is_template, false)),
