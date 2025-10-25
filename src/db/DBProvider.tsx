@@ -4,7 +4,7 @@ import { useDrizzleStudio } from "expo-drizzle-studio-plugin"
 import { deleteDatabaseAsync, openDatabaseSync } from "expo-sqlite"
 import { useEffect, useState } from "react"
 
-import migrations from "../../drizzle/migrations.js"
+import migrations from "../../drizzle/migrations"
 import { SQLiteDBName } from "./constants"
 import { allRelations } from "./relations"
 import { schema } from "./schema"
@@ -46,19 +46,32 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
 
   const { success, error } = useMigrations(drizzleDB, migrations)
 
-  // Only seed after both pragmas and migrations are complete
   useEffect(() => {
+    async function seedProcess() {
+      if (false) {
+        await deleteDatabaseAsync(SQLiteDBName)
+      }
+      const result = await drizzleDB.select().from(schema.exercises).limit(1).execute()
+
+      if (result.length > 0) {
+        console.log("Database already has data, skipping seeding")
+        setSeedingComplete(true)
+        return Promise.resolve()
+      } else {
+        console.log("Database is empty, starting seeding...")
+        seedAll(drizzleDB)
+          .then(() => {
+            console.log("Seeding completed successfully")
+            setSeedingComplete(true)
+          })
+          .catch((err) => {
+            console.error("Seeding failed:", err)
+            setSeedingComplete(true)
+          })
+      }
+    }
     if (success && pragmasComplete && !seedingComplete) {
-      // deleteDatabaseAsync(SQLiteDBName).then(() => {
-      // seedAll(drizzleDB)
-      //   .then(() => {
-      //     console.log("Seeding completed successfully")
-      setSeedingComplete(true)
-      //   })
-      //   .catch((err) => {
-      //     console.error("Seeding failed:", err)
-      //   })
-      // })
+      seedProcess()
     }
   }, [success, pragmasComplete, seedingComplete])
 
