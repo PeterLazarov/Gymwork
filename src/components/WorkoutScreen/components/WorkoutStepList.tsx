@@ -1,11 +1,11 @@
 import { ListRenderItemInfo } from "@shopify/flash-list"
 import React from "react"
 
+import { StepSetsList } from "@/components/shared/StepSetsList"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
 import { Card, CardProps, IndicatedScrollList, spacing } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
-import { StepSetsList } from "./StepSetsList"
 
 type Props = {
   workout: WorkoutModel

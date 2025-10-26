@@ -1,9 +1,10 @@
+import React, { useState } from "react"
+import { Pressable, View } from "react-native"
+
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { BottomDrawer, Divider, FAB, spacing, Text, useColors } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
-import React, { useState } from "react"
-import { Pressable, View } from "react-native"
 
 export const AddStepMenu = () => {
   const colors = useColors()

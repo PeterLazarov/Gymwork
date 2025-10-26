@@ -5,7 +5,7 @@ import { useSetting } from "@/context/SettingContext"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { useColors } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
-import { CommentsCard } from "./CommentsCard"
+import { CommentsCard } from "../../shared/CommentsCard"
 import { WorkoutEmptyState } from "./WorkoutEmptyState"
 import { WorkoutStepList } from "./WorkoutStepList"
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { View } from "react-native"
 
-import { ExerciseSelectLists } from "@/components/Exercise/ExerciseSelectListTabs"
+import { ExerciseSelectLists } from "@/components/ExerciseSelectScreen/components/ExerciseSelectListTabs"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { useInsertExerciseInWorkoutQuery } from "@/db/queries/useInsertExerciseInWorkoutQuery"
@@ -30,10 +30,10 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
     let workoutId = openedWorkout?.id
     if (!workoutId) {
       const result = await insertWorkout({ date: openedDateObject.toMillis() })
-      workoutId = result.lastInsertRowId
+      workoutId = result[0].id
     }
 
-    await insertExerciseInWorkout(exercises[0].id, workoutId)
+    await insertExerciseInWorkout(exercises[0].id!, workoutId)
 
     navigation.navigate("Workout")
   }

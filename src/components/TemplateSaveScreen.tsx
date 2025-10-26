@@ -237,7 +237,7 @@ const TemplateStepsListItem: React.FC<TemplateStepsListItemProps> = ({ step, onS
       <View style={listItemStyles.nameContainer}>
         {step.exercises.map((exercise) => (
           <Text key={exercise.id}>
-            {isSuperset && `${step.exerciseLettering[exercise.id]}: `}
+            {isSuperset && `${step.exerciseLettering[exercise.id!]}: `}
             {exercise.name}
           </Text>
         ))}

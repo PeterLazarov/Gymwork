@@ -5,7 +5,7 @@ import React from "react"
 import { Alert, LogBox, View } from "react-native"
 import { captureRef } from "react-native-view-shot"
 
-import { WorkoutDayView } from "@/components/Workout/WorkoutDayView"
+import { WorkoutDayView } from "@/components/WorkoutScreen/components/WorkoutDayView"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { Header } from "@/designSystem"
 import { defaultIgnoredWarnings, translate } from "@/utils"

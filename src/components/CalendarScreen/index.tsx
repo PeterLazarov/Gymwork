@@ -5,7 +5,7 @@ import { Calendar } from "react-native-calendario"
 import { MarkedDays } from "react-native-month"
 import { Menu } from "react-native-paper"
 
-import { WorkoutModal } from "@/components/Workout/WorkoutModal"
+import { WorkoutModal } from "@/components/CalendarScreen/WorkoutModal"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { useAllWorkoutsQuery, WorkoutResult } from "@/db/queries/useAllWorkoutIdsQuery"
