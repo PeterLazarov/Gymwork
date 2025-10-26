@@ -18,6 +18,8 @@ export type AppStackParamList = {
   UserFeedback: UserFeedbackScreenParams
   TemplateSave: TemplateSaveScreenParams
   ExerciseEdit: ExerciseEditScreenParams
+  TemplateSelect: undefined
+  WorkoutFeedback: undefined
 }
 
 export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStackScreenProps<

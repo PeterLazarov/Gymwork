@@ -1,5 +1,5 @@
 import type { Exercise, ExerciseMetric } from "@/db/schema"
-import { MetricType } from "../enums"
+import { MetricType } from "../../constants/enums"
 
 type ExerciseModelType = Exercise & {
   exerciseMetrics?: ExerciseMetric[]

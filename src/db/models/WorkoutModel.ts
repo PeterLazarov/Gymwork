@@ -1,4 +1,5 @@
 import type { Exercise, Set, Workout, WorkoutStep, WorkoutStepExercise } from "@/db/schema"
+import { Discomfort, Feeling } from "../../constants/enums"
 import { WorkoutStepModel } from "./WorkoutStepModel"
 
 type WorkoutModelType = Workout & {
@@ -12,13 +13,21 @@ type WorkoutModelType = Workout & {
   })[]
 }
 
+export type WorkoutComments = {
+  name?: string
+  notes: string
+  feeling?: Feeling
+  pain?: Discomfort
+  rpe?: number
+}
+
 export class WorkoutModel {
   id: number
   name: string | null
   notes: string | null
   date: number | null
-  feeling: string | null
-  pain: string | null
+  feeling: Feeling | null
+  pain: Discomfort | null
   rpe: number | null
   endedAt: number | null
   durationMs: number | null
@@ -32,15 +41,15 @@ export class WorkoutModel {
     this.name = data.name
     this.notes = data.notes
     this.date = data.date
-    this.feeling = data.feeling
-    this.pain = data.pain
+    this.feeling = data.feeling as Feeling | null
+    this.pain = data.pain as Discomfort | null
     this.rpe = data.rpe
     this.endedAt = data.ended_at
     this.durationMs = data.duration_ms
     this.isTemplate = data.is_template
     this.createdAt = data.created_at
     this.updatedAt = data.updated_at
-    this.workoutSteps = data.workoutSteps.map((step) => WorkoutStepModel.from(step))
+    this.workoutSteps = data.workoutSteps?.map((step) => WorkoutStepModel.from(step)) ?? []
   }
 
   get hasComments(): boolean {
@@ -53,6 +62,20 @@ export class WorkoutModel {
 
   get hasIncompleteSets(): boolean {
     return this.workoutSteps.some((step) => step.incompleteSets.length > 0)
+  }
+
+  get comments(): WorkoutComments {
+    return {
+      name: this.name ?? undefined,
+      notes: this.notes ?? "",
+      feeling: this.feeling ?? undefined,
+      pain: this.pain ?? undefined,
+      rpe: this.rpe ?? undefined,
+    }
+  }
+
+  update(updates: Partial<WorkoutModel>): WorkoutModel {
+    return Object.assign(this, updates)
   }
 
   static from(workout: WorkoutModelType): WorkoutModel {

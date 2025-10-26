@@ -24,7 +24,7 @@ import { translate } from "@/utils"
 import { HelperText, TextInput } from "react-native-paper"
 
 export type TemplateSaveScreenParams = {
-  edittingTemplate?: WorkoutModel & { isTemplate: true }
+  edittingTemplate?: WorkoutModel
 }
 interface TemplateSaveScreenProps extends AppStackScreenProps<"TemplateSave"> {}
 

@@ -33,6 +33,7 @@ const en = {
   done: "Done",
   workoutComments: "Workout comments",
   enterComments: "Enter comments...",
+  name: "Name",
   howWasWorkout: "How was the workout?",
   goToWorkout: "Go to workout",
   noSetsEntered: "No sets entered",

@@ -1,6 +1,6 @@
 import { measurementUnits } from "@/constants/units"
 import { palettes } from "@/designSystem"
-import { ExerciseMetric } from "./schema"
+import { ExerciseMetric } from "../db/schema"
 
 export type MetricType = ExerciseMetric["measurement_type"]
 
@@ -9,6 +9,9 @@ export const feelingsEnum = {
   neutral: "neutral",
   happy: "happy",
 } as const
+
+export type Feeling = (typeof feelingsEnum)[keyof typeof feelingsEnum]
+export type Discomfort = (typeof discomfortEnum)[keyof typeof discomfortEnum]
 
 export const measurementDefaults = {
   duration: {

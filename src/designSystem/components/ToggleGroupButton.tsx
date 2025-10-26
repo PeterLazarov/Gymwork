@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { View, ViewStyle } from "react-native"
 
-import { Button } from "./Button"
 import { useColors } from "../tokens/colors"
+import { Button } from "./Button"
 
 type Props = {
   buttons: {
@@ -15,7 +15,7 @@ type Props = {
   onChange: (value: string | undefined) => void
 }
 
-const ToggleGroupButton: React.FC<Props> = ({
+export const ToggleGroupButton: React.FC<Props> = ({
   buttons,
   initialActiveIndex,
   containerStyle,
@@ -55,5 +55,3 @@ const ToggleGroupButton: React.FC<Props> = ({
     </View>
   )
 }
-
-export default ToggleGroupButton

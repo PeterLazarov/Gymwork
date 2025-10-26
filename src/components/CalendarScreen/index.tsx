@@ -102,7 +102,7 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
 
   function goToFeedback() {
     setMenuOpen(false)
-    navigation.navigate("UserFeedback", { referrerPage: activeRoute ?? "?" })
+    navigation.navigate("UserFeedback", { referrerPage: "Calendar" })
   }
 
   // ! must be a whole number

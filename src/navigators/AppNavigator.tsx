@@ -13,6 +13,7 @@ import { ExerciseSelectScreen } from "@/components/ExerciseSelectScreen"
 import { TemplateSaveScreen } from "@/components/TemplateSaveScreen"
 import { UserFeedbackScreen } from "@/components/UserFeedbackScreen"
 import { WelcomeScreen } from "@/components/WelcomeScreen"
+import { WorkoutFeedbackScreen } from "@/components/WorkoutFeedbackScreen"
 import { WorkoutScreen } from "@/components/WorkoutScreen"
 import { offscreenRef } from "@/components/WorkoutScreen/utils/useShareWorkout"
 import { DialogContextProvider } from "@/context/DialogContext"
@@ -78,6 +79,10 @@ const AppStack = () => {
       <Stack.Screen
         name="UserFeedback"
         component={UserFeedbackScreen}
+      />
+      <Stack.Screen
+        name="WorkoutFeedback"
+        component={WorkoutFeedbackScreen}
       />
     </Stack.Navigator>
   )

@@ -1,7 +1,7 @@
 import React, { useMemo } from "react"
 import { StyleSheet, View } from "react-native"
 
-import { discomfortOptions, feelingOptions } from "@/db/enums"
+import { discomfortOptions, feelingOptions } from "@/constants/enums"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { Card, FeedbackPicker, fontSize, spacing, Text, useColors } from "@/designSystem"
 import { translate } from "@/utils"

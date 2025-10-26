@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import { ScrollView, View } from "react-native"
 
+import { measurementDefaults, measurementTypes, MetricType } from "@/constants/enums"
 import { muscleAreas, muscles } from "@/constants/muscles"
 import { DistanceUnit, measurementUnits, WeightUnit } from "@/constants/units"
 import { useDialogContext } from "@/context/DialogContext"
 import { useSetting } from "@/context/SettingContext"
-import { measurementDefaults, measurementTypes, MetricType } from "@/db/enums"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { useInsertExerciseQuery } from "@/db/queries/useInsertExerciseQuery"
 import { useUpdateExerciseQuery } from "@/db/queries/useUpdateExerciseQuery"
