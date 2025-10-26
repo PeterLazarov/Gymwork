@@ -18,25 +18,6 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = ({ navigation }) => {
   // )
   // @demo remove-block-end
 
-  // useEffect(() => {
-  //   async function fetchExercises() {
-  //     try {
-  //       const result = await drizzleDB.query.exercises.findMany({
-  //         orderBy: (exercises, { asc }) => [asc(exercises.name)],
-  //       })
-  //       setExercises(result)
-  //     } catch (error) {
-  //       console.error("Error fetching exercises:", error)
-  //     } finally {
-  //       setIsLoading(false)
-  //     }
-  //   }
-
-  //   fetchExercises()
-  // }, [drizzleDB])
-
-  // const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
-
   function onStart() {
     // TODO log that welcome screen was seen
     navigation.navigate("Workout")
