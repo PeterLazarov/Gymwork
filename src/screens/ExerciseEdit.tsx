@@ -1,0 +1,421 @@
+import React, { useState } from "react"
+import { ScrollView, View } from "react-native"
+
+import { muscleAreas, muscles } from "@/constants/muscles"
+import { DistanceUnit, measurementUnits, WeightUnit } from "@/constants/units"
+import { useDialogContext } from "@/context/DialogContext"
+import { useSetting } from "@/context/SettingContext"
+import { measurementDefaults, measurementTypes, MetricType } from "@/db/enums"
+import { ExerciseModel } from "@/db/models/ExerciseModel"
+import { useInsertExerciseQuery } from "@/db/queries/useInsertExerciseQuery"
+import { useUpdateExerciseQuery } from "@/db/queries/useUpdateExerciseQuery"
+import { ExerciseMetric } from "@/db/schema"
+import {
+  Button,
+  Header,
+  Icon,
+  IconButton,
+  Multiselect,
+  NumberInput,
+  Select,
+  spacing,
+  Text,
+  ToggleSwitch,
+  useColors,
+} from "@/designSystem"
+import { BaseLayout } from "@/layouts/BaseLayout"
+import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
+import { translate } from "@/utils"
+import { HelperText, TextInput } from "react-native-paper"
+
+export type ExerciseEditScreenParams = {
+  createMode?: boolean
+}
+interface ExerciseEditScreenProps extends AppStackScreenProps<"ExerciseEdit"> {}
+export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = ({ navigation }) => {
+  const colors = useColors()
+
+  const { edittedExercise } = useSetting()
+  const updateExercise = useUpdateExerciseQuery()
+  const insertExercise = useInsertExerciseQuery()
+  const { createMode } = useRouteParams("ExerciseEdit")
+  if (!createMode && !edittedExercise) {
+    console.warn("REDIRECT - No focusedExercise")
+    navigation.navigate("ExerciseSelect", {
+      selectMode: "plain",
+    })
+  }
+
+  const [exercise, setExercise] = useState<ExerciseModel>(
+    createMode ? new ExerciseModel() : edittedExercise!,
+  )
+  const [formValid, setFormValid] = useState(false)
+
+  const { showConfirm } = useDialogContext()
+
+  function onBackPress() {
+    showConfirm?.({
+      message: translate("changesWillBeLost"),
+      onClose: () => showConfirm?.(undefined),
+      onConfirm: onBackConfirmed,
+    })
+  }
+
+  function onBackConfirmed() {
+    showConfirm?.(undefined)
+    navigation.goBack()
+  }
+
+  function onUpdate(updated: ExerciseModel, isValid: boolean) {
+    setExercise(updated)
+    setFormValid(isValid)
+  }
+
+  function onComplete() {
+    if (!exercise) return
+
+    if (createMode) {
+      insertExercise(exercise)
+    } else {
+      updateExercise(exercise.id!, exercise)
+    }
+    navigation.goBack()
+  }
+
+  return (
+    <BaseLayout>
+      <Header>
+        <IconButton
+          onPress={onBackPress}
+          underlay="darker"
+        >
+          <Icon
+            icon="chevron-back"
+            color={colors.onPrimary}
+          />
+        </IconButton>
+        <Header.Title title={translate(createMode ? "createExercise" : "editExercise")} />
+        <IconButton
+          onPress={onComplete}
+          disabled={!formValid}
+          underlay="darker"
+        >
+          <Icon
+            icon="checkmark"
+            size="large"
+            color={colors.onPrimary}
+          />
+        </IconButton>
+      </Header>
+      <ScrollView style={{ flex: 1 }}>
+        {exercise && (
+          <ExerciseEditForm
+            exercise={exercise}
+            onUpdate={onUpdate}
+          />
+        )}
+      </ScrollView>
+      <Button
+        variant="primary"
+        onPress={onComplete}
+        disabled={!formValid}
+        text={translate("save")}
+      />
+    </BaseLayout>
+  )
+}
+
+type Props = {
+  exercise: ExerciseModel
+  onUpdate: (updated: ExerciseModel, isValid: boolean) => void
+}
+
+const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
+  const { scientificMuscleNames } = useSetting()
+
+  const [nameError, setNameError] = useState("")
+  const [weightIncError, setWeightIncError] = useState("")
+  const [musclesError, setMusclesError] = useState("")
+  const [measurementTypeRrror, setMeasurementTypeRrror] = useState("")
+
+  function runValidCheck(data: ExerciseModel) {
+    const nameInvalid = data.name.trim() === ""
+    const weightIncrementInvalid = data.getMetricByType("weight")?.step_value === 0
+    const musclesInvalid = data.muscles.length === 0 && data.muscleAreas.length === 0
+    const measurementsInvalid = data.metricTypes.length === 0
+
+    setNameError(nameInvalid ? "Exercise name cannot be empty." : "")
+    setWeightIncError(weightIncrementInvalid ? "Weight increment cannot be 0." : "")
+    setMusclesError(musclesInvalid ? "At least one muscle area required." : "")
+    setMeasurementTypeRrror(measurementsInvalid ? "At least one measurement type required." : "")
+
+    return !(nameInvalid || weightIncrementInvalid || musclesInvalid || measurementsInvalid)
+  }
+
+  function onFormChange(updated: ExerciseModel) {
+    const valid = runValidCheck(updated)
+    onUpdate(updated, valid)
+  }
+
+  function onMusclesChange(selected: string[]) {
+    const updated = exercise.update({ muscles: selected })
+    onFormChange(updated)
+  }
+  function onMuscleAreasChange(selected: string[]) {
+    const updated = exercise.update({ muscleAreas: selected })
+    onFormChange(updated)
+  }
+  function onPropChange(field: keyof ExerciseModel, value: string) {
+    const updated = exercise.update({ [field]: value })
+    onFormChange(updated)
+  }
+
+  function onAddMusclePress() {
+    // Todo: route to muscle create
+  }
+
+  function setMeasurementTypes(measurementNames: MetricType[]) {
+    const metrics = measurementNames.map(
+      (m) =>
+        ({
+          measurement_type: m,
+          unit: measurementDefaults[m].unit,
+          more_is_better: measurementDefaults[m].moreIsBetter,
+          step_value: "step" in measurementDefaults[m] ? measurementDefaults[m].step : null,
+        }) as ExerciseMetric,
+    )
+    const updated = exercise.update({ metrics })
+    onFormChange(updated)
+  }
+
+  function onMetricChange(metricType: MetricType, metric: ExerciseMetric) {
+    // TODO: update metric in state
+    const updated = exercise.update({ metrics: [...exercise.metrics, metric] })
+    onFormChange(updated)
+  }
+
+  return (
+    <View style={{ flex: 1, gap: 8, padding: 8 }}>
+      <TextInput
+        label="Name"
+        value={exercise.name}
+        onChangeText={(text) => onPropChange("name", text)}
+        error={nameError !== ""}
+      />
+      {nameError !== "" && (
+        <HelperText
+          type="error"
+          visible={nameError !== ""}
+        >
+          {nameError}
+        </HelperText>
+      )}
+      <View style={{ flexDirection: "row" }}>
+        {scientificMuscleNames && (
+          <Multiselect
+            options={muscles}
+            selectedValues={exercise.muscles}
+            onSelect={onMusclesChange}
+            containerStyle={{ flex: 1 }}
+            headerText={translate("muscles")}
+            error={musclesError !== ""}
+          />
+        )}
+        {!scientificMuscleNames && (
+          <Multiselect
+            options={muscleAreas}
+            selectedValues={exercise.muscleAreas}
+            onSelect={onMuscleAreasChange}
+            containerStyle={{ flex: 1 }}
+            headerText={translate("muscleAreas")}
+            error={musclesError !== ""}
+          />
+        )}
+        <IconButton
+          onPress={onAddMusclePress}
+          style={{ margin: spacing.xxs }}
+        >
+          <Icon icon="add" />
+        </IconButton>
+      </View>
+      {musclesError !== "" && (
+        <HelperText
+          type="error"
+          visible={musclesError !== ""}
+        >
+          {musclesError}
+        </HelperText>
+      )}
+      <Multiselect
+        options={measurementTypes}
+        selectedValues={exercise.metricTypes as string[]}
+        headerText="Measurements"
+        onSelect={(selection) => {
+          setMeasurementTypes(selection as MetricType[])
+        }}
+        error={!!measurementTypeRrror}
+      />
+      {exercise.hasMetricType("distance") && (
+        <DistanceSection
+          metricConfig={exercise.getMetricByType("distance")!}
+          onMetricChange={(metric) => onMetricChange("distance", metric)}
+        />
+      )}
+      {exercise.hasMetricType("weight") && (
+        <WeightSection
+          metricConfig={exercise.getMetricByType("weight")!}
+          onMetricChange={(metric) => onMetricChange("weight", metric)}
+          weightIncError={weightIncError}
+        />
+      )}
+      {exercise.hasMetricType("duration") && (
+        <DurationSection
+          metricConfig={exercise.getMetricByType("duration")!}
+          onMetricChange={(metric) => onMetricChange("duration", metric)}
+        />
+      )}
+    </View>
+  )
+}
+
+type DistanceSectionProps = {
+  metricConfig: ExerciseMetric
+  onMetricChange: (metric: ExerciseMetric) => void
+}
+
+const DistanceSection: React.FC<DistanceSectionProps> = ({ metricConfig, onMetricChange }) => {
+  function setUnit(unit: DistanceUnit) {
+    onMetricChange({ ...metricConfig, unit })
+  }
+
+  function toggleMoreIsBetter(value: boolean) {
+    onMetricChange({ ...metricConfig, more_is_better: value })
+  }
+
+  return (
+    <>
+      <Text>{translate("distanceMeasurementSettings")}</Text>
+
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Text>{translate("moreIsBetter")}</Text>
+        <ToggleSwitch
+          variant="primary"
+          value={metricConfig.more_is_better}
+          onValueChange={toggleMoreIsBetter}
+        />
+      </View>
+
+      <Select
+        options={Object.values(measurementUnits.distance)}
+        headerText={translate("unit")}
+        value={metricConfig.unit}
+        onChange={(distanceUnit) => setUnit(distanceUnit as DistanceUnit)}
+        label={translate("unit")}
+      />
+    </>
+  )
+}
+
+type DurationSectionProps = {
+  metricConfig: ExerciseMetric
+  onMetricChange: (metric: ExerciseMetric) => void
+}
+
+const DurationSection: React.FC<DurationSectionProps> = ({ metricConfig, onMetricChange }) => {
+  function toggleMoreIsBetter(value: boolean) {
+    onMetricChange({ ...metricConfig, more_is_better: value })
+  }
+
+  return (
+    <>
+      <Text>{translate("durationMeasurementSettings")}</Text>
+
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Text>{translate("moreIsBetter")}</Text>
+        <ToggleSwitch
+          variant="primary"
+          value={metricConfig.more_is_better}
+          onValueChange={toggleMoreIsBetter}
+        />
+      </View>
+    </>
+  )
+}
+
+type WeightSectionProps = {
+  metricConfig: ExerciseMetric
+  onMetricChange: (metric: ExerciseMetric) => void
+  weightIncError?: string
+}
+
+const WeightSection: React.FC<WeightSectionProps> = ({
+  metricConfig,
+  onMetricChange,
+  weightIncError,
+}) => {
+  function setUnit(unit: WeightUnit) {
+    onMetricChange({ ...metricConfig, unit })
+  }
+
+  function toggleMoreIsBetter(value: boolean) {
+    onMetricChange({ ...metricConfig, more_is_better: value })
+  }
+
+  function handleWeightIncrementChange(n: number) {
+    onMetricChange({ ...metricConfig, step_value: n })
+  }
+
+  return (
+    <>
+      <Text>{translate("weightMeasurementSettings")}</Text>
+
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Text>{translate("moreIsBetter")}</Text>
+        <ToggleSwitch
+          variant="primary"
+          value={metricConfig.more_is_better}
+          onValueChange={toggleMoreIsBetter}
+        />
+      </View>
+      <Select
+        options={Object.values(measurementUnits.weight)}
+        headerText={translate("unit")}
+        value={metricConfig.unit}
+        onChange={(unit) => setUnit(unit as WeightUnit)}
+        label={translate("unit")}
+      />
+      <NumberInput
+        value={metricConfig.step_value ?? 0}
+        onChange={(n) => handleWeightIncrementChange(n ?? 0)}
+        label="Weight Increment"
+        error={weightIncError !== ""}
+      />
+      {weightIncError !== "" && (
+        <HelperText
+          type="error"
+          visible={weightIncError !== ""}
+        >
+          {weightIncError}
+        </HelperText>
+      )}
+    </>
+  )
+}

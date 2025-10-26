@@ -1,4 +1,5 @@
 import type { Exercise, Set, WorkoutStep, WorkoutStepExercise } from "@/db/schema"
+import { alphabeticNumbering } from "@/utils"
 import { ExerciseModel } from "./ExerciseModel"
 import { SetModel } from "./SetModel"
 
@@ -58,14 +59,30 @@ export class WorkoutStepModel {
     return this.sets.some((set) => set.isWarmup)
   }
 
-  get exerciseSetsMap(): Record<string, SetModel[]> {
+  get exerciseSetsMap(): Record<Exercise["id"], SetModel[]> {
     return this.exercises.reduce(
       (acc, exercise) => {
         acc[exercise.id] = this.getSetsForExercise(exercise.id)
         return acc
       },
-      {} as Record<string, SetModel[]>,
+      {} as Record<Exercise["id"], SetModel[]>,
     )
+  }
+
+  get exerciseLettering(): Record<Exercise["id"], string> {
+    let map: Record<Exercise["id"], string> = {}
+
+    if (this.stepType === "superset") {
+      map = this.exercises.reduce(
+        (map, exercise, index) => {
+          map[exercise.id] = alphabeticNumbering(index)
+          return map
+        },
+        {} as Record<Exercise["id"], string>,
+      )
+    }
+
+    return map
   }
 
   getSetsForExercise(exerciseId: number): SetModel[] {

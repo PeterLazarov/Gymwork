@@ -43,9 +43,9 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
   }
 
   function onAddExercisePress() {
-    // navigation.navigate("ExerciseEdit", {
-    //   createMode: true,
-    // })
+    navigation.navigate("ExerciseEdit", {
+      createMode: true,
+    })
   }
 
   const supersetTitle =
@@ -55,47 +55,45 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
 
   return (
     <BaseLayout>
-      <View style={{ flex: 1, alignItems: "center" }}>
-        <Header>
-          <IconButton
-            onPress={onBackPress}
-            underlay="darker"
-          >
-            <Icon
-              icon="chevron-back"
-              color={colors.onPrimary}
-            />
-          </IconButton>
-          <Header.Title
-            title={selectMode === "plain" ? translate("selectExercise") : supersetTitle}
+      <Header>
+        <IconButton
+          onPress={onBackPress}
+          underlay="darker"
+        >
+          <Icon
+            icon="chevron-back"
+            color={colors.onPrimary}
           />
-          <IconButton
-            onPress={onAddExercisePress}
-            underlay="darker"
-          >
-            <Icon
-              icon="add"
-              size="large"
-              color={colors.onPrimary}
-            />
-          </IconButton>
-        </Header>
+        </IconButton>
+        <Header.Title
+          title={selectMode === "plain" ? translate("selectExercise") : supersetTitle}
+        />
+        <IconButton
+          onPress={onAddExercisePress}
+          underlay="darker"
+        >
+          <Icon
+            icon="add"
+            size="large"
+            color={colors.onPrimary}
+          />
+        </IconButton>
+      </Header>
 
-        <View style={{ flex: 1 }}>
-          <ExerciseSelectLists
-            multiselect={selectMode === "superset"}
-            selected={selectedExercises}
-            onChange={selectMode === "superset" ? setSelectedExercises : createExercisesStep}
-          />
-        </View>
-        {selectMode === "superset" && (
-          <FAB
-            icon="check"
-            disabled={selectedExercises.length < 2}
-            onPress={() => createExercisesStep(selectedExercises)}
-          />
-        )}
+      <View style={{ flex: 1 }}>
+        <ExerciseSelectLists
+          multiselect={selectMode === "superset"}
+          selected={selectedExercises}
+          onChange={selectMode === "superset" ? setSelectedExercises : createExercisesStep}
+        />
       </View>
+      {selectMode === "superset" && (
+        <FAB
+          icon="check"
+          disabled={selectedExercises.length < 2}
+          onPress={() => createExercisesStep(selectedExercises)}
+        />
+      )}
     </BaseLayout>
   )
 }

@@ -1,11 +1,12 @@
 import type { Exercise, ExerciseMetric } from "@/db/schema"
+import { MetricType } from "../enums"
 
 type ExerciseModelType = Exercise & {
   exerciseMetrics?: ExerciseMetric[]
 }
 
 export class ExerciseModel {
-  id: number
+  id?: number
   name: string
   images: string[]
   equipment: string[]
@@ -13,28 +14,28 @@ export class ExerciseModel {
   muscles: string[]
   instructions: string[]
   tips: string[]
-  position: string | null
-  stance: string | null
+  position?: string
+  stance?: string
   isFavorite: boolean
   createdAt: number
   updatedAt: number
-  exerciseMetrics: ExerciseMetric[]
+  metrics: ExerciseMetric[]
 
-  constructor(data: ExerciseModelType) {
-    this.id = data.id
-    this.name = data.name
-    this.images = data.images || []
-    this.equipment = data.equipment || []
-    this.muscleAreas = data.muscle_areas!
-    this.muscles = data.muscles!
-    this.instructions = data.instructions || []
-    this.tips = data.tips || []
-    this.position = data.position
-    this.stance = data.stance
-    this.isFavorite = data.is_favorite
-    this.createdAt = data.created_at
-    this.updatedAt = data.updated_at
-    this.exerciseMetrics = data.exerciseMetrics!
+  constructor(data?: ExerciseModelType) {
+    this.id = data?.id
+    this.name = data?.name ?? ""
+    this.images = data?.images ?? []
+    this.equipment = data?.equipment ?? []
+    this.muscleAreas = data?.muscle_areas ?? []
+    this.muscles = data?.muscles ?? []
+    this.instructions = data?.instructions ?? []
+    this.tips = data?.tips ?? []
+    this.position = data?.position ?? undefined
+    this.stance = data?.stance ?? undefined
+    this.isFavorite = data?.is_favorite ?? false
+    this.createdAt = data?.created_at ?? 0
+    this.updatedAt = data?.updated_at ?? 0
+    this.metrics = data?.exerciseMetrics ?? []
   }
 
   get hasImages(): boolean {
@@ -73,18 +74,16 @@ export class ExerciseModel {
     return !!this.stance
   }
 
-  hasMetricType(type: "weight" | "duration" | "reps" | "distance" | "speed" | "rest"): boolean {
-    return !!this.exerciseMetrics?.some((metric) => metric.measurement_type === type)
+  hasMetricType(type: MetricType): boolean {
+    return !!this.metrics?.some((metric) => metric.measurement_type === type)
   }
 
-  getMetricByType(
-    type: "weight" | "duration" | "reps" | "distance" | "speed" | "rest",
-  ): ExerciseMetric | undefined {
-    return this.exerciseMetrics?.find((metric) => metric.measurement_type === type)
+  getMetricByType(type: MetricType): ExerciseMetric | undefined {
+    return this.metrics?.find((metric) => metric.measurement_type === type)
   }
 
-  get metricTypes(): ExerciseMetric["measurement_type"][] {
-    return this.exerciseMetrics?.map((metric) => metric.measurement_type) ?? []
+  get metricTypes(): MetricType[] {
+    return this.metrics?.map((metric) => metric.measurement_type) ?? []
   }
 
   get isWeightExercise(): boolean {
@@ -105,6 +104,10 @@ export class ExerciseModel {
 
   requiresEquipment(equipment: string): boolean {
     return this.equipment.includes(equipment)
+  }
+
+  update(updates: Partial<ExerciseModel>): ExerciseModel {
+    return Object.assign(this, updates)
   }
 
   static from(exercise: ExerciseModelType): ExerciseModel {

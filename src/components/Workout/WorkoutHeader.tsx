@@ -23,7 +23,7 @@ export const WorkoutHeader: React.FC = () => {
 
   function saveTemplate() {
     setMenuOpen(false)
-    navigate("SaveTemplate")
+    navigate("TemplateSave")
   }
 
   function toggleCommentsCard() {
