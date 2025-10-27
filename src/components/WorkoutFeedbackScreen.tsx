@@ -114,7 +114,6 @@ const CommentsForm: React.FC<CommentsFormProps> = ({ comments, onUpdate }) => {
           gap: spacing.md,
           flex: 1,
           width: "100%",
-          alignItems: "center",
         }}
       >
         <Text>{translate("name")}</Text>
