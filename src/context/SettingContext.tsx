@@ -16,6 +16,10 @@ export type SettingContextType = {
   setScientificMuscleNames: (scientificMuscleNames: boolean) => void
   edittedExercise: ExerciseModel | null
   setEdittedExercise: (exercise: ExerciseModel | null) => void
+  measureRest: boolean
+  setMeasureRest: (measureRest: boolean) => void
+  previewNextSet: boolean
+  setPreviewNextSet: (previewNextSet: boolean) => void
 }
 
 export const SettingContext = createContext<SettingContextType | null>(null)
@@ -27,6 +31,8 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   const [showSetCompletion, setShowSetCompletion] = useState<boolean>(false)
   const [showWorkoutTimer, setShowWorkoutTimer] = useState<boolean>(false)
   const [scientificMuscleNames, setScientificMuscleNames] = useState<boolean>(false)
+  const [measureRest, setMeasureRest] = useState<boolean>(false)
+  const [previewNextSet, setPreviewNextSet] = useState<boolean>(false)
 
   const [feedbackUser, setFeedbackUser] = useState<string>("")
   const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState<string>("All Exercises")
@@ -47,6 +53,10 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     setScientificMuscleNames,
     edittedExercise,
     setEdittedExercise,
+    measureRest,
+    setMeasureRest,
+    previewNextSet,
+    setPreviewNextSet,
   }
 
   return <SettingContext.Provider value={value}>{children}</SettingContext.Provider>

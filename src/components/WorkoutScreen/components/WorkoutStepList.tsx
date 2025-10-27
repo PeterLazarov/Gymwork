@@ -46,9 +46,10 @@ export type WorkoutStepCardProps = {
 } & Partial<CardProps>
 
 const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, workout, ...rest }) => {
-  const title = step.isPlain
-    ? step.exercises[0].name
-    : step.exercises.map((e) => `${e.name}`).join("\n")
+  const title =
+    step.stepType === "plain"
+      ? step.exercises[0].name
+      : step.exercises.map((e) => `${e.name}`).join("\n")
 
   return (
     <Card

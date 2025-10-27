@@ -227,27 +227,24 @@ type TemplateStepsListItemProps = {
   onStepRemove: (stepId: number) => void
 }
 
-const TemplateStepsListItem: React.FC<TemplateStepsListItemProps> = ({ step, onStepRemove }) => {
-  const isSuperset = step.stepType === "superset"
-  return (
-    <View
-      key={step.id}
-      style={listItemStyles.item}
-    >
-      <View style={listItemStyles.nameContainer}>
-        {step.exercises.map((exercise) => (
-          <Text key={exercise.id}>
-            {isSuperset && `${step.exerciseLettering[exercise.id!]}: `}
-            {exercise.name}
-          </Text>
-        ))}
-      </View>
-      <IconButton onPress={() => onStepRemove(step.id)}>
-        <Icon icon="delete" />
-      </IconButton>
+const TemplateStepsListItem: React.FC<TemplateStepsListItemProps> = ({ step, onStepRemove }) => (
+  <View
+    key={step.id}
+    style={listItemStyles.item}
+  >
+    <View style={listItemStyles.nameContainer}>
+      {step.exercises.map((exercise) => (
+        <Text key={exercise.id}>
+          {step.stepType === "superset" && `${step.exerciseLettering[exercise.id!]}: `}
+          {exercise.name}
+        </Text>
+      ))}
     </View>
-  )
-}
+    <IconButton onPress={() => onStepRemove(step.id)}>
+      <Icon icon="delete" />
+    </IconButton>
+  </View>
+)
 
 const listItemStyles = StyleSheet.create({
   item: { flexDirection: "row", alignItems: "center" },

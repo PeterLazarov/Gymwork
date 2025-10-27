@@ -1,15 +1,15 @@
 import React, { forwardRef } from "react"
-import { Pressable, StyleProp, View, ViewStyle, TextInput as TextInputRN } from "react-native"
+import { Pressable, StyleProp, TextInput as TextInputRN, View, ViewStyle } from "react-native"
 import { TextInputProps } from "react-native-paper"
 
+import { spacing, useColors } from "../tokens"
 import { Icon } from "./Icon"
 import { NumberInput } from "./NumberInput"
-import { spacing, useColors } from "../tokens"
 
 type _IncrementNumberEditor = {
-  value?: number
+  value?: number | null
   onChange?: (value: number | undefined) => void
-  step?: number
+  step?: number | null
   returnKeyType?: TextInputProps["returnKeyType"]
   maxDecimals?: number
 }
@@ -49,7 +49,7 @@ type IncrementalButtonsProps = {
   value: number
   onChange(m: number): void
   children?: React.ReactNode
-  step?: number
+  step?: number | null
 }
 
 function isInvalidNumber(value?: number) {

@@ -1,0 +1,264 @@
+import { useDialogContext } from "@/context/DialogContext"
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { ExerciseModel } from "@/db/models/ExerciseModel"
+import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
+import { useRemoveWorkoutStepQuery } from "@/db/queries/useRemoveWorkoutStepQuery"
+import { useUpdateExerciseQuery } from "@/db/queries/useUpdateExerciseQuery"
+import { useUpdateWorkoutStepExerciseQuery } from "@/db/queries/useUpdateWorkoutStepExerciseQuery"
+import {
+  boxShadows,
+  fontSize,
+  Header,
+  Icon,
+  IconButton,
+  spacing,
+  Text,
+  useColors,
+} from "@/designSystem"
+import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
+import { navigate } from "@/navigators/navigationUtilities"
+import { translate } from "@/utils"
+import { useMemo, useState } from "react"
+import { View } from "react-native"
+import { Menu } from "react-native-paper"
+import { ExerciseSelectLists } from "../shared/ExerciseSelectLists"
+import { ExerciseTrackView } from "./components/ExerciseTrackView"
+
+export type WorkoutStepScreenParams = {
+  focusedStep: WorkoutStepModel
+}
+interface WorkoutStepScreenProps extends AppStackScreenProps<"WorkoutStep"> {}
+export const WorkoutStepScreen: React.FC<WorkoutStepScreenProps> = ({ navigation }) => {
+  const { focusedStep } = useRouteParams("WorkoutStep")
+  const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
+  const [focusedExercise, setFocusedExercise] = useState<ExerciseModel>(focusedStep.exercise)
+  const updateWorkoutStepExercise = useUpdateWorkoutStepExerciseQuery()
+
+  function switchExercise(exercise: ExerciseModel) {
+    if (focusedExercise) {
+      updateWorkoutStepExercise(focusedStep.id, focusedExercise.id!, exercise)
+      setFocusedExercise(exercise)
+      setExerciseSelectOpen(false)
+    }
+  }
+
+  return (
+    <View style={{ flex: 1 }}>
+      <StepHeader
+        step={focusedStep}
+        focusedExercise={focusedExercise}
+        onSwitchExercise={() => setExerciseSelectOpen(true)}
+      />
+
+      {exerciseSelectOpen && (
+        <ExerciseSelectLists
+          multiselect={false}
+          selected={[]}
+          onChange={([e]) => {
+            if (e) {
+              switchExercise(e)
+            }
+          }}
+        />
+      )}
+
+      {!exerciseSelectOpen && (
+        <>
+          {focusedStep?.stepType === "superset" && (
+            <ExerciseControl
+              selectedIndex={focusedExercise ? focusedStep.exercises.indexOf(focusedExercise) : -1}
+              options={focusedStep.exercises}
+              onChange={setFocusedExercise}
+            />
+          )}
+          <ExerciseTrackView
+            exercise={focusedExercise}
+            step={focusedStep}
+            setFocusedExercise={setFocusedExercise}
+          />
+        </>
+      )}
+    </View>
+  )
+}
+
+export type StepHeaderProps = {
+  step: WorkoutStepModel
+  focusedExercise: ExerciseModel
+  onSwitchExercise: () => void
+}
+
+const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitchExercise }) => {
+  const colors = useColors()
+
+  const { openedWorkout } = useOpenedWorkout()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const { showSnackbar } = useDialogContext()
+  const removeWorkoutStep = useRemoveWorkoutStepQuery()
+  const updateExercise = useUpdateExerciseQuery()
+  // const insertWorkoutStep = useInsertWorkoutStepQuery()
+
+  const deleteSelectedExercises = () => {
+    removeWorkoutStep(step.id)
+    navigate("Workout")
+    showSnackbar!({
+      text: "Exercise was removed from workout",
+      actionText: "Undo",
+      action: () => {
+        // TODO undo delete workout step
+        // insertWorkoutStep(step)
+      },
+    })
+  }
+
+  const toggleFavoriteExercise = () => {
+    setMenuOpen(false)
+    updateExercise(focusedExercise.id!, { isFavorite: !focusedExercise.isFavorite })
+  }
+
+  function onSwitchExercisePress() {
+    setMenuOpen(false)
+    onSwitchExercise()
+  }
+
+  function onEditExercisePress() {
+    setMenuOpen(false)
+    navigate("ExerciseEdit", {})
+  }
+  function goToFeedback() {
+    setMenuOpen(false)
+    navigate("UserFeedback", { referrerPage: "WorkoutStep" })
+  }
+  function goToInstructions() {
+    setMenuOpen(false)
+    navigate("ExerciseDetails", { exerciseId: step.exercise.id! })
+  }
+  function goBack() {
+    // stateStore.setProp("focusedStepGuid", "")
+    navigate("Workout")
+  }
+
+  const focusedStepName = useMemo(() => {
+    const name = step.stepType === "plain" ? step.exercise.name : "Superset"
+    let similarSteps = openedWorkout!.workoutSteps.filter((s) => s.stepType === step.stepType)
+
+    if (step.stepType === "plain") {
+      similarSteps = similarSteps.filter((s) => s.exercises.includes(focusedExercise))
+    }
+
+    const n = similarSteps.indexOf(step) + 1
+
+    return `${name} ${similarSteps.length > 1 ? n : ""}`
+  }, [step.exercise.id])
+
+  return (
+    <Header>
+      <IconButton
+        onPress={goBack}
+        underlay="darker"
+      >
+        <Icon
+          color={colors.onPrimary}
+          icon="chevron-back"
+        />
+      </IconButton>
+      <Header.Title
+        title={focusedStepName}
+        numberOfLines={1}
+      />
+
+      <Menu
+        visible={menuOpen}
+        onDismiss={() => setMenuOpen(false)}
+        anchorPosition="bottom"
+        anchor={
+          <IconButton
+            onPress={() => setMenuOpen(true)}
+            underlay="darker"
+          >
+            <Icon
+              icon="ellipsis-vertical"
+              color={colors.onPrimary}
+            />
+          </IconButton>
+        }
+      >
+        <Menu.Item
+          onPress={onSwitchExercisePress}
+          title={translate("switchExercise")}
+        />
+        <Menu.Item
+          onPress={onEditExercisePress}
+          title={translate("editExercise")}
+        />
+        <Menu.Item
+          onPress={deleteSelectedExercises}
+          title={translate("removeFromWorkout")}
+        />
+        <Menu.Item
+          onPress={toggleFavoriteExercise}
+          title={translate(focusedExercise.isFavorite ? "removeFavorite" : "setAsFavorite")}
+        />
+        <Menu.Item
+          onPress={goToInstructions}
+          title={translate("viewInstructions")}
+        />
+
+        <Menu.Item
+          onPress={goToFeedback}
+          title={translate("giveFeedback")}
+        />
+      </Menu>
+    </Header>
+  )
+}
+
+type ExerciseControlProps = {
+  options: ExerciseModel[]
+  selectedIndex: number
+  onChange: (exercise: ExerciseModel) => void
+}
+
+const ExerciseControl: React.FC<ExerciseControlProps> = ({ options, selectedIndex, onChange }) => {
+  const colors = useColors()
+
+  const exercise = options[selectedIndex]!
+  const atStart = selectedIndex === 0
+  const atEnd = selectedIndex === options.length - 1
+
+  const getPrev = () => {
+    onChange(atStart ? options.at(-1)! : options[selectedIndex - 1]!)
+  }
+
+  const getNext = () => {
+    onChange(atEnd ? options[0]! : options[selectedIndex + 1]!)
+  }
+
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: colors.surfaceContainerLowest,
+        padding: spacing.xxs,
+        ...boxShadows.default,
+      }}
+    >
+      <IconButton onPress={getPrev}>
+        <Icon icon="chevron-back" />
+      </IconButton>
+
+      <Text
+        style={{ fontSize: fontSize.lg, flex: 1 }}
+        numberOfLines={1}
+      >
+        {exercise.name}
+      </Text>
+
+      <IconButton onPress={getNext}>
+        <Icon icon="chevron-forward" />
+      </IconButton>
+    </View>
+  )
+}

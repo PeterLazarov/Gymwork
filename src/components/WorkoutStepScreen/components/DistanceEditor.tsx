@@ -6,19 +6,21 @@ import { DistanceUnit, measurementUnits } from "@/constants/units"
 import { NumberInput, NumberInputProps, Select, spacing } from "@/designSystem"
 
 type _Props = {
-  value?: number
+  value?: number | null
   unit: DistanceUnit
   onChange: (selected: number) => void
 }
 export type DistanceEditorProps = _Props & Omit<NumberInputProps, keyof _Props>
 
-const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(function DistanceEditor(
+export const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(function DistanceEditor(
   { value, unit, onChange, ...rest },
   ref,
 ) {
   const [internalUnit, setInternalUnit] = useState<DistanceUnit>(unit)
 
-  const formattedDistance = convert(value).from(unit).to(internalUnit)
+  const formattedDistance = convert(value ?? 0)
+    .from(unit)
+    .to(internalUnit)
 
   function onChangeInternal(distance: number | undefined) {
     if (distance === undefined) return
@@ -47,5 +49,3 @@ const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(function Dista
     </View>
   )
 })
-
-export default DistanceEditor

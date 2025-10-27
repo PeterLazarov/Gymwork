@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from "react"
-import { Image, Pressable, View } from "react-native"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
+import { Dimensions, Image, Pressable, View } from "react-native"
 
+import { useSetting } from "@/context/SettingContext"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { useExercisesQuery, useMostUsedExercisesQuery } from "@/db/queries/useExercisesQuery"
 import { useUpdateExerciseQuery } from "@/db/queries/useUpdateExerciseQuery"
@@ -11,15 +12,113 @@ import {
   IconButton,
   palettes,
   spacing,
+  TabConfig,
   Text,
+  TopNavigation,
   useColors,
 } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
 import { exerciseImages } from "@/utils/exerciseImages"
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list"
+import { Searchbar } from "react-native-paper"
 
 const noop = () => {}
+
+type ExerciseSelectListsProps = {
+  multiselect: boolean
+  selected: ExerciseModel[]
+  onChange(exercises: ExerciseModel[]): void
+}
+
+const tabHeight = 48
+const searchBarHeight = 72
+
+export const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
+  multiselect,
+  onChange,
+  selected,
+}) => {
+  const [selectedExercises, setSelectedExercises] = useState<ExerciseModel[]>(selected)
+
+  const { exerciseSelectLastTab, setExerciseSelectLastTab } = useSetting()
+
+  const [filterString, setFilterString] = useState("")
+
+  function toggleSelectedExercise(exercise: ExerciseModel) {
+    if (!selectedExercises.includes(exercise)) {
+      setSelectedExercises((oldVal) => {
+        const newSelected = [...oldVal, exercise]
+        onChange(newSelected) // TODO refactor
+
+        return newSelected
+      })
+    } else {
+      setSelectedExercises((oldVal) => {
+        const newSelected = oldVal.filter((e) => e.id !== exercise.id)
+        onChange(newSelected) // TODO refactor
+
+        return newSelected
+      })
+    }
+  }
+
+  const props = useMemo(() => {
+    return {
+      onSelect: (exercise: ExerciseModel) => {
+        multiselect ? toggleSelectedExercise(exercise) : setSelectedExercises([exercise])
+
+        // TODO refactor
+        !multiselect && onChange([exercise])
+      },
+      selectedExercises,
+      filterString,
+    }
+  }, [filterString, selectedExercises])
+
+  const tabsConfig: TabConfig[] = [
+    {
+      name: translate("favorite"),
+      Component: () => <FavoriteExercisesList {...props} />,
+    },
+    {
+      name: translate("mostUsed"),
+      Component: () => <MostUsedExercisesList {...props} />,
+    },
+    {
+      name: translate("allExercises"),
+      Component: () => <AllExercisesList {...props} />,
+    },
+  ]
+
+  return (
+    <View style={{ flex: 1 }}>
+      <View
+        style={{
+          zIndex: 1,
+          width: "100%",
+        }}
+      >
+        <Searchbar
+          placeholder={translate("search")}
+          value={filterString}
+          onChangeText={setFilterString}
+          mode="view"
+          defaultValue={filterString}
+          style={{ height: searchBarHeight }}
+        />
+      </View>
+
+      <TopNavigation
+        initialRouteName={exerciseSelectLastTab || "All Exercises"}
+        tabsConfig={tabsConfig}
+        tabWidth={Dimensions.get("screen").width / tabsConfig.length}
+        tabHeight={tabHeight}
+        onTabChange={(tab) => setExerciseSelectLastTab(tab)}
+      />
+    </View>
+  )
+}
 
 type ExerciseListProps = {
   exercises: ExerciseModel[]
@@ -49,7 +148,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, onSelect, select
     <FlashList
       data={exercises}
       renderItem={renderItem}
-      keyExtractor={(exercise) => exercise.id.toString()}
+      keyExtractor={(exercise) => exercise.id!.toString()}
     />
   )
 }
@@ -72,7 +171,7 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
   const updateExercise = useUpdateExerciseQuery()
 
   function handleLongPress() {
-    navigate("ExerciseDetails", { exerciseId: exercise.id })
+    navigate("ExerciseDetails", { exerciseId: exercise.id! })
   }
   const imageUri = exercise.images?.[0]
 
@@ -101,11 +200,7 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
           source={imageUri ? exerciseImages[imageUri] : undefined}
         />
 
-        <View
-          style={{
-            flex: 1,
-          }}
-        >
+        <View style={{ flex: 1 }}>
           <Text
             style={{
               flexWrap: "wrap",
@@ -117,7 +212,6 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
           </Text>
           <Text
             style={{
-              // flex: 1,
               flexWrap: "wrap",
               fontSize: fontSize.xs,
               color: colors.onSurfaceVariant,
@@ -129,9 +223,7 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
         </View>
 
         <IconButton
-          onPress={() => {
-            updateExercise(exercise.id, { is_favorite: !exercise.isFavorite })
-          }}
+          onPress={() => updateExercise(exercise.id!, { isFavorite: !exercise.isFavorite })}
         >
           <Icon
             icon={heartIcon}
@@ -148,7 +240,7 @@ type AllExercisesListProps = {
   selectedExercises: ExerciseModel[]
   filterString: string
 }
-export const AllExercisesList: React.FC<AllExercisesListProps> = ({
+const AllExercisesList: React.FC<AllExercisesListProps> = ({
   onSelect,
   selectedExercises,
   filterString,
@@ -186,7 +278,7 @@ type FavoriteExercisesListProps = {
   selectedExercises: ExerciseModel[]
   filterString: string
 }
-export const FavoriteExercisesList: React.FC<FavoriteExercisesListProps> = ({
+const FavoriteExercisesList: React.FC<FavoriteExercisesListProps> = ({
   onSelect,
   selectedExercises,
   filterString,
@@ -225,7 +317,7 @@ type MostUsedExercisesListProps = {
   selectedExercises: ExerciseModel[]
   filterString: string
 }
-export const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
+const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
   onSelect,
   selectedExercises,
   filterString,

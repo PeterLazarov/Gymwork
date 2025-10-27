@@ -3,7 +3,7 @@ import { DateTime } from "luxon"
 import { workout_step_exercises, workout_steps } from "../schema"
 import { useDB } from "../useDB"
 
-export const useInsertExerciseInWorkoutQuery = () => {
+export const useInsertWorkoutStepQuery = () => {
   const { drizzleDB } = useDB()
 
   return async (exerciseId: number, workoutId: number) => {

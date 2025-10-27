@@ -93,6 +93,10 @@ export class SetModel {
     )
   }
 
+  update(data: Partial<SetModel>): void {
+    Object.assign(this, data)
+  }
+
   static from(set: SetModelType): SetModel {
     return new SetModel(set)
   }

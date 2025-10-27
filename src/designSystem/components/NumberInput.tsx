@@ -5,7 +5,7 @@ import { TextInput, TextInputProps } from "react-native-paper"
 import { useColors } from "../tokens/colors"
 
 type _NumberInputProps = {
-  value?: number
+  value?: number | null
   onChange?: (value: number | undefined) => void
   //   onSubmit?: TextInputProps['onSubmitEditing']
   //   returnKeyType?: TextInputProps['returnKeyType']
@@ -47,7 +47,7 @@ export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
 
       if (Number(rendered) !== value) {
         setRendered(
-          value !== undefined
+          value !== undefined && value !== null
             ? String(value.toFixed(String(value).includes(".") ? maxDecimals : 0))
             : "",
         )

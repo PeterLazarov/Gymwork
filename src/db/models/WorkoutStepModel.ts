@@ -35,14 +35,6 @@ export class WorkoutStepModel {
     this.sets = data.sets.map((set) => SetModel.from(set))
   }
 
-  get isPlain(): boolean {
-    return this.stepType === "plain"
-  }
-
-  get isSuperset(): boolean {
-    return this.stepType === "superset"
-  }
-
   get completedSets(): SetModel[] {
     return this.sets.filter((set) => set.isComplete)
   }
@@ -59,10 +51,14 @@ export class WorkoutStepModel {
     return this.sets.some((set) => set.isWarmup)
   }
 
+  get exercise(): ExerciseModel {
+    return this.exercises[0]
+  }
+
   get exerciseSetsMap(): Record<Exercise["id"], SetModel[]> {
     return this.exercises.reduce(
       (acc, exercise) => {
-        acc[exercise.id] = this.getSetsForExercise(exercise.id)
+        acc[exercise.id!] = this.getSetsForExercise(exercise.id!)
         return acc
       },
       {} as Record<Exercise["id"], SetModel[]>,
@@ -75,7 +71,7 @@ export class WorkoutStepModel {
     if (this.stepType === "superset") {
       map = this.exercises.reduce(
         (map, exercise, index) => {
-          map[exercise.id] = alphabeticNumbering(index)
+          map[exercise.id!] = alphabeticNumbering(index)
           return map
         },
         {} as Record<Exercise["id"], string>,
