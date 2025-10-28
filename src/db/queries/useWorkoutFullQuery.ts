@@ -11,12 +11,20 @@ export const useWorkoutFullQuery = () => {
           with: {
             workoutStepExercises: {
               with: {
-                exercise: true,
+                exercise: {
+                  with: {
+                    exerciseMetrics: true
+                  }
+                },
               },
             },
             sets: {
               with: {
-                exercise: true,
+                exercise: {
+                  with: {
+                    exerciseMetrics: true
+                  }
+                },
               },
             },
           },
