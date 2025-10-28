@@ -96,3 +96,7 @@ web-build/
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Local database copies for Drizzle Studio
+local-db.db
+local-db.db-journal

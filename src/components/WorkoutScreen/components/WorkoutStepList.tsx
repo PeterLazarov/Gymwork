@@ -12,9 +12,8 @@ type Props = {
 }
 
 export const WorkoutStepList: React.FC<Props> = ({ workout }) => {
-  function onCardPress(stepId: number) {
-    // stateStore.setFocusedStep(stepId)
-    navigate("WorkoutStep")
+  function onCardPress(step: WorkoutStepModel) {
+    navigate("WorkoutStep", { focusedStep: step })
   }
 
   const renderItem = ({ item, index }: ListRenderItemInfo<WorkoutStepModel>) => {
@@ -23,7 +22,7 @@ export const WorkoutStepList: React.FC<Props> = ({ workout }) => {
       <WorkoutStepCard
         step={item}
         workout={workout}
-        onPress={() => onCardPress(item.id)}
+        onPress={() => onCardPress(item)}
         containerStyle={{
           marginBottom: isLast ? 0 : undefined,
         }}

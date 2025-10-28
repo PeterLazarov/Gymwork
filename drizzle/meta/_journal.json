@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1760895708240,
-      "tag": "0000_awesome_grandmaster",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1729891200000,
-      "tag": "0001_create_exercise_records_view",
+      "when": 1761672284555,
+      "tag": "0000_cheerful_old_lace",
       "breakpoints": true
     }
   ]

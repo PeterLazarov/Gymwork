@@ -41,6 +41,6 @@ module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
         ],
       },
     },
-    plugins: [...existingPlugins],
+    plugins: existingPlugins,
   }
 }

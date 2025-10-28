@@ -21,6 +21,7 @@ import Config from "@/ignite/config"
 import { useAppTheme } from "@/ignite/theme/context"
 import type { AppStackParamList, NavigationProps } from "./navigationTypes"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
+import { WorkoutStepScreen } from "@/components/WorkoutStepScreen"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -83,6 +84,10 @@ const AppStack = () => {
       <Stack.Screen
         name="WorkoutFeedback"
         component={WorkoutFeedbackScreen}
+      />
+      <Stack.Screen
+        name="WorkoutStep"
+        component={WorkoutStepScreen}
       />
     </Stack.Navigator>
   )
