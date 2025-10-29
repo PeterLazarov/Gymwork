@@ -6,6 +6,7 @@ import type { useSQLiteContext } from "expo-sqlite"
 import type __state from "../../data/data.json"
 import _state from "../../data/data_large.json"
 import { schema } from "../schema"
+import { DateTime } from "luxon"
 
 const {
   // workouts
@@ -138,7 +139,8 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
   console.log("added exercises")
 
   for (const workout of state.workoutStore.workouts) {
-    const workoutDate = new Date(workout.date).getTime()
+    const cleanedDate = DateTime.fromISO(workout.date).set({ hour: 0, minute: 0, second: 0 })
+    const workoutDate = cleanedDate.toMillis()
     const insertWorkoutQuery = await drizzleDB
       .insert(workouts)
       .values({

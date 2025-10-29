@@ -23,7 +23,7 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
   const dbRef = useRef<DrizzleDBType | null>(null)
   const sqliteRef = useRef<SQLiteDatabase | null>(null)
 
-  const FORCE_DELETE_DB = false
+  const FORCE_DELETE_DB = true
 
   useEffect(() => {
     const initDB = async () => {
