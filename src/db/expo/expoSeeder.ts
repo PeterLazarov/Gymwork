@@ -1,12 +1,12 @@
+import convert from "convert-units"
 import { sql } from "drizzle-orm"
-
-import { DrizzleDBType } from "@/src/db/useDB"
-
 import type { useSQLiteContext } from "expo-sqlite"
+import { DateTime } from "luxon"
+
 import type __state from "../../data/data.json"
 import _state from "../../data/data_large.json"
 import { schema } from "../schema"
-import { DateTime } from "luxon"
+import { DrizzleDBType } from "../useDB"
 
 const {
   // workouts
@@ -27,7 +27,28 @@ const {
   exercises_tags,
 } = schema
 
-const state = _state as typeof __state
+const state = _state as typeof __state as {
+  exerciseStore: {
+    exercises: Array<{
+      guid: string
+      name: string
+      images: string[]
+      equipment: string[]
+      instructions: string[]
+      tips: string[]
+      muscleAreas: string[]
+      muscles: string[]
+      measurements: Record<string, any>
+      isFavorite: boolean
+    }>
+  }
+}
+
+// Configuration for generated workouts
+const numberOfWorkouts = 20
+const weightIncrementKg = 2.5
+const setDuration = 100 * 1000
+const rest = 300 * 1000
 
 function between(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min
@@ -138,16 +159,31 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
   }
   console.log("added exercises")
 
-  for (const workout of state.workoutStore.workouts) {
-    const cleanedDate = DateTime.fromISO(workout.date).set({ hour: 0, minute: 0, second: 0 })
-    const workoutDate = cleanedDate.toMillis()
+  const today = DateTime.fromISO(DateTime.now().toISODate()!)
+  const exerciseList = state.exerciseStore.exercises
+
+  const benchPressExercise = exerciseList.find((e) => e.name?.toLowerCase().includes("bench press"))
+  const squatExercise = exerciseList.find((e) => e.name?.toLowerCase().includes("squat"))
+  const cardioExercise = exerciseList.find((e) => e.muscleAreas?.includes("Cardio"))
+
+  for (let i = 0; i < numberOfWorkouts; i++) {
+    const workoutDate = today
+      .minus({ days: i + i * Math.ceil(Math.random() * 2) })
+      .set({ hour: 0, minute: 0, second: 0 })
+    const workoutDateMs = workoutDate.toMillis()
+
+    let workoutTime = workoutDate.set({ hour: 8, minute: 0, second: 0 })
+
     const insertWorkoutQuery = await drizzleDB
       .insert(workouts)
       .values({
-        date: workoutDate,
-        notes: workout.notes,
-        rpe: workout.rpe,
-        pain: workout.pain,
+        date: workoutDateMs,
+        notes: Array.from({ length: between(0, 20) })
+          .map(() => "word")
+          .join(" ")
+          .trim(),
+        rpe: between(0, 1) ? between(5, 10) : null,
+        pain: (["pain", "discomfort", "noPain", null] as const)[between(0, 3)],
         is_template: false,
       })
       .execute()
@@ -158,40 +194,42 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
     const workoutId = insertWorkoutQuery.lastInsertRowId
     console.log({ workoutId })
 
-    for (let stepIndex = 0; stepIndex < workout.steps.length; stepIndex++) {
+    const numSteps = between(3, 8)
+
+    for (let stepIndex = 0; stepIndex < numSteps; stepIndex++) {
+      const stepTypeRoll = Math.random()
+      let stepExercises: typeof exerciseList
+      let isSuperSet = false
+
+      if (stepTypeRoll < 0.1 && benchPressExercise && squatExercise) {
+        stepExercises = [benchPressExercise, squatExercise]
+        isSuperSet = true
+      } else if (stepTypeRoll < 0.2 && benchPressExercise) {
+        stepExercises = [benchPressExercise]
+      } else if (stepTypeRoll < 0.3 && cardioExercise) {
+        stepExercises = [cardioExercise]
+      } else {
+        const randomExercise = exerciseList[between(0, exerciseList.length - 1)]
+        stepExercises = [randomExercise]
+      }
+
       const workout_step_obj: typeof workout_steps.$inferInsert = {
         step_type: "plain" as const,
         workout_id: workoutId,
         position: stepIndex,
       }
 
-      // ! this times out on web sometimes
       const runResult = await drizzleDB
         .insert(workout_steps)
         .values(workout_step_obj)
         .catch((err) => {
-          console.log({
-            err,
-            obj: workout_step_obj,
-          })
+          console.log({ err, obj: workout_step_obj })
+          throw err
         })
       const workoutStepId = runResult!.lastInsertRowId
 
-      const step = workout.steps[stepIndex]
-
-      // Get the exercise IDs for this step
-      const exerciseIds = new Set<number>()
-      for (const set of step.sets) {
-        const exerciseIndex = state.exerciseStore.exercises.findIndex(
-          (e) => e.guid === set.exercise,
-        )
-        if (exerciseIndex !== -1) {
-          exerciseIds.add(exerciseIndex + 1)
-        }
-      }
-
-      // Insert workout_step_exercises for each unique exercise in this step
-      for (const exerciseId of exerciseIds) {
+      for (const exercise of stepExercises) {
+        const exerciseId = exerciseList.indexOf(exercise) + 1
         await drizzleDB
           .insert(workout_step_exercises)
           .values({
@@ -205,23 +243,63 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
           })
       }
 
-      const groupSets = step.sets.map((set, i) => ({
-        workout_step_id: workoutStepId,
-        exercise_id: state.exerciseStore.exercises.findIndex((e) => e.guid === set.exercise)! + 1,
-        reps: "reps" in set ? set.reps : null,
-        weight_mcg: "weightMcg" in set ? set.weightMcg : null,
-        duration_ms: "durationMs" in set ? set.durationMs : null,
-        distance_mm: "distanceMm" in set ? set.distanceMm : null,
-        rest_ms: "restMs" in set ? set.restMs : null,
-        is_warmup: set.isWarmup,
-        date: workoutDate, // Denormalized for easier querying
-        is_weak_ass_record: false,
-        completed_at: null,
-      }))
+      const isCardio = stepExercises[0] === cardioExercise
+      const numSets = isSuperSet ? between(2, 3) * 2 : between(2, 5)
+
+      const groupSets: (typeof sets.$inferInsert)[] = []
+
+      for (let setIndex = 0; setIndex < numSets; setIndex++) {
+        const exercise = isSuperSet ? stepExercises[setIndex % 2] : stepExercises[0]
+        const exerciseId = exerciseList.indexOf(exercise) + 1
+
+        const restMs = setIndex > 0 ? rest : 0
+        workoutTime = workoutTime.plus({
+          milliseconds: restMs + setDuration,
+        })
+
+        if (isCardio) {
+          // Cardio set
+          const km = between(1, 3)
+          const duration = km * between(4, 7)
+          groupSets.push({
+            workout_step_id: workoutStepId,
+            exercise_id: exerciseId,
+            reps: null,
+            weight_mcg: null,
+            duration_ms: convert(duration).from("min").to("ms"),
+            distance_mm: convert(km).from("km").to("mm"),
+            rest_ms: restMs,
+            is_warmup: false,
+            date: workoutDateMs,
+            is_weak_ass_record: false,
+            completed_at: null,
+          })
+        } else {
+          const hasWeight = "weight" in exercise.measurements
+          groupSets.push({
+            workout_step_id: workoutStepId,
+            exercise_id: exerciseId,
+            reps: between(3, 12),
+            weight_mcg: hasWeight
+              ? convert(between(8, 40) * weightIncrementKg)
+                  .from("kg")
+                  .to("mcg")
+              : null,
+            duration_ms: null,
+            distance_mm: null,
+            rest_ms: restMs,
+            is_warmup: setIndex === 0 || (isSuperSet && setIndex === 1),
+            date: workoutDateMs,
+            is_weak_ass_record: false,
+            completed_at: null,
+          })
+        }
+      }
 
       await drizzleDB.insert(sets).values(groupSets)
     }
   }
+  console.log("added workouts")
 }
 
 export async function dropAllTables(db: DrizzleDBType) {
@@ -242,8 +320,23 @@ export async function dropAllTables(db: DrizzleDBType) {
 }
 
 export async function clearAll(db: DrizzleDBType, sqlite: ReturnType<typeof useSQLiteContext>) {
+  const tables = [
+    schema.settings,
+    schema.exercises,
+    schema.exercise_metrics,
+    schema.workouts,
+    schema.workout_steps,
+    schema.workout_step_exercises,
+    schema.sets,
+    schema.tags,
+    schema.workouts_tags,
+    schema.workout_steps_tags,
+    schema.sets_tags,
+    schema.exercises_tags,
+  ]
+
   return Promise.all(
-    Object.values(schema).map((table) =>
+    tables.map((table) =>
       db
         .delete(table)
         .execute()
