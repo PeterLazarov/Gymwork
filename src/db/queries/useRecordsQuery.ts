@@ -25,6 +25,5 @@ export const useRecordsQuery = (workoutStepId: number) => {
   // Use the reactive query hook with the sets table for updates
   const records = useExpoQuery(query, ["sets"])
 
-  //TODO: remove hack - records in array (records has value of {"id": 27})
-  return records ? [records] : []
+  return records 
 }
