@@ -14,24 +14,31 @@ addDatabaseChangeListener((e) => {
 })
 const defaultTables: string[] = []
 
-export function useExpoQuery<T>(query: string, tables?: string[]): T
+export function useExpoQuery<T>(query: string, tables?: string[], mode?: "multiple" | "single"): T
 
 export function useExpoQuery<T extends { prepare: () => { all: () => any } }>(
   query: T,
   tables?: string[],
+  mode?: "multiple" | "single",
 ): Awaited<ReturnType<ReturnType<T["prepare"]>["all"]>>
 
 export function useExpoQuery<T extends { all: () => any }>(
   query: T,
   tables?: string[],
+  mode?: "multiple" | "single",
 ): Awaited<ReturnType<T["all"]>>
 
 /**
  * Allows subscribing to any SQL query
  * @param query A complete SQL string with the params included, or a Drizzle select/query (.toSQL)
  * @param tables String array with the table names such as ["sets"]
+ * @param mode Whether to fetch all rows ('multiple', default) or just the first row ('single')
  */
-export function useExpoQuery(query: any, tables: string[] = defaultTables): any[] {
+export function useExpoQuery(
+  query: any,
+  tables: string[] = defaultTables,
+  mode: "multiple" | "single" = "multiple",
+): any[] {
   const [data, setData] = useState<any[]>([])
   const latestReq = useRef(0)
   const isActive = useRef(true)
@@ -49,8 +56,10 @@ export function useExpoQuery(query: any, tables: string[] = defaultTables): any[
     const reqId = ++latestReq.current
 
     const fetchRows = () => {
-      sqlite
-        .getAllAsync(sql, params)
+      const fetchMethod =
+        mode === "single" ? sqlite.getFirstAsync(sql, params) : sqlite.getAllAsync(sql, params)
+
+      fetchMethod
         .then((rows) => {
           if (isActive.current && reqId === latestReq.current) {
             setData(rows)

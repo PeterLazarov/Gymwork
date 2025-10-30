@@ -8,7 +8,7 @@ import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps } from "@/navigators/navigationTypes"
 import { translate } from "@/utils"
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list"
-import { useEffect, useState } from "react"
+import { useMemo } from "react"
 import { Pressable, View } from "react-native"
 
 interface TemplateSelectScreenProps extends AppStackScreenProps<"TemplateSelect"> {}
@@ -76,14 +76,12 @@ type TemplateListProps = {
   onEdit: (template: WorkoutModel) => void
 }
 const TemplateList: React.FC<TemplateListProps> = ({ onSelect, onDelete, onEdit }) => {
-  const templatesQuery = useTemplatesQuery()
-  const [templates, setTemplates] = useState<WorkoutModel[]>([])
+  const templatesData = useTemplatesQuery()
 
-  useEffect(() => {
-    templatesQuery().then((result) => {
-      setTemplates(result.map((item) => new WorkoutModel(item)))
-    })
-  }, [templatesQuery])
+  const templates = useMemo(
+    () => templatesData.map((item) => new WorkoutModel(item)),
+    [templatesData],
+  )
 
   const renderItem = ({ item }: ListRenderItemInfo<WorkoutModel>) => {
     return (
@@ -98,7 +96,7 @@ const TemplateList: React.FC<TemplateListProps> = ({ onSelect, onDelete, onEdit 
 
   return (
     <FlashList
-      data={templates.slice()}
+      data={templates}
       renderItem={renderItem}
       keyExtractor={(template) => template.id!.toString()}
     />

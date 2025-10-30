@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import React, { useCallback, useMemo, useState } from "react"
 import { Dimensions, Image, Pressable, View } from "react-native"
 
 import { useSetting } from "@/context/SettingContext"
@@ -245,20 +245,12 @@ const AllExercisesList: React.FC<AllExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const exercisesQuery = useExercisesQuery()
+  const exercisesData = useExercisesQuery({ filterString })
 
-  const [exercises, setExercises] = useState<ExerciseModel[]>([])
-
-  useEffect(() => {
-    exercisesQuery({ filterString })
-      .then((result) => {
-        const items = result.map((item) => new ExerciseModel(item))
-        setExercises(items)
-      })
-      .catch((error) => {
-        console.error("Error fetching exercises:", error)
-      })
-  }, [filterString, exercisesQuery])
+  const exercises = useMemo(
+    () => exercisesData.map((item) => new ExerciseModel(item)),
+    [exercisesData],
+  )
 
   return (
     <>
@@ -283,20 +275,12 @@ const FavoriteExercisesList: React.FC<FavoriteExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const exercisesQuery = useExercisesQuery()
+  const exercisesData = useExercisesQuery({ isFavorite: true, filterString })
 
-  const [exercises, setExercises] = useState<ExerciseModel[]>([])
-
-  useEffect(() => {
-    exercisesQuery({ isFavorite: true, filterString })
-      .then((result) => {
-        const items = result.map((item) => new ExerciseModel(item))
-        setExercises(items)
-      })
-      .catch((error) => {
-        console.error("Error fetching favorite exercises:", error)
-      })
-  }, [filterString, exercisesQuery])
+  const exercises = useMemo(
+    () => exercisesData.map((item) => new ExerciseModel(item)),
+    [exercisesData],
+  )
 
   return (
     <>
@@ -322,20 +306,12 @@ const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const mostUsedExercises = useMostUsedExercisesQuery()
+  const exercisesData = useMostUsedExercisesQuery({ limit: 10, filterString })
 
-  const [exercises, setExercises] = useState<ExerciseModel[]>([])
-
-  useEffect(() => {
-    mostUsedExercises({ limit: 10, filterString })
-      .then((result) => {
-        const items = result.map((item) => new ExerciseModel(item))
-        setExercises(items)
-      })
-      .catch((error) => {
-        console.error("Error fetching most used exercises:", error)
-      })
-  }, [filterString, mostUsedExercises])
+  const exercises = useMemo(
+    () => exercisesData.map((item) => new ExerciseModel(item)),
+    [exercisesData],
+  )
 
   return (
     <>

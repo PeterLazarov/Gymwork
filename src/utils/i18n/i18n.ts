@@ -2,7 +2,7 @@ import * as Localization from "expo-localization"
 import { I18n } from "i18n-js"
 import { I18nManager } from "react-native"
 
-import { capitalize, decamelize } from "@/utils"
+import { capitalize, decamelize } from "../string"
 import en, { Translations } from "./en"
 
 const translations = { en, "en-US": en }

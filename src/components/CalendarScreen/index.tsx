@@ -25,7 +25,7 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
 
   const { openedDateObject, setOpenedDate } = useOpenedWorkout()
   const getWorkouts = useAllWorkoutsQuery()
-  const workoutFullQuery = useWorkoutFullQuery()
+  const workoutFullQuery = useWorkoutFullQuery(null, false)
   const [markedDates, setMarkedDates] = useState<MarkedDays>({})
 
   const { copyWorkoutMode } = useRouteParams("Calendar")
@@ -88,7 +88,9 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
 
     if (didWorkoutOnDate) {
       workoutFullQuery(dateLuxon.toMillis()).then((workout) => {
-        setOpenedWorkout(WorkoutModel.from(workout!))
+        if (workout) {
+          setOpenedWorkout(WorkoutModel.from(workout))
+        }
       })
     } else {
       goToDay(dateString)

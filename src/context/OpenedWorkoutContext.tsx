@@ -1,8 +1,7 @@
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { useWorkoutFullQuery } from "@/db/queries/useWorkoutFullQuery"
-import { useDB } from "@/db/useDB"
 import { DateTime } from "luxon"
-import { createContext, FC, PropsWithChildren, useContext, useEffect, useState } from "react"
+import { createContext, FC, PropsWithChildren, useContext, useState } from "react"
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -18,8 +17,6 @@ export type OpenedWorkoutContextType = {
 
   // Workout-related
   openedWorkout: WorkoutModel | null
-  isLoadingWorkout: boolean
-  refetchWorkout: () => Promise<void>
 }
 
 export const OpenedWorkoutContext = createContext<OpenedWorkoutContextType | null>(null)
@@ -29,10 +26,7 @@ export interface OpenedWorkoutProviderProps {}
 export const OpenedWorkoutProvider: FC<PropsWithChildren<OpenedWorkoutProviderProps>> = ({
   children,
 }) => {
-  const { drizzleDB } = useDB()
   const [openedDate, setOpenedDate] = useState<string>(today.toISODate())
-  const [openedWorkout, setOpenedWorkout] = useState<WorkoutModel | null>(null)
-  const [isLoadingWorkout, setIsLoadingWorkout] = useState(true)
 
   const openedDateObject = DateTime.fromISO(openedDate)
   const todayDiff = Math.round(openedDateObject.diff(today, "days").days)
@@ -41,28 +35,9 @@ export const OpenedWorkoutProvider: FC<PropsWithChildren<OpenedWorkoutProviderPr
       ? openedDateObject.toRelativeCalendar({ unit: "days" })!
       : openedDateObject.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
-  const workoutQuery = useWorkoutFullQuery()
+  const workoutData = useWorkoutFullQuery(openedDateObject.toMillis())
 
-  async function fetchWorkout() {
-    setIsLoadingWorkout(true)
-    try {
-      const result = await workoutQuery(openedDateObject.toMillis())
-      if (result) {
-        setOpenedWorkout(WorkoutModel.from(result))
-      } else {
-        setOpenedWorkout(null)
-      }
-    } catch (error) {
-      console.error("Error fetching workout:", error)
-      setOpenedWorkout(null)
-    } finally {
-      setIsLoadingWorkout(false)
-    }
-  }
-
-  useEffect(() => {
-    fetchWorkout()
-  }, [openedDate, drizzleDB])
+  const openedWorkout = workoutData ? WorkoutModel.from(workoutData) : null
 
   const value: OpenedWorkoutContextType = {
     openedDate,
@@ -76,8 +51,6 @@ export const OpenedWorkoutProvider: FC<PropsWithChildren<OpenedWorkoutProviderPr
     },
     setOpenedDate,
     openedWorkout,
-    isLoadingWorkout,
-    refetchWorkout: fetchWorkout,
   }
 
   return <OpenedWorkoutContext.Provider value={value}>{children}</OpenedWorkoutContext.Provider>
