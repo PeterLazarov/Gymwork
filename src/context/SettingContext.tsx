@@ -1,3 +1,4 @@
+import { CHART_VIEW_KEY } from "@/constants/chartViews"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { createContext, FC, PropsWithChildren, useContext, useState } from "react"
 
@@ -20,6 +21,14 @@ export type SettingContextType = {
   setMeasureRest: (measureRest: boolean) => void
   previewNextSet: boolean
   setPreviewNextSet: (previewNextSet: boolean) => void
+  highlightedSet: number | null
+  setHighlightedSet: (id: number) => void
+  chartHeight: number
+  setChartHeight: (id: number) => void
+  chartWidth: number
+  setChartWidth: (id: number) => void
+  chartView: CHART_VIEW_KEY
+  setChartView: (view: CHART_VIEW_KEY) => void
 }
 
 export const SettingContext = createContext<SettingContextType | null>(null)
@@ -27,16 +36,20 @@ export const SettingContext = createContext<SettingContextType | null>(null)
 export interface SettingProviderProps {}
 
 export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ children }) => {
-  const [showCommentsCard, setShowCommentsCard] = useState<boolean>(false)
-  const [showSetCompletion, setShowSetCompletion] = useState<boolean>(false)
-  const [showWorkoutTimer, setShowWorkoutTimer] = useState<boolean>(false)
-  const [scientificMuscleNames, setScientificMuscleNames] = useState<boolean>(false)
-  const [measureRest, setMeasureRest] = useState<boolean>(false)
-  const [previewNextSet, setPreviewNextSet] = useState<boolean>(false)
+  const [showCommentsCard, setShowCommentsCard] = useState(false)
+  const [showSetCompletion, setShowSetCompletion] = useState(false)
+  const [showWorkoutTimer, setShowWorkoutTimer] = useState(false)
+  const [scientificMuscleNames, setScientificMuscleNames] = useState(false)
+  const [measureRest, setMeasureRest] = useState(false)
+  const [previewNextSet, setPreviewNextSet] = useState(false)
 
-  const [feedbackUser, setFeedbackUser] = useState<string>("")
-  const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState<string>("All Exercises")
+  const [feedbackUser, setFeedbackUser] = useState("")
+  const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState("All Exercises")
   const [edittedExercise, setEdittedExercise] = useState<ExerciseModel | null>(null)
+  const [highlightedSet, setHighlightedSet] = useState<number | null>(null)
+  const [chartHeight, setChartHeight] = useState(0)
+  const [chartWidth, setChartWidth] = useState(0)
+  const [chartView, setChartView] = useState<CHART_VIEW_KEY>("30D")
 
   const value = {
     showCommentsCard,
@@ -57,6 +70,14 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     setMeasureRest,
     previewNextSet,
     setPreviewNextSet,
+    highlightedSet,
+    setHighlightedSet,
+    chartHeight,
+    setChartHeight,
+    chartWidth,
+    setChartWidth,
+    chartView,
+    setChartView,
   }
 
   return <SettingContext.Provider value={value}>{children}</SettingContext.Provider>

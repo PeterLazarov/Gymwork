@@ -21,7 +21,7 @@ import { translate } from "@/utils"
 import React, { useMemo, useState } from "react"
 import { View } from "react-native"
 import { Menu } from "react-native-paper"
-import { ExerciseSelectLists } from "../shared/ExerciseSelectLists"
+import { ExerciseSelectLists } from "@/components/shared/ExerciseSelectLists"
 import { TrackView } from "./TrackView"
 import { HistoryView } from "./HistoryView"
 import { RecordsView } from "./RecordsView"
@@ -87,25 +87,9 @@ export const WorkoutStepScreen: React.FC<
               setFocusedExercise={setFocusedExercise}
             />
           )}
-          {route.name === "History" && (
-            <HistoryView
-              exercise={focusedExercise}
-              step={focusedStep}
-              setFocusedExercise={setFocusedExercise}
-            />
-          )}
-          {route.name === "Records" && (
-            <RecordsView
-              exercise={focusedExercise}
-              step={focusedStep}
-            />
-          )}
-          {route.name === "Chart" && (
-            <ChartView
-              exercise={focusedExercise}
-              step={focusedStep}
-            />
-          )}
+          {route.name === "History" && <HistoryView exercise={focusedExercise} />}
+          {route.name === "Records" && <RecordsView exercise={focusedExercise} />}
+          {route.name === "Chart" && <ChartView exercise={focusedExercise} />}
         </>
       )}
     </View>

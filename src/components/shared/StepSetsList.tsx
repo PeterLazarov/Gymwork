@@ -3,7 +3,7 @@ import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { useRecordsQuery } from "@/db/queries/useRecordsQuery"
+import { useRecordIdsQuery } from "@/db/queries/useRecordIdsQuery"
 import { Icon, Text, fontSize, palettes, spacing, useColors } from "@/designSystem"
 import { getFormatedDuration, translate } from "@/utils"
 import React, { useMemo } from "react"
@@ -23,7 +23,7 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
   workout,
 }) => {
   const { showSetCompletion: showSetCompletionSetting } = useSetting()
-  const stepRecords = useRecordsQuery(step.id)
+  const stepRecordIds = useRecordIdsQuery(step.id)
   // TODO deduplicate
   const showSetCompletion = showSetCompletionSetting && workout.hasIncompleteSets
 
@@ -34,7 +34,7 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
           key={set.id}
           set={set}
           exercise={set.exercise}
-          isRecord={stepRecords.some(({ id }) => id === set.id)}
+          isRecord={stepRecordIds.some(({ id }) => id === set.id)}
           // isFocused={stateStore.highlightedSetGuid === set.id}
           letter={hideSupersetLetters ? undefined : step.exerciseLettering[set.exercise.id!]}
           // number={step.setNumberMap[set.id]}
@@ -92,34 +92,34 @@ const SetItem: React.FC<SetItemProps> = ({
           />
         )}
       </View>
-      {exercise.metricTypes.includes("reps") && (
+      {exercise.hasMetricType("reps") && (
         <SetMetricLabel
           value={set.reps!}
           unit={translate("reps")}
           isFocused={isFocused}
         />
       )}
-      {exercise.metricTypes.includes("weight") && (
+      {exercise.hasMetricType("weight") && (
         <SetMetricLabel
           value={set.weight!}
           unit={exercise.getMetricByType("weight")!.unit}
           isFocused={isFocused}
         />
       )}
-      {exercise.metricTypes.includes("distance") && (
+      {exercise.hasMetricType("distance") && (
         <SetMetricLabel
           value={set.distance!}
           unit={exercise.getMetricByType("distance")!.unit}
           isFocused={isFocused}
         />
       )}
-      {exercise.metricTypes.includes("duration") && (
+      {exercise.hasMetricType("duration") && (
         <SetMetricLabel
           value={getFormatedDuration(set.durationMs!)}
           isFocused={isFocused}
         />
       )}
-      {exercise.metricTypes.includes("rest") && (
+      {exercise.hasMetricType("rest") && (
         <SetMetricLabel
           value={getFormatedDuration(set.restMs!)}
           isFocused={isFocused}

@@ -1,50 +1,73 @@
+import { useSetting } from "@/context/SettingContext"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
-import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { Text, useColors } from "@/designSystem"
+import { WorkoutModel } from "@/db/models/WorkoutModel"
+import { useExerciseHistoryQuery } from "@/db/queries/useExerciseHistoryQuery"
+import { ToggleGroupButton, spacing } from "@/designSystem"
+import { useMemo } from "react"
 import { StyleSheet, View } from "react-native"
+import { ExerciseStatsChart } from "./components/ExerciseStatsChart"
+import { CHART_VIEWS, CHART_VIEW_KEY } from "@/constants/chartViews"
 
 type ChartViewProps = {
-  step: WorkoutStepModel
   exercise: ExerciseModel
 }
 
-export const ChartView: React.FC<ChartViewProps> = ({ step, exercise }) => {
-  const colors = useColors()
+export const ChartView: React.FC<ChartViewProps> = ({ exercise }) => {
+  const { chartHeight, chartView, chartWidth, setChartHeight, setChartView, setChartWidth } =
+    useSetting()
+  const exerciseHistoryRaw = useExerciseHistoryQuery(exercise.id!)
+
+  const exerciseHistory = useMemo(
+    () => exerciseHistoryRaw.map((workout) => WorkoutModel.from(workout)),
+    [exerciseHistoryRaw],
+  )
+
+  const viewsArray = Object.keys(CHART_VIEWS) as CHART_VIEW_KEY[]
+  const toggleViewButtons = viewsArray.map((view) => ({
+    text: view,
+    value: CHART_VIEWS[view],
+  }))
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Progress Chart</Text>
-        <Text style={styles.subtitle}>Performance trends for {exercise.name}</Text>
-        <View style={styles.placeholder}>
-          <Text>Coming soon: Progress charts and analytics</Text>
-        </View>
+    <View style={styles.screen}>
+      <View
+        style={styles.chartContainer}
+        onLayout={(event) => {
+          const { width, height } = event.nativeEvent.layout
+          setChartHeight(height)
+          setChartWidth(width)
+        }}
+      >
+        {chartHeight !== 0 && (
+          <ExerciseStatsChart
+            exerciseHistory={exerciseHistory}
+            view={chartView}
+            height={chartHeight}
+            width={chartWidth}
+            exercise={exercise}
+          />
+        )}
       </View>
+
+      <ToggleGroupButton
+        buttons={toggleViewButtons}
+        initialActiveIndex={viewsArray.indexOf(chartView)}
+        containerStyle={{ padding: spacing.sm }}
+        onChange={(value) => setChartView(value as CHART_VIEW_KEY)}
+      />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  screen: {
+    marginTop: spacing.md,
+    justifyContent: "space-between",
+    display: "flex",
+    flexGrow: 1,
   },
-  content: {
-    flex: 1,
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    opacity: 0.7,
-    marginBottom: 24,
-  },
-  placeholder: {
-    flex: 1,
-    justifyContent: "center",
+  chartContainer: {
     alignItems: "center",
+    flexGrow: 1,
   },
 })

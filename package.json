@@ -40,6 +40,8 @@
     "@react-navigation/native-stack": "^7.2.0",
     "@sentry/react-native": "^7.4.0",
     "@shopify/flash-list": "^2.1.0",
+    "@shopify/react-native-skia": "2.2.12",
+    "@wuba/react-native-echarts": "^3.0.1",
     "apisauce": "3.1.1",
     "babel-plugin-inline-import": "^3.0.0",
     "convert-units": "^2.3.4",
@@ -59,6 +61,7 @@
     "expo-splash-screen": "~31.0.10",
     "expo-sqlite": "~16.0.1",
     "expo-system-ui": "~6.0.7",
+    "fitness-calc": "^1.0.2",
     "i18n-js": "^4.5.1",
     "i18next": "^23.14.0",
     "intl-pluralrules": "^2.0.1",
@@ -123,6 +126,11 @@
       "exclude": [
         "react-native-worklets"
       ]
+    }
+  },
+  "pnpm": {
+    "overrides": {
+      "tslib": "^2.6.1"
     }
   }
 }

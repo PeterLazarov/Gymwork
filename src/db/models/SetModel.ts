@@ -1,7 +1,8 @@
-import type { Exercise, Set } from "@/db/schema"
 import convert, { Unit } from "convert-units"
-import { ExerciseModel } from "./ExerciseModel"
+
+import type { Exercise, Set } from "@/db/schema"
 import { convertBaseDurationToUnit, convertBaseWeightToUnit } from "@/utils"
+import { ExerciseModel } from "./ExerciseModel"
 
 export type SetModelType = Set & {
   exercise?: Exercise
@@ -29,7 +30,7 @@ export class SetModel {
 
   constructor(data: SetModelType) {
     this.raw_data = data
-    
+
     this.id = data.id
     this.workoutStepId = data.workout_step_id
     this.exerciseId = data.exercise_id
@@ -87,6 +88,43 @@ export class SetModel {
     if (!this.weight || !this.reps) return null
 
     return this.weight * this.reps
+  }
+
+  get groupingValue(): number | null {
+    const groupedBy = this.exercise.groupRecordsBy
+
+    switch (groupedBy) {
+      case "weight":
+        return this.weight
+      case "reps":
+        return this.reps
+      case "duration":
+        return this.duration
+      case "distance":
+        return this.distance
+      case "speed":
+        return this.speedKph
+      default:
+        return null
+    }
+  }
+  get measuredValue(): number | null {
+    const measuredBy = this.exercise.measuredBy
+
+    switch (measuredBy) {
+      case "weight":
+        return this.weight
+      case "reps":
+        return this.reps
+      case "duration":
+        return this.duration
+      case "distance":
+        return this.distance
+      case "speed":
+        return this.speedKph
+      default:
+        return null
+    }
   }
 
   update(data: Partial<SetModel>): void {

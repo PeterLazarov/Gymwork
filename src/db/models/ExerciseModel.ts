@@ -5,6 +5,45 @@ type ExerciseModelType = Exercise & {
   exerciseMetrics?: ExerciseMetric[]
 }
 
+const groupingCombinations: {
+  measurement: MetricType[]
+  groupBy: MetricType
+}[] = [
+  { measurement: ["weight"], groupBy: "weight" },
+  { measurement: ["duration"], groupBy: "duration" },
+  { measurement: ["duration", "weight"], groupBy: "weight" },
+  { measurement: ["reps"], groupBy: "reps" },
+  { measurement: ["reps", "weight"], groupBy: "reps" },
+  { measurement: ["reps", "duration"], groupBy: "duration" },
+  { measurement: ["reps", "duration", "weight"], groupBy: "duration" },
+  { measurement: ["distance"], groupBy: "distance" },
+  { measurement: ["distance", "weight"], groupBy: "weight" },
+  { measurement: ["distance", "duration", "speed"], groupBy: "distance" },
+  { measurement: ["distance", "duration"], groupBy: "distance" },
+  { measurement: ["distance", "duration", "weight"], groupBy: "duration" },
+  { measurement: ["distance", "reps"], groupBy: "reps" },
+  { measurement: ["distance", "reps", "weight"], groupBy: "reps" },
+  { measurement: ["distance", "reps", "duration"], groupBy: "reps" },
+  { measurement: ["distance", "reps", "duration", "weight"], groupBy: "reps" },
+]
+
+const measurementCombinations: {
+  measurement: MetricType[]
+  measureBy: MetricType
+}[] = [
+  { measurement: ["weight"], measureBy: "weight" },
+  { measurement: ["duration"], measureBy: "duration" },
+  { measurement: ["duration", "weight"], measureBy: "duration" },
+  { measurement: ["reps"], measureBy: "reps" },
+  { measurement: ["reps", "weight"], measureBy: "weight" },
+  { measurement: ["reps", "duration"], measureBy: "reps" },
+  { measurement: ["distance"], measureBy: "distance" },
+  { measurement: ["distance", "weight"], measureBy: "distance" },
+  { measurement: ["distance", "duration", "speed"], measureBy: "duration" },
+  { measurement: ["distance", "duration"], measureBy: "duration" },
+  { measurement: ["distance", "reps"], measureBy: "distance" },
+]
+
 export class ExerciseModel {
   id?: number
   name: string
@@ -92,6 +131,36 @@ export class ExerciseModel {
 
   get isCardioExercise(): boolean {
     return this.hasMetricType("duration") || this.hasMetricType("distance")
+  }
+
+  get groupRecordsBy(): MetricType | undefined {
+    const exerciseMetricTypes = this.metricTypes
+    const groupByFallback = exerciseMetricTypes[0]
+
+    const combination = groupingCombinations.find((cfg) => {
+      return exerciseMetricTypes.every((type) => cfg.measurement.includes(type))
+    })
+
+    return combination?.groupBy || groupByFallback
+  }
+
+  get measuredBy(): MetricType | undefined {
+    const exerciseMetricTypes = this.metricTypes
+    const measureByFallback = exerciseMetricTypes[0]
+
+    const combination = measurementCombinations.find((cfg) => {
+      return cfg.measurement.every((type) => exerciseMetricTypes.includes(type))
+    })
+
+    return combination?.measureBy || measureByFallback
+  }
+
+  get groupingMeasurement(): ExerciseMetric | undefined {
+    return this.groupRecordsBy ? this.getMetricByType(this.groupRecordsBy) : undefined
+  }
+
+  get valueMeasurement(): ExerciseMetric | undefined {
+    return this.measuredBy ? this.getMetricByType(this.measuredBy) : undefined
   }
 
   targetsMuscleArea(muscleArea: string): boolean {

@@ -4,11 +4,7 @@ import { useExpoQuery } from "../expo/useExpoQuery"
 import { sets } from "../schema"
 import { useDB } from "../useDB"
 
-/**
- * Hook to get record set IDs for a specific workout step
- * Returns an array of objects with { id: number } where id is the set ID that is a record
- */
-export const useRecordsQuery = (workoutStepId: number) => {
+export const useRecordIdsQuery = (workoutStepId: number) => {
   const { drizzleDB } = useDB()
 
   // Build a Drizzle query to find record set IDs for this workout step
@@ -25,5 +21,5 @@ export const useRecordsQuery = (workoutStepId: number) => {
   // Use the reactive query hook with the sets table for updates
   const records = useExpoQuery(query, ["sets"])
 
-  return records 
+  return records
 }

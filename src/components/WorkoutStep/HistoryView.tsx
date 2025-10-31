@@ -1,347 +1,155 @@
-import { Duration } from "luxon"
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
-import { TextInput, View } from "react-native"
+import { Pressable, StyleSheet, View } from "react-native"
 
-import { DistanceEditor } from "@/components/WorkoutStep/components/DistanceEditor"
-import { DistanceUnit } from "@/constants/units"
+import { StepSetsList } from "@/components/shared/StepSetsList"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
-import { useSetting } from "@/context/SettingContext"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
+import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { useExerciseLastSetQuery } from "@/db/queries/useExerciseLastSetQuery"
-import { useInsertSetQuery } from "@/db/queries/useInsertSetQuery"
-import { useRemoveSetQuery } from "@/db/queries/useRemoveSetQuery"
-import { useUpdateSetQuery } from "@/db/queries/useUpdateSetQuery"
-import { Set } from "@/db/schema"
-import {
-  Button,
-  Divider,
-  DurationInput,
-  fontSize,
-  IncrementNumericEditor,
-  spacing,
-  Text,
-  useColors,
-} from "@/designSystem"
-import { convertWeightToBase, manageInputFocus, translate } from "@/utils"
-import { RestInput } from "./components/RestInput"
-import { SetTrackList } from "./components/SetTrackList"
+import { useExerciseHistoryQuery } from "@/db/queries/useExerciseHistoryQuery"
+import { Divider, EmptyState, spacing, Text, useColors } from "@/designSystem"
+import { navigate } from "@/navigators/navigationUtilities"
+import { msToIsoDate, translate } from "@/utils"
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list"
+import { DateTime } from "luxon"
+import { useCallback, useMemo } from "react"
 
-const defaultReps = 10
-
-type TrackViewProps = {
-  step: WorkoutStepModel
+type HistoryViewProps = {
   exercise: ExerciseModel
-  setFocusedExercise: (exercise: ExerciseModel) => void
 }
 
-export const HistoryView: React.FC<TrackViewProps> = ({
-  exercise: focusedExercise,
-  setFocusedExercise,
-  step,
-}) => {
+export const HistoryView: React.FC<HistoryViewProps> = ({ exercise }) => {
   const colors = useColors()
 
-  const [draftSet, setDraftSet] = useState<Partial<SetModel> | null>(null)
-  const { openedDateObject } = useOpenedWorkout()
-  const insertSet = useInsertSetQuery()
-  const updateSet = useUpdateSetQuery()
-  const removeSet = useRemoveSetQuery()
-  const lastSetQuery = useExerciseLastSetQuery()
-  // const { timerStore } = useStores()
-  // const timer = useMemo(() => {
-  //   return stateStore.openedWorkout?.isToday
-  //     ? timerStore.exerciseTimers.get(`timer_${focusedExercise.guid}`)
-  //     : undefined
-  // }, [focusedExercise, timerStore.exerciseTimers.size])
+  const styles = useMemo(() => makeStyles(colors), [colors])
+  const workoutsResult = useExerciseHistoryQuery(exercise.id!)
 
-  const [selectedSet, setSelectedSet] = useState<SetModel | null>(null)
+  const workouts = useMemo(
+    () => workoutsResult.map((item) => new WorkoutModel(item)),
 
-  // TODO optimize. Toggle selected set to see that it's slow
-  useEffect(() => {
-    if (selectedSet && focusedExercise.id !== selectedSet.exercise.id) {
-      setSelectedSet(null)
-    }
-  }, [focusedExercise])
-
-  useEffect(() => {
-    if (selectedSet) {
-      setDraftSet(selectedSet)
-    } else {
-      lastSetQuery(focusedExercise.id!).then((lastSet) => {
-        if (lastSet) {
-          setDraftSet(new SetModel(lastSet))
-        } else {
-          console.log("we`re fucked")
-        }
-      })
-    }
-  }, [selectedSet, focusedExercise])
-
-  const handleAdd = useCallback(() => {
-    if (draftSet) {
-      const { id, exercise, ...draftCopy } = draftSet
-
-      insertSet({
-        ...draftCopy,
-        exercise: focusedExercise,
-        workoutStepId: step.id,
-        exerciseId: focusedExercise.id,
-        date: openedDateObject.toMillis(),
-      })
-    }
-
-    // if (settingsStore.measureRest && timer) {
-    //   timer.setProp("type", "rest")
-
-    //   timer.start()
-
-    //   stateStore.draftSet?.setDuration(0)
-    // }
-
-    if (step.stepType === "superset") {
-      const index = step.exercises.indexOf(focusedExercise)
-      const isLastSet = index === step.exercises.length - 1
-      const nextExercise = step.exercises[isLastSet ? 0 : index + 1]
-      setFocusedExercise(nextExercise)
-    }
-  }, [draftSet, insertSet, step, focusedExercise, openedDateObject, setFocusedExercise])
-
-  const handleUpdate = useCallback(() => {
-    const { completedAt, exercise, ...updatedSet } = {
-      ...draftSet,
-      id: selectedSet!.id,
-    }
-
-    updateSet(updatedSet)
-
-    setSelectedSet(null)
-  }, [draftSet, selectedSet, updateSet])
-
-  const handleRemove = useCallback(() => {
-    removeSet(selectedSet!.id)
-    setSelectedSet(null)
-  }, [selectedSet, removeSet])
+    [workoutsResult],
+  )
 
   return (
-    <View
-      style={[
-        {
-          flexDirection: "column",
-          flexGrow: 1,
-          gap: spacing.xs,
-          display: "flex",
-          backgroundColor: colors.surfaceContainerLow,
-        },
-      ]}
-    >
-      <SetTrackList
-        step={step}
-        sets={step?.exerciseSetsMap[focusedExercise.id!] ?? []}
-        selectedSet={selectedSet}
-        setSelectedSet={setSelectedSet}
-        draftSet={draftSet}
-      />
-
-      {draftSet && (
-        <View style={{ paddingHorizontal: spacing.xs }}>
-          <SetEditControls
-            value={draftSet}
-            onSubmit={handleAdd}
-            onUpdate={(updates) =>
-              setDraftSet((prev) => new SetModel({ ...prev!.raw_data!, ...updates }))
-            }
-          />
-        </View>
+    <View style={styles.container}>
+      {exercise && workouts?.length ? (
+        <HistoryList
+          workouts={workouts}
+          exercise={exercise}
+        />
+      ) : (
+        <EmptyState text={translate("historyLogEmpty")} />
       )}
-      <SetEditActions
-        mode={selectedSet ? "edit" : "add"}
-        onAdd={handleAdd}
-        onUpdate={handleUpdate}
-        onRemove={handleRemove}
-      />
     </View>
   )
 }
 
-type SetEditControlsProps = {
-  value: Partial<SetModel>
-  onSubmit(): void
-  // TODO: use SetModel instead
-  onUpdate: (updated: Partial<Set>) => void
+const makeStyles = (colors: any) =>
+  StyleSheet.create({
+    container: {
+      paddingTop: spacing.md,
+      paddingHorizontal: spacing.md,
+      gap: spacing.lg,
+      flexDirection: "column",
+      display: "flex",
+      flexGrow: 1,
+    },
+  })
+
+type HistoryListProps = {
+  workouts: WorkoutModel[]
+  exercise: ExerciseModel
 }
+const HistoryList: React.FC<HistoryListProps> = ({ workouts, exercise }) => {
+  const { setOpenedDate } = useOpenedWorkout()
 
-const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUpdate }) => {
-  // TODO add more input options
-  const input0 = useRef<TextInput>(null)
-  const input1 = useRef<TextInput>(null)
-  const input2 = useRef<TextInput>(null)
-  const input3 = useRef<TextInput>(null)
-  const input4 = useRef<TextInput>(null)
-  const input5 = useRef<TextInput>(null)
-  const inputRefs = [input1, input2, input3, input4, input5]
-  const { onHandleSubmit, isLastInput } = manageInputFocus(inputRefs, onSubmit)
-  const { measureRest } = useSetting()
+  const stepsWithWorkout = useMemo(() => {
+    return workouts.flatMap((workout) =>
+      workout.workoutSteps.map((step: any) => ({
+        step,
+        workout,
+      })),
+    )
+  }, [workouts])
 
-  return (
-    <View style={{ gap: spacing.xs }}>
-      {measureRest && (
-        <SetEditPanelSection text={translate("rest")}>
-          <RestInput
-            ref={input0}
-            value={value.restMs ? Duration.fromMillis(value.restMs) : undefined}
-            onSubmit={() => onHandleSubmit(input0)}
-            onChange={(rest) => onUpdate({ rest_ms: rest.as("milliseconds") })}
-          />
-        </SetEditPanelSection>
-      )}
-
-      {value.exercise?.hasMetricType("reps") && (
-        <SetEditPanelSection text={translate("reps")}>
-          <IncrementNumericEditor
-            value={value.reps}
-            onChange={(reps) => onUpdate({ reps })}
-            onSubmitEditing={() => onHandleSubmit(input1)}
-            ref={input1}
-            returnKeyType={isLastInput(input1) ? "default" : "next"}
-            maxDecimals={0}
-          />
-        </SetEditPanelSection>
-      )}
-
-      {value.exercise?.hasMetricType("weight") && (
-        <SetEditPanelSection text={translate("weight")}>
-          <IncrementNumericEditor
-            value={value.weight}
-            onChange={(weight) => {
-              onUpdate({
-                weight_mcg: convertWeightToBase(
-                  weight!,
-                  value.exercise?.getMetricByType("weight")!.unit!,
-                ),
-              })
-            }}
-            step={value.exercise.getMetricByType("weight")!.step_value}
-            onSubmitEditing={() => onHandleSubmit(input2)}
-            ref={input2}
-            returnKeyType={isLastInput(input2) ? "default" : "next"}
-          />
-        </SetEditPanelSection>
-      )}
-
-      {value.exercise?.hasMetricType("distance") && (
-        <SetEditPanelSection text={translate("distance")}>
-          <DistanceEditor
-            value={value.distance}
-            onChange={(distance) => onUpdate({ distance_mm: distance })}
-            unit={value.exercise.getMetricByType("distance")!.unit as DistanceUnit}
-            onSubmitEditing={() => onHandleSubmit(input3)}
-            ref={input3}
-            returnKeyType={isLastInput(input3) ? "default" : "next"}
-          />
-        </SetEditPanelSection>
-      )}
-
-      {value.exercise?.hasMetricType("duration") && (
-        <SetEditPanelSection text={translate("duration")}>
-          <DurationInput
-            value={value.durationMs ? Duration.fromMillis(value.durationMs) : undefined}
-            onUpdate={(duration) => onUpdate({ duration_ms: duration.toMillis() })}
-            onSubmitEditing={() => onHandleSubmit(input4)}
-            // timer={timer}
-            ref={input4}
-          />
-        </SetEditPanelSection>
-      )}
-
-      {/* {value.exercise.hasMetricType("speed") && (
-        <SetEditPanelSection text={translate("speed")}>
-          <IncrementNumericEditor
-            value={value.speedKph}
-            onChange={(speed) => value.setProp("speedKph", speed)}
-            onSubmit={() => onHandleSubmit(input5)}
-            ref={input5}
-            returnKeyType={isLastInput(input1) ? "default" : "next"}
-            maxDecimals={2}
-            label={value.exercise.getMetricByType("speed")!.unit}
-            placeholder={
-              !value.speedKph && value.inferredSpeed
-                ? String(value.inferredSpeed.toFixed(2))
-                : undefined
-            }
-          />
-        </SetEditPanelSection>
-      )} */}
-    </View>
-  )
-}
-
-type SetEditPanelSectionProps = {
-  text: string
-  children: ReactNode
-}
-
-const SetEditPanelSection: React.FC<SetEditPanelSectionProps> = ({ text, children }) => {
-  return (
-    <View style={{ gap: spacing.xxs }}>
-      <View>
-        <Text
-          style={{
-            fontSize: fontSize.xs,
-            textTransform: "uppercase",
-            marginVertical: spacing.xxs,
+  const renderItem = useCallback(
+    ({ item }: ListRenderItemInfo<{ step: any; workout: any }>) => {
+      return (
+        <ListItem
+          key={item.step.id}
+          date={item.workout.date}
+          step={item.step}
+          sets={item.step.sets || []}
+          workout={item.workout}
+          onPress={() => {
+            navigate("Workout")
+            setOpenedDate(msToIsoDate(item.workout.date))
           }}
-        >
-          {text}
+        />
+      )
+    },
+    [setOpenedDate],
+  )
+
+  return (
+    <FlashList
+      data={stepsWithWorkout}
+      renderItem={renderItem}
+      keyExtractor={(item, i) => `${item.step.id}_${i}`}
+    />
+  )
+}
+
+type ListItemProps = {
+  date: number
+  step: WorkoutStepModel
+  sets: SetModel[]
+  workout: WorkoutModel
+  onPress?(): void
+}
+const ListItem: React.FC<ListItemProps> = ({ date, step, sets, workout, onPress }) => {
+  const colors = useColors()
+
+  const styles = useMemo(() => makeItemStyles(colors), [colors])
+
+  return (
+    <Pressable
+      style={styles.item}
+      key={date}
+      onPress={onPress}
+    >
+      <>
+        <Text style={styles.itemDate}>
+          {DateTime.fromMillis(date).toLocaleString(DateTime.DATE_MED)}
         </Text>
         <Divider
           orientation="horizontal"
           variant="neutral"
         />
-      </View>
-      {children}
-    </View>
+        <View style={{ padding: spacing.xxs }}>
+          <StepSetsList
+            step={step}
+            sets={sets}
+            workout={workout}
+            hideSupersetLetters
+          />
+        </View>
+      </>
+    </Pressable>
   )
 }
 
-type SetEditActionsProps = {
-  mode: "edit" | "add"
-  onUpdate(): void
-  onAdd(): void
-  onRemove(): void
-}
-
-const SetEditActions: React.FC<SetEditActionsProps> = ({ mode, onAdd, onRemove, onUpdate }) => (
-  <View
-    style={{
-      flexDirection: "row",
-      gap: spacing.xxs,
-      paddingHorizontal: spacing.xs,
-    }}
-  >
-    {mode === "add" ? (
-      <Button
-        variant="primary"
-        onPress={onAdd}
-        style={{ flex: 1 }}
-        text={translate("completeSet")}
-      />
-    ) : (
-      <>
-        <Button
-          variant="primary"
-          onPress={onUpdate}
-          style={{ flex: 1 }}
-          text={translate("updateSet")}
-        />
-        <Button
-          variant="critical"
-          onPress={onRemove}
-          style={{ flex: 1 }}
-          text={translate("remove")}
-        />
-      </>
-    )}
-  </View>
-)
+const makeItemStyles = (colors: any) =>
+  StyleSheet.create({
+    item: {
+      gap: spacing.xs,
+      marginBottom: spacing.sm,
+      borderRadius: spacing.xs,
+      borderColor: colors.onSurfaceVariant,
+      borderWidth: 1,
+    },
+    itemDate: {
+      textAlign: "center",
+      paddingTop: spacing.xxs,
+    },
+  })

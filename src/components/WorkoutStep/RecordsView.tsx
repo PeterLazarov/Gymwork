@@ -1,50 +1,117 @@
+import { useMemo } from "react"
+import { Pressable, ScrollView, StyleSheet, View } from "react-native"
+
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { useSetting } from "@/context/SettingContext"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
-import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { Text, useColors } from "@/designSystem"
-import { StyleSheet, View } from "react-native"
+import { SetModel } from "@/db/models/SetModel"
+import { useExerciseRecordsQuery } from "@/db/queries/useExerciseRecordsQuery"
+import { EmptyState, spacing } from "@/designSystem"
+import { navigate } from "@/navigators/navigationUtilities"
+import { msToIsoDate, translate } from "@/utils"
+import { SetDataLabel } from "./components/SetDataLabel"
 
 type RecordsViewProps = {
-  step: WorkoutStepModel
   exercise: ExerciseModel
 }
 
-export const RecordsView: React.FC<RecordsViewProps> = ({ step, exercise }) => {
-  const colors = useColors()
+export const RecordsView: React.FC<RecordsViewProps> = ({ exercise }) => {
+  const { setOpenedDate } = useOpenedWorkout()
+  const { setHighlightedSet } = useSetting()
+
+  const exerciseRecords = useExerciseRecordsQuery(exercise.id!)
+
+  const records = useMemo(
+    () => exerciseRecords.map((item) => new SetModel(item)),
+    [exerciseRecords],
+  )
+
+  function goToDate(set: SetModel) {
+    setOpenedDate(msToIsoDate(set.date))
+    setHighlightedSet(set.id)
+
+    navigate("Workout")
+  }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Records</Text>
-        <Text style={styles.subtitle}>Personal records for {exercise.name}</Text>
-        <View style={styles.placeholder}>
-          <Text>Coming soon: Personal records tracking</Text>
-        </View>
-      </View>
+    <View style={styles.screen}>
+      {records.length > 0 ? (
+        <ScrollView style={styles.list}>
+          {records.map((set) => {
+            return (
+              <ListItem
+                key={set.id}
+                set={set}
+                onPress={() => goToDate(set)}
+              />
+            )
+          })}
+        </ScrollView>
+      ) : (
+        <EmptyState text={translate("recordsLogEmpty")} />
+      )}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  screen: {
+    marginTop: spacing.md,
+    display: "flex",
+    flexGrow: 1,
   },
-  content: {
-    flex: 1,
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    opacity: 0.7,
-    marginBottom: 24,
-  },
-  placeholder: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+  list: {
+    flexBasis: 0,
   },
 })
+
+type ListItemProps = {
+  set: SetModel
+  onPress: () => void
+}
+
+const ListItem: React.FC<ListItemProps> = ({ set, onPress }) => {
+  const styles = useMemo(() => makeListItemStyles(set.isWeakAssRecord), [set.isWeakAssRecord])
+
+  const groupingMeasurement = set.exercise.groupingMeasurement
+  const valueMeasurement = set.exercise.valueMeasurement
+
+  return (
+    <Pressable
+      onPress={onPress}
+      style={styles.item}
+    >
+      <>
+        {groupingMeasurement && (
+          <SetDataLabel
+            value={set.groupingValue!}
+            unit={groupingMeasurement.unit}
+            fontSize="md"
+          />
+        )}
+
+        {valueMeasurement && (
+          <SetDataLabel
+            value={set.measuredValue!}
+            unit={valueMeasurement.unit}
+            fontSize="md"
+          />
+        )}
+      </>
+    </Pressable>
+  )
+}
+
+const makeListItemStyles = (isWeakAss: boolean) =>
+  StyleSheet.create({
+    item: {
+      display: "flex",
+      flexDirection: "row",
+      gap: spacing.md,
+      justifyContent: "space-around",
+      alignItems: "center",
+      height: 40,
+      flex: 1,
+      opacity: isWeakAss ? 0.5 : 1,
+    },
+  })
