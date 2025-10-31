@@ -26,8 +26,10 @@ export type AppStackParamList = {
 }
 
 export type WorkoutStepTabParamList = {
-  Track: undefined
-  History: undefined
+  Track: WorkoutStepScreenParams
+  History: WorkoutStepScreenParams
+  Records: WorkoutStepScreenParams
+  Chart: WorkoutStepScreenParams
 }
 
 export type WorkoutStepTabScreenProps<T extends keyof WorkoutStepTabParamList> =

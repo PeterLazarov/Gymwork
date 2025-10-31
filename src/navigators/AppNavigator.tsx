@@ -18,10 +18,18 @@ import { WorkoutFeedbackScreen } from "@/components/WorkoutFeedbackScreen"
 import { WorkoutScreen } from "@/components/WorkoutScreen"
 import { offscreenRef } from "@/components/WorkoutScreen/utils/useShareWorkout"
 import { WorkoutStepScreen } from "@/components/WorkoutStepScreen"
+import { ChartScreen } from "@/components/WorkoutStepScreen/ChartScreen"
+import { RecordsScreen } from "@/components/WorkoutStepScreen/RecordsScreen"
 import { DialogContextProvider } from "@/context/DialogContext"
+import { Icon, useColors } from "@/designSystem"
 import Config from "@/ignite/config"
 import { useAppTheme } from "@/ignite/theme/context"
-import type { AppStackParamList, NavigationProps, WorkoutStepTabParamList } from "./navigationTypes"
+import type {
+  AppStackParamList,
+  AppStackScreenProps,
+  NavigationProps,
+  WorkoutStepTabParamList,
+} from "./navigationTypes"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 
 /**
@@ -33,10 +41,8 @@ const exitRoutes = Config.exitRoutes
 const Stack = createNativeStackNavigator<AppStackParamList>()
 const WorkoutStepTab = createBottomTabNavigator<WorkoutStepTabParamList>()
 
-const WorkoutStepTabs = () => {
-  const {
-    theme: { colors },
-  } = useAppTheme()
+const WorkoutStepTabs = ({ route }: AppStackScreenProps<"WorkoutStep">) => {
+  const colors = useColors()
 
   return (
     <WorkoutStepTab.Navigator
@@ -45,22 +51,68 @@ const WorkoutStepTabs = () => {
         tabBarStyle: {
           backgroundColor: colors.background,
         },
-        tabBarActiveTintColor: colors.tint,
-        tabBarInactiveTintColor: colors.textDim,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.onSurfaceVariant,
       }}
     >
       <WorkoutStepTab.Screen
         name="Track"
         component={WorkoutStepScreen}
+        initialParams={route.params}
         options={{
           tabBarLabel: "Track",
+          tabBarIcon: ({ color }) => (
+            <Icon
+              icon="list-outline"
+              color={color}
+              size="small"
+            />
+          ),
         }}
       />
       <WorkoutStepTab.Screen
         name="History"
         component={WorkoutStepScreen}
+        initialParams={route.params}
         options={{
           tabBarLabel: "History",
+          tabBarIcon: ({ color }) => (
+            <Icon
+              icon="history"
+              color={color}
+              size="small"
+            />
+          ),
+        }}
+      />
+      <WorkoutStepTab.Screen
+        name="Records"
+        component={RecordsScreen}
+        initialParams={route.params}
+        options={{
+          tabBarLabel: "Records",
+          tabBarIcon: ({ color }) => (
+            <Icon
+              icon="trophy"
+              color={color}
+              size="small"
+            />
+          ),
+        }}
+      />
+      <WorkoutStepTab.Screen
+        name="Chart"
+        component={ChartScreen}
+        initialParams={route.params}
+        options={{
+          tabBarLabel: "Chart",
+          tabBarIcon: ({ color }) => (
+            <Icon
+              icon="analytics"
+              color={color}
+              size="small"
+            />
+          ),
         }}
       />
     </WorkoutStepTab.Navigator>

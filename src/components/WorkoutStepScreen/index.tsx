@@ -15,9 +15,9 @@ import {
   Text,
   useColors,
 } from "@/designSystem"
+import { WorkoutStepTabScreenProps } from "@/navigators/navigationTypes"
 import { navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
-import { useNavigation, useRoute } from "@react-navigation/native"
 import { useMemo, useState } from "react"
 import { View } from "react-native"
 import { Menu } from "react-native-paper"
@@ -27,17 +27,11 @@ import { ExerciseTrackView } from "./components/ExerciseTrackView"
 export type WorkoutStepScreenParams = {
   focusedStep: WorkoutStepModel
 }
-interface WorkoutStepScreenProps {
-  navigation?: any
-}
-export const WorkoutStepScreen: React.FC<WorkoutStepScreenProps> = ({ navigation: navProp }) => {
-  const navigation = navProp || useNavigation()
-  const route = useRoute<any>()
 
-  // Get params from parent navigator (WorkoutStep) when inside tabs
-  const parent = navigation.getParent()
-  const parentRoute = parent?.getCurrentRoute?.()
-  const routeStep = parentRoute?.params?.focusedStep || route.params?.focusedStep
+export const WorkoutStepScreen: React.FC<WorkoutStepTabScreenProps<"Track" | "History">> = ({
+  route,
+}) => {
+  const { focusedStep: routeStep } = route.params
   const { openedWorkout } = useOpenedWorkout()
   const focusedStep = openedWorkout?.workoutSteps.find((s) => s.id === routeStep.id) || routeStep
 
