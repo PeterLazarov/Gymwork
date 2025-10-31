@@ -17,9 +17,6 @@ import { WelcomeScreen } from "@/components/WelcomeScreen"
 import { WorkoutFeedbackScreen } from "@/components/WorkoutFeedbackScreen"
 import { WorkoutScreen } from "@/components/WorkoutScreen"
 import { offscreenRef } from "@/components/WorkoutScreen/utils/useShareWorkout"
-import { WorkoutStepScreen } from "@/components/WorkoutStepScreen"
-import { ChartScreen } from "@/components/WorkoutStepScreen/ChartScreen"
-import { RecordsScreen } from "@/components/WorkoutStepScreen/RecordsScreen"
 import { DialogContextProvider } from "@/context/DialogContext"
 import { Icon, useColors } from "@/designSystem"
 import Config from "@/ignite/config"
@@ -31,6 +28,7 @@ import type {
   WorkoutStepTabParamList,
 } from "./navigationTypes"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
+import { WorkoutStepScreen } from "@/components/WorkoutStep"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -87,7 +85,7 @@ const WorkoutStepTabs = ({ route }: AppStackScreenProps<"WorkoutStep">) => {
       />
       <WorkoutStepTab.Screen
         name="Records"
-        component={RecordsScreen}
+        component={WorkoutStepScreen}
         initialParams={route.params}
         options={{
           tabBarLabel: "Records",
@@ -102,7 +100,7 @@ const WorkoutStepTabs = ({ route }: AppStackScreenProps<"WorkoutStep">) => {
       />
       <WorkoutStepTab.Screen
         name="Chart"
-        component={ChartScreen}
+        component={WorkoutStepScreen}
         initialParams={route.params}
         options={{
           tabBarLabel: "Chart",

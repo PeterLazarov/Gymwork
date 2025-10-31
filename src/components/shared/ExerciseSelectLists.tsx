@@ -143,7 +143,6 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, onSelect, select
     [selectedExercises],
   )
 
-  console.log(exercises.length)
   return (
     <FlashList
       data={exercises}

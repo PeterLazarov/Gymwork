@@ -2,7 +2,7 @@ import { Duration } from "luxon"
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
 import { TextInput, View } from "react-native"
 
-import { DistanceEditor } from "@/components/WorkoutStepScreen/components/DistanceEditor"
+import { DistanceEditor } from "@/components/WorkoutStep/components/DistanceEditor"
 import { DistanceUnit } from "@/constants/units"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useSetting } from "@/context/SettingContext"
@@ -25,18 +25,18 @@ import {
   useColors,
 } from "@/designSystem"
 import { convertWeightToBase, manageInputFocus, translate } from "@/utils"
-import { RestInput } from "./RestInput"
-import { SetTrackList } from "./SetTrackList"
+import { RestInput } from "./components/RestInput"
+import { SetTrackList } from "./components/SetTrackList"
 
 const defaultReps = 10
 
-export type ExerciseTrackViewProps = {
+type TrackViewProps = {
   step: WorkoutStepModel
   exercise: ExerciseModel
   setFocusedExercise: (exercise: ExerciseModel) => void
 }
 
-export const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
+export const TrackView: React.FC<TrackViewProps> = ({
   exercise: focusedExercise,
   setFocusedExercise,
   step,

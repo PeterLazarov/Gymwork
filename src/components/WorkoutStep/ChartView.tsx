@@ -1,27 +1,23 @@
-import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
 import { Text, useColors } from "@/designSystem"
-import { WorkoutStepTabScreenProps } from "@/navigators/navigationTypes"
 import { StyleSheet, View } from "react-native"
 
-export type RecordsScreenParams = {
-  focusedStep: WorkoutStepModel
+type ChartViewProps = {
+  step: WorkoutStepModel
+  exercise: ExerciseModel
 }
 
-export const RecordsScreen: React.FC<WorkoutStepTabScreenProps<"Records">> = ({ route }) => {
-  const { focusedStep: routeStep } = route.params
-  const { openedWorkout } = useOpenedWorkout()
-  const focusedStep = openedWorkout?.workoutSteps.find((s) => s.id === routeStep.id) || routeStep
+export const ChartView: React.FC<ChartViewProps> = ({ step, exercise }) => {
   const colors = useColors()
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.content}>
-        <Text style={styles.title}>Records</Text>
-        <Text style={styles.subtitle}>Personal records for {focusedStep.exercise.name}</Text>
-        {/* TODO: Implement records display */}
+        <Text style={styles.title}>Progress Chart</Text>
+        <Text style={styles.subtitle}>Performance trends for {exercise.name}</Text>
         <View style={styles.placeholder}>
-          <Text>Coming soon: Personal records tracking</Text>
+          <Text>Coming soon: Progress charts and analytics</Text>
         </View>
       </View>
     </View>

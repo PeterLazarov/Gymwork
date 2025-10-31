@@ -18,19 +18,22 @@ import {
 import { WorkoutStepTabScreenProps } from "@/navigators/navigationTypes"
 import { navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
-import { useMemo, useState } from "react"
+import React, { useMemo, useState } from "react"
 import { View } from "react-native"
 import { Menu } from "react-native-paper"
 import { ExerciseSelectLists } from "../shared/ExerciseSelectLists"
-import { ExerciseTrackView } from "./components/ExerciseTrackView"
+import { TrackView } from "./TrackView"
+import { HistoryView } from "./HistoryView"
+import { RecordsView } from "./RecordsView"
+import { ChartView } from "./ChartView"
 
 export type WorkoutStepScreenParams = {
   focusedStep: WorkoutStepModel
 }
 
-export const WorkoutStepScreen: React.FC<WorkoutStepTabScreenProps<"Track" | "History">> = ({
-  route,
-}) => {
+export const WorkoutStepScreen: React.FC<
+  WorkoutStepTabScreenProps<"Track" | "History" | "Chart" | "Records">
+> = ({ route }) => {
   const { focusedStep: routeStep } = route.params
   const { openedWorkout } = useOpenedWorkout()
   const focusedStep = openedWorkout?.workoutSteps.find((s) => s.id === routeStep.id) || routeStep
@@ -76,11 +79,33 @@ export const WorkoutStepScreen: React.FC<WorkoutStepTabScreenProps<"Track" | "Hi
               onChange={setFocusedExercise}
             />
           )}
-          <ExerciseTrackView
-            exercise={focusedExercise}
-            step={focusedStep}
-            setFocusedExercise={setFocusedExercise}
-          />
+
+          {route.name === "Track" && (
+            <TrackView
+              exercise={focusedExercise}
+              step={focusedStep}
+              setFocusedExercise={setFocusedExercise}
+            />
+          )}
+          {route.name === "History" && (
+            <HistoryView
+              exercise={focusedExercise}
+              step={focusedStep}
+              setFocusedExercise={setFocusedExercise}
+            />
+          )}
+          {route.name === "Records" && (
+            <RecordsView
+              exercise={focusedExercise}
+              step={focusedStep}
+            />
+          )}
+          {route.name === "Chart" && (
+            <ChartView
+              exercise={focusedExercise}
+              step={focusedStep}
+            />
+          )}
         </>
       )}
     </View>
