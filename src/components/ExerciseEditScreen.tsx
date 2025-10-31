@@ -29,17 +29,15 @@ import { translate } from "@/utils"
 import { HelperText, TextInput } from "react-native-paper"
 
 export type ExerciseEditScreenParams = {
-  createMode?: boolean
+  edittedExercise?: ExerciseModel
 }
 interface ExerciseEditScreenProps extends AppStackScreenProps<"ExerciseEdit"> {}
 export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = ({ navigation }) => {
   const colors = useColors()
-
-  const { edittedExercise } = useSetting()
   const updateExercise = useUpdateExerciseQuery()
   const insertExercise = useInsertExerciseQuery()
-  const { createMode } = useRouteParams("ExerciseEdit")
-  if (!createMode && !edittedExercise) {
+  const { edittedExercise } = useRouteParams("ExerciseEdit")
+  if (!edittedExercise) {
     console.warn("REDIRECT - No focusedExercise")
     navigation.navigate("ExerciseSelect", {
       selectMode: "plain",
@@ -47,7 +45,7 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = ({ navigati
   }
 
   const [exercise, setExercise] = useState<ExerciseModel>(
-    createMode ? new ExerciseModel() : edittedExercise!,
+    edittedExercise ? edittedExercise! : new ExerciseModel(),
   )
   const [formValid, setFormValid] = useState(false)
 
@@ -74,10 +72,10 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = ({ navigati
   function onComplete() {
     if (!exercise) return
 
-    if (createMode) {
-      insertExercise(exercise)
-    } else {
+    if (edittedExercise) {
       updateExercise(exercise.id!, exercise)
+    } else {
+      insertExercise(exercise)
     }
     navigation.goBack()
   }
@@ -94,7 +92,7 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = ({ navigati
             color={colors.onPrimary}
           />
         </IconButton>
-        <Header.Title title={translate(createMode ? "createExercise" : "editExercise")} />
+        <Header.Title title={translate(edittedExercise ? "editExercise" : "createExercise")} />
         <IconButton
           onPress={onComplete}
           disabled={!formValid}

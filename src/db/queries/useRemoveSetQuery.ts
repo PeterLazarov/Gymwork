@@ -4,5 +4,7 @@ import { useDB } from "../useDB"
 
 export const useRemoveSetQuery = () => {
   const { drizzleDB } = useDB()
-  return (setId: number) => drizzleDB.delete(sets).where(eq(sets.id, setId))
+  return async (setId: number) => {
+    await drizzleDB.delete(sets).where(eq(sets.id, setId))
+  }
 }

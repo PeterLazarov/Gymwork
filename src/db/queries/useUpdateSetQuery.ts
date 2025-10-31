@@ -21,7 +21,8 @@ export const useUpdateSetQuery = () => {
     if (set.speedKph !== undefined) updateData.speed_kph = set.speedKph
     if (set.restMs !== undefined) updateData.rest_ms = set.restMs
     if (set.completedAt !== undefined) updateData.completed_at = set.completedAt
-
+    if (set.isWarmup !== undefined) updateData.is_warmup = set.isWarmup
+    
     await drizzleDB.update(sets).set(updateData).where(eq(sets.id, set.id!))
 
     return drizzleDB.select().from(sets).where(eq(sets.id, set.id!))

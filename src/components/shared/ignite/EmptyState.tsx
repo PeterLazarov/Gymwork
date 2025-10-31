@@ -1,8 +1,8 @@
 import { Image, ImageProps, ImageStyle, StyleProp, TextStyle, View, ViewStyle } from "react-native"
 
-import { translate } from "@/ignite/i18n/translate"
-import type { ThemedStyle } from "@/ignite/theme/types"
 import { useAppTheme } from "@/ignite/theme/context"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { translate } from "@/utils/i18n"
 
 import { Button, ButtonProps } from "./Button"
 import { Text, TextProps } from "./Text"

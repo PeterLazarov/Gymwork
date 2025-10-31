@@ -26,7 +26,7 @@ const customTranslate = <T = string>(
     scopeString = scope as string
   }
 
-  if (result === scopeString || (typeof result === "string" && result.startsWith("[missing"))) {
+  if (typeof result === "string" && result.startsWith("[missing")) {
     console.warn(`Missing Translation: ${scopeString}`)
     return capitalize(
       decamelize(scopeString, { preserveConsecutiveUppercase: true, separator: " " }),

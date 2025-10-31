@@ -1,13 +1,11 @@
-import { ReactNode, forwardRef, ForwardedRef } from "react"
+import { ForwardedRef, ReactNode, forwardRef } from "react"
 // eslint-disable-next-line no-restricted-imports
-import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from "react-native"
-import { TOptions } from "i18next"
+import { Text as RNText, TextProps as RNTextProps, StyleProp, TextStyle } from "react-native"
 
-import { isRTL, TxKeyPath } from "@/ignite/i18n"
-import { translate } from "@/ignite/i18n/translate"
-import type { ThemedStyle, ThemedStyleArray } from "@/ignite/theme/types"
 import { useAppTheme } from "@/ignite/theme/context"
+import type { ThemedStyle, ThemedStyleArray } from "@/ignite/theme/types"
 import { typography } from "@/ignite/theme/typography"
+import { TxKeyPath, isRTL, translate } from "@/utils/i18n"
 
 type Sizes = keyof typeof $sizeStyles
 type Weights = keyof typeof typography.primary
@@ -26,7 +24,7 @@ export interface TextProps extends RNTextProps {
    * Optional options to pass to i18n. Useful for interpolation
    * as well as explicitly setting locale or translation fallbacks.
    */
-  txOptions?: TOptions
+  txOptions?: any
   /**
    * An optional style override useful for padding & margin.
    */

@@ -1,12 +1,15 @@
 import type { Exercise, Set } from "@/db/schema"
 import convert, { Unit } from "convert-units"
 import { ExerciseModel } from "./ExerciseModel"
+import { convertBaseDurationToUnit, convertBaseWeightToUnit } from "@/utils"
 
-type SetModelType = Set & {
+export type SetModelType = Set & {
   exercise?: Exercise
 }
 
 export class SetModel {
+  raw_data: SetModelType
+
   id: number
   workoutStepId: number
   exerciseId: number
@@ -25,6 +28,8 @@ export class SetModel {
   exercise: ExerciseModel
 
   constructor(data: SetModelType) {
+    this.raw_data = data
+    
     this.id = data.id
     this.workoutStepId = data.workout_step_id
     this.exerciseId = data.exercise_id
@@ -59,18 +64,14 @@ export class SetModel {
     if (this.weightMcg === null) return null
 
     const metric = this.exercise.getMetricByType("weight")!
-    return convert(this.weightMcg)
-      .from("mcg")
-      .to(metric.unit as Unit)
+    return convertBaseWeightToUnit(this.weightMcg, metric.unit)
   }
 
   get duration(): number | null {
     if (this.durationMs === null) return null
 
     const metric = this.exercise.getMetricByType("duration")!
-    return convert(this.durationMs)
-      .from("ms")
-      .to(metric.unit as Unit)
+    return convertBaseDurationToUnit(this.durationMs, metric.unit)
   }
 
   get distance(): number | null {
@@ -83,14 +84,9 @@ export class SetModel {
   }
 
   get volume(): number | null {
-    if (!this.weightMcg || !this.reps) return null
+    if (!this.weight || !this.reps) return null
 
-    const metric = this.exercise.getMetricByType("weight")!
-    return (
-      convert(this.weightMcg)
-        .from("mcg")
-        .to(metric.unit as Unit) * this.reps
-    )
+    return this.weight * this.reps
   }
 
   update(data: Partial<SetModel>): void {

@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useRef, useCallback } from "react"
+import { useCallback, useEffect, useMemo, useRef } from "react"
 import { Animated, Image, ImageStyle, Platform, StyleProp, View, ViewStyle } from "react-native"
 
 import { iconRegistry } from "@/components/Icon"
-import { isRTL } from "@/ignite/i18n"
-import type { ThemedStyle } from "@/ignite/theme/types"
 import { useAppTheme } from "@/ignite/theme/context"
 import { $styles } from "@/ignite/theme/styles"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { isRTL } from "@/utils/i18n"
 
 import { $inputOuterBase, BaseToggleInputProps, Toggle, ToggleProps } from "./Toggle"
 

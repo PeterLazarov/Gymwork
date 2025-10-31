@@ -43,9 +43,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
   }
 
   function onAddExercisePress() {
-    navigation.navigate("ExerciseEdit", {
-      createMode: true,
-    })
+    navigation.navigate("ExerciseEdit", {})
   }
 
   const supersetTitle =

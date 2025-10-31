@@ -189,10 +189,12 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
           symbol={getSetSymbol()}
           color={color}
         />
-        <Icon
-          icon="trophy"
-          color={isRecord ? palettes.gold["80"] : "transparent"}
-        />
+        {isRecord && (
+          <Icon
+            icon="trophy"
+            color={palettes.gold["80"]}
+          />
+        )}
       </View>
 
       {set.exercise.hasMetricType("reps") && (

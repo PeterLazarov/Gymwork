@@ -1,5 +1,6 @@
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { useWorkoutFullQuery } from "@/db/queries/useWorkoutFullQuery"
+import { capitalize } from "@/utils"
 import { DateTime } from "luxon"
 import { createContext, FC, PropsWithChildren, useContext, useState } from "react"
 
@@ -32,7 +33,7 @@ export const OpenedWorkoutProvider: FC<PropsWithChildren<OpenedWorkoutProviderPr
   const todayDiff = Math.round(openedDateObject.diff(today, "days").days)
   const openedDateLabel =
     Math.abs(todayDiff) < 2
-      ? openedDateObject.toRelativeCalendar({ unit: "days" })!
+      ? capitalize(openedDateObject.toRelativeCalendar({ unit: "days" })!)
       : openedDateObject.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
   const workoutData = useWorkoutFullQuery(openedDateObject.toMillis())

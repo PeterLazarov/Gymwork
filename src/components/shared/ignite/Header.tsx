@@ -8,11 +8,10 @@ import {
   ViewStyle,
 } from "react-native"
 
-import { isRTL } from "@/ignite/i18n"
-import { translate } from "@/ignite/i18n/translate"
-import type { ThemedStyle } from "@/ignite/theme/types"
 import { useAppTheme } from "@/ignite/theme/context"
 import { $styles } from "@/ignite/theme/styles"
+import type { ThemedStyle } from "@/ignite/theme/types"
+import { isRTL, translate } from "@/utils/i18n"
 import { ExtendedEdge, useSafeAreaInsetsStyle } from "@/utils/useSafeAreaInsetsStyle"
 
 import { IconTypes, PressableIcon } from "./Icon"

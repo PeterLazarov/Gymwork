@@ -29,7 +29,10 @@ export type WorkoutStepScreenParams = {
 }
 interface WorkoutStepScreenProps extends AppStackScreenProps<"WorkoutStep"> {}
 export const WorkoutStepScreen: React.FC<WorkoutStepScreenProps> = ({ navigation }) => {
-  const { focusedStep } = useRouteParams("WorkoutStep")
+  const { focusedStep: routeStep } = useRouteParams("WorkoutStep")
+  const { openedWorkout } = useOpenedWorkout()
+  const focusedStep = openedWorkout?.workoutSteps.find((s) => s.id === routeStep.id) || routeStep
+
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
   const [focusedExercise, setFocusedExercise] = useState<ExerciseModel>(focusedStep.exercise)
   const updateWorkoutStepExercise = useUpdateWorkoutStepExerciseQuery()
@@ -99,6 +102,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
   // const insertWorkoutStep = useInsertWorkoutStepQuery()
 
   const deleteSelectedExercises = () => {
+    setMenuOpen(false)
     removeWorkoutStep(step.id)
     navigate("Workout")
     showSnackbar!({
@@ -123,7 +127,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
 
   function onEditExercisePress() {
     setMenuOpen(false)
-    navigate("ExerciseEdit", {})
+    navigate("ExerciseEdit", { edittedExercise: focusedExercise })
   }
   function goToFeedback() {
     setMenuOpen(false)
@@ -134,7 +138,6 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
     navigate("ExerciseDetails", { exerciseId: step.exercise.id! })
   }
   function goBack() {
-    // stateStore.setProp("focusedStepGuid", "")
     navigate("Workout")
   }
 

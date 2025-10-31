@@ -13,6 +13,7 @@ import { useExerciseLastSetQuery } from "@/db/queries/useExerciseLastSetQuery"
 import { useInsertSetQuery } from "@/db/queries/useInsertSetQuery"
 import { useRemoveSetQuery } from "@/db/queries/useRemoveSetQuery"
 import { useUpdateSetQuery } from "@/db/queries/useUpdateSetQuery"
+import { Set } from "@/db/schema"
 import {
   Button,
   Divider,
@@ -23,7 +24,7 @@ import {
   Text,
   useColors,
 } from "@/designSystem"
-import { manageInputFocus, translate } from "@/utils"
+import { convertWeightToBase, manageInputFocus, translate } from "@/utils"
 import { RestInput } from "./RestInput"
 import { SetTrackList } from "./SetTrackList"
 
@@ -65,22 +66,14 @@ export const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
   }, [focusedExercise])
 
   useEffect(() => {
-    function updateDraftSet(sourceSet: SetModel) {
-      const { id, exercise, reps, ...rest } = sourceSet
-
-      setDraftSet({
-        exercise: focusedExercise,
-        reps: reps || (focusedExercise.hasMetricType("reps") ? defaultReps : null),
-        ...rest,
-      })
-    }
-
     if (selectedSet) {
-      updateDraftSet(selectedSet)
+      setDraftSet(selectedSet)
     } else {
       lastSetQuery(focusedExercise.id!).then((lastSet) => {
         if (lastSet) {
-          updateDraftSet(new SetModel(lastSet))
+          setDraftSet(new SetModel(lastSet))
+        } else {
+          console.log("we`re fucked")
         }
       })
     }
@@ -88,10 +81,11 @@ export const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 
   const handleAdd = useCallback(() => {
     if (draftSet) {
-      const { id, ...draftCopy } = draftSet
+      const { id, exercise, ...draftCopy } = draftSet
 
       insertSet({
         ...draftCopy,
+        exercise: focusedExercise,
         workoutStepId: step.id,
         exerciseId: focusedExercise.id,
         date: openedDateObject.toMillis(),
@@ -112,24 +106,23 @@ export const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
       const nextExercise = step.exercises[isLastSet ? 0 : index + 1]
       setFocusedExercise(nextExercise)
     }
-  }, [focusedExercise])
+  }, [draftSet, insertSet, step, focusedExercise, openedDateObject, setFocusedExercise])
 
   const handleUpdate = useCallback(() => {
-    const { completedAt, ...updatedSet } = {
+    const { completedAt, exercise, ...updatedSet } = {
       ...draftSet,
-      exercise: selectedSet!.exercise,
       id: selectedSet!.id,
     }
 
     updateSet(updatedSet)
 
     setSelectedSet(null)
-  }, [draftSet, selectedSet])
+  }, [draftSet, selectedSet, updateSet])
 
   const handleRemove = useCallback(() => {
-    setSelectedSet(null)
     removeSet(selectedSet!.id)
-  }, [selectedSet])
+    setSelectedSet(null)
+  }, [selectedSet, removeSet])
 
   return (
     <View
@@ -156,7 +149,9 @@ export const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
           <SetEditControls
             value={draftSet}
             onSubmit={handleAdd}
-            onUpdate={(updates) => draftSet.update?.(updates)}
+            onUpdate={(updates) =>
+              setDraftSet((prev) => new SetModel({ ...prev!.raw_data!, ...updates }))
+            }
           />
         </View>
       )}
@@ -173,7 +168,8 @@ export const ExerciseTrackView: React.FC<ExerciseTrackViewProps> = ({
 type SetEditControlsProps = {
   value: Partial<SetModel>
   onSubmit(): void
-  onUpdate: (updated: Partial<SetModel>) => void
+  // TODO: use SetModel instead
+  onUpdate: (updated: Partial<Set>) => void
 }
 
 const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUpdate }) => {
@@ -196,7 +192,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
             ref={input0}
             value={value.restMs ? Duration.fromMillis(value.restMs) : undefined}
             onSubmit={() => onHandleSubmit(input0)}
-            onChange={(rest) => onUpdate({ restMs: rest.as("milliseconds") })}
+            onChange={(rest) => onUpdate({ rest_ms: rest.as("milliseconds") })}
           />
         </SetEditPanelSection>
       )}
@@ -206,7 +202,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
           <IncrementNumericEditor
             value={value.reps}
             onChange={(reps) => onUpdate({ reps })}
-            onSubmit={() => onHandleSubmit(input1)}
+            onSubmitEditing={() => onHandleSubmit(input1)}
             ref={input1}
             returnKeyType={isLastInput(input1) ? "default" : "next"}
             maxDecimals={0}
@@ -216,12 +212,18 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
 
       {value.exercise?.hasMetricType("weight") && (
         <SetEditPanelSection text={translate("weight")}>
-          {/* Works in KG */}
           <IncrementNumericEditor
             value={value.weight}
-            onChange={(weight) => onUpdate({ weight })}
+            onChange={(weight) => {
+              onUpdate({
+                weight_mcg: convertWeightToBase(
+                  weight!,
+                  value.exercise?.getMetricByType("weight")!.unit!,
+                ),
+              })
+            }}
             step={value.exercise.getMetricByType("weight")!.step_value}
-            onSubmit={() => onHandleSubmit(input2)}
+            onSubmitEditing={() => onHandleSubmit(input2)}
             ref={input2}
             returnKeyType={isLastInput(input2) ? "default" : "next"}
           />
@@ -232,7 +234,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
         <SetEditPanelSection text={translate("distance")}>
           <DistanceEditor
             value={value.distance}
-            onChange={(distance) => onUpdate({ distance })}
+            onChange={(distance) => onUpdate({ distance_mm: distance })}
             unit={value.exercise.getMetricByType("distance")!.unit as DistanceUnit}
             onSubmitEditing={() => onHandleSubmit(input3)}
             ref={input3}
@@ -245,7 +247,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
         <SetEditPanelSection text={translate("duration")}>
           <DurationInput
             value={value.durationMs ? Duration.fromMillis(value.durationMs) : undefined}
-            onUpdate={(duration) => onUpdate({ durationMs: duration.toMillis() })}
+            onUpdate={(duration) => onUpdate({ duration_ms: duration.toMillis() })}
             onSubmitEditing={() => onHandleSubmit(input4)}
             // timer={timer}
             ref={input4}
@@ -275,12 +277,12 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
   )
 }
 
-type Props = {
+type SetEditPanelSectionProps = {
   text: string
   children: ReactNode
 }
 
-const SetEditPanelSection: React.FC<Props> = ({ text, children }) => {
+const SetEditPanelSection: React.FC<SetEditPanelSectionProps> = ({ text, children }) => {
   return (
     <View style={{ gap: spacing.xxs }}>
       <View>

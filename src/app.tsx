@@ -7,14 +7,13 @@ if (__DEV__) {
 }
 import { useFonts } from "expo-font"
 import * as Linking from "expo-linking"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 import { KeyboardProvider } from "react-native-keyboard-controller"
 import { PaperProvider } from "react-native-paper"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 
 import DBProvider from "@/db/DBProvider"
 import { AppNavigator } from "@/navigators/AppNavigator"
-import { initI18n } from "./ignite/i18n"
 import { ThemeProvider } from "./ignite/theme/context"
 import { customFontsToLoad } from "./ignite/theme/typography"
 import { useNavigationPersistence } from "./navigators/navigationUtilities"
@@ -54,12 +53,6 @@ export function App() {
   } = useNavigationPersistence(NAVIGATION_PERSISTENCE_KEY)
 
   const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
-  const [isI18nInitialized, setIsI18nInitialized] = useState(false)
-
-  useEffect(() => {
-    initI18n().then(() => setIsI18nInitialized(true))
-    // .then(() => loadDateFnsLocale())
-  }, [])
 
   const colorScheme = useColorScheme()!
   const paperTheme = useMemo(() => {
@@ -72,7 +65,7 @@ export function App() {
   // In iOS: application:didFinishLaunchingWithOptions:
   // In Android: https://stackoverflow.com/a/45838109/204044
   // You can replace with your own loading component if you wish.
-  if (!isNavigationStateRestored || !isI18nInitialized || (!areFontsLoaded && !fontLoadError)) {
+  if (!isNavigationStateRestored || (!areFontsLoaded && !fontLoadError)) {
     return null
   }
 

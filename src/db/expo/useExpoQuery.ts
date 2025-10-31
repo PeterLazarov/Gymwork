@@ -44,22 +44,37 @@ export function useExpoQuery(
   const isActive = useRef(true)
   const { sqlite } = useDB()
 
-  // Memoize SQL + params to avoid recalculating on each render
+  const isDrizzleQuery = useMemo(() => {
+    return typeof query === "object" && query !== null && typeof query.execute === "function"
+  }, [query])
+
   const { sql, params } = useMemo(() => {
+    if (isDrizzleQuery) return { sql: null, params: [] }
     if (typeof query === "string") return { sql: query, params: [] }
     const toSQL = query.toSQL()
     return { sql: toSQL.sql, params: toSQL.params }
-  }, [query])
+  }, [query, isDrizzleQuery])
 
   useEffect(() => {
     isActive.current = true
     const reqId = ++latestReq.current
 
     const fetchRows = () => {
-      const fetchMethod =
-        mode === "single" ? sqlite.getFirstAsync(sql, params) : sqlite.getAllAsync(sql, params)
+      let fetchPromise: Promise<any>
 
-      fetchMethod
+      if (isDrizzleQuery) {
+        fetchPromise = query.execute().then((result: any) => {
+          if (mode === "single") {
+            return result
+          }
+          return Array.isArray(result) ? result : [result]
+        })
+      } else {
+        fetchPromise =
+          mode === "single" ? sqlite.getFirstAsync(sql!, params) : sqlite.getAllAsync(sql!, params)
+      }
+
+      fetchPromise
         .then((rows) => {
           if (isActive.current && reqId === latestReq.current) {
             setData(rows)
@@ -81,7 +96,7 @@ export function useExpoQuery(
       isActive.current = false
       sub.off("update", listener)
     }
-  }, [sql, JSON.stringify(params), JSON.stringify(tables)])
+  }, [query, sql, JSON.stringify(params), JSON.stringify(tables), mode, isDrizzleQuery])
 
   return data
 }
