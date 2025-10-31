@@ -5,6 +5,7 @@ import { ExerciseSelectScreenParams } from "@/components/ExerciseSelectScreen"
 import { TemplateSaveScreenParams } from "@/components/TemplateSaveScreen"
 import { UserFeedbackScreenParams } from "@/components/UserFeedbackScreen"
 import { WorkoutStepScreenParams } from "@/components/WorkoutStepScreen"
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 import { NavigationContainer, RouteProp, useRoute } from "@react-navigation/native"
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
 import { ComponentProps } from "react"
@@ -23,6 +24,14 @@ export type AppStackParamList = {
   WorkoutFeedback: undefined
   WorkoutStep: WorkoutStepScreenParams
 }
+
+export type WorkoutStepTabParamList = {
+  Track: undefined
+  History: undefined
+}
+
+export type WorkoutStepTabScreenProps<T extends keyof WorkoutStepTabParamList> =
+  BottomTabScreenProps<WorkoutStepTabParamList, T>
 
 export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStackScreenProps<
   AppStackParamList,

@@ -1,4 +1,5 @@
 import { PortalHost, PortalProvider } from "@gorhom/portal"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { ErrorBoundary } from "@sentry/react-native"
@@ -16,12 +17,12 @@ import { WelcomeScreen } from "@/components/WelcomeScreen"
 import { WorkoutFeedbackScreen } from "@/components/WorkoutFeedbackScreen"
 import { WorkoutScreen } from "@/components/WorkoutScreen"
 import { offscreenRef } from "@/components/WorkoutScreen/utils/useShareWorkout"
+import { WorkoutStepScreen } from "@/components/WorkoutStepScreen"
 import { DialogContextProvider } from "@/context/DialogContext"
 import Config from "@/ignite/config"
 import { useAppTheme } from "@/ignite/theme/context"
-import type { AppStackParamList, NavigationProps } from "./navigationTypes"
+import type { AppStackParamList, NavigationProps, WorkoutStepTabParamList } from "./navigationTypes"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { WorkoutStepScreen } from "@/components/WorkoutStepScreen"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -30,6 +31,41 @@ import { WorkoutStepScreen } from "@/components/WorkoutStepScreen"
 const exitRoutes = Config.exitRoutes
 
 const Stack = createNativeStackNavigator<AppStackParamList>()
+const WorkoutStepTab = createBottomTabNavigator<WorkoutStepTabParamList>()
+
+const WorkoutStepTabs = () => {
+  const {
+    theme: { colors },
+  } = useAppTheme()
+
+  return (
+    <WorkoutStepTab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: colors.background,
+        },
+        tabBarActiveTintColor: colors.tint,
+        tabBarInactiveTintColor: colors.textDim,
+      }}
+    >
+      <WorkoutStepTab.Screen
+        name="Track"
+        component={WorkoutStepScreen}
+        options={{
+          tabBarLabel: "Track",
+        }}
+      />
+      <WorkoutStepTab.Screen
+        name="History"
+        component={WorkoutStepScreen}
+        options={{
+          tabBarLabel: "History",
+        }}
+      />
+    </WorkoutStepTab.Navigator>
+  )
+}
 
 const AppStack = () => {
   const {
@@ -87,7 +123,7 @@ const AppStack = () => {
       />
       <Stack.Screen
         name="WorkoutStep"
-        component={WorkoutStepScreen}
+        component={WorkoutStepTabs}
       />
     </Stack.Navigator>
   )
@@ -111,7 +147,7 @@ export const AppNavigator = (props: NavigationProps) => {
             <ErrorBoundary
               fallback={({ error, resetError }) => (
                 <ErrorDetails
-                  error={error}
+                  error={error as Error}
                   resetError={resetError}
                 />
               )}
