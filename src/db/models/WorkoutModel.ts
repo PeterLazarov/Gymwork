@@ -74,6 +74,22 @@ export class WorkoutModel {
     }
   }
 
+  get muscles(): string[] {
+    const exercises = this.workoutSteps.flatMap(s => s.exercise)
+
+    return Array.from(
+      new Set(exercises.flatMap(e => e.muscles))
+    ) as string[]
+  }
+
+  get muscleAreas(): string[] {
+    const exercises = this.workoutSteps.flatMap(s => s.exercise)
+
+    return Array.from(
+      new Set(exercises.flatMap(e => e.muscleAreas))
+    ) as string[]
+  }
+
   update(updates: Partial<WorkoutModel>): WorkoutModel {
     return Object.assign(this, updates)
   }

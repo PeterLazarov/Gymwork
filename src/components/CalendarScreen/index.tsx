@@ -8,7 +8,7 @@ import { Menu } from "react-native-paper"
 import { WorkoutModal } from "@/components/CalendarScreen/WorkoutModal"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
-import { useAllWorkoutsQuery, WorkoutResult } from "@/db/queries/useAllWorkoutIdsQuery"
+import { useAllWorkoutIdsQuery, WorkoutResult } from "@/db/queries/useAllWorkoutIdsQuery"
 import { useWorkoutFullQuery } from "@/db/queries/useWorkoutFullQuery"
 import { fontSize, Header, Icon, IconButton, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
@@ -24,7 +24,7 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
   const colors = useColors()
 
   const { openedDateObject, setOpenedDate } = useOpenedWorkout()
-  const getWorkouts = useAllWorkoutsQuery()
+  const getWorkouts = useAllWorkoutIdsQuery()
   const workoutFullQuery = useWorkoutFullQuery(null, false)
   const [markedDates, setMarkedDates] = useState<MarkedDays>({})
 

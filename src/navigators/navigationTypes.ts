@@ -23,6 +23,7 @@ export type AppStackParamList = {
   TemplateSelect: undefined
   WorkoutFeedback: undefined
   WorkoutStep: WorkoutStepScreenParams
+  WorkoutsHistory: undefined
 }
 
 export type WorkoutStepTabParamList = {

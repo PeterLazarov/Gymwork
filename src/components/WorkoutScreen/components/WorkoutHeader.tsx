@@ -19,7 +19,8 @@ export const WorkoutHeader: React.FC = () => {
   const { openedDateLabel, openedWorkout } = useOpenedWorkout()
 
   function openCalendar() {
-    navigate("Calendar")
+    // navigate("Calendar")
+    navigate("WorkoutsHistory")
   }
 
   function saveTemplate() {

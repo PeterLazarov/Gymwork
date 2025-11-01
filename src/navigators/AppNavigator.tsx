@@ -29,6 +29,7 @@ import type {
 } from "./navigationTypes"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { WorkoutStepScreen } from "@/components/WorkoutStep"
+import { WorkoutsHistoryScreen } from "@/components/WorkoutHistoryScreen"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -174,6 +175,10 @@ const AppStack = () => {
       <Stack.Screen
         name="WorkoutStep"
         component={WorkoutStepTabs}
+      />
+      <Stack.Screen
+        name="WorkoutsHistory"
+        component={WorkoutsHistoryScreen}
       />
     </Stack.Navigator>
   )

@@ -21,6 +21,9 @@ const dateFormats = {
 export const msToIsoDate = (ms: number) => {
   return DateTime.fromMillis(ms).toISODate()!
 }
+export const isoDateToMs = (date: string) => {
+  return DateTime.fromISO(date).toMillis()!
+}
 export const formatDateIso = (dateIso: string, format: keyof typeof dateFormats) => {
   const date = DateTime.fromISO(dateIso)
 

@@ -5,7 +5,7 @@ export type WorkoutResult = {
   date: number
 }
 
-export const useAllWorkoutsQuery = () => {
+export const useAllWorkoutIdsQuery = () => {
   const { drizzleDB } = useDB()
   return () =>
     drizzleDB.query.workouts.findMany({
