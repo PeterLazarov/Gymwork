@@ -128,6 +128,7 @@ const en = {
   exerciseDetails: "Exercise Details",
   workoutsCount: "{{count}} Workouts",
   viewInstructions: "View instructions",
+  noExercisesAdded: "No exercises added"
 }
 
 export default en

@@ -53,7 +53,7 @@ export class WorkoutModel {
   }
 
   get hasComments(): boolean {
-    return !!(this.notes || this.feeling || this.pain || this.rpe)
+    return !!(this.name || this.notes || this.feeling || this.pain || this.rpe)
   }
 
   get isComplete(): boolean {

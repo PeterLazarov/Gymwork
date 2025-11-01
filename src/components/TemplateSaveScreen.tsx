@@ -78,6 +78,7 @@ export const TemplateSaveScreen: React.FC<TemplateSaveScreenProps> = ({ navigati
       insertWorkout({
         name: template.name,
         workoutSteps: templateSteps,
+        isTemplate: true,
       })
     }
     showSnackbar!({

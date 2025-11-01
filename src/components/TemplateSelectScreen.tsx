@@ -1,4 +1,5 @@
 import { useDialogContext } from "@/context/DialogContext"
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { useInsertWorkoutQuery } from "@/db/queries/useInsertWorkoutQuery"
 import { useRemoveTemplateQuery } from "@/db/queries/useRemoveTemplateQuery"
@@ -18,11 +19,13 @@ export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> = ({ navi
   const removeTemplateQuery = useRemoveTemplateQuery()
   const insertWorkout = useInsertWorkoutQuery()
   const { showConfirm } = useDialogContext()
+  const { openedDateObject } = useOpenedWorkout()
 
   function handleSelect(template: WorkoutModel) {
     insertWorkout({
       name: template.name,
       workoutSteps: template.workoutSteps,
+      date: openedDateObject.toMillis(),
     })
     navigation.navigate("Workout")
   }

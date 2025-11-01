@@ -7,12 +7,13 @@ export type WorkoutResult = {
 
 export const useAllWorkoutIdsQuery = () => {
   const { drizzleDB } = useDB()
-  return () =>
+  return (params?: {limit?: number}) => 
     drizzleDB.query.workouts.findMany({
       columns: {
         id: true,
         date: true,
       },
       orderBy: (workouts, { asc }) => asc(workouts.date),
-    }) as Promise<WorkoutResult[]>
+      limit: params?.limit
+    })
 }

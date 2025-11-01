@@ -226,6 +226,11 @@ const WorkoutListItem: React.FC<WorkoutListItemProps> = ({ workout, onPress }) =
       </View>
 
       <View style={styles.stats}>
+        {workout.comments.name && (
+          <View style={styles.surface}>
+            <Text>{workout.comments.name}</Text>
+          </View>
+        )}
         {workout.durationMs && (
           <View style={styles.surface}>
             <Text

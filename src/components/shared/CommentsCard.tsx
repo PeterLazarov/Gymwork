@@ -1,7 +1,7 @@
 import React, { useMemo } from "react"
 import { StyleSheet, View } from "react-native"
 
-import { discomfortOptions, feelingOptions } from "@/constants/enums"
+import { Discomfort, Feeling, discomfortOptions, feelingOptions } from "@/constants/enums"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { Card, FeedbackPicker, fontSize, spacing, Text, useColors } from "@/designSystem"
 import { translate } from "@/utils"
@@ -23,21 +23,26 @@ export const CommentsCard: React.FC<Props> = ({ workout, onPress, compactMode })
       onPress={onPress}
       content={
         <View style={styles.cardContent}>
-          {workout.notes !== "" && (
+          {!!workout.name?.trim() && (
+            <View style={styles.notesContainer}>
+              <Text style={styles.name}>{workout.name}</Text>
+            </View>
+          )}
+          {!!workout.notes?.trim() && (
             <View style={styles.notesContainer}>
               <Text style={styles.notes}>{workout.notes}</Text>
             </View>
           )}
 
           <View style={styles.stickerPanel}>
-            {workout.rpe !== undefined && (
+            {workout.rpe && (
               <Text style={styles.difficultyLabel}>
                 {translate("diffValue", { rpe: workout.rpe })}
               </Text>
             )}
             {workout.pain && (
               <FeedbackPicker.Option
-                option={discomfortOptions[workout.pain as keyof typeof discomfortOptions]}
+                option={discomfortOptions[workout.pain as Discomfort]}
                 isSelected
                 style={styles.sticker}
                 compactMode={compactMode}
@@ -45,7 +50,7 @@ export const CommentsCard: React.FC<Props> = ({ workout, onPress, compactMode })
             )}
             {workout.feeling && (
               <FeedbackPicker.Option
-                option={feelingOptions[workout.feeling as keyof typeof feelingOptions]}
+                option={feelingOptions[workout.feeling as Feeling]}
                 isSelected
                 style={styles.sticker}
                 compactMode={compactMode}
@@ -72,6 +77,10 @@ const makeStyles = (colors: any, compactMode?: boolean) =>
       gap: spacing.sm,
       paddingTop: spacing.xs,
       paddingHorizontal: compactMode ? spacing.xs : 0,
+    },
+    name: {
+      fontSize: fontSize.md,
+      color: colors.onSurface,
     },
     notes: {
       fontSize: fontSize.sm,
