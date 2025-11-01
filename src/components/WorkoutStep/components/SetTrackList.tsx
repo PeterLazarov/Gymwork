@@ -93,7 +93,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
   const flashListRef = useRef<FlashListRef<SetModel>>(null)
 
   function toggleSetWarmup(set: SetModel) {
-    updateSet({ isWarmup: !set.isWarmup })
+    updateSet({ id: set.id, isWarmup: !set.isWarmup })
   }
 
   if (showFallback && !sets?.length && !previewNextSet)

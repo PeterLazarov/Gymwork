@@ -214,7 +214,7 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
       }
 
       const workout_step_obj: typeof workout_steps.$inferInsert = {
-        step_type: "plain" as const,
+        step_type: isSuperSet ? "superset" : "plain",
         workout_id: workoutId,
         position: stepIndex,
       }

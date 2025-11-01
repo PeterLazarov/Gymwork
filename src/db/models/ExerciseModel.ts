@@ -179,6 +179,20 @@ export class ExerciseModel {
     return Object.assign(this, updates)
   }
 
+  static copy(source: ExerciseModel) {
+    return new ExerciseModel({
+      ...source,
+      id: -1,
+      position: source.position || null,
+      stance: source.stance || null,
+      muscle_areas: source.muscleAreas,
+      is_favorite: source.isFavorite,
+      created_at: source.createdAt,
+      updated_at: source.updatedAt,
+      exerciseMetrics: source.metrics,
+    })
+  }
+  
   static from(exercise: ExerciseModelType): ExerciseModel {
     return new ExerciseModel(exercise)
   }

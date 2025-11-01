@@ -65,7 +65,7 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = ({ navigati
   }
 
   function onUpdate(updated: ExerciseModel, isValid: boolean) {
-    setExercise(updated)
+    setExercise(ExerciseModel.copy(updated))
     setFormValid(isValid)
   }
 

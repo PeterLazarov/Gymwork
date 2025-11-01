@@ -110,10 +110,17 @@ export const WorkoutsHistoryScreen: React.FC = () => {
           value={filterString}
           mode="bar"
           right={() => (
-            <IconButton onPress={() => setFilterModalOpen(true)}>
-              {!filterEmpty && <Icon icon="filter" />}
-              {filterEmpty && <Icon icon="filter-outline" />}
-            </IconButton>
+            <>
+              {!filterEmpty && (
+                <IconButton onPress={() => setFilter({})}>
+                  <Icon icon="close" />
+                </IconButton>
+              )}
+              <IconButton onPress={() => setFilterModalOpen(true)}>
+                {!filterEmpty && <Icon icon="filter" />}
+                {filterEmpty && <Icon icon="filter-outline" />}
+              </IconButton>
+            </>
           )}
           style={{ borderRadius: 0 }}
         />
