@@ -1,8 +1,19 @@
-import { createContext, FC, PropsWithChildren, useContext, useState } from "react"
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 import { Appearance, ColorSchemeName } from "react-native"
 
 import { CHART_VIEW_KEY } from "@/constants/chartViews"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
+import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
+import { useUpdateSettingsQuery } from "@/db/queries/useUpdateSettingsQuery"
+import { InsertSettings } from "@/db/schema"
 
 let deviceColorScheme = Appearance.getColorScheme()
 Appearance.addChangeListener(({ colorScheme }) => {
@@ -45,17 +56,23 @@ export const SettingContext = createContext<SettingContextType | null>(null)
 export interface SettingProviderProps {}
 
 export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ children }) => {
-  const [showCommentsCard, setShowCommentsCard] = useState(false)
-  const [showSetCompletion, setShowSetCompletion] = useState(false)
-  const [showWorkoutTimer, setShowWorkoutTimer] = useState(false)
-  const [scientificMuscleNames, setScientificMuscleNames] = useState(false)
-  const [measureRest, setMeasureRest] = useState(false)
-  const [previewNextSet, setPreviewNextSet] = useState(false)
-  const [colorSchemePreference, setColorSchemePreference] = useState<ColorSchemeName>(
+  const { settings, isLoading } = useSettingsQuery({
+    theme: deviceColorScheme ?? null,
+  })
+  const updateSettings = useUpdateSettingsQuery()
+  const settingsId = settings?.id ?? null
+
+  const [showCommentsCard, setShowCommentsCardState] = useState(false)
+  const [showSetCompletion, setShowSetCompletionState] = useState(false)
+  const [showWorkoutTimer, setShowWorkoutTimerState] = useState(false)
+  const [scientificMuscleNames, setScientificMuscleNamesState] = useState(false)
+  const [measureRest, setMeasureRestState] = useState(false)
+  const [previewNextSet, setPreviewNextSetState] = useState(false)
+  const [colorSchemePreference, setColorSchemePreferenceState] = useState<ColorSchemeName>(
     deviceColorScheme ?? "light",
   )
+  const [feedbackUser, setFeedbackUserState] = useState("")
 
-  const [feedbackUser, setFeedbackUser] = useState("")
   const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState("All Exercises")
   const [edittedExercise, setEdittedExercise] = useState<ExerciseModel | null>(null)
   const [highlightedSet, setHighlightedSet] = useState<number | null>(null)
@@ -63,30 +80,126 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   const [chartWidth, setChartWidth] = useState(0)
   const [chartView, setChartView] = useState<CHART_VIEW_KEY>("30D")
 
+  const persistSettings = useCallback(
+    async (updates: Partial<InsertSettings>) => {
+      if (!settingsId) return
+      try {
+        await updateSettings(settingsId, updates)
+      } catch (error) {
+        console.error("Failed to persist settings", error)
+      }
+    },
+    [settingsId, updateSettings],
+  )
+
+  useEffect(() => {
+    if (!settings) return
+
+    setShowCommentsCardState(!!settings.show_comments_card)
+    setShowSetCompletionState(!!settings.show_set_completion)
+    setShowWorkoutTimerState(!!settings.show_workout_timer)
+    setScientificMuscleNamesState(!!settings.scientific_muscle_names_enabled)
+    setMeasureRestState(!!settings.measure_rest)
+    setPreviewNextSetState(!!settings.preview_next_set)
+    setFeedbackUserState(settings.feedback_user ?? "")
+
+    const persistedScheme = (settings.theme ?? undefined) as ColorSchemeName
+    setColorSchemePreferenceState(persistedScheme)
+    const appearanceScheme = persistedScheme ?? deviceColorScheme ?? null
+    Appearance.setColorScheme?.(appearanceScheme)
+  }, [settings])
+
+  const handleSetShowCommentsCard = useCallback(
+    (show: boolean) => {
+      setShowCommentsCardState(show)
+      persistSettings({ show_comments_card: show })
+    },
+    [persistSettings],
+  )
+
+  const handleSetShowSetCompletion = useCallback(
+    (show: boolean) => {
+      setShowSetCompletionState(show)
+      persistSettings({ show_set_completion: show })
+    },
+    [persistSettings],
+  )
+
+  const handleSetShowWorkoutTimer = useCallback(
+    (show: boolean) => {
+      setShowWorkoutTimerState(show)
+      persistSettings({ show_workout_timer: show })
+    },
+    [persistSettings],
+  )
+
+  const handleSetScientificMuscleNames = useCallback(
+    (enabled: boolean) => {
+      setScientificMuscleNamesState(enabled)
+      persistSettings({ scientific_muscle_names_enabled: enabled })
+    },
+    [persistSettings],
+  )
+
+  const handleSetMeasureRest = useCallback(
+    (enabled: boolean) => {
+      setMeasureRestState(enabled)
+      persistSettings({ measure_rest: enabled })
+    },
+    [persistSettings],
+  )
+
+  const handleSetPreviewNextSet = useCallback(
+    (enabled: boolean) => {
+      setPreviewNextSetState(enabled)
+      persistSettings({ preview_next_set: enabled })
+    },
+    [persistSettings],
+  )
+
+  const handleSetColorSchemePreference = useCallback(
+    (scheme: ColorSchemeName) => {
+      setColorSchemePreferenceState(scheme)
+      const appearanceScheme = scheme ?? deviceColorScheme ?? null
+      Appearance.setColorScheme?.(appearanceScheme)
+      persistSettings({ theme: scheme ?? null })
+    },
+    [persistSettings],
+  )
+
+  const handleSetFeedbackUser = useCallback(
+    (user: string) => {
+      setFeedbackUserState(user)
+      persistSettings({ feedback_user: user })
+    },
+    [persistSettings],
+  )
+
+  if (isLoading || !settingsId) {
+    return null
+  }
+
   const value = {
     showCommentsCard,
-    setShowCommentsCard,
+    setShowCommentsCard: handleSetShowCommentsCard,
     showSetCompletion,
-    setShowSetCompletion,
+    setShowSetCompletion: handleSetShowSetCompletion,
     showWorkoutTimer,
-    setShowWorkoutTimer,
+    setShowWorkoutTimer: handleSetShowWorkoutTimer,
     exerciseSelectLastTab,
     setExerciseSelectLastTab,
     feedbackUser,
-    setFeedbackUser,
+    setFeedbackUser: handleSetFeedbackUser,
     scientificMuscleNames,
-    setScientificMuscleNames,
+    setScientificMuscleNames: handleSetScientificMuscleNames,
     edittedExercise,
     setEdittedExercise,
     measureRest,
-    setMeasureRest,
+    setMeasureRest: handleSetMeasureRest,
     previewNextSet,
-    setPreviewNextSet,
+    setPreviewNextSet: handleSetPreviewNextSet,
     colorSchemePreference,
-    setColorSchemePreference: (scheme: ColorSchemeName) => {
-      setColorSchemePreference(scheme)
-      Appearance.setColorScheme?.(scheme ?? deviceColorScheme)
-    },
+    setColorSchemePreference: handleSetColorSchemePreference,
     highlightedSet,
     setHighlightedSet,
     chartHeight,

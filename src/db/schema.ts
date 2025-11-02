@@ -18,15 +18,14 @@ const timestamp_col = integer().notNull().default(timestamp_col_default_time_sql
 // Configs & Settings
 export const settings = sqliteTable("settings", {
   id: integer().primaryKey({ autoIncrement: true }),
-  theme: text({ enum: ["light", "dark"] })
-    .notNull()
-    .default("light"),
+  theme: text({ enum: ["light", "dark"] }).default("light"),
   scientific_muscle_names_enabled: integer({ mode: "boolean" }).notNull().default(false),
-  show_set_completion: integer({ mode: "boolean" }).notNull().default(true),
-  preview_next_set: integer({ mode: "boolean" }).notNull().default(true),
-  measure_rest: integer({ mode: "boolean" }).notNull().default(true),
-  show_comments_card: integer({ mode: "boolean" }).notNull().default(true),
-  show_workout_timer: integer({ mode: "boolean" }).notNull().default(true),
+  show_set_completion: integer({ mode: "boolean" }).notNull().default(false),
+  preview_next_set: integer({ mode: "boolean" }).notNull().default(false),
+  measure_rest: integer({ mode: "boolean" }).notNull().default(false),
+  show_comments_card: integer({ mode: "boolean" }).notNull().default(false),
+  show_workout_timer: integer({ mode: "boolean" }).notNull().default(false),
+  feedback_user: text().default(""),
   created_at: timestamp_col,
   updated_at: timestamp_col,
 })
@@ -185,7 +184,9 @@ function getEntityTagTable(tableName: string, table: SQLiteTableWithColumns<any>
       created_at: timestamp_col,
       updated_at: timestamp_col,
     },
-    (t) => [primaryKey({ columns: [t.tag_id, t.entity_id] })],
+    (t) => ({
+      pk: primaryKey({ columns: [t.tag_id, t.entity_id] }),
+    }),
   )
 }
 

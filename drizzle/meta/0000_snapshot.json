@@ -1,5 +1,5 @@
 {
-  "version": "6",
+  "version": "7",
   "dialect": "sqlite",
   "id": "5aa0ba32-2faf-4516-a021-934b25e5dea4",
   "prevId": "00000000-0000-0000-0000-000000000000",
@@ -480,7 +480,7 @@
           "name": "theme",
           "type": "text",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
           "default": "'light'"
         },
@@ -498,7 +498,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": true
+          "default": false
         },
         "preview_next_set": {
           "name": "preview_next_set",
@@ -506,7 +506,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": true
+          "default": false
         },
         "measure_rest": {
           "name": "measure_rest",
@@ -514,7 +514,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": true
+          "default": false
         },
         "show_comments_card": {
           "name": "show_comments_card",
@@ -522,7 +522,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": true
+          "default": false
         },
         "show_workout_timer": {
           "name": "show_workout_timer",
@@ -530,10 +530,26 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": true
+          "default": false
+        },
+        "feedback_user": {
+          "name": "feedback_user",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "''"
         },
         "created_at": {
           "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(strftime('%s','now')*1000 + cast(substr(strftime('%f','now'),4,3) as integer))"
+        },
+        "updated_at": {
+          "name": "updated_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,

@@ -8,6 +8,13 @@
       "when": 1761672284555,
       "tag": "0000_cheerful_old_lace",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1762065600000,
+      "tag": "0001_store_settings_preferences",
+      "breakpoints": true
     }
   ]
 }
