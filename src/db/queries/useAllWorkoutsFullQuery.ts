@@ -46,8 +46,8 @@ export const useAllWorkoutsFullQuery = () => {
 
         if (searchString) {
           conditions.push(or(
-            like(workouts.name, `%${searchString}%`)), 
-            like(workouts.notes, `%${searchString}%`
+            like(workouts.name, `%${searchString}%`), 
+            like(workouts.notes, `%${searchString}%`)
           ))
         }
 

@@ -111,8 +111,13 @@ export const WorkoutsHistoryScreen: React.FC = () => {
           mode="bar"
           right={() => (
             <>
-              {!filterEmpty && (
-                <IconButton onPress={() => setFilter({})}>
+              {(!filterEmpty || filterString.trim() !== "") && (
+                <IconButton
+                  onPress={() => {
+                    setFilter({})
+                    setFilterString("")
+                  }}
+                >
                   <Icon icon="close" />
                 </IconButton>
               )}
