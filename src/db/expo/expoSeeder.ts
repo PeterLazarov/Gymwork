@@ -248,6 +248,9 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
 
       const groupSets: (typeof sets.$inferInsert)[] = []
 
+      // Track the created_at timestamp for staggering sets
+      let setCreatedAt = workoutTime.toMillis()
+
       for (let setIndex = 0; setIndex < numSets; setIndex++) {
         const exercise = isSuperSet ? stepExercises[setIndex % 2] : stepExercises[0]
         const exerciseId = exerciseList.indexOf(exercise) + 1
@@ -256,6 +259,11 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         workoutTime = workoutTime.plus({
           milliseconds: restMs + setDuration,
         })
+
+        // Stagger created_at by 1 minute for each set
+        if (setIndex > 0) {
+          setCreatedAt += 60 * 1000 // Add 1 minute in milliseconds
+        }
 
         if (isCardio) {
           // Cardio set
@@ -273,6 +281,7 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
             date: workoutDateMs,
             is_weak_ass_record: false,
             completed_at: null,
+            created_at: setCreatedAt,
           })
         } else {
           const hasWeight = "weight" in exercise.measurements
@@ -292,6 +301,7 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
             date: workoutDateMs,
             is_weak_ass_record: false,
             completed_at: null,
+            created_at: setCreatedAt,
           })
         }
       }
