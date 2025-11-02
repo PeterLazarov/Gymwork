@@ -182,7 +182,7 @@ export class ExerciseModel {
   static copy(source: ExerciseModel) {
     return new ExerciseModel({
       ...source,
-      id: -1,
+      id: source.id ?? -1,
       position: source.position || null,
       stance: source.stance || null,
       muscle_areas: source.muscleAreas,

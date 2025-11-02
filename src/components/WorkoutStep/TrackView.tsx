@@ -33,12 +33,12 @@ const defaultReps = 10
 type TrackViewProps = {
   step: WorkoutStepModel
   exercise: ExerciseModel
-  setFocusedExercise: (exercise: ExerciseModel) => void
+  moveToNextExercise: () => void
 }
 
 export const TrackView: React.FC<TrackViewProps> = ({
   exercise: focusedExercise,
-  setFocusedExercise,
+  moveToNextExercise,
   step,
 }) => {
   const colors = useColors()
@@ -101,12 +101,9 @@ export const TrackView: React.FC<TrackViewProps> = ({
     // }
 
     if (step.stepType === "superset") {
-      const index = step.exercises.indexOf(focusedExercise)
-      const isLastSet = index === step.exercises.length - 1
-      const nextExercise = step.exercises[isLastSet ? 0 : index + 1]
-      setFocusedExercise(nextExercise)
+      moveToNextExercise()
     }
-  }, [draftSet, insertSet, step, focusedExercise, openedDateObject, setFocusedExercise])
+  }, [draftSet, insertSet, step, focusedExercise, openedDateObject, moveToNextExercise])
 
   const handleUpdate = useCallback(() => {
     const { completedAt, exercise, ...updatedSet } = {

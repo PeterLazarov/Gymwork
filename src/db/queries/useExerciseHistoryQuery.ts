@@ -56,5 +56,5 @@ export function useExerciseHistoryQuery(exerciseId: number) {
 
   const query = useMemo(() => buildQuery(exerciseId), [buildQuery, exerciseId])
 
-  return useExpoQuery(query, ["workouts", "workout_steps", "sets"], "multiple")
+  return useExpoQuery(query, ["workouts", "workout_steps", "sets", "exercises", "exercise_metrics"], "multiple")
 }

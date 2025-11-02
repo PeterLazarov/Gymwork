@@ -35,6 +35,8 @@ export const useInsertExerciseQuery = () => {
           exercise_id: exerciseId,
           measurement_type: metric.measurement_type,
           unit: metric.unit,
+          more_is_better: metric.more_is_better,
+          step_value: metric.step_value ?? null,
           created_at: timestamp,
           updated_at: timestamp,
         })),

@@ -39,13 +39,15 @@ export const WorkoutStepScreen: React.FC<
   const focusedStep = openedWorkout?.workoutSteps.find((s) => s.id === routeStep.id) || routeStep
 
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
-  const [focusedExercise, setFocusedExercise] = useState<ExerciseModel>(focusedStep.exercise)
+  const [focusedStepIndex, setFocusedStepIndex] = useState(0)
   const updateWorkoutStepExercise = useUpdateWorkoutStepExerciseQuery()
+  const focusedExercise = useMemo(() => {
+    return focusedStep.exercises[focusedStepIndex]
+  }, [focusedStep, focusedStepIndex])
 
   function switchExercise(exercise: ExerciseModel) {
     if (focusedExercise) {
       updateWorkoutStepExercise(focusedStep.id, focusedExercise.id!, exercise)
-      setFocusedExercise(exercise)
       setExerciseSelectOpen(false)
     }
   }
@@ -76,7 +78,7 @@ export const WorkoutStepScreen: React.FC<
             <ExerciseControl
               selectedIndex={focusedExercise ? focusedStep.exercises.indexOf(focusedExercise) : -1}
               options={focusedStep.exercises}
-              onChange={setFocusedExercise}
+              onChange={setFocusedStepIndex}
             />
           )}
 
@@ -84,7 +86,11 @@ export const WorkoutStepScreen: React.FC<
             <TrackView
               exercise={focusedExercise}
               step={focusedStep}
-              setFocusedExercise={setFocusedExercise}
+              moveToNextExercise={() =>
+                setFocusedStepIndex((prev) =>
+                  prev === focusedStep.exercises.length - 1 ? 0 : prev + 1,
+                )
+              }
             />
           )}
           {route.name === "History" && <HistoryView exercise={focusedExercise} />}
@@ -230,7 +236,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
 type ExerciseControlProps = {
   options: ExerciseModel[]
   selectedIndex: number
-  onChange: (exercise: ExerciseModel) => void
+  onChange: (index: number) => void
 }
 
 const ExerciseControl: React.FC<ExerciseControlProps> = ({ options, selectedIndex, onChange }) => {
@@ -241,11 +247,11 @@ const ExerciseControl: React.FC<ExerciseControlProps> = ({ options, selectedInde
   const atEnd = selectedIndex === options.length - 1
 
   const getPrev = () => {
-    onChange(atStart ? options.at(-1)! : options[selectedIndex - 1]!)
+    onChange(atStart ? options.length - 1 : selectedIndex - 1)
   }
 
   const getNext = () => {
-    onChange(atEnd ? options[0]! : options[selectedIndex + 1]!)
+    onChange(atEnd ? 0 : selectedIndex + 1)
   }
 
   return (

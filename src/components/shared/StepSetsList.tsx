@@ -94,28 +94,28 @@ const SetItem: React.FC<SetItemProps> = ({
       </View>
       {exercise.hasMetricType("reps") && (
         <SetMetricLabel
-          value={set.reps!}
+          value={set.reps ?? 0}
           unit={translate("reps")}
           isFocused={isFocused}
         />
       )}
       {exercise.hasMetricType("weight") && (
         <SetMetricLabel
-          value={set.weight!}
+          value={set.weight ?? 0}
           unit={exercise.getMetricByType("weight")!.unit}
           isFocused={isFocused}
         />
       )}
       {exercise.hasMetricType("distance") && (
         <SetMetricLabel
-          value={set.distance!}
+          value={set.distance ?? 0}
           unit={exercise.getMetricByType("distance")!.unit}
           isFocused={isFocused}
         />
       )}
       {exercise.hasMetricType("duration") && (
         <SetMetricLabel
-          value={getFormatedDuration(set.durationMs!)}
+          value={getFormatedDuration(set.durationMs ?? 0)}
           isFocused={isFocused}
         />
       )}

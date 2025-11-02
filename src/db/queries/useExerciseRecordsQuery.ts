@@ -24,7 +24,7 @@ export const useExerciseRecordsQuery = (exerciseId: number) => {
     })
   }, [drizzleDB, exerciseId])
 
-  const records = useExpoQuery(query, ["sets"])
+  const records = useExpoQuery(query, ["sets", "exercises", "exercise_metrics"])
 
   return records
 }

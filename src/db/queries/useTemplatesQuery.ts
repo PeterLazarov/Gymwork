@@ -28,5 +28,5 @@ export const useTemplatesQuery = (params?: {limit?: number}) => {
     })
   }, [drizzleDB])
 
-  return useExpoQuery(query, ["workouts", "workout_steps", "sets"])
+  return useExpoQuery(query, ["workouts", "workout_steps", "sets", "exercises", "exercise_metrics"])
 }

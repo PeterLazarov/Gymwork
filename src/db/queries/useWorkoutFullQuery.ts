@@ -53,5 +53,5 @@ export function useWorkoutFullQuery(openedDateMs: number | null, reactive: boole
 
   const query = useMemo(() => buildQuery(openedDateMs!), [buildQuery, openedDateMs])
 
-  return useExpoQuery(query, ["workouts", "workout_steps", "sets"], "single")
+  return useExpoQuery(query, ["workouts", "workout_steps", "sets", "exercises", "exercise_metrics"], "single")
 }
