@@ -36,7 +36,7 @@ export const WorkoutStepScreen: React.FC<
 > = ({ route }) => {
   const { focusedStep: routeStep } = route.params
   const { openedWorkout } = useOpenedWorkout()
-  const focusedStep = openedWorkout!.workoutSteps.find((s) => s.id === routeStep.id)!
+  const focusedStep = openedWorkout?.workoutSteps.find((s) => s.id === routeStep.id) || routeStep
 
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
   const [focusedStepIndex, setFocusedStepIndex] = useState(0)
@@ -158,7 +158,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
 
   const focusedStepName = useMemo(() => {
     const name = step.stepType === "plain" ? step.exercise.name : "Superset"
-    let similarSteps = openedWorkout!.workoutSteps.filter((s) => s.stepType === step.stepType)
+    let similarSteps = openedWorkout?.workoutSteps.filter((s) => s.stepType === step.stepType) || []
 
     if (step.stepType === "plain") {
       similarSteps = similarSteps.filter((s) => s.exercises.includes(focusedExercise))

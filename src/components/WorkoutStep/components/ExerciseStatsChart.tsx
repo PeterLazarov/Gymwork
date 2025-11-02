@@ -8,10 +8,11 @@ import {
 } from "echarts/components"
 import { ECharts, init, use } from "echarts/core"
 import { DateTime, Interval } from "luxon"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Dimensions, View } from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 
+import { CHART_VIEW } from "@/constants/chartViews"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useSetting } from "@/context/SettingContext"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
@@ -19,7 +20,6 @@ import { SetModel } from "@/db/models/SetModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { seriesSetup } from "../utils/seriesSetup"
 import { useChartConfig } from "../utils/useChartConfig"
-import { CHART_VIEW } from "@/constants/chartViews"
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -112,15 +112,12 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
       default:
         return fallback
     }
-
-    return fallback
   }, [view, exercise, exerciseHistory])
 
   const xAxis = useMemo(() => {
     return viewDays.map((d) => d.toFormat("dd LLL"))
   }, [view, exercise])
 
-  // Create a map of date to workout for quick lookup
   const dateWorkoutMap = useMemo(() => {
     const map = new Map<string, WorkoutModel>()
     exerciseHistory.forEach((workout) => {
@@ -142,7 +139,6 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
       const workout = dateWorkoutMap.get(dateKey)
       if (!workout) return []
 
-      // Get all sets for this exercise from all workout steps
       const sets: SetModel[] = []
       workout.workoutSteps.forEach((step) => {
         const exerciseSets = step.sets.filter((set) => set.exerciseId === exercise.id)
@@ -165,58 +161,69 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
   const chartHeight = useMemo(() => height ?? 400, [height])
   const chartWidth = useMemo(() => width ?? Dimensions.get("window").width, [width])
 
-  const onHighlight = (data: unknown) => {
-    // @ts-ignore
-    const dateIndex = data.batch?.[0]?.dataIndex as number
-    const date = viewDays[dateIndex]
-
-    if (!date || dateIndex === undefined) {
-      setSelectedDate(undefined)
-      return
-    }
-
-    const dateKey = date.toISODate()
-    if (!dateKey) {
-      setSelectedDate(undefined)
-      return
-    }
-
-    const workout = dateWorkoutMap.get(dateKey)
-
-    if (!workout) {
-      setSelectedDate(undefined)
-      return
-    }
-
-    // TODO set only if there's a workout there
-    setSelectedDate(dateKey)
-  }
-
-  // TODO this would be odd with multiple workouts+lines per day
   const [selectedDate, setSelectedDate] = useState<string>()
 
+  const onHighlight = useCallback(
+    (data: unknown) => {
+      // @ts-ignore TODO: fix this
+      const dateIndex = data.batch?.[0]?.dataIndex as number
+      const date = viewDays[dateIndex]
+
+      if (!date || dateIndex === undefined) {
+        setSelectedDate(undefined)
+        return
+      }
+
+      const dateKey = date.toISODate()
+      if (!dateKey) {
+        setSelectedDate(undefined)
+        return
+      }
+
+      const workout = dateWorkoutMap.get(dateKey)
+
+      if (!workout) {
+        setSelectedDate(undefined)
+        return
+      }
+
+      setSelectedDate(dateKey)
+    },
+    [viewDays, dateWorkoutMap],
+  )
+
   useEffect(() => {
-    if (chartElRef.current) {
+    if (chartElRef.current && !eChartRef.current) {
       eChartRef.current = init(chartElRef.current, "light", {
         renderer: "svg",
         width,
         height,
       })
 
-      eChartRef.current.setOption(getViewOptions())
-
-      // highlight and downplay catch both exact dot-clicks and non-exact ones
       eChartRef.current?.on("highlight", onHighlight)
     }
 
-    return () => eChartRef.current?.dispose()
-  }, [exercise, view, width, height, getViewOptions, viewDays, dateWorkoutMap])
+    return () => {
+      if (eChartRef.current) {
+        eChartRef.current.dispose()
+        eChartRef.current = null as any
+      }
+    }
+  }, [width, height, onHighlight])
 
   useEffect(() => {
-    eChartRef.current?.setOption({
-      series: feedChartSeriesData(setsByDay),
-    })
-  }, [exercise, view, exerciseHistory, width, height, feedChartSeriesData, setsByDay])
+    if (eChartRef.current) {
+      eChartRef.current.setOption(getViewOptions, { notMerge: true })
+    }
+  }, [getViewOptions, exercise, view])
+
+  useEffect(() => {
+    if (eChartRef.current) {
+      eChartRef.current.setOption({
+        series: feedChartSeriesData(setsByDay),
+      })
+    }
+  }, [feedChartSeriesData, setsByDay])
 
   // TODO does not highlight set in question
   function linkToWorkoutDate() {
@@ -232,13 +239,8 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
           width: chartWidth,
         }}
       >
-        {/* Select exercise */}
-        {/* Select view */}
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <SvgChart
-            ref={chartElRef}
-            useRNGH
-          />
+          <SvgChart ref={chartElRef} />
         </GestureHandlerRootView>
         {/* <Button
           disabled={!selectedDate}
