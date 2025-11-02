@@ -37,8 +37,7 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
           isRecord={stepRecordIds.some(({ id }) => id === set.id)}
           // isFocused={stateStore.highlightedSetGuid === set.id}
           letter={hideSupersetLetters ? undefined : step.exerciseLettering[set.exercise.id!]}
-          // number={step.setNumberMap[set.id]}
-          number={i + 1} // TODO remove this once we have the step number map
+          number={step.setsNumberMap[set.id!]}
           showSetCompletion={showSetCompletion}
         />
       ))}

@@ -81,6 +81,15 @@ export class WorkoutStepModel {
     return map
   }
 
+  get setsNumberMap(): Record<Set["id"], number | undefined> {
+    let setNumber = 1
+    const map: Record<Set["id"], number | undefined> = {}
+    this.sets.forEach(set => {
+      map[set.id!] = set.isWarmup ? undefined : setNumber++
+    })
+    return map
+  }
+
   getSetsForExercise(exerciseId: number): SetModel[] {
     return this.sets.filter((set) => set.exerciseId === exerciseId)
   }

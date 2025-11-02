@@ -79,7 +79,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
           <SetTrackItem
             set={item}
             isRecord={isRecord}
-            number={index + 1}
+            number={step.setsNumberMap[item.id!]}
             toggleSetWarmup={toggleSetWarmup}
             draft={isDraft}
             showSetCompletion={showComplete}
@@ -100,7 +100,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
     return <EmptyState text={translate("noSetsEntered")} />
   if (!sets?.length && !previewNextSet) return <View />
 
-  const shouldShowDraft = !selectedSet && previewNextSet
+  const shouldShowDraft = !selectedSet && previewNextSet && draftSet
   return (
     <Pressable
       style={{ flex: 1 }}
@@ -112,7 +112,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
       <FlashList
         data={shouldShowDraft ? [...sets, draftSet as SetModel] : sets}
         renderItem={renderItem}
-        keyExtractor={(set) => set.id!.toString()}
+        keyExtractor={(set, index) => (index === sets.length ? "draft" : set.id.toString())}
         ItemSeparatorComponent={() => (
           <Divider
             orientation="horizontal"
@@ -185,7 +185,11 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
       >
         <SetTypeButton
           icon={set.isWarmup ? "yoga" : undefined}
-          onPress={() => toggleSetWarmup(set)}
+          onPress={() => {
+            if (!draft) {
+              toggleSetWarmup(set)
+            }
+          }}
           symbol={getSetSymbol()}
           color={color}
         />
