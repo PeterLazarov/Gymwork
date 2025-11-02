@@ -106,7 +106,7 @@ export async function seedAll(drizzleDB: DrizzleDBType) {
         .values({
           exercise_id: exerciseId,
           measurement_type: "reps",
-          unit: "count",
+          unit: "reps",
           more_is_better: true,
           step_value: 1,
           min_value: 0,

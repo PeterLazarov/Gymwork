@@ -4,7 +4,6 @@ import { Menu } from "react-native-paper"
 import { Header, Icon, IconButton, useColors } from "@/designSystem"
 import { translate } from "@/utils"
 import { useShareWorkout } from "../utils/useShareWorkout"
-// import HomeMenuItems from "../HomeMenuItems"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useSetting } from "@/context/SettingContext"
 // import WorkoutTimerModal from "../Timer/WorkoutTimerModal"
@@ -36,6 +35,16 @@ export const WorkoutHeader: React.FC = () => {
   const deleteWorkout = () => {
     setMenuOpen(false)
     // workoutStore.removeWorkout(openedWorkout!)
+  }
+
+  function goToSettings() {
+    setMenuOpen(false)
+    navigate("Settings")
+  }
+
+  function goToFeedback() {
+    setMenuOpen(false)
+    navigate("UserFeedback", { referrerPage: "Workout" })
   }
 
   const [showWorkoutTimerModal, setShowWorkoutTimerModal] = useState(false)
@@ -110,7 +119,15 @@ export const WorkoutHeader: React.FC = () => {
             />
           </>
         )}
-        {/* <HomeMenuItems onClose={() => setMenuOpen(false)} /> */}
+
+        <Menu.Item
+          onPress={goToSettings}
+          title={translate("settings")}
+        />
+        <Menu.Item
+          onPress={goToFeedback}
+          title={translate("giveFeedback")}
+        />
       </Menu>
     </Header>
   )

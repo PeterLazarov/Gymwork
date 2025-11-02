@@ -21,6 +21,8 @@ export type SettingContextType = {
   setMeasureRest: (measureRest: boolean) => void
   previewNextSet: boolean
   setPreviewNextSet: (previewNextSet: boolean) => void
+  colorSchemePreference: string
+  setColorSchemePreference: (preference: string) => void
   highlightedSet: number | null
   setHighlightedSet: (id: number) => void
   chartHeight: number
@@ -42,6 +44,7 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   const [scientificMuscleNames, setScientificMuscleNames] = useState(false)
   const [measureRest, setMeasureRest] = useState(false)
   const [previewNextSet, setPreviewNextSet] = useState(false)
+  const [colorSchemePreference, setColorSchemePreference] = useState("light")
 
   const [feedbackUser, setFeedbackUser] = useState("")
   const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState("All Exercises")
@@ -70,6 +73,8 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     setMeasureRest,
     previewNextSet,
     setPreviewNextSet,
+    colorSchemePreference,
+    setColorSchemePreference,
     highlightedSet,
     setHighlightedSet,
     chartHeight,

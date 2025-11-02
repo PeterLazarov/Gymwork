@@ -247,7 +247,7 @@ const ExerciseControl: React.FC<ExerciseControlProps> = ({ options, selectedInde
   const getNext = () => {
     onChange(atEnd ? options[0]! : options[selectedIndex + 1]!)
   }
-  console.log("exercise control")
+
   return (
     <View
       style={{

@@ -3,6 +3,7 @@ import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
 import { SQLiteDatabase, deleteDatabaseAsync, openDatabaseSync } from "expo-sqlite"
 import { useEffect, useRef, useState } from "react"
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin"
+import Constants from "expo-constants"
 
 import migrations from "../../drizzle/migrations"
 import { SQLiteDBName } from "./constants"
@@ -23,7 +24,7 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
   const dbRef = useRef<DrizzleDBType | null>(null)
   const sqliteRef = useRef<SQLiteDatabase | null>(null)
 
-  const FORCE_DELETE_DB = false
+  const FORCE_DELETE_DB = (Constants.expoConfig?.extra?.RESET_DB || process.env.RESET_DB) === "true"
 
   useEffect(() => {
     const initDB = async () => {

@@ -200,7 +200,7 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
       {set.exercise.hasMetricType("reps") && (
         <SetDataLabel
           value={set.reps ?? 0}
-          unit={translate("reps")}
+          unit={set.exercise.getMetricByType("reps")!.unit}
         />
       )}
       {set.exercise.hasMetricType("weight") && (
