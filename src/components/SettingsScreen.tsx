@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react"
-import { Pressable, StyleSheet, View } from "react-native"
+import { ColorSchemeName, Pressable, StyleSheet, View } from "react-native"
 
 import { BaseLayout } from "@/layouts/BaseLayout"
 import {
@@ -13,14 +13,15 @@ import {
   ToggleSwitch,
   useColors,
 } from "@/designSystem"
+import type { SelectOption } from "@/designSystem"
 import { translate, useExport } from "@/utils"
 import { useDialogContext } from "@/context/DialogContext"
 import { goBack } from "@/navigators/navigationUtilities"
 import { useSetting } from "@/context/SettingContext"
 
-const appearanceOptions = [
-  { label: translate("dark"), value: "dark" as const },
-  { label: translate("light"), value: "light" as const },
+const appearanceOptions: SelectOption<ColorSchemeName>[] = [
+  { label: translate("dark"), value: "dark" },
+  { label: translate("light"), value: "light" },
   { label: translate("auto"), value: undefined },
 ]
 

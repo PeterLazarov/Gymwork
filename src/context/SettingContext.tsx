@@ -1,6 +1,13 @@
+import { createContext, FC, PropsWithChildren, useContext, useState } from "react"
+import { Appearance, ColorSchemeName } from "react-native"
+
 import { CHART_VIEW_KEY } from "@/constants/chartViews"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
-import { createContext, FC, PropsWithChildren, useContext, useState } from "react"
+
+let deviceColorScheme = Appearance.getColorScheme()
+Appearance.addChangeListener(({ colorScheme }) => {
+  deviceColorScheme = colorScheme
+})
 
 export type SettingContextType = {
   showCommentsCard: boolean
@@ -21,8 +28,8 @@ export type SettingContextType = {
   setMeasureRest: (measureRest: boolean) => void
   previewNextSet: boolean
   setPreviewNextSet: (previewNextSet: boolean) => void
-  colorSchemePreference: string
-  setColorSchemePreference: (preference: string) => void
+  colorSchemePreference: ColorSchemeName
+  setColorSchemePreference: (preference: ColorSchemeName) => void
   highlightedSet: number | null
   setHighlightedSet: (id: number) => void
   chartHeight: number
@@ -44,7 +51,9 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   const [scientificMuscleNames, setScientificMuscleNames] = useState(false)
   const [measureRest, setMeasureRest] = useState(false)
   const [previewNextSet, setPreviewNextSet] = useState(false)
-  const [colorSchemePreference, setColorSchemePreference] = useState("light")
+  const [colorSchemePreference, setColorSchemePreference] = useState<ColorSchemeName>(
+    deviceColorScheme ?? "light",
+  )
 
   const [feedbackUser, setFeedbackUser] = useState("")
   const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState("All Exercises")
@@ -74,7 +83,10 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     previewNextSet,
     setPreviewNextSet,
     colorSchemePreference,
-    setColorSchemePreference,
+    setColorSchemePreference: (scheme: ColorSchemeName) => {
+      setColorSchemePreference(scheme)
+      Appearance.setColorScheme?.(scheme ?? deviceColorScheme)
+    },
     highlightedSet,
     setHighlightedSet,
     chartHeight,
