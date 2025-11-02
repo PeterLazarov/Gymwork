@@ -187,7 +187,6 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   }
 
   function onMetricChange(metricType: MetricType, metric: ExerciseMetric) {
-    // TODO: update metric in state
     const updated = exercise.update({ metrics: [...exercise.metrics, metric] })
     onFormChange(updated)
   }

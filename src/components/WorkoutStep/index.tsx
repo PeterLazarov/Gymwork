@@ -36,14 +36,12 @@ export const WorkoutStepScreen: React.FC<
 > = ({ route }) => {
   const { focusedStep: routeStep } = route.params
   const { openedWorkout } = useOpenedWorkout()
-  const focusedStep = openedWorkout?.workoutSteps.find((s) => s.id === routeStep.id) || routeStep
+  const focusedStep = openedWorkout!.workoutSteps.find((s) => s.id === routeStep.id)!
 
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
   const [focusedStepIndex, setFocusedStepIndex] = useState(0)
   const updateWorkoutStepExercise = useUpdateWorkoutStepExerciseQuery()
-  const focusedExercise = useMemo(() => {
-    return focusedStep.exercises[focusedStepIndex]
-  }, [focusedStep, focusedStepIndex])
+  const focusedExercise = focusedStep.exercises[focusedStepIndex]
 
   function switchExercise(exercise: ExerciseModel) {
     if (focusedExercise) {
@@ -169,7 +167,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
     const n = similarSteps.indexOf(step) + 1
 
     return `${name} ${similarSteps.length > 1 ? n : ""}`
-  }, [step.exercise.id])
+  }, [step.exercise.id, step.exercises])
 
   return (
     <Header>
