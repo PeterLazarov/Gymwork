@@ -6,7 +6,7 @@ export const useExerciseLastSetQuery = () => {
   return async (exerciseId: number) => {
     const lastSet = await drizzleDB.query.sets.findFirst({
       where: (sets, { eq }) => eq(sets.exercise_id, exerciseId),
-      orderBy: (sets, { desc }) => [desc(sets.date)],
+      orderBy: (sets, { desc }) => [desc(sets.date), desc(sets.created_at)],
       with: {
         exercise: {
           with: {
