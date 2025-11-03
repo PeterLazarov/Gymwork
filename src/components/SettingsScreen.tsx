@@ -95,6 +95,7 @@ export const SettingsScreen: FC = () => {
         <SettingsToggleItem
           enabled={measureRest}
           onToggle={() => setMeasureRest(!measureRest)}
+          editable={false}
         >
           {translate("measureRest")}
         </SettingsToggleItem>
@@ -142,6 +143,7 @@ export const SettingsScreen: FC = () => {
         <SettingsToggleItem
           enabled={showWorkoutTimer}
           onToggle={() => setShowWorkoutTimer(!showWorkoutTimer)}
+          editable={false}
         >
           {translate("showWorkoutTimer")}
         </SettingsToggleItem>
@@ -154,6 +156,7 @@ export const SettingsScreen: FC = () => {
         <SettingsToggleItem
           enabled={showSetCompletion}
           onToggle={() => setShowSetCompletion(!showSetCompletion)}
+          editable={false}
         >
           {translate("showSetCompletion")}
         </SettingsToggleItem>
@@ -204,9 +207,15 @@ type SettingsToggledItemProps = {
   enabled: boolean
   onToggle: () => void
   children?: React.ReactNode
+  editable?: boolean
 }
 
-function SettingsToggleItem({ enabled, onToggle, children }: SettingsToggledItemProps) {
+function SettingsToggleItem({
+  enabled,
+  onToggle,
+  children,
+  editable = true,
+}: SettingsToggledItemProps) {
   const colors = useColors()
   const styles = useMemo(() => makeToggleItemStyles(colors), [colors])
 
@@ -214,12 +223,14 @@ function SettingsToggleItem({ enabled, onToggle, children }: SettingsToggledItem
     <Pressable
       style={styles.item}
       onPress={onToggle}
+      disabled={!editable}
     >
       <>
         <Text style={styles.itemLabel}>{children}</Text>
         <ToggleSwitch
           variant="primary"
           value={enabled}
+          disabled={!editable}
           onValueChange={onToggle}
         />
       </>

@@ -7,8 +7,9 @@ interface Props {
   value: boolean
   onValueChange: (value: boolean) => void
   variant: "primary" | "critical"
+  disabled?: boolean
 }
-export const ToggleSwitch: React.FC<Props> = ({ value, onValueChange, variant }) => {
+export const ToggleSwitch: React.FC<Props> = ({ value, variant, ...rest }) => {
   const colors = useColors()
 
   const thumbActiveColor = variant === "critical" ? colors.error : colors.primary
@@ -21,8 +22,8 @@ export const ToggleSwitch: React.FC<Props> = ({ value, onValueChange, variant })
       }}
       thumbColor={value ? thumbActiveColor : colors.surfaceContainer}
       ios_backgroundColor={colors.surfaceContainerHighest}
-      onValueChange={onValueChange}
       value={value}
+      {...rest}
     />
   )
 }

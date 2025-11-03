@@ -9,18 +9,16 @@
     "orientation": "portrait",
     "icon": "./assets/pen-logo.png",
     "splash": {
-      "image": "./assets/logo.png",
+      "image": "./assets/pen-logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#191015"
+      "backgroundColor": "#FFF"
     },
     "userInterfaceStyle": "automatic",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "jsEngine": "hermes",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "icon": "./assets/pen-logo.png",
       "package": "com.gymwork",
@@ -29,9 +27,9 @@
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
       },
       "splash": {
-        "image": "./assets/logo.png",
+        "image": "./assets/pen-logo.png",
         "resizeMode": "contain",
-        "backgroundColor": "#191015"
+        "backgroundColor": "#FFF"
       }
     },
     "ios": {
@@ -39,26 +37,22 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.gymwork",
       "splash": {
-        "image": "./assets/logo.png",
-        "tabletImage": "./assets/logo.png",
+        "image": "./assets/pen-logo.png",
+        "tabletImage": "./assets/pen-logo.png",
         "resizeMode": "contain",
-        "backgroundColor": "#191015"
+        "backgroundColor": "#FFF"
       }
     },
     "web": {
       "favicon": "./assets/pen-logo.png",
       "splash": {
-        "image": "./assets/logo.png",
+        "image": "./assets/pen-logo.png",
         "resizeMode": "contain",
-        "backgroundColor": "#191015"
+        "backgroundColor": "#FFF"
       },
       "bundler": "metro"
     },
-    "plugins": [
-      "expo-localization",
-      "expo-font",
-      "expo-build-properties"
-    ],
+    "plugins": ["expo-localization", "expo-font", "expo-build-properties"],
     "experiments": {
       "tsconfigPaths": true
     },
