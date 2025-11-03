@@ -1,7 +1,7 @@
 {
-  "name": "HelloWorld",
-  "slug": "HelloWorld",
-  "scheme": "helloworld",
+  "name": "Gymwork",
+  "slug": "Gymwork",
+  "scheme": "gymwork",
   "version": "1.0.0",
   "orientation": "portrait",
   "userInterfaceStyle": "automatic",
@@ -20,7 +20,8 @@
       "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
     },
     "allowBackup": false,
-    "edgeToEdgeEnabled": true
+    "edgeToEdgeEnabled": false,
+    "windowSoftInputMode": "adjustResize"
   },
   "ios": {
     "icon": "./assets/images/app-icon-android-legacy.png",

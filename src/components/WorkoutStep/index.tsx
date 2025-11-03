@@ -26,6 +26,7 @@ import { TrackView } from "./TrackView"
 import { HistoryView } from "./HistoryView"
 import { RecordsView } from "./RecordsView"
 import { ChartView } from "./ChartView"
+import { BaseLayout } from "@/layouts/BaseLayout"
 
 export type WorkoutStepScreenParams = {
   focusedStep: WorkoutStepModel
@@ -51,7 +52,7 @@ export const WorkoutStepScreen: React.FC<
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <BaseLayout>
       <StepHeader
         step={focusedStep}
         focusedExercise={focusedExercise}
@@ -96,7 +97,7 @@ export const WorkoutStepScreen: React.FC<
           {route.name === "Chart" && <ChartView exercise={focusedExercise} />}
         </>
       )}
-    </View>
+    </BaseLayout>
   )
 }
 

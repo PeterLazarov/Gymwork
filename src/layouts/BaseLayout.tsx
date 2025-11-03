@@ -1,6 +1,10 @@
-import { KeyboardExpandingView, useColors } from "@/designSystem"
 import React, { ReactNode } from "react"
 import { Platform, View, ViewStyle } from "react-native"
+import { KeyboardAvoidingView } from "react-native-keyboard-controller"
+
+import { useColors } from "@/designSystem"
+
+const isIos = Platform.OS === "ios"
 
 type Props = {
   children?: ReactNode
@@ -9,12 +13,6 @@ type Props = {
 }
 export const BaseLayout: React.FC<Props> = ({ children, style, hasFooter }) => {
   const colors = useColors()
-  //   const { stateStore } = useStores()
-  // TODO: test if android version 26 is the cutoff
-  const renderExpandingView =
-    Platform.OS === "ios" || (Platform.OS === "android" && Platform.Version < 26)
-
-  const footerHeight = 20
 
   return (
     <View
@@ -26,10 +24,12 @@ export const BaseLayout: React.FC<Props> = ({ children, style, hasFooter }) => {
         style,
       ]}
     >
-      {children}
-      {renderExpandingView && (
-        <KeyboardExpandingView footerHeight={hasFooter ? footerHeight : undefined} />
-      )}
+      <KeyboardAvoidingView
+        behavior={isIos ? "padding" : "height"}
+        style={[{ flex: 1 }]}
+      >
+        {children}
+      </KeyboardAvoidingView>
     </View>
   )
 }

@@ -11,7 +11,7 @@ interface SubComponents {
 
 type PickerProps = {
   selected?: string
-  onChange: (feeling?: string) => void
+  onChange: (value: string | null) => void
   options: FeedbackOption[]
   defaultValue?: string
 }
@@ -21,10 +21,10 @@ export const FeedbackPicker: React.FC<PickerProps> & SubComponents = ({
   options,
   defaultValue,
 }) => {
-  const [selectedIcon, setSelectedIcon] = useState(selected || defaultValue)
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(selected || defaultValue || null)
 
   function onPress(option: string) {
-    const newValue = selected === option ? undefined : option
+    const newValue = selected === option ? null : option
     setSelectedIcon(newValue)
     onChange(newValue)
   }

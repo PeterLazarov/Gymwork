@@ -53,16 +53,15 @@ export const useUpdateWorkoutQuery = () => {
     const updateData: Partial<Workout> = {
       updated_at: timestamp,
     }
-
-    if (workout.date !== undefined) updateData.date = workout.date
-    if (workout.isTemplate !== undefined) updateData.is_template = workout.isTemplate
-    if (workout.feeling !== undefined) updateData.feeling = workout.feeling
-    if (workout.notes !== undefined) updateData.notes = workout.notes
-    if (workout.rpe !== undefined) updateData.rpe = workout.rpe
-    if (workout.pain !== undefined) updateData.pain = workout.pain
-    if (workout.name !== undefined) updateData.name = workout.name
-    if (workout.endedAt !== undefined) updateData.ended_at = workout.endedAt
-    if (workout.durationMs !== undefined) updateData.duration_ms = workout.durationMs
+    if (Object.hasOwn(workout, 'date')) updateData.date = workout.date
+    if (Object.hasOwn(workout, 'isTemplate')) updateData.is_template = workout.isTemplate
+    if (Object.hasOwn(workout, 'feeling')) updateData.feeling = workout.feeling
+    if (Object.hasOwn(workout, 'notes')) updateData.notes = workout.notes
+    if (Object.hasOwn(workout, 'rpe')) updateData.rpe = workout.rpe
+    if (Object.hasOwn(workout, 'pain')) updateData.pain = workout.pain
+    if (Object.hasOwn(workout, 'name')) updateData.name = workout.name
+    if (Object.hasOwn(workout, 'endedAt')) updateData.ended_at = workout.endedAt
+    if (Object.hasOwn(workout, 'durationMs')) updateData.duration_ms = workout.durationMs
 
     await drizzleDB.update(workouts).set(updateData).where(eq(workouts.id, workoutId))
 

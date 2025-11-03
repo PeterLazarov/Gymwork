@@ -14,6 +14,7 @@ import {
   ToggleGroupButton,
   useColors,
 } from "@/designSystem"
+import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps } from "@/navigators/navigationTypes"
 import { translate, TxKeyPath } from "@/utils"
 import { useState } from "react"
@@ -54,7 +55,7 @@ export const WorkoutFeedbackScreen: React.FC<WorkoutFeedbackScreenProps> = ({ na
   }
 
   return (
-    <>
+    <BaseLayout>
       <Header>
         <IconButton
           onPress={onBackPress}
@@ -88,7 +89,7 @@ export const WorkoutFeedbackScreen: React.FC<WorkoutFeedbackScreenProps> = ({ na
         onPress={onCommentsSave}
         text={translate("save")}
       />
-    </>
+    </BaseLayout>
   )
 }
 
