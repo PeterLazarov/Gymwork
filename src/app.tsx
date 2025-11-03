@@ -19,7 +19,7 @@ import { customFontsToLoad } from "./ignite/theme/typography"
 import { useNavigationPersistence } from "./navigators/navigationUtilities"
 // import { loadDateFnsLocale } from "./utils/formatDate"
 import { OpenedWorkoutProvider } from "@/context/OpenedWorkoutContext"
-import { paperThemes } from "@/designSystem"
+import { paperThemes } from "@/designSystem/tokens"
 import { useColorScheme } from "react-native"
 import { SettingProvider } from "./context/SettingContext"
 
