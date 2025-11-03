@@ -29,10 +29,14 @@ export async function seedWorkouts(drizzleDB: DrizzleDBType, exerciseList: Exerc
   const squatExercise = exerciseList.find((e) => e.name?.toLowerCase().includes("squat"))
   const cardioExercise = exerciseList.find((e) => e.muscleAreas?.includes("Cardio"))
 
+  let daysAgo = 0
+
   for (let i = 0; i < numberOfWorkouts; i++) {
-    const workoutDate = today
-      .minus({ days: i + i * Math.ceil(Math.random() * 2) })
-      .set({ hour: 0, minute: 0, second: 0 })
+    if (i > 0) {
+      daysAgo += between(1, 3)
+    }
+
+    const workoutDate = today.minus({ days: daysAgo }).set({ hour: 0, minute: 0, second: 0 })
     const workoutDateMs = workoutDate.toMillis()
 
     let workoutTime = workoutDate.set({ hour: 8, minute: 0, second: 0 })
