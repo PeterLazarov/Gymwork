@@ -28,8 +28,6 @@ import { convertWeightToBase, manageInputFocus, translate } from "@/utils"
 import { RestInput } from "./components/RestInput"
 import { SetTrackList } from "./components/SetTrackList"
 
-const defaultReps = 10
-
 type TrackViewProps = {
   step: WorkoutStepModel
   exercise: ExerciseModel
@@ -69,15 +67,23 @@ export const TrackView: React.FC<TrackViewProps> = ({
     if (selectedSet) {
       setDraftSet(selectedSet)
     } else {
+      const workoutDate = openedDateObject.toMillis()
+
       lastSetQuery(focusedExercise.id!).then((lastSet) => {
         if (lastSet) {
           setDraftSet(new SetModel(lastSet))
         } else {
-          console.log("we`re fucked")
+          setDraftSet(
+            SetModel.createDefaultForExercise({
+              exercise: focusedExercise,
+              workoutStepId: step.id,
+              date: workoutDate,
+            }),
+          )
         }
       })
     }
-  }, [selectedSet, focusedExercise])
+  }, [selectedSet, focusedExercise, step.id, openedDateObject])
 
   const handleAdd = useCallback(() => {
     if (draftSet) {

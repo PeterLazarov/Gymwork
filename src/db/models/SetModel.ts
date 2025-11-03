@@ -1,7 +1,7 @@
 import convert, { Unit } from "convert-units"
 
-import type { Exercise, Set } from "@/db/schema"
-import { convertBaseDurationToUnit, convertBaseWeightToUnit } from "@/utils"
+import type { Exercise, ExerciseMetric, Set } from "@/db/schema"
+import { convertBaseDurationToUnit, convertBaseWeightToUnit, convertWeightToBase } from "@/utils"
 import { ExerciseModel } from "./ExerciseModel"
 
 export type SetModelType = Set & {
@@ -133,5 +133,76 @@ export class SetModel {
 
   static from(set: SetModelType): SetModel {
     return new SetModel(set)
+  }
+
+  static createDefaultForExercise({
+    exercise,
+    workoutStepId,
+    date,
+    defaultReps = 10,
+    defaultMetricValue = 10,
+  }: {
+    exercise: ExerciseModel
+    workoutStepId: number
+    date: number
+    defaultReps?: number
+    defaultMetricValue?: number
+  }): SetModel {
+    const timestamp = date || Date.now()
+
+    const exerciseRaw: Exercise & { exerciseMetrics?: ExerciseMetric[] } = {
+      id: exercise.id ?? -1,
+      name: exercise.name,
+      images: exercise.images,
+      equipment: exercise.equipment,
+      muscle_areas: exercise.muscleAreas,
+      muscles: exercise.muscles,
+      instructions: exercise.instructions ?? [],
+      tips: exercise.tips ?? [],
+      position: exercise.position ?? null,
+      stance: exercise.stance ?? null,
+      is_favorite: exercise.isFavorite,
+      created_at: exercise.createdAt ?? timestamp,
+      updated_at: exercise.updatedAt ?? timestamp,
+      exerciseMetrics: exercise.metrics,
+    }
+
+    const safeConvert = (unit: string | undefined, target: Unit): number | null => {
+      if (!unit) return null
+      try {
+        return convert(defaultMetricValue)
+          .from(unit as Unit)
+          .to(target)
+      } catch {
+        return defaultMetricValue
+      }
+    }
+
+    const weightMetric = exercise.getMetricByType("weight")
+    const distanceMetric = exercise.getMetricByType("distance")
+    const durationMetric = exercise.getMetricByType("duration")
+    const restMetric = exercise.getMetricByType("rest")
+    const speedMetric = exercise.getMetricByType("speed")
+
+    const rawSet: SetModelType = {
+      id: -1,
+      workout_step_id: workoutStepId,
+      exercise_id: exercise.id ?? -1,
+      is_warmup: false,
+      date,
+      is_weak_ass_record: false,
+      reps: exercise.hasMetricType("reps") ? defaultReps : null,
+      weight_mcg: weightMetric ? convertWeightToBase(defaultMetricValue, weightMetric.unit) : null,
+      distance_mm: distanceMetric ? safeConvert(distanceMetric.unit, "mm") : null,
+      duration_ms: durationMetric ? safeConvert(durationMetric.unit, "ms") : null,
+      speed_kph: speedMetric ? defaultMetricValue : null,
+      rest_ms: restMetric ? safeConvert(restMetric.unit, "ms") : null,
+      completed_at: null,
+      created_at: timestamp,
+      updated_at: timestamp,
+      exercise: exerciseRaw,
+    }
+
+    return new SetModel(rawSet)
   }
 }
