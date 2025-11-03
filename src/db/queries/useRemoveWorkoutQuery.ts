@@ -2,10 +2,10 @@ import { and, eq } from "drizzle-orm"
 import { workouts } from "../schema"
 import { useDB } from "../useDB"
 
-export const useRemoveTemplateQuery = () => {
+export const useRemoveWorkoutQuery = () => {
   const { drizzleDB } = useDB()
-  return (templateId: number) =>
+  return (workoutId: number) => 
     drizzleDB
       .delete(workouts)
-      .where(and(eq(workouts.id, templateId), eq(workouts.is_template, true)))
+      .where(eq(workouts.id, workoutId))
 }

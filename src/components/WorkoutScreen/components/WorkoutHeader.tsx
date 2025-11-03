@@ -8,11 +8,13 @@ import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useSetting } from "@/context/SettingContext"
 // import WorkoutTimerModal from "../Timer/WorkoutTimerModal"
 import { navigate } from "@/navigators/navigationUtilities"
+import { useRemoveWorkoutQuery } from "@/db/queries/useRemoveWorkoutQuery"
 
 export const WorkoutHeader: React.FC = () => {
   const colors = useColors()
 
   const { showCommentsCard, setShowCommentsCard, showWorkoutTimer } = useSetting()
+  const removeWorkoutQuery = useRemoveWorkoutQuery()
 
   const [menuOpen, setMenuOpen] = useState(false)
   const { openedDateLabel, openedWorkout } = useOpenedWorkout()
@@ -34,7 +36,9 @@ export const WorkoutHeader: React.FC = () => {
 
   const deleteWorkout = () => {
     setMenuOpen(false)
-    // workoutStore.removeWorkout(openedWorkout!)
+    if (openedWorkout) {
+      removeWorkoutQuery(openedWorkout.id)
+    }
   }
 
   function goToSettings() {

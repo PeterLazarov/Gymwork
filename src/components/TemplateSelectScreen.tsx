@@ -2,7 +2,7 @@ import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { useInsertWorkoutQuery } from "@/db/queries/useInsertWorkoutQuery"
-import { useRemoveTemplateQuery } from "@/db/queries/useRemoveTemplateQuery"
+import { useRemoveWorkoutQuery } from "@/db/queries/useRemoveWorkoutQuery"
 import { useTemplatesQuery } from "@/db/queries/useTemplatesQuery"
 import { Header, Icon, IconButton, Text, spacing, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
@@ -16,7 +16,7 @@ interface TemplateSelectScreenProps extends AppStackScreenProps<"TemplateSelect"
 
 export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> = ({ navigation }) => {
   const colors = useColors()
-  const removeTemplateQuery = useRemoveTemplateQuery()
+  const removeWorkoutQuery = useRemoveWorkoutQuery()
   const insertWorkout = useInsertWorkoutQuery()
   const { showConfirm } = useDialogContext()
   const { openedDateObject } = useOpenedWorkout()
@@ -39,7 +39,7 @@ export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> = ({ navi
       message: translate("templateWillBeDeleted"),
       onClose: () => showConfirm?.(undefined),
       onConfirm: () => {
-        removeTemplateQuery(template.id)
+        removeWorkoutQuery(template.id)
         showConfirm?.(undefined)
       },
     })
