@@ -1,66 +1,75 @@
 {
   "name": "Gymwork",
-  "slug": "Gymwork",
-  "scheme": "gymwork",
-  "version": "1.0.0",
-  "orientation": "portrait",
-  "userInterfaceStyle": "automatic",
-  "icon": "./assets/pen-logo.png",
-  "updates": {
-    "fallbackToCacheTimeout": 0
-  },
-  "newArchEnabled": true,
-  "jsEngine": "hermes",
-  "assetBundlePatterns": ["**/*"],
-  "android": {
+  "displayName": "Gymwork",
+  "expo": {
+    "name": "Gymwork",
+    "slug": "Gymwork",
+    "scheme": "gymwork",
+    "version": "1.0.0",
+    "orientation": "portrait",
     "icon": "./assets/pen-logo.png",
-    "package": "com.gymwork",
-    "adaptiveIcon": {
-      "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
-      "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
+    "splash": {
+      "image": "./assets/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#191015"
     },
-    "allowBackup": false,
-    "edgeToEdgeEnabled": false,
-    "windowSoftInputMode": "adjustResize"
-  },
-  "ios": {
-    "icon": "./assets/images/app-icon-android-legacy.png",
-    "supportsTablet": true,
-    "bundleIdentifier": "com.gymwork"
-  },
-  "web": {
-    "favicon": "./assets/images/app-icon-ios.png",
-    "bundler": "metro"
-  },
-  "plugins": [
-    "expo-localization",
-    "expo-font",
-    [
-      "expo-splash-screen",
-      {
-        "image": "./assets/images/app-icon-android-adaptive-foreground.png",
-        "imageWidth": 300,
+    "userInterfaceStyle": "automatic",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "jsEngine": "hermes",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "icon": "./assets/pen-logo.png",
+      "package": "com.gymwork",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/pen-logo.png",
+        "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
+      },
+      "splash": {
+        "image": "./assets/logo.png",
         "resizeMode": "contain",
         "backgroundColor": "#191015"
       }
-    ],
-    [
-      "react-native-edge-to-edge",
-      {
-        "android": {
-          "parentTheme": "Light",
-          "enforceNavigationBarContrast": false
-        }
+    },
+    "ios": {
+      "icon": "./assets/pen-logo.png",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gymwork",
+      "splash": {
+        "image": "./assets/logo.png",
+        "tabletImage": "./assets/logo.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#191015"
       }
+    },
+    "web": {
+      "favicon": "./assets/pen-logo.png",
+      "splash": {
+        "image": "./assets/logo.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#191015"
+      },
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-localization",
+      "expo-font",
+      "expo-build-properties"
     ],
-    "expo-build-properties"
-  ],
-  "experiments": {
-    "tsconfigPaths": true
+    "experiments": {
+      "tsconfigPaths": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f170b951-e464-4e11-a6df-5af2a8dcd8c3"
+      }
+    },
+    "owner": "peter.lazarov94"
   },
-  "extra": {
-    "ignite": {
-      "version": "UNKNOWN"
-    }
+  "ignite": {
+    "version": "9.8.0"
   }
 }

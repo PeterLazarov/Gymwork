@@ -31,7 +31,7 @@ export const useAllWorkoutsFullQuery = () => {
         },
       },
       where: (workouts, { and, eq, gte, lte, or, like }) => {
-        const conditions = []
+        const conditions: any[] = [eq(workouts.is_template, false)]
         
         if (filter.discomfortLevel) {
           conditions.push(eq(workouts.pain, filter.discomfortLevel)) 
