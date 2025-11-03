@@ -1,10 +1,11 @@
 import { drizzle } from "drizzle-orm/expo-sqlite"
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
+import Constants from "expo-constants"
+import { useDrizzleStudio } from "expo-drizzle-studio-plugin"
 import { SQLiteDatabase, deleteDatabaseAsync, openDatabaseSync } from "expo-sqlite"
 import { useEffect, useRef, useState } from "react"
-import { useDrizzleStudio } from "expo-drizzle-studio-plugin"
-import Constants from "expo-constants"
 
+// @ts-expect-error: Drizzle generates the migrations file in JS without type declarations
 import migrations from "../../drizzle/migrations"
 import { SQLiteDBName } from "./constants"
 import { allRelations } from "./relations"
@@ -19,12 +20,16 @@ export function getDrizzle(): DrizzleDBType {
   return _drizzle
 }
 
+const IS_DEV_RUNTIME =
+  typeof __DEV__ !== "undefined" ? __DEV__ : process.env.NODE_ENV !== "production"
+
 export default function DBProvider({ children }: { children: React.ReactNode }) {
   const [isReady, setIsReady] = useState(false)
   const dbRef = useRef<DrizzleDBType | null>(null)
   const sqliteRef = useRef<SQLiteDatabase | null>(null)
 
-  const FORCE_DELETE_DB = (Constants.expoConfig?.extra?.RESET_DB || process.env.RESET_DB) === "true"
+  const resetDbFlag = Constants.expoConfig?.extra?.RESET_DB ?? process.env.RESET_DB
+  const FORCE_DELETE_DB = IS_DEV_RUNTIME && resetDbFlag === "true"
 
   useEffect(() => {
     const initDB = async () => {
@@ -103,7 +108,7 @@ function DBProviderInitialised({
       } else {
         console.log("Database is empty, starting seeding...")
         try {
-          await seedAll(db)
+          await seedAll(db, { includeWorkouts: IS_DEV_RUNTIME })
           console.log("✅ Seeding completed")
           setSeedingComplete(true)
         } catch (err) {
