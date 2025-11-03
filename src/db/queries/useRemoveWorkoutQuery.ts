@@ -4,8 +4,8 @@ import { useDB } from "../useDB"
 
 export const useRemoveWorkoutQuery = () => {
   const { drizzleDB } = useDB()
-  return (workoutId: number) => 
-    drizzleDB
+  return async (workoutId: number) => 
+    await drizzleDB
       .delete(workouts)
       .where(eq(workouts.id, workoutId))
 }
