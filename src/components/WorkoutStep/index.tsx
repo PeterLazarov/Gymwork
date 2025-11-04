@@ -1,3 +1,7 @@
+import React, { useMemo, useState } from "react"
+import { View } from "react-native"
+
+import { ExerciseSelectLists } from "@/components/shared/ExerciseSelectLists"
 import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
@@ -9,24 +13,21 @@ import {
   boxShadows,
   fontSize,
   Header,
+  Menu,
   Icon,
   IconButton,
   spacing,
   Text,
   useColors,
 } from "@/designSystem"
+import { BaseLayout } from "@/layouts/BaseLayout"
 import { WorkoutStepTabScreenProps } from "@/navigators/navigationTypes"
 import { navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
-import React, { useMemo, useState } from "react"
-import { View } from "react-native"
-import { Menu } from "react-native-paper"
-import { ExerciseSelectLists } from "@/components/shared/ExerciseSelectLists"
-import { TrackView } from "./TrackView"
+import { ChartView } from "./ChartView"
 import { HistoryView } from "./HistoryView"
 import { RecordsView } from "./RecordsView"
-import { ChartView } from "./ChartView"
-import { BaseLayout } from "@/layouts/BaseLayout"
+import { TrackView } from "./TrackView"
 
 export type WorkoutStepScreenParams = {
   focusedStep: WorkoutStepModel
@@ -189,7 +190,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
       <Menu
         visible={menuOpen}
         onDismiss={() => setMenuOpen(false)}
-        anchorPosition="bottom"
+        position="bottom-right"
         anchor={
           <IconButton
             onPress={() => setMenuOpen(true)}

@@ -1,12 +1,17 @@
+import { useFocusEffect } from "@react-navigation/native"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { View, StyleSheet, Pressable } from "react-native"
-import { Menu, Searchbar } from "react-native-paper"
+import { Pressable, StyleSheet, View } from "react-native"
+import { Searchbar } from "react-native-paper"
 
+import { MuscleMap } from "@/components/shared/MuscleMap"
+import { discomfortOptions } from "@/constants/enums"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
+import { useAllWorkoutsFullQuery } from "@/db/queries/useAllWorkoutsFullQuery"
 import {
   EmptyState,
   fontSize,
   Header,
+  Menu,
   Icon,
   IconButton,
   IndicatedScrollList,
@@ -20,10 +25,7 @@ import { navigate } from "@/navigators/navigationUtilities"
 import { formatDateIso, msToIsoDate, translate } from "@/utils"
 import { ListRenderItemInfo } from "@shopify/flash-list"
 import { WorkoutModal } from "../CalendarScreen/WorkoutModal"
-import { MuscleMap } from "@/components/shared/MuscleMap"
-import { discomfortOptions } from "@/constants/enums"
 import { FilterForm, isFilterEmpty, WorkoutsFilterModal } from "./components/WorkoutsFilterModal"
-import { useAllWorkoutsFullQuery } from "@/db/queries/useAllWorkoutsFullQuery"
 
 export const WorkoutsHistoryScreen: React.FC = () => {
   const [filterString, setFilterString] = useState("")
@@ -43,6 +45,12 @@ export const WorkoutsHistoryScreen: React.FC = () => {
   const [openedWorkout, setOpenedWorkout] = useState<WorkoutModel | undefined>()
   const [filterModalOpen, setFilterModalOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => setMenuOpen(false)
+    }, []),
+  )
 
   const renderItem = useCallback(({ item }: ListRenderItemInfo<WorkoutModel>) => {
     return (
@@ -65,7 +73,7 @@ export const WorkoutsHistoryScreen: React.FC = () => {
 
   function goToFeedback() {
     setMenuOpen(false)
-    navigate("UserFeedback", { referrerPage: "WorkoutsHistory" })
+    requestAnimationFrame(() => navigate("UserFeedback", { referrerPage: "WorkoutsHistory" }))
   }
 
   return (
@@ -84,7 +92,7 @@ export const WorkoutsHistoryScreen: React.FC = () => {
         <Menu
           visible={menuOpen}
           onDismiss={() => setMenuOpen(false)}
-          anchorPosition="bottom"
+          position="bottom-right"
           anchor={
             <IconButton
               onPress={() => setMenuOpen(true)}

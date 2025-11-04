@@ -1,14 +1,13 @@
 import React, { useState } from "react"
-import { Menu } from "react-native-paper"
 
-import { Header, Icon, IconButton, useColors } from "@/designSystem"
-import { translate } from "@/utils"
-import { useShareWorkout } from "../utils/useShareWorkout"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useSetting } from "@/context/SettingContext"
+import { Header, Icon, IconButton, Menu, useColors } from "@/designSystem"
+import { translate } from "@/utils"
+import { useShareWorkout } from "../utils/useShareWorkout"
 // import WorkoutTimerModal from "../Timer/WorkoutTimerModal"
-import { navigate } from "@/navigators/navigationUtilities"
 import { useRemoveWorkoutQuery } from "@/db/queries/useRemoveWorkoutQuery"
+import { navigate } from "@/navigators/navigationUtilities"
 
 export const WorkoutHeader: React.FC = () => {
   const colors = useColors()
@@ -85,7 +84,7 @@ export const WorkoutHeader: React.FC = () => {
       <Menu
         visible={menuOpen}
         onDismiss={() => setMenuOpen(false)}
-        anchorPosition="bottom"
+        position="bottom-right"
         anchor={
           <IconButton
             onPress={() => setMenuOpen(true)}

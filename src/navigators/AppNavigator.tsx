@@ -4,19 +4,22 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { ErrorBoundary } from "@sentry/react-native"
 import { View, useWindowDimensions } from "react-native"
-import { Portal } from "react-native-paper"
 
 import { CalendarScreen } from "@/components/CalendarScreen"
 import { ErrorDetails } from "@/components/ErrorDetails"
 import { ExerciseDetailsScreen } from "@/components/ExerciseDetailsScreen"
 import { ExerciseEditScreen } from "@/components/ExerciseEditScreen"
 import { ExerciseSelectScreen } from "@/components/ExerciseSelectScreen"
+import { SettingsScreen } from "@/components/SettingsScreen"
 import { TemplateSaveScreen } from "@/components/TemplateSaveScreen"
+import { TemplateSelectScreen } from "@/components/TemplateSelectScreen"
 import { UserFeedbackScreen } from "@/components/UserFeedbackScreen"
 import { WelcomeScreen } from "@/components/WelcomeScreen"
 import { WorkoutFeedbackScreen } from "@/components/WorkoutFeedbackScreen"
+import { WorkoutsHistoryScreen } from "@/components/WorkoutHistoryScreen"
 import { WorkoutScreen } from "@/components/WorkoutScreen"
 import { offscreenRef } from "@/components/WorkoutScreen/utils/useShareWorkout"
+import { WorkoutStepScreen } from "@/components/WorkoutStep"
 import { DialogContextProvider } from "@/context/DialogContext"
 import { Icon, useColors } from "@/designSystem"
 import Config from "@/ignite/config"
@@ -28,10 +31,6 @@ import type {
   WorkoutStepTabParamList,
 } from "./navigationTypes"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { WorkoutStepScreen } from "@/components/WorkoutStep"
-import { WorkoutsHistoryScreen } from "@/components/WorkoutHistoryScreen"
-import { TemplateSelectScreen } from "@/components/TemplateSelectScreen"
-import { SettingsScreen } from "@/components/SettingsScreen"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -207,20 +206,18 @@ export const AppNavigator = (props: NavigationProps) => {
       {...props}
     >
       <PortalProvider>
-        <Portal.Host>
-          <DialogContextProvider>
-            <ErrorBoundary
-              fallback={({ error, resetError }) => (
-                <ErrorDetails
-                  error={error as Error}
-                  resetError={resetError}
-                />
-              )}
-            >
-              <AppStack />
-            </ErrorBoundary>
-          </DialogContextProvider>
-        </Portal.Host>
+        <DialogContextProvider>
+          <ErrorBoundary
+            fallback={({ error, resetError }) => (
+              <ErrorDetails
+                error={error as Error}
+                resetError={resetError}
+              />
+            )}
+          >
+            <AppStack />
+          </ErrorBoundary>
+        </DialogContextProvider>
 
         <View
           ref={offscreenRef}

@@ -1,16 +1,16 @@
+import { useFocusEffect } from "@react-navigation/native"
 import { DateTime } from "luxon"
-import React, { useEffect, useMemo, useState } from "react"
-import { useWindowDimensions } from "react-native"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
+import { useWindowDimensions, View } from "react-native"
 import { Calendar } from "react-native-calendario"
 import { MarkedDays } from "react-native-month"
-import { Menu } from "react-native-paper"
 
 import { WorkoutModal } from "@/components/CalendarScreen/WorkoutModal"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { useAllWorkoutIdsQuery, WorkoutResult } from "@/db/queries/useAllWorkoutIdsQuery"
 import { useWorkoutFullQuery } from "@/db/queries/useWorkoutFullQuery"
-import { fontSize, Header, Icon, IconButton, useColors } from "@/designSystem"
+import { fontSize, Header, Menu, Icon, IconButton, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
 import { msToIsoDate, translate } from "@/utils"
@@ -31,6 +31,12 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
   const { copyWorkoutMode } = useRouteParams("Calendar")
   const [openedWorkout, setOpenedWorkout] = useState<WorkoutModel | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useFocusEffect(
+    useCallback(() => {
+      return () => setMenuOpen(false)
+    }, []),
+  )
 
   const [workouts, setWorkouts] = useState<WorkoutResult[]>([])
 
@@ -104,7 +110,7 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
 
   function goToFeedback() {
     setMenuOpen(false)
-    navigation.navigate("UserFeedback", { referrerPage: "Calendar" })
+    requestAnimationFrame(() => navigation.navigate("UserFeedback", { referrerPage: "Calendar" }))
   }
 
   // ! must be a whole number
@@ -136,7 +142,7 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
           <Menu
             visible={menuOpen}
             onDismiss={() => setMenuOpen(false)}
-            anchorPosition="bottom"
+            position="bottom-right"
             anchor={
               <IconButton
                 onPress={() => setMenuOpen(true)}

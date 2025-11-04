@@ -1,5 +1,5 @@
 import { View, ViewProps, TextProps, useColorScheme } from "react-native"
-import { SafeAreaInsetsContext } from "react-native-safe-area-context"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { Text } from "./Text"
 import { fontSize, spacing, useColors } from "../tokens"
@@ -12,6 +12,7 @@ const padding = spacing.sm
 export const Header: React.FC<ViewProps> & SubComponents = ({ style, ...otherProps }) => {
   const colors = useColors()
   const colorScheme = useColorScheme()
+  const insets = useSafeAreaInsets()
 
   return (
     <View
@@ -20,7 +21,9 @@ export const Header: React.FC<ViewProps> & SubComponents = ({ style, ...otherPro
           backgroundColor: colorScheme === "light" ? colors.primary : colors.shadow,
           flexDirection: "row",
           alignItems: "center",
-          padding: padding,
+          paddingHorizontal: padding,
+          paddingBottom: padding,
+          paddingTop: padding + insets.top,
           zIndex: 1,
           width: "100%",
         },
