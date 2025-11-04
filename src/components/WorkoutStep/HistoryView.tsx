@@ -7,7 +7,7 @@ import { SetModel } from "@/db/models/SetModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
 import { useExerciseHistoryQuery } from "@/db/queries/useExerciseHistoryQuery"
-import { Divider, EmptyState, spacing, Text, useColors } from "@/designSystem"
+import { AppColors, Divider, EmptyState, spacing, Text, useColors } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
 import { msToIsoDate, translate } from "@/utils"
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list"
@@ -44,7 +44,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ exercise }) => {
   )
 }
 
-const makeStyles = (colors: any) =>
+const makeStyles = (colors: AppColors) =>
   StyleSheet.create({
     container: {
       paddingTop: spacing.md,
@@ -139,7 +139,7 @@ const ListItem: React.FC<ListItemProps> = ({ date, step, sets, workout, onPress 
   )
 }
 
-const makeItemStyles = (colors: any) =>
+const makeItemStyles = (colors: AppColors) =>
   StyleSheet.create({
     item: {
       gap: spacing.xs,

@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { Text as TextRn, TextProps as TextRnProps, StyleSheet } from "react-native"
 
-import { fontSize, useColors } from "../tokens"
+import { AppColors, fontSize, useColors } from "../tokens"
 
 type TextProps = TextRnProps & {
   text?: string
@@ -20,7 +20,7 @@ export const Text: React.FC<TextProps> = ({ style, children, text, ...otherProps
   )
 }
 
-const makeStyles = (colors: any) =>
+const makeStyles = (colors: AppColors) =>
   StyleSheet.create({
     default: {
       color: colors.onSurface,

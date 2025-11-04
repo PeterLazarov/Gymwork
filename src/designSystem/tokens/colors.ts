@@ -10,3 +10,5 @@ export function useColors() {
 
   return getColors(colorScheme)
 }
+
+export type AppColors = ReturnType<typeof useColors>

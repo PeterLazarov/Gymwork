@@ -9,6 +9,7 @@ import { useInsertWorkoutQuery } from "@/db/queries/useInsertWorkoutQuery"
 import { useUpdateWorkoutQuery } from "@/db/queries/useUpdateWorkoutQuery"
 import { Workout } from "@/db/schema"
 import {
+  AppColors,
   Button,
   Header,
   Icon,
@@ -211,7 +212,7 @@ const TemplateStepsList: React.FC<Props> = ({ steps, onStepRemove }) => {
   )
 }
 
-const makeStyles = (colors: any) =>
+const makeStyles = (colors: AppColors) =>
   StyleSheet.create({
     exerciseList: {
       borderWidth: 1,

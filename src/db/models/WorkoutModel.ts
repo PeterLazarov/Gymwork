@@ -2,7 +2,7 @@ import type { Exercise, Set, Workout, WorkoutStep, WorkoutStepExercise } from "@
 import { Discomfort, Feeling } from "../../constants/enums"
 import { WorkoutStepModel } from "./WorkoutStepModel"
 
-type WorkoutModelType = Workout & {
+export type WorkoutModelRecord = Workout & {
   workoutSteps: (WorkoutStep & {
     workoutStepExercises: (WorkoutStepExercise & {
       exercise: Exercise
@@ -35,8 +35,10 @@ export class WorkoutModel {
   createdAt: number
   updatedAt: number
   workoutSteps: WorkoutStepModel[]
+  private readonly musclesCache: string[]
+  private readonly muscleAreasCache: string[]
 
-  constructor(data: WorkoutModelType) {
+  constructor(data: WorkoutModelRecord) {
     this.id = data.id
     this.name = data.name
     this.notes = data.notes
@@ -50,6 +52,18 @@ export class WorkoutModel {
     this.createdAt = data.created_at
     this.updatedAt = data.updated_at
     this.workoutSteps = data.workoutSteps?.map((step) => WorkoutStepModel.from(step)) ?? []
+
+    const exercises = this.workoutSteps.flatMap((step) => step.exercises)
+    const uniqueMuscles = new Set<string>()
+    const uniqueMuscleAreas = new Set<string>()
+
+    exercises.forEach((exercise) => {
+      exercise.muscles.forEach((muscle) => uniqueMuscles.add(muscle))
+      exercise.muscleAreas.forEach((muscleArea) => uniqueMuscleAreas.add(muscleArea))
+    })
+
+    this.musclesCache = Object.freeze(Array.from(uniqueMuscles)) as string[]
+    this.muscleAreasCache = Object.freeze(Array.from(uniqueMuscleAreas)) as string[]
   }
 
   get hasComments(): boolean {
@@ -75,26 +89,18 @@ export class WorkoutModel {
   }
 
   get muscles(): string[] {
-    const exercises = this.workoutSteps.flatMap(s => s.exercise)
-
-    return Array.from(
-      new Set(exercises.flatMap(e => e.muscles))
-    ) as string[]
+    return this.musclesCache
   }
 
   get muscleAreas(): string[] {
-    const exercises = this.workoutSteps.flatMap(s => s.exercise)
-
-    return Array.from(
-      new Set(exercises.flatMap(e => e.muscleAreas))
-    ) as string[]
+    return this.muscleAreasCache
   }
 
   update(updates: Partial<WorkoutModel>): WorkoutModel {
     return Object.assign(this, updates)
   }
 
-  static from(workout: WorkoutModelType): WorkoutModel {
+  static from(workout: WorkoutModelRecord): WorkoutModel {
     return new WorkoutModel(workout)
   }
 }

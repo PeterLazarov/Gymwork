@@ -13,7 +13,7 @@ import {
   ToggleSwitch,
   useColors,
 } from "@/designSystem"
-import type { SelectOption } from "@/designSystem"
+import type { AppColors, SelectOption } from "@/designSystem"
 import { translate, useExport } from "@/utils"
 import { useDialogContext } from "@/context/DialogContext"
 import { goBack } from "@/navigators/navigationUtilities"
@@ -187,7 +187,7 @@ export const SettingsScreen: FC = () => {
   )
 }
 
-const makeStyles = (colors: any) =>
+const makeStyles = (colors: AppColors) =>
   StyleSheet.create({
     item: {
       flexDirection: "row",
@@ -237,7 +237,7 @@ function SettingsToggleItem({
   )
 }
 
-const makeToggleItemStyles = (colors: any) =>
+const makeToggleItemStyles = (colors: AppColors) =>
   StyleSheet.create({
     item: {
       flexDirection: "row",

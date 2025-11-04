@@ -1,5 +1,5 @@
 import { useFocusEffect } from "@react-navigation/native"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { memo, useCallback, useMemo, useState } from "react"
 import { Pressable, StyleSheet, View } from "react-native"
 import { Searchbar } from "react-native-paper"
 
@@ -8,13 +8,14 @@ import { discomfortOptions } from "@/constants/enums"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { useAllWorkoutsFullQuery } from "@/db/queries/useAllWorkoutsFullQuery"
 import {
+  AppColors,
   EmptyState,
   fontSize,
   Header,
-  Menu,
   Icon,
   IconButton,
   IndicatedScrollList,
+  Menu,
   palettes,
   spacing,
   Text,
@@ -23,24 +24,24 @@ import {
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { navigate } from "@/navigators/navigationUtilities"
 import { formatDateIso, msToIsoDate, translate } from "@/utils"
-import { ListRenderItemInfo } from "@shopify/flash-list"
+import type { FlashListProps, ListRenderItemInfo } from "@shopify/flash-list"
 import { WorkoutModal } from "../CalendarScreen/WorkoutModal"
 import { FilterForm, isFilterEmpty, WorkoutsFilterModal } from "./components/WorkoutsFilterModal"
+
+const ITEM_ESTIMATED_HEIGHT = 240
 
 export const WorkoutsHistoryScreen: React.FC = () => {
   const [filterString, setFilterString] = useState("")
   const [filter, setFilter] = useState<FilterForm>({})
+  const trimmedFilterString = filterString.trim()
   const filterEmpty = isFilterEmpty(filter)
-  const [workouts, setWorkouts] = useState<WorkoutModel[]>([])
+  const hasAppliedFilters = !filterEmpty || trimmedFilterString.length > 0
 
-  const workoutFullQuery = useAllWorkoutsFullQuery()
-
-  useEffect(() => {
-    workoutFullQuery(filter, filterString).then((results) => {
-      const models = results.map((workout) => new WorkoutModel(workout))
-      setWorkouts(models)
-    })
-  }, [filter, filterString])
+  const rawWorkouts = useAllWorkoutsFullQuery(filter, trimmedFilterString)
+  const workouts = useMemo(
+    () => rawWorkouts.map((workout) => new WorkoutModel(workout)),
+    [rawWorkouts],
+  )
 
   const [openedWorkout, setOpenedWorkout] = useState<WorkoutModel | undefined>()
   const [filterModalOpen, setFilterModalOpen] = useState(false)
@@ -52,18 +53,6 @@ export const WorkoutsHistoryScreen: React.FC = () => {
     }, []),
   )
 
-  const renderItem = useCallback(({ item }: ListRenderItemInfo<WorkoutModel>) => {
-    return (
-      <WorkoutListItem
-        key={item.id}
-        workout={item}
-        onPress={() => setOpenedWorkout(item)}
-      />
-    )
-  }, [])
-
-  const keyExtractor = useCallback((workout: WorkoutModel) => `${workout.date}_${workout.id}`, [])
-
   const colors = useColors()
   const styles = useMemo(() => makeStyles(colors), [colors])
 
@@ -71,10 +60,51 @@ export const WorkoutsHistoryScreen: React.FC = () => {
     navigate("Workout")
   }
 
+  function resetFilters() {
+    setFilter({})
+    setFilterString("")
+  }
+
   function goToFeedback() {
     setMenuOpen(false)
     requestAnimationFrame(() => navigate("UserFeedback", { referrerPage: "WorkoutsHistory" }))
   }
+
+  const overrideItemLayout = useCallback<
+    NonNullable<FlashListProps<WorkoutModel>["overrideItemLayout"]>
+  >((layout, _item, _index, _maxColumns) => {
+    const layoutWithSize = layout as { span?: number; size?: number }
+    if (layoutWithSize.size == null) {
+      layoutWithSize.size = ITEM_ESTIMATED_HEIGHT
+    }
+  }, [])
+
+  const renderSearchActions = useCallback(() => {
+    return (
+      <>
+        {hasAppliedFilters && (
+          <IconButton onPress={resetFilters}>
+            <Icon icon="close" />
+          </IconButton>
+        )}
+        <IconButton onPress={() => setFilterModalOpen(true)}>
+          {filterEmpty ? <Icon icon="filter-outline" /> : <Icon icon="filter" />}
+        </IconButton>
+      </>
+    )
+  }, [filterEmpty, hasAppliedFilters])
+
+  const renderItem = useCallback(
+    ({ item }: ListRenderItemInfo<WorkoutModel>) => (
+      <WorkoutListItem
+        workout={item}
+        onPress={setOpenedWorkout}
+      />
+    ),
+    [setOpenedWorkout],
+  )
+
+  const keyExtractor = useCallback((workout: WorkoutModel) => `${workout.date}_${workout.id}`, [])
 
   return (
     <BaseLayout>
@@ -117,25 +147,8 @@ export const WorkoutsHistoryScreen: React.FC = () => {
           onChangeText={setFilterString}
           value={filterString}
           mode="bar"
-          right={() => (
-            <>
-              {(!filterEmpty || filterString.trim() !== "") && (
-                <IconButton
-                  onPress={() => {
-                    setFilter({})
-                    setFilterString("")
-                  }}
-                >
-                  <Icon icon="close" />
-                </IconButton>
-              )}
-              <IconButton onPress={() => setFilterModalOpen(true)}>
-                {!filterEmpty && <Icon icon="filter" />}
-                {filterEmpty && <Icon icon="filter-outline" />}
-              </IconButton>
-            </>
-          )}
-          style={{ borderRadius: 0 }}
+          right={renderSearchActions}
+          style={styles.searchbar}
         />
         {workouts.length > 0 ? (
           <>
@@ -143,6 +156,7 @@ export const WorkoutsHistoryScreen: React.FC = () => {
               data={workouts}
               renderItem={renderItem}
               keyExtractor={keyExtractor}
+              overrideItemLayout={overrideItemLayout}
             />
             <View style={styles.workoutCount}>
               <Text>{translate("workoutsCount", { count: workouts.length })}</Text>
@@ -169,22 +183,14 @@ export const WorkoutsHistoryScreen: React.FC = () => {
     </BaseLayout>
   )
 }
-const makeStyles = (colors: any) =>
+const makeStyles = (colors: AppColors) =>
   StyleSheet.create({
     screen: {
       display: "flex",
       flexGrow: 1,
     },
-    filterOptionList: {
-      flexDirection: "row",
-      margin: spacing.xs,
-    },
-    filterOption: {
-      backgroundColor: "transparent",
-    },
-    list: {
-      flexBasis: 0,
-      // backgroundColor:
+    searchbar: {
+      borderRadius: 0,
     },
     workoutCount: {
       alignItems: "center",
@@ -195,46 +201,39 @@ const makeStyles = (colors: any) =>
 
 type WorkoutListItemProps = {
   workout: WorkoutModel
-  onPress: () => void
+  onPress: (workout: WorkoutModel) => void
 }
 
 const WorkoutListItem: React.FC<WorkoutListItemProps> = ({ workout, onPress }) => {
   const colors = useColors()
-  const styles = makeWorkoutItemStyles(colors)
-
-  const muscles = useMemo(() => workout.muscles, [workout.muscles])
-  const muscleAreas = useMemo(() => workout.muscleAreas, [workout.muscleAreas])
-
-  const muscleMapContainerStyle = useMemo(() => [styles.muscleMapContainer], [styles])
-  const rowStyle = useMemo(() => [styles.row], [styles])
-  const betweenStyle = useMemo(() => [styles.between], [styles])
+  const styles = useMemo(() => makeWorkoutItemStyles(colors), [colors])
 
   return (
     <Pressable
-      onPress={onPress}
+      onPress={() => onPress(workout)}
       style={styles.container}
     >
       <View>
-        <View style={betweenStyle}>
+        <View style={styles.between}>
           <View>
             <Text style={styles.title}>{formatDateIso(msToIsoDate(workout.date!), "long")}</Text>
           </View>
 
-          <View style={rowStyle}>
-            <View style={muscleMapContainerStyle}>
+          <View style={styles.row}>
+            <View style={styles.muscleMapContainer}>
               <MuscleMap
-                muscles={muscles}
-                muscleAreas={muscleAreas}
+                muscles={workout.muscles}
+                muscleAreas={workout.muscleAreas}
                 back={false}
                 activeColor={palettes.gold["80"]}
                 inactiveColor={colors.outline}
                 baseColor={colors.bodyBase}
               />
             </View>
-            <View style={muscleMapContainerStyle}>
+            <View style={styles.muscleMapContainer}>
               <MuscleMap
-                muscles={muscles}
-                muscleAreas={muscleAreas}
+                muscles={workout.muscles}
+                muscleAreas={workout.muscleAreas}
                 back={true}
                 activeColor={palettes.gold["80"]}
                 inactiveColor={colors.outline}
@@ -320,7 +319,7 @@ const WorkoutListItem: React.FC<WorkoutListItemProps> = ({ workout, onPress }) =
   )
 }
 
-const makeWorkoutItemStyles = (colors: any) =>
+const makeWorkoutItemStyles = (colors: AppColors) =>
   StyleSheet.create({
     container: {
       display: "flex",

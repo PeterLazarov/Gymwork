@@ -1,4 +1,4 @@
-import { fontSize as fontSizeToken, spacing, Text, useColors } from "@/designSystem"
+import { AppColors, fontSize as fontSizeToken, spacing, Text, useColors } from "@/designSystem"
 import { useMemo } from "react"
 import { StyleSheet, View } from "react-native"
 
@@ -33,7 +33,11 @@ export const SetDataLabel: React.FC<Props> = ({
   )
 }
 
-const makeStyles = (colors: any, isFocused?: boolean, fontSize?: keyof typeof fontSizeToken) =>
+const makeStyles = (
+  colors: AppColors,
+  isFocused?: boolean,
+  fontSize?: keyof typeof fontSizeToken,
+) =>
   StyleSheet.create({
     container: {
       flex: 1,

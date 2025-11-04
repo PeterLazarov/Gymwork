@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native"
 
 import { Discomfort, Feeling, discomfortOptions, feelingOptions } from "@/constants/enums"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
-import { Card, FeedbackPicker, fontSize, spacing, Text, useColors } from "@/designSystem"
+import { AppColors, Card, FeedbackPicker, fontSize, spacing, Text, useColors } from "@/designSystem"
 import { translate } from "@/utils"
 
 type Props = {
@@ -63,7 +63,7 @@ export const CommentsCard: React.FC<Props> = ({ workout, onPress, compactMode })
   )
 }
 
-const makeStyles = (colors: any, compactMode?: boolean) =>
+const makeStyles = (colors: AppColors, compactMode?: boolean) =>
   StyleSheet.create({
     card: {
       padding: compactMode ? 0 : spacing.xs,

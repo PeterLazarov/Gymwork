@@ -4,7 +4,7 @@ import { SetModel } from "@/db/models/SetModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
 import { useRecordIdsQuery } from "@/db/queries/useRecordIdsQuery"
-import { Icon, Text, fontSize, palettes, spacing, useColors } from "@/designSystem"
+import { AppColors, Icon, Text, fontSize, palettes, spacing, useColors } from "@/designSystem"
 import { getFormatedDuration, translate } from "@/utils"
 import React, { useMemo } from "react"
 import { StyleSheet, View } from "react-native"
@@ -197,7 +197,7 @@ const SetMetricLabel: React.FC<SetMetricLabelProps> = ({
 }
 
 const makeMetricLabelStyles = (
-  colors: any,
+  colors: AppColors,
   isFocused?: boolean,
   fontSizeProp?: keyof typeof fontSize,
 ) =>
