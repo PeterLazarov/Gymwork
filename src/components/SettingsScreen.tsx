@@ -95,7 +95,6 @@ export const SettingsScreen: FC = () => {
         <SettingsToggleItem
           enabled={measureRest}
           onToggle={() => setMeasureRest(!measureRest)}
-          editable={false}
         >
           {translate("measureRest")}
         </SettingsToggleItem>

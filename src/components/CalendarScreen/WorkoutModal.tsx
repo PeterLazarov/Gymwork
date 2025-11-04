@@ -1,7 +1,6 @@
 import { DateTime } from "luxon"
 import { useState } from "react"
-import { ScrollView, View } from "react-native"
-import { Modal, Portal } from "react-native-paper"
+import { Modal, ScrollView, View } from "react-native"
 
 import { CommentsCard } from "@/components/shared/CommentsCard"
 import { StepSetsList } from "@/components/shared/StepSetsList"
@@ -9,7 +8,16 @@ import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
 import { useWorkoutCopy } from "@/db/queries/useWorkoutCopy"
-import { Button, Divider, Text, ToggleSwitch, fontSize, spacing, useColors } from "@/designSystem"
+import {
+  Backdrop,
+  Button,
+  Divider,
+  Text,
+  ToggleSwitch,
+  fontSize,
+  spacing,
+  useColors,
+} from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
 import { msToIsoDate, translate } from "@/utils"
 
@@ -41,87 +49,96 @@ export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, sh
   }
 
   return (
-    <Portal>
-      <Modal
-        visible={open}
-        onDismiss={onClose}
-        contentContainerStyle={{
-          backgroundColor: colors.surface,
-          marginVertical: spacing.xs,
-          marginHorizontal: spacing.md,
-          flex: 1,
-        }}
+    <Modal
+      transparent
+      visible={open}
+      onRequestClose={onClose}
+      animationType="fade"
+    >
+      <Backdrop onPress={onClose} />
+      <View
+        pointerEvents="box-none"
+        style={{ flex: 1 }}
       >
-        <View style={{ height: "100%" }}>
-          <Text
-            style={{
-              fontSize: fontSize.lg,
-              textAlign: "center",
-              padding: spacing.md,
-            }}
-          >
-            {label}
-          </Text>
-          <Divider
-            orientation="horizontal"
-            variant="primary"
-          />
-          <View style={{ flex: 1 }}>
-            {showComments && workout.hasComments && (
-              <CommentsCard
-                workout={workout}
-                compactMode
-              />
-            )}
-            <ScrollView>
-              {workout.workoutSteps.map((step) => (
-                <StepItem
-                  key={step.id}
-                  step={step}
+        <View
+          style={{
+            backgroundColor: colors.surface,
+            marginVertical: spacing.xs,
+            marginHorizontal: spacing.md,
+            flex: 1,
+          }}
+        >
+          <View style={{ height: "100%" }}>
+            <Text
+              style={{
+                fontSize: fontSize.lg,
+                textAlign: "center",
+                padding: spacing.md,
+              }}
+            >
+              {label}
+            </Text>
+            <Divider
+              orientation="horizontal"
+              variant="primary"
+            />
+            <View style={{ flex: 1 }}>
+              {showComments && workout.hasComments && (
+                <CommentsCard
                   workout={workout}
+                  compactMode
                 />
-              ))}
-            </ScrollView>
-            {mode === "copy" && (
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: spacing.xxs,
-                  gap: spacing.xs,
-                }}
-              >
-                <Text style={{ color: colors.onSurface }}>{translate("includeSets")}</Text>
-                <ToggleSwitch
-                  variant="primary"
-                  value={includeSets}
-                  onValueChange={setIncludeSets}
-                />
-              </View>
-            )}
-          </View>
-          <Divider
-            orientation="horizontal"
-            variant="primary"
-          />
-          <View style={{ flexDirection: "row" }}>
-            <Button
-              variant="tertiary"
-              style={{ flex: 1 }}
-              onPress={onClose}
-              text={translate("cancel")}
+              )}
+              <ScrollView>
+                {workout.workoutSteps.map((step) => (
+                  <StepItem
+                    key={step.id}
+                    step={step}
+                    workout={workout}
+                  />
+                ))}
+              </ScrollView>
+              {mode === "copy" && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: spacing.xxs,
+                    gap: spacing.xs,
+                  }}
+                >
+                  <Text style={{ color: colors.onSurface }}>{translate("includeSets")}</Text>
+                  <ToggleSwitch
+                    variant="primary"
+                    value={includeSets}
+                    onValueChange={setIncludeSets}
+                  />
+                </View>
+              )}
+            </View>
+            <Divider
+              orientation="horizontal"
+              variant="primary"
             />
-            <Button
-              variant="tertiary"
-              style={{ flex: 1 }}
-              onPress={onActionPress}
-              text={translate(mode === "copy" ? "copyWorkout" : "goToWorkout")}
-            />
+            <View style={{ flexDirection: "row" }}>
+              <Button
+                variant="tertiary"
+                style={{ flex: 1 }}
+                onPress={onClose}
+                text={translate("cancel")}
+              />
+              <Button
+                variant="tertiary"
+                style={{ flex: 1 }}
+                onPress={onActionPress}
+                text={translate(mode === "copy" ? "copyWorkout" : "goToWorkout")}
+              />
+            </View>
           </View>
         </View>
-      </Modal>
-    </Portal>
+      </View>
+    </Modal>
   )
 }
 

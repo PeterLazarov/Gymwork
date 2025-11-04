@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from "react"
-import { Dimensions, Pressable, ScrollView, View, ViewStyle } from "react-native"
-import { Modal, Portal, TextInput } from "react-native-paper"
+import { Dimensions, Pressable, ScrollView, View, ViewStyle, Modal } from "react-native"
+import { TextInput } from "react-native-paper"
 
 import { translate } from "@/utils"
 import { fontSize, spacing, useColors } from "../tokens"
 import { Button } from "./Button"
 import { Divider } from "./Divider"
 import { Text } from "./Text"
+import { Backdrop } from "./Backdrop"
 
 export type SelectOption<T = unknown> =
   | string
@@ -135,20 +136,24 @@ function SelectOptionsModal<T = unknown>({
   const maxModalHeight = Dimensions.get("screen").height - 100
 
   return (
-    <Portal>
-      <Modal
-        visible={open}
-        onDismiss={onClose}
-        contentContainerStyle={{
-          backgroundColor: colors.surfaceContainerLowest,
-          marginVertical: spacing.xs,
-          marginHorizontal: spacing.md,
-          maxHeight: maxModalHeight,
-        }}
+    <Modal
+      visible={open}
+      onDismiss={onClose}
+      transparent
+      animationType="fade"
+    >
+      <Backdrop onPress={onClose} />
+      <View
+        pointerEvents="box-none"
+        style={{ justifyContent: "center", flex: 1 }}
       >
         <View
           style={{
             height: modalHeight,
+
+            backgroundColor: colors.surfaceContainerLowest,
+            marginVertical: spacing.xs,
+            marginHorizontal: spacing.md,
             maxHeight: maxModalHeight,
           }}
         >
@@ -198,8 +203,8 @@ function SelectOptionsModal<T = unknown>({
             </View>
           )}
         </View>
-      </Modal>
-    </Portal>
+      </View>
+    </Modal>
   )
 }
 
