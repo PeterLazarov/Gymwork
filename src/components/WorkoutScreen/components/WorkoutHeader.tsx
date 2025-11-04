@@ -18,8 +18,7 @@ export const WorkoutHeader: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const { openedDateLabel, openedWorkout } = useOpenedWorkout()
 
-  function openCalendar() {
-    // navigate("Calendar")
+  function openAnalytics() {
     navigate("WorkoutsHistory")
   }
 
@@ -72,11 +71,11 @@ export const WorkoutHeader: React.FC = () => {
       )}
 
       <IconButton
-        onPress={openCalendar}
+        onPress={openAnalytics}
         underlay="darker"
       >
         <Icon
-          icon="calendar-sharp"
+          icon="pie-chart"
           color={colors.onPrimary}
         />
       </IconButton>

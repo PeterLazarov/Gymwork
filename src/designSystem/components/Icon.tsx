@@ -29,6 +29,7 @@ const IoniconsIcons = [
   "pause-outline",
   "stop",
   "stop-outline",
+  "pie-chart",
   "play",
   "play-outline",
   "play-forward-outline",
