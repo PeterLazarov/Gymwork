@@ -80,7 +80,7 @@ export const WorkoutsHistoryScreen: React.FC = () => {
             color={colors.onPrimary}
           />
         </IconButton>
-        <Header.Title title={translate("calendar")} />
+        <Header.Title title={translate("workouts")} />
         <Menu
           visible={menuOpen}
           onDismiss={() => setMenuOpen(false)}

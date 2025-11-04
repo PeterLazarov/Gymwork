@@ -3,6 +3,7 @@ import { Platform, View, ViewStyle } from "react-native"
 import { KeyboardAvoidingView } from "react-native-keyboard-controller"
 
 import { useColors } from "@/designSystem"
+import { useSafeAreaInsetsStyle } from "@/utils/ignite/useSafeAreaInsetsStyle"
 
 const isIos = Platform.OS === "ios"
 
@@ -13,6 +14,7 @@ type Props = {
 }
 export const BaseLayout: React.FC<Props> = ({ children, style, hasFooter }) => {
   const colors = useColors()
+  const $containerInsets = useSafeAreaInsetsStyle(["top", "bottom"])
 
   return (
     <View
@@ -21,6 +23,7 @@ export const BaseLayout: React.FC<Props> = ({ children, style, hasFooter }) => {
           flex: 1,
           backgroundColor: colors.surfaceContainer,
         },
+        $containerInsets,
         style,
       ]}
     >

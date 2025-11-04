@@ -14,26 +14,20 @@ export const Header: React.FC<ViewProps> & SubComponents = ({ style, ...otherPro
   const colorScheme = useColorScheme()
 
   return (
-    <SafeAreaInsetsContext.Consumer>
-      {(insets) => (
-        <View
-          style={[
-            {
-              backgroundColor: colorScheme === "light" ? colors.primary : colors.shadow,
-              flexDirection: "row",
-              alignItems: "center",
-              paddingHorizontal: padding,
-              paddingBottom: padding,
-              paddingTop: (insets?.top ?? 0) + padding,
-              zIndex: 1,
-              width: "100%",
-            },
-            style,
-          ]}
-          {...otherProps}
-        />
-      )}
-    </SafeAreaInsetsContext.Consumer>
+    <View
+      style={[
+        {
+          backgroundColor: colorScheme === "light" ? colors.primary : colors.shadow,
+          flexDirection: "row",
+          alignItems: "center",
+          padding: padding,
+          zIndex: 1,
+          width: "100%",
+        },
+        style,
+      ]}
+      {...otherProps}
+    />
   )
 }
 Header.displayName = "Header"
