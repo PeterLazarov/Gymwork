@@ -2,7 +2,6 @@ import { SQL } from "drizzle-orm"
 import { useMemo } from "react"
 
 import { FilterForm } from "@/components/WorkoutHistoryScreen/components/WorkoutsFilterModal"
-import { WorkoutModelRecord } from "@/db/models/WorkoutModel"
 import { isoDateToMs } from "@/utils"
 
 import { useExpoQuery } from "../expo/useExpoQuery"
@@ -17,10 +16,7 @@ const tablesToWatch = [
   "exercise_metrics",
 ]
 
-export const useAllWorkoutsFullQuery = (
-  filter: FilterForm,
-  searchString: string,
-): WorkoutModelRecord[] => {
+export const useAllWorkoutsFullQuery = (filter: FilterForm, searchString: string) => {
   const { drizzleDB } = useDB()
 
   const query = useMemo(() => {
@@ -66,7 +62,10 @@ export const useAllWorkoutsFullQuery = (
 
         if (searchString.length > 0) {
           conditions.push(
-            or(like(workouts.name, `%${searchString}%`), like(workouts.notes, `%${searchString}%`))!,
+            or(
+              like(workouts.name, `%${searchString}%`),
+              like(workouts.notes, `%${searchString}%`),
+            )!,
           )
         }
 
@@ -77,5 +76,10 @@ export const useAllWorkoutsFullQuery = (
     })
   }, [drizzleDB, filter.dateFrom, filter.dateTo, filter.discomfortLevel, searchString])
 
-  return useExpoQuery(query, tablesToWatch) as WorkoutModelRecord[]
+  const { data, isLoading } = useExpoQuery(query, tablesToWatch)
+
+  return {
+    workouts: data ?? [],
+    isLoading,
+  }
 }

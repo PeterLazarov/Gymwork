@@ -7,7 +7,6 @@ import { useDB } from "../useDB"
 export const useRecordIdsQuery = (workoutStepId: number) => {
   const { drizzleDB } = useDB()
 
-  // Build a Drizzle query to find record set IDs for this workout step
   const query = useMemo(() => {
     return drizzleDB
       .select({
@@ -18,8 +17,10 @@ export const useRecordIdsQuery = (workoutStepId: number) => {
       .where(eq(sets.workout_step_id, workoutStepId))
   }, [drizzleDB, workoutStepId])
 
-  // Use the reactive query hook with the sets table for updates
-  const records = useExpoQuery(query, ["sets"])
+  const { data, isLoading } = useExpoQuery(query, ["sets"])
 
-  return records
+  return {
+    recordIds: data ?? [],
+    isLoading,
+  }
 }

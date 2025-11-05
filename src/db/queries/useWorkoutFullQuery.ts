@@ -1,16 +1,29 @@
+import { WorkoutModelRecord } from "@/db/models/WorkoutModel"
 import { useCallback, useMemo } from "react"
+
 import { useExpoQuery } from "../expo/useExpoQuery"
 import { useDB } from "../useDB"
 
-export function useWorkoutFullQuery(openedDateMs: number, reactive: true): any
-export function useWorkoutFullQuery(openedDateMs: number): any
+type UseWorkoutFullQueryReactiveResult = {
+  workout: WorkoutModelRecord | null
+  isLoading: boolean
+}
+
+export function useWorkoutFullQuery(
+  openedDateMs: number,
+  reactive: true,
+): UseWorkoutFullQueryReactiveResult
+export function useWorkoutFullQuery(openedDateMs: number): UseWorkoutFullQueryReactiveResult
 
 export function useWorkoutFullQuery(
   openedDateMs: number | null,
   reactive: false,
-): (dateMs: number) => Promise<any>
+): (dateMs: number) => unknown
 
-export function useWorkoutFullQuery(openedDateMs: number | null, reactive: boolean = true): any {
+export function useWorkoutFullQuery(
+  openedDateMs: number | null,
+  reactive: boolean = true,
+): UseWorkoutFullQueryReactiveResult | ((dateMs: number) => unknown) {
   const { drizzleDB } = useDB()
 
   const buildQuery = useCallback(
@@ -53,5 +66,14 @@ export function useWorkoutFullQuery(openedDateMs: number | null, reactive: boole
 
   const query = useMemo(() => buildQuery(openedDateMs!), [buildQuery, openedDateMs])
 
-  return useExpoQuery(query, ["workouts", "workout_steps", "sets", "exercises", "exercise_metrics"], "single")
+  const { data, isLoading } = useExpoQuery(
+    query,
+    ["workouts", "workout_steps", "sets", "exercises", "exercise_metrics"],
+    "single",
+  )
+
+  return {
+    workout: data ?? null,
+    isLoading,
+  }
 }

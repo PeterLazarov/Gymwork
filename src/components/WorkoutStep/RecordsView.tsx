@@ -19,12 +19,9 @@ export const RecordsView: React.FC<RecordsViewProps> = ({ exercise }) => {
   const { setOpenedDate } = useOpenedWorkout()
   const { setHighlightedSet } = useSetting()
 
-  const exerciseRecords = useExerciseRecordsQuery(exercise.id!)
+  const { records: rawRecords } = useExerciseRecordsQuery(exercise.id!)
 
-  const records = useMemo(
-    () => exerciseRecords.map((item) => new SetModel(item)),
-    [exerciseRecords],
-  )
+  const records = useMemo(() => rawRecords.map((item) => new SetModel(item)), [rawRecords])
 
   function goToDate(set: SetModel) {
     setOpenedDate(msToIsoDate(set.date))

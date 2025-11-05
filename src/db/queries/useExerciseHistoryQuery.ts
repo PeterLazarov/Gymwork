@@ -1,9 +1,16 @@
+import { WorkoutModelRecord } from "@/db/models/WorkoutModel"
 import { and, eq } from "drizzle-orm"
 import { useCallback, useMemo } from "react"
+
 import { useExpoQuery } from "../expo/useExpoQuery"
 import { useDB } from "../useDB"
 
-export function useExerciseHistoryQuery(exerciseId: number) {
+type UseExerciseHistoryQueryResult = {
+  workouts: WorkoutModelRecord[]
+  isLoading: boolean
+}
+
+export function useExerciseHistoryQuery(exerciseId: number): UseExerciseHistoryQueryResult {
   const { drizzleDB } = useDB()
 
   const buildQuery = useCallback(
@@ -56,5 +63,14 @@ export function useExerciseHistoryQuery(exerciseId: number) {
 
   const query = useMemo(() => buildQuery(exerciseId), [buildQuery, exerciseId])
 
-  return useExpoQuery(query, ["workouts", "workout_steps", "sets", "exercises", "exercise_metrics"], "multiple")
+  const { data, isLoading } = useExpoQuery(
+    query,
+    ["workouts", "workout_steps", "sets", "exercises", "exercise_metrics"],
+    "multiple",
+  )
+
+  return {
+    workouts: data ?? [],
+    isLoading,
+  }
 }

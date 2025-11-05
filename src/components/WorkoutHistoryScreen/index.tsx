@@ -1,5 +1,5 @@
 import { useFocusEffect } from "@react-navigation/native"
-import { memo, useCallback, useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { Pressable, StyleSheet, View } from "react-native"
 import { Searchbar } from "react-native-paper"
 
@@ -17,6 +17,7 @@ import {
   IndicatedScrollList,
   Menu,
   palettes,
+  Skeleton,
   spacing,
   Text,
   useColors,
@@ -29,6 +30,7 @@ import { WorkoutModal } from "../CalendarScreen/WorkoutModal"
 import { FilterForm, isFilterEmpty, WorkoutsFilterModal } from "./components/WorkoutsFilterModal"
 
 const ITEM_ESTIMATED_HEIGHT = 240
+const SKELETON_PLACEHOLDERS = [0, 1, 2] as const
 
 export const WorkoutsHistoryScreen: React.FC = () => {
   const [filterString, setFilterString] = useState("")
@@ -37,7 +39,10 @@ export const WorkoutsHistoryScreen: React.FC = () => {
   const filterEmpty = isFilterEmpty(filter)
   const hasAppliedFilters = !filterEmpty || trimmedFilterString.length > 0
 
-  const rawWorkouts = useAllWorkoutsFullQuery(filter, trimmedFilterString)
+  const { workouts: rawWorkouts, isLoading: workoutsLoading } = useAllWorkoutsFullQuery(
+    filter,
+    trimmedFilterString,
+  )
   const workouts = useMemo(
     () => rawWorkouts.map((workout) => new WorkoutModel(workout)),
     [rawWorkouts],
@@ -150,7 +155,21 @@ export const WorkoutsHistoryScreen: React.FC = () => {
           right={renderSearchActions}
           style={styles.searchbar}
         />
-        {workouts.length > 0 ? (
+        {!workoutsLoading && workouts.length === 0 && (
+          <EmptyState text={translate("noWorkoutsEntered")} />
+        )}
+        {workoutsLoading && (
+          <View style={styles.skeletonContainer}>
+            {SKELETON_PLACEHOLDERS.map((placeholder) => (
+              <Skeleton
+                key={placeholder}
+                height={ITEM_ESTIMATED_HEIGHT - spacing.lg}
+                style={styles.skeletonItem}
+              />
+            ))}
+          </View>
+        )}
+        {workouts.length > 0 && (
           <>
             <IndicatedScrollList
               data={workouts}
@@ -162,8 +181,6 @@ export const WorkoutsHistoryScreen: React.FC = () => {
               <Text>{translate("workoutsCount", { count: workouts.length })}</Text>
             </View>
           </>
-        ) : (
-          <EmptyState text={translate("noWorkoutsEntered")} />
         )}
       </View>
       {openedWorkout && (
@@ -196,6 +213,13 @@ const makeStyles = (colors: AppColors) =>
       alignItems: "center",
       paddingVertical: spacing.xxs,
       backgroundColor: colors.surfaceVariant,
+    },
+    skeletonContainer: {
+      paddingHorizontal: spacing.md,
+      paddingTop: spacing.sm,
+    },
+    skeletonItem: {
+      marginBottom: spacing.sm,
     },
   })
 

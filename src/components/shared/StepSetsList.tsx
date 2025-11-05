@@ -23,7 +23,7 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
   workout,
 }) => {
   const { showSetCompletion: showSetCompletionSetting } = useSetting()
-  const stepRecordIds = useRecordIdsQuery(step.id)
+  const { recordIds } = useRecordIdsQuery(step.id)
   // TODO deduplicate
   const showSetCompletion = showSetCompletionSetting && workout.hasIncompleteSets
 
@@ -34,7 +34,7 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
           key={set.id}
           set={set}
           exercise={set.exercise}
-          isRecord={stepRecordIds.some(({ id }) => id === set.id)}
+          isRecord={recordIds.some(({ id }) => id === set.id)}
           // isFocused={stateStore.highlightedSetGuid === set.id}
           letter={hideSupersetLetters ? undefined : step.exerciseLettering[set.exercise.id!]}
           number={step.setsNumberMap[set.id!]}

@@ -1,5 +1,6 @@
 import { eq, sql } from "drizzle-orm"
 import { useMemo } from "react"
+
 import { useExpoQuery } from "../expo/useExpoQuery"
 import { useDB } from "../useDB"
 
@@ -24,7 +25,10 @@ export const useExerciseRecordsQuery = (exerciseId: number) => {
     })
   }, [drizzleDB, exerciseId])
 
-  const records = useExpoQuery(query, ["sets", "exercises", "exercise_metrics"])
+  const { data, isLoading } = useExpoQuery(query, ["sets", "exercises", "exercise_metrics"])
 
-  return records
+  return {
+    records: data ?? [],
+    isLoading,
+  }
 }

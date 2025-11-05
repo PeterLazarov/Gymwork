@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { Alert, View, StyleSheet } from "react-native"
+import { Alert, StyleSheet, View } from "react-native"
 
+import { CommentsCard } from "@/components/shared/CommentsCard"
 import { useSetting } from "@/context/SettingContext"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
-import { EmptyState, spacing, useColors } from "@/designSystem"
-import { navigate } from "@/navigators/navigationUtilities"
-import { CommentsCard } from "@/components/shared/CommentsCard"
-import { WorkoutStepList } from "./WorkoutStepList"
-import { translate } from "@/utils"
-import { ActionCard } from "./ActionCard"
 import { useAllWorkoutIdsQuery } from "@/db/queries/useAllWorkoutIdsQuery"
 import { useTemplatesQuery } from "@/db/queries/useTemplatesQuery"
+import { EmptyState, spacing, useColors } from "@/designSystem"
+import { navigate } from "@/navigators/navigationUtilities"
+import { translate } from "@/utils"
+import { ActionCard } from "./ActionCard"
+import { WorkoutStepList } from "./WorkoutStepList"
 
 type Props = {
   workout: WorkoutModel | null
@@ -44,7 +44,7 @@ export const WorkoutDayView: React.FC<Props> = ({ workout }) => {
 export const WorkoutEmptyState: React.FC = () => {
   const [hasWorkouts, setHasWorkouts] = useState(false)
 
-  const templates = useTemplatesQuery({ limit: 1 })
+  const { templates } = useTemplatesQuery({ limit: 1 })
   const workoutsQuery = useAllWorkoutIdsQuery()
   useEffect(() => {
     workoutsQuery({ limit: 1 }).then((res) => {

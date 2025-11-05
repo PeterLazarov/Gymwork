@@ -22,13 +22,9 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ exercise }) => {
   const colors = useColors()
 
   const styles = useMemo(() => makeStyles(colors), [colors])
-  const workoutsResult = useExerciseHistoryQuery(exercise.id!)
+  const { workouts: rawWorkouts } = useExerciseHistoryQuery(exercise.id!)
 
-  const workouts = useMemo(
-    () => workoutsResult.map((item) => new WorkoutModel(item)),
-
-    [workoutsResult],
-  )
+  const workouts = useMemo(() => rawWorkouts.map((item) => new WorkoutModel(item)), [rawWorkouts])
 
   return (
     <View style={styles.container}>

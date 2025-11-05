@@ -1,8 +1,9 @@
 import { useMemo } from "react"
+
 import { useExpoQuery } from "../expo/useExpoQuery"
 import { useDB } from "../useDB"
 
-export const useTemplatesQuery = (params?: {limit?: number}) => {
+export const useTemplatesQuery = (params?: { limit?: number }) => {
   const { drizzleDB } = useDB()
 
   const query = useMemo(() => {
@@ -24,9 +25,20 @@ export const useTemplatesQuery = (params?: {limit?: number}) => {
           },
         },
       },
-      limit: params?.limit
+      limit: params?.limit,
     })
   }, [drizzleDB])
 
-  return useExpoQuery(query, ["workouts", "workout_steps", "sets", "exercises", "exercise_metrics"])
+  const { data, isLoading } = useExpoQuery(query, [
+    "workouts",
+    "workout_steps",
+    "sets",
+    "exercises",
+    "exercise_metrics",
+  ])
+
+  return {
+    templates: data ?? [],
+    isLoading,
+  }
 }

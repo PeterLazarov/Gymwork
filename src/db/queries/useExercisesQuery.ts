@@ -4,10 +4,12 @@ import { useExpoQuery } from "../expo/useExpoQuery"
 import { exercises, workout_step_exercises } from "../schema"
 import { useDB } from "../useDB"
 
-export const useExercisesQuery = ({
-  isFavorite,
-  filterString,
-}: { isFavorite?: boolean; filterString?: string } = {}) => {
+type UseExercisesQueryParams = {
+  isFavorite?: boolean
+  filterString?: string
+}
+
+export const useExercisesQuery = ({ isFavorite, filterString }: UseExercisesQueryParams = {}) => {
   const { drizzleDB } = useDB()
 
   const query = useMemo(() => {
@@ -30,10 +32,13 @@ export const useExercisesQuery = ({
     })
   }, [drizzleDB, isFavorite, filterString])
 
-  // Watch exercises table for changes
-  return useExpoQuery(query, ["exercises"])
-}
+  const { data, isLoading } = useExpoQuery(query, ["exercises"])
 
+  return {
+    exercises: data ?? [],
+    isLoading,
+  }
+}
 export const useMostUsedExercisesQuery = ({
   limit,
   filterString,
@@ -57,7 +62,14 @@ export const useMostUsedExercisesQuery = ({
       .limit(limit)
   }, [drizzleDB, limit, filterString])
 
-  const results = useExpoQuery(query, ["exercises", "workout_step_exercises"])
+  const { data, isLoading } = useExpoQuery(query, ["exercises", "workout_step_exercises"])
 
-  return useMemo(() => results.map((r: any) => r.exercise), [results])
+  const exercisesResult = useMemo(() => {
+    return data.map((record) => record.exercise)
+  }, [data])
+
+  return {
+    exercises: exercisesResult,
+    isLoading,
+  }
 }

@@ -14,19 +14,28 @@ addDatabaseChangeListener((e) => {
 })
 const defaultTables: string[] = []
 
-export function useExpoQuery<T>(query: string, tables?: string[], mode?: "multiple" | "single"): T
+type UseExpoQueryResult<T> = {
+  data: T
+  isLoading: boolean
+}
 
-export function useExpoQuery<T extends { prepare: () => { all: () => any } }>(
+export function useExpoQuery<T>(
+  query: string,
+  tables?: string[],
+  mode?: "multiple" | "single",
+): UseExpoQueryResult<T>
+
+export function useExpoQuery<T extends { prepare: () => { all: () => unknown } }>(
   query: T,
   tables?: string[],
   mode?: "multiple" | "single",
-): Awaited<ReturnType<ReturnType<T["prepare"]>["all"]>>
+): UseExpoQueryResult<Awaited<ReturnType<ReturnType<T["prepare"]>["all"]>>>
 
-export function useExpoQuery<T extends { all: () => any }>(
+export function useExpoQuery<T extends { all: () => unknown }>(
   query: T,
   tables?: string[],
   mode?: "multiple" | "single",
-): Awaited<ReturnType<T["all"]>>
+): UseExpoQueryResult<Awaited<ReturnType<T["all"]>>>
 
 /**
  * Allows subscribing to any SQL query
@@ -38,8 +47,9 @@ export function useExpoQuery(
   query: any,
   tables: string[] = defaultTables,
   mode: "multiple" | "single" = "multiple",
-): any[] {
-  const [data, setData] = useState<any[]>([])
+): UseExpoQueryResult<unknown> {
+  const [data, setData] = useState<unknown>(mode === "single" ? undefined : [])
+  const [isLoading, setIsLoading] = useState(true)
   const latestReq = useRef(0)
   const isActive = useRef(true)
   const { sqlite } = useDB()
@@ -60,6 +70,7 @@ export function useExpoQuery(
     const reqId = ++latestReq.current
 
     const fetchRows = () => {
+      setIsLoading(true)
       let fetchPromise: Promise<any>
 
       if (isDrizzleQuery) {
@@ -83,6 +94,11 @@ export function useExpoQuery(
         .catch((err) => {
           if (isActive.current) console.error("Query error:", err)
         })
+        .finally(() => {
+          if (isActive.current && reqId === latestReq.current) {
+            setIsLoading(false)
+          }
+        })
     }
 
     fetchRows()
@@ -98,5 +114,11 @@ export function useExpoQuery(
     }
   }, [query, sql, JSON.stringify(params), JSON.stringify(tables), mode, isDrizzleQuery])
 
-  return data
+  return useMemo(
+    () => ({
+      data,
+      isLoading,
+    }),
+    [data, isLoading],
+  )
 }

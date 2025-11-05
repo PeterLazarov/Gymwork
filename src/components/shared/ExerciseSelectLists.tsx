@@ -244,11 +244,11 @@ const AllExercisesList: React.FC<AllExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const exercisesData = useExercisesQuery({ filterString })
+  const { exercises: rawExercises } = useExercisesQuery({ filterString })
 
   const exercises = useMemo(
-    () => exercisesData.map((item) => new ExerciseModel(item)),
-    [exercisesData],
+    () => rawExercises.map((item) => new ExerciseModel(item)),
+    [rawExercises],
   )
 
   return (
@@ -274,11 +274,11 @@ const FavoriteExercisesList: React.FC<FavoriteExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const exercisesData = useExercisesQuery({ isFavorite: true, filterString })
+  const { exercises: rawExercises } = useExercisesQuery({ isFavorite: true, filterString })
 
   const exercises = useMemo(
-    () => exercisesData.map((item) => new ExerciseModel(item)),
-    [exercisesData],
+    () => rawExercises.map((item) => new ExerciseModel(item)),
+    [rawExercises],
   )
 
   return (
@@ -305,11 +305,11 @@ const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const exercisesData = useMostUsedExercisesQuery({ limit: 10, filterString })
+  const { exercises: rawExercises } = useMostUsedExercisesQuery({ limit: 10, filterString })
 
   const exercises = useMemo(
-    () => exercisesData.map((item) => new ExerciseModel(item)),
-    [exercisesData],
+    () => rawExercises.map((item) => new ExerciseModel(item)),
+    [rawExercises],
   )
 
   return (

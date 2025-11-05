@@ -49,13 +49,13 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
     setSelectedSet(set.id === selectedSet?.id ? null : set)
   }
 
-  const stepRecordIds = useRecordIdsQuery(step.id)
+  const { recordIds } = useRecordIdsQuery(step.id)
 
   const showComplete = showSetCompletion && openedWorkout?.hasIncompleteSets
 
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<SetModel>) => {
-      const isRecord = stepRecordIds.some(({ id }) => id === item.id)
+      const isRecord = recordIds.some(({ id }) => id === item.id)
       const isFocused = selectedSet?.id === item.id
       const isDraft = index === sets.length
 
@@ -87,7 +87,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
         </Pressable>
       )
     },
-    [selectedSet, stepRecordIds, sets.length, colors, toggleSetWarmup, showComplete],
+    [selectedSet, recordIds, sets.length, colors, toggleSetWarmup, showComplete],
   )
 
   const flashListRef = useRef<FlashListRef<SetModel>>(null)

@@ -1,19 +1,12 @@
 import { useEffect, useMemo, useState } from "react"
 
 import { useExpoQuery } from "@/db/expo/useExpoQuery"
-import { InsertSettings, Settings, settings } from "@/db/schema"
+import { InsertSettings, settings } from "@/db/schema"
 import { useDB } from "@/db/useDB"
 
 const EMPTY_DEFAULTS: Partial<InsertSettings> = {}
 
-type UseSettingsQueryResult = {
-  settings: Settings | null
-  isLoading: boolean
-}
-
-export const useSettingsQuery = (
-  defaults: Partial<InsertSettings> = EMPTY_DEFAULTS,
-): UseSettingsQueryResult => {
+export const useSettingsQuery = (defaults: Partial<InsertSettings> = EMPTY_DEFAULTS) => {
   const { drizzleDB } = useDB()
   const [isEnsured, setIsEnsured] = useState(false)
 
@@ -43,18 +36,10 @@ export const useSettingsQuery = (
   }, [drizzleDB, JSON.stringify(defaults)])
 
   const query = useMemo(() => drizzleDB.query.settings.findFirst(), [drizzleDB])
-  const rawResult = useExpoQuery(query, ["settings"], "single") as
-    | Settings
-    | null
-    | undefined
-    | any[]
-
-  const settingsRow = Array.isArray(rawResult)
-    ? ((rawResult[0] ?? null) as Settings | null)
-    : ((rawResult ?? null) as Settings | null)
+  const { data, isLoading: queryLoading } = useExpoQuery(query, ["settings"], "single")
 
   return {
-    settings: settingsRow,
-    isLoading: !isEnsured || rawResult === undefined,
+    settings: data,
+    isLoading: !isEnsured || queryLoading,
   }
 }

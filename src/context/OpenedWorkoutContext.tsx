@@ -36,9 +36,9 @@ export const OpenedWorkoutProvider: FC<PropsWithChildren<OpenedWorkoutProviderPr
       ? capitalize(openedDateObject.toRelativeCalendar({ unit: "days" })!)
       : openedDateObject.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
-  const workoutData = useWorkoutFullQuery(openedDateObject.toMillis())
+  const { workout } = useWorkoutFullQuery(openedDateObject.toMillis())
 
-  const openedWorkout = workoutData ? WorkoutModel.from(workoutData) : null
+  const openedWorkout = workout ? WorkoutModel.from(workout) : null
 
   const value: OpenedWorkoutContextType = {
     openedDate,
