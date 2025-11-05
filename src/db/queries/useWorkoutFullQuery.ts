@@ -68,7 +68,7 @@ export function useWorkoutFullQuery(
 
   const { data, isLoading } = useExpoQuery(
     query,
-    ["workouts", "workout_steps", "sets", "exercises", "exercise_metrics"],
+    ["workouts", "workout_steps", "workout_step_exercises", "sets", "exercises", "exercise_metrics"],
     "single",
   )
 

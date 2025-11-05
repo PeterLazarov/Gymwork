@@ -172,7 +172,6 @@ const CommentsForm: React.FC<CommentsFormProps> = ({ comments, onUpdate }) => {
           </Text>
         )}
 
-        {/* TODO fill screen. somehow */}
         <TextInput
           value={comments.notes}
           onChangeText={(text) =>

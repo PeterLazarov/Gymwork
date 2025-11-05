@@ -33,7 +33,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
       workoutId = result[0].id
     }
 
-    await insertExerciseInWorkout(exercises[0].id!, workoutId)
+    await insertExerciseInWorkout({ exercises, workoutId })
 
     navigation.navigate("Workout")
   }

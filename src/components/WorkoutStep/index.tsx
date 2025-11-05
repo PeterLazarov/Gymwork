@@ -6,6 +6,7 @@ import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
+import { useInsertWorkoutStepQuery } from "@/db/queries/useInsertWorkoutStepQuery"
 import { useRemoveWorkoutStepQuery } from "@/db/queries/useRemoveWorkoutStepQuery"
 import { useUpdateExerciseQuery } from "@/db/queries/useUpdateExerciseQuery"
 import { useUpdateWorkoutStepExerciseQuery } from "@/db/queries/useUpdateWorkoutStepExerciseQuery"
@@ -13,9 +14,9 @@ import {
   boxShadows,
   fontSize,
   Header,
-  Menu,
   Icon,
   IconButton,
+  Menu,
   spacing,
   Text,
   useColors,
@@ -115,20 +116,39 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
   const [menuOpen, setMenuOpen] = useState(false)
   const { showSnackbar } = useDialogContext()
   const removeWorkoutStep = useRemoveWorkoutStepQuery()
+  const insertWorkoutStep = useInsertWorkoutStepQuery()
   const updateExercise = useUpdateExerciseQuery()
-  // const insertWorkoutStep = useInsertWorkoutStepQuery()
 
-  const deleteSelectedExercises = () => {
+  const getRevertDeleteStep = (step: WorkoutStepModel) => {
+    const stepToRestore = {
+      workoutId: step.workoutId,
+      exercises: step.exercises,
+      sets: step.sets,
+      stepData: {
+        id: step.id,
+        stepType: step.stepType,
+        position: step.position,
+        createdAt: step.createdAt,
+        updatedAt: step.updatedAt,
+      },
+    }
+
+    return async () => {
+      await insertWorkoutStep(stepToRestore)
+
+      showSnackbar!({ text: "Deleted exercise was restored to workout" })
+    }
+  }
+
+  function deleteSelectedExercises() {
     setMenuOpen(false)
+
     removeWorkoutStep(step.id)
     navigate("Workout")
     showSnackbar!({
       text: "Exercise was removed from workout",
       actionText: "Undo",
-      action: () => {
-        // TODO undo delete workout step
-        // insertWorkoutStep(step)
-      },
+      action: getRevertDeleteStep(step),
     })
   }
 

@@ -24,7 +24,6 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
 }) => {
   const { showSetCompletion: showSetCompletionSetting } = useSetting()
   const { recordIds } = useRecordIdsQuery(step.id)
-  // TODO deduplicate
   const showSetCompletion = showSetCompletionSetting && workout.hasIncompleteSets
 
   return (

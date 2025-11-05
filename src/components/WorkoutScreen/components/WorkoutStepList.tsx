@@ -32,7 +32,7 @@ export const WorkoutStepList: React.FC<Props> = ({ workout }) => {
 
   return (
     <IndicatedScrollList
-      data={workout.workoutSteps.slice()}
+      data={workout.workoutSteps}
       renderItem={renderItem}
       keyExtractor={(item) => `${workout!.date}_${item.id}`}
     />
