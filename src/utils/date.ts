@@ -49,3 +49,12 @@ export const isDateLessThan = (date: string, comparedTo: string) => {
 
   return d1 < d2
 }
+
+export function sanitizeMsDate(timestamp: number | null | undefined): number | null {
+  if (timestamp === null || timestamp === undefined) {
+    return null
+  }
+  const dateTime = DateTime.fromMillis(timestamp)
+  const sanitized = dateTime.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+  return sanitized.toMillis()
+}

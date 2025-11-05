@@ -19,6 +19,7 @@ import {
   workouts_tags,
 } from "@/db/schema"
 import { useDB } from "@/db/useDB"
+import { sanitizeMsDate } from "./date"
 
 export function useExport() {
   const { drizzleDB } = useDB()
@@ -159,7 +160,11 @@ export function useExport() {
     }
 
     if (data.workouts?.length) {
-      await drizzleDB.insert(workouts).values(data.workouts)
+      const sanitizedWorkouts = data.workouts.map((workout: any) => ({
+        ...workout,
+        date: sanitizeMsDate(workout.date),
+      }))
+      await drizzleDB.insert(workouts).values(sanitizedWorkouts)
     }
 
     if (data.workout_steps?.length) {
@@ -171,7 +176,11 @@ export function useExport() {
     }
 
     if (data.sets?.length) {
-      await drizzleDB.insert(sets).values(data.sets)
+      const sanitizedSets = data.sets.map((set: any) => ({
+        ...set,
+        date: sanitizeMsDate(set.date),
+      }))
+      await drizzleDB.insert(sets).values(sanitizedSets)
     }
 
     if (data.tags?.length) {

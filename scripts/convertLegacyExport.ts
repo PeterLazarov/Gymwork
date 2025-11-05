@@ -1,3 +1,5 @@
+import { sanitizeMsDate } from "@/utils/date"
+import { DateTime } from "luxon"
 import { readFile, writeFile } from "node:fs/promises"
 import { basename, extname, resolve } from "node:path"
 
@@ -203,11 +205,14 @@ function convertDate(date: string | null | undefined): number | null {
   if (!date) {
     return null
   }
-  const ms = Date.parse(`${date}T00:00:00Z`)
-  if (Number.isNaN(ms)) {
+  // Parse date as local timezone midnight using DateTime
+  // This matches how the app handles dates with DateTime.fromISO()
+  const dateTime = DateTime.fromISO(date)
+  if (!dateTime.isValid) {
     throw new Error(`Unable to parse date string: ${date}`)
   }
-  return ms
+  const atMidnight = dateTime.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+  return atMidnight.toMillis()
 }
 
 function toMilliseconds(value?: number | null): number | null {
@@ -392,11 +397,12 @@ async function convertLegacyExport({ input, output }: { input: string; output: s
             continue
           }
 
-          const setDate =
+          const setDate = sanitizeMsDate(
             convertDate(setItem.date) ??
-            workoutDate ??
-            (typeof setItem.createdAt === "number" ? setItem.createdAt : null) ??
-            workoutCreatedAt
+              workoutDate ??
+              (typeof setItem.createdAt === "number" ? setItem.createdAt : null) ??
+              workoutCreatedAt,
+          )
           const createdAt = setItem.createdAt ?? workoutCreatedAt
           const updatedAt = setItem.completedAt ?? createdAt
 

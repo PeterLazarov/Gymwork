@@ -42,7 +42,7 @@ export const TrackView: React.FC<TrackViewProps> = ({
   const colors = useColors()
 
   const [draftSet, setDraftSet] = useState<Partial<SetModel> | null>(null)
-  const { openedDateObject } = useOpenedWorkout()
+  const { openedDateMs } = useOpenedWorkout()
   const insertSet = useInsertSetQuery()
   const updateSet = useUpdateSetQuery()
   const removeSet = useRemoveSetQuery()
@@ -67,8 +67,6 @@ export const TrackView: React.FC<TrackViewProps> = ({
     if (selectedSet) {
       setDraftSet(selectedSet)
     } else {
-      const workoutDate = openedDateObject.toMillis()
-
       lastSetQuery(focusedExercise.id!).then((lastSet) => {
         if (lastSet) {
           setDraftSet(new SetModel(lastSet))
@@ -77,13 +75,13 @@ export const TrackView: React.FC<TrackViewProps> = ({
             SetModel.createDefaultForExercise({
               exercise: focusedExercise,
               workoutStepId: step.id,
-              date: workoutDate,
+              date: openedDateMs,
             }),
           )
         }
       })
     }
-  }, [selectedSet, focusedExercise, step.id, openedDateObject])
+  }, [selectedSet, focusedExercise, step.id, openedDateMs])
 
   const handleAdd = useCallback(() => {
     if (draftSet) {
@@ -94,7 +92,7 @@ export const TrackView: React.FC<TrackViewProps> = ({
         exercise: focusedExercise,
         workoutStepId: step.id,
         exerciseId: focusedExercise.id,
-        date: openedDateObject.toMillis(),
+        date: openedDateMs,
       })
     }
 
@@ -109,7 +107,7 @@ export const TrackView: React.FC<TrackViewProps> = ({
     if (step.stepType === "superset") {
       moveToNextExercise()
     }
-  }, [draftSet, insertSet, step, focusedExercise, openedDateObject, moveToNextExercise])
+  }, [draftSet, insertSet, step, focusedExercise, openedDateMs, moveToNextExercise])
 
   const handleUpdate = useCallback(() => {
     const { completedAt, exercise, ...updatedSet } = {

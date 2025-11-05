@@ -2,7 +2,15 @@ import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { useWorkoutFullQuery } from "@/db/queries/useWorkoutFullQuery"
 import { capitalize } from "@/utils"
 import { DateTime } from "luxon"
-import { createContext, FC, PropsWithChildren, useContext, useState } from "react"
+import {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react"
 
 const now = DateTime.now()
 const today = now.set({ hour: 0, minute: 0, second: 0 })
@@ -11,6 +19,7 @@ export type OpenedWorkoutContextType = {
   // Date-related
   openedDate: string
   openedDateObject: DateTime
+  openedDateMs: number
   openedDateLabel: string
   incrementDate: () => void
   decrementDate: () => void
@@ -29,30 +38,47 @@ export const OpenedWorkoutProvider: FC<PropsWithChildren<OpenedWorkoutProviderPr
 }) => {
   const [openedDate, setOpenedDate] = useState<string>(today.toISODate())
 
-  const openedDateObject = DateTime.fromISO(openedDate)
-  const todayDiff = Math.round(openedDateObject.diff(today, "days").days)
-  const openedDateLabel =
-    Math.abs(todayDiff) < 2
-      ? capitalize(openedDateObject.toRelativeCalendar({ unit: "days" })!)
-      : openedDateObject.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
+  const openedDateObject = useMemo(() => DateTime.fromISO(openedDate), [openedDate])
 
-  const { workout } = useWorkoutFullQuery(openedDateObject.toMillis())
+  const todayDiff = useMemo(
+    () => Math.round(openedDateObject.diff(today, "days").days),
+    [openedDateObject],
+  )
 
-  const openedWorkout = workout ? WorkoutModel.from(workout) : null
+  const openedDateMs = useMemo(() => openedDateObject.toMillis(), [openedDateObject])
+  const openedDateLabel = useMemo(
+    () =>
+      Math.abs(todayDiff) < 2
+        ? capitalize(openedDateObject.toRelativeCalendar({ unit: "days" })!)
+        : openedDateObject.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY),
+    [openedDateObject, todayDiff],
+  )
 
-  const value: OpenedWorkoutContextType = {
-    openedDate,
-    openedDateObject,
-    openedDateLabel,
-    incrementDate: () => {
-      setOpenedDate(openedDateObject.plus({ days: 1 }).toISODate()!)
-    },
-    decrementDate: () => {
-      setOpenedDate(openedDateObject.minus({ days: 1 }).toISODate()!)
-    },
-    setOpenedDate,
-    openedWorkout,
-  }
+  const { workout } = useWorkoutFullQuery(openedDateMs)
+
+  const openedWorkout = useMemo(() => (workout ? WorkoutModel.from(workout) : null), [workout])
+
+  const incrementDate = useCallback(() => {
+    setOpenedDate(openedDateObject.plus({ days: 1 }).toISODate()!)
+  }, [openedDateObject])
+
+  const decrementDate = useCallback(() => {
+    setOpenedDate(openedDateObject.minus({ days: 1 }).toISODate()!)
+  }, [openedDateObject])
+
+  const value: OpenedWorkoutContextType = useMemo(
+    () => ({
+      openedDate,
+      openedDateObject,
+      openedDateMs,
+      openedDateLabel,
+      incrementDate,
+      decrementDate,
+      setOpenedDate,
+      openedWorkout,
+    }),
+    [openedDate, openedDateObject, openedDateLabel, incrementDate, decrementDate, openedWorkout],
+  )
 
   return <OpenedWorkoutContext.Provider value={value}>{children}</OpenedWorkoutContext.Provider>
 }

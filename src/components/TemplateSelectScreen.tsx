@@ -19,13 +19,13 @@ export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> = ({ navi
   const removeWorkoutQuery = useRemoveWorkoutQuery()
   const insertWorkout = useInsertWorkoutQuery()
   const { showConfirm } = useDialogContext()
-  const { openedDateObject } = useOpenedWorkout()
+  const { openedDateMs } = useOpenedWorkout()
 
   function handleSelect(template: WorkoutModel) {
     insertWorkout({
       name: template.name,
       workoutSteps: template.workoutSteps,
-      date: openedDateObject.toMillis(),
+      date: openedDateMs,
     })
     navigation.navigate("Workout")
   }
@@ -79,11 +79,11 @@ type TemplateListProps = {
   onEdit: (template: WorkoutModel) => void
 }
 const TemplateList: React.FC<TemplateListProps> = ({ onSelect, onDelete, onEdit }) => {
-  const templatesData = useTemplatesQuery()
+  const { templates: rawTemplates } = useTemplatesQuery()
 
   const templates = useMemo(
-    () => templatesData.map((item) => new WorkoutModel(item)),
-    [templatesData],
+    () => rawTemplates.map((item) => new WorkoutModel(item)),
+    [rawTemplates],
   )
 
   const renderItem = ({ item }: ListRenderItemInfo<WorkoutModel>) => {

@@ -21,7 +21,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
   const colors = useColors()
 
   const [selectedExercises, setSelectedExercises] = useState<ExerciseModel[]>([])
-  const { openedWorkout, openedDateObject } = useOpenedWorkout()
+  const { openedWorkout, openedDateMs } = useOpenedWorkout()
   const insertWorkout = useInsertWorkoutQuery()
   const insertExerciseInWorkout = useInsertWorkoutStepQuery()
   const { selectMode } = useRouteParams("ExerciseSelect")
@@ -29,7 +29,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
   async function createExercisesStep(exercises: ExerciseModel[]) {
     let workoutId = openedWorkout?.id
     if (!workoutId) {
-      const result = await insertWorkout({ date: openedDateObject.toMillis() })
+      const result = await insertWorkout({ date: openedDateMs })
       workoutId = result[0].id
     }
 
