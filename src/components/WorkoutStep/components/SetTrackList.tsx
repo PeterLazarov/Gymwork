@@ -167,7 +167,6 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "space-around",
           paddingHorizontal: spacing.xs,
           paddingVertical: spacing.xxs,
         },

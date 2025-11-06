@@ -168,10 +168,6 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
     onFormChange(updated)
   }
 
-  function onAddMusclePress() {
-    // Todo: route to muscle create
-  }
-
   function setMeasurementTypes(measurementNames: MetricType[]) {
     const metrics = measurementNames.map(
       (m) =>
@@ -187,7 +183,8 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   }
 
   function onMetricChange(metricType: MetricType, metric: ExerciseMetric) {
-    const updated = exercise.update({ metrics: [...exercise.metrics, metric] })
+    const otherMetrics = exercise.metrics.filter((m) => m.measurement_type !== metricType)
+    const updated = exercise.update({ metrics: [...otherMetrics, metric] })
     onFormChange(updated)
   }
 
@@ -228,12 +225,6 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
             error={musclesError !== ""}
           />
         )}
-        <IconButton
-          onPress={onAddMusclePress}
-          style={{ margin: spacing.xxs }}
-        >
-          <Icon icon="add" />
-        </IconButton>
       </View>
       {musclesError !== "" && (
         <HelperText

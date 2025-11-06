@@ -23,7 +23,7 @@ export const BaseLayout: React.FC<Props> = ({ children, style, hasFooter }) => {
         {
           flex: 1,
           backgroundColor: colors.surfaceContainer,
-          paddingBottom: insets.bottom,
+          paddingBottom: hasFooter ? 0 : insets.bottom,
         },
         style,
       ]}

@@ -56,7 +56,6 @@ export const TrackView: React.FC<TrackViewProps> = ({
 
   const [selectedSet, setSelectedSet] = useState<SetModel | null>(null)
 
-  // TODO optimize. Toggle selected set to see that it's slow
   useEffect(() => {
     if (selectedSet && focusedExercise.id !== selectedSet.exercise.id) {
       setSelectedSet(null)
@@ -212,14 +211,17 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
       )}
 
       {value.exercise?.hasMetricType("weight") && (
-        <SetEditPanelSection text={translate("weight")}>
+        <SetEditPanelSection
+          text={translate("weight")}
+          unit={value.exercise!.getMetricByType("weight")!.unit}
+        >
           <IncrementNumericEditor
             value={value.weight}
             onChange={(weight) => {
               onUpdate({
                 weight_mcg: convertWeightToBase(
                   weight!,
-                  value.exercise?.getMetricByType("weight")!.unit!,
+                  value.exercise!.getMetricByType("weight")!.unit!,
                 ),
               })
             }}
@@ -280,22 +282,36 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
 
 type SetEditPanelSectionProps = {
   text: string
+  unit?: string
   children: ReactNode
 }
 
-const SetEditPanelSection: React.FC<SetEditPanelSectionProps> = ({ text, children }) => {
+const SetEditPanelSection: React.FC<SetEditPanelSectionProps> = ({ text, unit, children }) => {
   return (
     <View style={{ gap: spacing.xxs }}>
       <View>
-        <Text
-          style={{
-            fontSize: fontSize.xs,
-            textTransform: "uppercase",
-            marginVertical: spacing.xxs,
-          }}
-        >
-          {text}
-        </Text>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text
+            style={{
+              fontSize: fontSize.xs,
+              textTransform: "uppercase",
+              marginVertical: spacing.xxs,
+            }}
+          >
+            {text}
+          </Text>
+          {unit && (
+            <Text
+              style={{
+                fontSize: fontSize.xs,
+                textTransform: "uppercase",
+                marginVertical: spacing.xxs,
+              }}
+            >
+              {unit}
+            </Text>
+          )}
+        </View>
         <Divider
           orientation="horizontal"
           variant="neutral"

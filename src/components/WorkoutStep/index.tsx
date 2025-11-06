@@ -54,7 +54,7 @@ export const WorkoutStepScreen: React.FC<
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout hasFooter>
       <StepHeader
         step={focusedStep}
         focusedExercise={focusedExercise}

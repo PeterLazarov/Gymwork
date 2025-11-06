@@ -65,7 +65,6 @@ const WorkoutStepTabs = ({ route }: AppStackScreenProps<"WorkoutStep">) => {
             <Icon
               icon="list-outline"
               color={color}
-              size="small"
             />
           ),
         }}
@@ -80,7 +79,6 @@ const WorkoutStepTabs = ({ route }: AppStackScreenProps<"WorkoutStep">) => {
             <Icon
               icon="history"
               color={color}
-              size="small"
             />
           ),
         }}
@@ -95,7 +93,6 @@ const WorkoutStepTabs = ({ route }: AppStackScreenProps<"WorkoutStep">) => {
             <Icon
               icon="trophy"
               color={color}
-              size="small"
             />
           ),
         }}
@@ -110,7 +107,6 @@ const WorkoutStepTabs = ({ route }: AppStackScreenProps<"WorkoutStep">) => {
             <Icon
               icon="analytics"
               color={color}
-              size="small"
             />
           ),
         }}

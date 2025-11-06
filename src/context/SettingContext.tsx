@@ -33,8 +33,6 @@ export type SettingContextType = {
   setFeedbackUser: (user: string) => void
   scientificMuscleNames: boolean
   setScientificMuscleNames: (scientificMuscleNames: boolean) => void
-  edittedExercise: ExerciseModel | null
-  setEdittedExercise: (exercise: ExerciseModel | null) => void
   measureRest: boolean
   setMeasureRest: (measureRest: boolean) => void
   previewNextSet: boolean
@@ -74,7 +72,6 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   const [feedbackUser, setFeedbackUserState] = useState("")
 
   const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState("All Exercises")
-  const [edittedExercise, setEdittedExercise] = useState<ExerciseModel | null>(null)
   const [highlightedSet, setHighlightedSet] = useState<number | null>(null)
   const [chartHeight, setChartHeight] = useState(0)
   const [chartWidth, setChartWidth] = useState(0)
@@ -192,8 +189,6 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     setFeedbackUser: handleSetFeedbackUser,
     scientificMuscleNames,
     setScientificMuscleNames: handleSetScientificMuscleNames,
-    edittedExercise,
-    setEdittedExercise,
     measureRest,
     setMeasureRest: handleSetMeasureRest,
     previewNextSet,

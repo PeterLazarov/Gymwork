@@ -141,7 +141,6 @@ const makeSetItemStyles = (textColor: string) =>
       display: "flex",
       flexDirection: "row",
       gap: spacing.md,
-      justifyContent: "space-around",
       alignItems: "center",
       height: 24,
     },
@@ -202,10 +201,10 @@ const makeMetricLabelStyles = (
 ) =>
   StyleSheet.create({
     container: {
-      flex: 1,
       flexDirection: "row",
       gap: spacing.xxs,
-      justifyContent: "center",
+      // TODO: render metrics as grid instead of fixed width
+      minWidth: spacing.xxl,
     },
     value: {
       fontWeight: "bold",
