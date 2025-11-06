@@ -25,7 +25,7 @@ export const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(functio
   function onChangeInternal(distance: number | undefined) {
     if (distance === undefined) return
 
-    const standardizedValue = convert(distance).from(internalUnit).to(unit)
+    const standardizedValue = convert(distance).from(internalUnit).to("mm")
 
     onChange(standardizedValue)
   }

@@ -84,6 +84,7 @@ export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
                 ? Math.min(text.indexOf(".") + maxDecimals + 1, maxLength)
                 : maxDigits,
             )
+
           setRendered(toFixed)
 
           onChange?.(Number(toFixed))
