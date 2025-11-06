@@ -84,6 +84,13 @@ export class SetModel {
       .to(metric.unit as Unit)
   }
 
+  get speed(): number | null {
+    return null
+  }
+
+  get rest(): number | null {
+    return null
+  }
   get volume(): number | null {
     if (!this.weight || !this.reps) return null
 

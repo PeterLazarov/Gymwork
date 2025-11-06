@@ -7,14 +7,16 @@ export type SeriesItem = {
   color: string
   initiallySelected: boolean
   unit: string
+  type: 'line' | 'bar'
 }
 type ChartConfigParams = {
-  series: Record<string, SeriesItem>
+  series: Record<string, SeriesItem>,
   symbolSize: number
   xAxis: string[]
 }
 export const useChartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams) => {
   const colors = useColors()
+  const seriesNames = Object.keys(series)
 
   const getViewOptions = useMemo(
     () => ({
@@ -28,10 +30,10 @@ export const useChartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams)
         confine: true,
       },
       legend: {
-        data: Object.keys(series),
-        selected: Object.keys(series).reduce(
+        data: seriesNames,
+        selected: seriesNames.reduce(
           (obj, curr) => {
-            obj[curr] = series[curr]?.initiallySelected
+            obj[curr] = series[curr]?.initiallySelected ?? false
             return obj
           },
           {} as Record<string, boolean | undefined>,
@@ -61,9 +63,9 @@ export const useChartConfig = ({ series, symbolSize, xAxis }: ChartConfigParams)
         data: xAxis,
         boundaryGap: false,
       },
-      series: Object.keys(series).map((name, i) => ({
+      series: seriesNames.map((name, i) => ({
         name,
-        type: "line",
+        type: series[name].type,
         symbolSize,
         symbol: "circle",
         showAllSymbol: true,

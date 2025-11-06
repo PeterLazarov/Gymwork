@@ -1,5 +1,5 @@
 import { SVGRenderer, SvgChart } from "@wuba/react-native-echarts"
-import { LineChart } from "echarts/charts"
+import { LineChart, BarChart } from "echarts/charts"
 import {
   GridComponent,
   LegendComponent,
@@ -32,7 +32,7 @@ use([
   SVGRenderer,
   LegendComponent,
   // TimelineComponent,
-  // ...
+  BarChart,
   LineChart,
 ])
 

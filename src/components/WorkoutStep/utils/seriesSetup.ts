@@ -70,12 +70,23 @@ export const seriesSetup = ({ data }: Props) => {
       palettes.primary["60"],
     ]
 
+    if (exercise.hasMetricType('reps')) {
+      series["Reps"] = {
+        data: singleMetricFormatter("reps"),
+        color: colorsStack.pop()!,
+        initiallySelected: true,
+        unit: 'reps',
+        type: 'line'
+      }
+    } 
+
     if (exercise.hasMetricType("weight")) {
       series["Max Weight"] = {
         data: singleMetricFormatter("weight"),
         color: colorsStack.pop()!,
         initiallySelected: true,
         unit: exercise.getMetricByType("weight")!.unit,
+        type: 'line'
       }
       if (exercise.hasMetricType("reps")) {
         series["Predicted 1RM"] = {
@@ -83,24 +94,21 @@ export const seriesSetup = ({ data }: Props) => {
           color: colorsStack.pop()!,
           initiallySelected: true,
           unit: exercise.getMetricByType("weight")!.unit,
+          type: 'line'
         }
-        // series.Sets = {
-        //   data: workSetsFormatter(),
-        //   color: colorsStack.pop()!,
-        //   initiallySelected: false,
-        //   unit: 'sets',
-        // }
-        series.Tonnage = {
+        series["Tonnage"] = {
           data: totalTonnageFormatter(),
           color: colorsStack.pop()!,
           initiallySelected: false,
           unit: exercise.getMetricByType("weight")!.unit,
+          type: 'bar'
         }
-        series.Volume = {
+        series["Volume"] = {
           data: totalVolumeFormatter(),
           color: colorsStack.pop()!,
           initiallySelected: false,
           unit: "reps",
+          type: 'bar'
         }
       }
     }
@@ -110,6 +118,7 @@ export const seriesSetup = ({ data }: Props) => {
         color: colorsStack.pop()!,
         initiallySelected: true,
         unit: exercise.getMetricByType("distance")!.unit,
+        type: 'line'
       }
       // if (exercise.hasMetricType('duration')) {
       //   const isImperial = isImperialDistance(
@@ -134,8 +143,18 @@ export const seriesSetup = ({ data }: Props) => {
         color: colorsStack.pop()!,
         initiallySelected: false,
         unit: exercise.getMetricByType("duration")!.unit,
+        type: 'line'
       }
     }
+
+    series['Sets'] = {
+      data: workSetsFormatter(),
+      color: colorsStack.pop()!,
+      initiallySelected: false,
+      unit: 'sets',
+      type: 'bar'
+    }
+
 
     // if (measureRest) {
     //   series['Max Rest'] = {
