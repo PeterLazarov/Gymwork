@@ -28,11 +28,16 @@ import { formatDateIso, msToIsoDate, translate } from "@/utils"
 import type { FlashListProps, ListRenderItemInfo } from "@shopify/flash-list"
 import { WorkoutModal } from "../CalendarScreen/WorkoutModal"
 import { FilterForm, isFilterEmpty, WorkoutsFilterModal } from "./components/WorkoutsFilterModal"
+import { useRouteParams } from "@/navigators/navigationTypes"
 
 const ITEM_ESTIMATED_HEIGHT = 240
 const SKELETON_PLACEHOLDERS = [0, 1, 2] as const
 
+export type WorkoutsHistoryScreenParams = {
+  copyWorkoutMode?: boolean
+}
 export const WorkoutsHistoryScreen: React.FC = () => {
+  const { copyWorkoutMode } = useRouteParams("WorkoutsHistory")
   const [filterString, setFilterString] = useState("")
   const [filter, setFilter] = useState<FilterForm>({})
   const trimmedFilterString = filterString.trim()
@@ -188,7 +193,7 @@ export const WorkoutsHistoryScreen: React.FC = () => {
           open={!!openedWorkout}
           workout={openedWorkout}
           onClose={() => setOpenedWorkout(undefined)}
-          mode="view"
+          mode={copyWorkoutMode ? "copy" : "view"}
           showComments
         />
       )}

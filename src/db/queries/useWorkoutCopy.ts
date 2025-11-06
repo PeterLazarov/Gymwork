@@ -4,13 +4,13 @@ import { useDB } from "../useDB"
 
 export const useWorkoutCopy = () => {
   const { drizzleDB } = useDB()
-  return async (workout: WorkoutModel, includeSets: boolean): Promise<number> => {
+  return async (date: number, workout: WorkoutModel, includeSets: boolean): Promise<number> => {
     const insertWorkoutResult = await drizzleDB
       .insert(workouts)
       .values({
+        date,
         name: workout.name,
         notes: workout.notes,
-        date: workout.date,
         feeling: workout.feeling,
         pain: workout.pain,
         rpe: workout.rpe,
@@ -34,7 +34,7 @@ export const useWorkoutCopy = () => {
 
       const newStepId = insertStepResult.lastInsertRowId as number
 
-      const exerciseIds = new Set(step.exercises.map((exercise) => exercise.id))
+      const exerciseIds = new Set(step.exercises.map((exercise) => exercise.id!))
 
       for (const exerciseId of exerciseIds) {
         await drizzleDB

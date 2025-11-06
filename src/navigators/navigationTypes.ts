@@ -4,6 +4,7 @@ import { ExerciseEditScreenParams } from "@/components/ExerciseEditScreen"
 import { ExerciseSelectScreenParams } from "@/components/ExerciseSelectScreen"
 import { TemplateSaveScreenParams } from "@/components/TemplateSaveScreen"
 import { UserFeedbackScreenParams } from "@/components/UserFeedbackScreen"
+import { WorkoutsHistoryScreenParams } from "@/components/WorkoutHistoryScreen"
 import { WorkoutStepScreenParams } from "@/components/WorkoutStep"
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 import { NavigationContainer, RouteProp, useRoute } from "@react-navigation/native"
@@ -23,7 +24,7 @@ export type AppStackParamList = {
   TemplateSelect: undefined
   WorkoutFeedback: undefined
   WorkoutStep: WorkoutStepScreenParams
-  WorkoutsHistory: undefined
+  WorkoutsHistory: WorkoutsHistoryScreenParams
   Settings: undefined
 }
 

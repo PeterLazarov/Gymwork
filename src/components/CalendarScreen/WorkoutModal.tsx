@@ -20,6 +20,7 @@ import {
 } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
 import { msToIsoDate, translate } from "@/utils"
+import { useDialogContext } from "@/context/DialogContext"
 
 type Props = {
   open: boolean
@@ -30,8 +31,9 @@ type Props = {
 }
 export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, showComments }) => {
   const [includeSets, setIncludeSets] = useState(true)
-  const { setOpenedDate } = useOpenedWorkout()
+  const { openedDateMs, setOpenedDate } = useOpenedWorkout()
   const copyWorkout = useWorkoutCopy()
+  const { showSnackbar } = useDialogContext()
 
   const luxonDate = DateTime.fromMillis(workout.date!)
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
@@ -40,7 +42,8 @@ export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, sh
 
   const onActionPress = () => {
     if (mode === "copy") {
-      copyWorkout(workout!, includeSets)
+      showSnackbar?.({ text: "Workout will be copied" })
+      copyWorkout(openedDateMs, workout!, includeSets)
     } else if (mode === "view") {
       setOpenedDate(msToIsoDate(workout.date!))
     }

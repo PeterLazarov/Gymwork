@@ -81,7 +81,7 @@ export const WorkoutEmptyState: React.FC = () => {
   }, [hasWorkouts, hasTemplates])
 
   function copyWorkout() {
-    navigate("Calendar", {
+    navigate("WorkoutsHistory", {
       copyWorkoutMode: true,
     })
   }
