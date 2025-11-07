@@ -3,3 +3,21 @@
 - fix airtable intergration
 - send error reports
 - sort records
+- workout timer
+- set rest timer
+- in exercise edit screen show MuscleMap
+- show muscle icons in exercise name
+- how to delete an exercise
+- 1RM calc in records
+- how does split screen look like
+- Look into https://reactnative.dev/docs/timers#interactionmanager for optimizing render time
+- Exercise instructions / visualisations
+- Bodyweight exercises
+- Default exercise image
+- Brainstorm how to create an image for an exercise
+- show and filter exercise equipments
+- list rest time in workout chart
+- Experiments: Inline editing -> do try Compact entry (clicking on a value in a set opens only the control to edit that value)
+- share button
+- change to hierarchial translation keys
+- optimize queries (try Tanstack Query)
