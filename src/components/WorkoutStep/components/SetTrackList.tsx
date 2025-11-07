@@ -169,6 +169,7 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
           alignItems: "center",
           paddingHorizontal: spacing.xs,
           paddingVertical: spacing.xxs,
+          gap: spacing.xs,
         },
         style,
       ]}
@@ -180,6 +181,7 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
           gap: spacing.xs,
           flexDirection: "row",
           alignItems: "center",
+          flex: 1,
         }}
       >
         <SetTypeButton

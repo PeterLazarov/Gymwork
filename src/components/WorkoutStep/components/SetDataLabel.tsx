@@ -40,10 +40,10 @@ const makeStyles = (
 ) =>
   StyleSheet.create({
     container: {
-      flex: 1,
       flexDirection: "row",
       gap: spacing.xxs,
       justifyContent: "center",
+      minWidth: spacing.xxl,
     },
     value: {
       fontWeight: "bold",

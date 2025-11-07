@@ -2,7 +2,7 @@ import React from "react"
 import { Dimensions, Modal, Pressable, View } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { boxShadows, spacing, useColors } from "../tokens"
+import { boxShadows, fontSize, spacing, useColors } from "../tokens"
 import { Text } from "./Text"
 import { Backdrop } from "./Backdrop"
 
@@ -81,6 +81,7 @@ export const Menu: React.FC<MenuProps> & {
                   backgroundColor: colors.surface,
                   borderRadius: spacing.xxs,
                   paddingVertical: spacing.xs,
+                  gap: spacing.xxs,
                   minWidth: 180,
                   ...boxShadows.lg,
                 }}
@@ -115,7 +116,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ title, onPress, disabled }) => {
       }}
     >
       <Text
-        style={{ color: colors.onSurface }}
+        style={{ color: colors.onSurface, fontSize: fontSize.md }}
         numberOfLines={1}
       >
         {title}
