@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react"
+import React, { useMemo, useRef, useState } from "react"
 import { StyleSheet, View } from "react-native"
 
 import { useDialogContext } from "@/context/DialogContext"
@@ -20,22 +20,22 @@ import {
   useColors,
 } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
-import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
+import { useRouteParams } from "@/navigators/navigationTypes"
 import { translate } from "@/utils"
 import { HelperText, TextInput } from "react-native-paper"
+import { goBack, navigate } from "@/navigators/navigationUtilities"
 
 export type TemplateSaveScreenParams = {
   edittingTemplate?: WorkoutModel
 }
-interface TemplateSaveScreenProps extends AppStackScreenProps<"TemplateSave"> {}
-
-export const TemplateSaveScreen: React.FC<TemplateSaveScreenProps> = ({ navigation }) => {
+export const TemplateSaveScreen: React.FC = () => {
   const colors = useColors()
 
   const { openedWorkout } = useOpenedWorkout()
   const { edittingTemplate } = useRouteParams("TemplateSave")
   const insertWorkout = useInsertWorkoutQuery()
   const updateWorkout = useUpdateWorkoutQuery()
+  const hasChanges = useRef(false)
 
   const [template, setTemplate] = useState<Partial<WorkoutModel>>(
     edittingTemplate ? { ...edittingTemplate } : { name: "", isTemplate: true },
@@ -46,7 +46,7 @@ export const TemplateSaveScreen: React.FC<TemplateSaveScreenProps> = ({ navigati
 
   if (!edittingTemplate && !openedWorkout?.workoutSteps) {
     console.warn("REDIRECT - No openedworkout steps")
-    navigation.navigate("Workout")
+    navigate("Workout")
     return null
   }
   const [formValid, setFormValid] = useState(
@@ -55,19 +55,18 @@ export const TemplateSaveScreen: React.FC<TemplateSaveScreenProps> = ({ navigati
   const { showConfirm, showSnackbar } = useDialogContext()
 
   function onBackPress() {
-    showConfirm?.({
-      message: translate("workoutWillNotBeSaved"),
-      onClose: () => showConfirm?.(undefined),
-      onConfirm: onBackConfirmed,
-    })
-  }
-
-  function onBackConfirmed() {
-    showConfirm?.(undefined)
-    navigation.goBack()
+    if (hasChanges.current) {
+      showConfirm?.({
+        message: translate("workoutWillNotBeSaved"),
+        onConfirm: goBack,
+      })
+    } else {
+      goBack()
+    }
   }
 
   function onUpdate(updated: Partial<Workout>, isValid: boolean) {
+    hasChanges.current = true
     setTemplate(updated)
     setFormValid(isValid)
   }
@@ -85,7 +84,7 @@ export const TemplateSaveScreen: React.FC<TemplateSaveScreenProps> = ({ navigati
     showSnackbar!({
       text: translate("templateSaved"),
     })
-    navigation.goBack()
+    goBack()
   }
 
   return (

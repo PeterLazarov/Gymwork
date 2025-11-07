@@ -37,10 +37,8 @@ export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> = ({ navi
   function handleDelete(template: WorkoutModel) {
     showConfirm?.({
       message: translate("templateWillBeDeleted"),
-      onClose: () => showConfirm?.(undefined),
       onConfirm: () => {
         removeWorkoutQuery(template.id)
-        showConfirm?.(undefined)
       },
     })
   }

@@ -1,3 +1,8 @@
+import { useRef, useState } from "react"
+import { View } from "react-native"
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
+import { TextInput } from "react-native-paper"
+
 import { discomfortOptions, feelingOptions } from "@/constants/enums"
 import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
@@ -15,43 +20,31 @@ import {
   useColors,
 } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
-import { AppStackScreenProps } from "@/navigators/navigationTypes"
 import { translate, TxKeyPath } from "@/utils"
-import { useState } from "react"
-import { View } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
-import { TextInput } from "react-native-paper"
+import { goBack } from "@/navigators/navigationUtilities"
 
-interface WorkoutFeedbackScreenProps extends AppStackScreenProps<"WorkoutFeedback"> {}
-
-export const WorkoutFeedbackScreen: React.FC<WorkoutFeedbackScreenProps> = ({ navigation }) => {
+export const WorkoutFeedbackScreen: React.FC = () => {
   const colors = useColors()
   const { openedWorkout } = useOpenedWorkout()
   const updateWorkout = useUpdateWorkoutQuery()
   const { showConfirm } = useDialogContext()
   const [comments, setComments] = useState<WorkoutComments>(openedWorkout!.comments)
+  const hasChanges = useRef(false)
 
-  if (!openedWorkout) {
-    console.warn("REDIRECT - No workout")
-    navigation.goBack()
-    return null
-  }
   function onBackPress() {
-    showConfirm?.({
-      message: translate("changesWillBeLost"),
-      onClose: () => showConfirm?.(undefined),
-      onConfirm: onBackConfirmed,
-    })
-  }
-
-  function onBackConfirmed() {
-    showConfirm?.(undefined)
-    navigation.goBack()
+    if (hasChanges.current) {
+      showConfirm?.({
+        message: translate("changesWillBeLost"),
+        onConfirm: goBack,
+      })
+    } else {
+      goBack()
+    }
   }
 
   function onCommentsSave() {
     updateWorkout(openedWorkout!.id, { ...comments })
-    navigation.goBack()
+    goBack()
   }
 
   return (
@@ -81,7 +74,10 @@ export const WorkoutFeedbackScreen: React.FC<WorkoutFeedbackScreenProps> = ({ na
 
       <CommentsForm
         comments={comments}
-        onUpdate={setComments}
+        onUpdate={(updated) => {
+          hasChanges.current = true
+          setComments(updated)
+        }}
       />
 
       <Button

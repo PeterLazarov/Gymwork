@@ -1,5 +1,6 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { ScrollView, View } from "react-native"
+import { HelperText, TextInput } from "react-native-paper"
 
 import { measurementDefaults, measurementTypes, MetricType } from "@/constants/enums"
 import { muscleAreas, muscles } from "@/constants/muscles"
@@ -18,31 +19,30 @@ import {
   Multiselect,
   NumberInput,
   Select,
-  spacing,
   Text,
   ToggleSwitch,
   useColors,
 } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
-import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
+import { useRouteParams } from "@/navigators/navigationTypes"
 import { translate } from "@/utils"
-import { HelperText, TextInput } from "react-native-paper"
+import { goBack, navigate } from "@/navigators/navigationUtilities"
 
 export type ExerciseEditScreenParams = {
   edittedExercise?: ExerciseModel
 }
-interface ExerciseEditScreenProps extends AppStackScreenProps<"ExerciseEdit"> {}
-export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = ({ navigation }) => {
+export const ExerciseEditScreen: React.FC = () => {
   const colors = useColors()
   const updateExercise = useUpdateExerciseQuery()
   const insertExercise = useInsertExerciseQuery()
   const { edittedExercise } = useRouteParams("ExerciseEdit")
   if (!edittedExercise) {
     console.warn("REDIRECT - No focusedExercise")
-    navigation.navigate("ExerciseSelect", {
+    navigate("ExerciseSelect", {
       selectMode: "plain",
     })
   }
+  const hasChanges = useRef(false)
 
   const [exercise, setExercise] = useState<ExerciseModel>(
     edittedExercise ? edittedExercise! : new ExerciseModel(),
@@ -52,21 +52,20 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = ({ navigati
   const { showConfirm } = useDialogContext()
 
   function onBackPress() {
-    showConfirm?.({
-      message: translate("changesWillBeLost"),
-      onClose: () => showConfirm?.(undefined),
-      onConfirm: onBackConfirmed,
-    })
-  }
-
-  function onBackConfirmed() {
-    showConfirm?.(undefined)
-    navigation.goBack()
+    if (hasChanges.current) {
+      showConfirm?.({
+        message: translate("changesWillBeLost"),
+        onConfirm: goBack,
+      })
+    } else {
+      goBack()
+    }
   }
 
   function onUpdate(updated: ExerciseModel, isValid: boolean) {
     setExercise(ExerciseModel.copy(updated))
     setFormValid(isValid)
+    hasChanges.current = true
   }
 
   function onComplete() {
@@ -77,7 +76,7 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = ({ navigati
     } else {
       insertExercise(exercise)
     }
-    navigation.goBack()
+    goBack()
   }
 
   return (

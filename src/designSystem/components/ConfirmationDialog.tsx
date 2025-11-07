@@ -1,4 +1,5 @@
 import { Modal, View } from "react-native"
+import { Portal } from "react-native-paper"
 
 import { translate } from "@/utils"
 import { fontSize, spacing, useColors } from "../tokens"
@@ -26,55 +27,57 @@ export const ConfirmationDialog: React.FC<Props> = ({
   const colors = useColors()
 
   return (
-    <Modal
-      transparent
-      visible={open}
-      onRequestClose={onClose}
-      animationType="fade"
-    >
-      <Backdrop onPress={onClose} />
-      <View
-        pointerEvents="box-none"
-        style={{ justifyContent: "center", flex: 1 }}
+    <Portal>
+      <Modal
+        transparent
+        visible={open}
+        onRequestClose={onClose}
+        animationType="fade"
       >
+        <Backdrop onPress={onClose} />
         <View
-          style={{
-            backgroundColor: colors.surface,
-            marginHorizontal: spacing.md,
-          }}
+          pointerEvents="box-none"
+          style={{ justifyContent: "center", flex: 1 }}
         >
-          <Text
+          <View
             style={{
-              fontSize: fontSize.lg,
-              textAlign: "center",
-              padding: spacing.md,
+              backgroundColor: colors.surface,
+              marginHorizontal: spacing.md,
             }}
           >
-            {translate("warning")}
-          </Text>
-          <Divider
-            orientation="horizontal"
-            variant="primary"
-          />
-          <View style={{ padding: spacing.md }}>
-            <Text>{message}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Button
-              variant="tertiary"
-              style={{ flex: 1 }}
-              onPress={onClose}
-              text={cancelButtonText}
+            <Text
+              style={{
+                fontSize: fontSize.lg,
+                textAlign: "center",
+                padding: spacing.md,
+              }}
+            >
+              {translate("warning")}
+            </Text>
+            <Divider
+              orientation="horizontal"
+              variant="primary"
             />
-            <Button
-              variant="tertiary"
-              style={{ flex: 1 }}
-              onPress={onConfirm}
-              text={confirmButtonText}
-            />
+            <View style={{ padding: spacing.md }}>
+              <Text>{message}</Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Button
+                variant="tertiary"
+                style={{ flex: 1 }}
+                onPress={onClose}
+                text={cancelButtonText}
+              />
+              <Button
+                variant="tertiary"
+                style={{ flex: 1 }}
+                onPress={onConfirm}
+                text={confirmButtonText}
+              />
+            </View>
           </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </Portal>
   )
 }

@@ -10,15 +10,15 @@ type SnackbarOptions = {
 type ConfirmationOptions = {
   message: string
   onConfirm: () => void
-  onClose: () => void
+  onClose?: () => void
 }
 type DialogContextType = {
   snackbarOptions?: SnackbarOptions
   showSnackbar?: (options?: SnackbarOptions) => void
-  confirmationOptions?: ConfirmationOptions
-  showConfirm?: (options?: ConfirmationOptions) => void
+  confirmationOptions: ConfirmationOptions | null
+  showConfirm?: (options: ConfirmationOptions | null) => void
 }
-const DialogContext = createContext<DialogContextType>({})
+const DialogContext = createContext<DialogContextType>({ confirmationOptions: null })
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 export const useDialogContext = () => useContext(DialogContext)
@@ -28,7 +28,7 @@ type Props = {
 }
 export const DialogContextProvider: React.FC<Props> = ({ children }) => {
   const [snackbarOptions, setSnackbarOptions] = useState<SnackbarOptions | undefined>()
-  const [confirmationOptions, setConfirmationOption] = useState<ConfirmationOptions | undefined>()
+  const [confirmationOptions, setConfirmationOption] = useState<ConfirmationOptions | null>(null)
   return (
     <DialogContext.Provider
       value={{
@@ -54,16 +54,20 @@ export const DialogContextProvider: React.FC<Props> = ({ children }) => {
           }
         />
       )}
-      {confirmationOptions && (
-        <ConfirmationDialog
-          open={!!confirmationOptions}
-          message={confirmationOptions.message}
-          onClose={confirmationOptions.onClose}
-          onConfirm={confirmationOptions.onConfirm}
-          cancelButtonText={translate("cancel")}
-          confirmButtonText={translate("confirm")}
-        />
-      )}
+      <ConfirmationDialog
+        open={!!confirmationOptions}
+        message={confirmationOptions?.message || ""}
+        onClose={() => {
+          setConfirmationOption(null)
+          confirmationOptions?.onClose?.()
+        }}
+        onConfirm={() => {
+          setConfirmationOption(null)
+          confirmationOptions?.onConfirm()
+        }}
+        cancelButtonText={translate("cancel")}
+        confirmButtonText={translate("confirm")}
+      />
     </DialogContext.Provider>
   )
 }
