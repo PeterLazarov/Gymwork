@@ -1,5 +1,6 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { ScrollView, View } from "react-native"
+import { HelperText, TextInput } from "react-native-paper"
 
 import { measurementDefaults, measurementTypes, MetricType } from "@/constants/enums"
 import { muscleAreas, muscles } from "@/constants/muscles"
@@ -18,7 +19,6 @@ import {
   Multiselect,
   NumberInput,
   Select,
-  spacing,
   Text,
   ToggleSwitch,
   useColors,
@@ -26,7 +26,6 @@ import {
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
 import { translate } from "@/utils"
-import { HelperText, TextInput } from "react-native-paper"
 
 export type ExerciseEditScreenParams = {
   edittedExercise?: ExerciseModel
@@ -43,6 +42,7 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = ({ navigati
       selectMode: "plain",
     })
   }
+  const hasChanges = useRef(false)
 
   const [exercise, setExercise] = useState<ExerciseModel>(
     edittedExercise ? edittedExercise! : new ExerciseModel(),
@@ -52,21 +52,24 @@ export const ExerciseEditScreen: React.FC<ExerciseEditScreenProps> = ({ navigati
   const { showConfirm } = useDialogContext()
 
   function onBackPress() {
-    showConfirm?.({
-      message: translate("changesWillBeLost"),
-      onClose: () => showConfirm?.(undefined),
-      onConfirm: onBackConfirmed,
-    })
-  }
-
-  function onBackConfirmed() {
-    showConfirm?.(undefined)
-    navigation.goBack()
+    if (hasChanges.current) {
+      showConfirm?.({
+        message: translate("changesWillBeLost"),
+        onClose: () => showConfirm?.(undefined),
+        onConfirm: () => {
+          showConfirm?.(undefined)
+          navigation.goBack()
+        },
+      })
+    } else {
+      navigation.goBack()
+    }
   }
 
   function onUpdate(updated: ExerciseModel, isValid: boolean) {
     setExercise(ExerciseModel.copy(updated))
     setFormValid(isValid)
+    hasChanges.current = true
   }
 
   function onComplete() {

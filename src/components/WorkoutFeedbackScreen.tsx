@@ -1,3 +1,8 @@
+import { useRef, useState } from "react"
+import { View } from "react-native"
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
+import { TextInput } from "react-native-paper"
+
 import { discomfortOptions, feelingOptions } from "@/constants/enums"
 import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
@@ -17,10 +22,6 @@ import {
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps } from "@/navigators/navigationTypes"
 import { translate, TxKeyPath } from "@/utils"
-import { useState } from "react"
-import { View } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
-import { TextInput } from "react-native-paper"
 
 interface WorkoutFeedbackScreenProps extends AppStackScreenProps<"WorkoutFeedback"> {}
 
@@ -30,23 +31,21 @@ export const WorkoutFeedbackScreen: React.FC<WorkoutFeedbackScreenProps> = ({ na
   const updateWorkout = useUpdateWorkoutQuery()
   const { showConfirm } = useDialogContext()
   const [comments, setComments] = useState<WorkoutComments>(openedWorkout!.comments)
+  const hasChanges = useRef(false)
 
-  if (!openedWorkout) {
-    console.warn("REDIRECT - No workout")
-    navigation.goBack()
-    return null
-  }
   function onBackPress() {
-    showConfirm?.({
-      message: translate("changesWillBeLost"),
-      onClose: () => showConfirm?.(undefined),
-      onConfirm: onBackConfirmed,
-    })
-  }
-
-  function onBackConfirmed() {
-    showConfirm?.(undefined)
-    navigation.goBack()
+    if (hasChanges.current) {
+      showConfirm?.({
+        message: translate("changesWillBeLost"),
+        onClose: () => showConfirm?.(undefined),
+        onConfirm: () => {
+          showConfirm?.(undefined)
+          navigation.goBack()
+        },
+      })
+    } else {
+      navigation.goBack()
+    }
   }
 
   function onCommentsSave() {
@@ -81,7 +80,10 @@ export const WorkoutFeedbackScreen: React.FC<WorkoutFeedbackScreenProps> = ({ na
 
       <CommentsForm
         comments={comments}
-        onUpdate={setComments}
+        onUpdate={(updated) => {
+          hasChanges.current = true
+          setComments(updated)
+        }}
       />
 
       <Button
