@@ -20,14 +20,15 @@ export const settings = sqliteTable("settings", {
   id: integer().primaryKey({ autoIncrement: true }),
   theme: text({ enum: ["light", "dark"] }).default("light"),
   scientific_muscle_names_enabled: integer({ mode: "boolean" }).notNull().default(false),
-  show_set_completion: integer({ mode: "boolean" }).notNull().default(false),
+  manual_set_completion: integer({ mode: "boolean" }).notNull().default(false),
   preview_next_set: integer({ mode: "boolean" }).notNull().default(false),
   measure_rest: integer({ mode: "boolean" }).notNull().default(false),
   show_comments_card: integer({ mode: "boolean" }).notNull().default(false),
   show_workout_timer: integer({ mode: "boolean" }).notNull().default(false),
+  visited_welcome_screen: integer({ mode: "boolean" }).notNull().default(false),
   feedback_user: text().default(""),
-  created_at: timestamp_col,
-  updated_at: timestamp_col,
+  created_at: integer().notNull().default(timestamp_col_default_time_sql()),
+  updated_at: integer().notNull().default(timestamp_col_default_time_sql()),
 })
 
 // Exercises - Tuby structure

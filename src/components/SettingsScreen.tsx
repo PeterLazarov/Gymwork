@@ -39,8 +39,8 @@ export const SettingsScreen: FC = () => {
     setScientificMuscleNames,
     showWorkoutTimer,
     setShowWorkoutTimer,
-    showSetCompletion,
-    setShowSetCompletion,
+    manualSetCompletion,
+    setManualSetCompletion,
   } = useSetting()
   const colors = useColors()
   const styles = useMemo(() => makeStyles(colors), [colors])
@@ -153,11 +153,10 @@ export const SettingsScreen: FC = () => {
         />
 
         <SettingsToggleItem
-          enabled={showSetCompletion}
-          onToggle={() => setShowSetCompletion(!showSetCompletion)}
-          editable={false}
+          enabled={manualSetCompletion}
+          onToggle={() => setManualSetCompletion(!manualSetCompletion)}
         >
-          {translate("showSetCompletion")}
+          {translate("manualSetCompletion")}
         </SettingsToggleItem>
 
         <Divider

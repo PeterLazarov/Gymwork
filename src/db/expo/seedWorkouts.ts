@@ -141,7 +141,7 @@ export async function seedWorkouts(drizzleDB: DrizzleDBType, exerciseList: Exerc
             is_warmup: false,
             date: workoutDateMs,
             is_weak_ass_record: false,
-            completed_at: null,
+            completed_at: setCreatedAt,
             created_at: setCreatedAt,
           })
         } else {
@@ -161,7 +161,7 @@ export async function seedWorkouts(drizzleDB: DrizzleDBType, exerciseList: Exerc
             is_warmup: setIndex === 0 || (isSuperSet && setIndex === 1),
             date: workoutDateMs,
             is_weak_ass_record: false,
-            completed_at: null,
+            completed_at: setCreatedAt,
             created_at: setCreatedAt,
           })
         }

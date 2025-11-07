@@ -23,8 +23,8 @@ Appearance.addChangeListener(({ colorScheme }) => {
 export type SettingContextType = {
   showCommentsCard: boolean
   setShowCommentsCard: (show: boolean) => void
-  showSetCompletion: boolean
-  setShowSetCompletion: (show: boolean) => void
+  manualSetCompletion: boolean
+  setManualSetCompletion: (show: boolean) => void
   showWorkoutTimer: boolean
   setShowWorkoutTimer: (show: boolean) => void
   exerciseSelectLastTab: string
@@ -39,6 +39,8 @@ export type SettingContextType = {
   setPreviewNextSet: (previewNextSet: boolean) => void
   colorSchemePreference: ColorSchemeName
   setColorSchemePreference: (preference: ColorSchemeName) => void
+  visitedWelcomeScreen: boolean
+  setVisitedWelcomeScreen: (show: boolean) => void
   highlightedSet: number | null
   setHighlightedSet: (id: number) => void
   chartHeight: number
@@ -61,11 +63,12 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   const settingsId = settings?.id ?? null
 
   const [showCommentsCard, setShowCommentsCardState] = useState(false)
-  const [showSetCompletion, setShowSetCompletionState] = useState(false)
+  const [manualSetCompletion, setManualSetCompletionState] = useState(false)
   const [showWorkoutTimer, setShowWorkoutTimerState] = useState(false)
   const [scientificMuscleNames, setScientificMuscleNamesState] = useState(false)
   const [measureRest, setMeasureRestState] = useState(false)
   const [previewNextSet, setPreviewNextSetState] = useState(false)
+  const [visitedWelcomeScreen, setVisitedWelcomeScreen] = useState(false)
   const [colorSchemePreference, setColorSchemePreferenceState] = useState<ColorSchemeName>(
     deviceColorScheme ?? "light",
   )
@@ -93,11 +96,12 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     if (!settings) return
 
     setShowCommentsCardState(!!settings.show_comments_card)
-    setShowSetCompletionState(!!settings.show_set_completion)
+    setManualSetCompletionState(!!settings.manual_set_completion)
     setShowWorkoutTimerState(!!settings.show_workout_timer)
     setScientificMuscleNamesState(!!settings.scientific_muscle_names_enabled)
     setMeasureRestState(!!settings.measure_rest)
     setPreviewNextSetState(!!settings.preview_next_set)
+    setVisitedWelcomeScreen(!!settings.visited_welcome_screen)
     setFeedbackUserState(settings.feedback_user ?? "")
 
     const persistedScheme = (settings.theme ?? undefined) as ColorSchemeName
@@ -114,10 +118,10 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     [persistSettings],
   )
 
-  const handleSetShowSetCompletion = useCallback(
-    (show: boolean) => {
-      setShowSetCompletionState(show)
-      persistSettings({ show_set_completion: show })
+  const handleSetManualSetCompletion = useCallback(
+    (value: boolean) => {
+      setManualSetCompletionState(value)
+      persistSettings({ manual_set_completion: value })
     },
     [persistSettings],
   )
@@ -164,6 +168,14 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     [persistSettings],
   )
 
+  const handleSetVisitedWelcomeScreen = useCallback(
+    (enabled: boolean) => {
+      setVisitedWelcomeScreen(enabled)
+      persistSettings({ visited_welcome_screen: enabled })
+    },
+    [persistSettings],
+  )
+
   const handleSetFeedbackUser = useCallback(
     (user: string) => {
       setFeedbackUserState(user)
@@ -179,8 +191,8 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   const value = {
     showCommentsCard,
     setShowCommentsCard: handleSetShowCommentsCard,
-    showSetCompletion,
-    setShowSetCompletion: handleSetShowSetCompletion,
+    manualSetCompletion,
+    setManualSetCompletion: handleSetManualSetCompletion,
     showWorkoutTimer,
     setShowWorkoutTimer: handleSetShowWorkoutTimer,
     exerciseSelectLastTab,
@@ -195,6 +207,8 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     setPreviewNextSet: handleSetPreviewNextSet,
     colorSchemePreference,
     setColorSchemePreference: handleSetColorSchemePreference,
+    visitedWelcomeScreen,
+    setVisitedWelcomeScreen: handleSetVisitedWelcomeScreen,
     highlightedSet,
     setHighlightedSet,
     chartHeight,

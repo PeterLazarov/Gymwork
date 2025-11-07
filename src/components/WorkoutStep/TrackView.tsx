@@ -43,6 +43,7 @@ export const TrackView: React.FC<TrackViewProps> = ({
 
   const [draftSet, setDraftSet] = useState<Partial<SetModel> | null>(null)
   const { openedDateMs } = useOpenedWorkout()
+  const { manualSetCompletion } = useSetting()
   const insertSet = useInsertSetQuery()
   const updateSet = useUpdateSetQuery()
   const removeSet = useRemoveSetQuery()
@@ -86,13 +87,16 @@ export const TrackView: React.FC<TrackViewProps> = ({
     if (draftSet) {
       const { id, exercise, ...draftCopy } = draftSet
 
-      insertSet({
-        ...draftCopy,
-        exercise: focusedExercise,
-        workoutStepId: step.id,
-        exerciseId: focusedExercise.id,
-        date: openedDateMs,
-      })
+      insertSet(
+        {
+          ...draftCopy,
+          exercise: focusedExercise,
+          workoutStepId: step.id,
+          exerciseId: focusedExercise.id,
+          date: openedDateMs,
+        },
+        manualSetCompletion,
+      )
     }
 
     // if (settingsStore.measureRest && timer) {

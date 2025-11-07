@@ -31,6 +31,7 @@ import type {
   WorkoutStepTabParamList,
 } from "./navigationTypes"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
+import { useSetting } from "@/context/SettingContext"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -120,7 +121,7 @@ const AppStack = () => {
     theme: { colors },
   } = useAppTheme()
 
-  const hasVisitedWelcome = false
+  const { visitedWelcomeScreen } = useSetting()
 
   return (
     <Stack.Navigator
@@ -131,7 +132,7 @@ const AppStack = () => {
           backgroundColor: colors.background,
         },
       }}
-      initialRouteName={hasVisitedWelcome ? "Welcome" : "Workout"}
+      initialRouteName={visitedWelcomeScreen ? "Workout" : "Welcome"}
     >
       <Stack.Screen
         name="Welcome"

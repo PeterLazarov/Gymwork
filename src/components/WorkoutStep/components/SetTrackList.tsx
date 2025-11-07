@@ -21,6 +21,7 @@ import {
 } from "@/designSystem"
 import { getFormatedDuration, translate } from "@/utils"
 import { SetDataLabel } from "./SetDataLabel"
+import { DateTime } from "luxon"
 
 type SetTrackListProps = {
   step: WorkoutStepModel
@@ -42,7 +43,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
   const colors = useColors()
 
   const { openedWorkout } = useOpenedWorkout()
-  const { showSetCompletion, previewNextSet } = useSetting()
+  const { manualSetCompletion, previewNextSet } = useSetting()
   const updateSet = useUpdateSetQuery()
 
   function toggleSelectedSet(set: SetModel) {
@@ -51,7 +52,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
 
   const { recordIds } = useRecordIdsQuery(step.id)
 
-  const showComplete = showSetCompletion && openedWorkout?.hasIncompleteSets
+  const showComplete = manualSetCompletion && openedWorkout?.hasIncompleteSets
 
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<SetModel>) => {
@@ -81,8 +82,9 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
             isRecord={isRecord}
             number={step.setsNumberMap[item.id!]}
             toggleSetWarmup={toggleSetWarmup}
+            toggleCompleted={toggleSetCompletion}
             draft={isDraft}
-            showSetCompletion={showComplete}
+            showComplete={showComplete}
           />
         </Pressable>
       )
@@ -94,6 +96,9 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
 
   function toggleSetWarmup(set: SetModel) {
     updateSet({ id: set.id, isWarmup: !set.isWarmup })
+  }
+  function toggleSetCompletion(set: SetModel) {
+    updateSet({ id: set.id, completedAt: set.completedAt ? null : DateTime.now().toMillis() })
   }
 
   if (showFallback && !sets?.length && !previewNextSet)
@@ -134,8 +139,9 @@ type SetTrackItemProps = {
   isRecord?: boolean
   number?: number
   toggleSetWarmup: (set: SetModel) => void
+  toggleCompleted: (set: SetModel) => void
   draft?: boolean
-  showSetCompletion?: boolean
+  showComplete?: boolean
 } & View["props"]
 
 const hideZeroRest = false
@@ -145,14 +151,14 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
   isRecord,
   number,
   toggleSetWarmup,
+  toggleCompleted,
   style,
   draft,
-  showSetCompletion,
+  showComplete,
   ...rest
 }) => {
   const colors = useColors()
   const { measureRest, previewNextSet } = useSetting()
-  const color = colors.onSurface
 
   function getSetSymbol() {
     if (set.isWarmup) return
@@ -192,7 +198,7 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
             }
           }}
           symbol={getSetSymbol()}
-          color={color}
+          color={colors.onSurface}
         />
         {isRecord && (
           <Icon
@@ -246,16 +252,14 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
         />
       )} */}
 
-      {/* {showSetCompletion && (
+      {showComplete && (
         <SetTypeButton
           icon={"check"}
           disabled={draft}
-          onPress={() => {
-            set.setProp("completedAt", set.completed ? null : new Date())
-          }}
-          color={set.completed ? color : colors.outlineVariant}
+          onPress={() => toggleCompleted(set)}
+          color={set.completedAt ? colors.primary : colors.outline}
         />
-      )} */}
+      )}
     </View>
   )
 }

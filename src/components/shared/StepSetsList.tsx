@@ -22,9 +22,9 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
   hideSupersetLetters = false,
   workout,
 }) => {
-  const { showSetCompletion: showSetCompletionSetting } = useSetting()
+  const { manualSetCompletion } = useSetting()
   const { recordIds } = useRecordIdsQuery(step.id)
-  const showSetCompletion = showSetCompletionSetting && workout.hasIncompleteSets
+  const showSetComplete = manualSetCompletion && workout.hasIncompleteSets
 
   return (
     <>
@@ -36,7 +36,7 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
           isRecord={recordIds.some(({ id }) => id === set.id)}
           letter={hideSupersetLetters ? undefined : step.exerciseLettering[set.exercise.id!]}
           number={step.setsNumberMap[set.id!]}
-          showSetCompletion={showSetCompletion}
+          showSetComplete={showSetComplete}
         />
       ))}
     </>
@@ -50,7 +50,7 @@ type SetItemProps = {
   number?: number
   isFocused?: boolean
   isRecord?: boolean
-  showSetCompletion?: boolean
+  showSetComplete?: boolean
 }
 
 const SetItem: React.FC<SetItemProps> = ({
@@ -59,7 +59,7 @@ const SetItem: React.FC<SetItemProps> = ({
   isRecord,
   letter,
   number,
-  showSetCompletion,
+  showSetComplete,
 }) => {
   const colors = useColors()
   const styles = useMemo(() => makeSetItemStyles(colors), [colors])
@@ -112,11 +112,11 @@ const SetItem: React.FC<SetItemProps> = ({
         <SetMetricLabel value={getFormatedDuration(set.restMs!)} />
       )}
 
-      {showSetCompletion && (
+      {showSetComplete && (
         <Icon
           size="small"
           icon={"check"}
-          color={set.isComplete ? colors.onSurface : colors.outlineVariant}
+          color={set.completedAt ? colors.primary : colors.outlineVariant}
         />
       )}
     </View>

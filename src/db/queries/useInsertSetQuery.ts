@@ -6,7 +6,7 @@ import { useDB } from "../useDB"
 export const useInsertSetQuery = () => {
   const { drizzleDB } = useDB()
 
-  return async (set: Partial<SetModel>) => {
+  return async (set: Partial<SetModel>, completionEnabled: boolean = false) => {
     const timestamp = DateTime.now().toMillis()
 
     const insertData: InsertSet = {
@@ -23,6 +23,7 @@ export const useInsertSetQuery = () => {
       duration_ms: set.durationMs,
       speed_kph: set.speedKph,
       rest_ms: set.restMs,
+      completed_at: completionEnabled ? null : timestamp
     }
     return drizzleDB.insert(sets).values(insertData).returning()
   }

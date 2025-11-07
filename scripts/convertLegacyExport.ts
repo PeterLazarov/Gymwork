@@ -66,6 +66,9 @@ type LegacyExport = {
   exerciseStore: {
     exercises: LegacyExercise[]
   }
+  settingStore: {
+    showSetCompletion: boolean
+  }
 }
 
 type ConvertedExercise = {
@@ -327,7 +330,8 @@ async function convertLegacyExport({ input, output }: { input: string; output: s
   let nextStepExerciseId = 1
   let nextSetId = 1
 
-  function processWorkoutCollection(collection: LegacyWorkout[] | undefined, isTemplate: boolean) {
+  type ProcessWorkooutOptions = {isTemplate: boolean, manualSetCompletion?: boolean}
+  function processWorkoutCollection(collection: LegacyWorkout[] | undefined, {isTemplate, manualSetCompletion = false}: ProcessWorkooutOptions) {
     if (!collection) {
       return
     }
@@ -419,7 +423,7 @@ async function convertLegacyExport({ input, output }: { input: string; output: s
             duration_ms: setItem.durationMs ?? null,
             speed_kph: null,
             rest_ms: setItem.restMs ?? null,
-            completed_at: setItem.completedAt ?? null,
+            completed_at: manualSetCompletion ? null : updatedAt,
             created_at: createdAt,
             updated_at: updatedAt,
           })
@@ -429,8 +433,8 @@ async function convertLegacyExport({ input, output }: { input: string; output: s
     }
   }
 
-  processWorkoutCollection(legacy.workoutStore.workouts, false)
-  processWorkoutCollection(legacy.workoutStore.workoutTemplates, true)
+  processWorkoutCollection(legacy.workoutStore.workouts, { isTemplate: false, manualSetCompletion: legacy.settingStore.showSetCompletion})
+  processWorkoutCollection(legacy.workoutStore.workoutTemplates, { isTemplate: true})
 
   if (missingExercises.size > 0) {
     const missingList = Array.from(missingExercises).sort().join(", ")

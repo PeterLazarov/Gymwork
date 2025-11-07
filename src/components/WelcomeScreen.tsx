@@ -5,6 +5,7 @@ import type { AppStackScreenProps } from "@/navigators/navigationTypes"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { Button, Text, Header, fontSize, spacing } from "@/designSystem"
 import { translate } from "@/utils"
+import { useSetting } from "@/context/SettingContext"
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
@@ -18,8 +19,10 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = ({ navigation }) => {
   // )
   // @demo remove-block-end
 
+  const { setVisitedWelcomeScreen } = useSetting()
+
   function onStart() {
-    // TODO log that welcome screen was seen
+    setVisitedWelcomeScreen(true)
     navigation.navigate("Workout")
   }
 
