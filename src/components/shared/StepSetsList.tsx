@@ -34,7 +34,6 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
           set={set}
           exercise={set.exercise}
           isRecord={recordIds.some(({ id }) => id === set.id)}
-          // isFocused={stateStore.highlightedSetGuid === set.id}
           letter={hideSupersetLetters ? undefined : step.exerciseLettering[set.exercise.id!]}
           number={step.setsNumberMap[set.id!]}
           showSetCompletion={showSetCompletion}
@@ -57,15 +56,13 @@ type SetItemProps = {
 const SetItem: React.FC<SetItemProps> = ({
   set,
   exercise,
-  isFocused,
   isRecord,
   letter,
   number,
   showSetCompletion,
 }) => {
   const colors = useColors()
-  const color = isFocused ? colors.tertiary : colors.onSurface
-  const styles = useMemo(() => makeSetItemStyles(color), [color])
+  const styles = useMemo(() => makeSetItemStyles(colors), [colors])
 
   return (
     <View style={styles.item}>
@@ -79,7 +76,7 @@ const SetItem: React.FC<SetItemProps> = ({
         {set.isWarmup && (
           <Icon
             icon="yoga"
-            color={color}
+            color={colors.onSurface}
           />
         )}
         {letter && <Text style={styles.setLetter}>{letter}</Text>}
@@ -94,48 +91,39 @@ const SetItem: React.FC<SetItemProps> = ({
         <SetMetricLabel
           value={set.reps ?? 0}
           unit={translate("reps")}
-          isFocused={isFocused}
         />
       )}
       {exercise.hasMetricType("weight") && (
         <SetMetricLabel
           value={set.weight ?? 0}
           unit={exercise.getMetricByType("weight")!.unit}
-          isFocused={isFocused}
         />
       )}
       {exercise.hasMetricType("distance") && (
         <SetMetricLabel
           value={set.distance ?? 0}
           unit={exercise.getMetricByType("distance")!.unit}
-          isFocused={isFocused}
         />
       )}
       {exercise.hasMetricType("duration") && (
-        <SetMetricLabel
-          value={getFormatedDuration(set.durationMs ?? 0)}
-          isFocused={isFocused}
-        />
+        <SetMetricLabel value={getFormatedDuration(set.durationMs ?? 0)} />
       )}
       {exercise.hasMetricType("rest") && (
-        <SetMetricLabel
-          value={getFormatedDuration(set.restMs!)}
-          isFocused={isFocused}
-        />
+        <SetMetricLabel value={getFormatedDuration(set.restMs!)} />
       )}
 
       {showSetCompletion && (
         <Icon
           size="small"
           icon={"check"}
-          color={set.isComplete ? color : colors.outlineVariant}
+          color={set.isComplete ? colors.onSurface : colors.outlineVariant}
         />
       )}
     </View>
   )
 }
 
-const makeSetItemStyles = (textColor: string) =>
+const makeSetItemStyles = (colors: AppColors) =>
   StyleSheet.create({
     item: {
       display: "flex",
@@ -152,13 +140,13 @@ const makeSetItemStyles = (textColor: string) =>
     },
     setNumber: {
       fontSize: fontSize.sm,
-      color: textColor,
+      color: colors.onSurface,
       fontWeight: "bold",
       marginLeft: spacing.xs,
     },
     setLetter: {
       fontSize: fontSize.sm,
-      color: textColor,
+      color: colors.onSurface,
       fontWeight: "bold",
     },
   })
@@ -166,7 +154,6 @@ const makeSetItemStyles = (textColor: string) =>
 type SetMetricLabelProps = {
   value?: string | number
   unit?: string
-  isFocused?: boolean
   fontSize?: keyof typeof fontSize
   fixDecimals?: boolean
 }
@@ -174,15 +161,11 @@ type SetMetricLabelProps = {
 const SetMetricLabel: React.FC<SetMetricLabelProps> = ({
   value,
   unit,
-  isFocused,
   fontSize: fontSizeProp,
   fixDecimals,
 }) => {
   const colors = useColors()
-  const styles = useMemo(
-    () => makeMetricLabelStyles(colors, isFocused, fontSizeProp),
-    [colors, isFocused, fontSizeProp],
-  )
+  const styles = useMemo(() => makeMetricLabelStyles(colors, fontSizeProp), [colors, fontSizeProp])
 
   return (
     <View style={styles.container}>
@@ -194,11 +177,7 @@ const SetMetricLabel: React.FC<SetMetricLabelProps> = ({
   )
 }
 
-const makeMetricLabelStyles = (
-  colors: AppColors,
-  isFocused?: boolean,
-  fontSizeProp?: keyof typeof fontSize,
-) =>
+const makeMetricLabelStyles = (colors: AppColors, fontSizeProp?: keyof typeof fontSize) =>
   StyleSheet.create({
     container: {
       flexDirection: "row",
@@ -208,11 +187,11 @@ const makeMetricLabelStyles = (
     },
     value: {
       fontWeight: "bold",
-      color: isFocused ? colors.tertiary : colors.onSurface,
+      color: colors.onSurface,
       fontSize: fontSizeProp ? fontSize[fontSizeProp] : fontSize.xs,
     },
     unit: {
-      color: isFocused ? colors.tertiary : colors.onSurface,
+      color: colors.onSurface,
       fontSize: fontSizeProp ? fontSize[fontSizeProp] : fontSize.xs,
     },
   })

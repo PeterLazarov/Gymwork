@@ -2,7 +2,6 @@ import { useMemo } from "react"
 import { Pressable, ScrollView, StyleSheet, View } from "react-native"
 
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
-import { useSetting } from "@/context/SettingContext"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
 import { useExerciseRecordsQuery } from "@/db/queries/useExerciseRecordsQuery"
@@ -17,7 +16,6 @@ type RecordsViewProps = {
 
 export const RecordsView: React.FC<RecordsViewProps> = ({ exercise }) => {
   const { setOpenedDate } = useOpenedWorkout()
-  const { setHighlightedSet } = useSetting()
 
   const { records: rawRecords } = useExerciseRecordsQuery(exercise.id!)
 
@@ -25,7 +23,6 @@ export const RecordsView: React.FC<RecordsViewProps> = ({ exercise }) => {
 
   function goToDate(set: SetModel) {
     setOpenedDate(msToIsoDate(set.date))
-    setHighlightedSet(set.id)
 
     navigate("Workout")
   }
