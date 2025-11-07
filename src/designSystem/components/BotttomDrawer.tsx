@@ -1,7 +1,9 @@
 import React, { ReactNode, useEffect, useMemo } from "react"
 import { BackHandler, useWindowDimensions } from "react-native"
-import { Portal } from "@gorhom/portal"
+import { Portal } from "react-native-paper"
+// import { Portal } from "@gorhom/portal"
 import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated"
+
 import { Backdrop } from "./Backdrop"
 
 // TODO: fix the collapse animation
