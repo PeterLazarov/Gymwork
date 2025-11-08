@@ -5,7 +5,7 @@ import { useColors } from "../tokens/colors"
 import { Text } from "./Text"
 
 type ButtonVariants = {
-  variant: "primary" | "accent" | "neutral" | "critical" | "tertiary"
+  variant: "primary" | "accent" | "neutral" | "critical" | "tertiary" | "secondary"
   type?: "filled" | "outline"
 }
 type ButtonProps = Omit<PressableProps, "style"> &
@@ -38,7 +38,7 @@ export const Button: React.FC<ButtonProps> = ({
     neutral: colors.secondaryContainer,
     critical: colors.error,
     tertiary: colors.surfaceContainer,
-    disabled: colors.outlineVariant,
+    secondary: colors.outlineVariant,
     outline: colors.outline,
   }
 
@@ -46,6 +46,7 @@ export const Button: React.FC<ButtonProps> = ({
     primary: colors.onPrimary,
     accent: colors.onTertiaryContainer,
     neutral: colors.onSecondaryContainer,
+    secondary: colors.onSecondaryContainer,
     critical: colors.onError,
     tertiary: colors.onSurface,
   }

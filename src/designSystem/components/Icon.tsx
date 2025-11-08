@@ -50,6 +50,7 @@ const IoniconsIcons = [
 type IonicIcon = (typeof IoniconsIcons)[number]
 
 const MCIcons = [
+  "arm-flex",
   "yoga",
   "drag-horizontal-variant",
   "delete",

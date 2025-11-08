@@ -249,26 +249,22 @@ const WorkoutListItem: React.FC<WorkoutListItemProps> = ({ workout, onPress }) =
           </View>
 
           <View style={styles.row}>
-            <View style={styles.muscleMapContainer}>
-              <MuscleMap
-                muscles={workout.muscles}
-                muscleAreas={workout.muscleAreas}
-                back={false}
-                activeColor={palettes.gold["80"]}
-                inactiveColor={colors.outline}
-                baseColor={colors.bodyBase}
-              />
-            </View>
-            <View style={styles.muscleMapContainer}>
-              <MuscleMap
-                muscles={workout.muscles}
-                muscleAreas={workout.muscleAreas}
-                back={true}
-                activeColor={palettes.gold["80"]}
-                inactiveColor={colors.outline}
-                baseColor={colors.bodyBase}
-              />
-            </View>
+            <MuscleMap
+              muscles={workout.muscles}
+              muscleAreas={workout.muscleAreas}
+              back={false}
+              activeColor={palettes.gold["80"]}
+              inactiveColor={colors.outline}
+              baseColor={colors.bodyBase}
+            />
+            <MuscleMap
+              muscles={workout.muscles}
+              muscleAreas={workout.muscleAreas}
+              back={true}
+              activeColor={palettes.gold["80"]}
+              inactiveColor={colors.outline}
+              baseColor={colors.bodyBase}
+            />
           </View>
         </View>
       </View>
@@ -380,10 +376,6 @@ const makeWorkoutItemStyles = (colors: AppColors) =>
       fontSize: fontSize.sm,
       fontWeight: "500",
       color: colors.onSurface,
-    },
-    muscleMapContainer: {
-      height: 80,
-      width: 60,
     },
     row: {
       flexDirection: "row",

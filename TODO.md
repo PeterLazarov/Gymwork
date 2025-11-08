@@ -5,7 +5,6 @@
 - sort records
 - workout timer
 - set rest timer
-- in exercise edit screen show MuscleMap
 - show muscle icons in exercise name
 - how to delete an exercise
 - 1RM calc in records

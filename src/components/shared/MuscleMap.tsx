@@ -1,10 +1,12 @@
 import { muscleAreaToMusclesMapping, muscleSvgMappings } from "@/constants/muscleMappings"
+import { spacing } from "@/designSystem"
 import { memo, useMemo } from "react"
+import { View } from "react-native"
 import { XmlProps } from "react-native-svg"
 import { SvgCss } from "react-native-svg/css"
 
 export interface MuscleMapProps extends Partial<XmlProps> {
-  back: boolean
+  back?: boolean
   muscles: string[]
   muscleAreas: string[]
   baseColor?: string
@@ -63,10 +65,13 @@ const MuscleMapComponent = ({
   }, [styleTag])
 
   return (
-    <SvgCss
-      xml={xmlWithCSS}
-      {...rest}
-    ></SvgCss>
+    // TODO: fix hardcoded size value
+    <View style={{ height: 80, width: spacing.xxxl }}>
+      <SvgCss
+        xml={xmlWithCSS}
+        {...rest}
+      ></SvgCss>
+    </View>
   )
 }
 

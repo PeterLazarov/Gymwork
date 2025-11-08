@@ -18,7 +18,9 @@ import {
   IconButton,
   Multiselect,
   NumberInput,
+  palettes,
   Select,
+  spacing,
   Text,
   ToggleSwitch,
   useColors,
@@ -27,6 +29,7 @@ import { BaseLayout } from "@/layouts/BaseLayout"
 import { useRouteParams } from "@/navigators/navigationTypes"
 import { translate } from "@/utils"
 import { goBack, navigate } from "@/navigators/navigationUtilities"
+import { MuscleMap } from "./shared/MuscleMap"
 
 export type ExerciseEditScreenParams = {
   edittedExercise?: ExerciseModel
@@ -129,11 +132,13 @@ type Props = {
 
 const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   const { scientificMuscleNames } = useSetting()
+  const colors = useColors()
 
   const [nameError, setNameError] = useState("")
   const [weightIncError, setWeightIncError] = useState("")
   const [musclesError, setMusclesError] = useState("")
-  const [measurementTypeRrror, setMeasurementTypeRrror] = useState("")
+  const [measurementTypeError, setMeasurementTypeError] = useState("")
+  const [showMuscleMap, setShowMuscleMap] = useState(true)
 
   function runValidCheck(data: ExerciseModel) {
     const nameInvalid = data.name.trim() === ""
@@ -144,7 +149,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
     setNameError(nameInvalid ? "Exercise name cannot be empty." : "")
     setWeightIncError(weightIncrementInvalid ? "Weight increment cannot be 0." : "")
     setMusclesError(musclesInvalid ? "At least one muscle area required." : "")
-    setMeasurementTypeRrror(measurementsInvalid ? "At least one measurement type required." : "")
+    setMeasurementTypeError(measurementsInvalid ? "At least one measurement type required." : "")
 
     return !(nameInvalid || weightIncrementInvalid || musclesInvalid || measurementsInvalid)
   }
@@ -203,7 +208,32 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           {nameError}
         </HelperText>
       )}
-      <View style={{ flexDirection: "row" }}>
+      {showMuscleMap && (
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            gap: spacing.lg,
+          }}
+        >
+          <MuscleMap
+            muscles={exercise.muscles}
+            muscleAreas={exercise.muscleAreas}
+            activeColor={palettes.gold["80"]}
+            inactiveColor={colors.outline}
+            baseColor={colors.bodyBase}
+          />
+          <MuscleMap
+            back
+            muscles={exercise.muscles}
+            muscleAreas={exercise.muscleAreas}
+            activeColor={palettes.gold["80"]}
+            inactiveColor={colors.outline}
+            baseColor={colors.bodyBase}
+          />
+        </View>
+      )}
+      <View style={{ flexDirection: "row", justifyContent: "center", gap: spacing.sm }}>
         {scientificMuscleNames && (
           <Multiselect
             options={muscles}
@@ -224,6 +254,21 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
             error={musclesError !== ""}
           />
         )}
+        <Button
+          variant={showMuscleMap ? "primary" : "secondary"}
+          onPress={() => setShowMuscleMap(!showMuscleMap)}
+          style={{
+            marginTop: spacing.md,
+            borderRadius: spacing.xs,
+            width: spacing.xl,
+            height: spacing.xl,
+          }}
+        >
+          <Icon
+            icon="arm-flex"
+            color={showMuscleMap ? colors.onPrimary : colors.onSurface}
+          />
+        </Button>
       </View>
       {musclesError !== "" && (
         <HelperText
@@ -240,7 +285,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
         onSelect={(selection) => {
           setMeasurementTypes(selection as MetricType[])
         }}
-        error={!!measurementTypeRrror}
+        error={!!measurementTypeError}
       />
       {exercise.hasMetricType("distance") && (
         <DistanceSection
