@@ -10,7 +10,6 @@ import {
 import { Appearance, ColorSchemeName } from "react-native"
 
 import { CHART_VIEW_KEY } from "@/constants/chartViews"
-import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 import { useUpdateSettingsQuery } from "@/db/queries/useUpdateSettingsQuery"
 import { InsertSettings } from "@/db/schema"
@@ -62,17 +61,17 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   const updateSettings = useUpdateSettingsQuery()
   const settingsId = settings?.id ?? null
 
-  const [showCommentsCard, setShowCommentsCardState] = useState(false)
-  const [manualSetCompletion, setManualSetCompletionState] = useState(false)
-  const [showWorkoutTimer, setShowWorkoutTimerState] = useState(false)
-  const [scientificMuscleNames, setScientificMuscleNamesState] = useState(false)
-  const [measureRest, setMeasureRestState] = useState(false)
-  const [previewNextSet, setPreviewNextSetState] = useState(false)
-  const [visitedWelcomeScreen, setVisitedWelcomeScreen] = useState(false)
-  const [colorSchemePreference, setColorSchemePreferenceState] = useState<ColorSchemeName>(
-    deviceColorScheme ?? "light",
-  )
-  const [feedbackUser, setFeedbackUserState] = useState("")
+  const defaultSettings: InsertSettings = {
+    show_comments_card: false,
+    manual_set_completion: false,
+    show_workout_timer: false,
+    scientific_muscle_names_enabled: false,
+    measure_rest: false,
+    preview_next_set: false,
+    visited_welcome_screen: false,
+    feedback_user: "",
+    theme: deviceColorScheme ?? "light",
+  }
 
   const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState("All Exercises")
   const [highlightedSet, setHighlightedSet] = useState<number | null>(null)
@@ -95,120 +94,57 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   useEffect(() => {
     if (!settings) return
 
-    setShowCommentsCardState(!!settings.show_comments_card)
-    setManualSetCompletionState(!!settings.manual_set_completion)
-    setShowWorkoutTimerState(!!settings.show_workout_timer)
-    setScientificMuscleNamesState(!!settings.scientific_muscle_names_enabled)
-    setMeasureRestState(!!settings.measure_rest)
-    setPreviewNextSetState(!!settings.preview_next_set)
-    setVisitedWelcomeScreen(!!settings.visited_welcome_screen)
-    setFeedbackUserState(settings.feedback_user ?? "")
-
-    const persistedScheme = (settings.theme ?? undefined) as ColorSchemeName
-    setColorSchemePreferenceState(persistedScheme)
-    const appearanceScheme = persistedScheme ?? deviceColorScheme ?? null
+    const appearanceScheme = settings.theme ?? deviceColorScheme ?? null
     Appearance.setColorScheme?.(appearanceScheme)
   }, [settings])
-
-  const handleSetShowCommentsCard = useCallback(
-    (show: boolean) => {
-      setShowCommentsCardState(show)
-      persistSettings({ show_comments_card: show })
-    },
-    [persistSettings],
-  )
-
-  const handleSetManualSetCompletion = useCallback(
-    (value: boolean) => {
-      setManualSetCompletionState(value)
-      persistSettings({ manual_set_completion: value })
-    },
-    [persistSettings],
-  )
-
-  const handleSetShowWorkoutTimer = useCallback(
-    (show: boolean) => {
-      setShowWorkoutTimerState(show)
-      persistSettings({ show_workout_timer: show })
-    },
-    [persistSettings],
-  )
-
-  const handleSetScientificMuscleNames = useCallback(
-    (enabled: boolean) => {
-      setScientificMuscleNamesState(enabled)
-      persistSettings({ scientific_muscle_names_enabled: enabled })
-    },
-    [persistSettings],
-  )
-
-  const handleSetMeasureRest = useCallback(
-    (enabled: boolean) => {
-      setMeasureRestState(enabled)
-      persistSettings({ measure_rest: enabled })
-    },
-    [persistSettings],
-  )
-
-  const handleSetPreviewNextSet = useCallback(
-    (enabled: boolean) => {
-      setPreviewNextSetState(enabled)
-      persistSettings({ preview_next_set: enabled })
-    },
-    [persistSettings],
-  )
-
-  const handleSetColorSchemePreference = useCallback(
-    (scheme: ColorSchemeName) => {
-      setColorSchemePreferenceState(scheme)
-      const appearanceScheme = scheme ?? deviceColorScheme ?? null
-      Appearance.setColorScheme?.(appearanceScheme)
-      persistSettings({ theme: scheme ?? null })
-    },
-    [persistSettings],
-  )
-
-  const handleSetVisitedWelcomeScreen = useCallback(
-    (enabled: boolean) => {
-      setVisitedWelcomeScreen(enabled)
-      persistSettings({ visited_welcome_screen: enabled })
-    },
-    [persistSettings],
-  )
-
-  const handleSetFeedbackUser = useCallback(
-    (user: string) => {
-      setFeedbackUserState(user)
-      persistSettings({ feedback_user: user })
-    },
-    [persistSettings],
-  )
 
   if (isLoading || !settingsId) {
     return null
   }
 
   const value = {
-    showCommentsCard,
-    setShowCommentsCard: handleSetShowCommentsCard,
-    manualSetCompletion,
-    setManualSetCompletion: handleSetManualSetCompletion,
-    showWorkoutTimer,
-    setShowWorkoutTimer: handleSetShowWorkoutTimer,
+    showCommentsCard: settings?.show_comments_card || defaultSettings.show_comments_card!,
+    setShowCommentsCard: (show: boolean) => {
+      persistSettings({ show_comments_card: show })
+    },
+    manualSetCompletion: settings?.manual_set_completion || defaultSettings.manual_set_completion!,
+    setManualSetCompletion: (value: boolean) => {
+      persistSettings({ manual_set_completion: value })
+    },
+    showWorkoutTimer: settings?.show_workout_timer || defaultSettings.show_workout_timer!,
+    setShowWorkoutTimer: (show: boolean) => {
+      persistSettings({ show_workout_timer: show })
+    },
+    feedbackUser: settings?.feedback_user || defaultSettings.feedback_user!,
+    setFeedbackUser: (user: string) => {
+      persistSettings({ feedback_user: user })
+    },
+    scientificMuscleNames:
+      settings?.scientific_muscle_names_enabled || defaultSettings.scientific_muscle_names_enabled!,
+    setScientificMuscleNames: (enabled: boolean) => {
+      persistSettings({ scientific_muscle_names_enabled: enabled })
+    },
+    measureRest: settings?.measure_rest || defaultSettings.measure_rest!,
+    setMeasureRest: (enabled: boolean) => {
+      persistSettings({ measure_rest: enabled })
+    },
+    previewNextSet: settings?.preview_next_set || defaultSettings.preview_next_set!,
+    setPreviewNextSet: (enabled: boolean) => {
+      persistSettings({ preview_next_set: enabled })
+    },
+    colorSchemePreference: settings?.theme || defaultSettings.theme!,
+    setColorSchemePreference: (scheme: ColorSchemeName) => {
+      const appearanceScheme = scheme ?? deviceColorScheme ?? null
+      Appearance.setColorScheme?.(appearanceScheme)
+      persistSettings({ theme: scheme ?? null })
+    },
+    visitedWelcomeScreen:
+      settings?.visited_welcome_screen || defaultSettings.visited_welcome_screen!,
+    setVisitedWelcomeScreen: (enabled: boolean) => {
+      persistSettings({ visited_welcome_screen: enabled })
+    },
     exerciseSelectLastTab,
     setExerciseSelectLastTab,
-    feedbackUser,
-    setFeedbackUser: handleSetFeedbackUser,
-    scientificMuscleNames,
-    setScientificMuscleNames: handleSetScientificMuscleNames,
-    measureRest,
-    setMeasureRest: handleSetMeasureRest,
-    previewNextSet,
-    setPreviewNextSet: handleSetPreviewNextSet,
-    colorSchemePreference,
-    setColorSchemePreference: handleSetColorSchemePreference,
-    visitedWelcomeScreen,
-    setVisitedWelcomeScreen: handleSetVisitedWelcomeScreen,
     highlightedSet,
     setHighlightedSet,
     chartHeight,
