@@ -2,6 +2,7 @@ import { useMemo } from "react"
 
 import { useExpoQuery } from "../expo/useExpoQuery"
 import { useDB } from "../useDB"
+import { useTanstackQuery } from "@/tanstack-query"
 
 export const useTemplatesQuery = (params?: { limit?: number }) => {
   const { drizzleDB } = useDB()
@@ -29,7 +30,7 @@ export const useTemplatesQuery = (params?: { limit?: number }) => {
     })
   }, [drizzleDB])
 
-  const { data, isLoading } = useExpoQuery(query, [
+  const { data, isLoading } = useTanstackQuery(query, [
     "workouts",
     "workout_steps",
     "sets",

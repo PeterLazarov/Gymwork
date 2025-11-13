@@ -1,17 +1,8 @@
-import { EventEmitter } from "events"
-import { addDatabaseChangeListener } from "expo-sqlite"
 import { useEffect, useMemo, useRef, useState } from "react"
 
 import { useDB } from "@/db/useDB"
+import { dbChangeEmitter } from "@/db/expo/dbChangeEmitter"
 
-const emitter = new EventEmitter<{
-  update: [rowId: number, table: string]
-}>()
-
-addDatabaseChangeListener((e) => {
-  console.warn(`Hook has been called`, e)
-  emitter.emit("update", e.rowId, e.tableName)
-})
 const defaultTables: string[] = []
 
 type UseExpoQueryResult<T> = {
@@ -106,7 +97,7 @@ export function useExpoQuery(
     const listener = (_rowId: number, table: string) => {
       if (tables.includes(table)) fetchRows()
     }
-    const sub = emitter.on("update", listener)
+    const sub = dbChangeEmitter.on("update", listener)
 
     return () => {
       isActive.current = false

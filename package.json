@@ -41,6 +41,8 @@
     "@sentry/react-native": "^7.4.0",
     "@shopify/flash-list": "^2.1.0",
     "@shopify/react-native-skia": "2.2.12",
+    "@tanstack/react-query": "^5.83.0",
+    "@tanstack/react-query-devtools": "^5.83.0",
     "@wuba/react-native-echarts": "^3.0.1",
     "apisauce": "3.1.1",
     "babel-plugin-inline-import": "^3.0.0",

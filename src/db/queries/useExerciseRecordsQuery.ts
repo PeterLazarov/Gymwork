@@ -3,6 +3,7 @@ import { useMemo } from "react"
 
 import { useExpoQuery } from "../expo/useExpoQuery"
 import { useDB } from "../useDB"
+import { useTanstackQuery } from "@/tanstack-query"
 
 export const useExerciseRecordsQuery = (exerciseId: number) => {
   const { drizzleDB } = useDB()
@@ -28,7 +29,7 @@ export const useExerciseRecordsQuery = (exerciseId: number) => {
       })
   }, [drizzleDB, exerciseId])
 
-  const { data, isLoading } = useExpoQuery(query, ["sets", "exercises", "exercise_metrics"])
+  const { data, isLoading } = useTanstackQuery(query, ["sets", "exercises", "exercise_metrics"])
 
   return {
     records: data ?? [],

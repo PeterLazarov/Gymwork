@@ -17,4 +17,4 @@
 - list rest time in workout chart
 - Experiments: Inline editing -> do try Compact entry (clicking on a value in a set opens only the control to edit that value)
 - change to hierarchial translation keys
-- optimize queries (try Tanstack Query)
+- combine tanstack and drizzle services

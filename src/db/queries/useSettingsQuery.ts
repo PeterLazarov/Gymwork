@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react"
 import { useExpoQuery } from "@/db/expo/useExpoQuery"
 import { InsertSettings, settings } from "@/db/schema"
 import { useDB } from "@/db/useDB"
+import { useTanstackQuery } from "@/tanstack-query"
 
 const EMPTY_DEFAULTS: Partial<InsertSettings> = {}
 
@@ -36,7 +37,7 @@ export const useSettingsQuery = (defaults: Partial<InsertSettings> = EMPTY_DEFAU
   }, [drizzleDB, JSON.stringify(defaults)])
 
   const query = useMemo(() => drizzleDB.query.settings.findFirst(), [drizzleDB])
-  const { data, isLoading: queryLoading } = useExpoQuery(query, ["settings"], "single")
+  const { data, isLoading: queryLoading } = useTanstackQuery(query, ["settings"], "single")
 
   return {
     settings: data,

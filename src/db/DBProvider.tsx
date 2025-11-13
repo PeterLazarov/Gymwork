@@ -14,6 +14,7 @@ import { DBContext, DrizzleDBType } from "./useDB"
 
 import { ActivityIndicator, Text, View } from "react-native"
 import { seedAll } from "./expo/expoSeeder"
+import { TanstackQueryProvider } from "@/tanstack-query"
 
 let _drizzle: DrizzleDBType
 export function getDrizzle(): DrizzleDBType {
@@ -143,5 +144,9 @@ function DBProviderInitialised({
     )
   }
 
-  return <DBContext.Provider value={{ sqlite, drizzleDB: db }}>{children}</DBContext.Provider>
+  return (
+    <DBContext.Provider value={{ sqlite, drizzleDB: db }}>
+      <TanstackQueryProvider>{children}</TanstackQueryProvider>
+    </DBContext.Provider>
+  )
 }

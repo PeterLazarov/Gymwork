@@ -4,6 +4,7 @@ import { useCallback, useMemo } from "react"
 
 import { useExpoQuery } from "../expo/useExpoQuery"
 import { useDB } from "../useDB"
+import { useTanstackQuery } from "@/tanstack-query"
 
 type UseExerciseHistoryQueryResult = {
   workouts: WorkoutModelRecord[]
@@ -63,7 +64,7 @@ export function useExerciseHistoryQuery(exerciseId: number): UseExerciseHistoryQ
 
   const query = useMemo(() => buildQuery(exerciseId), [buildQuery, exerciseId])
 
-  const { data, isLoading } = useExpoQuery(
+  const { data, isLoading } = useTanstackQuery(
     query,
     ["workouts", "workout_steps", "sets", "exercises", "exercise_metrics"],
     "multiple",

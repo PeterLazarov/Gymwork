@@ -3,6 +3,7 @@ import { useMemo } from "react"
 import { useExpoQuery } from "../expo/useExpoQuery"
 import { exercises, workout_step_exercises } from "../schema"
 import { useDB } from "../useDB"
+import { useTanstackQuery } from "@/tanstack-query"
 
 type UseExercisesQueryParams = {
   isFavorite?: boolean
@@ -32,7 +33,7 @@ export const useExercisesQuery = ({ isFavorite, filterString }: UseExercisesQuer
     })
   }, [drizzleDB, isFavorite, filterString])
 
-  const { data, isLoading } = useExpoQuery(query, ["exercises"])
+  const { data, isLoading } = useTanstackQuery(query, ["exercises"])
 
   return {
     exercises: data ?? [],
@@ -62,7 +63,7 @@ export const useMostUsedExercisesQuery = ({
       .limit(limit)
   }, [drizzleDB, limit, filterString])
 
-  const { data, isLoading } = useExpoQuery(query, ["exercises", "workout_step_exercises"])
+  const { data, isLoading } = useTanstackQuery(query, ["exercises", "workout_step_exercises"])
 
   const exercisesResult = useMemo(() => {
     return data.map((record) => record.exercise)

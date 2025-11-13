@@ -6,6 +6,7 @@ import { isoDateToMs } from "@/utils"
 
 import { useExpoQuery } from "../expo/useExpoQuery"
 import { useDB } from "../useDB"
+import { useTanstackQuery } from "@/tanstack-query"
 
 const tablesToWatch = [
   "workouts",
@@ -76,7 +77,7 @@ export const useAllWorkoutsFullQuery = (filter: FilterForm, searchString: string
     })
   }, [drizzleDB, filter.dateFrom, filter.dateTo, filter.discomfortLevel, searchString])
 
-  const { data, isLoading } = useExpoQuery(query, tablesToWatch)
+  const { data, isLoading } = useTanstackQuery(query, tablesToWatch)
 
   return {
     workouts: data ?? [],

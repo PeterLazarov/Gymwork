@@ -3,6 +3,7 @@ import { useCallback, useMemo } from "react"
 
 import { useExpoQuery } from "../expo/useExpoQuery"
 import { useDB } from "../useDB"
+import { useTanstackQuery } from "@/tanstack-query"
 
 type UseWorkoutFullQueryReactiveResult = {
   workout: WorkoutModelRecord | null
@@ -66,7 +67,7 @@ export function useWorkoutFullQuery(
 
   const query = useMemo(() => buildQuery(openedDateMs!), [buildQuery, openedDateMs])
 
-  const { data, isLoading } = useExpoQuery(
+  const { data, isLoading } = useTanstackQuery(
     query,
     ["workouts", "workout_steps", "workout_step_exercises", "sets", "exercises", "exercise_metrics"],
     "single",
