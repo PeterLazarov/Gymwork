@@ -4,6 +4,7 @@ import { SetModel } from "@/db/models/SetModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
 import { useRecordIdsQuery } from "@/db/queries/useRecordIdsQuery"
+import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 import { AppColors, Icon, Text, fontSize, palettes, spacing, useColors } from "@/designSystem"
 import { getFormatedDuration, translate } from "@/utils"
 import React, { useMemo } from "react"
@@ -22,9 +23,9 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
   hideSupersetLetters = false,
   workout,
 }) => {
-  const { manualSetCompletion } = useSetting()
+  const { settings } = useSettingsQuery()
   const { recordIds } = useRecordIdsQuery(step.id)
-  const showSetComplete = manualSetCompletion && workout.hasIncompleteSets
+  const showSetComplete = settings?.manual_set_completion && workout.hasIncompleteSets
 
   return (
     <>

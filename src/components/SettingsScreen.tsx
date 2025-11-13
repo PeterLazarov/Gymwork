@@ -18,6 +18,7 @@ import { translate, useExport } from "@/utils"
 import { useDialogContext } from "@/context/DialogContext"
 import { goBack } from "@/navigators/navigationUtilities"
 import { useSetting } from "@/context/SettingContext"
+import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 
 const appearanceOptions: SelectOption<ColorSchemeName>[] = [
   { label: translate("dark"), value: "dark" },
@@ -26,20 +27,15 @@ const appearanceOptions: SelectOption<ColorSchemeName>[] = [
 ]
 
 export const SettingsScreen: FC = () => {
+  const { settings } = useSettingsQuery()
   const {
     colorSchemePreference,
     setColorSchemePreference,
-    measureRest,
     setMeasureRest,
-    showCommentsCard,
     setShowCommentsCard,
-    previewNextSet,
     setPreviewNextSet,
-    scientificMuscleNames,
     setScientificMuscleNames,
-    showWorkoutTimer,
     setShowWorkoutTimer,
-    manualSetCompletion,
     setManualSetCompletion,
   } = useSetting()
   const colors = useColors()
@@ -93,8 +89,8 @@ export const SettingsScreen: FC = () => {
         />
 
         <SettingsToggleItem
-          enabled={measureRest}
-          onToggle={() => setMeasureRest(!measureRest)}
+          enabled={settings!.measure_rest}
+          onToggle={() => setMeasureRest(!settings!.measure_rest)}
         >
           {translate("measureRest")}
         </SettingsToggleItem>
@@ -105,8 +101,8 @@ export const SettingsScreen: FC = () => {
         />
 
         <SettingsToggleItem
-          enabled={showCommentsCard}
-          onToggle={() => setShowCommentsCard(!showCommentsCard)}
+          enabled={settings!.show_comments_card}
+          onToggle={() => setShowCommentsCard(!settings!.show_comments_card)}
         >
           {translate("showCommentsCard")}
         </SettingsToggleItem>
@@ -117,8 +113,8 @@ export const SettingsScreen: FC = () => {
         />
 
         <SettingsToggleItem
-          enabled={previewNextSet}
-          onToggle={() => setPreviewNextSet(!previewNextSet)}
+          enabled={settings!.preview_next_set}
+          onToggle={() => setPreviewNextSet(!settings!.preview_next_set)}
         >
           {translate("previewNextSet")}
         </SettingsToggleItem>
@@ -129,8 +125,8 @@ export const SettingsScreen: FC = () => {
         />
 
         <SettingsToggleItem
-          enabled={scientificMuscleNames}
-          onToggle={() => setScientificMuscleNames(!scientificMuscleNames)}
+          enabled={settings!.scientific_muscle_names_enabled}
+          onToggle={() => setScientificMuscleNames(!settings!.scientific_muscle_names_enabled)}
         >
           {translate("scientificMuscleNames")}
         </SettingsToggleItem>
@@ -140,8 +136,8 @@ export const SettingsScreen: FC = () => {
         />
 
         <SettingsToggleItem
-          enabled={showWorkoutTimer}
-          onToggle={() => setShowWorkoutTimer(!showWorkoutTimer)}
+          enabled={settings!.show_workout_timer}
+          onToggle={() => setShowWorkoutTimer(!settings!.show_workout_timer)}
           editable={false}
         >
           {translate("showWorkoutTimer")}
@@ -153,8 +149,8 @@ export const SettingsScreen: FC = () => {
         />
 
         <SettingsToggleItem
-          enabled={manualSetCompletion}
-          onToggle={() => setManualSetCompletion(!manualSetCompletion)}
+          enabled={settings!.manual_set_completion}
+          onToggle={() => setManualSetCompletion(!settings!.manual_set_completion)}
         >
           {translate("manualSetCompletion")}
         </SettingsToggleItem>

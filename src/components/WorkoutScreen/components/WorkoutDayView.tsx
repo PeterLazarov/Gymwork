@@ -11,19 +11,20 @@ import { navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
 import { ActionCard } from "./ActionCard"
 import { WorkoutStepList } from "./WorkoutStepList"
+import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 
 type Props = {
   workout: WorkoutModel | null
 }
 export const WorkoutDayView: React.FC<Props> = ({ workout }) => {
   const colors = useColors()
-  const { showCommentsCard } = useSetting()
+  const { settings } = useSettingsQuery()
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.surfaceContainer }}>
       {workout ? (
         <>
-          {showCommentsCard && workout.hasComments && (
+          {settings?.show_comments_card && workout.hasComments && (
             <CommentsCard
               workout={workout}
               onPress={() => navigate("WorkoutFeedback")}

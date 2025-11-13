@@ -55,9 +55,7 @@ export const SettingContext = createContext<SettingContextType | null>(null)
 export interface SettingProviderProps {}
 
 export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ children }) => {
-  const { settings, isLoading } = useSettingsQuery({
-    theme: deviceColorScheme ?? null,
-  })
+  const { settings, isLoading } = useSettingsQuery()
   const updateSettings = useUpdateSettingsQuery()
   const settingsId = settings?.id ?? null
 

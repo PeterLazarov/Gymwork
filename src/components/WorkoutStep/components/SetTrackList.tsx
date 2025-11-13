@@ -22,6 +22,7 @@ import {
 import { getFormatedDuration, translate } from "@/utils"
 import { SetDataLabel } from "./SetDataLabel"
 import { DateTime } from "luxon"
+import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 
 type SetTrackListProps = {
   step: WorkoutStepModel
@@ -43,7 +44,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
   const colors = useColors()
 
   const { openedWorkout } = useOpenedWorkout()
-  const { manualSetCompletion, previewNextSet } = useSetting()
+  const { settings } = useSettingsQuery()
   const updateSet = useUpdateSetQuery()
 
   function toggleSelectedSet(set: SetModel) {
@@ -52,7 +53,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
 
   const { recordIds } = useRecordIdsQuery(step.id)
 
-  const showComplete = manualSetCompletion && openedWorkout?.hasIncompleteSets
+  const showComplete = settings?.manual_set_completion && openedWorkout?.hasIncompleteSets
 
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<SetModel>) => {
@@ -101,11 +102,11 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
     updateSet({ id: set.id, completedAt: set.completedAt ? null : DateTime.now().toMillis() })
   }
 
-  if (showFallback && !sets?.length && !previewNextSet)
+  if (showFallback && !sets?.length && !settings?.preview_next_set)
     return <EmptyState text={translate("noSetsEntered")} />
-  if (!sets?.length && !previewNextSet) return <View />
+  if (!sets?.length && !settings?.preview_next_set) return <View />
 
-  const shouldShowDraft = !selectedSet && previewNextSet && draftSet
+  const shouldShowDraft = !selectedSet && settings?.preview_next_set && draftSet
   return (
     <Pressable
       style={{ flex: 1 }}

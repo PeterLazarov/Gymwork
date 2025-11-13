@@ -27,6 +27,7 @@ import {
 import { convertWeightToBase, manageInputFocus, translate } from "@/utils"
 import { RestInput } from "./components/RestInput"
 import { SetTrackList } from "./components/SetTrackList"
+import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 
 type TrackViewProps = {
   step: WorkoutStepModel
@@ -43,7 +44,7 @@ export const TrackView: React.FC<TrackViewProps> = ({
 
   const [draftSet, setDraftSet] = useState<Partial<SetModel> | null>(null)
   const { openedDateMs } = useOpenedWorkout()
-  const { manualSetCompletion } = useSetting()
+  const { settings } = useSettingsQuery()
   const insertSet = useInsertSetQuery()
   const updateSet = useUpdateSetQuery()
   const removeSet = useRemoveSetQuery()
@@ -95,7 +96,7 @@ export const TrackView: React.FC<TrackViewProps> = ({
           exerciseId: focusedExercise.id,
           date: openedDateMs,
         },
-        manualSetCompletion,
+        settings!.manual_set_completion,
       )
     }
 
@@ -186,11 +187,11 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
   const input5 = useRef<TextInput>(null)
   const inputRefs = [input1, input2, input3, input4, input5]
   const { onHandleSubmit, isLastInput } = manageInputFocus(inputRefs, onSubmit)
-  const { measureRest } = useSetting()
+  const { settings } = useSettingsQuery()
 
   return (
     <View style={{ gap: spacing.xs }}>
-      {measureRest && (
+      {settings?.measure_rest && (
         <SetEditPanelSection text={translate("rest")}>
           <RestInput
             ref={input0}

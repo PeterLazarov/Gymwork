@@ -20,6 +20,7 @@ import { SetModel } from "@/db/models/SetModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { seriesSetup } from "../utils/seriesSetup"
 import { useChartConfig } from "../utils/useChartConfig"
+import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -59,7 +60,7 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
   exerciseHistory,
 }) => {
   const { setOpenedDate } = useOpenedWorkout()
-  const { measureRest } = useSetting()
+  const { settings } = useSettingsQuery()
   const chartElRef = useRef<any>(null)
   const eChartRef = useRef<ECharts>(null)
 
@@ -151,7 +152,7 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
 
   const { getChartSeries } = seriesSetup({ data: setsByDay })
 
-  const series = getChartSeries(exercise, measureRest)
+  const series = getChartSeries(exercise, settings!.measure_rest)
 
   const { getViewOptions, feedChartSeriesData } = useChartConfig({
     series,

@@ -8,11 +8,13 @@ import { useShareWorkout } from "../utils/useShareWorkout"
 // import WorkoutTimerModal from "../Timer/WorkoutTimerModal"
 import { useRemoveWorkoutQuery } from "@/db/queries/useRemoveWorkoutQuery"
 import { navigate } from "@/navigators/navigationUtilities"
+import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 
 export const WorkoutHeader: React.FC = () => {
   const colors = useColors()
 
-  const { showCommentsCard, setShowCommentsCard, showWorkoutTimer } = useSetting()
+  const { settings } = useSettingsQuery()
+  const { setShowCommentsCard } = useSetting()
   const removeWorkoutQuery = useRemoveWorkoutQuery()
 
   const [menuOpen, setMenuOpen] = useState(false)
@@ -29,7 +31,7 @@ export const WorkoutHeader: React.FC = () => {
 
   function toggleCommentsCard() {
     setMenuOpen(false)
-    setShowCommentsCard(!showCommentsCard)
+    setShowCommentsCard(!settings!.show_comments_card)
   }
 
   const deleteWorkout = () => {
@@ -55,7 +57,7 @@ export const WorkoutHeader: React.FC = () => {
     <Header>
       <Header.Title title={openedDateLabel} />
 
-      {showWorkoutTimer && (
+      {settings?.show_workout_timer && (
         <>
           {/* <MiniTimer
             n={Math.floor(timerStore.workoutTimer.timeElapsed.as("minutes"))}
@@ -99,7 +101,9 @@ export const WorkoutHeader: React.FC = () => {
         {openedWorkout?.hasComments && (
           <Menu.Item
             onPress={toggleCommentsCard}
-            title={translate(showCommentsCard ? "hideCommentsCard" : "showCommentsCard")}
+            title={translate(
+              settings!.show_comments_card ? "hideCommentsCard" : "showCommentsCard",
+            )}
           />
         )}
 

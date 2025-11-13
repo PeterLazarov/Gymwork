@@ -30,6 +30,7 @@ import { useRouteParams } from "@/navigators/navigationTypes"
 import { translate } from "@/utils"
 import { goBack, navigate } from "@/navigators/navigationUtilities"
 import { MuscleMap } from "./shared/MuscleMap"
+import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 
 export type ExerciseEditScreenParams = {
   edittedExercise?: ExerciseModel
@@ -131,9 +132,8 @@ type Props = {
 }
 
 const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
-  const { scientificMuscleNames } = useSetting()
+  const { settings } = useSettingsQuery()
   const colors = useColors()
-
   const [nameError, setNameError] = useState("")
   const [weightIncError, setWeightIncError] = useState("")
   const [musclesError, setMusclesError] = useState("")
@@ -234,7 +234,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
         </View>
       )}
       <View style={{ flexDirection: "row", justifyContent: "center", gap: spacing.sm }}>
-        {scientificMuscleNames && (
+        {settings && settings.scientific_muscle_names_enabled && (
           <Multiselect
             options={muscles}
             selectedValues={exercise.muscles}
@@ -244,7 +244,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
             error={musclesError !== ""}
           />
         )}
-        {!scientificMuscleNames && (
+        {settings && !settings.scientific_muscle_names_enabled && (
           <Multiselect
             options={muscleAreas}
             selectedValues={exercise.muscleAreas}
