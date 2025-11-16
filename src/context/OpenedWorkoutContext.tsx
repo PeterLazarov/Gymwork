@@ -27,6 +27,7 @@ export type OpenedWorkoutContextType = {
 
   // Workout-related
   openedWorkout: WorkoutModel | null
+  openedWorkoutLoading: boolean
 }
 
 export const OpenedWorkoutContext = createContext<OpenedWorkoutContextType | null>(null)
@@ -54,7 +55,7 @@ export const OpenedWorkoutProvider: FC<PropsWithChildren<OpenedWorkoutProviderPr
     [openedDateObject, todayDiff],
   )
 
-  const { workout } = useWorkoutFullQuery(openedDateMs)
+  const { workout, isLoading: openedWorkoutLoading } = useWorkoutFullQuery(openedDateMs)
 
   const openedWorkout = useMemo(() => (workout ? WorkoutModel.from(workout) : null), [workout])
 
@@ -66,19 +67,17 @@ export const OpenedWorkoutProvider: FC<PropsWithChildren<OpenedWorkoutProviderPr
     setOpenedDate(openedDateObject.minus({ days: 1 }).toISODate()!)
   }, [openedDateObject])
 
-  const value: OpenedWorkoutContextType = useMemo(
-    () => ({
-      openedDate,
-      openedDateObject,
-      openedDateMs,
-      openedDateLabel,
-      incrementDate,
-      decrementDate,
-      setOpenedDate,
-      openedWorkout,
-    }),
-    [openedDate, openedDateObject, openedDateLabel, incrementDate, decrementDate, openedWorkout],
-  )
+  const value: OpenedWorkoutContextType = {
+    openedDate,
+    openedDateObject,
+    openedDateMs,
+    openedDateLabel,
+    incrementDate,
+    decrementDate,
+    setOpenedDate,
+    openedWorkout,
+    openedWorkoutLoading,
+  }
 
   return <OpenedWorkoutContext.Provider value={value}>{children}</OpenedWorkoutContext.Provider>
 }

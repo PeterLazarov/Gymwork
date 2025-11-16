@@ -18,3 +18,4 @@
 - Experiments: Inline editing -> do try Compact entry (clicking on a value in a set opens only the control to edit that value)
 - change to hierarchial translation keys
 - combine tanstack and drizzle services
+- create Modal abstraction

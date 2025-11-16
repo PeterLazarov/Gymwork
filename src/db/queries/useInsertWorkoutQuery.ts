@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import { DateTime } from "luxon"
 import { WorkoutModel } from "../models/WorkoutModel"
 import { workout_step_exercises, workout_steps, workouts } from "../schema"
@@ -5,6 +6,7 @@ import { useDB } from "../useDB"
 
 export const useInsertWorkoutQuery = () => {
   const { drizzleDB } = useDB()
+  const queryClient = useQueryClient()
 
   async function createWorkoutSteps(
     workoutId: number,
@@ -65,6 +67,21 @@ export const useInsertWorkoutQuery = () => {
     if (workout.workoutSteps && workout.workoutSteps.length > 0) {
       await createWorkoutSteps(workoutId, workout.workoutSteps, timestamp)
     }
+
+    await queryClient.invalidateQueries({
+      predicate: (query) => {
+        const queryKey = query.queryKey as string[]
+
+        return queryKey.some(
+          key => 
+            typeof key === 'string' &&
+            (key.includes('workouts') ||
+              key.includes('workout_steps') ||
+              key.includes('workout_step_exercises') ||
+              key.includes('sets'))
+        )
+      }
+    })
 
     return result
   }

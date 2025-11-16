@@ -66,7 +66,7 @@ export const useMostUsedExercisesQuery = ({
   const { data, isLoading } = useTanstackQuery(query, ["exercises", "workout_step_exercises"])
 
   const exercisesResult = useMemo(() => {
-    return data.map((record) => record.exercise)
+    return data?.map((record) => record.exercise) || []
   }, [data])
 
   return {

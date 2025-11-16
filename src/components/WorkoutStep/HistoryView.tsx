@@ -28,7 +28,7 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ exercise }) => {
 
   return (
     <View style={styles.container}>
-      {exercise && workouts?.length ? (
+      {exercise && workouts?.length > 0 ? (
         <HistoryList
           workouts={workouts}
           exercise={exercise}
@@ -86,6 +86,10 @@ const HistoryList: React.FC<HistoryListProps> = ({ workouts, exercise }) => {
     },
     [setOpenedDate],
   )
+
+  if (stepsWithWorkout.length === 0) {
+    return <EmptyState text={translate("historyLogEmpty")} />
+  }
 
   return (
     <FlashList

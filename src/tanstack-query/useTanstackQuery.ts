@@ -69,7 +69,7 @@ export function useTanstackQuery(
         return Array.isArray(result) ? result : [result]
       }
       if (typeof query === "string") {
-        if (mode === 'single') {
+        if (mode === "single") {
           const row = await sqlite.getFirstAsync(query)
           return row ?? null
         }
@@ -77,7 +77,7 @@ export function useTanstackQuery(
       }
       const toSQL = (query as { toSQL: () => { sql: string; params: unknown[] } }).toSQL()
 
-      if (mode === 'single') {
+      if (mode === "single") {
         const row = await sqlite.getFirstAsync(toSQL.sql, toSQL.params as SQLiteBindParams)
         return row ?? null
       }
@@ -88,7 +88,6 @@ export function useTanstackQuery(
   const { data, isLoading } = useQuery({
     queryKey: key,
     queryFn,
-    placeholderData: mode === "single" ? null : [],
   })
 
   useEffect(() => {
@@ -104,9 +103,7 @@ export function useTanstackQuery(
   }, [key, queryClient, JSON.stringify(tables)])
 
   return {
-    data: data ?? (mode === 'single' ? null : []),
+    data,
     isLoading,
   }
 }
-
-

@@ -21,6 +21,7 @@ import {
 import { navigate } from "@/navigators/navigationUtilities"
 import { msToIsoDate, translate } from "@/utils"
 import { useDialogContext } from "@/context/DialogContext"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 type Props = {
   open: boolean
@@ -34,6 +35,7 @@ export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, sh
   const { openedDateMs, setOpenedDate } = useOpenedWorkout()
   const copyWorkout = useWorkoutCopy()
   const { showSnackbar } = useDialogContext()
+  const insets = useSafeAreaInsets()
 
   const luxonDate = DateTime.fromMillis(workout.date!)
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
@@ -61,7 +63,7 @@ export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, sh
       <Backdrop onPress={onClose} />
       <View
         pointerEvents="box-none"
-        style={{ flex: 1 }}
+        style={{ flex: 1, marginTop: insets.top, marginBottom: insets.bottom }}
       >
         <View
           style={{

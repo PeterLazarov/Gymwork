@@ -3,8 +3,8 @@ import { Dimensions, Modal, Pressable, View } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { boxShadows, fontSize, spacing, useColors } from "../tokens"
-import { Text } from "./Text"
 import { Backdrop } from "./Backdrop"
+import { Text } from "./Text"
 
 type MenuProps = {
   visible: boolean
@@ -18,6 +18,7 @@ export const Menu: React.FC<MenuProps> & {
   Item: React.FC<MenuItemProps>
 } = ({ visible, onDismiss, anchor, children, position = "bottom-right" }) => {
   const colors = useColors()
+  const insets = useSafeAreaInsets()
 
   const anchorRef = React.useRef<View>(null)
   const [anchorRect, setAnchorRect] = React.useState<{
@@ -65,7 +66,8 @@ export const Menu: React.FC<MenuProps> & {
         >
           {(() => {
             const screenWidth = Dimensions.get("window").width
-            const top = (anchorRect ? anchorRect.y + anchorRect.height : 0) + spacing.xs
+            const top =
+              (anchorRect ? anchorRect.y + anchorRect.height : 0) + spacing.xs + insets.top
             const right = anchorRect
               ? Math.max(spacing.sm, screenWidth - (anchorRect.x + anchorRect.width))
               : spacing.sm
