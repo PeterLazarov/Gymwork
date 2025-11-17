@@ -1,13 +1,13 @@
 import React, { useMemo, useState } from "react"
-import { Dimensions, Pressable, ScrollView, View, ViewStyle, Modal } from "react-native"
+import { Dimensions, Pressable, ScrollView, View, ViewStyle } from "react-native"
 import { TextInput } from "react-native-paper"
 
 import { translate } from "@/utils"
 import { fontSize, spacing, useColors } from "../tokens"
 import { Button } from "./Button"
 import { Divider } from "./Divider"
+import { Modal } from "./Modal"
 import { Text } from "./Text"
-import { Backdrop } from "./Backdrop"
 
 export type SelectOption<T = unknown> =
   | string
@@ -137,72 +137,64 @@ function SelectOptionsModal<T = unknown>({
 
   return (
     <Modal
-      visible={open}
-      onDismiss={onClose}
-      transparent
-      animationType="fade"
+      open={open}
+      onClose={onClose}
+      containerStyle={{ justifyContent: "center" }}
     >
-      <Backdrop onPress={onClose} />
       <View
-        pointerEvents="box-none"
-        style={{ justifyContent: "center", flex: 1 }}
+        style={{
+          height: modalHeight,
+          backgroundColor: colors.surfaceContainerLowest,
+          marginVertical: spacing.xs,
+          marginHorizontal: spacing.md,
+          maxHeight: maxModalHeight,
+        }}
       >
-        <View
-          style={{
-            height: modalHeight,
-
-            backgroundColor: colors.surfaceContainerLowest,
-            marginVertical: spacing.xs,
-            marginHorizontal: spacing.md,
-            maxHeight: maxModalHeight,
-          }}
-        >
-          <View style={{ height: headerHeight }}>
-            <View
+        <View style={{ height: headerHeight }}>
+          <View
+            style={{
+              flexGrow: 1,
+              justifyContent: "center",
+            }}
+          >
+            <Text
               style={{
-                flexGrow: 1,
-                justifyContent: "center",
+                fontSize: fontSize.lg,
+                textAlign: "center",
               }}
-            >
-              <Text
-                style={{
-                  fontSize: fontSize.lg,
-                  textAlign: "center",
-                }}
-                text={header}
-              />
-            </View>
-            <Divider
-              orientation="horizontal"
-              variant="primary"
+              text={header}
             />
           </View>
-
-          <View style={{ flex: 1 }}>
-            <ScrollView>
-              {options.map((option, index) => (
-                <ListItem
-                  key={index}
-                  option={option}
-                  showDivider={index !== 0}
-                  onSelect={onOptionSelect}
-                  selectedValues={selectedValues}
-                  height={listItemHeight}
-                />
-              ))}
-            </ScrollView>
-          </View>
-          {!hideButton && (
-            <View style={{ flexDirection: "row" }}>
-              <Button
-                variant="primary"
-                style={{ flex: 1, height: buttonHeight }}
-                onPress={onClose}
-                text={translate("done")}
-              />
-            </View>
-          )}
+          <Divider
+            orientation="horizontal"
+            variant="primary"
+          />
         </View>
+
+        <View style={{ flex: 1 }}>
+          <ScrollView>
+            {options.map((option, index) => (
+              <ListItem
+                key={index}
+                option={option}
+                showDivider={index !== 0}
+                onSelect={onOptionSelect}
+                selectedValues={selectedValues}
+                height={listItemHeight}
+              />
+            ))}
+          </ScrollView>
+        </View>
+        {!hideButton && (
+          <View style={{ flexDirection: "row" }}>
+            <Button
+              variant="primary"
+              style={{ flex: 1, height: buttonHeight }}
+              onPress={onClose}
+              text={translate("done")}
+            />
+          </View>
+        )}
       </View>
     </Modal>
   )

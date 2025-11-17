@@ -1,9 +1,9 @@
 import React from "react"
-import { Dimensions, Modal, Pressable, View } from "react-native"
+import { Dimensions, Pressable, View } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { boxShadows, fontSize, spacing, useColors } from "../tokens"
-import { Backdrop } from "./Backdrop"
+import { Modal } from "./Modal"
 import { Text } from "./Text"
 
 type MenuProps = {
@@ -54,45 +54,36 @@ export const Menu: React.FC<MenuProps> & {
       </View>
 
       <Modal
-        transparent
-        visible={visible}
-        onRequestClose={onDismiss}
-        animationType="fade"
+        open={visible}
+        onClose={onDismiss}
       >
-        <Backdrop onPress={onDismiss} />
-        <View
-          pointerEvents="box-none"
-          style={{ flex: 1 }}
-        >
-          {(() => {
-            const screenWidth = Dimensions.get("window").width
-            const top =
-              (anchorRect ? anchorRect.y + anchorRect.height : 0) + spacing.xs + insets.top
-            const right = anchorRect
-              ? Math.max(spacing.sm, screenWidth - (anchorRect.x + anchorRect.width))
-              : spacing.sm
-            const left = anchorRect ? Math.max(spacing.sm, anchorRect.x) : spacing.sm
+        {(() => {
+          const screenWidth = Dimensions.get("window").width
+          const top = (anchorRect ? anchorRect.y + anchorRect.height : 0) + spacing.xs + insets.top
+          const right = anchorRect
+            ? Math.max(spacing.sm, screenWidth - (anchorRect.x + anchorRect.width))
+            : spacing.sm
+          const left = anchorRect ? Math.max(spacing.sm, anchorRect.x) : spacing.sm
 
-            const panelPositionStyle = position === "bottom-right" ? { top, right } : { top, left }
+          const panelPositionStyle = position === "bottom-right" ? { top, right } : { top, left }
 
-            return (
-              <View
-                style={{
-                  position: "absolute",
-                  ...panelPositionStyle,
-                  backgroundColor: colors.surface,
-                  borderRadius: spacing.xxs,
-                  paddingVertical: spacing.xs,
-                  gap: spacing.xxs,
-                  minWidth: 180,
-                  ...boxShadows.lg,
-                }}
-              >
-                {children}
-              </View>
-            )
-          })()}
-        </View>
+          return (
+            <View
+              style={{
+                position: "absolute",
+                ...panelPositionStyle,
+                backgroundColor: colors.surface,
+                borderRadius: spacing.xxs,
+                paddingVertical: spacing.xs,
+                gap: spacing.xxs,
+                minWidth: 180,
+                ...boxShadows.lg,
+              }}
+            >
+              {children}
+            </View>
+          )
+        })()}
       </Modal>
     </>
   )

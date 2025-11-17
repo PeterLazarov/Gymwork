@@ -1,5 +1,5 @@
 - fix chart reset on view change
-- fix exercise select screen favourite button 
+- fix exercise select screen favourite button
 - fix airtable intergration
 - send error reports
 - workout timer
@@ -18,4 +18,4 @@
 - Experiments: Inline editing -> do try Compact entry (clicking on a value in a set opens only the control to edit that value)
 - change to hierarchial translation keys
 - combine tanstack and drizzle services
-- create Modal abstraction
+- test if calling onClose in Modal component twice

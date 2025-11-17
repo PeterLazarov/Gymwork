@@ -1,16 +1,16 @@
 import { Duration } from "luxon"
 import { forwardRef, useEffect, useMemo, useState } from "react"
-import { TextInput, View, Modal } from "react-native"
+import { TextInput, View } from "react-native"
 import { AnimatedCircularProgress } from "react-native-circular-progress"
 
 import {
-  Backdrop,
   Button,
   Divider,
   DurationInput,
   fontSize,
   Icon,
   IconButton,
+  Modal,
   NumberInput,
   spacing,
   Text,
@@ -160,56 +160,49 @@ const TimerEditModal: React.FC<TimerEditModalProps> = ({ open, onClose, timer, l
 
   return (
     <Modal
-      visible={open}
-      onDismiss={onClose}
-      transparent
-      animationType="fade"
+      open={open}
+      onClose={onClose}
+      containerStyle={{ justifyContent: "center" }}
     >
-      <Backdrop onPress={onClose} />
       <View
-        pointerEvents="box-none"
-        style={{ justifyContent: "center", flex: 1 }}
+        style={{
+          backgroundColor: colors.surface,
+          marginHorizontal: spacing.md,
+        }}
       >
-        <View
+        <Text
           style={{
-            backgroundColor: colors.surface,
-            marginHorizontal: spacing.md,
+            fontSize: fontSize.lg,
+            textAlign: "center",
+            padding: spacing.md,
           }}
         >
-          <Text
-            style={{
-              fontSize: fontSize.lg,
-              textAlign: "center",
-              padding: spacing.md,
-            }}
-          >
-            {label ?? translate("editRestTimer")}
-          </Text>
-          <Divider
-            orientation="horizontal"
-            variant="primary"
+          {label ?? translate("editRestTimer")}
+        </Text>
+        <Divider
+          orientation="horizontal"
+          variant="primary"
+        />
+        <View style={{ padding: spacing.md }}>
+          <DurationInput
+            value={preferredDuration}
+            onUpdate={setPreferredDuration}
+            hideHours
           />
-          <View style={{ padding: spacing.md }}>
-            <DurationInput
-              value={preferredDuration}
-              onUpdate={setPreferredDuration}
-              hideHours
-            />
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Button
-              variant="tertiary"
-              style={{ flex: 1 }}
-              onPress={onClose}
-              text={translate("cancel")}
-            />
-            <Button
-              variant="tertiary"
-              style={{ flex: 1 }}
-              onPress={onConfirm}
-              text={translate("confirm")}
-            />
-          </View>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Button
+            variant="tertiary"
+            style={{ flex: 1 }}
+            onPress={onClose}
+            text={translate("cancel")}
+          />
+          <Button
+            variant="tertiary"
+            style={{ flex: 1 }}
+            onPress={onConfirm}
+            text={translate("confirm")}
+          />
         </View>
       </View>
     </Modal>
