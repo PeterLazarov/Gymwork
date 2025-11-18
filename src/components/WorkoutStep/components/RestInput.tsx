@@ -16,10 +16,11 @@ import {
   Text,
   useColors,
 } from "@/designSystem"
-import { Timer, translate, useTimer } from "@/utils"
+import { translate } from "@/utils"
+import { useTimerContext } from "@/context/TimerContext"
 
 export type RestInputProps = {
-  value?: Duration
+  value: number
   onChange(duration: Duration): void
   onSubmit?: () => void
 }
@@ -29,20 +30,21 @@ export const RestInput = forwardRef<TextInput, RestInputProps>(function RestInpu
   ref,
 ) {
   const colors = useColors()
-
-  const timer = useTimer()
+  const timer = useTimerContext()
+  const restDuration = Duration.fromMillis(value)
 
   const percentTimeLeft = useMemo(() => {
     if (!timer) return 0
 
-    if (timer.duration.toMillis() === 0) {
+    if (timer.timeLimit!.toMillis() === 0) {
       return 0
     }
 
-    const percentage = Math.min(timer.timeElapsed.toMillis() / timer.duration.toMillis(), 1) * 100
+    const percentage =
+      Math.min(timer.timeElapsed!.toMillis() / timer.timeLimit!.toMillis(), 1) * 100
 
     return percentage
-  }, [timer?.duration, timer?.timeElapsed])
+  }, [timer?.timeLimit, timer?.timeElapsed])
 
   const [settingDialogOpen, setSettingDialogOpen] = useState(false)
 
@@ -50,24 +52,11 @@ export const RestInput = forwardRef<TextInput, RestInputProps>(function RestInpu
     setSettingDialogOpen(true)
   }
 
-  function onResume() {
-    if (!timer) return
-
-    if (timer.type !== "rest") {
-      timer?.setTimeElapsed(value ?? Duration.fromMillis(0))
-      timer.setProp("type", "rest")
-    }
-    timer.resume()
-  }
-
-  // Recompute the timer state to force a rerender
   useMemo(() => timer?.isRunning, [timer?.isRunning])
 
   useEffect(() => {
-    if (timer?.type === "rest") {
-      onChange(timer.timeElapsed)
-    }
-  }, [timer?.timeElapsed, timer?.type])
+    onChange(timer.timeElapsed!)
+  }, [timer?.timeElapsed])
 
   return (
     <>
@@ -89,12 +78,12 @@ export const RestInput = forwardRef<TextInput, RestInputProps>(function RestInpu
           >
             {() => (
               <View>
-                {timer.type === "rest" && timer.isRunning ? (
+                {timer.isRunning ? (
                   <IconButton onPress={timer.stop}>
                     <Icon icon="stop" />
                   </IconButton>
                 ) : (
-                  <IconButton onPress={onResume}>
+                  <IconButton onPress={() => timer.start?.(restDuration)}>
                     <Icon icon="play" />
                   </IconButton>
                 )}
@@ -106,13 +95,11 @@ export const RestInput = forwardRef<TextInput, RestInputProps>(function RestInpu
         <NumberInput
           dense
           style={{ flexGrow: 1, textAlign: "center" }}
-          value={value ? Math.round(value.as("seconds") ?? 0) : undefined}
+          value={Math.round(restDuration.as("seconds") ?? 0)}
           onChange={(seconds) => {
             const duration = Duration.fromDurationLike({ seconds })
-            if (timer?.type === "rest") {
-              timer?.stop()
-              timer?.setTimeElapsed(duration)
-            }
+            timer.stop?.()
+            timer.setTimeElapsed?.(duration)
             onChange(duration)
           }}
           ref={ref}
@@ -134,7 +121,6 @@ export const RestInput = forwardRef<TextInput, RestInputProps>(function RestInpu
           onClose={() => {
             setSettingDialogOpen(false)
           }}
-          timer={timer}
         />
       )}
     </>
@@ -144,17 +130,16 @@ export const RestInput = forwardRef<TextInput, RestInputProps>(function RestInpu
 type TimerEditModalProps = {
   open: boolean
   onClose: () => void
-  timer: Timer
   label?: string
 }
-const TimerEditModal: React.FC<TimerEditModalProps> = ({ open, onClose, timer, label }) => {
+const TimerEditModal: React.FC<TimerEditModalProps> = ({ open, onClose, label }) => {
   const colors = useColors()
+  const { setTimeLimit, timeLimit } = useTimerContext()
 
-  const { setDuration, duration } = timer
-  const [preferredDuration, setPreferredDuration] = useState(duration)
+  const [preferredRestDuration, setPreferredRestDuration] = useState(timeLimit)
 
   function onConfirm() {
-    setDuration(preferredDuration)
+    setTimeLimit?.(preferredRestDuration!)
     onClose()
   }
 
@@ -185,8 +170,8 @@ const TimerEditModal: React.FC<TimerEditModalProps> = ({ open, onClose, timer, l
         />
         <View style={{ padding: spacing.md }}>
           <DurationInput
-            value={preferredDuration}
-            onUpdate={setPreferredDuration}
+            value={preferredRestDuration}
+            onUpdate={setPreferredRestDuration}
             hideHours
           />
         </View>

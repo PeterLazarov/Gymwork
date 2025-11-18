@@ -1,145 +1,93 @@
 import { Duration } from "luxon"
 import { useCallback, useEffect, useRef, useState } from "react"
 
-export type TimerType = "rest" | "exercise" | "general"
-
 export type Timer = {
-  duration: Duration
+  timeLimit: Duration
   timeElapsed: Duration
-  type: TimerType
   isRunning: boolean
   resume: () => void
   stop: () => void
   reset: () => void
-  setDuration: (duration: Duration) => void
-  setTimeElapsed: (duration: Duration) => void
-  setProp: <K extends keyof Timer>(key: K, value: Timer[K]) => void
+  setTimeLimit: (timeLimit: Duration) => void
+  setTimeElapsed: (timeLimit: Duration) => void
 }
 
 export type UseTimerOptions = {
-  initialDuration?: Duration
-  initialType?: TimerType
+  initialTimeLimit?: Duration
   onComplete?: () => void
-  updateInterval?: number // milliseconds
+  updateInterval?: number
 }
 
-/**
- * A hook that provides timer functionality with elapsed time tracking
- * @param options - Configuration options for the timer
- * @returns Timer object with current state and control methods
- */
-export function useTimer(options: UseTimerOptions = {}): Timer {
-  const {
-    initialDuration = Duration.fromMillis(0),
-    initialType = "general",
-    onComplete,
-    updateInterval = 100,
-  } = options
-
-  const [duration, setDuration] = useState(initialDuration)
+export function useTimer({
+  initialTimeLimit = Duration.fromMillis(0),
+  onComplete,
+  updateInterval = 100,
+}: UseTimerOptions = {}): Timer {
+  const [timeLimit, setTimeLimit] = useState(initialTimeLimit)
   const [timeElapsed, setTimeElapsed] = useState(Duration.fromMillis(0))
-  const [type, setType] = useState<TimerType>(initialType)
   const [isRunning, setIsRunning] = useState(false)
-  const [, setTick] = useState(0) // Force re-renders
 
-  const startTimeRef = useRef<number | null>(null)
-  const elapsedAtStartRef = useRef(0)
+  const startRef = useRef<number | null>(null)
+  const elapsedStartRef = useRef(0)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const onCompleteRef = useRef(onComplete)
 
-  // Keep onComplete ref up to date
   useEffect(() => {
     onCompleteRef.current = onComplete
   }, [onComplete])
 
   const stop = useCallback(() => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current)
-      intervalRef.current = null
-    }
+    if (intervalRef.current) clearInterval(intervalRef.current)
+    intervalRef.current = null
+    startRef.current = null
     setIsRunning(false)
-    startTimeRef.current = null
   }, [])
 
   const resume = useCallback(() => {
     if (isRunning) return
 
-    startTimeRef.current = Date.now()
-    elapsedAtStartRef.current = timeElapsed.toMillis()
+    startRef.current = Date.now()
+    elapsedStartRef.current = timeElapsed.toMillis()
     setIsRunning(true)
 
     intervalRef.current = setInterval(() => {
-      const now = Date.now()
-      const elapsed = elapsedAtStartRef.current + (now - (startTimeRef.current ?? now))
-      const newTimeElapsed = Duration.fromMillis(elapsed)
+      const elapsed = elapsedStartRef.current + (Date.now() - (startRef.current ?? Date.now()))
+      const next = Duration.fromMillis(elapsed)
 
-      setTimeElapsed(newTimeElapsed)
-      setTick((prev) => prev + 1) // Force re-render
+      setTimeElapsed(next)
 
-      // Check if timer has completed
-      if (duration.toMillis() > 0 && elapsed >= duration.toMillis()) {
+      if (timeLimit.toMillis() > 0 && elapsed >= timeLimit.toMillis()) {
         stop()
         onCompleteRef.current?.()
       }
     }, updateInterval)
-  }, [isRunning, timeElapsed, duration, updateInterval, stop])
+  }, [isRunning, timeElapsed, timeLimit, updateInterval, stop])
 
   const reset = useCallback(() => {
     stop()
     setTimeElapsed(Duration.fromMillis(0))
-    elapsedAtStartRef.current = 0
+    resume()
   }, [stop])
 
-  const handleSetTimeElapsed = useCallback((newDuration: Duration) => {
-    setTimeElapsed(newDuration)
-    elapsedAtStartRef.current = newDuration.toMillis()
+  const setElapsedSafe = useCallback((d: Duration) => {
+    setTimeElapsed(d)
+    elapsedStartRef.current = d.toMillis()
   }, [])
 
-  const setProp = useCallback(
-    <K extends keyof Timer>(key: K, value: Timer[K]) => {
-      switch (key) {
-        case "duration":
-          setDuration(value as Duration)
-          break
-        case "timeElapsed":
-          handleSetTimeElapsed(value as Duration)
-          break
-        case "type":
-          setType(value as TimerType)
-          break
-        case "isRunning":
-          if (value) {
-            resume()
-          } else {
-            stop()
-          }
-          break
-        default:
-          console.warn(`Cannot set property ${String(key)} on Timer`)
-      }
-    },
-    [handleSetTimeElapsed, resume, stop],
-  )
-
-  // Cleanup interval on unmount
   useEffect(() => {
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current)
-      }
+      if (intervalRef.current) clearInterval(intervalRef.current)
     }
   }, [])
 
   return {
-    duration,
+    timeLimit,
     timeElapsed,
-    type,
     isRunning,
     resume,
     stop,
     reset,
-    setDuration,
-    setTimeElapsed: handleSetTimeElapsed,
-    setProp,
+    setTimeLimit,
+    setTimeElapsed: setElapsedSafe,
   }
 }

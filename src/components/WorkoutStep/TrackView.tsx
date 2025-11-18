@@ -28,6 +28,7 @@ import { convertWeightToBase, manageInputFocus, translate } from "@/utils"
 import { RestInput } from "./components/RestInput"
 import { SetTrackList } from "./components/SetTrackList"
 import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
+import { useTimerContext } from "@/context/TimerContext"
 
 type TrackViewProps = {
   step: WorkoutStepModel
@@ -49,12 +50,7 @@ export const TrackView: React.FC<TrackViewProps> = ({
   const updateSet = useUpdateSetQuery()
   const removeSet = useRemoveSetQuery()
   const lastSetQuery = useExerciseLastSetQuery()
-  // const { timerStore } = useStores()
-  // const timer = useMemo(() => {
-  //   return stateStore.openedWorkout?.isToday
-  //     ? timerStore.exerciseTimers.get(`timer_${focusedExercise.guid}`)
-  //     : undefined
-  // }, [focusedExercise, timerStore.exerciseTimers.size])
+  const timer = useTimerContext()
 
   const [selectedSet, setSelectedSet] = useState<SetModel | null>(null)
 
@@ -70,7 +66,7 @@ export const TrackView: React.FC<TrackViewProps> = ({
     } else {
       lastSetQuery(focusedExercise.id!).then((lastSet) => {
         if (lastSet) {
-          setDraftSet(new SetModel(lastSet))
+          setDraftSet(new SetModel({ ...lastSet, rest_ms: 0 }))
         } else {
           setDraftSet(
             SetModel.createDefaultForExercise({
@@ -100,13 +96,11 @@ export const TrackView: React.FC<TrackViewProps> = ({
       )
     }
 
-    // if (settingsStore.measureRest && timer) {
-    //   timer.setProp("type", "rest")
+    if (settings?.measure_rest) {
+      timer.reset?.()
 
-    //   timer.start()
-
-    //   stateStore.draftSet?.setDuration(0)
-    // }
+      setDraftSet((prev) => new SetModel({ ...prev!.raw_data!, rest_ms: 0 }))
+    }
 
     if (step.stepType === "superset") {
       moveToNextExercise()
@@ -195,7 +189,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
         <SetEditPanelSection text={translate("rest")}>
           <RestInput
             ref={input0}
-            value={value.restMs ? Duration.fromMillis(value.restMs) : undefined}
+            value={value.restMs ?? 0}
             onSubmit={() => onHandleSubmit(input0)}
             onChange={(rest) => onUpdate({ rest_ms: rest.as("milliseconds") })}
           />

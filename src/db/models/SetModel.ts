@@ -89,8 +89,9 @@ export class SetModel {
   }
 
   get rest(): number | null {
-    return null
+    return this.restMs ? convert(this.restMs).from('ms').to('s') : null
   }
+
   get volume(): number | null {
     if (!this.weight || !this.reps) return null
 

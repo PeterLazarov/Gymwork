@@ -63,6 +63,7 @@ const SetItem: React.FC<SetItemProps> = ({
   showSetComplete,
 }) => {
   const colors = useColors()
+  const { settings } = useSettingsQuery()
   const styles = useMemo(() => makeSetItemStyles(colors), [colors])
 
   return (
@@ -109,8 +110,11 @@ const SetItem: React.FC<SetItemProps> = ({
       {exercise.hasMetricType("duration") && (
         <SetMetricLabel value={getFormatedDuration(set.durationMs ?? 0)} />
       )}
-      {exercise.hasMetricType("rest") && (
-        <SetMetricLabel value={getFormatedDuration(set.restMs!)} />
+      {settings?.measure_rest && set.rest && (
+        <SetMetricLabel
+          value={getFormatedDuration(set.rest, true)}
+          unit={translate("rest")}
+        />
       )}
 
       {showSetComplete && (

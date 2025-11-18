@@ -55,7 +55,7 @@ const en = {
   weightMeasurementSettings: "Weight Measurement Settings",
   durationMeasurementSettings: "Duration Measurement Settings",
   unit: "Unit",
-  rest: "Rest",
+  rest: "rest",
   removeWorkout: "Remove workout",
   muscles: "Muscles",
   muscleAreas: "Muscle areas",

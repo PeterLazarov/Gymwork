@@ -6,7 +6,6 @@ import { WorkoutHeader } from "./components/WorkoutHeader"
 
 export const WorkoutScreen: React.FC = () => {
   const { openedWorkout, openedWorkoutLoading } = useOpenedWorkout()
-  console.log({ openedWorkoutLoading })
   return (
     <BaseLayout>
       <WorkoutHeader />

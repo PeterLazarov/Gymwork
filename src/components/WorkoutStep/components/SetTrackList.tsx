@@ -145,8 +145,6 @@ type SetTrackItemProps = {
   showComplete?: boolean
 } & View["props"]
 
-const hideZeroRest = false
-
 const SetTrackItem: React.FC<SetTrackItemProps> = ({
   set,
   isRecord,
@@ -224,7 +222,6 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
       {set.exercise.hasMetricType("distance") && (
         <SetDataLabel
           value={set.distance ?? 0}
-          // value={set.distance ?? set.inferredDistance?.toFixed(2)} TODO: Why?
           unit={set.exercise.getMetricByType("distance")!.unit}
         />
       )}
@@ -243,15 +240,12 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
           fixDecimals
         />
       )} */}
-      {/* {measureRest && (
+      {measureRest && (
         <SetDataLabel
-          value={
-            set.rest || !hideZeroRest
-              ? `${translate("rest")} ${getFormatedDuration(set.rest ?? 0, true)}`
-              : ""
-          }
+          value={getFormatedDuration(set.rest ?? 0, true)}
+          unit={translate("rest")}
         />
-      )} */}
+      )}
 
       {showComplete && (
         <SetTypeButton

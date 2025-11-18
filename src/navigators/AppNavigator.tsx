@@ -32,6 +32,7 @@ import type {
 } from "./navigationTypes"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { useSetting } from "@/context/SettingContext"
+import { TimerContextProvider } from "@/context/TimerContext"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -204,16 +205,18 @@ export const AppNavigator = (props: NavigationProps) => {
     >
       <PortalProvider>
         <DialogContextProvider>
-          <ErrorBoundary
-            fallback={({ error, resetError }) => (
-              <ErrorDetails
-                error={error as Error}
-                resetError={resetError}
-              />
-            )}
-          >
-            <AppStack />
-          </ErrorBoundary>
+          <TimerContextProvider>
+            <ErrorBoundary
+              fallback={({ error, resetError }) => (
+                <ErrorDetails
+                  error={error as Error}
+                  resetError={resetError}
+                />
+              )}
+            >
+              <AppStack />
+            </ErrorBoundary>
+          </TimerContextProvider>
         </DialogContextProvider>
 
         <View
