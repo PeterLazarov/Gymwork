@@ -21,3 +21,4 @@
 - test if calling onClose in Modal component twice
 - fix rest timer Partial ts type
 - fix rest timer start button
+- render last active chart view
