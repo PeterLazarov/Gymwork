@@ -3,10 +3,9 @@ import { StyleSheet, View } from "react-native"
 
 import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { useInsertWorkout, useUpdateWorkout } from "@/db/hooks"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { useInsertWorkoutQuery } from "@/db/queries/useInsertWorkoutQuery"
-import { useUpdateWorkoutQuery } from "@/db/queries/useUpdateWorkoutQuery"
 import { Workout } from "@/db/schema"
 import {
   AppColors,
@@ -21,9 +20,9 @@ import {
 } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { useRouteParams } from "@/navigators/navigationTypes"
+import { goBack, navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
 import { HelperText, TextInput } from "react-native-paper"
-import { goBack, navigate } from "@/navigators/navigationUtilities"
 
 export type TemplateSaveScreenParams = {
   edittingTemplate?: WorkoutModel
@@ -33,8 +32,8 @@ export const TemplateSaveScreen: React.FC = () => {
 
   const { openedWorkout } = useOpenedWorkout()
   const { edittingTemplate } = useRouteParams("TemplateSave")
-  const insertWorkout = useInsertWorkoutQuery()
-  const updateWorkout = useUpdateWorkoutQuery()
+  const { mutate: insertWorkout } = useInsertWorkout()
+  const { mutate: updateWorkout } = useUpdateWorkout()
   const hasChanges = useRef(false)
 
   const [template, setTemplate] = useState<Partial<WorkoutModel>>(
@@ -65,7 +64,7 @@ export const TemplateSaveScreen: React.FC = () => {
     }
   }
 
-  function onUpdate(updated: Partial<Workout>, isValid: boolean) {
+  function onUpdate(updated: Partial<WorkoutModel>, isValid: boolean) {
     hasChanges.current = true
     setTemplate(updated)
     setFormValid(isValid)
@@ -73,7 +72,7 @@ export const TemplateSaveScreen: React.FC = () => {
 
   function onComplete() {
     if (edittingTemplate) {
-      updateWorkout(template.id!, template, true)
+      updateWorkout({ workoutId: template.id!, workout: template, overwriteSteps: true })
     } else {
       insertWorkout({
         name: template.name,
@@ -127,9 +126,9 @@ export const TemplateSaveScreen: React.FC = () => {
 }
 
 type EditTemplateFormProps = {
-  template: Partial<Workout>
+  template: Partial<WorkoutModel>
   steps: WorkoutStepModel[]
-  onUpdate: (template: Partial<Workout>, isValid: boolean) => void
+  onUpdate: (template: Partial<WorkoutModel>, isValid: boolean) => void
   onUpdateSteps: (steps: WorkoutStepModel[]) => void
 }
 

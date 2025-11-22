@@ -2,11 +2,11 @@ import { Pressable, StyleSheet, View } from "react-native"
 
 import { StepSetsList } from "@/components/shared/StepSetsList"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { useWorkoutsForExercise } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { useExerciseHistoryQuery } from "@/db/queries/useExerciseHistoryQuery"
 import { AppColors, Divider, EmptyState, spacing, Text, useColors } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
 import { msToIsoDate, translate } from "@/utils"
@@ -22,9 +22,12 @@ export const HistoryView: React.FC<HistoryViewProps> = ({ exercise }) => {
   const colors = useColors()
 
   const styles = useMemo(() => makeStyles(colors), [colors])
-  const { workouts: rawWorkouts } = useExerciseHistoryQuery(exercise.id!)
+  const { data: exerciseHistoryRaw } = useWorkoutsForExercise(exercise.id!)
 
-  const workouts = useMemo(() => rawWorkouts.map((item) => new WorkoutModel(item)), [rawWorkouts])
+  const workouts = useMemo(
+    () => (exerciseHistoryRaw ? exerciseHistoryRaw.map((item) => new WorkoutModel(item)) : []),
+    [exerciseHistoryRaw],
+  )
 
   return (
     <View style={styles.container}>

@@ -1,5 +1,5 @@
+import { useWorkoutByDate } from "@/db/hooks"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
-import { useWorkoutFullQuery } from "@/db/queries/useWorkoutFullQuery"
 import { capitalize } from "@/utils"
 import { DateTime } from "luxon"
 import {
@@ -55,7 +55,7 @@ export const OpenedWorkoutProvider: FC<PropsWithChildren<OpenedWorkoutProviderPr
     [openedDateObject, todayDiff],
   )
 
-  const { workout, isLoading: openedWorkoutLoading } = useWorkoutFullQuery(openedDateMs)
+  const { data: workout, isLoading: openedWorkoutLoading } = useWorkoutByDate(openedDateMs)
 
   const openedWorkout = useMemo(() => (workout ? WorkoutModel.from(workout) : null), [workout])
 

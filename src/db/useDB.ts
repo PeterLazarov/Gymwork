@@ -1,21 +1,18 @@
 import { drizzle } from "drizzle-orm/expo-sqlite"
-import { useSQLiteContext } from "expo-sqlite"
 import { createContext, useContext } from "react"
 
 import { allRelations } from "@/db/relations"
 import { schema } from "@/db/schema"
+import { DatabaseService } from "./services/DatabaseService"
 
 export type DrizzleDBType = ReturnType<typeof drizzle<typeof schema & typeof allRelations>>
 
-export const DBContext = createContext<null | {
-  sqlite: ReturnType<typeof useSQLiteContext>
-  drizzleDB: ReturnType<typeof drizzle<typeof schema & typeof allRelations>>
-}>(null)
+export const DatabaseServiceContext = createContext<DatabaseService | null>(null)
 
-export function useDB() {
-  const ctx = useContext(DBContext)
-  if (!ctx) {
-    throw new Error("useDB must be used within a DBProvider")
+export function useDatabaseService() {
+  const service = useContext(DatabaseServiceContext)
+  if (!service) {
+    throw new Error("useDatabaseService must be used within a DatabaseProvider")
   }
-  return ctx
+  return service
 }

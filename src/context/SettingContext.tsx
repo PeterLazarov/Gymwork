@@ -10,8 +10,7 @@ import {
 import { Appearance, ColorSchemeName } from "react-native"
 
 import { CHART_VIEW_KEY } from "@/constants/chartViews"
-import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
-import { useUpdateSettingsQuery } from "@/db/queries/useUpdateSettingsQuery"
+import { useSettings, useUpdateSettings } from "@/db/hooks"
 import { InsertSettings } from "@/db/schema"
 
 let deviceColorScheme = Appearance.getColorScheme()
@@ -55,8 +54,8 @@ export const SettingContext = createContext<SettingContextType | null>(null)
 export interface SettingProviderProps {}
 
 export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ children }) => {
-  const { settings, isLoading } = useSettingsQuery()
-  const updateSettings = useUpdateSettingsQuery()
+  const { data: settings, isLoading } = useSettings()
+  const { mutateAsync: updateSettings } = useUpdateSettings()
   const settingsId = settings?.id ?? null
 
   const defaultSettings: InsertSettings = {
@@ -75,13 +74,13 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   const [highlightedSet, setHighlightedSet] = useState<number | null>(null)
   const [chartHeight, setChartHeight] = useState(0)
   const [chartWidth, setChartWidth] = useState(0)
-  const [chartView, setChartView] = useState<CHART_VIEW_KEY>("30D")
+  const [chartView, setChartView] = useState<CHART_VIEW_KEY>("30D") // TODO: store updated value in global state
 
   const persistSettings = useCallback(
     async (updates: Partial<InsertSettings>) => {
       if (!settingsId) return
       try {
-        await updateSettings(settingsId, updates)
+        await updateSettings({ id: settingsId, updates })
       } catch (error) {
         console.error("Failed to persist settings", error)
       }

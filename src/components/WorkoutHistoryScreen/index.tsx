@@ -5,8 +5,8 @@ import { Searchbar } from "react-native-paper"
 
 import { MuscleMap } from "@/components/shared/MuscleMap"
 import { discomfortOptions } from "@/constants/enums"
+import { useAllWorkoutsFull } from "@/db/hooks"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
-import { useAllWorkoutsFullQuery } from "@/db/queries/useAllWorkoutsFullQuery"
 import {
   AppColors,
   EmptyState,
@@ -23,12 +23,12 @@ import {
   useColors,
 } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
+import { useRouteParams } from "@/navigators/navigationTypes"
 import { navigate } from "@/navigators/navigationUtilities"
 import { formatDateIso, msToIsoDate, translate } from "@/utils"
 import type { FlashListProps, ListRenderItemInfo } from "@shopify/flash-list"
 import { WorkoutModal } from "../CalendarScreen/WorkoutModal"
 import { FilterForm, isFilterEmpty, WorkoutsFilterModal } from "./components/WorkoutsFilterModal"
-import { useRouteParams } from "@/navigators/navigationTypes"
 
 const ITEM_ESTIMATED_HEIGHT = 240
 const SKELETON_PLACEHOLDERS = [0, 1, 2] as const
@@ -44,12 +44,12 @@ export const WorkoutsHistoryScreen: React.FC = () => {
   const filterEmpty = isFilterEmpty(filter)
   const hasAppliedFilters = !filterEmpty || trimmedFilterString.length > 0
 
-  const { workouts: rawWorkouts, isLoading: workoutsLoading } = useAllWorkoutsFullQuery(
+  const { data: rawWorkouts, isLoading: workoutsLoading } = useAllWorkoutsFull(
     filter,
     trimmedFilterString,
   )
   const workouts = useMemo(
-    () => rawWorkouts.map((workout) => new WorkoutModel(workout)),
+    () => (rawWorkouts ? rawWorkouts.map((workout) => new WorkoutModel(workout)) : []),
     [rawWorkouts],
   )
 

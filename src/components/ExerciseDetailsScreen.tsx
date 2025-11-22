@@ -1,12 +1,12 @@
-import { FC, useEffect, useState } from "react"
-import { Image, useWindowDimensions, View, StyleSheet } from "react-native"
+import { FC } from "react"
+import { Image, StyleSheet, useWindowDimensions, View } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 
-import { fontSize, Header, Icon, IconButton, spacing, Text, useColors } from "@/designSystem"
+import { useExercise } from "@/db/hooks"
 import { Exercise } from "@/db/schema"
-import { useExerciseQuery } from "@/db/queries/useExerciseQuery"
-import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
+import { fontSize, Header, Icon, IconButton, spacing, Text, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
+import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
 import { translate } from "@/utils"
 import { exerciseImages } from "@/utils/exerciseImages"
 
@@ -17,16 +17,7 @@ interface ExerciseDetailsScreenProps extends AppStackScreenProps<"ExerciseDetail
 
 export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({ navigation }) => {
   const { exerciseId } = useRouteParams("ExerciseDetails")
-  const [exercise, setExercise] = useState<Exercise>()
-  const exerciseQuery = useExerciseQuery()
-
-  useEffect(() => {
-    exerciseQuery(exerciseId).then((result) => {
-      if (result) {
-        setExercise(result)
-      }
-    })
-  }, [])
+  const { data: exercise } = useExercise(exerciseId)
 
   const colors = useColors()
   const { width } = useWindowDimensions()

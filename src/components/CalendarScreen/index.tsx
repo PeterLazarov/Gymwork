@@ -1,19 +1,24 @@
 import { useFocusEffect } from "@react-navigation/native"
 import { DateTime } from "luxon"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
-import { useWindowDimensions, View } from "react-native"
+import { useWindowDimensions } from "react-native"
 import { Calendar } from "react-native-calendario"
 import { MarkedDays } from "react-native-month"
 
 import { WorkoutModal } from "@/components/CalendarScreen/WorkoutModal"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { useAllWorkoutIds } from "@/db/hooks/useWorkoutsActions"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
-import { useAllWorkoutIdsQuery, WorkoutResult } from "@/db/queries/useAllWorkoutIdsQuery"
-import { useWorkoutFullQuery } from "@/db/queries/useWorkoutFullQuery"
-import { fontSize, Header, Menu, Icon, IconButton, useColors } from "@/designSystem"
+import { useDatabaseService } from "@/db/useDB"
+import { fontSize, Header, Icon, IconButton, Menu, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
 import { msToIsoDate, translate } from "@/utils"
+
+type WorkoutResult = {
+  id: number
+  date: number
+}
 
 export type CalendarScreenParams = {
   copyWorkoutMode?: boolean
@@ -24,8 +29,8 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
   const colors = useColors()
 
   const { openedDateObject, setOpenedDate } = useOpenedWorkout()
-  const getWorkouts = useAllWorkoutIdsQuery()
-  const workoutFullQuery = useWorkoutFullQuery(null, false)
+  const { data: workoutIdsData } = useAllWorkoutIds()
+  const db = useDatabaseService()
   const [markedDates, setMarkedDates] = useState<MarkedDays>({})
 
   const { copyWorkoutMode } = useRouteParams("Calendar")
@@ -41,27 +46,27 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
   const [workouts, setWorkouts] = useState<WorkoutResult[]>([])
 
   useEffect(() => {
-    getWorkouts().then((results: WorkoutResult[]) => {
-      setWorkouts(results)
-
-      setMarkedDates(
-        results.reduce((acc, curr) => {
-          const isoDate = msToIsoDate(curr.date!)
-          if (!(isoDate in acc)) {
-            acc[isoDate] = {}
-          }
-          acc[isoDate]!.dots = [
-            {
-              color: colors.tertiary,
-              selectedColor: colors.onTertiary,
-            },
-          ]
-
-          return acc
-        }, {} as MarkedDays),
-      )
-    })
-  }, [])
+    if (!workoutIdsData) return
+    const results: WorkoutResult[] = workoutIdsData
+      .filter((w) => w.date !== null)
+      .map((w) => ({ id: w.id, date: w.date as number }))
+    setWorkouts(results)
+    setMarkedDates(
+      results.reduce((acc, curr) => {
+        const isoDate = msToIsoDate(curr.date!)
+        if (!(isoDate in acc)) {
+          acc[isoDate] = {}
+        }
+        acc[isoDate]!.dots = [
+          {
+            color: colors.tertiary,
+            selectedColor: colors.onTertiary,
+          },
+        ]
+        return acc
+      }, {} as MarkedDays),
+    )
+  }, [workoutIdsData, colors])
 
   const firstRenderedDate = useMemo(() => {
     if (workouts.length === 0) return null
@@ -93,10 +98,8 @@ export const CalendarScreen: React.FC<CalendarScreenProps> = ({ navigation }) =>
     const didWorkoutOnDate = Object.keys(markedDates).includes(dateString)
 
     if (didWorkoutOnDate) {
-      workoutFullQuery(dateLuxon.toMillis()).then((workout) => {
-        if (workout) {
-          setOpenedWorkout(WorkoutModel.from(workout))
-        }
+      db.getWorkoutByDate(dateLuxon.toMillis()).then((workout: any) => {
+        if (workout) setOpenedWorkout(WorkoutModel.from(workout))
       })
     } else {
       goToDay(dateString)

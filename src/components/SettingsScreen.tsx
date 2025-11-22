@@ -1,24 +1,24 @@
 import { FC, useMemo } from "react"
 import { ColorSchemeName, Pressable, StyleSheet, View } from "react-native"
 
-import { BaseLayout } from "@/layouts/BaseLayout"
+import { useDialogContext } from "@/context/DialogContext"
+import { useSetting } from "@/context/SettingContext"
+import { useSettings } from "@/db/hooks"
+import type { AppColors, SelectOption } from "@/designSystem"
 import {
-  Text,
-  Header,
-  spacing,
-  IconButton,
-  Icon,
   Divider,
+  Header,
+  Icon,
+  IconButton,
   Select,
+  spacing,
+  Text,
   ToggleSwitch,
   useColors,
 } from "@/designSystem"
-import type { AppColors, SelectOption } from "@/designSystem"
-import { translate, useExport } from "@/utils"
-import { useDialogContext } from "@/context/DialogContext"
+import { BaseLayout } from "@/layouts/BaseLayout"
 import { goBack } from "@/navigators/navigationUtilities"
-import { useSetting } from "@/context/SettingContext"
-import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
+import { translate, useExport } from "@/utils"
 
 const appearanceOptions: SelectOption<ColorSchemeName>[] = [
   { label: translate("dark"), value: "dark" },
@@ -27,7 +27,7 @@ const appearanceOptions: SelectOption<ColorSchemeName>[] = [
 ]
 
 export const SettingsScreen: FC = () => {
-  const { settings } = useSettingsQuery()
+  const { data: settings } = useSettings()
   const {
     colorSchemePreference,
     setColorSchemePreference,

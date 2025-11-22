@@ -4,10 +4,9 @@ import { Keyboard, Pressable, View } from "react-native"
 
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useSetting } from "@/context/SettingContext"
+import { useRecordIds, useSettings, useUpdateSet } from "@/db/hooks"
 import { SetModel } from "@/db/models/SetModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { useRecordIdsQuery } from "@/db/queries/useRecordIdsQuery"
-import { useUpdateSetQuery } from "@/db/queries/useUpdateSetQuery"
 import {
   Divider,
   EmptyState,
@@ -20,9 +19,8 @@ import {
   useColors,
 } from "@/designSystem"
 import { getFormatedDuration, translate } from "@/utils"
-import { SetDataLabel } from "./SetDataLabel"
 import { DateTime } from "luxon"
-import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
+import { SetDataLabel } from "./SetDataLabel"
 
 type SetTrackListProps = {
   step: WorkoutStepModel
@@ -44,20 +42,20 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
   const colors = useColors()
 
   const { openedWorkout } = useOpenedWorkout()
-  const { settings } = useSettingsQuery()
-  const updateSet = useUpdateSetQuery()
+  const { data: settings } = useSettings()
+  const { mutate: updateSet } = useUpdateSet()
 
   function toggleSelectedSet(set: SetModel) {
     setSelectedSet(set.id === selectedSet?.id ? null : set)
   }
 
-  const { recordIds } = useRecordIdsQuery(step.id)
+  const { data: recordIds } = useRecordIds(step.id)
 
   const showComplete = settings?.manual_set_completion && openedWorkout?.hasIncompleteSets
 
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<SetModel>) => {
-      const isRecord = recordIds.some(({ id }) => id === item.id)
+      const isRecord = recordIds?.some(({ id }) => id === item.id)
       const isFocused = selectedSet?.id === item.id
       const isDraft = index === sets.length
 
@@ -96,10 +94,13 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
   const flashListRef = useRef<FlashListRef<SetModel>>(null)
 
   function toggleSetWarmup(set: SetModel) {
-    updateSet({ id: set.id, isWarmup: !set.isWarmup })
+    updateSet({ setId: set.id!, updates: { isWarmup: !set.isWarmup } })
   }
   function toggleSetCompletion(set: SetModel) {
-    updateSet({ id: set.id, completedAt: set.completedAt ? null : DateTime.now().toMillis() })
+    updateSet({
+      setId: set.id!,
+      updates: { completedAt: set.completedAt ? null : DateTime.now().toMillis() },
+    })
   }
 
   if (showFallback && !sets?.length && !settings?.preview_next_set)

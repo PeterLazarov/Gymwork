@@ -6,16 +6,15 @@ import { Header, Icon, IconButton, Menu, useColors } from "@/designSystem"
 import { translate } from "@/utils"
 import { useShareWorkout } from "../utils/useShareWorkout"
 // import WorkoutTimerModal from "../Timer/WorkoutTimerModal"
-import { useRemoveWorkoutQuery } from "@/db/queries/useRemoveWorkoutQuery"
+import { useRemoveWorkout, useSettings } from "@/db/hooks"
 import { navigate } from "@/navigators/navigationUtilities"
-import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 
 export const WorkoutHeader: React.FC = () => {
   const colors = useColors()
 
-  const { settings } = useSettingsQuery()
+  const { data: settings } = useSettings()
   const { setShowCommentsCard } = useSetting()
-  const removeWorkoutQuery = useRemoveWorkoutQuery()
+  const { mutate: removeWorkout } = useRemoveWorkout()
 
   const [menuOpen, setMenuOpen] = useState(false)
   const { openedDateLabel, openedWorkout } = useOpenedWorkout()
@@ -37,7 +36,7 @@ export const WorkoutHeader: React.FC = () => {
   const deleteWorkout = () => {
     setMenuOpen(false)
     if (openedWorkout) {
-      removeWorkoutQuery(openedWorkout.id)
+      removeWorkout(openedWorkout.id)
     }
   }
 

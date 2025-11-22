@@ -1,9 +1,7 @@
 import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { useInsertWorkout, useRemoveWorkout, useTemplates } from "@/db/hooks"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
-import { useInsertWorkoutQuery } from "@/db/queries/useInsertWorkoutQuery"
-import { useRemoveWorkoutQuery } from "@/db/queries/useRemoveWorkoutQuery"
-import { useTemplatesQuery } from "@/db/queries/useTemplatesQuery"
 import { Header, Icon, IconButton, Text, spacing, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps } from "@/navigators/navigationTypes"
@@ -16,8 +14,8 @@ interface TemplateSelectScreenProps extends AppStackScreenProps<"TemplateSelect"
 
 export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> = ({ navigation }) => {
   const colors = useColors()
-  const removeWorkoutQuery = useRemoveWorkoutQuery()
-  const insertWorkout = useInsertWorkoutQuery()
+  const { mutate: removeWorkout } = useRemoveWorkout()
+  const { mutate: insertWorkout } = useInsertWorkout()
   const { showConfirm } = useDialogContext()
   const { openedDateMs } = useOpenedWorkout()
 
@@ -38,7 +36,7 @@ export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> = ({ navi
     showConfirm?.({
       message: translate("templateWillBeDeleted"),
       onConfirm: () => {
-        removeWorkoutQuery(template.id)
+        removeWorkout(template.id)
       },
     })
   }
@@ -77,10 +75,10 @@ type TemplateListProps = {
   onEdit: (template: WorkoutModel) => void
 }
 const TemplateList: React.FC<TemplateListProps> = ({ onSelect, onDelete, onEdit }) => {
-  const { templates: rawTemplates } = useTemplatesQuery()
+  const { data: rawTemplates } = useTemplates()
 
   const templates = useMemo(
-    () => rawTemplates.map((item) => new WorkoutModel(item)),
+    () => (rawTemplates ? rawTemplates.map((item) => new WorkoutModel(item)) : []), // TODO: fix error
     [rawTemplates],
   )
 

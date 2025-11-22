@@ -18,33 +18,62 @@ import {
   workouts,
   workouts_tags,
 } from "@/db/schema"
-import { useDB } from "@/db/useDB"
+import { useDatabaseService } from "@/db/useDB"
 import { sanitizeMsDate } from "./date"
 
 export function useExport() {
-  const { drizzleDB } = useDB()
+  const db = useDatabaseService()
+  const drizzle = db.getDrizzle()
 
   async function exportData() {
     try {
       const now = DateTime.now()
       const fileName = `${now.toFormat("MMM-dd")}-Gymwork-${now.toFormat("HHmmss")}.json`
 
+      const [
+        settingsData,
+        exercisesData,
+        exerciseMetricsData,
+        workoutsData,
+        workoutStepsData,
+        workoutStepExercisesData,
+        setsData,
+        tagsData,
+        workoutsTagsData,
+        workoutStepsTagsData,
+        setsTagsData,
+        exercisesTagsData,
+      ] = await Promise.all([
+        drizzle.query.settings.findMany(),
+        drizzle.query.exercises.findMany(),
+        drizzle.query.exercise_metrics.findMany(),
+        drizzle.query.workouts.findMany(),
+        drizzle.query.workout_steps.findMany(),
+        drizzle.query.workout_step_exercises.findMany(),
+        drizzle.query.sets.findMany(),
+        drizzle.query.tags.findMany(),
+        drizzle.query.workouts_tags.findMany(),
+        drizzle.query.workout_steps_tags.findMany(),
+        drizzle.query.sets_tags.findMany(),
+        drizzle.query.exercises_tags.findMany(),
+      ])
+
       const exportedData = {
         version: "1.0",
         exportedAt: now.toISO(),
         data: {
-          settings: await drizzleDB.select().from(settings),
-          exercises: await drizzleDB.select().from(exercises),
-          exercise_metrics: await drizzleDB.select().from(exercise_metrics),
-          workouts: await drizzleDB.select().from(workouts),
-          workout_steps: await drizzleDB.select().from(workout_steps),
-          workout_step_exercises: await drizzleDB.select().from(workout_step_exercises),
-          sets: await drizzleDB.select().from(sets),
-          tags: await drizzleDB.select().from(tags),
-          workouts_tags: await drizzleDB.select().from(workouts_tags),
-          workout_steps_tags: await drizzleDB.select().from(workout_steps_tags),
-          sets_tags: await drizzleDB.select().from(sets_tags),
-          exercises_tags: await drizzleDB.select().from(exercises_tags),
+          settings: settingsData,
+          exercises: exercisesData,
+          exercise_metrics: exerciseMetricsData,
+          workouts: workoutsData,
+          workout_steps: workoutStepsData,
+          workout_step_exercises: workoutStepExercisesData,
+          sets: setsData,
+          tags: tagsData,
+          workouts_tags: workoutsTagsData,
+          workout_steps_tags: workoutStepsTagsData,
+          sets_tags: setsTagsData,
+          exercises_tags: exercisesTagsData,
         },
       }
 
@@ -131,32 +160,31 @@ export function useExport() {
   }
 
   async function performRestore(data: any) {
-    await drizzleDB.delete(workouts_tags)
-    await drizzleDB.delete(workout_steps_tags)
-    await drizzleDB.delete(sets_tags)
-    await drizzleDB.delete(exercises_tags)
+    await Promise.all([
+      drizzle.delete(workouts_tags),
+      drizzle.delete(workout_steps_tags),
+      drizzle.delete(sets_tags),
+      drizzle.delete(exercises_tags),
+    ])
 
-    await drizzleDB.delete(sets)
-    await drizzleDB.delete(workout_step_exercises)
-    await drizzleDB.delete(workout_steps)
-    await drizzleDB.delete(workouts)
+    await Promise.all([drizzle.delete(sets), drizzle.delete(workout_step_exercises)])
 
-    await drizzleDB.delete(exercise_metrics)
-    await drizzleDB.delete(exercises)
+    await drizzle.delete(workout_steps)
+    await drizzle.delete(workouts)
+    await drizzle.delete(exercise_metrics)
 
-    await drizzleDB.delete(tags)
-    await drizzleDB.delete(settings)
+    await Promise.all([drizzle.delete(exercises), drizzle.delete(tags), drizzle.delete(settings)])
 
     if (data.settings?.length) {
-      await drizzleDB.insert(settings).values(data.settings)
+      await drizzle.insert(settings).values(data.settings)
     }
 
     if (data.exercises?.length) {
-      await drizzleDB.insert(exercises).values(data.exercises)
+      await drizzle.insert(exercises).values(data.exercises)
     }
 
     if (data.exercise_metrics?.length) {
-      await drizzleDB.insert(exercise_metrics).values(data.exercise_metrics)
+      await drizzle.insert(exercise_metrics).values(data.exercise_metrics)
     }
 
     if (data.workouts?.length) {
@@ -164,15 +192,15 @@ export function useExport() {
         ...workout,
         date: sanitizeMsDate(workout.date),
       }))
-      await drizzleDB.insert(workouts).values(sanitizedWorkouts)
+      await drizzle.insert(workouts).values(sanitizedWorkouts)
     }
 
     if (data.workout_steps?.length) {
-      await drizzleDB.insert(workout_steps).values(data.workout_steps)
+      await drizzle.insert(workout_steps).values(data.workout_steps)
     }
 
     if (data.workout_step_exercises?.length) {
-      await drizzleDB.insert(workout_step_exercises).values(data.workout_step_exercises)
+      await drizzle.insert(workout_step_exercises).values(data.workout_step_exercises)
     }
 
     if (data.sets?.length) {
@@ -180,27 +208,27 @@ export function useExport() {
         ...set,
         date: sanitizeMsDate(set.date),
       }))
-      await drizzleDB.insert(sets).values(sanitizedSets)
+      await drizzle.insert(sets).values(sanitizedSets)
     }
 
     if (data.tags?.length) {
-      await drizzleDB.insert(tags).values(data.tags)
+      await drizzle.insert(tags).values(data.tags)
     }
 
     if (data.workouts_tags?.length) {
-      await drizzleDB.insert(workouts_tags).values(data.workouts_tags)
+      await drizzle.insert(workouts_tags).values(data.workouts_tags)
     }
 
     if (data.workout_steps_tags?.length) {
-      await drizzleDB.insert(workout_steps_tags).values(data.workout_steps_tags)
+      await drizzle.insert(workout_steps_tags).values(data.workout_steps_tags)
     }
 
     if (data.sets_tags?.length) {
-      await drizzleDB.insert(sets_tags).values(data.sets_tags)
+      await drizzle.insert(sets_tags).values(data.sets_tags)
     }
 
     if (data.exercises_tags?.length) {
-      await drizzleDB.insert(exercises_tags).values(data.exercises_tags)
+      await drizzle.insert(exercises_tags).values(data.exercises_tags)
     }
   }
 

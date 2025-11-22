@@ -1,8 +1,8 @@
 import { CHART_VIEWS, CHART_VIEW_KEY } from "@/constants/chartViews"
 import { useSetting } from "@/context/SettingContext"
+import { useWorkoutsForExercise } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
-import { useExerciseHistoryQuery } from "@/db/queries/useExerciseHistoryQuery"
 import { ToggleGroupButton, spacing } from "@/designSystem"
 import { useMemo } from "react"
 import { StyleSheet, View } from "react-native"
@@ -15,10 +15,11 @@ type ChartViewProps = {
 export const ChartView: React.FC<ChartViewProps> = ({ exercise }) => {
   const { chartHeight, chartView, chartWidth, setChartHeight, setChartView, setChartWidth } =
     useSetting()
-  const { workouts: exerciseHistoryRaw } = useExerciseHistoryQuery(exercise.id!)
+  const { data: exerciseHistoryRaw } = useWorkoutsForExercise(exercise.id!)
 
   const exerciseHistory = useMemo(
-    () => exerciseHistoryRaw.map((workout) => WorkoutModel.from(workout)),
+    () =>
+      exerciseHistoryRaw ? exerciseHistoryRaw.map((workout) => new WorkoutModel(workout)) : [],
     [exerciseHistoryRaw],
   )
 

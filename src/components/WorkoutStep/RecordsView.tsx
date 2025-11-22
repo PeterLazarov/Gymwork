@@ -2,9 +2,9 @@ import { useMemo } from "react"
 import { Pressable, ScrollView, StyleSheet, View } from "react-native"
 
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { useExerciseRecords } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
-import { useExerciseRecordsQuery } from "@/db/queries/useExerciseRecordsQuery"
 import { EmptyState, spacing } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
 import { msToIsoDate, translate } from "@/utils"
@@ -17,9 +17,12 @@ type RecordsViewProps = {
 export const RecordsView: React.FC<RecordsViewProps> = ({ exercise }) => {
   const { setOpenedDate } = useOpenedWorkout()
 
-  const { records: rawRecords } = useExerciseRecordsQuery(exercise.id!)
+  const { data: rawRecords } = useExerciseRecords(exercise.id!)
 
-  const records = useMemo(() => rawRecords.map((item) => new SetModel(item)), [rawRecords])
+  const records = useMemo(
+    () => (rawRecords ? rawRecords.map((item) => new SetModel(item)) : []),
+    [rawRecords],
+  )
 
   function goToDate(set: SetModel) {
     setOpenedDate(msToIsoDate(set.date))

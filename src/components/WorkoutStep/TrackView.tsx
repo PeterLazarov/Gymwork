@@ -5,14 +5,17 @@ import { TextInput, View } from "react-native"
 import { DistanceEditor } from "@/components/WorkoutStep/components/DistanceEditor"
 import { DistanceUnit } from "@/constants/units"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
-import { useSetting } from "@/context/SettingContext"
+import { useTimerContext } from "@/context/TimerContext"
+import {
+  useExerciseLastSet,
+  useInsertSet,
+  useRemoveSet,
+  useSettings,
+  useUpdateSet,
+} from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { useExerciseLastSetQuery } from "@/db/queries/useExerciseLastSetQuery"
-import { useInsertSetQuery } from "@/db/queries/useInsertSetQuery"
-import { useRemoveSetQuery } from "@/db/queries/useRemoveSetQuery"
-import { useUpdateSetQuery } from "@/db/queries/useUpdateSetQuery"
 import { Set } from "@/db/schema"
 import {
   Button,
@@ -27,8 +30,6 @@ import {
 import { convertWeightToBase, manageInputFocus, translate } from "@/utils"
 import { RestInput } from "./components/RestInput"
 import { SetTrackList } from "./components/SetTrackList"
-import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
-import { useTimerContext } from "@/context/TimerContext"
 
 type TrackViewProps = {
   step: WorkoutStepModel
@@ -45,11 +46,11 @@ export const TrackView: React.FC<TrackViewProps> = ({
 
   const [draftSet, setDraftSet] = useState<Partial<SetModel> | null>(null)
   const { openedDateMs } = useOpenedWorkout()
-  const { settings } = useSettingsQuery()
-  const insertSet = useInsertSetQuery()
-  const updateSet = useUpdateSetQuery()
-  const removeSet = useRemoveSetQuery()
-  const lastSetQuery = useExerciseLastSetQuery()
+  const { data: settings } = useSettings()
+  const { mutateAsync: insertSet } = useInsertSet()
+  const { mutateAsync: updateSet } = useUpdateSet()
+  const { mutateAsync: removeSet } = useRemoveSet()
+  const { data: lastSet } = useExerciseLastSet(focusedExercise.id!)
   const timer = useTimerContext()
 
   const [selectedSet, setSelectedSet] = useState<SetModel | null>(null)
@@ -63,37 +64,33 @@ export const TrackView: React.FC<TrackViewProps> = ({
   useEffect(() => {
     if (selectedSet) {
       setDraftSet(selectedSet)
+    } else if (lastSet) {
+      setDraftSet(new SetModel({ ...lastSet, rest_ms: 0 }))
     } else {
-      lastSetQuery(focusedExercise.id!).then((lastSet) => {
-        if (lastSet) {
-          setDraftSet(new SetModel({ ...lastSet, rest_ms: 0 }))
-        } else {
-          setDraftSet(
-            SetModel.createDefaultForExercise({
-              exercise: focusedExercise,
-              workoutStepId: step.id,
-              date: openedDateMs,
-            }),
-          )
-        }
-      })
+      setDraftSet(
+        SetModel.createDefaultForExercise({
+          exercise: focusedExercise,
+          workoutStepId: step.id,
+          date: openedDateMs,
+        }),
+      )
     }
-  }, [selectedSet, focusedExercise, step.id, openedDateMs])
+  }, [selectedSet, focusedExercise, step.id, openedDateMs, lastSet])
 
   const handleAdd = useCallback(() => {
     if (draftSet) {
       const { id, exercise, ...draftCopy } = draftSet
 
-      insertSet(
-        {
+      insertSet({
+        set: {
           ...draftCopy,
           exercise: focusedExercise,
           workoutStepId: step.id,
           exerciseId: focusedExercise.id,
           date: openedDateMs,
         },
-        settings!.manual_set_completion,
-      )
+        manualCompletion: settings?.manual_set_completion,
+      })
     }
 
     if (settings?.measure_rest) {
@@ -111,9 +108,9 @@ export const TrackView: React.FC<TrackViewProps> = ({
     const { completedAt, exercise, ...updatedSet } = {
       ...draftSet,
       id: selectedSet!.id,
-    }
+    } // TODO: find another way to keep the selectedSet id
 
-    updateSet(updatedSet)
+    updateSet({ setId: selectedSet!.id, updates: updatedSet })
 
     setSelectedSet(null)
   }, [draftSet, selectedSet, updateSet])
@@ -181,7 +178,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
   const input5 = useRef<TextInput>(null)
   const inputRefs = [input1, input2, input3, input4, input5]
   const { onHandleSubmit, isLastInput } = manageInputFocus(inputRefs, onSubmit)
-  const { settings } = useSettingsQuery()
+  const { data: settings } = useSettings()
 
   return (
     <View style={{ gap: spacing.xs }}>

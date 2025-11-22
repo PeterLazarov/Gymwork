@@ -1,16 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useMemo } from "react"
 import { Alert, StyleSheet, View } from "react-native"
 
 import { CommentsCard } from "@/components/shared/CommentsCard"
+import { useAllWorkoutIds, useSettings, useTemplates } from "@/db/hooks"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
-import { useAllWorkoutIdsQuery } from "@/db/queries/useAllWorkoutIdsQuery"
-import { useTemplatesQuery } from "@/db/queries/useTemplatesQuery"
 import { AppColors, EmptyState, Skeleton, spacing, useColors } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
 import { ActionCard } from "./ActionCard"
 import { WorkoutStepList } from "./WorkoutStepList"
-import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 
 const ITEM_ESTIMATED_HEIGHT = 240
 type Props = {
@@ -19,7 +17,7 @@ type Props = {
 }
 export const WorkoutDayView: React.FC<Props> = ({ workout, isLoading }) => {
   const colors = useColors()
-  const { settings } = useSettingsQuery()
+  const { data: settings } = useSettings()
 
   const styles = makeStyles(colors)
 
@@ -57,17 +55,10 @@ export const WorkoutDayView: React.FC<Props> = ({ workout, isLoading }) => {
 }
 
 export const WorkoutEmptyState: React.FC = () => {
-  const [hasWorkouts, setHasWorkouts] = useState(false)
-
-  const { templates } = useTemplatesQuery({ limit: 1 })
-  const workoutsQuery = useAllWorkoutIdsQuery()
-  useEffect(() => {
-    workoutsQuery({ limit: 1 }).then((res) => {
-      setHasWorkouts(res.length > 0)
-    })
-  }, [])
-
-  const hasTemplates = useMemo(() => templates.length > 0, [templates])
+  const { data: templates } = useTemplates()
+  const { data: workoutIds } = useAllWorkoutIds({ limit: 1 })
+  const hasWorkouts = workoutIds && workoutIds.length > 0
+  const hasTemplates = templates && templates.length > 0
   function startWorkout() {
     navigate("ExerciseSelect")
   }

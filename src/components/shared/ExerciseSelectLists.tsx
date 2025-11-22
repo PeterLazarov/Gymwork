@@ -2,9 +2,8 @@ import React, { useCallback, useMemo, useState } from "react"
 import { Dimensions, Image, Pressable, View } from "react-native"
 
 import { useSetting } from "@/context/SettingContext"
+import { useExercises, useMostUsedExercises, useUpdateExercise } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
-import { useExercisesQuery, useMostUsedExercisesQuery } from "@/db/queries/useExercisesQuery"
-import { useUpdateExerciseQuery } from "@/db/queries/useUpdateExerciseQuery"
 import {
   EmptyState,
   fontSize,
@@ -167,7 +166,7 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
 }) => {
   const heartIcon = exercise.isFavorite ? "heart" : "heart-outlined"
   const colors = useColors()
-  const updateExercise = useUpdateExerciseQuery()
+  const { mutate: updateExercise } = useUpdateExercise()
 
   function handleLongPress() {
     navigate("ExerciseDetails", { exerciseId: exercise.id! })
@@ -222,7 +221,9 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
         </View>
 
         <IconButton
-          onPress={() => updateExercise(exercise.id!, { isFavorite: !exercise.isFavorite })}
+          onPress={() =>
+            updateExercise({ id: exercise.id!, updates: { is_favorite: !exercise.isFavorite } })
+          }
         >
           <Icon
             icon={heartIcon}
@@ -244,10 +245,10 @@ const AllExercisesList: React.FC<AllExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const { exercises: rawExercises } = useExercisesQuery({ filterString })
+  const { data: rawExercises } = useExercises({ search: filterString })
 
   const exercises = useMemo(
-    () => rawExercises.map((item) => new ExerciseModel(item)),
+    () => (rawExercises ? rawExercises.map((item) => new ExerciseModel(item)) : []),
     [rawExercises],
   )
 
@@ -274,10 +275,10 @@ const FavoriteExercisesList: React.FC<FavoriteExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const { exercises: rawExercises } = useExercisesQuery({ isFavorite: true, filterString })
+  const { data: rawExercises } = useExercises({ isFavorite: true, search: filterString })
 
   const exercises = useMemo(
-    () => rawExercises.map((item) => new ExerciseModel(item)),
+    () => (rawExercises ? rawExercises.map((item) => new ExerciseModel(item)) : []),
     [rawExercises],
   )
 
@@ -305,10 +306,10 @@ const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const { exercises: rawExercises } = useMostUsedExercisesQuery({ limit: 10, filterString })
+  const { data: rawExercises } = useMostUsedExercises(10, filterString)
 
   const exercises = useMemo(
-    () => rawExercises.map((item) => new ExerciseModel(item)),
+    () => (rawExercises ?? []).map((item) => new ExerciseModel(item)),
     [rawExercises],
   )
 

@@ -6,10 +6,8 @@ import { measurementDefaults, measurementTypes, MetricType } from "@/constants/e
 import { muscleAreas, muscles } from "@/constants/muscles"
 import { DistanceUnit, measurementUnits, WeightUnit } from "@/constants/units"
 import { useDialogContext } from "@/context/DialogContext"
-import { useSetting } from "@/context/SettingContext"
+import { useInsertExercise, useSettings, useUpdateExercise } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
-import { useInsertExerciseQuery } from "@/db/queries/useInsertExerciseQuery"
-import { useUpdateExerciseQuery } from "@/db/queries/useUpdateExerciseQuery"
 import { ExerciseMetric } from "@/db/schema"
 import {
   Button,
@@ -27,18 +25,17 @@ import {
 } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { useRouteParams } from "@/navigators/navigationTypes"
-import { translate } from "@/utils"
 import { goBack, navigate } from "@/navigators/navigationUtilities"
+import { translate } from "@/utils"
 import { MuscleMap } from "./shared/MuscleMap"
-import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 
 export type ExerciseEditScreenParams = {
   edittedExercise?: ExerciseModel
 }
 export const ExerciseEditScreen: React.FC = () => {
   const colors = useColors()
-  const updateExercise = useUpdateExerciseQuery()
-  const insertExercise = useInsertExerciseQuery()
+  const { mutate: updateExercise } = useUpdateExercise()
+  const { mutate: insertExercise } = useInsertExercise()
   const { edittedExercise } = useRouteParams("ExerciseEdit")
   if (!edittedExercise) {
     console.warn("REDIRECT - No focusedExercise")
@@ -76,9 +73,9 @@ export const ExerciseEditScreen: React.FC = () => {
     if (!exercise) return
 
     if (edittedExercise) {
-      updateExercise(exercise.id!, exercise)
+      updateExercise({ id: exercise.id!, updates: exercise })
     } else {
-      insertExercise(exercise)
+      insertExercise(exercise as any) // TODO: update DatabaseService.insertExercise
     }
     goBack()
   }
@@ -132,7 +129,7 @@ type Props = {
 }
 
 const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
-  const { settings } = useSettingsQuery()
+  const { data: settings } = useSettings()
   const colors = useColors()
   const [nameError, setNameError] = useState("")
   const [weightIncError, setWeightIncError] = useState("")

@@ -1,10 +1,8 @@
-import { useSetting } from "@/context/SettingContext"
+import { useRecordIds, useSettings } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { useRecordIdsQuery } from "@/db/queries/useRecordIdsQuery"
-import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 import { AppColors, Icon, Text, fontSize, palettes, spacing, useColors } from "@/designSystem"
 import { getFormatedDuration, translate } from "@/utils"
 import React, { useMemo } from "react"
@@ -23,8 +21,8 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
   hideSupersetLetters = false,
   workout,
 }) => {
-  const { settings } = useSettingsQuery()
-  const { recordIds } = useRecordIdsQuery(step.id)
+  const { data: settings } = useSettings()
+  const { data: recordIds } = useRecordIds(step.id)
   const showSetComplete = settings?.manual_set_completion && workout.hasIncompleteSets
 
   return (
@@ -34,7 +32,7 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
           key={set.id}
           set={set}
           exercise={set.exercise}
-          isRecord={recordIds.some(({ id }) => id === set.id)}
+          isRecord={recordIds?.some(({ id }) => id === set.id)}
           letter={hideSupersetLetters ? undefined : step.exerciseLettering[set.exercise.id!]}
           number={step.setsNumberMap[set.id!]}
           showSetComplete={showSetComplete}
@@ -63,7 +61,7 @@ const SetItem: React.FC<SetItemProps> = ({
   showSetComplete,
 }) => {
   const colors = useColors()
-  const { settings } = useSettingsQuery()
+  const { data: settings } = useSettings()
   const styles = useMemo(() => makeSetItemStyles(colors), [colors])
 
   return (

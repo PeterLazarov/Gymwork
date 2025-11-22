@@ -8,7 +8,6 @@ import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { useWorkoutCopy } from "@/db/queries/useWorkoutCopy"
 import {
   Button,
   Divider,
@@ -22,6 +21,7 @@ import {
 import { navigate } from "@/navigators/navigationUtilities"
 import { msToIsoDate, translate } from "@/utils"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useCopyWorkout } from "@/db/hooks"
 
 type Props = {
   open: boolean
@@ -33,9 +33,8 @@ type Props = {
 export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, showComments }) => {
   const [includeSets, setIncludeSets] = useState(true)
   const { openedDateMs, setOpenedDate } = useOpenedWorkout()
-  const copyWorkout = useWorkoutCopy()
+  const { mutate: copyWorkout } = useCopyWorkout()
   const { showSnackbar } = useDialogContext()
-  const insets = useSafeAreaInsets()
 
   const luxonDate = DateTime.fromMillis(workout.date!)
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
@@ -45,7 +44,7 @@ export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, sh
   const onActionPress = () => {
     if (mode === "copy") {
       showSnackbar?.({ text: "Workout will be copied" })
-      copyWorkout(openedDateMs, workout!, includeSets)
+      copyWorkout({ targetDate: openedDateMs, sourceWorkout: workout, copySets: includeSets })
     } else if (mode === "view") {
       setOpenedDate(msToIsoDate(workout.date!))
     }

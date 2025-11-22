@@ -1,5 +1,5 @@
 import { SVGRenderer, SvgChart } from "@wuba/react-native-echarts"
-import { LineChart, BarChart } from "echarts/charts"
+import { BarChart, LineChart } from "echarts/charts"
 import {
   GridComponent,
   LegendComponent,
@@ -14,13 +14,12 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 
 import { CHART_VIEW } from "@/constants/chartViews"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
-import { useSetting } from "@/context/SettingContext"
+import { useSettings } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { seriesSetup } from "../utils/seriesSetup"
 import { useChartConfig } from "../utils/useChartConfig"
-import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
 
 // Docs
 // https://echarts.apache.org/en/option.html#title
@@ -60,7 +59,7 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
   exerciseHistory,
 }) => {
   const { setOpenedDate } = useOpenedWorkout()
-  const { settings } = useSettingsQuery()
+  const { data: settings } = useSettings()
   const chartElRef = useRef<any>(null)
   const eChartRef = useRef<ECharts>(null)
 

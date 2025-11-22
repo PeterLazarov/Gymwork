@@ -6,8 +6,8 @@ import { TextInput } from "react-native-paper"
 import { discomfortOptions, feelingOptions } from "@/constants/enums"
 import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { useUpdateWorkout } from "@/db/hooks"
 import { WorkoutComments } from "@/db/models/WorkoutModel"
-import { useUpdateWorkoutQuery } from "@/db/queries/useUpdateWorkoutQuery"
 import {
   Button,
   FeedbackPicker,
@@ -20,13 +20,13 @@ import {
   useColors,
 } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
-import { translate, TxKeyPath } from "@/utils"
 import { goBack } from "@/navigators/navigationUtilities"
+import { translate, TxKeyPath } from "@/utils"
 
 export const WorkoutFeedbackScreen: React.FC = () => {
   const colors = useColors()
   const { openedWorkout } = useOpenedWorkout()
-  const updateWorkout = useUpdateWorkoutQuery()
+  const { mutate: updateWorkout } = useUpdateWorkout()
   const { showConfirm } = useDialogContext()
   const [comments, setComments] = useState<WorkoutComments>(openedWorkout!.comments)
   const hasChanges = useRef(false)
@@ -43,7 +43,7 @@ export const WorkoutFeedbackScreen: React.FC = () => {
   }
 
   function onCommentsSave() {
-    updateWorkout(openedWorkout!.id, { ...comments })
+    updateWorkout({ workoutId: openedWorkout!.id, workout: { ...comments } })
     goBack()
   }
 

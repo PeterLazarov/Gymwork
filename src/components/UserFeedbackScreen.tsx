@@ -15,7 +15,7 @@ import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useSetting } from "@/context/SettingContext"
 import { AirtableFeedback, airtableApi } from "@/integrations/airtable"
 import { HelperText, TextInput } from "react-native-paper"
-import { useSettingsQuery } from "@/db/queries/useSettingsQuery"
+import { useSettings } from "@/db/hooks"
 
 export type UserFeedbackScreenParams = {
   referrerPage: keyof AppStackParamList
@@ -26,7 +26,7 @@ export const UserFeedbackScreen: React.FC<UserFeedbackScreenProps> = ({ navigati
   const { referrerPage } = useRouteParams("UserFeedback")
 
   const { openedDate } = useOpenedWorkout()
-  const { settings } = useSettingsQuery()
+  const { data: settings } = useSettings()
   const { setFeedbackUser } = useSetting()
   const { showSnackbar } = useDialogContext()
 

@@ -3,9 +3,8 @@ import { View } from "react-native"
 
 import { ExerciseSelectLists } from "@/components/shared/ExerciseSelectLists"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { useInsertWorkout, useInsertWorkoutStep } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
-import { useInsertWorkoutQuery } from "@/db/queries/useInsertWorkoutQuery"
-import { useInsertWorkoutStepQuery } from "@/db/queries/useInsertWorkoutStepQuery"
 import { WorkoutStep } from "@/db/schema"
 import { FAB, Header, Icon, IconButton, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
@@ -22,8 +21,8 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
 
   const [selectedExercises, setSelectedExercises] = useState<ExerciseModel[]>([])
   const { openedWorkout, openedDateMs } = useOpenedWorkout()
-  const insertWorkout = useInsertWorkoutQuery()
-  const insertExerciseInWorkout = useInsertWorkoutStepQuery()
+  const { mutateAsync: insertWorkout } = useInsertWorkout()
+  const { mutateAsync: insertExerciseInWorkout } = useInsertWorkoutStep()
   const { selectMode } = useRouteParams("ExerciseSelect")
 
   async function createExercisesStep(exercises: ExerciseModel[]) {

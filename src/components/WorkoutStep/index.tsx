@@ -4,12 +4,14 @@ import { View } from "react-native"
 import { ExerciseSelectLists } from "@/components/shared/ExerciseSelectLists"
 import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import {
+  useInsertWorkoutStep,
+  useRemoveWorkoutStep,
+  useUpdateExercise,
+  useUpdateWorkoutStepExercise,
+} from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { useInsertWorkoutStepQuery } from "@/db/queries/useInsertWorkoutStepQuery"
-import { useRemoveWorkoutStepQuery } from "@/db/queries/useRemoveWorkoutStepQuery"
-import { useUpdateExerciseQuery } from "@/db/queries/useUpdateExerciseQuery"
-import { useUpdateWorkoutStepExerciseQuery } from "@/db/queries/useUpdateWorkoutStepExerciseQuery"
 import {
   boxShadows,
   fontSize,
@@ -43,12 +45,12 @@ export const WorkoutStepScreen: React.FC<
 
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
   const [focusedStepIndex, setFocusedStepIndex] = useState(0)
-  const updateWorkoutStepExercise = useUpdateWorkoutStepExerciseQuery()
+  const { mutate: updateWorkoutStepExercise } = useUpdateWorkoutStepExercise()
   const focusedExercise = focusedStep.exercises[focusedStepIndex]
 
   function switchExercise(exercise: ExerciseModel) {
     if (focusedExercise) {
-      updateWorkoutStepExercise(focusedStep.id, focusedExercise.id!, exercise)
+      updateWorkoutStepExercise({ workoutStepId: focusedStep.id, exerciseId: exercise.id! })
       setExerciseSelectOpen(false)
     }
   }
@@ -115,9 +117,9 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
   const { openedWorkout } = useOpenedWorkout()
   const [menuOpen, setMenuOpen] = useState(false)
   const { showSnackbar } = useDialogContext()
-  const removeWorkoutStep = useRemoveWorkoutStepQuery()
-  const insertWorkoutStep = useInsertWorkoutStepQuery()
-  const updateExercise = useUpdateExerciseQuery()
+  const { mutate: removeWorkoutStep } = useRemoveWorkoutStep()
+  const { mutateAsync: insertWorkoutStep } = useInsertWorkoutStep()
+  const { mutate: updateExercise } = useUpdateExercise()
 
   const getRevertDeleteStep = (step: WorkoutStepModel) => {
     const stepToRestore = {
@@ -154,7 +156,10 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
 
   const toggleFavoriteExercise = () => {
     setMenuOpen(false)
-    updateExercise(focusedExercise.id!, { isFavorite: !focusedExercise.isFavorite })
+    updateExercise({
+      id: focusedExercise.id!,
+      updates: { is_favorite: !focusedExercise.isFavorite },
+    })
   }
 
   function onSwitchExercisePress() {

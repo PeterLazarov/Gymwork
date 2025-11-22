@@ -3,18 +3,19 @@ import { useMigrations } from "drizzle-orm/expo-sqlite/migrator"
 import Constants from "expo-constants"
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin"
 import { SQLiteDatabase, deleteDatabaseAsync, openDatabaseSync } from "expo-sqlite"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 // @ts-expect-error: Drizzle generates the migrations file in JS without type declarations
 import migrations from "../../drizzle/migrations"
 import { SQLiteDBName } from "./constants"
 import { allRelations } from "./relations"
 import { schema } from "./schema"
-import { DBContext, DrizzleDBType } from "./useDB"
+import { DatabaseService } from "./services/DatabaseService"
+import { DatabaseServiceContext, DrizzleDBType } from "./useDB"
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ActivityIndicator, Text, View } from "react-native"
 import { seedAll } from "./expo/expoSeeder"
-import { TanstackQueryProvider } from "@/tanstack-query"
 
 let _drizzle: DrizzleDBType
 export function getDrizzle(): DrizzleDBType {
@@ -23,6 +24,15 @@ export function getDrizzle(): DrizzleDBType {
 
 const IS_DEV_RUNTIME =
   typeof __DEV__ !== "undefined" ? __DEV__ : process.env.NODE_ENV !== "production"
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000, // Data is fresh for 1 second
+      retry: 1,
+    },
+  },
+})
 
 export default function DBProvider({ children }: { children: React.ReactNode }) {
   const [isReady, setIsReady] = useState(false)
@@ -96,6 +106,9 @@ function DBProviderInitialised({
 
   const { success, error } = useMigrations(db, migrations)
 
+  // Create database service instance
+  const databaseService = useMemo(() => new DatabaseService(db), [db])
+
   // Seed data after migrations
   useEffect(() => {
     if (!success || seedingComplete) return
@@ -145,8 +158,10 @@ function DBProviderInitialised({
   }
 
   return (
-    <DBContext.Provider value={{ sqlite, drizzleDB: db }}>
-      <TanstackQueryProvider>{children}</TanstackQueryProvider>
-    </DBContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <DatabaseServiceContext.Provider value={databaseService}>
+        {children}
+      </DatabaseServiceContext.Provider>
+    </QueryClientProvider>
   )
 }
