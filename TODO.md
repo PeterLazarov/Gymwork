@@ -17,7 +17,7 @@
 - list rest time in workout chart
 - Experiments: Inline editing -> do try Compact entry (clicking on a value in a set opens only the control to edit that value)
 - change to hierarchial translation keys
-- combine tanstack and drizzle services
+- optimise set insert and remove loading time
 - test if calling onClose in Modal component twice
 - fix rest timer Partial ts type
 - fix rest timer start button
