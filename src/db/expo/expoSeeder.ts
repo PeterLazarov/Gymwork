@@ -3,11 +3,12 @@ import type { useSQLiteContext } from "expo-sqlite"
 
 import type __state from "../../data/data.json"
 import _state from "../../data/data_large.json"
+import { defaultSettings } from "../hooks"
 import { schema } from "../schema"
 import { DrizzleDBType } from "../useDB"
 import { seedWorkouts } from "./seedWorkouts"
 
-const { exercises, exercise_metrics } = schema
+const { exercises, exercise_metrics, settings } = schema
 
 const state = _state as typeof __state as {
   exerciseStore: {
@@ -33,6 +34,13 @@ type SeedOptions = {
 }
 
 export async function seedAll(drizzleDB: DrizzleDBType, options: SeedOptions = {}) {
+  // Create default settings record if it doesn't exist
+  const existingSettings = await drizzleDB.query.settings.findFirst()
+  if (!existingSettings) {
+    await drizzleDB.insert(settings).values(defaultSettings).execute()
+    console.log("✅ Created default settings")
+  }
+
   for (const e of state.exerciseStore.exercises) {
     const _exercise: typeof exercises.$inferInsert = {
       name: e.name,
