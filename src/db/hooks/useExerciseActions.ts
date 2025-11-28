@@ -20,6 +20,19 @@ export function useWorkoutsForExercise(
   return useQuery({
     queryKey: ["exercises", exerciseId, "workouts", filters],
     queryFn: () => db.getWorkoutsForExercise(exerciseId, filters),
+    select: (data) => {
+      return data
+        .map((workout) => ({
+          ...workout,
+          workoutSteps: workout.workoutSteps
+            .filter((step) => step.sets.some((set) => set.exercise_id === exerciseId))
+            .map((step) => ({
+              ...step,
+              sets: step.sets.filter((set) => set.exercise_id === exerciseId),
+            })),
+        }))
+        .filter((workout) => workout.workoutSteps.length > 0)
+    },
   })
 }
 
