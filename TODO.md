@@ -22,3 +22,6 @@
 - fix rest timer Partial ts type
 - fix rest timer start button
 - render last active chart view
+- fix switch exercise -> sets disappearing
+- fix exercise history tab not filtering out the other exercises in the workouts
+- exercise drag n drop
