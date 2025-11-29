@@ -7,7 +7,7 @@ import { NumberInput } from "./NumberInput"
 import { Icon } from "./Icon"
 import { IconButton } from "./IconButton"
 import { fontSize, spacing } from "../tokens"
-import { Timer } from "app/db/models/Timer"
+import { Timer } from "@/utils/useTimer"
 import { manageInputFocus, translate } from "@/utils"
 
 type Props = {
@@ -33,25 +33,14 @@ export const DurationInput = forwardRef<TextInputRN, Props>(function DurationInp
   const { onHandleSubmit } = manageInputFocus(inputRefs, () => onSubmitEditing?.())
 
   useEffect(() => {
-    if (timer?.timeElapsed && timer?.type === "duration") {
+    if (timer?.timeElapsed) {
       onUpdate(timer?.timeElapsed)
     }
-  }, [timer?.timeElapsed, timer?.type])
+  }, [timer?.timeElapsed])
 
   const hideTimer = useMemo(() => {
     return !timer
   }, [timer])
-
-  function onResume() {
-    if (!timer) return
-
-    if (timer.type !== "duration") {
-      timer?.setTimeElapsed(value ?? Duration.fromMillis(0))
-      timer.setProp("type", "duration")
-    }
-
-    timer.resume()
-  }
 
   return (
     <View
@@ -63,12 +52,12 @@ export const DurationInput = forwardRef<TextInputRN, Props>(function DurationInp
     >
       {!hideTimer && (
         <View style={{ paddingLeft: 4 }}>
-          {timer?.type === "duration" && timer?.isRunning ? (
+          {timer?.isRunning ? (
             <IconButton onPress={timer?.stop}>
               <Icon icon="stop" />
             </IconButton>
           ) : (
-            <IconButton onPress={onResume}>
+            <IconButton onPress={timer?.resume}>
               <Icon icon="play" />
             </IconButton>
           )}
@@ -88,9 +77,9 @@ export const DurationInput = forwardRef<TextInputRN, Props>(function DurationInp
                 .shiftToAll()
                 .set({ hours: hours ?? 0 })
               onUpdate(updatedDuration)
-              if (timer?.type === "duration") {
-                timer?.setTimeElapsed(updatedDuration)
-                timer?.stop()
+              if (timer) {
+                timer.setTimeElapsed(updatedDuration)
+                timer.stop()
               }
             }}
             maxLength={2}
@@ -116,9 +105,9 @@ export const DurationInput = forwardRef<TextInputRN, Props>(function DurationInp
               .set({ minutes: minutes ?? 0 })
             timer?.stop()
             onUpdate(updatedDuration)
-            if (timer?.type === "duration") {
-              timer?.setTimeElapsed(updatedDuration)
-              timer?.stop()
+            if (timer) {
+              timer.setTimeElapsed(updatedDuration)
+              timer.stop()
             }
           }
         }}
@@ -142,9 +131,9 @@ export const DurationInput = forwardRef<TextInputRN, Props>(function DurationInp
               .shiftToAll()
               .set({ seconds: seconds ?? 0 })
             onUpdate(updatedDuration)
-            if (timer?.type === "duration") {
-              timer?.setTimeElapsed(updatedDuration)
-              timer?.stop()
+            if (timer) {
+              timer.setTimeElapsed(updatedDuration)
+              timer.stop()
             }
           }
         }}

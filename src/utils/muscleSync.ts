@@ -11,12 +11,12 @@ export const syncMuscleAreasFromMuscles = (
   })
 
   const updatedMuscleAreas = currentMuscleAreas.filter((area) => {
-    const musclesInArea = muscleAreaToMusclesMapping[area] || []
+    const musclesInArea = muscleAreaToMusclesMapping[area as keyof typeof muscleAreaToMusclesMapping] || []
     return musclesInArea.some((muscle) => selectedMuscles.includes(muscle))
   })
 
   muscleAreasFromMuscles.forEach((area) => {
-    const musclesInArea = muscleAreaToMusclesMapping[area] || []
+    const musclesInArea = muscleAreaToMusclesMapping[area as keyof typeof muscleAreaToMusclesMapping] || []
     const allMusclesSelected = musclesInArea.every((muscle) => selectedMuscles.includes(muscle))
     if (allMusclesSelected && !updatedMuscleAreas.includes(area)) {
       updatedMuscleAreas.push(area)
@@ -33,7 +33,7 @@ export const syncMusclesFromMuscleAreas = (
   let updatedMuscles = [...currentMuscles]
 
   selectedMuscleAreas.forEach((area) => {
-    const musclesInArea = muscleAreaToMusclesMapping[area] || []
+    const musclesInArea = muscleAreaToMusclesMapping[area as keyof typeof muscleAreaToMusclesMapping] || []
     musclesInArea.forEach((muscle) => {
       if (!updatedMuscles.includes(muscle)) {
         updatedMuscles.push(muscle)

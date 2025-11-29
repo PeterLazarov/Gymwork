@@ -40,7 +40,8 @@ export const Button: React.FC<ButtonProps> = ({
     tertiary: colors.surfaceContainer,
     secondary: colors.outlineVariant,
     outline: colors.outline,
-  }
+    disabled: colors.surface,
+  } as const
 
   const buttonTextColors = {
     primary: colors.onPrimary,
@@ -49,7 +50,8 @@ export const Button: React.FC<ButtonProps> = ({
     secondary: colors.onSecondaryContainer,
     critical: colors.onError,
     tertiary: colors.onSurface,
-  }
+    disabled: colors.onSurface,
+  } as const
 
   const color = disabled ? "disabled" : type === "outline" ? "outline" : variant
 
