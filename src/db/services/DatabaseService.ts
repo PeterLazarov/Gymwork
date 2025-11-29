@@ -266,6 +266,7 @@ export class DatabaseService {
         and(eq(workouts.date, dateMs), eq(workouts.is_template, false)),
       with: {
         workoutSteps: {
+          orderBy: (workoutSteps, { asc }) => [asc(workoutSteps.position)],
           with: {
             workoutStepExercises: {
               with: {
