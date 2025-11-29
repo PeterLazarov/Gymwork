@@ -41,7 +41,7 @@ export function useExerciseLastSet(exerciseId: number) {
 
   return useQuery({
     queryKey: ["exercises", exerciseId, "last-set"],
-    queryFn: () => db.getExerciseLastSet(exerciseId),
+    queryFn: async () => (await db.getExerciseLastSet(exerciseId)) ?? null,
   })
 }
 

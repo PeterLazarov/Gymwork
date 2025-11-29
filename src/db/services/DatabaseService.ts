@@ -1,4 +1,4 @@
-import { asc, count, desc, eq, like, sql } from "drizzle-orm"
+import { and, asc, count, desc, eq, like, sql } from "drizzle-orm"
 import { DateTime } from "luxon"
 import { ExerciseModel } from "../models/ExerciseModel"
 import { SetModel } from "../models/SetModel"
@@ -597,12 +597,17 @@ export class DatabaseService {
     return this.db.delete(workout_steps).where(eq(workout_steps.id, workoutStepId))
   }
 
-  async updateWorkoutStepExercise(workoutStepId: number, exerciseId: number) {
+  async updateWorkoutStepExercise(workoutStepId: number, oldExerciseId: number, exerciseId: number) {
     const timestamp = DateTime.now().toMillis()
-
-    await this.db
-      .delete(workout_step_exercises)
-      .where(eq(workout_step_exercises.workout_step_id, workoutStepId))
+console.log("updateWorkoutStepExercise", workoutStepId, oldExerciseId, exerciseId)
+    Promise.all([
+      this.db.delete(workout_step_exercises).where(
+        and(eq(workout_step_exercises.workout_step_id, workoutStepId), eq(workout_step_exercises.exercise_id, oldExerciseId))
+      ),
+      this.db.delete(sets).where(
+        and(eq(sets.workout_step_id, workoutStepId), eq(sets.exercise_id, oldExerciseId))
+      )
+    ])
 
     return this.db.insert(workout_step_exercises).values({
       workout_step_id: workoutStepId,

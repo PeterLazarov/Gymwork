@@ -22,5 +22,4 @@
 - fix rest timer Partial ts type
 - fix rest timer start button
 - render last active chart view
-- fix switch exercise -> sets disappearing
 - exercise drag n drop

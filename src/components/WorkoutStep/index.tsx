@@ -50,7 +50,7 @@ export const WorkoutStepScreen: React.FC<
 
   function switchExercise(exercise: ExerciseModel) {
     if (focusedExercise) {
-      updateWorkoutStepExercise({ workoutStepId: focusedStep.id, exerciseId: exercise.id! })
+      updateWorkoutStepExercise({ workoutStepId: focusedStep.id, oldExerciseId: focusedExercise.id!, exerciseId: exercise.id! })
       setExerciseSelectOpen(false)
     }
   }

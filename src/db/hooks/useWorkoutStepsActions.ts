@@ -45,8 +45,8 @@ export function useUpdateWorkoutStepExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ workoutStepId, exerciseId }: { workoutStepId: number; exerciseId: number }) =>
-      db.updateWorkoutStepExercise(workoutStepId, exerciseId),
+    mutationFn: ({ workoutStepId, oldExerciseId, exerciseId }: { workoutStepId: number; oldExerciseId: number; exerciseId: number }) =>
+      db.updateWorkoutStepExercise(workoutStepId, oldExerciseId, exerciseId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workouts"] })
     },
