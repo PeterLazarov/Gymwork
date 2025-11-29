@@ -157,9 +157,8 @@ export class DatabaseService {
 
   async getExerciseLastSet(exerciseId: number) {
     return this.db.query.sets.findFirst({
-      where: (sets, { eq, and, isNotNull }) =>
-        and(eq(sets.exercise_id, exerciseId), isNotNull(sets.completed_at)),
-      orderBy: (sets, { desc }) => [desc(sets.completed_at)],
+      where: (sets, { eq }) => eq(sets.exercise_id, exerciseId),
+      orderBy: (sets, { desc }) => [desc(sets.created_at)],
       with: {
         exercise: {
           with: {
