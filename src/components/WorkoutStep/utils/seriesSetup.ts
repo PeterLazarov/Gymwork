@@ -4,6 +4,8 @@ import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
 import { palettes } from "@/designSystem"
 import { SeriesItem } from "./useChartConfig"
+import { measurementUnits } from "@/constants/units"
+import { isImperialDistance } from "@/utils"
 
 type Props = {
   data: SetModel[][]
@@ -30,16 +32,16 @@ export const seriesSetup = ({ data }: Props) => {
     )
   }
 
-  // const speedFormatter = () => {
-  //   return data.map(sets =>
-  //     sets.length > 0
-  //       ? sets.reduce(
-  //           (max, set) => Number(Math.max(max, set.speed).toFixed(2)),
-  //           0
-  //         )
-  //       : null
-  //   )
-  // }
+  const speedFormatter = () => {
+    return data.map(sets =>
+      sets.length > 0
+        ? sets.reduce(
+            (max, set) => Number(Math.max(max, set.speed ?? 0).toFixed(2)),
+            0
+          )
+        : null
+    )
+  }
 
   const totalTonnageFormatter = () => {
     return data.map((sets) =>
@@ -113,32 +115,33 @@ export const seriesSetup = ({ data }: Props) => {
       }
     }
     if (exercise.hasMetricType("distance")) {
-      series["Max Distance"] = {
+      series["Distance"] = {
         data: singleMetricFormatter("distance"),
         color: colorsStack.pop()!,
         initiallySelected: true,
         unit: exercise.getMetricByType("distance")!.unit,
         type: 'line'
       }
-      // if (exercise.hasMetricType('duration')) {
-      //   const isImperial = isImperialDistance(
-      //     exercise.getMetricByType('distance')!.unit
-      //   )
-      //   const distanceUnit = isImperial
-      //     ? measurementUnits.distance.mile
-      //     : measurementUnits.distance.km
-      //   const durationUnit = measurementUnits.duration.h
+      if (exercise.hasMetricType('duration')) {
+        const isImperial = isImperialDistance(
+          exercise.getMetricByType('distance')!.unit
+        )
+        const distanceUnit = isImperial
+          ? measurementUnits.distance.mile
+          : measurementUnits.distance.km
+        const durationUnit = measurementUnits.duration.h
 
-      //   series['Max Speed'] = {
-      //     data: speedFormatter(),
-      //     color: colorsStack.pop()!,
-      //     initiallySelected: false,
-      //     unit: `${distanceUnit}/${durationUnit}`,
-      //   }
-      // }
+        series['Speed'] = {
+          data: speedFormatter(),
+          color: colorsStack.pop()!,
+          initiallySelected: false,
+          unit: `${distanceUnit}/${durationUnit}`,
+          type: 'line'
+        }
+      }
     }
     if (exercise.hasMetricType("duration")) {
-      series["Max Duration"] = {
+      series["Duration"] = {
         data: singleMetricFormatter("duration"),
         color: colorsStack.pop()!,
         initiallySelected: false,

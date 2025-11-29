@@ -1,4 +1,3 @@
-- fix chart reset on view change
 - fix exercise select screen favourite button
 - fix airtable intergration
 - send error reports

@@ -1,7 +1,7 @@
 import convert, { Unit } from "convert-units"
 
 import type { Exercise, ExerciseMetric, Set } from "@/db/schema"
-import { convertBaseDurationToUnit, convertBaseWeightToUnit, convertWeightToBase } from "@/utils"
+import { convertBaseDurationToUnit, convertBaseWeightToUnit, convertWeightToBase, isImperialDistance } from "@/utils"
 import { ExerciseModel } from "./ExerciseModel"
 
 export type SetModelType = Set & {
@@ -85,7 +85,16 @@ export class SetModel {
   }
 
   get speed(): number | null {
-    return null
+    if (!this.distance || !this.durationMs) return null
+
+    const distanceMetric = this.exercise.getMetricByType("distance")!
+    const isImperial = isImperialDistance(distanceMetric.unit)
+
+    const baseDistance = convert(this.distance).from(distanceMetric.unit as Unit)
+    const formattedDistance = baseDistance.to(isImperial ? 'mi' : 'km')
+    const formattedDuration = convert(this.durationMs).from('ms').to('h')
+
+    return formattedDistance / formattedDuration
   }
 
   get rest(): number | null {
