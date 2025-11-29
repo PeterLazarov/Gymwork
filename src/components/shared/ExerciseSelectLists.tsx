@@ -10,6 +10,7 @@ import {
   Icon,
   IconButton,
   palettes,
+  Select,
   spacing,
   TabConfig,
   Text,
@@ -21,6 +22,7 @@ import { translate } from "@/utils"
 import { exerciseImages } from "@/utils/exerciseImages"
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list"
 import { Searchbar } from "react-native-paper"
+import { muscleAreas } from "@/constants/muscles"
 
 const noop = () => {}
 
@@ -254,13 +256,11 @@ const AllExercisesList: React.FC<AllExercisesListProps> = ({
 
   return (
     <>
-      <View style={{ flex: 1, flexDirection: "column" }}>
-        <ExerciseList
-          exercises={exercises}
-          onSelect={onSelect ?? noop}
-          selectedExercises={selectedExercises}
-        />
-      </View>
+      <ExerciseList
+        exercises={exercises}
+        onSelect={onSelect ?? noop}
+        selectedExercises={selectedExercises}
+      />
     </>
   )
 }
@@ -282,17 +282,17 @@ const FavoriteExercisesList: React.FC<FavoriteExercisesListProps> = ({
     [rawExercises],
   )
 
+  if (exercises.length === 0) {
+    return <EmptyState text={translate("noFavoriteExercises")} />
+  }
+
   return (
     <>
-      {exercises.length > 0 ? (
-        <ExerciseList
-          exercises={exercises}
-          onSelect={onSelect}
-          selectedExercises={selectedExercises}
-        />
-      ) : (
-        <EmptyState text={translate("noFavoriteExercises")} />
-      )}
+      <ExerciseList
+        exercises={exercises}
+        onSelect={onSelect}
+        selectedExercises={selectedExercises}
+      />  
     </>
   )
 }
@@ -306,24 +306,47 @@ const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const { data: rawExercises } = useMostUsedExercises(10, filterString)
+  const [count, setCount] = useState(10)
+  const [muscleArea, setMuscleArea] = useState<string | undefined>()
+  const { data: rawExercises } = useMostUsedExercises(count, muscleArea, filterString)
 
   const exercises = useMemo(
     () => (rawExercises ?? []).map((item) => new ExerciseModel(item)),
     [rawExercises],
   )
 
+  if (exercises.length === 0) {
+    return <EmptyState text={translate("noWorkoutsEntered")} />
+  }
+
   return (
     <>
-      {exercises.length > 0 ? (
-        <ExerciseList
-          exercises={exercises}
-          onSelect={onSelect}
-          selectedExercises={selectedExercises}
+      <View style={{ flexDirection: "row", gap: spacing.xxs }}>
+        <Select
+          label={translate("count")}
+          value={count}
+          onChange={setCount}
+          options={[
+            { label: "10", value: 10 },
+            { label: "20", value: 20 },
+            { label: "30", value: 30 },
+          ]}
+          containerStyle={{ flex: 1 }}
         />
-      ) : (
-        <EmptyState text={translate("noWorkoutsEntered")} />
-      )}
+        {/* <Select
+          label={translate("muscle")}
+          value={muscleArea}
+          onChange={setMuscleArea}
+          options={muscleAreas.map((muscleArea) => ({ label: muscleArea, value: muscleArea }))}
+          containerStyle={{ flex: 1 }}
+        /> */}
+
+      </View>
+      <ExerciseList
+        exercises={exercises}
+        onSelect={onSelect}
+        selectedExercises={selectedExercises}
+      />
     </>
   )
 }

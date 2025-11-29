@@ -1,4 +1,4 @@
-import { and, asc, count, desc, eq, like, sql } from "drizzle-orm"
+import { and, arrayContained, arrayOverlaps, asc, count, desc, eq, inArray, like, sql } from "drizzle-orm"
 import { DateTime } from "luxon"
 import { ExerciseModel } from "../models/ExerciseModel"
 import { SetModel } from "../models/SetModel"
@@ -77,7 +77,17 @@ export class DatabaseService {
     })
   }
 
-  async getMostUsedExercises(limit: number, search?: string) {
+  async getMostUsedExercises(limit: number, muscleArea?: string, search?: string) {
+    const conditions = []
+    
+    if (search) {
+      conditions.push(like(exercises.name, `%${search}%`))
+    }
+    
+    if (muscleArea) {
+      conditions.push(arrayOverlaps(exercises.muscle_areas, [muscleArea]))
+    }
+    
     return this.db
       .select({
         exercise: exercises,
@@ -87,7 +97,7 @@ export class DatabaseService {
       .leftJoin(workout_step_exercises, eq(workout_step_exercises.exercise_id, exercises.id))
       .groupBy(exercises.id)
       .orderBy(desc(count(workout_step_exercises.id)))
-      .where(search ? like(exercises.name, `%${search}%`) : undefined)
+      .where(and(...conditions))
       .limit(limit)
   }
 

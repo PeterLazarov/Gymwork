@@ -1,4 +1,3 @@
-- fix exercise select screen favourite button
 - fix airtable intergration
 - send error reports
 - workout timer
