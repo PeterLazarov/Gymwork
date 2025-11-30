@@ -169,7 +169,7 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
 
   const [selectedDate, setSelectedDate] = useState<string>()
 
-  function onHighlight(data: HighlightPayload) {
+  const onHighlight = useCallback((data: HighlightPayload) => {
     const dateIndex = data.batch?.[0]?.dataIndex as number
     const date = viewDays[dateIndex]
 
@@ -192,7 +192,7 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
     }
 
     setSelectedDate(dateKey)
-  }
+  }, [viewDays, dateWorkoutMap])
 
   useEffect(() => {
     if (chartElRef.current && !eChartRef.current) {
@@ -211,7 +211,7 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
         eChartRef.current = null as any
       }
     }
-  }, [width, height, onHighlight])
+  }, [width, height])
 
   useEffect(() => {
     if (eChartRef.current) {
