@@ -65,6 +65,7 @@ const MCIcons = [
   "sleep",
   "filter",
   "filter-outline",
+  "drag-horizontal"
 ] as const satisfies readonly (keyof typeof MaterialCommunityIcons.glyphMap)[]
 type MCIcon = (typeof MCIcons)[number]
 

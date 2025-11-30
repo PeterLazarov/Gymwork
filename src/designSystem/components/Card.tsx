@@ -5,14 +5,16 @@ import { spacing, useColors } from "../tokens"
 import { Text } from "./Text"
 
 export type CardProps = Omit<PressableProps, "containerStyle" | "style"> & {
-  title?: string
+  header?: React.ReactNode
   content: React.ReactNode
   containerStyle?: ViewStyle
   style?: StyleProp<ViewStyle>
 }
 
-export const Card: React.FC<CardProps> = ({
-  title,
+export const Card: React.FC<CardProps> & {
+  Title: React.FC<TitleProps>
+} = ({
+  header,
   content,
   containerStyle = {},
   style,
@@ -32,12 +34,19 @@ export const Card: React.FC<CardProps> = ({
     >
       {(props) => (
         <View style={[styles.content, style, { opacity: props.pressed ? 0.5 : 1 }]}>
-          {title && <Text style={styles.title}>{title}</Text>}
+          {header}
           <View>{content}</View>
         </View>
       )}
     </Pressable>
   )
+}
+
+type TitleProps = {
+  tx: string
+}
+const Title: React.FC<TitleProps> = ({ tx }) => {
+  return <Text style={titleStyle.title}>{tx}</Text>
 }
 
 const makeStyles = (colors: ReturnType<typeof useColors>) =>
@@ -54,3 +63,11 @@ const makeStyles = (colors: ReturnType<typeof useColors>) =>
       fontWeight: "bold",
     },
   })
+
+const titleStyle = StyleSheet.create({
+  title: {
+    fontWeight: "bold",
+  },
+})
+
+Card.Title = Title

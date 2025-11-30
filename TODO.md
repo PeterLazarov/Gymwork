@@ -20,4 +20,3 @@
 - fix rest timer Partial ts type
 - fix rest timer start button
 - render last active chart view
-- show drag icon on step drag

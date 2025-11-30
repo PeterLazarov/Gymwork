@@ -5,7 +5,7 @@ import { StepSetsList } from "@/components/shared/StepSetsList"
 import { useReorderWorkoutSteps } from "@/db/hooks"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
-import { Card, CardProps, DraggableList, spacing, useColors } from "@/designSystem"
+import { Card, CardProps, DraggableList, Icon, spacing, useColors } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
 import { DragListRenderItemInfo } from "react-native-draglist"
 
@@ -64,7 +64,12 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, workout, onDrag
 
   return (
     <Card
-      title={title}
+      header={
+        <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
+          {isActive && <Icon icon="drag-horizontal" />}
+          <Card.Title tx={title}/>
+        </View>
+      }
       content={
         <View style={{ opacity: isActive ? 0 : 1 }}>
           <StepSetsList
