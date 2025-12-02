@@ -3,6 +3,9 @@ import { Modal as RNModal, ModalProps as RNModalProps, View, ViewStyle } from "r
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { Backdrop } from "./Backdrop"
+import { Text } from "./Text"
+import { Divider } from "./Divider"
+import { fontSize, spacing } from "../tokens"
 
 type ModalProps = Omit<RNModalProps, "visible"> & {
   containerStyle?: ViewStyle
@@ -10,7 +13,9 @@ type ModalProps = Omit<RNModalProps, "visible"> & {
   onClose: () => void
 }
 
-export function Modal({ containerStyle, open, children, onClose, ...props }: ModalProps) {
+export const Modal: React.FC<ModalProps> & {
+  Header: React.FC<{ title: string }>
+} = ({ containerStyle, open, children, onClose, ...props }) => {
   const insets = useSafeAreaInsets()
 
   return (
@@ -33,3 +38,27 @@ export function Modal({ containerStyle, open, children, onClose, ...props }: Mod
     </RNModal>
   )
 }
+
+type HeaderProps = {
+  title: string
+}
+
+Modal.Header = ({ title }: HeaderProps) => {
+  return  <>
+    <Text
+      style={{
+        fontSize: fontSize.md,
+        textAlign: "center",
+        padding: spacing.sm,
+      }}
+    >
+      {title}
+    </Text>
+    <View style={{ paddingHorizontal: spacing.sm }}>
+      <Divider
+        orientation="horizontal"
+        variant="primary"
+      />
+    </View>
+  </>
+} 

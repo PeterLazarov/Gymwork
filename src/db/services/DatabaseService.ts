@@ -1,4 +1,4 @@
-import { and, arrayContained, arrayOverlaps, asc, count, desc, eq, inArray, like, sql } from "drizzle-orm"
+import { and, arrayContained, arrayOverlaps, asc, count, desc, eq, exists, gt, inArray, like, sql } from "drizzle-orm"
 import { DateTime } from "luxon"
 import { ExerciseModel } from "../models/ExerciseModel"
 import { SetModel } from "../models/SetModel"
@@ -16,17 +16,11 @@ import {
   workouts,
 } from "../schema"
 import type { DrizzleDBType } from "../useDB"
+import { ExerciseFilters, WorkoutFilters } from "../hooks"
 
-type WorkoutFilters = {
-  discomfortLevel?: string
+type DatabaseWorkoutFilters = Omit<WorkoutFilters, "dateFrom" | "dateTo"> & {
   dateFrom?: number
   dateTo?: number
-  limit?: number
-  search?: string
-}
-
-type ExerciseFilters = {
-  isFavorite?: boolean
   search?: string
 }
 
@@ -70,6 +64,14 @@ export class DatabaseService {
           conditions.push(like(exercises.name, `%${filters.search}%`))
         }
 
+        if (filters?.muscleArea) {
+          conditions.push(sql`instr(${exercises.muscle_areas}, ${filters.muscleArea}) > 0`)
+        }
+
+        if (filters?.muscle) {
+          conditions.push(sql`instr(${exercises.muscles}, ${filters.muscle}) > 0`)
+        }
+
         if (conditions.length === 0) return undefined
         if (conditions.length === 1) return conditions[0]
         return and(...conditions)
@@ -77,15 +79,19 @@ export class DatabaseService {
     })
   }
 
-  async getMostUsedExercises(limit: number, muscleArea?: string, search?: string) {
+  async getMostUsedExercises(limit: number, filters: ExerciseFilters) {
     const conditions = []
     
-    if (search) {
-      conditions.push(like(exercises.name, `%${search}%`))
+    if (filters.search) {
+      conditions.push(like(exercises.name, `%${filters.search}%`))
     }
     
-    if (muscleArea) {
-      conditions.push(arrayOverlaps(exercises.muscle_areas, [muscleArea]))
+    if (filters.muscleArea) {
+      conditions.push(sql`instr(${exercises.muscle_areas}, ${filters.muscleArea}) > 0`)
+    }
+    
+    if (filters.muscle) {
+      conditions.push(sql`instr(${exercises.muscles}, ${filters.muscle}) > 0`)
     }
     
     return this.db
@@ -94,7 +100,7 @@ export class DatabaseService {
         usage_count: count(workout_step_exercises.id),
       })
       .from(exercises)
-      .leftJoin(workout_step_exercises, eq(workout_step_exercises.exercise_id, exercises.id))
+      .innerJoin(workout_step_exercises, eq(workout_step_exercises.exercise_id, exercises.id))
       .groupBy(exercises.id)
       .orderBy(desc(count(workout_step_exercises.id)))
       .where(and(...conditions))
@@ -217,7 +223,7 @@ export class DatabaseService {
     })
   }
 
-  async getAllWorkoutsFull(filters?: WorkoutFilters) {
+  async getAllWorkoutsFull(filters?: DatabaseWorkoutFilters) {
     return this.db.query.workouts.findMany({
       where: (workouts, { and, gte, lte, eq, like, or }) => {
         const conditions = [eq(workouts.is_template, false)]
@@ -232,6 +238,43 @@ export class DatabaseService {
 
         if (filters?.dateTo) {
           conditions.push(lte(workouts.date, filters.dateTo))
+        }
+
+
+        if (filters?.muscleArea) {
+          conditions.push(
+            exists(
+              this.db
+                .select()
+                .from(workout_steps)
+                .innerJoin(sets, eq(sets.workout_step_id, workout_steps.id))
+                .innerJoin(exercises, eq(exercises.id, sets.exercise_id))
+                .where(
+                  and(
+                    eq(workout_steps.workout_id, workouts.id),
+                    sql`instr(${exercises.muscle_areas}, ${filters.muscleArea}) > 0`,
+                  ),
+                ),
+            ),
+          )
+        }
+
+        if (filters?.muscle) {
+          conditions.push(
+            exists(
+              this.db
+                .select()
+                .from(workout_steps)
+                .innerJoin(sets, eq(sets.workout_step_id, workout_steps.id))
+                .innerJoin(exercises, eq(exercises.id, sets.exercise_id))
+                .where(
+                  and(
+                    eq(workout_steps.workout_id, workouts.id),
+                    sql`instr(${exercises.muscles}, ${filters.muscle}) > 0`,
+                  ),
+                ),
+            ),
+          )
         }
 
         if (filters?.search && filters.search.trim() !== "") {

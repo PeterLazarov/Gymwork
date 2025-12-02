@@ -20,3 +20,5 @@
 - fix rest timer Partial ts type
 - fix rest timer start button
 - render last active chart view
+- fix invisible Divider in WorkoutFilterModal
+- make Select not ugly in WorkoutFilterModal and ExerciseSelectLists

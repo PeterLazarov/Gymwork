@@ -81,9 +81,11 @@ export function useUpdateExercise() {
   })
 }
 
-type ExerciseFilters = {
+export type ExerciseFilters = {
   isFavorite?: boolean
   search?: string
+  muscleArea?: string
+  muscle?: string
 }
 
 export function useExercises(filters?: ExerciseFilters) {
@@ -95,13 +97,13 @@ export function useExercises(filters?: ExerciseFilters) {
   })
 }
 
-export function useMostUsedExercises(limit: number, muscleArea?: string, search?: string) {
+export function useMostUsedExercises(limit: number, filters: ExerciseFilters) {
   const db = useDatabaseService()
 
   return useQuery({
-    queryKey: ["exercises", "most-used", { limit, muscleArea, search }],
+    queryKey: ["exercises", "most-used", { limit, filters }],
     queryFn: async () => {
-      const result = await db.getMostUsedExercises(limit, muscleArea, search)
+      const result = await db.getMostUsedExercises(limit, filters)
       return result.map((r) => r.exercise)
     },
   })

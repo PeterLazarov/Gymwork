@@ -130,8 +130,9 @@ const en = {
   viewInstructions: "View instructions",
   noExercisesAdded: "No exercises added",
   workouts: 'Workouts',
-  count: 'Count',
+  top: 'Top',
   muscle: 'Muscle',
+  filterWorkouts: 'Filter workouts',
 }
 
 export default en

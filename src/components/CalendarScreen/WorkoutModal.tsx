@@ -56,83 +56,66 @@ export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, sh
     <Modal
       open={open}
       onClose={onClose}
+      containerStyle={{
+        backgroundColor: colors.surface,
+        marginVertical: spacing.xs,
+        marginHorizontal: spacing.md,
+        flex: 1,
+      }}
     >
-      <View
-        style={{
-          backgroundColor: colors.surface,
-          marginVertical: spacing.xs,
-          marginHorizontal: spacing.md,
-          flex: 1,
-        }}
-      >
-        <View style={{ height: "100%" }}>
-          <Text
+      <Modal.Header title={label} />
+      <View style={{ flex: 1 }}>
+        {showComments && workout.hasComments && (
+          <CommentsCard
+            workout={workout}
+            compactMode
+          />
+        )}
+        <ScrollView>
+          {workout.workoutSteps.map((step) => (
+            <StepItem
+              key={step.id}
+              step={step}
+              workout={workout}
+            />
+          ))}
+        </ScrollView>
+        {mode === "copy" && (
+          <View
             style={{
-              fontSize: fontSize.lg,
-              textAlign: "center",
-              padding: spacing.md,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: spacing.xxs,
+              gap: spacing.xs,
             }}
           >
-            {label}
-          </Text>
-          <Divider
-            orientation="horizontal"
-            variant="primary"
-          />
-          <View style={{ flex: 1 }}>
-            {showComments && workout.hasComments && (
-              <CommentsCard
-                workout={workout}
-                compactMode
-              />
-            )}
-            <ScrollView>
-              {workout.workoutSteps.map((step) => (
-                <StepItem
-                  key={step.id}
-                  step={step}
-                  workout={workout}
-                />
-              ))}
-            </ScrollView>
-            {mode === "copy" && (
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: spacing.xxs,
-                  gap: spacing.xs,
-                }}
-              >
-                <Text style={{ color: colors.onSurface }}>{translate("includeSets")}</Text>
-                <ToggleSwitch
-                  variant="primary"
-                  value={includeSets}
-                  onValueChange={setIncludeSets}
-                />
-              </View>
-            )}
-          </View>
-          <Divider
-            orientation="horizontal"
-            variant="primary"
-          />
-          <View style={{ flexDirection: "row" }}>
-            <Button
-              variant="tertiary"
-              style={{ flex: 1 }}
-              onPress={onClose}
-              text={translate("cancel")}
-            />
-            <Button
-              variant="tertiary"
-              style={{ flex: 1 }}
-              onPress={onActionPress}
-              text={translate(mode === "copy" ? "copyWorkout" : "goToWorkout")}
+            <Text style={{ color: colors.onSurface }}>{translate("includeSets")}</Text>
+            <ToggleSwitch
+              variant="primary"
+              value={includeSets}
+              onValueChange={setIncludeSets}
             />
           </View>
-        </View>
+        )}
+      </View>
+      <Divider
+        orientation="horizontal"
+        variant="primary"
+      />
+      <View style={{ flexDirection: "row" }}>
+        <Button
+          variant="tertiary"
+          style={{ flex: 1 }}
+          onPress={onClose}
+          text={translate("cancel")}
+        />
+        <Button
+          variant="tertiary"
+          style={{ flex: 1 }}
+          onPress={onActionPress}
+          text={translate(mode === "copy" ? "copyWorkout" : "goToWorkout")}
+        />
       </View>
     </Modal>
   )

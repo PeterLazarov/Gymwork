@@ -8,6 +8,8 @@ export type WorkoutFilters = {
   dateTo?: string
   limit?: number
   discomfortLevel?: string
+  muscleArea?: string
+  muscle?: string
 }
 
 export function useAllWorkoutIds(params?: { limit?: number }) {
