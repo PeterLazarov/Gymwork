@@ -5,9 +5,11 @@ import { SetModel } from "../models/SetModel"
 import { WorkoutModel } from "../models/WorkoutModel"
 import {
   Exercise,
+  ExerciseMetric,
   InsertSettings,
   Set,
   Workout,
+  exercise_metrics,
   exercises,
   sets,
   settings,
@@ -409,17 +411,23 @@ export class DatabaseService {
       .returning()
   }
 
-  async updateExercise(id: number, updates: Partial<Exercise>) {
+  async updateExercise(id: number, updates: Partial<ExerciseModel>) {
     const timestamp = DateTime.now().toMillis()
-
-    return this.db
+    const { metrics, muscleAreas, ...exerciseUpdates } = updates
+    await this.db
       .update(exercises)
       .set({
-        ...updates,
+        ...exerciseUpdates,
+        muscle_areas: muscleAreas,
         updated_at: timestamp,
       })
       .where(eq(exercises.id, id))
-      .returning()
+
+    if (metrics !== undefined) {
+      await this.deleteAndRecreateExerciseMetrics(id, metrics, timestamp)
+    }
+
+    return this.db.select().from(exercises).where(eq(exercises.id, id))
   }
 
   // ============================================================================
@@ -862,6 +870,28 @@ console.log("updateWorkoutStepExercise", workoutStepId, oldExerciseId, exerciseI
             })),
         )
       }
+    }
+  }
+
+  private async deleteAndRecreateExerciseMetrics(
+    exerciseId: number,
+    metrics: ExerciseMetric[],
+    timestamp: number,
+  ) {
+    await this.db.delete(exercise_metrics).where(eq(exercise_metrics.exercise_id, exerciseId))
+
+    if (metrics.length > 0) {
+      await this.db.insert(exercise_metrics).values(
+        metrics.map((metric) => ({
+          exercise_id: exerciseId,
+          measurement_type: metric.measurement_type,
+          unit: metric.unit,
+          more_is_better: metric.more_is_better,
+          step_value: metric.step_value ?? null,
+          created_at: timestamp,
+          updated_at: timestamp,
+        })),
+      )
     }
   }
 }

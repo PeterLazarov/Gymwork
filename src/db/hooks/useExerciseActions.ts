@@ -75,11 +75,20 @@ export function useUpdateExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, updates }: { id: number; updates: Partial<Exercise> }) =>
-      db.updateExercise(id, updates),
+    mutationFn: ({ id, updates }: { id: number; updates: Partial<ExerciseModel> }) => {
+      const data = {
+        ...updates,
+        muscles: updates.muscles?.map((m) => m.toString()) ?? [],
+        muscleAreas: updates.muscleAreas?.map((m) => m.toString()) ?? [],
+        metrics: updates.metrics,
+      }
+      return db.updateExercise(id, data)
+    },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["exercises"] })
       queryClient.invalidateQueries({ queryKey: ["exercises", variables.id] })
+      // Invalidate workout queries since they include exercise data with metrics
+      queryClient.invalidateQueries({ queryKey: ["workouts"] })
     },
   })
 }

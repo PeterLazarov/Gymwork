@@ -5,7 +5,7 @@ import { Searchbar } from "react-native-paper"
 
 import { MuscleMap } from "@/components/shared/MuscleMap"
 import { discomfortOptions } from "@/constants/enums"
-import { useAllWorkoutsFull } from "@/db/hooks"
+import { useAllWorkoutsFull, useSettings } from "@/db/hooks"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import {
   AppColors,
@@ -235,6 +235,7 @@ type WorkoutListItemProps = {
 
 const WorkoutListItem: React.FC<WorkoutListItemProps> = ({ workout, onPress }) => {
   const colors = useColors()
+  const { data: settings } = useSettings()
   const styles = useMemo(() => makeWorkoutItemStyles(colors), [colors])
 
   return (
@@ -250,16 +251,14 @@ const WorkoutListItem: React.FC<WorkoutListItemProps> = ({ workout, onPress }) =
 
           <View style={styles.row}>
             <MuscleMap
-              muscles={workout.muscles}
-              muscleAreas={workout.muscleAreas}
+              muscles={settings?.scientific_muscle_names_enabled ? workout.muscles : workout.muscleAreas}
               back={false}
               activeColor={palettes.gold["80"]}
               inactiveColor={colors.outline}
               baseColor={colors.bodyBase}
             />
             <MuscleMap
-              muscles={workout.muscles}
-              muscleAreas={workout.muscleAreas}
+              muscles={settings?.scientific_muscle_names_enabled ? workout.muscles : workout.muscleAreas}
               back={true}
               activeColor={palettes.gold["80"]}
               inactiveColor={colors.outline}

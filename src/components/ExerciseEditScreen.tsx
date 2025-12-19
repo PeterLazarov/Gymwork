@@ -70,6 +70,7 @@ export const ExerciseEditScreen: React.FC = () => {
     if (!exercise) return
 
     if (edittedExercise) {
+      console.log("edittedExercise", exercise.metricTypes)
       updateExercise({ id: exercise.id!, updates: exercise })
       goBack()  
     } else {
@@ -214,16 +215,14 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           }}
         >
           <MuscleMap
-            muscles={exercise.muscles}
-            muscleAreas={exercise.muscleAreas}
+            muscles={settings?.scientific_muscle_names_enabled ? exercise.muscles : exercise.muscleAreas}
             activeColor={palettes.gold["80"]}
             inactiveColor={colors.outline}
             baseColor={colors.bodyBase}
           />
           <MuscleMap
             back
-            muscles={exercise.muscles}
-            muscleAreas={exercise.muscleAreas}
+            muscles={settings?.scientific_muscle_names_enabled ? exercise.muscles : exercise.muscleAreas}
             activeColor={palettes.gold["80"]}
             inactiveColor={colors.outline}
             baseColor={colors.bodyBase}

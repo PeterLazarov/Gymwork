@@ -8,7 +8,6 @@ import { SvgCss } from "react-native-svg/css"
 export interface MuscleMapProps extends Partial<XmlProps> {
   back?: boolean
   muscles: string[]
-  muscleAreas: string[]
   baseColor?: string
   inactiveColor?: string
   activeColor?: string
