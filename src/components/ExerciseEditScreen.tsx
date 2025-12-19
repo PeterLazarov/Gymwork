@@ -6,7 +6,7 @@ import { measurementDefaults, measurementTypes, MetricType } from "@/constants/e
 import { muscleAreas, muscles } from "@/constants/muscles"
 import { DistanceUnit, measurementUnits, WeightUnit } from "@/constants/units"
 import { useDialogContext } from "@/context/DialogContext"
-import { useInsertExercise, useSettings, useUpdateExercise } from "@/db/hooks"
+import { useCreateExercisesStep, useInsertExercise, useInsertWorkoutStep, useSettings, useUpdateExercise } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { ExerciseMetric } from "@/db/schema"
 import {
@@ -28,6 +28,7 @@ import { useRouteParams } from "@/navigators/navigationTypes"
 import { goBack, navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
 import { MuscleMap } from "./shared/MuscleMap"
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 
 export type ExerciseEditScreenParams = {
   edittedExercise?: ExerciseModel
@@ -35,14 +36,10 @@ export type ExerciseEditScreenParams = {
 export const ExerciseEditScreen: React.FC = () => {
   const colors = useColors()
   const { mutate: updateExercise } = useUpdateExercise()
-  const { mutate: insertExercise } = useInsertExercise()
+  const { mutateAsync: insertExercise } = useInsertExercise()
+  const { mutateAsync: createStep } = useCreateExercisesStep()
   const { edittedExercise } = useRouteParams("ExerciseEdit")
-  if (!edittedExercise) {
-    console.warn("REDIRECT - No focusedExercise")
-    navigate("ExerciseSelect", {
-      selectMode: "plain",
-    })
-  }
+
   const hasChanges = useRef(false)
 
   const [exercise, setExercise] = useState<ExerciseModel>(
@@ -69,15 +66,18 @@ export const ExerciseEditScreen: React.FC = () => {
     hasChanges.current = true
   }
 
-  function onComplete() {
+  async function onComplete() {
     if (!exercise) return
 
     if (edittedExercise) {
       updateExercise({ id: exercise.id!, updates: exercise })
+      goBack()  
     } else {
-      insertExercise(exercise as any) // TODO: update DatabaseService.insertExercise
+      const created = await insertExercise(exercise as any) // TODO: update DatabaseService.insertExercise
+      await createStep([created])
+
+      navigate("Workout")
     }
-    goBack()
   }
 
   return (

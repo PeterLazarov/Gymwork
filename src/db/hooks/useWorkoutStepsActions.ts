@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import type { ExerciseModel } from "../models/ExerciseModel"
 import type { SetModel } from "../models/SetModel"
 import { useDatabaseService } from "../useDB"
+import { useInsertWorkout } from "./useWorkoutsActions"
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 
 type InsertWorkoutStepParams = {
   workoutId: number
@@ -83,3 +85,30 @@ export function useReorderWorkoutStepSets() {
     },
   })
 }
+
+
+
+export function useCreateExercisesStep() {
+  const db = useDatabaseService()
+  const { openedWorkout, openedDateMs } = useOpenedWorkout()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (exercises: ExerciseModel[]) => {
+      let workoutId = openedWorkout?.id
+      if (!workoutId) {
+        const result = await db.insertWorkout({ date: openedDateMs })
+        workoutId = result[0].id
+      }
+
+      await db.insertWorkoutStep({ exercises, workoutId })
+
+      return workoutId
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+    },
+  })
+}
+
+

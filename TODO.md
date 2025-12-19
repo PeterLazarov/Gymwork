@@ -22,3 +22,4 @@
 - render last active chart view
 - fix invisible Divider in WorkoutFilterModal
 - make Select not ugly in WorkoutFilterModal and ExerciseSelectLists
+- Chest muscle area is empty

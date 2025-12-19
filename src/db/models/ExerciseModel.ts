@@ -60,7 +60,7 @@ export class ExerciseModel {
   updatedAt: number
   metrics: ExerciseMetric[]
 
-  constructor(data?: ExerciseModelType) {
+  constructor(data?: Partial<ExerciseModelType>) {
     this.id = data?.id
     this.name = data?.name ?? ""
     this.images = data?.images ?? []
@@ -182,9 +182,6 @@ export class ExerciseModel {
   static copy(source: ExerciseModel) {
     return new ExerciseModel({
       ...source,
-      id: source.id ?? -1,
-      position: source.position || null,
-      stance: source.stance || null,
       muscle_areas: source.muscleAreas,
       is_favorite: source.isFavorite,
       created_at: source.createdAt,

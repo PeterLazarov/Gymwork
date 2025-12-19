@@ -2,8 +2,7 @@ import React, { useState } from "react"
 import { View } from "react-native"
 
 import { ExerciseSelectLists } from "@/components/shared/ExerciseSelectLists"
-import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
-import { useInsertWorkout, useInsertWorkoutStep } from "@/db/hooks"
+import { useCreateExercisesStep } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { WorkoutStep } from "@/db/schema"
 import { FAB, Header, Icon, IconButton, useColors } from "@/designSystem"
@@ -20,19 +19,11 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
   const colors = useColors()
 
   const [selectedExercises, setSelectedExercises] = useState<ExerciseModel[]>([])
-  const { openedWorkout, openedDateMs } = useOpenedWorkout()
-  const { mutateAsync: insertWorkout } = useInsertWorkout()
-  const { mutateAsync: insertExerciseInWorkout } = useInsertWorkoutStep()
+  const { mutateAsync: createStep } = useCreateExercisesStep()
   const { selectMode } = useRouteParams("ExerciseSelect")
 
   async function createExercisesStep(exercises: ExerciseModel[]) {
-    let workoutId = openedWorkout?.id
-    if (!workoutId) {
-      const result = await insertWorkout({ date: openedDateMs })
-      workoutId = result[0].id
-    }
-
-    await insertExerciseInWorkout({ exercises, workoutId })
+    await createStep(exercises)
 
     navigation.navigate("Workout")
   }

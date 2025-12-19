@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import type { Exercise } from "../schema"
 import { useDatabaseService } from "../useDB"
+import { ExerciseModel } from "../models/ExerciseModel"
 
 export function useExercise(exerciseId: number) {
   const db = useDatabaseService()
@@ -59,8 +60,10 @@ export function useInsertExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (exercise: Omit<Exercise, "id" | "created_at" | "updated_at">) =>
-      db.insertExercise(exercise),
+    mutationFn: async (exercise: Omit<Exercise, "id" | "created_at" | "updated_at">) => {
+      const [inserted] = await db.insertExercise(exercise)
+      return new ExerciseModel(inserted)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["exercises"] })
     },
