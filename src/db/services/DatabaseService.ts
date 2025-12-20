@@ -290,6 +290,7 @@ export class DatabaseService {
       limit: filters?.limit,
       with: {
         workoutSteps: {
+          orderBy: (workout_steps, { asc }) => [asc(workout_steps.position)],
           with: {
             workoutStepExercises: {
               with: {
