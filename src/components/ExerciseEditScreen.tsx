@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import { ScrollView, View } from "react-native"
+import { ScrollView, View, StyleSheet } from "react-native"
 import { HelperText, TextInput } from "react-native-paper"
 
 import { measurementDefaults, measurementTypes, MetricType } from "@/constants/enums"
@@ -191,7 +191,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   }
 
   return (
-    <View style={{ flex: 1, gap: 8, padding: 8 }}>
+    <View style={{ flex: 1, gap: spacing.lg, padding: spacing.xs }}>
       <TextInput
         label="Name"
         value={exercise.name}
@@ -229,51 +229,53 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           />
         </View>
       )}
-      <View style={{ flexDirection: "row", justifyContent: "center", gap: spacing.sm }}>
-        {settings && settings.scientific_muscle_names_enabled && (
-          <Multiselect
-            options={muscles}
-            selectedValues={exercise.muscles}
-            onSelect={onMusclesChange}
-            containerStyle={{ flex: 1 }}
-            headerText={translate("muscles")}
-            error={musclesError !== ""}
-          />
+      <View>
+        <View style={{ flexDirection: "row", justifyContent: "center", gap: spacing.sm }}>
+          {settings && settings.scientific_muscle_names_enabled && (
+            <Multiselect
+              options={muscles}
+              selectedValues={exercise.muscles}
+              onSelect={onMusclesChange}
+              containerStyle={{ flex: 1 }}
+              headerText={translate("muscles")}
+              error={musclesError !== ""}
+            />
+          )}
+          {settings && !settings.scientific_muscle_names_enabled && (
+            <Multiselect
+              options={muscleAreas}
+              selectedValues={exercise.muscleAreas}
+              onSelect={onMuscleAreasChange}
+              containerStyle={{ flex: 1 }}
+              headerText={translate("muscleAreas")}
+              error={musclesError !== ""}
+            />
+          )}
+          <Button
+            variant={showMuscleMap ? "primary" : "secondary"}
+            onPress={() => setShowMuscleMap(!showMuscleMap)}
+            style={{
+              marginTop: spacing.md,
+              borderRadius: spacing.xs,
+              width: spacing.xl,
+              height: spacing.xl,
+            }}
+          >
+            <Icon
+              icon="arm-flex"
+              color={showMuscleMap ? colors.onPrimary : colors.onSurface}
+            />
+          </Button>
+        </View>
+        {musclesError !== "" && (
+          <HelperText
+            type="error"
+            visible={musclesError !== ""}
+          >
+            {musclesError}
+          </HelperText>
         )}
-        {settings && !settings.scientific_muscle_names_enabled && (
-          <Multiselect
-            options={muscleAreas}
-            selectedValues={exercise.muscleAreas}
-            onSelect={onMuscleAreasChange}
-            containerStyle={{ flex: 1 }}
-            headerText={translate("muscleAreas")}
-            error={musclesError !== ""}
-          />
-        )}
-        <Button
-          variant={showMuscleMap ? "primary" : "secondary"}
-          onPress={() => setShowMuscleMap(!showMuscleMap)}
-          style={{
-            marginTop: spacing.md,
-            borderRadius: spacing.xs,
-            width: spacing.xl,
-            height: spacing.xl,
-          }}
-        >
-          <Icon
-            icon="arm-flex"
-            color={showMuscleMap ? colors.onPrimary : colors.onSurface}
-          />
-        </Button>
       </View>
-      {musclesError !== "" && (
-        <HelperText
-          type="error"
-          visible={musclesError !== ""}
-        >
-          {musclesError}
-        </HelperText>
-      )}
       <Multiselect
         options={measurementTypes}
         selectedValues={exercise.metricTypes as string[]}
@@ -325,11 +327,7 @@ const DistanceSection: React.FC<DistanceSectionProps> = ({ metricConfig, onMetri
       <Text>{translate("distanceMeasurementSettings")}</Text>
 
       <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+        style={styles.formRow}
       >
         <Text>{translate("moreIsBetter")}</Text>
         <ToggleSwitch
@@ -339,13 +337,19 @@ const DistanceSection: React.FC<DistanceSectionProps> = ({ metricConfig, onMetri
         />
       </View>
 
-      <Select
-        options={Object.values(measurementUnits.distance)}
-        headerText={translate("unit")}
-        value={metricConfig.unit}
-        onChange={(distanceUnit) => setUnit(distanceUnit as DistanceUnit)}
-        label={translate("unit")}
-      />
+      <View
+        style={styles.formRow}
+      >
+        <Text style={{ flex: 1 }}>{translate("unit")}</Text>
+        <Select
+          options={Object.values(measurementUnits.distance)}
+          headerText={translate("unit")}
+          value={metricConfig.unit}
+          onChange={(distanceUnit) => setUnit(distanceUnit as DistanceUnit)}
+          label={translate("unit")}
+          containerStyle={{ flex: 1 }}
+        />
+      </View>
     </>
   )
 }
@@ -365,11 +369,7 @@ const DurationSection: React.FC<DurationSectionProps> = ({ metricConfig, onMetri
       <Text>{translate("durationMeasurementSettings")}</Text>
 
       <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+        style={styles.formRow}
       >
         <Text>{translate("moreIsBetter")}</Text>
         <ToggleSwitch
@@ -410,11 +410,7 @@ const WeightSection: React.FC<WeightSectionProps> = ({
       <Text>{translate("weightMeasurementSettings")}</Text>
 
       <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+        style={styles.formRow}
       >
         <Text>{translate("moreIsBetter")}</Text>
         <ToggleSwitch
@@ -447,3 +443,11 @@ const WeightSection: React.FC<WeightSectionProps> = ({
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  formRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+})

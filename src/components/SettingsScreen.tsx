@@ -78,7 +78,7 @@ export const SettingsScreen: FC = () => {
         <Select
           options={appearanceOptions}
           value={colorSchemePreference}
-          onChange={setColorSchemePreference}
+          onChange={(value) => setColorSchemePreference(value!)}
           headerText={translate("theme")}
           label={translate("theme")}
         />

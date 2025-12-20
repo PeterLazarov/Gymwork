@@ -1,25 +1,27 @@
 import { ReactNode } from "react"
-import { Pressable, PressableProps, StyleProp, ViewStyle } from "react-native"
+import { Pressable, PressableProps, StyleProp, TextStyle, ViewStyle } from "react-native"
 
 import { useColors } from "../tokens/colors"
 import { Text } from "./Text"
 
+const buttonSizes = {
+  xSmall: 24,
+  small: 32,
+  default: 48,
+}
 type ButtonVariants = {
   variant: "primary" | "accent" | "neutral" | "critical" | "tertiary" | "secondary"
   type?: "filled" | "outline"
 }
-type ButtonProps = Omit<PressableProps, "style"> &
+export type ButtonProps = Omit<PressableProps, "style"> &
   ButtonVariants & {
-    size?: "default" | "small"
+    size?: keyof typeof buttonSizes
     children?: ReactNode | string
     text?: string
     style?: StyleProp<ViewStyle>
+    textStyle?: StyleProp<TextStyle>
   }
 
-const buttonSizes = {
-  small: 32,
-  default: 48,
-}
 export const Button: React.FC<ButtonProps> = ({
   size = "default",
   disabled,
@@ -28,6 +30,7 @@ export const Button: React.FC<ButtonProps> = ({
   style,
   text,
   children,
+  textStyle,
   ...otherProps
 }) => {
   const colors = useColors()
@@ -54,7 +57,7 @@ export const Button: React.FC<ButtonProps> = ({
   } as const
 
   const color = disabled ? "disabled" : type === "outline" ? "outline" : variant
-
+  if(textStyle) console.log(textStyle)
   return (
     <Pressable
       style={[
@@ -68,6 +71,7 @@ export const Button: React.FC<ButtonProps> = ({
           borderWidth: type === "outline" ? 2 : 0,
           borderColor: type === "outline" ? buttonColors[variant] : "transparent",
         },
+
         style,
       ]}
       disabled={disabled}
@@ -79,11 +83,12 @@ export const Button: React.FC<ButtonProps> = ({
             textAlign: "center",
             color: type !== "outline" ? buttonTextColors[variant] : buttonColors[variant],
           },
+          textStyle,
         ]}
         text={text}
       >
-        {children}
       </Text>
+      {children}
     </Pressable>
   )
 }

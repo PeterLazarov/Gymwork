@@ -33,7 +33,7 @@ type ExerciseSelectListsProps = {
 }
 
 const tabHeight = 48
-const searchBarHeight = 72
+const searchBarHeight = 48
 
 export const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
   multiselect,
@@ -107,6 +107,7 @@ export const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
           mode="view"
           defaultValue={filterString}
           style={{ height: searchBarHeight }}
+          inputStyle={{ minHeight: searchBarHeight }}
         />
       </View>
 
@@ -224,7 +225,7 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
 
         <IconButton
           onPress={() =>
-            updateExercise({ id: exercise.id!, updates: { is_favorite: !exercise.isFavorite } })
+            updateExercise({ id: exercise.id!, updates: { isFavorite: !exercise.isFavorite } })
           }
         >
           <Icon
@@ -264,13 +265,14 @@ const AllExercisesList: React.FC<AllExercisesListProps> = ({
   const muscleItems = settings?.scientific_muscle_names_enabled ? muscles : muscleAreas
   return (
     <>
-      <View style={{ flexDirection: "row", gap: spacing.xxs }}>
+      <View style={{ flexDirection: "row", gap: spacing.xxs, padding: spacing.xs }}>
         <Select
           label={translate("muscle")}
           value={settings?.scientific_muscle_names_enabled ? muscle : muscleArea}
           onChange={settings?.scientific_muscle_names_enabled ? setMuscle : setMuscleArea}
           options={muscleItems.map((muscleArea) => ({ label: muscleArea, value: muscleArea }))}
           containerStyle={{ flex: 1 }}
+          clearable
         />
       </View>
       <ExerciseList
@@ -320,6 +322,7 @@ const FavoriteExercisesList: React.FC<FavoriteExercisesListProps> = ({
           onChange={settings?.scientific_muscle_names_enabled ? setMuscle : setMuscleArea}
           options={muscleItems.map((muscleArea) => ({ label: muscleArea, value: muscleArea }))}
           containerStyle={{ flex: 1 }}
+          clearable
         />
       </View>
       <ExerciseList
@@ -366,7 +369,7 @@ const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
         <Select
           label={translate("top")}
           value={count}
-          onChange={setCount}
+          onChange={(value) => setCount(value!)}
           options={[
             { label: "10", value: 10 },
             { label: "20", value: 20 },
@@ -380,6 +383,7 @@ const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
           onChange={settings?.scientific_muscle_names_enabled ? setMuscle : setMuscleArea}
           options={muscleItems.map((muscleArea) => ({ label: muscleArea, value: muscleArea }))}
           containerStyle={{ flex: 1 }}
+          clearable
         />
       </View>
       <ExerciseList

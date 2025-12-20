@@ -8,6 +8,7 @@ import { Button } from "./Button"
 import { Divider } from "./Divider"
 import { Modal } from "./Modal"
 import { Text } from "./Text"
+import { Tag } from "./Tag"
 
 export type SelectOption<T = unknown> =
   | string
@@ -19,12 +20,15 @@ export type SelectOption<T = unknown> =
 type SelectProps<T = unknown> = {
   options: SelectOption<T>[]
   value?: T
-  onChange: (selected: T) => void
+  onChange: (selected?: T) => void
   headerText?: string
   placeholder?: string
   containerStyle?: ViewStyle
+  buttonStyle?: ViewStyle
   hideSelectedItemsRemove?: boolean
   label?: string
+  clearable?: boolean
+  hideChevron?: boolean
 }
 
 export function Select<T>({
@@ -35,15 +39,15 @@ export function Select<T>({
   placeholder,
   label,
   containerStyle = {},
+  buttonStyle,
+  clearable,
+  hideChevron
 }: SelectProps<T>) {
   const [selectionOpen, setSelectionOpen] = useState(false)
 
   const openSelection = () => setSelectionOpen(true)
   const closeSelection = () => setSelectionOpen(false)
 
-  const getOptionLabel = (option: SelectOption): string => {
-    return typeof option === "string" ? option : option.label
-  }
   const getOptionValue = (option: SelectOption<T>): T => {
     return typeof option === "string" ? (option as T) : option.value
   }
@@ -59,12 +63,20 @@ export function Select<T>({
       closeSelection()
     }
   }
+
+  function clear() {
+    onChange(undefined)
+  }
   return (
     <View style={{ ...containerStyle }}>
       <SelectButton
-        text={selectedOption ? getOptionLabel(selectedOption) : placeholder}
+        option={selectedOption}
         onPress={openSelection}
         label={label}
+        style={buttonStyle}
+        clearable={clearable}
+        clear={clear}
+        hideChevron={hideChevron}
       />
       <SelectOptionsModal
         header={headerText || placeholder}
@@ -81,29 +93,31 @@ export function Select<T>({
 
 type SelectButtonProps = {
   onPress: () => void
-  text?: string
+  option?: SelectOption
   error?: boolean
   label?: string
+  style?: ViewStyle
+  clearable?: boolean
+  clear: () => void
+  hideChevron?: boolean
 }
 
-const SelectButton: React.FC<SelectButtonProps> = ({ onPress, text, error, label }) => {
+const SelectButton: React.FC<SelectButtonProps> = ({ onPress, option, label, style, clearable, clear, hideChevron }) => {
+  const getOptionLabel = (option: SelectOption): string => {
+    return typeof option === "string" ? option : option.label
+  }
+  const text = option ? getOptionLabel(option) : undefined
+  const showClearIcon = clearable && option
+  
   return (
-    <Pressable
+    <Tag
       onPress={onPress}
-      style={{
-        flexGrow: 1,
-      }}
-    >
-      <TextInput
-        value={text}
-        error={error}
-        label={label}
-        pointerEvents="none"
-        focusable={false}
-        editable={false}
-        style={{ flexGrow: 1 }}
-      />
-    </Pressable>
+      variant={option ? "primary" : "secondary"}
+      text={text || label}
+      style={style}
+      rightIcon={showClearIcon ? "close" : hideChevron ? undefined : "chevron-down"}
+      rightIconAction={showClearIcon ? clear : undefined}
+    />
   )
 }
 

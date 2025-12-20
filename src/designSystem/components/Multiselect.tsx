@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import { View, ViewStyle } from "react-native"
 
-import { spacing, useColors } from "../tokens"
-import { Icon } from "./Icon"
-import { IconButton } from "./IconButton"
+import { spacing } from "../tokens"
 import { Select, SelectOption } from "./Select"
-import { Text } from "./Text"
+import { Button } from "./Button"
+import { Tag } from "./Tag"
+import { Icon } from "./Icon"
 
 type MultiselectProps<T = unknown> = {
   options: readonly SelectOption<T>[]
@@ -24,7 +24,6 @@ export function Multiselect<T>({
   headerText,
   containerStyle = {},
   hideSelectedItemsRemove,
-  error,
 }: MultiselectProps<T>) {
   const [selectionOpen, setSelectionOpen] = useState(false)
 
@@ -60,11 +59,17 @@ export function Multiselect<T>({
           ...containerStyle,
         }}
       >
-        <Select.Button
+        <Button
           onPress={openSelection}
+          variant="tertiary"
           text={headerText}
-          error={error}
-        />
+          size="small"
+          style={{
+            justifyContent: "flex-start",
+          }}
+        >
+          <Icon icon="chevron-down" size="small" />
+        </Button>
         <View style={{ flexDirection: "row", gap: spacing.xs, flexWrap: "wrap" }}>
           {selectedValues.map((selectedValue, index) => {
             const option = options.find((opt) => getOptionValue(opt) === selectedValue)
@@ -99,41 +104,12 @@ type SelectedLabelProps = {
 }
 
 const SelectedLabel: React.FC<SelectedLabelProps> = ({ selection, hideRemove, onRemove }) => {
-  const colors = useColors()
-
   return (
-    <View
-      style={{
-        borderWidth: 1,
-        borderColor: colors.primary,
-        paddingLeft: spacing.xs,
-        paddingRight: spacing.xxs,
-        paddingVertical: spacing.xs,
-        borderRadius: 8,
-        gap: spacing.xxs,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text
-        style={{
-          color: colors.primary,
-          textTransform: "capitalize",
-        }}
-        text={selection}
-      />
-      {!hideRemove && (
-        <IconButton
-          onPress={() => onRemove?.(selection)}
-          size="sm"
-        >
-          <Icon
-            icon="close"
-            size="small"
-          />
-        </IconButton>
-      )}
-    </View>
+    <Tag
+      variant="primary"
+      text={selection}
+      rightIcon={hideRemove ? undefined : "close"}
+      rightIconAction={() => onRemove?.(selection)}
+    />
   )
 }

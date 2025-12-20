@@ -31,7 +31,7 @@ export const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(functio
   }
 
   return (
-    <View style={{ flexDirection: "row", gap: spacing.lg }}>
+    <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
       <NumberInput
         value={formattedDistance}
         style={{ textAlign: "center", flex: 1.5 }}
@@ -44,7 +44,9 @@ export const DistanceEditor = forwardRef<TextInput, DistanceEditorProps>(functio
         options={Object.values(measurementUnits.distance)}
         value={internalUnit}
         onChange={(unit) => setInternalUnit(unit as DistanceUnit)}
-        containerStyle={{ height: "auto" }}
+        containerStyle={{ width: spacing.xxl }}
+        buttonStyle={{ height: spacing.xxl }}
+        hideChevron
       />
     </View>
   )
