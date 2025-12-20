@@ -65,19 +65,17 @@ export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
         underlineStyle={{ borderWidth: 0 }}
         underlineColor={colors.tertiary}
         onChangeText={(text) => {
-          if (text === "") {
+          if (text === ".") {
+            text = "0."
+          }
+          if (text === "" || isNaN(Number(text))) {
             setRendered("")
             onChange?.(undefined)
             return
           }
-          const asNum = Number(text)
-          if (isNaN(asNum)) {
-            return
-          }
 
-          // Strip leading zeroes, enforce max length
           const toFixed = text
-            .replace(/^0+/, "")
+            .replace(/^0+(?=[0-9])/, "") 
             .slice(
               0,
               text.includes(".")
