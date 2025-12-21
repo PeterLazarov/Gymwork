@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react"
-import { Dimensions, Image, Pressable, View } from "react-native"
+import { Dimensions, Image, Pressable, View, ViewStyle } from "react-native"
 
 import { useSetting } from "@/context/SettingContext"
 import { useExercises, useMostUsedExercises, useSettings, useUpdateExercise } from "@/db/hooks"
@@ -23,6 +23,7 @@ import { exerciseImages } from "@/utils/exerciseImages"
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list"
 import { Searchbar } from "react-native-paper"
 import { muscleAreas, muscles } from "@/constants/muscles"
+import { equipments } from "@/constants/equipments"
 
 const noop = () => {}
 
@@ -248,33 +249,20 @@ const AllExercisesList: React.FC<AllExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const [muscleArea, setMuscleArea] = useState<string | undefined>()
-  const [muscle, setMuscle] = useState<string | undefined>()
-  const filters = useMemo(() => 
-    ({ muscleArea, muscle, search: filterString }), 
-    [muscleArea, muscle, filterString]
-  )
+  const exerciseFilters = useExerciseFilters()
+  const { muscleArea, muscle, equipment } = exerciseFilters
+
+  const filters = { muscleArea, muscle, equipment, search: filterString }
   const { data: rawExercises } = useExercises(filters)
-  const { data: settings } = useSettings()
 
   const exercises = useMemo(
     () => (rawExercises ? rawExercises.map((item) => new ExerciseModel(item)) : []),
     [rawExercises],
   )
 
-  const muscleItems = settings?.scientific_muscle_names_enabled ? muscles : muscleAreas
   return (
     <>
-      <View style={{ flexDirection: "row", gap: spacing.xxs, padding: spacing.xs }}>
-        <Select
-          label={translate("muscle")}
-          value={settings?.scientific_muscle_names_enabled ? muscle : muscleArea}
-          onChange={settings?.scientific_muscle_names_enabled ? setMuscle : setMuscleArea}
-          options={muscleItems.map((muscleArea) => ({ label: muscleArea, value: muscleArea }))}
-          containerStyle={{ flex: 1 }}
-          clearable
-        />
-      </View>
+      <ExerciseFilterBar filters={exerciseFilters} />
       <ExerciseList
         exercises={exercises}
         onSelect={onSelect ?? noop}
@@ -294,14 +282,11 @@ const FavoriteExercisesList: React.FC<FavoriteExercisesListProps> = ({
   selectedExercises,
   filterString,
 }) => {
-  const [muscleArea, setMuscleArea] = useState<string | undefined>()
-  const [muscle, setMuscle] = useState<string | undefined>()
-  const filters = useMemo(() => 
-    ({ isFavorite: true, muscleArea, muscle, search: filterString }), 
-    [muscleArea, muscle, filterString]
-  )
+  const exerciseFilters = useExerciseFilters()
+  const { muscleArea, muscle, equipment } = exerciseFilters
+
+  const filters = { isFavorite: true, muscleArea, muscle, equipment, search: filterString }
   const { data: rawExercises } = useExercises(filters)
-  const { data: settings } = useSettings()
 
   const exercises = useMemo(
     () => (rawExercises ? rawExercises.map((item) => new ExerciseModel(item)) : []),
@@ -311,25 +296,15 @@ const FavoriteExercisesList: React.FC<FavoriteExercisesListProps> = ({
   if (exercises.length === 0) {
     return <EmptyState text={translate("noFavoriteExercises")} />
   }
-  
-  const muscleItems = settings?.scientific_muscle_names_enabled ? muscles : muscleAreas
+
   return (
     <>
-      <View style={{ flexDirection: "row", gap: spacing.xxs }}>
-        <Select
-          label={translate("muscle")}
-          value={settings?.scientific_muscle_names_enabled ? muscle : muscleArea}
-          onChange={settings?.scientific_muscle_names_enabled ? setMuscle : setMuscleArea}
-          options={muscleItems.map((muscleArea) => ({ label: muscleArea, value: muscleArea }))}
-          containerStyle={{ flex: 1 }}
-          clearable
-        />
-      </View>
+      <ExerciseFilterBar filters={exerciseFilters} />
       <ExerciseList
         exercises={exercises}
         onSelect={onSelect}
         selectedExercises={selectedExercises}
-      />  
+      />
     </>
   )
 }
@@ -344,13 +319,10 @@ const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
   filterString,
 }) => {
   const [count, setCount] = useState(10)
-  const [muscleArea, setMuscleArea] = useState<string | undefined>()
-  const [muscle, setMuscle] = useState<string | undefined>()
-  const { data: settings } = useSettings()
-  const filter = useMemo(() => 
-    ({ muscleArea, muscle, search: filterString }), 
-    [muscleArea, muscle, filterString]
-  )
+  const exerciseFilters = useExerciseFilters()
+  const { muscleArea, muscle, equipment } = exerciseFilters
+
+  const filter = { muscleArea, muscle, equipment, search: filterString }
   const { data: rawExercises } = useMostUsedExercises(count, filter)
 
   const exercises = useMemo(
@@ -362,10 +334,9 @@ const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
     return <EmptyState text={translate("noWorkoutsEntered")} />
   }
 
-  const muscleItems = settings?.scientific_muscle_names_enabled ? muscles : muscleAreas
   return (
     <>
-      <View style={{ flexDirection: "row", gap: spacing.xxs }}>
+      <ExerciseFilterBar filters={exerciseFilters}>
         <Select
           label={translate("top")}
           value={count}
@@ -377,20 +348,79 @@ const MostUsedExercisesList: React.FC<MostUsedExercisesListProps> = ({
           ]}
           containerStyle={{ flex: 1 }}
         />
-        <Select
-          label={translate("muscle")}
-          value={settings?.scientific_muscle_names_enabled ? muscle : muscleArea}
-          onChange={settings?.scientific_muscle_names_enabled ? setMuscle : setMuscleArea}
-          options={muscleItems.map((muscleArea) => ({ label: muscleArea, value: muscleArea }))}
-          containerStyle={{ flex: 1 }}
-          clearable
-        />
-      </View>
+      </ExerciseFilterBar>
       <ExerciseList
         exercises={exercises}
         onSelect={onSelect}
         selectedExercises={selectedExercises}
       />
     </>
+  )
+}
+
+const useExerciseFilters = () => {
+  const [muscleArea, setMuscleArea] = useState<string | undefined>()
+  const [muscle, setMuscle] = useState<string | undefined>()
+  const [equipment, setEquipment] = useState<string | undefined>()
+  const { data: settings } = useSettings()
+
+  return {
+    muscleArea,
+    setMuscleArea,
+    muscle,
+    setMuscle,
+    equipment,
+    setEquipment,
+    settings,
+  }
+}
+
+type ExerciseFilters = ReturnType<typeof useExerciseFilters>
+
+type ExerciseFilterBarProps = {
+  filters: ExerciseFilters
+  children?: React.ReactNode
+}
+
+const ExerciseFilterBar: React.FC<ExerciseFilterBarProps> = ({
+  filters,
+  children,
+}) => {
+  const {
+    muscleArea,
+    setMuscleArea,
+    muscle,
+    setMuscle,
+    equipment,
+    setEquipment,
+    settings,
+  } = filters
+
+  const muscleItems = settings?.scientific_muscle_names_enabled ? muscles : muscleAreas
+
+  return (
+    <View style={{ 
+      flexDirection: "row", 
+      gap: spacing.xxs,
+      padding: spacing.xs
+    }}>
+      {children}
+      <Select
+        label={translate("muscle")}
+        value={settings?.scientific_muscle_names_enabled ? muscle : muscleArea}
+        onChange={settings?.scientific_muscle_names_enabled ? setMuscle : setMuscleArea}
+        options={muscleItems.map((m) => ({ label: m, value: m }))}
+        containerStyle={{ flex: 1 }}
+        clearable
+      />
+      <Select
+        label={translate("equipment")}
+        value={equipment}
+        onChange={setEquipment}
+        options={equipments.map((e) => ({ label: e, value: e }))}
+        containerStyle={{ flex: 1 }}
+        clearable
+      />
+    </View>
   )
 }

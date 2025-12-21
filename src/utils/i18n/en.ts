@@ -133,6 +133,7 @@ const en = {
   top: 'Top',
   muscle: 'Muscle',
   filterWorkouts: 'Filter workouts',
+  equipment: 'Equipment',
 }
 
 export default en

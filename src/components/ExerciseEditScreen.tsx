@@ -29,6 +29,7 @@ import { goBack, navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
 import { MuscleMap } from "./shared/MuscleMap"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { equipments } from "@/constants/equipments"
 
 export type ExerciseEditScreenParams = {
   edittedExercise?: ExerciseModel
@@ -165,7 +166,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
     const updated = exercise.update({ muscleAreas: selected })
     onFormChange(updated)
   }
-  function onPropChange(field: keyof ExerciseModel, value: string) {
+  function onPropChange(field: keyof ExerciseModel, value: string | string[]) {
     const updated = exercise.update({ [field]: value })
     onFormChange(updated)
   }
@@ -276,6 +277,14 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           </HelperText>
         )}
       </View>
+      <Multiselect
+        options={equipments}
+        selectedValues={exercise.equipment}
+        headerText="Equipments"
+        onSelect={(selection) => {
+          onPropChange("equipment", selection)
+        }}
+      />
       <Multiselect
         options={measurementTypes}
         selectedValues={exercise.metricTypes as string[]}

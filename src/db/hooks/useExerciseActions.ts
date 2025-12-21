@@ -98,6 +98,7 @@ export type ExerciseFilters = {
   search?: string
   muscleArea?: string
   muscle?: string
+  equipment?: string
 }
 
 export function useExercises(filters?: ExerciseFilters) {

@@ -66,6 +66,10 @@ export class DatabaseService {
           conditions.push(like(exercises.name, `%${filters.search}%`))
         }
 
+        if (filters?.equipment) {
+          conditions.push(sql`instr(${exercises.equipment}, ${filters.equipment}) > 0`)
+        }
+
         if (filters?.muscleArea) {
           conditions.push(sql`instr(${exercises.muscle_areas}, ${filters.muscleArea}) > 0`)
         }
@@ -94,6 +98,10 @@ export class DatabaseService {
     
     if (filters.muscle) {
       conditions.push(sql`instr(${exercises.muscles}, ${filters.muscle}) > 0`)
+    }
+
+    if (filters.equipment) {
+      conditions.push(sql`instr(${exercises.equipment}, ${filters.equipment}) > 0`)
     }
     
     return this.db
