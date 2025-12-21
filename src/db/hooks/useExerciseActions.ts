@@ -78,8 +78,9 @@ export function useUpdateExercise() {
     mutationFn: ({ id, updates }: { id: number; updates: Partial<ExerciseModel> }) => {
       const data = {
         ...updates,
-        muscles: updates.muscles?.map((m) => m.toString()) ?? [],
-        muscleAreas: updates.muscleAreas?.map((m) => m.toString()) ?? [],
+        is_favorite: updates.isFavorite,
+        muscles: updates.muscles,
+        muscleAreas: updates.muscleAreas,
         metrics: updates.metrics,
       }
       return db.updateExercise(id, data)
