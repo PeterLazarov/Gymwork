@@ -1,4 +1,4 @@
-- fix airtable intergration
+- fix airtable intergration (env variables in build are missing)
 - send error reports
 - workout timer
 - set rest timer
@@ -7,7 +7,8 @@
 - how does split screen look like
 - Look into https://reactnative.dev/docs/timers#interactionmanager for optimizing render time
 - Bodyweight exercises
-- Improve exercise instructions modal
+- Exercise instructions and tips as string[] is weird
+- fix the seed to use actual data
 - Brainstorm how to create an image for an exercise
 - list rest time in workout chart
 - Experiments: Inline editing -> do try Compact entry (clicking on a value in a set opens only the control to edit that value)
