@@ -94,6 +94,23 @@ export function useUpdateExercise() {
   })
 }
 
+
+export function useDeleteExercise() {
+  const db = useDatabaseService()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({ id }: { id: number }) => {
+      return db.deleteExercise(id)
+    },
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["exercises"] })
+      queryClient.invalidateQueries({ queryKey: ["exercises", variables.id] })
+      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+    },
+  })
+}
+
 export type ExerciseFilters = {
   isFavorite?: boolean
   search?: string

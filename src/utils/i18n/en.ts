@@ -134,6 +134,9 @@ const en = {
   muscle: 'Muscle',
   filterWorkouts: 'Filter workouts',
   equipment: 'Equipment',
+  editInstructions: 'Edit instructions',
+  deleteExercise: 'Delete exercise',
+  exerciseInUse: 'Exercise in use in date/dates:\n{{dates}}\nThis data will be lost if you delete this exercise.', 
 }
 
 export default en

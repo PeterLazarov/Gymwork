@@ -439,6 +439,30 @@ export class DatabaseService {
     return this.db.select().from(exercises).where(eq(exercises.id, id))
   }
 
+  async deleteExercise(id: number) {
+    const stepsToDelete = await this.db
+      .select({ id: workout_steps.id })
+      .from(workout_steps)
+      .innerJoin(
+        workout_step_exercises,
+        eq(workout_steps.id, workout_step_exercises.workout_step_id),
+      )
+      .where(
+        and(
+          eq(workout_step_exercises.exercise_id, id),
+          eq(workout_steps.step_type, "plain"),
+        ),
+      )
+
+    const stepIds = stepsToDelete.map((s) => s.id)
+
+    if (stepIds.length > 0) {
+      await this.db.delete(workout_steps).where(inArray(workout_steps.id, stepIds))
+    }
+
+    return this.db.delete(exercises).where(eq(exercises.id, id))
+  }
+
   // ============================================================================
   // MUTATIONS - Workouts
   // ============================================================================

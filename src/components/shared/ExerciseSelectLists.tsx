@@ -190,7 +190,7 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
           justifyContent: "space-between",
           alignItems: "center",
           paddingHorizontal: spacing.xxs,
-          marginVertical: spacing.xxxs,
+          marginBottom: spacing.xxs,
           gap: spacing.xs,
           height,
           backgroundColor: isSelected ? colors.secondary : "transparent",

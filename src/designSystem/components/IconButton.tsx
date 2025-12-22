@@ -27,6 +27,7 @@ export const IconButton: React.FC<Props> = ({
       justifyContent: "center",
       ...style,
     }}
+    // TODO: implement underlay or remove it
     // underlay={underlay}
     {...props}
   />

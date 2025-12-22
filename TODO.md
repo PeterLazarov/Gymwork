@@ -3,11 +3,9 @@
 - workout timer
 - set rest timer
 - show muscle icons in exercise name
-- how to delete an exercise
 - 1RM calc in records
 - how does split screen look like
 - Look into https://reactnative.dev/docs/timers#interactionmanager for optimizing render time
-- Exercise instructions / visualisations
 - Bodyweight exercises
 - Improve exercise instructions modal
 - Brainstorm how to create an image for an exercise
@@ -21,3 +19,4 @@
 - render last active chart view
 - fix invisible Divider in WorkoutFilterModal
 - Why are there imageUri's that are not in exerciseImages?
+- IconButton underlay prop is not working

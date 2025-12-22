@@ -1,14 +1,14 @@
-import { FC } from "react"
-import { Image, StyleSheet, useWindowDimensions, View } from "react-native"
-import { ScrollView } from "react-native-gesture-handler"
+import { FC, useState } from "react"
+import { Image, ScrollView, StyleSheet, useWindowDimensions, View } from "react-native"
 
-import { useExercise } from "@/db/hooks"
+import { useDeleteExercise, useExercise, useWorkoutsForExercise } from "@/db/hooks"
 import { Exercise } from "@/db/schema"
-import { fontSize, Header, Icon, IconButton, spacing, Text, useColors } from "@/designSystem"
+import { fontSize, Header, Icon, IconButton, Menu, spacing, Text, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
-import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
-import { translate } from "@/utils"
+import { AppStackParamList, AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
+import { msToIsoDate, translate } from "@/utils"
 import { exerciseImages } from "@/utils/exerciseImages"
+import { useDialogContext } from "@/context/DialogContext"
 
 export type ExerciseDetailsScreenParams = {
   exerciseId: Exercise["id"]
@@ -18,6 +18,10 @@ interface ExerciseDetailsScreenProps extends AppStackScreenProps<"ExerciseDetail
 export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({ navigation }) => {
   const { exerciseId } = useRouteParams("ExerciseDetails")
   const { data: exercise } = useExercise(exerciseId)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const { data: exerciseHistoryRaw } = useWorkoutsForExercise(exerciseId)
+  const { mutateAsync: deleteExercise } = useDeleteExercise()
+  const { showConfirm } = useDialogContext()
 
   const colors = useColors()
   const { width } = useWindowDimensions()
@@ -28,9 +32,37 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({ navigati
   function onBackPress() {
     navigation.goBack()
   }
+
+  function goBackSkipStepDetails() {
+    const prevScreen = navigation.getState().routes[navigation.getState().routes.length - 2].name
+    if (prevScreen === "WorkoutStep") {
+      navigation.goBack()
+    }
+    navigation.goBack()
+  }
+
+  function onDeleteExercisePress() {
+    if (exerciseHistoryRaw && exerciseHistoryRaw.length > 0) {
+      showConfirm?.({
+        message: translate("exerciseInUse", { dates: exerciseHistoryRaw.map((w) => msToIsoDate(w.date!)).join(", ") }),
+        onConfirm: async () => {
+          deleteExercise({ id: exerciseId })
+          goBackSkipStepDetails()
+        },
+      })
+    } else {
+      deleteExercise({ id: exerciseId })
+      goBackSkipStepDetails()
+    }
+  }
+
+  function onEditInstructionsPress() {
+    
+  }
+
   return (
     <BaseLayout>
-      <Header style={{ paddingTop: spacing.sm }}>
+      <Header>
         <IconButton
           onPress={onBackPress}
           underlay="darker"
@@ -41,10 +73,35 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({ navigati
           />
         </IconButton>
         <Header.Title title={translate("exerciseDetails")} />
+        <Menu
+          visible={menuOpen}
+          onDismiss={() => setMenuOpen(false)}
+          position="bottom-right"
+          anchor={
+            <IconButton
+              onPress={() => setMenuOpen(true)}
+              underlay="darker"
+            >
+              <Icon
+                icon="ellipsis-vertical"
+                color={colors.onPrimary}
+              />
+            </IconButton>
+          }
+        >
+          <Menu.Item
+            onPress={onEditInstructionsPress}
+            title={translate("editInstructions")}
+          />
+          <Menu.Item
+            onPress={onDeleteExercisePress}
+            title={translate("deleteExercise")}
+          />
+        </Menu>
       </Header>
       <Image
         style={{ width, height: imgHeight }}
-        source={imageUri ? exerciseImages[imageUri] : undefined}
+        source={imageUri && imageUri in exerciseImages ? exerciseImages[imageUri] : exerciseImages["Image Missing"]}
       />
 
       <ScrollView style={styles.container}>
