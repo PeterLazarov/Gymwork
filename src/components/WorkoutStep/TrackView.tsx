@@ -215,10 +215,10 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
             value={value.weight}
             onChange={(weight) => {
               onUpdate({
-                weight_mcg: convertWeightToBase(
-                  weight!,
+                weight_mcg: weight ? convertWeightToBase(
+                  weight,
                   value.exercise!.getMetricByType("weight")!.unit!,
-                ),
+                ) : 0,
               })
             }}
             step={value.exercise.getMetricByType("weight")!.step_value}
