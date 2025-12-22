@@ -1,6 +1,7 @@
 import { ImageSourcePropType } from "react-native";
 
 export const exerciseImages = {
+    'Image Missing': require('../../assets/images/exercises/image-missing.jpeg'),
     'Abdominals/3-4 Sit-up_female': require('../../assets/images/exercises/Abdominals/3-4 Sit-up_female.webp'),
     'Abdominals/3-4 Sit-up_female1': require('../../assets/images/exercises/Abdominals/3-4 Sit-up_female1.webp'),
     'Abdominals/45 Degree Bicycle Twisting_female': require('../../assets/images/exercises/Abdominals/45 Degree Bicycle Twisting_female.webp'),

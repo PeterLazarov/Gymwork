@@ -9,7 +9,7 @@
 - Look into https://reactnative.dev/docs/timers#interactionmanager for optimizing render time
 - Exercise instructions / visualisations
 - Bodyweight exercises
-- Default exercise image
+- Improve exercise instructions modal
 - Brainstorm how to create an image for an exercise
 - list rest time in workout chart
 - Experiments: Inline editing -> do try Compact entry (clicking on a value in a set opens only the control to edit that value)
@@ -20,3 +20,4 @@
 - fix rest timer start button
 - render last active chart view
 - fix invisible Divider in WorkoutFilterModal
+- Why are there imageUri's that are not in exerciseImages?

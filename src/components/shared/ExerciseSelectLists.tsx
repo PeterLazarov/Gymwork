@@ -190,7 +190,8 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
           justifyContent: "space-between",
           alignItems: "center",
           paddingHorizontal: spacing.xxs,
-          gap: spacing.xxs,
+          marginVertical: spacing.xxxs,
+          gap: spacing.xs,
           height,
           backgroundColor: isSelected ? colors.secondary : "transparent",
         }}
@@ -198,8 +199,9 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
         <Image
           width={height}
           height={height}
-          style={{ height, width: height }}
-          source={imageUri ? exerciseImages[imageUri] : undefined}
+          style={{ height, width: height, borderRadius: spacing.xs }}
+          // TODO: Why are there imageUri's that are not in exerciseImages?
+          source={imageUri && imageUri in exerciseImages ? exerciseImages[imageUri] : exerciseImages['Image Missing']}
         />
 
         <View style={{ flex: 1 }}>
