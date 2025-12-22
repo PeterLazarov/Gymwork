@@ -20,7 +20,7 @@ export const ToggleSwitch: React.FC<Props> = ({ value, variant, ...rest }) => {
         false: colors.surfaceContainerHighest,
         true: colors.surfaceContainerHigh,
       }}
-      thumbColor={value ? thumbActiveColor : colors.surfaceContainer}
+      thumbColor={value ? thumbActiveColor : colors.surfaceContainerHigh}
       ios_backgroundColor={colors.surfaceContainerHighest}
       value={value}
       {...rest}

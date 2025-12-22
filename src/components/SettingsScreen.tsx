@@ -75,13 +75,17 @@ export const SettingsScreen: FC = () => {
       </Header>
 
       <View style={{ flex: 1, padding: spacing.xs }}>
-        <Select
-          options={appearanceOptions}
-          value={colorSchemePreference}
-          onChange={(value) => setColorSchemePreference(value!)}
-          headerText={translate("theme")}
-          label={translate("theme")}
-        />
+        <View style={styles.item}>
+          <Text style={[styles.itemLabel, {flex: 1}]}>{translate("theme")}</Text>
+          <Select
+            options={appearanceOptions}
+            value={colorSchemePreference}
+            onChange={(value) => setColorSchemePreference(value!)}
+            headerText={translate("theme")}
+            label={translate("theme")}
+            containerStyle={{flex: 1}}
+          />
+        </View>
 
         <Divider
           variant="neutral"
