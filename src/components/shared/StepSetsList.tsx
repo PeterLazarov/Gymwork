@@ -1,4 +1,4 @@
-import { useRecordIds, useSettings } from "@/db/hooks"
+import { useRecords, useSettings } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
@@ -22,22 +22,25 @@ export const StepSetsList: React.FC<StepSetsListProps> = ({
   workout,
 }) => {
   const { data: settings } = useSettings()
-  const { data: recordIds } = useRecordIds(step.id)
+  const { data: records } = useRecords(step.id)
   const showSetComplete = settings?.manual_set_completion && workout.hasIncompleteSets
 
   return (
     <>
-      {sets.map((set, i) => (
-        <SetItem
-          key={set.id}
-          set={set}
-          exercise={set.exercise}
-          isRecord={recordIds?.some(({ id }) => id === set.id)}
-          letter={hideSupersetLetters ? undefined : step.exerciseLettering[set.exercise.id!]}
-          number={step.setsNumberMap[set.id!]}
-          showSetComplete={showSetComplete}
-        />
-      ))}
+      {sets.map((set, i) => {
+        const record = records?.find(({ id }) => id === set.id)
+        return (
+          <SetItem
+            key={set.id}
+            set={set}
+            exercise={set.exercise}
+            isRecord={!!record && !record.isWeakAss}
+            letter={hideSupersetLetters ? undefined : step.exerciseLettering[set.exercise.id!]}
+            number={step.setsNumberMap[set.id!]}
+            showSetComplete={showSetComplete}
+          />
+        )
+      })}
     </>
   )
 }

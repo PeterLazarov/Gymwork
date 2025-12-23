@@ -383,10 +383,11 @@ export class DatabaseService {
   // QUERIES - Sets
   // ============================================================================
 
-  async getRecordIds(workoutStepId: number) {
+  async getRecords(workoutStepId: number) {
     return this.db
       .select({
         id: sql<number>`er.record_id`.as("id"),
+        isWeakAss: sql<boolean>`er.is_weak_ass`.as("isWeakAss"),
       })
       .from(sql`exercise_records er`)
       .innerJoin(sets, eq(sets.id, sql`er.record_id`))

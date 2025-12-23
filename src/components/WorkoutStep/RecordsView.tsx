@@ -70,6 +70,7 @@ type ListItemProps = {
 const ListItem: React.FC<ListItemProps> = ({ set, onPress }) => {
   const styles = useMemo(() => makeListItemStyles(set.isWeakAssRecord), [set.isWeakAssRecord])
 
+  const isSingleMeasurement = set.exercise.groupRecordsBy === set.exercise.measuredBy 
   const groupingMeasurement = set.exercise.groupingMeasurement
   const valueMeasurement = set.exercise.valueMeasurement
 
@@ -79,7 +80,7 @@ const ListItem: React.FC<ListItemProps> = ({ set, onPress }) => {
       style={styles.item}
     >
       <>
-        {groupingMeasurement && (
+        {!isSingleMeasurement && groupingMeasurement && (
           <SetDataLabel
             value={set.groupingValue!}
             unit={groupingMeasurement.unit}

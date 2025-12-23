@@ -2,12 +2,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import type { SetModel } from "../models/SetModel"
 import { useDatabaseService } from "../useDB"
 
-export function useRecordIds(workoutStepId: number) {
+export function useRecords(workoutStepId: number) {
   const db = useDatabaseService()
 
   return useQuery({
     queryKey: ["sets", "records", workoutStepId],
-    queryFn: () => db.getRecordIds(workoutStepId),
+    queryFn: () => db.getRecords(workoutStepId),
   })
 }
 

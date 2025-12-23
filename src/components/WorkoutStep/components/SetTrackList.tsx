@@ -4,7 +4,7 @@ import { Keyboard, Pressable, View } from "react-native"
 
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useSetting } from "@/context/SettingContext"
-import { useRecordIds, useSettings, useUpdateSet } from "@/db/hooks"
+import { useRecords, useSettings, useUpdateSet } from "@/db/hooks"
 import { SetModel } from "@/db/models/SetModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
 import {
@@ -49,13 +49,13 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
     setSelectedSet(set.id === selectedSet?.id ? null : set)
   }
 
-  const { data: recordIds } = useRecordIds(step.id)
+  const { data: records } = useRecords(step.id)
 
   const showComplete = settings?.manual_set_completion && openedWorkout?.hasIncompleteSets
 
   const renderItem = useCallback(
     ({ item, index }: ListRenderItemInfo<SetModel>) => {
-      const isRecord = recordIds?.some(({ id }) => id === item.id)
+      const record = records?.find(({ id }) => id === item.id)
       const isFocused = selectedSet?.id === item.id
       const isDraft = index === sets.length
 
@@ -78,7 +78,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
         >
           <SetTrackItem
             set={item}
-            isRecord={isRecord}
+            isRecord={!!record && !record.isWeakAss}
             number={step.setsNumberMap[item.id!]}
             toggleSetWarmup={toggleSetWarmup}
             toggleCompleted={toggleSetCompletion}
@@ -88,7 +88,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
         </Pressable>
       )
     },
-    [selectedSet, recordIds, sets.length, colors, toggleSetWarmup, showComplete],
+    [selectedSet, records, sets.length, colors, toggleSetWarmup, showComplete],
   )
 
   const flashListRef = useRef<FlashListRef<SetModel>>(null)

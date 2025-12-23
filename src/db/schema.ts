@@ -219,6 +219,7 @@ const exercise_records = sqliteView("exercise_records", {
   date: integer().notNull(),
   grouping_value: integer().notNull(),
   measurement_value: integer().notNull(),
+  is_weak_ass: integer({ mode: "boolean" }).notNull(),
 }).as(sql`
   WITH exercise_measurement_types AS (
     SELECT
@@ -239,10 +240,10 @@ const exercise_records = sqliteView("exercise_records", {
       ws.date,
       emt.measurement_types,
       CASE
-        WHEN emt.measurement_types = 'weight' THEN ws.weight_mcg
-        WHEN emt.measurement_types = 'duration' THEN ws.duration_ms
-        WHEN emt.measurement_types = 'reps' THEN ws.reps
-        WHEN emt.measurement_types = 'distance' THEN ws.distance_mm
+        WHEN emt.measurement_types = 'weight' THEN 0
+        WHEN emt.measurement_types = 'duration' THEN 0
+        WHEN emt.measurement_types = 'reps' THEN 0
+        WHEN emt.measurement_types = 'distance' THEN 0
         WHEN emt.measurement_types IN ('weight,duration','duration,weight') THEN ws.weight_mcg
         WHEN emt.measurement_types IN ('reps,weight', 'weight,reps') THEN ws.reps
         WHEN emt.measurement_types IN ('duration,reps', 'reps,duration') THEN ws.duration_ms
@@ -309,21 +310,41 @@ const exercise_records = sqliteView("exercise_records", {
     LEFT JOIN ${exercise_metrics} em
       ON ms.exercise_id = em.exercise_id
       AND ms.measuring_metric_type = em.measurement_type
+  ),
+  records AS (
+    SELECT * FROM ranked_sets WHERE rank = 1
   )
   SELECT
-    id AS record_id,
-    exercise_id,
-    reps,
-    weight_mcg,
-    distance_mm,
-    duration_ms,
-    speed_kph,
-    date,
-    grouping_value,
-    measurement_value
-  FROM ranked_sets
-  WHERE rank = 1
-  ORDER BY exercise_id, grouping_value
+    r1.id AS record_id,
+    r1.exercise_id,
+    r1.reps,
+    r1.weight_mcg,
+    r1.distance_mm,
+    r1.duration_ms,
+    r1.speed_kph,
+    r1.date,
+    r1.grouping_value,
+    r1.measurement_value,
+    CASE
+      WHEN EXISTS (
+        SELECT 1
+        FROM records r2
+        WHERE r2.exercise_id = r1.exercise_id
+          AND r2.grouping_value >= r1.grouping_value
+          AND (
+            (r1.more_is_better = 1 AND r2.measurement_value >= r1.measurement_value) OR
+            (r1.more_is_better = 0 AND r2.measurement_value <= r1.measurement_value)
+          )
+          AND (
+            r2.grouping_value > r1.grouping_value OR
+            (r1.more_is_better = 1 AND r2.measurement_value > r1.measurement_value) OR
+            (r1.more_is_better = 0 AND r2.measurement_value < r1.measurement_value)
+          )
+      ) THEN 1
+      ELSE 0
+    END AS is_weak_ass
+  FROM records r1
+  ORDER BY r1.exercise_id, r1.grouping_value
 `)
 
 /**
