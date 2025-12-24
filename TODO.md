@@ -1,4 +1,3 @@
-- fix airtable intergration (env variables in build are missing)
 - send error reports
 - workout timer
 - set rest timer
