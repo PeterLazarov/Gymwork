@@ -1,4 +1,3 @@
-- send error reports
 - workout timer
 - set rest timer
 - show muscle icons in exercise name

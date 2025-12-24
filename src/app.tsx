@@ -22,6 +22,7 @@ import { OpenedWorkoutProvider } from "@/context/OpenedWorkoutContext"
 import { paperThemes } from "@/designSystem/tokens"
 import { useColorScheme } from "react-native"
 import { SettingProvider } from "./context/SettingContext"
+import { initCrashReporting } from "./utils/crashReporting"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -46,6 +47,7 @@ const config = {
 }
 
 export function App() {
+  initCrashReporting()
   const {
     initialNavigationState,
     onNavigationStateChange,

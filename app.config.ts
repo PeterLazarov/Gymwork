@@ -23,6 +23,7 @@ module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
       ...config.extra,
       AIRTABLE_URL: process.env.AIRTABLE_URL,
       AIRTABLE_SECRET: process.env.AIRTABLE_SECRET,
+      SENTRY_DSN: process.env.SENTRY_DSN,
       RESET_DB: process.env.RESET_DB,
     },
     ios: {
