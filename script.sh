@@ -1,1 +1,1 @@
-while :; do cat prompt.txt | claude ; done
+while :; do cat prompt.txt | gemini prompt ; done
