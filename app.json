@@ -9,7 +9,7 @@
     "orientation": "portrait",
     "icon": "./assets/pen-logo.png",
     "splash": {
-      "image": "./assets/pen-logo.png",
+      "image": "./assets/shadow-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#FFF"
     },
@@ -27,7 +27,7 @@
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
       },
       "splash": {
-        "image": "./assets/pen-logo.png",
+        "image": "./assets/shadow-icon.png",
         "resizeMode": "contain",
         "backgroundColor": "#FFF"
       }
@@ -37,16 +37,16 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.gymwork",
       "splash": {
-        "image": "./assets/pen-logo.png",
-        "tabletImage": "./assets/pen-logo.png",
+        "image": "./assets/shadow-icon.png",
+        "tabletImage": "./assets/shadow-icon.png",
         "resizeMode": "contain",
         "backgroundColor": "#FFF"
       }
     },
     "web": {
-      "favicon": "./assets/pen-logo.png",
+      "favicon": "./assets/shadow-icon.png",
       "splash": {
-        "image": "./assets/pen-logo.png",
+        "image": "./assets/shadow-icon.png",
         "resizeMode": "contain",
         "backgroundColor": "#FFF"
       },
