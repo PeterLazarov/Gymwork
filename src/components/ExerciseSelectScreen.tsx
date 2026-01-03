@@ -5,7 +5,7 @@ import { ExerciseSelectLists } from "@/components/shared/ExerciseSelectLists"
 import { useCreateExercisesStep } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { WorkoutStep } from "@/db/schema"
-import { FAB, Header, Icon, IconButton, useColors } from "@/designSystem"
+import { FAB, Header, Icon, IconButton, Menu, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
 import { translate } from "@/utils"
@@ -21,6 +21,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
   const [selectedExercises, setSelectedExercises] = useState<ExerciseModel[]>([])
   const { mutateAsync: createStep } = useCreateExercisesStep()
   const { selectMode } = useRouteParams("ExerciseSelect")
+  const [menuOpen, setMenuOpen] = useState(false)
 
   async function createExercisesStep(exercises: ExerciseModel[]) {
     await createStep(exercises)
@@ -40,6 +41,11 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
     selectedExercises.length > 0
       ? translate("selectedCount", { count: selectedExercises.length })
       : translate("selectExercises")
+
+  function goToFeedback() {
+    setMenuOpen(false)
+    requestAnimationFrame(() => navigation.navigate("UserFeedback", { referrerPage: "ExerciseSelect" }))
+  }
 
   return (
     <BaseLayout>
@@ -65,7 +71,28 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
             size="large"
             color={colors.onPrimary}
           />
-        </IconButton>
+        </IconButton> 
+        <Menu
+          visible={menuOpen}
+          onDismiss={() => setMenuOpen(false)}
+          position="bottom-right"
+          anchor={
+            <IconButton
+              onPress={() => setMenuOpen(true)}
+              underlay="darker"
+            >
+              <Icon
+                icon="ellipsis-vertical"
+                color={colors.onPrimary}
+              />
+            </IconButton>
+          }
+        >
+          <Menu.Item
+            onPress={goToFeedback}
+            title={translate("giveFeedback")}
+          />
+        </Menu>
       </Header>
 
       <View style={{ flex: 1 }}>
