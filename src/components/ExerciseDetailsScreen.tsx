@@ -114,6 +114,7 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({ navigati
       />
 
       <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.label}>{exercise?.name}</Text>
         {(exercise && !editMode) && <InstructionsPanel exercise={exercise} />}
         {(exercise && editMode) && <InstructionsEditor exercise={exercise} onSave={onSaveInstructions} />}
       </ScrollView>
