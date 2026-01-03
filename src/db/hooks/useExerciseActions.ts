@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import Fuse from "fuse.js"
 import type { Exercise } from "../schema"
 import { useDatabaseService } from "../useDB"
 import { ExerciseModel } from "../models/ExerciseModel"
@@ -125,6 +126,20 @@ export function useExercises(filters?: ExerciseFilters) {
   return useQuery({
     queryKey: ["exercises", filters],
     queryFn: () => db.getExercises(filters),
+    select: (data) => {
+      if (filters?.search && filters.search.trim()) {
+        const fuse = new Fuse(data, {
+          keys: ["name"],
+          threshold: 0.2, // Very strict: 0 = exact match, 1 = match anything
+          ignoreLocation: true,
+          minMatchCharLength: 2,
+        })
+        
+        return fuse.search(filters.search).map(result => result.item)
+      }
+      
+      return data
+    },
   })
 }
 
@@ -136,6 +151,20 @@ export function useMostUsedExercises(limit: number, filters: ExerciseFilters) {
     queryFn: async () => {
       const result = await db.getMostUsedExercises(limit, filters)
       return result.map((r) => r.exercise)
+    },
+    select: (data) => {
+      if (filters?.search && filters.search.trim()) {
+        const fuse = new Fuse(data, {
+          keys: ["name"],
+          threshold: 0.2, // Very strict: 0 = exact match, 1 = match anything
+          ignoreLocation: true,
+          minMatchCharLength: 2,
+        })
+        
+        return fuse.search(filters.search).map(result => result.item)
+      }
+      
+      return data
     },
   })
 }

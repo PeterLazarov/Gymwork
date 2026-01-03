@@ -1,4 +1,4 @@
-import { and, arrayContained, arrayOverlaps, asc, count, desc, eq, exists, gt, inArray, like, sql } from "drizzle-orm"
+import { and, arrayContained, arrayOverlaps, asc, count, desc, eq, exists, gt, inArray, like, or, sql } from "drizzle-orm"
 import { DateTime } from "luxon"
 import { ExerciseModel } from "../models/ExerciseModel"
 import { SetModel } from "../models/SetModel"
@@ -62,9 +62,13 @@ export class DatabaseService {
           conditions.push(eq(exercises.is_favorite, filters.isFavorite))
         }
 
-        if (filters?.search) {
-          conditions.push(like(exercises.name, `%${filters.search}%`))
-        }
+        // Search filtering is handled by Fuse.js in the hook's select function
+        // if (filters?.search) {
+        //   const words = filters.search.trim().split(" ")
+        //   words.forEach((word) => {
+        //     conditions.push(like(exercises.name, `%${word}%`))
+        //   })
+        // }
 
         if (filters?.equipment) {
           conditions.push(sql`instr(${exercises.equipment}, ${filters.equipment}) > 0`)
@@ -88,9 +92,13 @@ export class DatabaseService {
   async getMostUsedExercises(limit: number, filters: ExerciseFilters) {
     const conditions = []
     
-    if (filters.search) {
-      conditions.push(like(exercises.name, `%${filters.search}%`))
-    }
+    // Search filtering is handled by Fuse.js in the hook's select function
+    // if (filters?.search) {
+    //   const words = filters.search.trim().split(" ")
+    //   words.forEach((word) => {
+    //     conditions.push(like(exercises.name, `%${word}%`))
+    //   })
+    // }
     
     if (filters.muscleArea) {
       conditions.push(sql`instr(${exercises.muscle_areas}, ${filters.muscleArea}) > 0`)
