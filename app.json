@@ -3,7 +3,7 @@
   "displayName": "BodyBuilder",
   "expo": {
     "name": "BodyBuilder",
-    "slug": "BodyBuilder",
+    "slug": "bodybuilder",
     "scheme": "BodyBuilder",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,7 +18,9 @@
       "fallbackToCacheTimeout": 0
     },
     "jsEngine": "hermes",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "icon": "./assets/pen-logo.png",
       "package": "com.bodybuilder",
@@ -52,13 +54,17 @@
       },
       "bundler": "metro"
     },
-    "plugins": ["expo-localization", "expo-font", "expo-build-properties"],
+    "plugins": [
+      "expo-localization",
+      "expo-font",
+      "expo-build-properties"
+    ],
     "experiments": {
       "tsconfigPaths": true
     },
     "extra": {
       "eas": {
-        "projectId": "f170b951-e464-4e11-a6df-5af2a8dcd8c3"
+        "projectId": "0b395f1b-f91b-48a2-aad5-70036988be1b"
       }
     },
     "owner": "peter.lazarov94"
