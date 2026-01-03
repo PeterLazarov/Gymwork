@@ -1,0 +1,1 @@
+while :; do cat prompt.txt | claude ; done

@@ -1,0 +1,1 @@
+Complete the first unfinished task in observability-plan.md . If it is too difficult, split it up into multiple subpoints. After completion, mark it as complete. If all tasks are complete, reply with a single word - "SUCCESS"
