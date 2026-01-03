@@ -41,12 +41,12 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = ({ navigation }) => {
           with us through the “<Text style={styles.bold}>Give Feedback</Text>” option in the header
           menu.
         </Text>
-        <Text style={[styles.text, styles.bold]}>We hope you have an awesome time Gymworking!</Text>
+        <Text style={[styles.text, styles.bold]}>We hope you have an awesome time workout out!</Text>
       </View>
       <Button
         variant="primary"
         onPress={onStart}
-        text={translate("startGymworking")}
+        text={translate("startWorkingOut")}
       />
     </BaseLayout>
   )

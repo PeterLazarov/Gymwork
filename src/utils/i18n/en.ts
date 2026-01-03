@@ -105,7 +105,7 @@ const en = {
   comments: "Comments",
   commentsLogEmpty: "No workout comments entered.",
   welcome: "Welcome",
-  startGymworking: "Start gymworking",
+  startWorkingOut: "Start working out",
   templateSaved: "Template saved.",
   copyWorkoutAlert: "Please create at least 1 workout first.",
   useTemplateAlert:

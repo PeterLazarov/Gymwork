@@ -1,10 +1,10 @@
 {
-  "name": "Gymwork",
-  "displayName": "Gymwork",
+  "name": "BodyBuilder",
+  "displayName": "BodyBuilder",
   "expo": {
-    "name": "Gymwork",
-    "slug": "Gymwork",
-    "scheme": "gymwork",
+    "name": "BodyBuilder",
+    "slug": "BodyBuilder",
+    "scheme": "BodyBuilder",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/pen-logo.png",
@@ -21,7 +21,7 @@
     "assetBundlePatterns": ["**/*"],
     "android": {
       "icon": "./assets/pen-logo.png",
-      "package": "com.gymwork",
+      "package": "com.bodybuilder",
       "adaptiveIcon": {
         "foregroundImage": "./assets/pen-logo.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
@@ -35,7 +35,7 @@
     "ios": {
       "icon": "./assets/pen-logo.png",
       "supportsTablet": true,
-      "bundleIdentifier": "com.gymwork",
+      "bundleIdentifier": "com.bodybuilder",
       "splash": {
         "image": "./assets/shadow-icon.png",
         "tabletImage": "./assets/shadow-icon.png",

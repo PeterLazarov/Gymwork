@@ -28,7 +28,7 @@ export function useExport() {
   async function exportData() {
     try {
       const now = DateTime.now()
-      const fileName = `${now.toFormat("MMM-dd")}-Gymwork-${now.toFormat("HHmmss")}.json`
+      const fileName = `${now.toFormat("MMM-dd")}-BodyBuilder-${now.toFormat("HHmmss")}.json`
 
       const [
         settingsData,
@@ -85,7 +85,7 @@ export function useExport() {
       if (await Sharing.isAvailableAsync()) {
         await Sharing.shareAsync(file.uri, {
           mimeType: "application/json",
-          dialogTitle: "Export Gymwork Data",
+          dialogTitle: "Export Data",
           UTI: "public.json",
         })
       } else {
@@ -126,7 +126,7 @@ export function useExport() {
       const importedData = JSON.parse(fileContent)
 
       if (!importedData.data) {
-        Alert.alert("Invalid File", "The selected file does not contain valid Gymwork data")
+        Alert.alert("Invalid File", "The selected file does not contain valid BodyBuilder data")
         return
       }
 
