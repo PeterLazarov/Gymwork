@@ -1,1 +1,1 @@
-while :; do cat prompt.txt | gemini prompt ; done
+while :; do cat prompt.txt | gemini -y ; done

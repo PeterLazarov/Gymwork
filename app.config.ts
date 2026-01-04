@@ -25,6 +25,11 @@ module.exports = ({ config }: ConfigContext): Partial<ExpoConfig> => {
       AIRTABLE_SECRET: process.env.AIRTABLE_SECRET,
       SENTRY_DSN: process.env.SENTRY_DSN,
       RESET_DB: process.env.RESET_DB,
+      LOG_RQ: process.env.LOG_RQ,
+      LOG_DB: process.env.LOG_DB,
+      LOG_DB_SQL: process.env.LOG_DB_SQL,
+      LOG_DB_PARAMS: process.env.LOG_DB_PARAMS,
+      LOG_SLOW_MS: process.env.LOG_SLOW_MS,
     },
     ios: {
       ...config.ios,

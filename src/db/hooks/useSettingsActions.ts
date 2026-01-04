@@ -32,6 +32,7 @@ export function useSettings() {
 
       return settings
     },
+    meta: { op: "settings.get" },
   })
 }
 
@@ -40,6 +41,7 @@ export function useUpdateSettings() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "settings.update" },
     mutationFn: ({ id, updates }: { id: number; updates: Partial<InsertSettings> }) =>
       db.updateSettings(id, updates),
     onSuccess: () => {

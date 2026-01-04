@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/expo-sqlite"
 import { openDatabaseSync } from "expo-sqlite"
+import { createDrizzleLoggerMiddleware } from "../../observability"
 import * as schema from "./schema"
 
 // Lazy initialization
@@ -12,7 +13,8 @@ function initializeDatabase() {
 
   try {
     // Open the database for simple app settings storage
-    expoDb = openDatabaseSync("storage.db", { enableChangeListener: false })
+    const sqlite = openDatabaseSync("storage.db", { enableChangeListener: false })
+    expoDb = createDrizzleLoggerMiddleware(sqlite)
 
     // Create tables if they don't exist
     expoDb.execSync(`

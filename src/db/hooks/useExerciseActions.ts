@@ -9,6 +9,7 @@ export function useExercise(exerciseId: number) {
   return useQuery({
     queryKey: ["exercises", exerciseId],
     queryFn: () => db.getExercise(exerciseId),
+    meta: { op: "exercises.get" },
   })
 }
 
@@ -21,6 +22,7 @@ export function useWorkoutsForExercise(
   return useQuery({
     queryKey: ["exercises", exerciseId, "workouts", filters],
     queryFn: () => db.getWorkoutsForExercise(exerciseId, filters),
+    meta: { op: "exercises.getWorkouts" },
     select: (data) => {
       return data
         .map((workout) => ({
@@ -43,6 +45,7 @@ export function useExerciseLastSet(exerciseId: number) {
   return useQuery({
     queryKey: ["exercises", exerciseId, "last-set"],
     queryFn: async () => (await db.getExerciseLastSet(exerciseId)) ?? null,
+    meta: { op: "exercises.getLastSet" },
   })
 }
 
@@ -52,6 +55,7 @@ export function useExerciseRecords(exerciseId: number) {
   return useQuery({
     queryKey: ["exercises", exerciseId, "records"],
     queryFn: () => db.getExerciseRecords(exerciseId),
+    meta: { op: "exercises.getRecords" },
   })
 }
 
@@ -60,6 +64,7 @@ export function useInsertExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "exercises.create" },
     mutationFn: async (exercise: Omit<Exercise, "id" | "created_at" | "updated_at">) => {
       const [inserted] = await db.insertExercise(exercise)
       return new ExerciseModel(inserted)
@@ -75,6 +80,7 @@ export function useUpdateExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "exercises.update" },
     mutationFn: ({ id, updates }: { id: number; updates: Partial<ExerciseModel> }) => {
       const data = {
         ...updates,
@@ -100,6 +106,7 @@ export function useDeleteExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "exercises.delete" },
     mutationFn: ({ id }: { id: number }) => {
       return db.deleteExercise(id)
     },
@@ -125,6 +132,7 @@ export function useExercises(filters?: ExerciseFilters) {
   return useQuery({
     queryKey: ["exercises", filters],
     queryFn: () => db.getExercises(filters),
+    meta: { op: "exercises.list" },
   })
 }
 
@@ -137,5 +145,6 @@ export function useMostUsedExercises(limit: number, filters: ExerciseFilters) {
       const result = await db.getMostUsedExercises(limit, filters)
       return result.map((r) => r.exercise)
     },
+    meta: { op: "exercises.listMostUsed" },
   })
 }

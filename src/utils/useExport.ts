@@ -20,91 +20,95 @@ import {
 } from "@/db/schema"
 import { useDatabaseService } from "@/db/useDB"
 import { sanitizeMsDate } from "./date"
+import { withOperation } from "./observability"
 
 export function useExport() {
   const db = useDatabaseService()
   const drizzle = db.getDrizzle()
 
   async function exportData() {
-    try {
-      const now = DateTime.now()
-      const fileName = `${now.toFormat("MMM-dd")}-BodyBuilder-${now.toFormat("HHmmss")}.json`
+    return withOperation("export.exportData", async () => {
+      try {
+        const now = DateTime.now()
+        const fileName = `${now.toFormat("MMM-dd")}-BodyBuilder-${now.toFormat("HHmmss")}.json`
 
-      const [
-        settingsData,
-        exercisesData,
-        exerciseMetricsData,
-        workoutsData,
-        workoutStepsData,
-        workoutStepExercisesData,
-        setsData,
-        tagsData,
-        workoutsTagsData,
-        workoutStepsTagsData,
-        setsTagsData,
-        exercisesTagsData,
-      ] = await Promise.all([
-        drizzle.query.settings.findMany(),
-        drizzle.query.exercises.findMany(),
-        drizzle.query.exercise_metrics.findMany(),
-        drizzle.query.workouts.findMany(),
-        drizzle.query.workout_steps.findMany(),
-        drizzle.query.workout_step_exercises.findMany(),
-        drizzle.query.sets.findMany(),
-        drizzle.query.tags.findMany(),
-        drizzle.query.workouts_tags.findMany(),
-        drizzle.query.workout_steps_tags.findMany(),
-        drizzle.query.sets_tags.findMany(),
-        drizzle.query.exercises_tags.findMany(),
-      ])
+        const [
+          settingsData,
+          exercisesData,
+          exerciseMetricsData,
+          workoutsData,
+          workoutStepsData,
+          workoutStepExercisesData,
+          setsData,
+          tagsData,
+          workoutsTagsData,
+          workoutStepsTagsData,
+          setsTagsData,
+          exercisesTagsData,
+        ] = await Promise.all([
+          drizzle.query.settings.findMany(),
+          drizzle.query.exercises.findMany(),
+          drizzle.query.exercise_metrics.findMany(),
+          drizzle.query.workouts.findMany(),
+          drizzle.query.workout_steps.findMany(),
+          drizzle.query.workout_step_exercises.findMany(),
+          drizzle.query.sets.findMany(),
+          drizzle.query.tags.findMany(),
+          drizzle.query.workouts_tags.findMany(),
+          drizzle.query.workout_steps_tags.findMany(),
+          drizzle.query.sets_tags.findMany(),
+          drizzle.query.exercises_tags.findMany(),
+        ])
 
-      const exportedData = {
-        version: "1.0",
-        exportedAt: now.toISO(),
-        data: {
-          settings: settingsData,
-          exercises: exercisesData,
-          exercise_metrics: exerciseMetricsData,
-          workouts: workoutsData,
-          workout_steps: workoutStepsData,
-          workout_step_exercises: workoutStepExercisesData,
-          sets: setsData,
-          tags: tagsData,
-          workouts_tags: workoutsTagsData,
-          workout_steps_tags: workoutStepsTagsData,
-          sets_tags: setsTagsData,
-          exercises_tags: exercisesTagsData,
-        },
-      }
-
-      const jsonString = JSON.stringify(exportedData, null, 2)
-
-      const file = new File(Paths.cache, fileName)
-      await file.write(jsonString)
-
-      if (await Sharing.isAvailableAsync()) {
-        await Sharing.shareAsync(file.uri, {
-          mimeType: "application/json",
-          dialogTitle: "Export Data",
-          UTI: "public.json",
-        })
-      } else {
-        Alert.alert("Error", "Sharing is not available on this device")
-      }
-
-      setTimeout(async () => {
-        try {
-          if (file.exists) {
-            await file.delete()
-          }
-        } catch (error) {
-          console.error("Error cleaning up temp file:", error)
+        const exportedData = {
+          version: "1.0",
+          exportedAt: now.toISO(),
+          data: {
+            settings: settingsData,
+            exercises: exercisesData,
+            exercise_metrics: exerciseMetricsData,
+            workouts: workoutsData,
+            workout_steps: workoutStepsData,
+            workout_step_exercises: workoutStepExercisesData,
+            sets: setsData,
+            tags: tagsData,
+            workouts_tags: workoutsTagsData,
+            workout_steps_tags: workoutStepsTagsData,
+            sets_tags: setsTagsData,
+            exercises_tags: exercisesTagsData,
+          },
         }
-      }, 5000)
-    } catch (error: any) {
-      console.error("Export error:", error)
-      Alert.alert("Export Failed", error.message || "An unknown error occurred")
-    }
+
+        const jsonString = JSON.stringify(exportedData, null, 2)
+
+        const file = new File(Paths.cache, fileName)
+        await file.write(jsonString)
+
+        if (await Sharing.isAvailableAsync()) {
+          await Sharing.shareAsync(file.uri, {
+            mimeType: "application/json",
+            dialogTitle: "Export Data",
+            UTI: "public.json",
+          })
+        } else {
+          Alert.alert("Error", "Sharing is not available on this device")
+        }
+
+        setTimeout(async () => {
+          try {
+            if (file.exists) {
+              await file.delete()
+            }
+          } catch (error) {
+            console.error("Error cleaning up temp file:", error)
+          }
+        }, 5000)
+      } catch (error: any) {
+        console.error("Export error:", error)
+        Alert.alert("Export Failed", error.message || "An unknown error occurred")
+        throw error // Re-throw for withOperation to log it as error
+      }
+    })
   }
 
   async function restoreData(): Promise<void> {
@@ -160,76 +164,78 @@ export function useExport() {
   }
 
   async function performRestore(data: any) {
-    await Promise.all([
-      drizzle.delete(workouts_tags),
-      drizzle.delete(workout_steps_tags),
-      drizzle.delete(sets_tags),
-      drizzle.delete(exercises_tags),
-    ])
+    return withOperation("export.performRestore", async () => {
+      await Promise.all([
+        drizzle.delete(workouts_tags),
+        drizzle.delete(workout_steps_tags),
+        drizzle.delete(sets_tags),
+        drizzle.delete(exercises_tags),
+      ])
 
-    await Promise.all([drizzle.delete(sets), drizzle.delete(workout_step_exercises)])
+      await Promise.all([drizzle.delete(sets), drizzle.delete(workout_step_exercises)])
 
-    await drizzle.delete(workout_steps)
-    await drizzle.delete(workouts)
-    await drizzle.delete(exercise_metrics)
+      await drizzle.delete(workout_steps)
+      await drizzle.delete(workouts)
+      await drizzle.delete(exercise_metrics)
 
-    await Promise.all([drizzle.delete(exercises), drizzle.delete(tags), drizzle.delete(settings)])
+      await Promise.all([drizzle.delete(exercises), drizzle.delete(tags), drizzle.delete(settings)])
 
-    if (data.settings?.length) {
-      await drizzle.insert(settings).values(data.settings)
-    }
+      if (data.settings?.length) {
+        await drizzle.insert(settings).values(data.settings)
+      }
 
-    if (data.exercises?.length) {
-      await drizzle.insert(exercises).values(data.exercises)
-    }
+      if (data.exercises?.length) {
+        await drizzle.insert(exercises).values(data.exercises)
+      }
 
-    if (data.exercise_metrics?.length) {
-      await drizzle.insert(exercise_metrics).values(data.exercise_metrics)
-    }
+      if (data.exercise_metrics?.length) {
+        await drizzle.insert(exercise_metrics).values(data.exercise_metrics)
+      }
 
-    if (data.workouts?.length) {
-      const sanitizedWorkouts = data.workouts.map((workout: any) => ({
-        ...workout,
-        date: sanitizeMsDate(workout.date),
-      }))
-      await drizzle.insert(workouts).values(sanitizedWorkouts)
-    }
+      if (data.workouts?.length) {
+        const sanitizedWorkouts = data.workouts.map((workout: any) => ({
+          ...workout,
+          date: sanitizeMsDate(workout.date),
+        }))
+        await drizzle.insert(workouts).values(sanitizedWorkouts)
+      }
 
-    if (data.workout_steps?.length) {
-      await drizzle.insert(workout_steps).values(data.workout_steps)
-    }
+      if (data.workout_steps?.length) {
+        await drizzle.insert(workout_steps).values(data.workout_steps)
+      }
 
-    if (data.workout_step_exercises?.length) {
-      await drizzle.insert(workout_step_exercises).values(data.workout_step_exercises)
-    }
+      if (data.workout_step_exercises?.length) {
+        await drizzle.insert(workout_step_exercises).values(data.workout_step_exercises)
+      }
 
-    if (data.sets?.length) {
-      const sanitizedSets = data.sets.map((set: any) => ({
-        ...set,
-        date: sanitizeMsDate(set.date),
-      }))
-      await drizzle.insert(sets).values(sanitizedSets)
-    }
+      if (data.sets?.length) {
+        const sanitizedSets = data.sets.map((set: any) => ({
+          ...set,
+          date: sanitizeMsDate(set.date),
+        }))
+        await drizzle.insert(sets).values(sanitizedSets)
+      }
 
-    if (data.tags?.length) {
-      await drizzle.insert(tags).values(data.tags)
-    }
+      if (data.tags?.length) {
+        await drizzle.insert(tags).values(data.tags)
+      }
 
-    if (data.workouts_tags?.length) {
-      await drizzle.insert(workouts_tags).values(data.workouts_tags)
-    }
+      if (data.workouts_tags?.length) {
+        await drizzle.insert(workouts_tags).values(data.workouts_tags)
+      }
 
-    if (data.workout_steps_tags?.length) {
-      await drizzle.insert(workout_steps_tags).values(data.workout_steps_tags)
-    }
+      if (data.workout_steps_tags?.length) {
+        await drizzle.insert(workout_steps_tags).values(data.workout_steps_tags)
+      }
 
-    if (data.sets_tags?.length) {
-      await drizzle.insert(sets_tags).values(data.sets_tags)
-    }
+      if (data.sets_tags?.length) {
+        await drizzle.insert(sets_tags).values(data.sets_tags)
+      }
 
-    if (data.exercises_tags?.length) {
-      await drizzle.insert(exercises_tags).values(data.exercises_tags)
-    }
+      if (data.exercises_tags?.length) {
+        await drizzle.insert(exercises_tags).values(data.exercises_tags)
+      }
+    })
   }
 
   return {
