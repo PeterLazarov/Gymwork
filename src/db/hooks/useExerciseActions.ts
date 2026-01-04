@@ -10,6 +10,7 @@ export function useExercise(exerciseId: number) {
   return useQuery({
     queryKey: ["exercises", exerciseId],
     queryFn: () => db.getExercise(exerciseId),
+    meta: { op: "exercises.get" },
   })
 }
 
@@ -22,6 +23,7 @@ export function useWorkoutsForExercise(
   return useQuery({
     queryKey: ["exercises", exerciseId, "workouts", filters],
     queryFn: () => db.getWorkoutsForExercise(exerciseId, filters),
+    meta: { op: "exercises.getWorkouts" },
     select: (data) => {
       return data
         .map((workout) => ({
@@ -44,6 +46,7 @@ export function useExerciseLastSet(exerciseId: number) {
   return useQuery({
     queryKey: ["exercises", exerciseId, "last-set"],
     queryFn: async () => (await db.getExerciseLastSet(exerciseId)) ?? null,
+    meta: { op: "exercises.getLastSet" },
   })
 }
 
@@ -53,6 +56,7 @@ export function useExerciseRecords(exerciseId: number) {
   return useQuery({
     queryKey: ["exercises", exerciseId, "records"],
     queryFn: () => db.getExerciseRecords(exerciseId),
+    meta: { op: "exercises.getRecords" },
   })
 }
 
@@ -61,6 +65,7 @@ export function useInsertExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "exercises.create" },
     mutationFn: async (exercise: Omit<ExerciseModel, "id" | "createdAt" | "updatedAt">) => {
       const inserted = await db.insertExercise(exercise)
       return new ExerciseModel(inserted)
@@ -76,6 +81,7 @@ export function useUpdateExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "exercises.update" },
     mutationFn: ({ id, updates }: { id: number; updates: Omit<Partial<ExerciseModel>, "id" | "createdAt" | "updatedAt"> }) => {
       return db.updateExercise(id, updates)
     },
@@ -94,6 +100,7 @@ export function useDeleteExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "exercises.delete" },
     mutationFn: ({ id }: { id: number }) => {
       return db.deleteExercise(id)
     },
@@ -133,6 +140,7 @@ export function useExercises(filters?: ExerciseFilters) {
       
       return data
     },
+    meta: { op: "exercises.list" },
   })
 }
 
@@ -159,5 +167,6 @@ export function useMostUsedExercises(limit: number, filters: ExerciseFilters) {
       
       return data
     },
+    meta: { op: "exercises.listMostUsed" },
   })
 }

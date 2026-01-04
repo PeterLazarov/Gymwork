@@ -23,6 +23,7 @@ export function useInsertWorkoutStep() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "workoutSteps.create" },
     mutationFn: (params: InsertWorkoutStepParams) => db.insertWorkoutStep(params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workouts"] })
@@ -35,6 +36,7 @@ export function useRemoveWorkoutStep() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "workoutSteps.delete" },
     mutationFn: (workoutStepId: number) => db.removeWorkoutStep(workoutStepId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workouts"] })
@@ -47,6 +49,7 @@ export function useUpdateWorkoutStepExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "workoutSteps.updateExercise" },
     mutationFn: ({ workoutStepId, oldExerciseId, exerciseId }: { workoutStepId: number; oldExerciseId: number; exerciseId: number }) =>
       db.updateWorkoutStepExercise(workoutStepId, oldExerciseId, exerciseId),
     onSuccess: () => {
@@ -60,6 +63,7 @@ export function useReorderWorkoutSteps() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "workoutSteps.reorder" },
     mutationFn: ({ workoutId, from, to }: { workoutId: number; from: number; to: number }) =>
       db.reorderWorkoutSteps(workoutId, from, to),
     onSuccess: () => {
@@ -73,6 +77,7 @@ export function useReorderWorkoutStepSets() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "workoutSteps.reorderSets" },
     mutationFn: ({
       workoutStepId,
       orderedSetIds,
@@ -94,6 +99,7 @@ export function useCreateExercisesStep() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "workoutSteps.createFromExercises" },
     mutationFn: async (exercises: ExerciseModel[]) => {
       let workoutId = openedWorkout?.id
       if (!workoutId) {

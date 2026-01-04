@@ -15,6 +15,7 @@ import { DatabaseServiceContext, DrizzleDBType } from "./useDB"
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ActivityIndicator, Text, View } from "react-native"
+import { createDrizzleLoggerMiddleware, createReactQueryLoggerMiddleware } from "../utils/observability"
 import { seedAll } from "./expo/expoSeeder"
 
 let _drizzle: DrizzleDBType
@@ -33,6 +34,8 @@ const queryClient = new QueryClient({
     },
   },
 })
+
+createReactQueryLoggerMiddleware(queryClient)
 
 export default function DBProvider({ children }: { children: React.ReactNode }) {
   const [isReady, setIsReady] = useState(false)
@@ -53,13 +56,14 @@ export default function DBProvider({ children }: { children: React.ReactNode }) 
 
         console.log("📂 Opening database...")
         const sqlite = openDatabaseSync(SQLiteDBName, { enableChangeListener: true })
+        const loggedSqlite = createDrizzleLoggerMiddleware(sqlite)
 
-        await sqlite.execAsync("PRAGMA journal_mode = WAL")
-        await sqlite.execAsync("PRAGMA foreign_keys = ON")
+        await loggedSqlite.execAsync("PRAGMA journal_mode = WAL")
+        await loggedSqlite.execAsync("PRAGMA foreign_keys = ON")
 
-        const db = drizzle(sqlite, { schema: { ...schema, ...allRelations } })
+        const db = drizzle(loggedSqlite, { schema: { ...schema, ...allRelations } })
         dbRef.current = db
-        sqliteRef.current = sqlite
+        sqliteRef.current = loggedSqlite
         _drizzle = db
 
         console.log("✅ Database initialized")

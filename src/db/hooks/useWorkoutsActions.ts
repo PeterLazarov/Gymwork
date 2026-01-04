@@ -18,6 +18,7 @@ export function useAllWorkoutIds(params?: { limit?: number }) {
   return useQuery({
     queryKey: ["workouts", "ids", params],
     queryFn: () => db.getAllWorkoutIds(params),
+    meta: { op: "workouts.listIds" },
   })
 }
 
@@ -33,6 +34,7 @@ export function useAllWorkoutsFull(filters?: WorkoutFilters, search?: string) {
   return useQuery({
     queryKey: ["workouts", "full", combinedFilter],
     queryFn: async () => (await db.getAllWorkoutsFull(combinedFilter)) ?? null,
+    meta: { op: "workouts.listFull" },
   })
 }
 
@@ -42,6 +44,7 @@ export function useWorkoutByDate(dateMs: number) {
   return useQuery({
     queryKey: ["workouts", "by-date", dateMs],
     queryFn: async () => (await db.getWorkoutByDate(dateMs)) ?? null,
+    meta: { op: "workouts.getByDate" },
   })
 }
 
@@ -51,6 +54,7 @@ export function useTemplates() {
   return useQuery({
     queryKey: ["workouts", "templates"],
     queryFn: () => db.getTemplates(),
+    meta: { op: "workouts.listTemplates" },
   })
 }
 
@@ -59,6 +63,7 @@ export function useInsertWorkout() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "workouts.create" },
     mutationFn: (workout: Partial<WorkoutModel>) => db.insertWorkout(workout),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workouts"] })
@@ -71,6 +76,7 @@ export function useUpdateWorkout() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "workouts.update" },
     mutationFn: ({
       workoutId,
       workout,
@@ -94,6 +100,7 @@ export function useRemoveWorkout() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "workouts.delete" },
     mutationFn: (workoutId: number) => db.removeWorkout(workoutId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workouts"] })
@@ -106,6 +113,7 @@ export function useCopyWorkout() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "workouts.copy" },
     mutationFn: ({
       sourceWorkout,
       targetDate,

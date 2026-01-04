@@ -8,6 +8,7 @@ export function useRecords(workoutStepId: number) {
   return useQuery({
     queryKey: ["sets", "records", workoutStepId],
     queryFn: () => db.getRecords(workoutStepId),
+    meta: { op: "sets.getRecords" },
   })
 }
 
@@ -16,6 +17,7 @@ export function useInsertSet() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "sets.create" },
     mutationFn: ({
       set,
       manualCompletion,
@@ -36,6 +38,7 @@ export function useUpdateSet() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "sets.update" },
     mutationFn: ({ setId, updates }: { setId: number; updates: Partial<SetModel> }) =>
       db.updateSet(setId, updates),
     onSuccess: () => {
@@ -51,6 +54,7 @@ export function useRemoveSet() {
   const queryClient = useQueryClient()
 
   return useMutation({
+    meta: { op: "sets.delete" },
     mutationFn: (setId: number) => db.removeSet(setId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["workouts"] })
