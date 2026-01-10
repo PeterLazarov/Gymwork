@@ -229,7 +229,7 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
       {set.exercise.hasMetricType("duration") && (
         <SetDataLabel
           value={getFormatedDuration(
-            set.duration ?? 0,
+            set.durationMs ?? 0,
             // set.duration ?? (set.inferredDuration ? +set.inferredDuration.toFixed(2) : 0), TODO: Why?
           )}
         />
