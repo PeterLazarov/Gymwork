@@ -23,7 +23,8 @@
     ],
     "android": {
       "icon": "./assets/pen-logo.png",
-      "package": "com.bodybuilder",
+      "package": "com.gymwork",
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/pen-logo.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
@@ -37,7 +38,7 @@
     "ios": {
       "icon": "./assets/pen-logo.png",
       "supportsTablet": true,
-      "bundleIdentifier": "com.bodybuilder",
+      "bundleIdentifier": "com.gymwork",
       "splash": {
         "image": "./assets/shadow-icon.png",
         "tabletImage": "./assets/shadow-icon.png",
