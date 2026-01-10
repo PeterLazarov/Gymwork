@@ -28,7 +28,6 @@ import { useRouteParams } from "@/navigators/navigationTypes"
 import { goBack, navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
 import { MuscleMap } from "./shared/MuscleMap"
-import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { equipments } from "@/constants/equipments"
 
 export type ExerciseEditScreenParams = {

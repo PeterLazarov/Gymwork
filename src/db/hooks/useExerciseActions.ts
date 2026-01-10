@@ -61,8 +61,8 @@ export function useInsertExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (exercise: Omit<Exercise, "id" | "created_at" | "updated_at">) => {
-      const [inserted] = await db.insertExercise(exercise)
+    mutationFn: async (exercise: Omit<ExerciseModel, "id" | "createdAt" | "updatedAt">) => {
+      const inserted = await db.insertExercise(exercise)
       return new ExerciseModel(inserted)
     },
     onSuccess: () => {
@@ -76,15 +76,8 @@ export function useUpdateExercise() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, updates }: { id: number; updates: Partial<ExerciseModel> }) => {
-      const data = {
-        ...updates,
-        is_favorite: updates.isFavorite,
-        muscles: updates.muscles,
-        muscleAreas: updates.muscleAreas,
-        metrics: updates.metrics,
-      }
-      return db.updateExercise(id, data)
+    mutationFn: ({ id, updates }: { id: number; updates: Omit<Partial<ExerciseModel>, "id" | "createdAt" | "updatedAt"> }) => {
+      return db.updateExercise(id, updates)
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["exercises"] })

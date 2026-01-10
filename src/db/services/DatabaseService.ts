@@ -416,20 +416,28 @@ export class DatabaseService {
   // MUTATIONS - Exercises
   // ============================================================================
 
-  async insertExercise(exercise: Omit<Exercise, "id" | "created_at" | "updated_at">) {
+  async insertExercise(exercise: Omit<ExerciseModel, "id" | "createdAt" | "updatedAt">) {
     const timestamp = DateTime.now().toMillis()
+    const { metrics, muscleAreas, ...exerciseData } = exercise
 
-    return this.db
+    const [inserted] = await this.db
       .insert(exercises)
       .values({
-        ...exercise,
+        ...exerciseData,
+        muscle_areas: muscleAreas,
         created_at: timestamp,
         updated_at: timestamp,
       })
       .returning()
+
+    if (metrics && metrics.length > 0) {
+      await this.createExerciseMetrics(inserted.id, metrics, timestamp)
+    }
+
+    return inserted
   }
 
-  async updateExercise(id: number, updates: Partial<ExerciseModel>) {
+  async updateExercise(id: number, updates: Omit<Partial<ExerciseModel>, "id" | "createdAt" | "updatedAt">) {
     const timestamp = DateTime.now().toMillis()
     const { metrics, muscleAreas, ...exerciseUpdates } = updates
     await this.db
@@ -441,8 +449,9 @@ export class DatabaseService {
       })
       .where(eq(exercises.id, id))
 
-    if (metrics !== undefined) {
-      await this.deleteAndRecreateExerciseMetrics(id, metrics, timestamp)
+    if (metrics && metrics.length > 0) {
+      await this.db.delete(exercise_metrics).where(eq(exercise_metrics.exercise_id, id))  
+      await this.createExerciseMetrics(id, metrics, timestamp)
     }
 
     return this.db.select().from(exercises).where(eq(exercises.id, id))
@@ -915,25 +924,21 @@ console.log("updateWorkoutStepExercise", workoutStepId, oldExerciseId, exerciseI
     }
   }
 
-  private async deleteAndRecreateExerciseMetrics(
+  private async createExerciseMetrics(
     exerciseId: number,
     metrics: ExerciseMetric[],
     timestamp: number,
   ) {
-    await this.db.delete(exercise_metrics).where(eq(exercise_metrics.exercise_id, exerciseId))
-
-    if (metrics.length > 0) {
-      await this.db.insert(exercise_metrics).values(
-        metrics.map((metric) => ({
-          exercise_id: exerciseId,
-          measurement_type: metric.measurement_type,
-          unit: metric.unit,
-          more_is_better: metric.more_is_better,
-          step_value: metric.step_value ?? null,
-          created_at: timestamp,
-          updated_at: timestamp,
-        })),
-      )
-    }
+    await this.db.insert(exercise_metrics).values(
+      metrics.map((metric) => ({
+        exercise_id: exerciseId,
+        measurement_type: metric.measurement_type,
+        unit: metric.unit,
+        more_is_better: metric.more_is_better,
+        step_value: metric.step_value ?? null,
+        created_at: timestamp,
+        updated_at: timestamp,
+      })),
+    )
   }
 }
