@@ -40,7 +40,7 @@ export const WorkoutStepScreen: React.FC<
   WorkoutStepTabScreenProps<"Track" | "History" | "Chart" | "Records">
 > = ({ route }) => {
   const { focusedStep: routeStep } = route.params
-  const { openedWorkout } = useOpenedWorkout()
+  const { openedWorkout, openedDateMs } = useOpenedWorkout()
   const focusedStep = openedWorkout?.workoutSteps.find((s) => s.id === routeStep.id) || routeStep
 
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
@@ -50,7 +50,12 @@ export const WorkoutStepScreen: React.FC<
 
   function switchExercise(exercise: ExerciseModel) {
     if (focusedExercise) {
-      updateWorkoutStepExercise({ workoutStepId: focusedStep.id, oldExerciseId: focusedExercise.id!, exerciseId: exercise.id! })
+      updateWorkoutStepExercise({ 
+        workoutStepId: focusedStep.id, 
+        oldExerciseId: focusedExercise.id!, 
+        exerciseId: exercise.id!,
+        date: openedDateMs 
+      })
       setExerciseSelectOpen(false)
     }
   }
@@ -114,7 +119,7 @@ export type StepHeaderProps = {
 const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitchExercise }) => {
   const colors = useColors()
 
-  const { openedWorkout } = useOpenedWorkout()
+  const { openedWorkout, openedDateMs } = useOpenedWorkout()
   const [menuOpen, setMenuOpen] = useState(false)
   const { showSnackbar } = useDialogContext()
   const { mutate: removeWorkoutStep } = useRemoveWorkoutStep()
@@ -136,7 +141,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
     }
 
     return async () => {
-      await insertWorkoutStep(stepToRestore)
+      await insertWorkoutStep({ ...stepToRestore, date: openedDateMs })
 
       showSnackbar!({ text: "Deleted exercise was restored to workout" })
     }
@@ -145,7 +150,11 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
   function deleteSelectedExercises() {
     setMenuOpen(false)
 
-    removeWorkoutStep(step.id)
+    removeWorkoutStep({ 
+      workoutStepId: step.id, 
+      date: openedDateMs,
+      exerciseIds: step.exercises.map(e => e.id!).filter(Boolean)
+    })
     navigate("Workout")
     showSnackbar!({
       text: "Exercise was removed from workout",
@@ -158,7 +167,7 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
     setMenuOpen(false)
     updateExercise({
       id: focusedExercise.id!,
-      updates: { is_favorite: !focusedExercise.isFavorite },
+      updates: { isFavorite: !focusedExercise.isFavorite },
     })
   }
 

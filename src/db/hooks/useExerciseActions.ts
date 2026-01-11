@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import Fuse from "fuse.js"
-import type { Exercise } from "../schema"
 import { useDatabaseService } from "../useDB"
 import { ExerciseModel } from "../models/ExerciseModel"
 
@@ -89,7 +88,7 @@ export function useUpdateExercise() {
       queryClient.invalidateQueries({ queryKey: ["exercises"] })
       queryClient.invalidateQueries({ queryKey: ["exercises", variables.id] })
       // Invalidate workout queries since they include exercise data with metrics
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
     },
   })
 }
@@ -107,7 +106,7 @@ export function useDeleteExercise() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["exercises"] })
       queryClient.invalidateQueries({ queryKey: ["exercises", variables.id] })
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
     },
   })
 }

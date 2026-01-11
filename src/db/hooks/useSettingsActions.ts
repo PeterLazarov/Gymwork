@@ -33,6 +33,7 @@ export function useSettings() {
       return settings
     },
     meta: { op: "settings.get" },
+    staleTime: Infinity,
   })
 }
 

@@ -42,7 +42,7 @@ export const WorkoutStepList: React.FC<Props> = ({ workout }) => {
       data={workout.workoutSteps}
       renderItem={renderItem}
       keyExtractor={(item) => `${workout!.date}_${item.id}`}
-      onReorder={({from, to}) => reorderSteps({ workoutId: workout.id, from, to})}
+      onReorder={({from, to}) => reorderSteps({ workoutId: workout.id, from, to, date: workout.date ?? undefined })}
     />
   )
 }

@@ -24,9 +24,15 @@ export function useInsertWorkoutStep() {
 
   return useMutation({
     meta: { op: "workoutSteps.create" },
-    mutationFn: (params: InsertWorkoutStepParams) => db.insertWorkoutStep(params),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+    mutationFn: (params: InsertWorkoutStepParams & { date?: number }) => db.insertWorkoutStep(params),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
+      if (variables.date) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
+      }
+      variables.exercises.forEach(ex => {
+        if (ex.id) queryClient.invalidateQueries({ queryKey: ["exercises", ex.id] })
+      })
     },
   })
 }
@@ -37,9 +43,18 @@ export function useRemoveWorkoutStep() {
 
   return useMutation({
     meta: { op: "workoutSteps.delete" },
-    mutationFn: (workoutStepId: number) => db.removeWorkoutStep(workoutStepId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+    mutationFn: ({ workoutStepId }: { workoutStepId: number; date?: number; exerciseIds?: number[] }) => 
+      db.removeWorkoutStep(workoutStepId),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
+      if (variables.date) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
+      }
+      if (variables.exerciseIds) {
+        variables.exerciseIds.forEach(id => {
+          queryClient.invalidateQueries({ queryKey: ["exercises", id] })
+        })
+      }
     },
   })
 }
@@ -50,10 +65,24 @@ export function useUpdateWorkoutStepExercise() {
 
   return useMutation({
     meta: { op: "workoutSteps.updateExercise" },
-    mutationFn: ({ workoutStepId, oldExerciseId, exerciseId }: { workoutStepId: number; oldExerciseId: number; exerciseId: number }) =>
+    mutationFn: ({ 
+      workoutStepId, 
+      oldExerciseId, 
+      exerciseId
+    }: { 
+      workoutStepId: number; 
+      oldExerciseId: number; 
+      exerciseId: number;
+      date?: number;
+    }) =>
       db.updateWorkoutStepExercise(workoutStepId, oldExerciseId, exerciseId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
+      if (variables.date) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
+      }
+      queryClient.invalidateQueries({ queryKey: ["exercises", variables.oldExerciseId] })
+      queryClient.invalidateQueries({ queryKey: ["exercises", variables.exerciseId] })
     },
   })
 }
@@ -64,10 +93,13 @@ export function useReorderWorkoutSteps() {
 
   return useMutation({
     meta: { op: "workoutSteps.reorder" },
-    mutationFn: ({ workoutId, from, to }: { workoutId: number; from: number; to: number }) =>
+    mutationFn: ({ workoutId, from, to }: { workoutId: number; from: number; to: number; date?: number }) =>
       db.reorderWorkoutSteps(workoutId, from, to),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
+      if (variables.date) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
+      }
     },
   })
 }
@@ -84,9 +116,13 @@ export function useReorderWorkoutStepSets() {
     }: {
       workoutStepId: number
       orderedSetIds: number[]
+      date?: number
     }) => db.reorderWorkoutStepSets(workoutStepId, orderedSetIds),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
+      if (variables.date) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
+      }
     },
   })
 }
@@ -111,8 +147,14 @@ export function useCreateExercisesStep() {
 
       return workoutId
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
+      if (openedDateMs) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", openedDateMs] })
+      }
+      variables.forEach(ex => {
+        if (ex.id) queryClient.invalidateQueries({ queryKey: ["exercises", ex.id] })
+      })
     },
   })
 }

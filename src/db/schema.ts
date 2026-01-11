@@ -1,5 +1,6 @@
 import { sql } from "drizzle-orm"
 import {
+  index,
   integer,
   primaryKey,
   real,
@@ -7,6 +8,7 @@ import {
   SQLiteTableWithColumns,
   sqliteView,
   text,
+  uniqueIndex,
 } from "drizzle-orm/sqlite-core"
 
 const timestamp_col_default_time_sql = () =>
@@ -102,7 +104,9 @@ export const workouts = sqliteTable("workouts", {
 
   created_at: timestamp_col,
   updated_at: timestamp_col,
-})
+}, (table) => ({
+  dateIdx: index("workouts_date_idx").on(table.date),
+}))
 
 // Workout Steps (replaces set_groups)
 export const workout_steps = sqliteTable("workout_steps", {
@@ -116,7 +120,9 @@ export const workout_steps = sqliteTable("workout_steps", {
 
   created_at: timestamp_col,
   updated_at: timestamp_col,
-})
+}, (table) => ({
+  workoutIdIdx: index("workout_steps_workout_id_idx").on(table.workout_id),
+}))
 
 // Join table for exercises in workout steps
 export const workout_step_exercises = sqliteTable("workout_step_exercises", {
@@ -130,7 +136,9 @@ export const workout_step_exercises = sqliteTable("workout_step_exercises", {
 
   created_at: timestamp_col,
   updated_at: timestamp_col,
-})
+}, (table) => ({
+  workoutStepIdIdx: index("workout_step_exercises_workout_step_id_idx").on(table.workout_step_id),
+}))
 
 // Workout Sets (replaces sets)
 export const sets = sqliteTable("sets", {
@@ -158,7 +166,11 @@ export const sets = sqliteTable("sets", {
 
   created_at: timestamp_col,
   updated_at: timestamp_col,
-})
+}, (table) => ({
+  workoutStepIdIdx: index("sets_workout_step_id_idx").on(table.workout_step_id),
+  exerciseIdIdx: index("sets_exercise_id_idx").on(table.exercise_id),
+  dateIdx: index("sets_date_idx").on(table.date),
+}))
 
 // Tags
 export const tags = sqliteTable("tags", {

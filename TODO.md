@@ -19,4 +19,3 @@
 - fix invisible Divider in WorkoutFilterModal
 - Why are there imageUri's that are not in exerciseImages?
 - IconButton underlay prop is not working
-- Add middleware to Drizzle or Tanstack Query so that each request time is measured
