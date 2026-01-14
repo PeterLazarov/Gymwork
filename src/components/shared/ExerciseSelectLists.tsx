@@ -48,21 +48,17 @@ export const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
   const [filterString, setFilterString] = useState("")
 
   function toggleSelectedExercise(exercise: ExerciseModel) {
-    if (!selectedExercises.includes(exercise)) {
-      setSelectedExercises((oldVal) => {
-        const newSelected = [...oldVal, exercise]
-        onChange(newSelected) // TODO refactor
+    setSelectedExercises((oldVal) => {
+      let newSelected = oldVal
+      if (selectedExercises.some((e) => e.id === exercise.id)) {
+        newSelected = oldVal.filter((e) => e.id !== exercise.id)
+      } else {
+        newSelected = [...oldVal, exercise]
+      }
+      onChange(newSelected) // TODO refactor
 
-        return newSelected
-      })
-    } else {
-      setSelectedExercises((oldVal) => {
-        const newSelected = oldVal.filter((e) => e.id !== exercise.id)
-        onChange(newSelected) // TODO refactor
-
-        return newSelected
-      })
-    }
+      return newSelected
+    })
   }
 
   const props = useMemo(() => {
@@ -138,7 +134,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, onSelect, select
         <ExerciseListItem
           exercise={item}
           onSelect={onSelect}
-          isSelected={selectedExercises.includes(item)}
+          isSelected={selectedExercises.some((e) => e.id === item.id)}
           height={itemHeight}
         />
       )
@@ -176,6 +172,7 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
     navigate("ExerciseDetails", { exerciseId: exercise.id! })
   }
   const imageUri = exercise.images?.[0]
+  const imageSize = height - 2 * spacing.xxs
 
   return (
     <Pressable
@@ -193,13 +190,11 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
           marginBottom: spacing.xxs,
           gap: spacing.xs,
           height,
-          backgroundColor: isSelected ? colors.secondary : "transparent",
+          backgroundColor: isSelected ? colors.surfaceVariant : "transparent",
         }}
       >
         <Image
-          width={height}
-          height={height}
-          style={{ height, width: height, borderRadius: spacing.xs }}
+          style={{ height: imageSize, width: imageSize, borderRadius: spacing.xs }}
           // TODO: Why are there imageUri's that are not in exerciseImages?
           source={imageUri && imageUri in exerciseImages ? exerciseImages[imageUri] : exerciseImages['Image Missing']}
         />
@@ -208,7 +203,7 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
           <Text
             style={{
               flexWrap: "wrap",
-              color: isSelected ? colors.onSecondary : colors.onSurface,
+              color: colors.onSurface,
             }}
             numberOfLines={1}
           >

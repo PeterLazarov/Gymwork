@@ -67,7 +67,7 @@ export const TopNavigation: React.FC<Props> = ({
             swipeEnabled: !swipeDisabled,
           }}
           style={{
-            backgroundColor: "green",
+            flex: 1,
           }}
           backBehavior="none"
         >

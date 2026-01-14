@@ -19,3 +19,4 @@
 - fix invisible Divider in WorkoutFilterModal
 - Why are there imageUri's that are not in exerciseImages?
 - IconButton underlay prop is not working
+- Add modal for notification when a new app version is available

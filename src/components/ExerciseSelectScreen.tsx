@@ -5,7 +5,7 @@ import { ExerciseSelectLists } from "@/components/shared/ExerciseSelectLists"
 import { useCreateExercisesStep } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { WorkoutStep } from "@/db/schema"
-import { FAB, Header, Icon, IconButton, Menu, useColors } from "@/designSystem"
+import { FAB, Header, Icon, IconButton, Menu, spacing, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
 import { translate } from "@/utils"
@@ -102,13 +102,32 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
           onChange={selectMode === "superset" ? setSelectedExercises : createExercisesStep}
         />
       </View>
+
       {selectMode === "superset" && (
-        <FAB
-          icon="check"
-          disabled={selectedExercises.length < 2}
-          onPress={() => createExercisesStep(selectedExercises)}
-        />
+        <View
+          pointerEvents="box-none"
+          style={{
+            position: "absolute",
+            bottom: spacing.lg,
+            left: 0,
+            right: 0,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <FAB
+            icon="check"
+            disabled={selectedExercises.length < 2}
+            onPress={() => createExercisesStep(selectedExercises)}
+            style={{
+              position: "relative",
+              left: undefined,
+              right: undefined,
+            }}
+          />
+        </View>
       )}
+
     </BaseLayout>
   )
 }
