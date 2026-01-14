@@ -20,3 +20,5 @@
 - Why are there imageUri's that are not in exerciseImages?
 - IconButton underlay prop is not working
 - Add modal for notification when a new app version is available
+- in superset select screen have a way to list all selected exercises
+- add an animation / effect to favorite exercise button

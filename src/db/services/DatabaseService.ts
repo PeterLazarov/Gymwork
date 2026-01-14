@@ -439,11 +439,12 @@ export class DatabaseService {
 
   async updateExercise(id: number, updates: Omit<Partial<ExerciseModel>, "id" | "createdAt" | "updatedAt">) {
     const timestamp = DateTime.now().toMillis()
-    const { metrics, muscleAreas, ...exerciseUpdates } = updates
+    const { metrics, muscleAreas, isFavorite, ...exerciseUpdates } = updates
     await this.db
       .update(exercises)
       .set({
         ...exerciseUpdates,
+        is_favorite: isFavorite,
         muscle_areas: muscleAreas,
         updated_at: timestamp,
       })
