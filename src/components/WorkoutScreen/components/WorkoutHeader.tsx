@@ -36,7 +36,10 @@ export const WorkoutHeader: React.FC = () => {
   const deleteWorkout = () => {
     setMenuOpen(false)
     if (openedWorkout) {
-      removeWorkout(openedWorkout.id)
+      removeWorkout({
+        workoutId: openedWorkout.id,
+        date: openedWorkout.date
+      })
     }
   }
 

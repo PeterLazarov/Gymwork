@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import Fuse from "fuse.js"
 import { useDatabaseService } from "../useDB"
 import { ExerciseModel } from "../models/ExerciseModel"
+import { addRecord, removeRecord } from "../cacheUtils"
 
 export function useExercise(exerciseId: number) {
   const db = useDatabaseService()
@@ -69,12 +70,13 @@ export function useInsertExercise() {
       const inserted = await db.insertExercise(exercise)
       return new ExerciseModel(inserted)
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["exercises"] })
+    onSuccess: (inserted) => {
+      queryClient.setQueriesData({ queryKey: ["exercises"] }, oldData => addRecord(oldData, inserted));
     },
   })
 }
 
+// TODO: Protect cache
 export function useUpdateExercise() {
   const db = useDatabaseService()
   const queryClient = useQueryClient()
@@ -84,7 +86,7 @@ export function useUpdateExercise() {
     mutationFn: ({ id, updates }: { id: number; updates: Omit<Partial<ExerciseModel>, "id" | "createdAt" | "updatedAt"> }) => {
       return db.updateExercise(id, updates)
     },
-    onSuccess: (_, variables) => {
+    onSuccess: (updatedExercise, variables) => {
       queryClient.invalidateQueries({ queryKey: ["exercises"] })
       queryClient.invalidateQueries({ queryKey: ["exercises", variables.id] })
       // Invalidate workout queries since they include exercise data with metrics
@@ -104,8 +106,10 @@ export function useDeleteExercise() {
       return db.deleteExercise(id)
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["exercises"] })
-      queryClient.invalidateQueries({ queryKey: ["exercises", variables.id] })
+      queryClient.setQueryData(["exercises", variables.id], null);
+      queryClient.setQueryData(["exercises"], oldData => removeRecord(oldData, variables.id))
+
+      // TODO: How to avoid invalidating all workouts?
       queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
     },
   })

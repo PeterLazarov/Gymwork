@@ -4,6 +4,8 @@ import type { SetModel } from "../models/SetModel"
 import { useDatabaseService } from "../useDB"
 import { useInsertWorkout } from "./useWorkoutsActions"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
+import { WorkoutStep } from "../schema"
+import { removeRecord } from "../cacheUtils"
 
 type InsertWorkoutStepParams = {
   workoutId: number
@@ -46,10 +48,11 @@ export function useRemoveWorkoutStep() {
     mutationFn: ({ workoutStepId }: { workoutStepId: number; date?: number; exerciseIds?: number[] }) => 
       db.removeWorkoutStep(workoutStepId),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
       if (variables.date) {
-        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
+        // TODO: fix TS error
+        queryClient.setQueryData(["workouts", "by-date", variables.date], (data) => removeStepFromWorkout(data, variables.workoutStepId))
       }
+      // TODO: Protect exercise queries cache
       if (variables.exerciseIds) {
         variables.exerciseIds.forEach(id => {
           queryClient.invalidateQueries({ queryKey: ["exercises", id] })
@@ -77,7 +80,7 @@ export function useUpdateWorkoutStepExercise() {
     }) =>
       db.updateWorkoutStepExercise(workoutStepId, oldExerciseId, exerciseId),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
+      // TODO: Protect queries cache
       if (variables.date) {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
       }
@@ -96,7 +99,6 @@ export function useReorderWorkoutSteps() {
     mutationFn: ({ workoutId, from, to }: { workoutId: number; from: number; to: number; date?: number }) =>
       db.reorderWorkoutSteps(workoutId, from, to),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
       if (variables.date) {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
       }
@@ -119,7 +121,6 @@ export function useReorderWorkoutStepSets() {
       date?: number
     }) => db.reorderWorkoutStepSets(workoutStepId, orderedSetIds),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
       if (variables.date) {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
       }
@@ -159,4 +160,17 @@ export function useCreateExercisesStep() {
   })
 }
 
-
+function removeStepFromWorkout(
+  oldData: unknown,
+  stepId: number,
+): unknown {
+  if (!oldData || typeof oldData !== 'object') return oldData;
+  
+  const workout = oldData as { workoutSteps?: WorkoutStep[] };
+  if (!workout.workoutSteps || !Array.isArray(workout.workoutSteps)) return oldData;
+  
+  return {
+    ...workout,
+    workoutSteps: removeRecord(workout.workoutSteps, stepId)
+  };
+}

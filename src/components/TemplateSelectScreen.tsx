@@ -36,7 +36,7 @@ export const TemplateSelectScreen: React.FC<TemplateSelectScreenProps> = ({ navi
     showConfirm?.({
       message: translate("templateWillBeDeleted"),
       onConfirm: () => {
-        removeWorkout(template.id)
+        removeWorkout({ workoutId: template.id })
       },
     })
   }

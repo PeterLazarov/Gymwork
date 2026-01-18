@@ -116,7 +116,7 @@ export const TrackView: React.FC<TrackViewProps> = ({
   }, [draftSet, selectedSet, updateSet])
 
   const handleRemove = useCallback(() => {
-    removeSet({ id: selectedSet!.id, date: openedDateMs, exerciseId: focusedExercise.id })
+    removeSet({ id: selectedSet!.id, date: openedDateMs, exerciseId: focusedExercise.id, stepId: step.id })
     setSelectedSet(null)
   }, [selectedSet, removeSet])
 

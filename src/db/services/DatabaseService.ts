@@ -713,7 +713,7 @@ export class DatabaseService {
 
   async updateWorkoutStepExercise(workoutStepId: number, oldExerciseId: number, exerciseId: number) {
     const timestamp = DateTime.now().toMillis()
-console.log("updateWorkoutStepExercise", workoutStepId, oldExerciseId, exerciseId)
+
     Promise.all([
       this.db.delete(workout_step_exercises).where(
         and(eq(workout_step_exercises.workout_step_id, workoutStepId), eq(workout_step_exercises.exercise_id, oldExerciseId))

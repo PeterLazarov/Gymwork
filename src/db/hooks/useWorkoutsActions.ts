@@ -2,6 +2,7 @@ import { isoDateToMs } from "@/utils"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import type { WorkoutModel } from "../models/WorkoutModel"
 import { useDatabaseService } from "../useDB"
+import { removeRecord } from "../cacheUtils"
 
 export type WorkoutFilters = {
   dateFrom?: string
@@ -87,7 +88,7 @@ export function useUpdateWorkout() {
       overwriteSteps?: boolean
     }) => db.updateWorkout(workoutId, workout, overwriteSteps),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
       if (variables.workout.date) {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.workout.date] })
       }
@@ -101,9 +102,15 @@ export function useRemoveWorkout() {
 
   return useMutation({
     meta: { op: "workouts.delete" },
-    mutationFn: (workoutId: number) => db.removeWorkout(workoutId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+    mutationFn: ({ workoutId }: { workoutId: number, date?: number | null }) => db.removeWorkout(workoutId),
+    onSuccess: (_, variables) => {
+      if (variables.date) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
+      }
+      else {
+        // TODO: fix ts error
+        queryClient.setQueryData(["workouts", "templates"] , oldData => removeRecord(oldData, variables.workoutId))
+      }
     },
   })
 }
@@ -124,7 +131,6 @@ export function useCopyWorkout() {
       copySets: boolean
     }) => db.copyWorkout(sourceWorkout, targetDate, copySets),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
       queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.targetDate] })
     },
   })
