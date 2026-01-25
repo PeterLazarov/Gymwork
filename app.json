@@ -5,7 +5,7 @@
     "name": "BodyBuilder",
     "slug": "bodybuilder",
     "scheme": "BodyBuilder",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/pen-logo.png",
     "splash": {
@@ -24,7 +24,7 @@
     "android": {
       "icon": "./assets/pen-logo.png",
       "package": "com.gymwork",
-      "versionCode": 4,
+      "versionCode": 5,
       "adaptiveIcon": {
         "foregroundImage": "./assets/pen-logo.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
