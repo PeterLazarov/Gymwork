@@ -43,7 +43,7 @@ export const WorkoutFeedbackScreen: React.FC = () => {
   }
 
   function onCommentsSave() {
-    updateWorkout({ workoutId: openedWorkout!.id, workout: { ...comments } })
+    updateWorkout({ workoutId: openedWorkout!.id, workout: { ...comments }, date: openedWorkout!.date })
     goBack()
   }
 

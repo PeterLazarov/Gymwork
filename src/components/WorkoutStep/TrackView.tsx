@@ -9,6 +9,7 @@ import { useTimerContext } from "@/context/TimerContext"
 import {
   useExerciseLastSet,
   useInsertSet,
+  useRecords,
   useRemoveSet,
   useSettings,
   useUpdateSet,
@@ -51,6 +52,7 @@ export const TrackView: React.FC<TrackViewProps> = ({
   const { mutateAsync: updateSet } = useUpdateSet()
   const { mutateAsync: removeSet } = useRemoveSet()
   const { data: lastSet } = useExerciseLastSet(focusedExercise.id!)
+  const { data: records } = useRecords(step.id)
   const timer = useTimerContext()
 
   const [selectedSet, setSelectedSet] = useState<SetModel | null>(null)
@@ -116,9 +118,16 @@ export const TrackView: React.FC<TrackViewProps> = ({
   }, [draftSet, selectedSet, updateSet])
 
   const handleRemove = useCallback(() => {
-    removeSet({ id: selectedSet!.id, date: openedDateMs, exerciseId: focusedExercise.id, stepId: step.id })
+    const isRecord = records?.some((r) => r.id === selectedSet!.id && !r.isWeakAss)
+    removeSet({
+      id: selectedSet!.id,
+      date: openedDateMs,
+      exerciseId: focusedExercise.id,
+      stepId: step.id,
+      isRecord,
+    })
     setSelectedSet(null)
-  }, [selectedSet, removeSet])
+  }, [selectedSet, removeSet, records])
 
   return (
     <View
@@ -215,10 +224,9 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
             value={value.weight}
             onChange={(weight) => {
               onUpdate({
-                weight_mcg: weight ? convertWeightToBase(
-                  weight,
-                  value.exercise!.getMetricByType("weight")!.unit!,
-                ) : 0,
+                weight_mcg: weight
+                  ? convertWeightToBase(weight, value.exercise!.getMetricByType("weight")!.unit!)
+                  : 0,
               })
             }}
             step={value.exercise.getMetricByType("weight")!.step_value}

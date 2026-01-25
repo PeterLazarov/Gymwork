@@ -1,11 +1,10 @@
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { removeRecord } from "../cacheUtils"
 import type { ExerciseModel } from "../models/ExerciseModel"
 import type { SetModel } from "../models/SetModel"
-import { useDatabaseService } from "../useDB"
-import { useInsertWorkout } from "./useWorkoutsActions"
-import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { WorkoutStep } from "../schema"
-import { removeRecord } from "../cacheUtils"
+import { useDatabaseService } from "../useDB"
 
 type InsertWorkoutStepParams = {
   workoutId: number
@@ -26,15 +25,23 @@ export function useInsertWorkoutStep() {
 
   return useMutation({
     meta: { op: "workoutSteps.create" },
-    mutationFn: (params: InsertWorkoutStepParams & { date?: number }) => db.insertWorkoutStep(params),
+    mutationFn: (params: InsertWorkoutStepParams & { date?: number }) =>
+      db.insertWorkoutStep(params),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
       if (variables.date) {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
       }
-      variables.exercises.forEach(ex => {
-        if (ex.id) queryClient.invalidateQueries({ queryKey: ["exercises", ex.id] })
+      // Stale exercise history queries (workouts containing these exercises)
+      variables.exercises.forEach((ex) => {
+        if (ex.id) {
+          queryClient.invalidateQueries({
+            queryKey: ["exercises", ex.id, "workouts"],
+            refetchType: "none",
+          })
+        }
       })
+      queryClient.invalidateQueries({ queryKey: ["exercises", "most-used"], refetchType: "none" })
     },
   })
 }
@@ -45,18 +52,28 @@ export function useRemoveWorkoutStep() {
 
   return useMutation({
     meta: { op: "workoutSteps.delete" },
-    mutationFn: ({ workoutStepId }: { workoutStepId: number; date?: number; exerciseIds?: number[] }) => 
-      db.removeWorkoutStep(workoutStepId),
+    mutationFn: ({
+      workoutStepId,
+    }: {
+      workoutStepId: number
+      date?: number
+      exerciseIds?: number[]
+    }) => db.removeWorkoutStep(workoutStepId),
     onSuccess: (_, variables) => {
       if (variables.date) {
-        // TODO: fix TS error
-        queryClient.setQueryData(["workouts", "by-date", variables.date], (data) => removeStepFromWorkout(data, variables.workoutStepId))
+        queryClient.setQueryData(["workouts", "by-date", variables.date], (data) =>
+          removeStepFromWorkout(data, variables.workoutStepId),
+        )
       }
-      // TODO: Protect exercise queries cache
+      // Stale exercise history queries (workouts containing these exercises)
       if (variables.exerciseIds) {
-        variables.exerciseIds.forEach(id => {
-          queryClient.invalidateQueries({ queryKey: ["exercises", id] })
+        variables.exerciseIds.forEach((id) => {
+          queryClient.invalidateQueries({
+            queryKey: ["exercises", id, "workouts"],
+            refetchType: "none",
+          })
         })
+        queryClient.invalidateQueries({ queryKey: ["exercises", "most-used"], refetchType: "none" })
       }
     },
   })
@@ -68,24 +85,30 @@ export function useUpdateWorkoutStepExercise() {
 
   return useMutation({
     meta: { op: "workoutSteps.updateExercise" },
-    mutationFn: ({ 
-      workoutStepId, 
-      oldExerciseId, 
-      exerciseId
-    }: { 
-      workoutStepId: number; 
-      oldExerciseId: number; 
-      exerciseId: number;
-      date?: number;
-    }) =>
-      db.updateWorkoutStepExercise(workoutStepId, oldExerciseId, exerciseId),
+    mutationFn: ({
+      workoutStepId,
+      oldExerciseId,
+      exerciseId,
+    }: {
+      workoutStepId: number
+      oldExerciseId: number
+      exerciseId: number
+      date?: number
+    }) => db.updateWorkoutStepExercise(workoutStepId, oldExerciseId, exerciseId),
     onSuccess: (_, variables) => {
-      // TODO: Protect queries cache
       if (variables.date) {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
       }
-      queryClient.invalidateQueries({ queryKey: ["exercises", variables.oldExerciseId] })
-      queryClient.invalidateQueries({ queryKey: ["exercises", variables.exerciseId] })
+      // Stale exercise history queries for both old and new exercise
+      queryClient.invalidateQueries({
+        queryKey: ["exercises", variables.oldExerciseId, "workouts"],
+        refetchType: "none",
+      })
+      queryClient.invalidateQueries({
+        queryKey: ["exercises", variables.exerciseId, "workouts"],
+        refetchType: "none",
+      })
+      queryClient.invalidateQueries({ queryKey: ["exercises", "most-used"], refetchType: "none" })
     },
   })
 }
@@ -96,8 +119,16 @@ export function useReorderWorkoutSteps() {
 
   return useMutation({
     meta: { op: "workoutSteps.reorder" },
-    mutationFn: ({ workoutId, from, to }: { workoutId: number; from: number; to: number; date?: number }) =>
-      db.reorderWorkoutSteps(workoutId, from, to),
+    mutationFn: ({
+      workoutId,
+      from,
+      to,
+    }: {
+      workoutId: number
+      from: number
+      to: number
+      date?: number
+    }) => db.reorderWorkoutSteps(workoutId, from, to),
     onSuccess: (_, variables) => {
       if (variables.date) {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
@@ -128,8 +159,6 @@ export function useReorderWorkoutStepSets() {
   })
 }
 
-
-
 export function useCreateExercisesStep() {
   const db = useDatabaseService()
   const { openedWorkout, openedDateMs } = useOpenedWorkout()
@@ -153,24 +182,28 @@ export function useCreateExercisesStep() {
       if (openedDateMs) {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", openedDateMs] })
       }
-      variables.forEach(ex => {
-        if (ex.id) queryClient.invalidateQueries({ queryKey: ["exercises", ex.id] })
+      // Stale exercise history queries (workouts containing these exercises)
+      variables.forEach((ex) => {
+        if (ex.id) {
+          queryClient.invalidateQueries({
+            queryKey: ["exercises", ex.id, "workouts"],
+            refetchType: "none",
+          })
+        }
       })
+      queryClient.invalidateQueries({ queryKey: ["exercises", "most-used"], refetchType: "none" })
     },
   })
 }
 
-function removeStepFromWorkout(
-  oldData: unknown,
-  stepId: number,
-): unknown {
-  if (!oldData || typeof oldData !== 'object') return oldData;
-  
-  const workout = oldData as { workoutSteps?: WorkoutStep[] };
-  if (!workout.workoutSteps || !Array.isArray(workout.workoutSteps)) return oldData;
-  
+function removeStepFromWorkout(oldData: unknown, stepId: number): unknown {
+  if (!oldData || typeof oldData !== "object") return oldData
+
+  const workout = oldData as { workoutSteps?: WorkoutStep[] }
+  if (!workout.workoutSteps || !Array.isArray(workout.workoutSteps)) return oldData
+
   return {
     ...workout,
-    workoutSteps: removeRecord(workout.workoutSteps, stepId)
-  };
+    workoutSteps: removeRecord(workout.workoutSteps, stepId),
+  }
 }

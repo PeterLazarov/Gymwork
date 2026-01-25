@@ -6,6 +6,7 @@ import { measurementDefaults, measurementTypes, MetricType } from "@/constants/e
 import { muscleAreas, muscles } from "@/constants/muscles"
 import { DistanceUnit, measurementUnits, WeightUnit } from "@/constants/units"
 import { useDialogContext } from "@/context/DialogContext"
+import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useCreateExercisesStep, useInsertExercise, useInsertWorkoutStep, useSettings, useUpdateExercise } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { ExerciseMetric } from "@/db/schema"
@@ -39,6 +40,7 @@ export const ExerciseEditScreen: React.FC = () => {
   const { mutateAsync: insertExercise } = useInsertExercise()
   const { mutateAsync: createStep } = useCreateExercisesStep()
   const { edittedExercise } = useRouteParams("ExerciseEdit")
+  const { openedDateMs } = useOpenedWorkout()
 
   const hasChanges = useRef(false)
 
@@ -71,8 +73,8 @@ export const ExerciseEditScreen: React.FC = () => {
 
     if (edittedExercise) {
       console.log("edittedExercise", exercise.metricTypes)
-      updateExercise({ id: exercise.id!, updates: exercise })
-      goBack()  
+      updateExercise({ id: exercise.id!, updates: exercise, date: openedDateMs })
+      goBack()
     } else {
       const created = await insertExercise(exercise as any) // TODO: update DatabaseService.insertExercise
       await createStep([created])

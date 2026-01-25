@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import Fuse from "fuse.js"
-import { useDatabaseService } from "../useDB"
+import { addRecord, removeRecord, updateRecord } from "../cacheUtils"
 import { ExerciseModel } from "../models/ExerciseModel"
-import { addRecord, removeRecord } from "../cacheUtils"
+import { useDatabaseService } from "../useDB"
 
 export function useExercise(exerciseId: number) {
   const db = useDatabaseService()
@@ -71,30 +71,61 @@ export function useInsertExercise() {
       return new ExerciseModel(inserted)
     },
     onSuccess: (inserted) => {
-      queryClient.setQueriesData({ queryKey: ["exercises"] }, oldData => addRecord(oldData, inserted));
+      queryClient.setQueriesData<ExerciseModel[]>({ queryKey: ["exercises"] }, (oldData) =>
+        addRecord(oldData, inserted),
+      )
     },
   })
 }
 
-// TODO: Protect cache
 export function useUpdateExercise() {
   const db = useDatabaseService()
   const queryClient = useQueryClient()
 
   return useMutation({
     meta: { op: "exercises.update" },
-    mutationFn: ({ id, updates }: { id: number; updates: Omit<Partial<ExerciseModel>, "id" | "createdAt" | "updatedAt"> }) => {
+    mutationFn: ({
+      id,
+      updates,
+    }: {
+      id: number
+      updates: Omit<Partial<ExerciseModel>, "id" | "createdAt" | "updatedAt">
+      date?: number
+    }) => {
       return db.updateExercise(id, updates)
     },
-    onSuccess: (updatedExercise, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["exercises"] })
-      queryClient.invalidateQueries({ queryKey: ["exercises", variables.id] })
-      // Invalidate workout queries since they include exercise data with metrics
+    onSuccess: (updatedExerciseRows, variables) => {
+      const row = updatedExerciseRows[0]
+      if (row) {
+        queryClient.setQueryData(["exercises", variables.id], new ExerciseModel(row))
+
+        queryClient.setQueriesData<(typeof row)[]>({ queryKey: ["exercises"] }, (oldData) =>
+          Array.isArray(oldData) ? updateRecord(oldData, variables.id, row) : oldData,
+        )
+
+        if ("isFavorite" in variables.updates) {
+          queryClient.setQueriesData<(typeof row)[]>(
+            {
+              queryKey: ["exercises"],
+              predicate: (q) => !!(q.queryKey[1] as ExerciseFilters)?.isFavorite,
+            },
+            (oldData) =>
+              Array.isArray(oldData)
+                ? row.is_favorite
+                  ? addRecord(oldData, row)
+                  : removeRecord(oldData, row.id)
+                : oldData,
+          )
+        }
+      }
+      // Invalidate workout queries since they include embedded exercise data
       queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
+      if (variables.date) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
+      }
     },
   })
 }
-
 
 export function useDeleteExercise() {
   const db = useDatabaseService()
@@ -106,8 +137,10 @@ export function useDeleteExercise() {
       return db.deleteExercise(id)
     },
     onSuccess: (_, variables) => {
-      queryClient.setQueryData(["exercises", variables.id], null);
-      queryClient.setQueryData(["exercises"], oldData => removeRecord(oldData, variables.id))
+      queryClient.setQueryData(["exercises", variables.id], null)
+      queryClient.setQueryData<ExerciseModel[]>(["exercises"], (oldData) =>
+        removeRecord(oldData, variables.id),
+      )
 
       // TODO: How to avoid invalidating all workouts?
       queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
@@ -129,6 +162,7 @@ export function useExercises(filters?: ExerciseFilters) {
   return useQuery({
     queryKey: ["exercises", filters],
     queryFn: () => db.getExercises(filters),
+    refetchOnMount: false,
     select: (data) => {
       if (filters?.search && filters.search.trim()) {
         const fuse = new Fuse(data, {
@@ -137,10 +171,10 @@ export function useExercises(filters?: ExerciseFilters) {
           ignoreLocation: true,
           minMatchCharLength: 2,
         })
-        
-        return fuse.search(filters.search).map(result => result.item)
+
+        return fuse.search(filters.search).map((result) => result.item)
       }
-      
+
       return data
     },
     meta: { op: "exercises.list" },
@@ -156,6 +190,7 @@ export function useMostUsedExercises(limit: number, filters: ExerciseFilters) {
       const result = await db.getMostUsedExercises(limit, filters)
       return result.map((r) => r.exercise)
     },
+    refetchOnMount: false,
     select: (data) => {
       if (filters?.search && filters.search.trim()) {
         const fuse = new Fuse(data, {
@@ -164,10 +199,10 @@ export function useMostUsedExercises(limit: number, filters: ExerciseFilters) {
           ignoreLocation: true,
           minMatchCharLength: 2,
         })
-        
-        return fuse.search(filters.search).map(result => result.item)
+
+        return fuse.search(filters.search).map((result) => result.item)
       }
-      
+
       return data
     },
     meta: { op: "exercises.listMostUsed" },

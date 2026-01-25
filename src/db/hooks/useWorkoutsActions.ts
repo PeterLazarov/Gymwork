@@ -1,8 +1,8 @@
 import { isoDateToMs } from "@/utils"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { removeRecord } from "../cacheUtils"
 import type { WorkoutModel } from "../models/WorkoutModel"
 import { useDatabaseService } from "../useDB"
-import { removeRecord } from "../cacheUtils"
 
 export type WorkoutFilters = {
   dateFrom?: string
@@ -66,8 +66,12 @@ export function useInsertWorkout() {
   return useMutation({
     meta: { op: "workouts.create" },
     mutationFn: (workout: Partial<WorkoutModel>) => db.insertWorkout(workout),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
+      // Dated workouts need immediate refetch since Workout screen is already mounted
+      if (variables.date) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
+      }
     },
   })
 }
@@ -86,11 +90,17 @@ export function useUpdateWorkout() {
       workoutId: number
       workout: Partial<WorkoutModel>
       overwriteSteps?: boolean
+      date?: number | null
     }) => db.updateWorkout(workoutId, workout, overwriteSteps),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
-      if (variables.workout.date) {
-        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.workout.date] })
+      // Use explicit date param, fall back to workout.date for backwards compatibility
+      const workoutDate = variables.date ?? variables.workout.date
+      if (workoutDate) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", workoutDate] })
+      }
+      if (variables.workout.isTemplate) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "templates"] })
       }
     },
   })
@@ -102,14 +112,16 @@ export function useRemoveWorkout() {
 
   return useMutation({
     meta: { op: "workouts.delete" },
-    mutationFn: ({ workoutId }: { workoutId: number, date?: number | null }) => db.removeWorkout(workoutId),
+    mutationFn: ({ workoutId }: { workoutId: number; date?: number | null }) =>
+      db.removeWorkout(workoutId),
     onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
       if (variables.date) {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
-      }
-      else {
-        // TODO: fix ts error
-        queryClient.setQueryData(["workouts", "templates"] , oldData => removeRecord(oldData, variables.workoutId))
+      } else {
+        queryClient.setQueryData<WorkoutModel[]>(["workouts", "templates"], (oldData) =>
+          removeRecord(oldData, variables.workoutId),
+        )
       }
     },
   })
@@ -124,7 +136,7 @@ export function useCopyWorkout() {
     mutationFn: ({
       sourceWorkout,
       targetDate,
-      copySets
+      copySets,
     }: {
       sourceWorkout: WorkoutModel
       targetDate: number

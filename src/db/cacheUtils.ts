@@ -1,14 +1,29 @@
-// TODO: fix unknown type
-export function addRecord<T>(oldData: unknown, inserted: T): T[] {
-  if (Array.isArray(oldData)) {
-    return [inserted, ...oldData];
+type Identifiable = { id?: number }
+
+export function addRecord<T extends Identifiable>(oldData: T[] | undefined, inserted: T): T[] {
+  if (oldData) {
+    return [inserted, ...oldData]
   }
-  return oldData as T[];
+  return [inserted]
 }
 
-export function removeRecord<T>(oldData: unknown, removedId: number): T[] {
-  if (Array.isArray(oldData)) {
-    return oldData.filter((item) => item.id !== removedId);
+export function removeRecord<T extends Identifiable>(
+  oldData: T[] | undefined,
+  removedId: number,
+): T[] {
+  if (oldData) {
+    return oldData.filter((item) => item.id !== removedId)
   }
-  return oldData as T[];
+  return []
+}
+
+export function updateRecord<T extends Identifiable>(
+  oldData: T[] | undefined,
+  updatedId: number,
+  updates: Partial<T>,
+): T[] {
+  if (oldData) {
+    return oldData.map((item) => (item.id === updatedId ? { ...item, ...updates } : item))
+  }
+  return []
 }
