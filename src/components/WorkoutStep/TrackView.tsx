@@ -65,9 +65,18 @@ export const TrackView: React.FC<TrackViewProps> = ({
 
   useEffect(() => {
     if (selectedSet) {
-      setDraftSet(selectedSet)
+      const rawWithUpdatedExercise = {
+        ...selectedSet.raw_data,
+        exercise: { ...selectedSet.raw_data.exercise!, exerciseMetrics: focusedExercise.metrics },
+      }
+      setDraftSet(new SetModel(rawWithUpdatedExercise))
     } else if (lastSet) {
-      setDraftSet(new SetModel({ ...lastSet, rest_ms: 0 }))
+      const rawWithUpdatedExercise = {
+        ...lastSet,
+        rest_ms: 0,
+        exercise: { ...lastSet.exercise, exerciseMetrics: focusedExercise.metrics },
+      }
+      setDraftSet(new SetModel(rawWithUpdatedExercise))
     } else {
       setDraftSet(
         SetModel.createDefaultForExercise({
@@ -112,10 +121,10 @@ export const TrackView: React.FC<TrackViewProps> = ({
       id: selectedSet!.id,
     } // TODO: find another way to keep the selectedSet id
 
-    updateSet({ setId: selectedSet!.id, updates: updatedSet })
+    updateSet({ setId: selectedSet!.id, updates: updatedSet, date: openedDateMs })
 
     setSelectedSet(null)
-  }, [draftSet, selectedSet, updateSet])
+  }, [draftSet, selectedSet, updateSet, openedDateMs])
 
   const handleRemove = useCallback(() => {
     const isRecord = records?.some((r) => r.id === selectedSet!.id && !r.isWeakAss)

@@ -41,7 +41,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
 }) => {
   const colors = useColors()
 
-  const { openedWorkout } = useOpenedWorkout()
+  const { openedWorkout, openedDateMs } = useOpenedWorkout()
   const { data: settings } = useSettings()
   const { mutate: updateSet } = useUpdateSet()
 
@@ -94,12 +94,13 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
   const flashListRef = useRef<FlashListRef<SetModel>>(null)
 
   function toggleSetWarmup(set: SetModel) {
-    updateSet({ setId: set.id!, updates: { isWarmup: !set.isWarmup } })
+    updateSet({ setId: set.id!, updates: { isWarmup: !set.isWarmup }, date: openedDateMs })
   }
   function toggleSetCompletion(set: SetModel) {
     updateSet({
       setId: set.id!,
       updates: { completedAt: set.completedAt ? null : DateTime.now().toMillis() },
+      date: openedDateMs,
     })
   }
 

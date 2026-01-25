@@ -1,13 +1,19 @@
 import React, { useRef, useState } from "react"
-import { ScrollView, View, StyleSheet } from "react-native"
+import { ScrollView, StyleSheet, View } from "react-native"
 import { HelperText, TextInput } from "react-native-paper"
 
 import { measurementDefaults, measurementTypes, MetricType } from "@/constants/enums"
+import { equipments } from "@/constants/equipments"
 import { muscleAreas, muscles } from "@/constants/muscles"
 import { DistanceUnit, measurementUnits, WeightUnit } from "@/constants/units"
 import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
-import { useCreateExercisesStep, useInsertExercise, useInsertWorkoutStep, useSettings, useUpdateExercise } from "@/db/hooks"
+import {
+  useCreateExercisesStep,
+  useInsertExercise,
+  useSettings,
+  useUpdateExercise,
+} from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { ExerciseMetric } from "@/db/schema"
 import {
@@ -29,7 +35,6 @@ import { useRouteParams } from "@/navigators/navigationTypes"
 import { goBack, navigate } from "@/navigators/navigationUtilities"
 import { translate } from "@/utils"
 import { MuscleMap } from "./shared/MuscleMap"
-import { equipments } from "@/constants/equipments"
 
 export type ExerciseEditScreenParams = {
   edittedExercise?: ExerciseModel
@@ -217,14 +222,18 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           }}
         >
           <MuscleMap
-            muscles={settings?.scientific_muscle_names_enabled ? exercise.muscles : exercise.muscleAreas}
+            muscles={
+              settings?.scientific_muscle_names_enabled ? exercise.muscles : exercise.muscleAreas
+            }
             activeColor={palettes.gold["80"]}
             inactiveColor={colors.outline}
             baseColor={colors.bodyBase}
           />
           <MuscleMap
             back
-            muscles={settings?.scientific_muscle_names_enabled ? exercise.muscles : exercise.muscleAreas}
+            muscles={
+              settings?.scientific_muscle_names_enabled ? exercise.muscles : exercise.muscleAreas
+            }
             activeColor={palettes.gold["80"]}
             inactiveColor={colors.outline}
             baseColor={colors.bodyBase}
@@ -336,9 +345,7 @@ const DistanceSection: React.FC<DistanceSectionProps> = ({ metricConfig, onMetri
     <>
       <Text>{translate("distanceMeasurementSettings")}</Text>
 
-      <View
-        style={styles.formRow}
-      >
+      <View style={styles.formRow}>
         <Text>{translate("moreIsBetter")}</Text>
         <ToggleSwitch
           variant="primary"
@@ -347,9 +354,7 @@ const DistanceSection: React.FC<DistanceSectionProps> = ({ metricConfig, onMetri
         />
       </View>
 
-      <View
-        style={styles.formRow}
-      >
+      <View style={styles.formRow}>
         <Text style={{ flex: 1 }}>{translate("unit")}</Text>
         <Select
           options={Object.values(measurementUnits.distance)}
@@ -378,9 +383,7 @@ const DurationSection: React.FC<DurationSectionProps> = ({ metricConfig, onMetri
     <>
       <Text>{translate("durationMeasurementSettings")}</Text>
 
-      <View
-        style={styles.formRow}
-      >
+      <View style={styles.formRow}>
         <Text>{translate("moreIsBetter")}</Text>
         <ToggleSwitch
           variant="primary"
@@ -419,9 +422,7 @@ const WeightSection: React.FC<WeightSectionProps> = ({
     <>
       <Text>{translate("weightMeasurementSettings")}</Text>
 
-      <View
-        style={styles.formRow}
-      >
+      <View style={styles.formRow}>
         <Text>{translate("moreIsBetter")}</Text>
         <ToggleSwitch
           variant="primary"

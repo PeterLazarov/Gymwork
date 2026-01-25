@@ -27,11 +27,19 @@ export function useInsertSet() {
       set: Partial<SetModel>
       manualCompletion?: boolean
     }) => db.insertSet(set, manualCompletion),
-    onSuccess: (_, variables) => {
+    onSuccess: ([inserted], variables) => {
       if (variables.set.date) {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.set.date] })
       }
       queryClient.invalidateQueries({ queryKey: ["exercises", "most-used"], refetchType: "none" })
+
+      if (variables.set.exerciseId) {
+        const lastSetKey = ["exercises", variables.set.exerciseId, "last-set"]
+        const currentLastSet = queryClient.getQueryData<{ date: number }>(lastSetKey)
+        if (currentLastSet && inserted.date >= currentLastSet.date) {
+          queryClient.setQueryData(lastSetKey, { ...currentLastSet, ...inserted })
+        }
+      }
     },
   })
 }
@@ -42,20 +50,24 @@ export function useUpdateSet() {
 
   return useMutation({
     meta: { op: "sets.update" },
-    mutationFn: ({ setId, updates }: { setId: number; updates: Partial<SetModel> }) =>
-      db.updateSet(setId, updates),
+    mutationFn: ({
+      setId,
+      updates,
+    }: {
+      setId: number
+      updates: Partial<SetModel>
+      date?: number
+    }) => db.updateSet(setId, updates),
     onSuccess: (_, variables) => {
       // Mark lists as stale but don't refetch immediately
       queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
       queryClient.invalidateQueries({ queryKey: ["exercises"], refetchType: "none" })
 
-      // Targeted invalidation
-      if (variables.updates.date) {
-        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.updates.date] })
+      // Targeted invalidation - use explicit date param or fall back to updates.date
+      const workoutDate = variables.date ?? variables.updates.date
+      if (workoutDate) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", workoutDate] })
       }
-      // Assuming we can't easily get exerciseId from updates alone usually, but if we did:
-      // We'd rely on the "sets" invalidation to handle step tracks.
-      // If we really need exercise details update, we rely on refetchType: 'none' global
 
       queryClient.invalidateQueries({ queryKey: ["sets"], refetchType: "none" })
     },
