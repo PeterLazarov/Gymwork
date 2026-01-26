@@ -41,6 +41,8 @@ export type SettingContextType = {
   setVisitedWelcomeScreen: (show: boolean) => void
   highlightedSet: number | null
   setHighlightedSet: (id: number) => void
+  skippedVersion: string | null
+  setSkippedVersion: (version: string) => void
   chartHeight: number
   setChartHeight: (id: number) => void
   chartWidth: number
@@ -67,6 +69,7 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     preview_next_set: false,
     visited_welcome_screen: false,
     feedback_user: "",
+    skipped_version: null,
     theme: deviceColorScheme ?? "light",
   }
 
@@ -144,6 +147,10 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     setExerciseSelectLastTab,
     highlightedSet,
     setHighlightedSet,
+    skippedVersion: settings?.skipped_version || defaultSettings.skipped_version!,
+    setSkippedVersion: (version: string) => {
+      persistSettings({ skipped_version: version })
+    },
     chartHeight,
     setChartHeight,
     chartWidth,

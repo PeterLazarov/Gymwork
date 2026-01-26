@@ -43,6 +43,13 @@
       "when": 1768133661281,
       "tag": "0005_colorful_wendell_vaughn",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1768133661282,
+      "tag": "0006_add_skipped_version",
+      "breakpoints": true
     }
   ]
 }

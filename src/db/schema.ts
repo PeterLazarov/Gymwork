@@ -29,6 +29,7 @@ export const settings = sqliteTable("settings", {
   show_workout_timer: integer({ mode: "boolean" }).notNull().default(false),
   visited_welcome_screen: integer({ mode: "boolean" }).notNull().default(false),
   feedback_user: text().default(""),
+  skipped_version: text(),
   created_at: integer().notNull().default(timestamp_col_default_time_sql()),
   updated_at: integer().notNull().default(timestamp_col_default_time_sql()),
 })

@@ -6,6 +6,7 @@ import { ErrorBoundary } from "@sentry/react-native"
 import { View, useWindowDimensions } from "react-native"
 
 import { CalendarScreen } from "@/components/CalendarScreen"
+import { AppUpdateModal } from "@/components/AppUpdateModal"
 import { ErrorDetails } from "@/components/ErrorDetails"
 import { ExerciseDetailsScreen } from "@/components/ExerciseDetailsScreen"
 import { ExerciseEditScreen } from "@/components/ExerciseEditScreen"
@@ -215,6 +216,7 @@ export const AppNavigator = (props: NavigationProps) => {
               )}
             >
               <AppStack />
+              <AppUpdateModal />
             </ErrorBoundary>
           </TimerContextProvider>
         </DialogContextProvider>

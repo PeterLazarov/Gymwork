@@ -7,6 +7,7 @@ import m0002 from './0002_amused_nightcrawler.sql';
 import m0003 from './0003_fix_exercise_records_view.sql';
 import m0004 from './0004_track_weak_ass_records_view.sql';
 import m0005 from './0005_colorful_wendell_vaughn.sql';
+import m0006 from './0006_add_skipped_version.sql';
 
   export default {
     journal,
@@ -16,7 +17,8 @@ m0001,
 m0002,
 m0003,
 m0004,
-m0005
+m0005,
+m0006
     }
   }
   

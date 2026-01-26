@@ -8,6 +8,11 @@ export type AirtableFeedback = {
   createdAt: string
 }
 
+export type AirtableRelease = {
+  version: string
+  notes: string
+}
+
 export interface ApiConfig {
   /**
    * The URL of the api.
@@ -42,7 +47,7 @@ export class AirtableApi {
   }
 
   async sendFeedback(feedback: AirtableFeedback): Promise<any> {
-    return this.apisauce.post("", {
+    return this.apisauce.post("Feedback", {
       records: [
         {
           fields: {
@@ -54,6 +59,21 @@ export class AirtableApi {
         },
       ],
     })
+  }
+
+  async getReleases(): Promise<AirtableRelease[]> {
+    const response = await this.apisauce.get<{
+      records: Array<{ id: string; fields: { Version: string; Notes: string } }>
+    }>("Releases")
+
+    if (!response.ok || !response.data) {
+      return []
+    }
+
+    return response.data.records.map((record) => ({
+      version: record.fields.Version,
+      notes: record.fields.Notes,
+    }))
   }
 }
 
