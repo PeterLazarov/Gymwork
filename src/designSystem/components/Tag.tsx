@@ -1,27 +1,37 @@
-import { StyleSheet, StyleProp, ViewStyle } from "react-native"
+import { StyleSheet } from "react-native"
 
 import { fontSize, spacing } from "../tokens"
 import { Button, ButtonProps } from "./Button"
 import { Icon, IconProps } from "./Icon"
 import { IconButton } from "./IconButton"
 
-type TagProps =  Omit<ButtonProps, "size" | "children"> & {
-    text?: string
-    rightIcon?: IconProps['icon']
-    rightIconAction?: () => void
-  }
-export const Tag: React.FC<TagProps> = ({ style, rightIcon, rightIconAction, ...props }) => {
+type TagProps = Omit<ButtonProps, "size" | "children"> & {
+  text?: string
+  rightIcon?: IconProps["icon"]
+  rightIconAction?: () => void
+}
+export const Tag: React.FC<TagProps> = ({
+  style,
+  rightIcon,
+  rightIconAction,
+  onPress,
+  ...props
+}) => {
   return (
     <Button
-      style={[styles.tag, style, !!rightIcon ? {paddingRight: spacing.xxl} : undefined]}
+      style={[styles.tag, style, !!rightIcon ? { paddingRight: spacing.xxl } : undefined]}
       size="small"
+      onPress={onPress}
       {...props}
     >
-      {rightIcon && 
-        <IconButton onPress={rightIconAction} style={styles.rightIcon}>
-          <Icon icon={rightIcon}  />
+      {rightIcon && (
+        <IconButton
+          onPress={rightIconAction || onPress}
+          style={styles.rightIcon}
+        >
+          <Icon icon={rightIcon} />
         </IconButton>
-      }
+      )}
     </Button>
   )
 }
@@ -36,5 +46,5 @@ const styles = StyleSheet.create({
   rightIcon: {
     position: "absolute",
     right: 0,
-  }
+  },
 })
