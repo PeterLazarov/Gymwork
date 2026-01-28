@@ -1,14 +1,15 @@
-import { and, arrayContained, arrayOverlaps, asc, count, desc, eq, exists, gt, inArray, like, or, sql } from "drizzle-orm"
+import { and, asc, count, desc, eq, exists, inArray, sql } from "drizzle-orm"
 import { DateTime } from "luxon"
+import { ExerciseFilters, WorkoutFilters } from "../hooks"
 import { ExerciseModel } from "../models/ExerciseModel"
 import { SetModel } from "../models/SetModel"
 import { WorkoutModel } from "../models/WorkoutModel"
 import {
-  Exercise,
   ExerciseMetric,
   InsertSettings,
   Set,
   Workout,
+  WorkoutStep,
   exercise_metrics,
   exercises,
   sets,
@@ -18,7 +19,6 @@ import {
   workouts,
 } from "../schema"
 import type { DrizzleDBType } from "../useDB"
-import { ExerciseFilters, WorkoutFilters } from "../hooks"
 
 type DatabaseWorkoutFilters = Omit<WorkoutFilters, "dateFrom" | "dateTo"> & {
   dateFrom?: number
@@ -28,6 +28,7 @@ type DatabaseWorkoutFilters = Omit<WorkoutFilters, "dateFrom" | "dateTo"> & {
 
 type InsertWorkoutStepParams = {
   workoutId: number
+  stepType: WorkoutStep["step_type"]
   exercises: ExerciseModel[]
   sets?: SetModel[]
   stepData?: {
@@ -91,7 +92,7 @@ export class DatabaseService {
 
   async getMostUsedExercises(limit: number, filters: ExerciseFilters) {
     const conditions = []
-    
+
     // Search filtering is handled by Fuse.js in the hook's select function
     // if (filters?.search) {
     //   const words = filters.search.trim().split(" ")
@@ -99,11 +100,11 @@ export class DatabaseService {
     //     conditions.push(like(exercises.name, `%${word}%`))
     //   })
     // }
-    
+
     if (filters.muscleArea) {
       conditions.push(sql`instr(${exercises.muscle_areas}, ${filters.muscleArea}) > 0`)
     }
-    
+
     if (filters.muscle) {
       conditions.push(sql`instr(${exercises.muscles}, ${filters.muscle}) > 0`)
     }
@@ -111,7 +112,7 @@ export class DatabaseService {
     if (filters.equipment) {
       conditions.push(sql`instr(${exercises.equipment}, ${filters.equipment}) > 0`)
     }
-    
+
     return this.db
       .select({
         exercise: exercises,
@@ -257,7 +258,6 @@ export class DatabaseService {
         if (filters?.dateTo) {
           conditions.push(lte(workouts.date, filters.dateTo))
         }
-
 
         if (filters?.muscleArea) {
           conditions.push(
@@ -437,7 +437,10 @@ export class DatabaseService {
     return inserted
   }
 
-  async updateExercise(id: number, updates: Omit<Partial<ExerciseModel>, "id" | "createdAt" | "updatedAt">) {
+  async updateExercise(
+    id: number,
+    updates: Omit<Partial<ExerciseModel>, "id" | "createdAt" | "updatedAt">,
+  ) {
     const timestamp = DateTime.now().toMillis()
     const { metrics, muscleAreas, isFavorite, ...exerciseUpdates } = updates
     await this.db
@@ -451,7 +454,7 @@ export class DatabaseService {
       .where(eq(exercises.id, id))
 
     if (metrics && metrics.length > 0) {
-      await this.db.delete(exercise_metrics).where(eq(exercise_metrics.exercise_id, id))  
+      await this.db.delete(exercise_metrics).where(eq(exercise_metrics.exercise_id, id))
       await this.createExerciseMetrics(id, metrics, timestamp)
     }
 
@@ -466,12 +469,7 @@ export class DatabaseService {
         workout_step_exercises,
         eq(workout_steps.id, workout_step_exercises.workout_step_id),
       )
-      .where(
-        and(
-          eq(workout_step_exercises.exercise_id, id),
-          eq(workout_steps.step_type, "plain"),
-        ),
-      )
+      .where(and(eq(workout_step_exercises.exercise_id, id), eq(workout_steps.step_type, "plain")))
 
     const stepIds = stepsToDelete.map((s) => s.id)
 
@@ -623,6 +621,7 @@ export class DatabaseService {
   async insertWorkoutStep({
     workoutId,
     exercises,
+    stepType,
     sets: stepSets,
     stepData,
   }: InsertWorkoutStepParams) {
@@ -655,7 +654,7 @@ export class DatabaseService {
         .insert(workout_steps)
         .values({
           workout_id: workoutId,
-          step_type: "plain",
+          step_type: stepType,
           position: nextPosition,
           created_at: timestamp,
           updated_at: timestamp,
@@ -711,16 +710,25 @@ export class DatabaseService {
     return this.db.delete(workout_steps).where(eq(workout_steps.id, workoutStepId))
   }
 
-  async updateWorkoutStepExercise(workoutStepId: number, oldExerciseId: number, exerciseId: number) {
+  async updateWorkoutStepExercise(
+    workoutStepId: number,
+    oldExerciseId: number,
+    exerciseId: number,
+  ) {
     const timestamp = DateTime.now().toMillis()
 
     Promise.all([
-      this.db.delete(workout_step_exercises).where(
-        and(eq(workout_step_exercises.workout_step_id, workoutStepId), eq(workout_step_exercises.exercise_id, oldExerciseId))
-      ),
-      this.db.delete(sets).where(
-        and(eq(sets.workout_step_id, workoutStepId), eq(sets.exercise_id, oldExerciseId))
-      )
+      this.db
+        .delete(workout_step_exercises)
+        .where(
+          and(
+            eq(workout_step_exercises.workout_step_id, workoutStepId),
+            eq(workout_step_exercises.exercise_id, oldExerciseId),
+          ),
+        ),
+      this.db
+        .delete(sets)
+        .where(and(eq(sets.workout_step_id, workoutStepId), eq(sets.exercise_id, oldExerciseId))),
     ])
 
     return this.db.insert(workout_step_exercises).values({

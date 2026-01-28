@@ -24,7 +24,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
   const [menuOpen, setMenuOpen] = useState(false)
 
   async function createExercisesStep(exercises: ExerciseModel[]) {
-    await createStep(exercises)
+    await createStep({ exercises, stepType: selectMode })
 
     navigation.navigate("Workout")
   }
@@ -44,7 +44,9 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
 
   function goToFeedback() {
     setMenuOpen(false)
-    requestAnimationFrame(() => navigation.navigate("UserFeedback", { referrerPage: "ExerciseSelect" }))
+    requestAnimationFrame(() =>
+      navigation.navigate("UserFeedback", { referrerPage: "ExerciseSelect" }),
+    )
   }
 
   return (
@@ -71,7 +73,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
             size="large"
             color={colors.onPrimary}
           />
-        </IconButton> 
+        </IconButton>
         <Menu
           visible={menuOpen}
           onDismiss={() => setMenuOpen(false)}
@@ -127,7 +129,6 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
           />
         </View>
       )}
-
     </BaseLayout>
   )
 }

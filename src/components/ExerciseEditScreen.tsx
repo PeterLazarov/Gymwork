@@ -81,8 +81,8 @@ export const ExerciseEditScreen: React.FC = () => {
       updateExercise({ id: exercise.id!, updates: exercise, date: openedDateMs })
       goBack()
     } else {
-      const created = await insertExercise(exercise as any) // TODO: update DatabaseService.insertExercise
-      await createStep([created])
+      const created = await insertExercise(exercise as any) // TODO: update DatabaseService.insertExercise to not use any
+      await createStep({ exercises: [created], stepType: "plain" })
 
       navigate("Workout")
     }

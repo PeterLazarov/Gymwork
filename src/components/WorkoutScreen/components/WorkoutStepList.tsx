@@ -20,7 +20,13 @@ export const WorkoutStepList: React.FC<Props> = ({ workout }) => {
     navigate("WorkoutStep", { focusedStep: step })
   }
 
-  const renderItem = ({ item, index, onDragStart, onDragEnd, isActive }: DragListRenderItemInfo<WorkoutStepModel>) => {
+  const renderItem = ({
+    item,
+    index,
+    onDragStart,
+    onDragEnd,
+    isActive,
+  }: DragListRenderItemInfo<WorkoutStepModel>) => {
     const isLast = index === workout.workoutSteps.length - 1
     return (
       <WorkoutStepCard
@@ -42,7 +48,9 @@ export const WorkoutStepList: React.FC<Props> = ({ workout }) => {
       data={workout.workoutSteps}
       renderItem={renderItem}
       keyExtractor={(item) => `${workout!.date}_${item.id}`}
-      onReorder={({from, to}) => reorderSteps({ workoutId: workout.id, from, to, date: workout.date ?? undefined })}
+      onReorder={({ from, to }) =>
+        reorderSteps({ workoutId: workout.id, from, to, date: workout.date ?? undefined })
+      }
     />
   )
 }
@@ -55,7 +63,14 @@ export type WorkoutStepCardProps = {
   isActive?: boolean
 } & Partial<CardProps>
 
-const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, workout, onDragStart, onDragEnd, isActive, ...rest }) => {
+const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({
+  step,
+  workout,
+  onDragStart,
+  onDragEnd,
+  isActive,
+  ...rest
+}) => {
   const colors = useColors()
   const title =
     step.stepType === "plain"
@@ -67,7 +82,7 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({ step, workout, onDrag
       header={
         <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
           {isActive && <Icon icon="drag-horizontal" />}
-          <Card.Title tx={title}/>
+          <Card.Title tx={title + step.stepType} />
         </View>
       }
       content={

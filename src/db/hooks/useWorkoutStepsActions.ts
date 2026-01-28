@@ -8,6 +8,7 @@ import { useDatabaseService } from "../useDB"
 
 type InsertWorkoutStepParams = {
   workoutId: number
+  stepType: WorkoutStep["step_type"]
   exercises: ExerciseModel[]
   sets?: SetModel[]
   stepData?: {
@@ -166,14 +167,20 @@ export function useCreateExercisesStep() {
 
   return useMutation({
     meta: { op: "workoutSteps.createFromExercises" },
-    mutationFn: async (exercises: ExerciseModel[]) => {
+    mutationFn: async ({
+      exercises,
+      stepType,
+    }: {
+      exercises: ExerciseModel[]
+      stepType: WorkoutStep["step_type"]
+    }) => {
       let workoutId = openedWorkout?.id
       if (!workoutId) {
         const result = await db.insertWorkout({ date: openedDateMs })
         workoutId = result[0].id
       }
 
-      await db.insertWorkoutStep({ exercises, workoutId })
+      await db.insertWorkoutStep({ exercises, workoutId, stepType })
 
       return workoutId
     },
@@ -183,7 +190,7 @@ export function useCreateExercisesStep() {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", openedDateMs] })
       }
       // Stale exercise history queries (workouts containing these exercises)
-      variables.forEach((ex) => {
+      variables.exercises.forEach((ex) => {
         if (ex.id) {
           queryClient.invalidateQueries({
             queryKey: ["exercises", ex.id, "workouts"],
