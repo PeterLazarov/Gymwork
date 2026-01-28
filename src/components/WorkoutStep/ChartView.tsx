@@ -5,7 +5,7 @@ import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { ToggleGroupButton, spacing } from "@/designSystem"
 import { useMemo } from "react"
-import { StyleSheet, View } from "react-native"
+import { ActivityIndicator, StyleSheet, View } from "react-native"
 import { ExerciseStatsChart } from "./components/ExerciseStatsChart"
 
 type ChartViewProps = {
@@ -15,7 +15,7 @@ type ChartViewProps = {
 export const ChartView: React.FC<ChartViewProps> = ({ exercise }) => {
   const { chartHeight, chartView, chartWidth, setChartHeight, setChartView, setChartWidth } =
     useSetting()
-  const { data: exerciseHistoryRaw } = useWorkoutsForExercise(exercise.id!)
+  const { data: exerciseHistoryRaw, isLoading } = useWorkoutsForExercise(exercise.id!)
 
   const exerciseHistory = useMemo(
     () =>
@@ -39,14 +39,18 @@ export const ChartView: React.FC<ChartViewProps> = ({ exercise }) => {
           setChartWidth(width)
         }}
       >
-        {chartHeight !== 0 && (
-          <ExerciseStatsChart
-            exerciseHistory={exerciseHistory}
-            view={chartView}
-            height={chartHeight}
-            width={chartWidth}
-            exercise={exercise}
-          />
+        {isLoading ? (
+          <ActivityIndicator size="large" style={styles.loader} />
+        ) : (
+          chartHeight !== 0 && (
+            <ExerciseStatsChart
+              exerciseHistory={exerciseHistory}
+              view={chartView}
+              height={chartHeight}
+              width={chartWidth}
+              exercise={exercise}
+            />
+          )
         )}
       </View>
 
@@ -70,5 +74,10 @@ const styles = StyleSheet.create({
   chartContainer: {
     alignItems: "center",
     flexGrow: 1,
+  },
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 })

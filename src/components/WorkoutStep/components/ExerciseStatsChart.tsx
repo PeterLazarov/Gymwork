@@ -6,8 +6,8 @@ import {
   TitleComponent,
   TooltipComponent,
 } from "echarts/components"
-import type { HighlightPayload } from "echarts/types/dist/shared"
 import { ECharts, init, use } from "echarts/core"
+import type { HighlightPayload } from "echarts/types/dist/shared"
 import { DateTime, Interval } from "luxon"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Dimensions, View } from "react-native"
@@ -117,7 +117,7 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
 
   const xAxis = useMemo(() => {
     return viewDays.map((d) => d.toFormat("dd LLL"))
-  }, [view, exercise])
+  }, [viewDays])
 
   const dateWorkoutMap = useMemo(() => {
     const map = new Map<string, WorkoutModel>()
@@ -150,14 +150,10 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
     })
   }, [exercise, viewDays, dateWorkoutMap])
 
-
-  const series = useMemo(
-    () => {
-      const { getChartSeries } = seriesSetup({ data: setsByDay })
-      return getChartSeries(exercise, settings!.measure_rest)
-    },
-    [exercise, settings, setsByDay],
-  )
+  const series = useMemo(() => {
+    const { getChartSeries } = seriesSetup({ data: setsByDay })
+    return getChartSeries(exercise, settings!.measure_rest)
+  }, [exercise, settings, setsByDay])
 
   const { getViewOptions, feedChartSeriesData } = useChartConfig({
     series,
@@ -169,30 +165,33 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
 
   const [selectedDate, setSelectedDate] = useState<string>()
 
-  const onHighlight = useCallback((data: HighlightPayload) => {
-    const dateIndex = data.batch?.[0]?.dataIndex as number
-    const date = viewDays[dateIndex]
+  const onHighlight = useCallback(
+    (data: HighlightPayload) => {
+      const dateIndex = data.batch?.[0]?.dataIndex as number
+      const date = viewDays[dateIndex]
 
-    if (!date || dateIndex === undefined) {
-      setSelectedDate(undefined)
-      return
-    }
+      if (!date || dateIndex === undefined) {
+        setSelectedDate(undefined)
+        return
+      }
 
-    const dateKey = date.toISODate()
-    if (!dateKey) {
-      setSelectedDate(undefined)
-      return
-    }
+      const dateKey = date.toISODate()
+      if (!dateKey) {
+        setSelectedDate(undefined)
+        return
+      }
 
-    const workout = dateWorkoutMap.get(dateKey)
+      const workout = dateWorkoutMap.get(dateKey)
 
-    if (!workout) {
-      setSelectedDate(undefined)
-      return
-    }
+      if (!workout) {
+        setSelectedDate(undefined)
+        return
+      }
 
-    setSelectedDate(dateKey)
-  }, [viewDays, dateWorkoutMap])
+      setSelectedDate(dateKey)
+    },
+    [viewDays, dateWorkoutMap],
+  )
 
   useEffect(() => {
     if (chartElRef.current && !eChartRef.current) {
@@ -202,7 +201,7 @@ export const ExerciseStatsChart: React.FC<ExerciseStatsChartProps> = ({
         height,
       })
 
-      eChartRef.current?.on("highlight", data => onHighlight(data as HighlightPayload))
+      eChartRef.current?.on("highlight", (data) => onHighlight(data as HighlightPayload))
     }
 
     return () => {

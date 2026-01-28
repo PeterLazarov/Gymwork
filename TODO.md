@@ -22,3 +22,4 @@
 - Add modal for notification when a new app version is available
 - in superset select screen have a way to list all selected exercises
 - add an animation / effect to favorite exercise button
+- Make initial load of chart faster / show empty chart
