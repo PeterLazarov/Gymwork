@@ -93,7 +93,7 @@ const SetItem: React.FC<SetItemProps> = ({
       {exercise.hasMetricType("reps") && (
         <SetMetricLabel
           value={set.reps ?? 0}
-          unit={translate("reps")}
+          unit={translate("measurements.reps")}
         />
       )}
       {exercise.hasMetricType("weight") && (

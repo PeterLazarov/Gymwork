@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useMemo, useRef, useState } from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import { HelperText, TextInput } from "react-native-paper"
 
@@ -144,6 +144,10 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   const [musclesError, setMusclesError] = useState("")
   const [measurementTypeError, setMeasurementTypeError] = useState("")
   const [showMuscleMap, setShowMuscleMap] = useState(true)
+
+  const measurementOptions = useMemo(() => {
+    return measurementTypes.filter((m) => m !== "rest").map((m) => ({ label: translate(`measurements.${m}`), value: m }))
+  }, [])
 
   function runValidCheck(data: ExerciseModel) {
     const nameInvalid = data.name.trim() === ""
@@ -296,7 +300,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
         }}
       />
       <Multiselect
-        options={measurementTypes}
+        options={measurementOptions}
         selectedValues={exercise.metricTypes as string[]}
         headerText="Measurements"
         onSelect={(selection) => {

@@ -280,11 +280,7 @@ const WorkoutListItem: React.FC<WorkoutListItemProps> = ({ workout, onPress }) =
               numberOfLines={1}
               style={styles.surfaceTitle}
             >
-              {translate("duration")}
-              {workout.durationMs}
-              {typeof workout.durationMs}
-              {workout.durationMs}
-              {translate("duration")}
+              {translate("measurements.duration")}
             </Text>
 
             <Text

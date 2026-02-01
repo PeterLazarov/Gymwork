@@ -10,10 +10,6 @@ const en = {
   startRest: "Start rest",
   endRest: "End rest",
   search: "Search",
-  reps: "reps",
-  weight: "weight",
-  distance: "distance",
-  duration: "duration",
   durationMinutes: "minutes",
   updateSet: "Update set",
   remove: "Remove",
@@ -137,6 +133,13 @@ const en = {
   editInstructions: 'Edit instructions',
   deleteExercise: 'Delete exercise',
   exerciseInUse: 'Exercise in use in date/dates:\n{{dates}}\nThis data will be lost if you delete this exercise.', 
+  measurements: {
+    reps: 'Reps',
+    weight: 'Weight',
+    distance: 'Distance',
+    duration: 'Duration',
+    speed: 'Speed',
+  }
 }
 
 export default en

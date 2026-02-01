@@ -212,7 +212,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
       )}
 
       {value.exercise?.hasMetricType("reps") && (
-        <SetEditPanelSection text={translate("reps")}>
+        <SetEditPanelSection text={translate("measurements.reps")}>
           <IncrementNumericEditor
             value={value.reps}
             onChange={(reps) => onUpdate({ reps })}
@@ -226,7 +226,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
 
       {value.exercise?.hasMetricType("weight") && (
         <SetEditPanelSection
-          text={translate("weight")}
+          text={translate("measurements.weight")}
           unit={value.exercise!.getMetricByType("weight")!.unit}
         >
           <IncrementNumericEditor
@@ -247,7 +247,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
       )}
 
       {value.exercise?.hasMetricType("distance") && (
-        <SetEditPanelSection text={translate("distance")}>
+        <SetEditPanelSection text={translate("measurements.distance")}>
           <DistanceEditor
             value={value.distance}
             onChange={(distance) => onUpdate({ distance_mm: distance })}
@@ -260,7 +260,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
       )}
 
       {value.exercise?.hasMetricType("duration") && (
-        <SetEditPanelSection text={translate("duration")}>
+        <SetEditPanelSection text={translate("measurements.duration")}>
           <DurationInput
             value={value.durationMs ? Duration.fromMillis(value.durationMs) : undefined}
             onUpdate={(duration) => onUpdate({ duration_ms: duration.toMillis() })}
