@@ -82,7 +82,7 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({
       header={
         <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.sm }}>
           {isActive && <Icon icon="drag-horizontal" />}
-          <Card.Title tx={title + step.stepType} />
+          <Card.Title tx={title} />
         </View>
       }
       content={
