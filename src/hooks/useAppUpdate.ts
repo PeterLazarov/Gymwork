@@ -35,12 +35,9 @@ export const useAppUpdate = () => {
         if (sortedReleases.length === 0) return false
 
         const newerReleases = sortedReleases.filter((r) => compare(r.version, currentVersion) > 0)
+        const latest = newerReleases?.[0]
 
-        if (newerReleases.length === 0) return false
-
-        const latest = newerReleases[0]
-
-        if (latest.version === skippedVersion) {
+        if (!latest || latest.version === skippedVersion) {
           return false
         }
 

@@ -3,18 +3,31 @@ import { spacing } from "@/designSystem/tokens"
 import { useAppUpdate } from "@/hooks/useAppUpdate"
 import { ScrollView, View } from "react-native"
 
-export const AppUpdateModal = () => {
+type AppUpdateModalProps = {
+  open?: boolean
+  onClose?: () => void
+}
+
+export const AppUpdateModal = ({ open, onClose }: AppUpdateModalProps = {}) => {
   const { updateAvailable, latestVersion, newReleases, dismissUpdate, performUpdate } =
     useAppUpdate()
 
-  if (!updateAvailable) return null
+  // Use external open prop if provided, otherwise use internal updateAvailable state
+  const isOpen = open ?? updateAvailable
+  
+  const handleClose = () => {
+    onClose?.()
+    dismissUpdate()
+  }
+
+  if (!isOpen) return null
 
   const hasReleaseNotes = newReleases.some((r) => r.notes)
 
   return (
     <Modal
-      open={updateAvailable}
-      onClose={dismissUpdate}
+      open={isOpen}
+      onClose={handleClose}
       containerStyle={{ justifyContent: "center", padding: spacing.md }}
     >
       <Card
@@ -65,7 +78,7 @@ export const AppUpdateModal = () => {
             >
               <Button
                 variant="neutral"
-                onPress={dismissUpdate}
+                onPress={handleClose}
                 text="Not now"
                 style={{ flex: 1 }}
               />

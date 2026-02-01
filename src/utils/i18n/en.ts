@@ -139,7 +139,9 @@ const en = {
     distance: 'Distance',
     duration: 'Duration',
     speed: 'Speed',
-  }
+  },
+  version: 'Version: {{version}}',
+  version_update_available: 'Version: {{version}} \n Update available'
 }
 
 export default en

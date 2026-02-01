@@ -57,7 +57,7 @@ export const Button: React.FC<ButtonProps> = ({
   } as const
 
   const color = disabled ? "disabled" : type === "outline" ? "outline" : variant
-  if(textStyle) console.log(textStyle)
+
   return (
     <Pressable
       style={[
