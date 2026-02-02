@@ -11,64 +11,47 @@ const APP_STORE_URL = "https://apps.apple.com/app/com.gymwork"
 
 export const useAppUpdate = () => {
   const { skippedVersion, setSkippedVersion } = useSetting()
-  const [updateAvailable, setUpdateAvailable] = useState(false)
   const [newReleases, setNewReleases] = useState<AirtableRelease[]>([])
   const [latestVersion, setLatestVersion] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const checkViaAirtable = async () => {
+    const fetchReleases = async () => {
       try {
         const releases = await airtableApi.getReleases()
-        if (releases.length === 0) return false
+        if (releases.length === 0) return
 
         const currentVersion = Constants.expoConfig?.version
         if (!currentVersion || !valid(currentVersion)) {
           console.warn("Could not determine current app version")
-          return false
+          return
         }
 
         const sortedReleases = releases
           .filter((r) => valid(r.version))
           .sort((a, b) => compare(b.version, a.version))
 
-        if (sortedReleases.length === 0) return false
-
         const newerReleases = sortedReleases.filter((r) => compare(r.version, currentVersion) > 0)
-        const latest = newerReleases?.[0]
-
-        if (!latest || latest.version === skippedVersion) {
-          return false
+        
+        if (newerReleases.length > 0) {
+          setLatestVersion(newerReleases[0].version)
+          setNewReleases(newerReleases)
         }
-
-        setUpdateAvailable(true)
-        setLatestVersion(latest.version)
-        setNewReleases(newerReleases)
-        return true
       } catch (e) {
-        console.error("Failed to check version via Airtable:", e)
-        return false
-      }
-    }
-
-    const checkFn = async () => {
-      if (__DEV__) {
-        console.log("Skipping update check in DEV mode")
+        console.error("Failed to fetch releases from Airtable:", e)
+      } finally {
         setLoading(false)
-        return
       }
-
-      await checkViaAirtable()
-      setLoading(false)
     }
 
-    checkFn()
-  }, [skippedVersion])
+    fetchReleases()
+  }, [])
+
+  const updateAvailable = !loading && latestVersion !== null && latestVersion !== skippedVersion
 
   const dismissUpdate = () => {
     if (latestVersion) {
       setSkippedVersion(latestVersion)
-      setUpdateAvailable(false)
     }
   }
 
