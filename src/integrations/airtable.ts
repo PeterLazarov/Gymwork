@@ -55,6 +55,7 @@ export class AirtableApi {
             Comments: feedback.comments,
             Date: feedback.date,
             CreatedAt: feedback.createdAt,
+            Version: Constants.expoConfig?.version,
           },
         },
       ],
