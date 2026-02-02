@@ -92,6 +92,7 @@ export type IconProps = {
   color?: string
   style?: StyleProp<TextStyle>
   children?: ReactNode
+  variant?: "primary" | "accent" | "neutral" | "critical" | "tertiary" | "secondary"
 }
 
 export const Icon: React.FC<IconProps> = ({
@@ -100,10 +101,21 @@ export const Icon: React.FC<IconProps> = ({
   color: _color,
   style,
   children,
+  variant
 }) => {
   const colors = useColors()
 
-  const color = _color ?? colors.onSurface
+  const buttonTextColors = {
+    primary: colors.onPrimary,
+    accent: colors.onTertiaryContainer,
+    neutral: colors.onSecondaryContainer,
+    secondary: colors.onSecondaryContainer,
+    critical: colors.onError,
+    tertiary: colors.onSurface,
+    disabled: colors.shadow,
+  } as const
+
+  const color = _color ?? buttonTextColors[variant ?? "tertiary"]
 
   return (
     <>

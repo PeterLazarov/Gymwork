@@ -21,3 +21,6 @@
 - in superset select screen have a way to list all selected exercises
 - add an animation / effect to favorite exercise button
 - Make initial load of chart faster / show empty chart
+- Get typing of all ant design icons in Icon component
+- disabled button style is single for all variant and horrible
+

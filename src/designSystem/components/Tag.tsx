@@ -15,6 +15,7 @@ export const Tag: React.FC<TagProps> = ({
   rightIcon,
   rightIconAction,
   onPress,
+  variant,
   ...props
 }) => {
   return (
@@ -22,6 +23,7 @@ export const Tag: React.FC<TagProps> = ({
       style={[styles.tag, style, !!rightIcon ? { paddingRight: spacing.xxl } : undefined]}
       size="small"
       onPress={onPress}
+      variant={variant}
       {...props}
     >
       {rightIcon && (
@@ -29,7 +31,7 @@ export const Tag: React.FC<TagProps> = ({
           onPress={rightIconAction || onPress}
           style={styles.rightIcon}
         >
-          <Icon icon={rightIcon} />
+          <Icon icon={rightIcon} variant={variant} />
         </IconButton>
       )}
     </Button>
