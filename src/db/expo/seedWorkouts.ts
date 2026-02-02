@@ -27,9 +27,9 @@ export async function seedWorkouts(drizzleDB: DrizzleDBType, exerciseList: Exerc
 
     const today = DateTime.fromISO(DateTime.now().toISODate()!)
 
-    const benchPressExercise = exerciseList.find((e) => e.name?.toLowerCase().includes("bench press"))
-    const squatExercise = exerciseList.find((e) => e.name?.toLowerCase().includes("squat"))
-    const cardioExercise = exerciseList.find((e) => e.muscleAreas?.includes("Cardio"))
+    const benchPressExercise = exerciseList.find((e) => e.exercise.name?.toLowerCase().includes("bench press"))
+    const squatExercise = exerciseList.find((e) => e.exercise.name?.toLowerCase().includes("squat"))
+    const cardioExercise = exerciseList.find((e) => e.exercise.muscle_areas?.includes("Cardio"))
 
     let daysAgo = 0
 
@@ -147,7 +147,7 @@ export async function seedWorkouts(drizzleDB: DrizzleDBType, exerciseList: Exerc
               created_at: setCreatedAt,
             })
           } else {
-            const hasWeight = "weight" in exercise.measurements
+            const hasWeight = exercise.measurements.weight
             groupSets.push({
               workout_step_id: workoutStepId,
               exercise_id: exerciseId,
