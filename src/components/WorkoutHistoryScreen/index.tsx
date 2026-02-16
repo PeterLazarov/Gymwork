@@ -1,11 +1,10 @@
 import { useFocusEffect } from "@react-navigation/native"
-import { useCallback, useMemo, useState } from "react"
+import { Suspense, lazy, useCallback, useMemo, useState } from "react"
 import { Pressable, StyleSheet, View } from "react-native"
 import { Searchbar } from "react-native-paper"
 
-import { MuscleMap } from "@/components/shared/MuscleMap"
 import { discomfortOptions } from "@/constants/enums"
-import { useAllWorkoutsFull, useSettings } from "@/db/hooks"
+import { useAllWorkoutsFull, useSettings, useWorkoutsCount } from "@/db/hooks"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import {
   AppColors,
@@ -33,6 +32,10 @@ import { FilterForm, isFilterEmpty, WorkoutsFilterModal } from "./components/Wor
 const ITEM_ESTIMATED_HEIGHT = 240
 const SKELETON_PLACEHOLDERS = [0, 1, 2] as const
 
+const LazyMuscleMap = lazy(() =>
+  import("@/components/shared/MuscleMap").then((mod) => ({ default: mod.MuscleMap })),
+)
+
 export type WorkoutsHistoryScreenParams = {
   copyWorkoutMode?: boolean
 }
@@ -44,12 +47,23 @@ export const WorkoutsHistoryScreen: React.FC = () => {
   const filterEmpty = isFilterEmpty(filter)
   const hasAppliedFilters = !filterEmpty || trimmedFilterString.length > 0
 
-  const { data: rawWorkouts, isLoading: workoutsLoading } = useAllWorkoutsFull(
-    filter,
-    trimmedFilterString,
-  )
+  const {
+    data: rawWorkouts,
+    isLoading: workoutsLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useAllWorkoutsFull(filter, trimmedFilterString)
+
+  const { data: totalCount } = useWorkoutsCount(filter, trimmedFilterString)
+
   const workouts = useMemo(
-    () => (rawWorkouts ? rawWorkouts.map((workout) => new WorkoutModel(workout)) : []),
+    () =>
+      rawWorkouts
+        ? rawWorkouts.pages
+            .flatMap((page) => page)
+            .map((workout) => new WorkoutModel(workout))
+        : [],
     [rawWorkouts],
   )
 
@@ -181,9 +195,23 @@ export const WorkoutsHistoryScreen: React.FC = () => {
               renderItem={renderItem}
               keyExtractor={keyExtractor}
               overrideItemLayout={overrideItemLayout}
+              onEndReached={() => {
+                if (hasNextPage) fetchNextPage()
+              }}
+              onEndReachedThreshold={0.5}
+              ListFooterComponent={
+                isFetchingNextPage ? (
+                  <View style={{ padding: spacing.md }}>
+                    <Skeleton
+                      height={ITEM_ESTIMATED_HEIGHT - spacing.lg}
+                      style={styles.skeletonItem}
+                    />
+                  </View>
+                ) : null
+              }
             />
             <View style={styles.workoutCount}>
-              <Text>{translate("workoutsCount", { count: workouts.length })}</Text>
+              <Text>{translate("workoutsCount", { count: totalCount ?? workouts.length })}</Text>
             </View>
           </>
         )}
@@ -250,20 +278,22 @@ const WorkoutListItem: React.FC<WorkoutListItemProps> = ({ workout, onPress }) =
           </View>
 
           <View style={styles.row}>
-            <MuscleMap
-              muscles={settings?.scientific_muscle_names_enabled ? workout.muscles : workout.muscleAreas}
-              back={false}
-              activeColor={palettes.gold["80"]}
-              inactiveColor={colors.outline}
-              baseColor={colors.bodyBase}
-            />
-            <MuscleMap
-              muscles={settings?.scientific_muscle_names_enabled ? workout.muscles : workout.muscleAreas}
-              back={true}
-              activeColor={palettes.gold["80"]}
-              inactiveColor={colors.outline}
-              baseColor={colors.bodyBase}
-            />
+            <Suspense fallback={<Skeleton height={80} style={styles.muscleSkeletonDouble} />}>
+              <LazyMuscleMap
+                muscles={settings?.scientific_muscle_names_enabled ? workout.muscles : workout.muscleAreas}
+                back={false}
+                activeColor={palettes.gold["80"]}
+                inactiveColor={colors.outline}
+                baseColor={colors.bodyBase}
+              />
+              <LazyMuscleMap
+                muscles={settings?.scientific_muscle_names_enabled ? workout.muscles : workout.muscleAreas}
+                back={true}
+                activeColor={palettes.gold["80"]}
+                inactiveColor={colors.outline}
+                baseColor={colors.bodyBase}
+              />
+            </Suspense>
           </View>
         </View>
       </View>
@@ -374,6 +404,16 @@ const makeWorkoutItemStyles = (colors: AppColors) =>
     },
     row: {
       flexDirection: "row",
+    },
+    musclePlaceholder: {
+      height: 80,
+      width: spacing.xxxl,
+    },
+    muscleSkeleton: {
+      width: spacing.xxxl,
+    },
+    muscleSkeletonDouble: {
+      width: spacing.xxxl * 2,
     },
     between: {
       flexDirection: "row",

@@ -7,7 +7,7 @@ export type WorkoutModelRecord = Workout & {
     workoutStepExercises: (WorkoutStepExercise & {
       exercise: Exercise
     })[]
-    sets: (Set & {
+    sets?: (Set & {
       exercise: Exercise
     })[]
   })[]

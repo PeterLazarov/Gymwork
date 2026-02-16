@@ -1,5 +1,5 @@
 import { DateTime } from "luxon"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { ScrollView, View } from "react-native"
 
 import { CommentsCard } from "@/components/shared/CommentsCard"
@@ -12,16 +12,15 @@ import {
   Button,
   Divider,
   Modal,
+  Skeleton,
   Text,
   ToggleSwitch,
-  fontSize,
   spacing,
   useColors,
 } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
 import { msToIsoDate, translate } from "@/utils"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { useCopyWorkout } from "@/db/hooks"
+import { useCopyWorkout, useWorkoutByDate } from "@/db/hooks"
 
 type Props = {
   open: boolean
@@ -35,6 +34,13 @@ export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, sh
   const { openedDateMs, setOpenedDate } = useOpenedWorkout()
   const { mutate: copyWorkout } = useCopyWorkout()
   const { showSnackbar } = useDialogContext()
+  const { data: fullWorkoutRecord, isLoading } = useWorkoutByDate(workout.date!)
+
+  const fullWorkout = useMemo(
+    () => (fullWorkoutRecord ? new WorkoutModel(fullWorkoutRecord) : undefined),
+    [fullWorkoutRecord],
+  )
+  const displayWorkout = fullWorkout || workout
 
   const luxonDate = DateTime.fromMillis(workout.date!)
   const label = luxonDate.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
@@ -64,41 +70,47 @@ export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, sh
       }}
     >
       <Modal.Header title={label} />
-      <View style={{ flex: 1 }}>
-        {showComments && workout.hasComments && (
-          <CommentsCard
-            workout={workout}
-            compactMode
-          />
-        )}
-        <ScrollView>
-          {workout.workoutSteps.map((step) => (
-            <StepItem
-              key={step.id}
-              step={step}
-              workout={workout}
+      {isLoading ? (
+        <View style={{ padding: spacing.md }}>
+          <Skeleton height={200} />
+        </View>
+      ) : (
+        <View style={{ flex: 1 }}>
+          {showComments && displayWorkout.hasComments && (
+            <CommentsCard
+              workout={displayWorkout}
+              compactMode
             />
-          ))}
-        </ScrollView>
-        {mode === "copy" && (
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: spacing.xxs,
-              gap: spacing.xs,
-            }}
-          >
-            <Text style={{ color: colors.onSurface }}>{translate("includeSets")}</Text>
-            <ToggleSwitch
-              variant="primary"
-              value={includeSets}
-              onValueChange={setIncludeSets}
-            />
-          </View>
-        )}
-      </View>
+          )}
+          <ScrollView>
+            {displayWorkout.workoutSteps.map((step) => (
+              <StepItem
+                key={step.id}
+                step={step}
+                workout={displayWorkout}
+              />
+            ))}
+          </ScrollView>
+          {mode === "copy" && (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: spacing.xxs,
+                gap: spacing.xs,
+              }}
+            >
+              <Text style={{ color: colors.onSurface }}>{translate("includeSets")}</Text>
+              <ToggleSwitch
+                variant="primary"
+                value={includeSets}
+                onValueChange={setIncludeSets}
+              />
+            </View>
+          )}
+        </View>
+      )}
       <Divider
         orientation="horizontal"
         variant="primary"

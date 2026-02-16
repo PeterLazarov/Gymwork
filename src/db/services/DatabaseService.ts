@@ -1,4 +1,4 @@
-import { and, asc, count, desc, eq, exists, inArray, sql } from "drizzle-orm"
+import { and, asc, count, desc, eq, exists, gte, inArray, like, lte, or, sql } from "drizzle-orm"
 import { DateTime } from "luxon"
 import { ExerciseFilters, WorkoutFilters } from "../hooks"
 import { ExerciseModel } from "../models/ExerciseModel"
@@ -24,6 +24,7 @@ type DatabaseWorkoutFilters = Omit<WorkoutFilters, "dateFrom" | "dateTo"> & {
   dateFrom?: number
   dateTo?: number
   search?: string
+  offset?: number
 }
 
 type InsertWorkoutStepParams = {
@@ -242,6 +243,70 @@ export class DatabaseService {
     })
   }
 
+  async getWorkoutsCount(filters?: DatabaseWorkoutFilters) {
+    const conditions = [eq(workouts.is_template, false)]
+
+    if (filters?.discomfortLevel) {
+      conditions.push(eq(workouts.pain, filters.discomfortLevel))
+    }
+
+    if (filters?.dateFrom) {
+      conditions.push(gte(workouts.date, filters.dateFrom))
+    }
+
+    if (filters?.dateTo) {
+      conditions.push(lte(workouts.date, filters.dateTo))
+    }
+
+    if (filters?.muscleArea) {
+      conditions.push(
+        exists(
+          this.db
+            .select()
+            .from(workout_steps)
+            .innerJoin(sets, eq(sets.workout_step_id, workout_steps.id))
+            .innerJoin(exercises, eq(exercises.id, sets.exercise_id))
+            .where(
+              and(
+                eq(workout_steps.workout_id, workouts.id),
+                sql`instr(${exercises.muscle_areas}, ${filters.muscleArea}) > 0`,
+              ),
+            ),
+        ),
+      )
+    }
+
+    if (filters?.muscle) {
+      conditions.push(
+        exists(
+          this.db
+            .select()
+            .from(workout_steps)
+            .innerJoin(sets, eq(sets.workout_step_id, workout_steps.id))
+            .innerJoin(exercises, eq(exercises.id, sets.exercise_id))
+            .where(
+              and(
+                eq(workout_steps.workout_id, workouts.id),
+                sql`instr(${exercises.muscles}, ${filters.muscle}) > 0`,
+              ),
+            ),
+        ),
+      )
+    }
+
+    if (filters?.search && filters.search.trim() !== "") {
+      const s = filters.search.trim()
+      conditions.push(or(like(workouts.name, `%${s}%`), like(workouts.notes, `%${s}%`))!)
+    }
+
+    const result = await this.db
+      .select({ count: count() })
+      .from(workouts)
+      .where(and(...conditions))
+
+    return result[0].count
+  }
+
   async getAllWorkoutsFull(filters?: DatabaseWorkoutFilters) {
     return this.db.query.workouts.findMany({
       where: (workouts, { and, gte, lte, eq, like, or }) => {
@@ -304,26 +369,14 @@ export class DatabaseService {
       },
       orderBy: (workouts, { desc }) => [desc(workouts.date)],
       limit: filters?.limit,
+      offset: filters?.offset,
       with: {
         workoutSteps: {
           orderBy: (workout_steps, { asc }) => [asc(workout_steps.position)],
           with: {
             workoutStepExercises: {
               with: {
-                exercise: {
-                  with: {
-                    exerciseMetrics: true,
-                  },
-                },
-              },
-            },
-            sets: {
-              with: {
-                exercise: {
-                  with: {
-                    exerciseMetrics: true,
-                  },
-                },
+                exercise: true,
               },
             },
           },

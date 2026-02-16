@@ -7,7 +7,7 @@ type WorkoutStepModelType = WorkoutStep & {
   workoutStepExercises: (WorkoutStepExercise & {
     exercise: Exercise
   })[]
-  sets: (Set & {
+  sets?: (Set & {
     exercise: Exercise
   })[]
 }
@@ -32,7 +32,7 @@ export class WorkoutStepModel {
     this.updatedAt = data.updated_at
     this.workoutStepExercises = data.workoutStepExercises
     this.exercises = data.workoutStepExercises.map((wse) => ExerciseModel.from(wse.exercise))
-    this.sets = data.sets.map((set) => SetModel.from(set))
+    this.sets = data.sets?.map((set) => SetModel.from(set)) ?? []
   }
 
   get completedSets(): SetModel[] {

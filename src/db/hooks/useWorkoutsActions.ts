@@ -1,5 +1,5 @@
 import { isoDateToMs } from "@/utils"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { removeRecord } from "../cacheUtils"
 import type { WorkoutModel } from "../models/WorkoutModel"
 import { useDatabaseService } from "../useDB"
@@ -11,6 +11,7 @@ export type WorkoutFilters = {
   discomfortLevel?: string
   muscleArea?: string
   muscle?: string
+  offset?: number
 }
 
 export function useAllWorkoutIds(params?: { limit?: number }) {
@@ -23,7 +24,31 @@ export function useAllWorkoutIds(params?: { limit?: number }) {
   })
 }
 
+export const WORKOUTS_PAGE_SIZE = 5
 export function useAllWorkoutsFull(filters?: WorkoutFilters, search?: string) {
+  const db = useDatabaseService()
+  const combinedFilter = {
+    ...filters,
+    dateFrom: filters?.dateFrom ? isoDateToMs(filters.dateFrom) : undefined,
+    dateTo: filters?.dateTo ? isoDateToMs(filters.dateTo) : undefined,
+    search,
+    limit: WORKOUTS_PAGE_SIZE,
+  }
+
+  return useInfiniteQuery({
+    queryKey: ["workouts", "full", combinedFilter],
+    queryFn: async ({ pageParam = 0 }) =>
+      (await db.getAllWorkoutsFull({ ...combinedFilter, offset: pageParam })) ?? [],
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length < WORKOUTS_PAGE_SIZE) return undefined
+      return allPages.length * WORKOUTS_PAGE_SIZE
+    },
+    meta: { op: "workouts.listFull" },
+  })
+}
+
+export function useWorkoutsCount(filters?: WorkoutFilters, search?: string) {
   const db = useDatabaseService()
   const combinedFilter = {
     ...filters,
@@ -33,9 +58,9 @@ export function useAllWorkoutsFull(filters?: WorkoutFilters, search?: string) {
   }
 
   return useQuery({
-    queryKey: ["workouts", "full", combinedFilter],
-    queryFn: async () => (await db.getAllWorkoutsFull(combinedFilter)) ?? null,
-    meta: { op: "workouts.listFull" },
+    queryKey: ["workouts", "count", combinedFilter],
+    queryFn: () => db.getWorkoutsCount(combinedFilter),
+    meta: { op: "workouts.count" },
   })
 }
 
