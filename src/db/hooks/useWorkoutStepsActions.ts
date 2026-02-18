@@ -33,15 +33,6 @@ export function useInsertWorkoutStep() {
       if (variables.date) {
         queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
       }
-      // Stale exercise history queries (workouts containing these exercises)
-      variables.exercises.forEach((ex) => {
-        if (ex.id) {
-          queryClient.invalidateQueries({
-            queryKey: ["exercises", ex.id, "workouts"],
-            refetchType: "none",
-          })
-        }
-      })
       queryClient.invalidateQueries({ queryKey: ["exercises", "most-used"], refetchType: "none" })
     },
   })
@@ -65,16 +56,6 @@ export function useRemoveWorkoutStep() {
         queryClient.setQueryData(["workouts", "by-date", variables.date], (data) =>
           removeStepFromWorkout(data, variables.workoutStepId),
         )
-      }
-      // Stale exercise history queries (workouts containing these exercises)
-      if (variables.exerciseIds) {
-        variables.exerciseIds.forEach((id) => {
-          queryClient.invalidateQueries({
-            queryKey: ["exercises", id, "workouts"],
-            refetchType: "none",
-          })
-        })
-        queryClient.invalidateQueries({ queryKey: ["exercises", "most-used"], refetchType: "none" })
       }
     },
   })
