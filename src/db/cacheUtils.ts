@@ -1,3 +1,5 @@
+import type { Query, QueryClient, QueryKey } from "@tanstack/react-query"
+
 type Identifiable = { id?: number }
 
 export function addRecord<T extends Identifiable>(oldData: T[] | undefined, inserted: T): T[] {
@@ -26,4 +28,19 @@ export function updateRecord<T extends Identifiable>(
     return oldData.map((item) => (item.id === updatedId ? { ...item, ...updates } : item))
   }
   return []
+}
+
+export function updateQueryItems<TData>(
+  queryClient: QueryClient,
+  queryKey: QueryKey,
+  predicate: (query: Query<TData>) => boolean,
+  updater: (query: Query<TData>) => TData | undefined,
+): void {
+  const queries = queryClient.getQueryCache().findAll({ queryKey }) as Query<TData>[]
+  queries.filter(predicate).forEach((query) => {
+    const updated = updater(query)
+    if (updated !== undefined) {
+      queryClient.setQueryData(query.queryKey, updated)
+    }
+  })
 }

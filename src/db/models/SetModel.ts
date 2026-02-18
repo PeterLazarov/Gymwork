@@ -168,17 +168,8 @@ export class SetModel {
     const timestamp = date || Date.now()
 
     const exerciseRaw: Exercise & { exerciseMetrics?: ExerciseMetric[] } = {
+      ...exercise.toRawModel(),
       id: exercise.id ?? -1,
-      name: exercise.name,
-      images: exercise.images,
-      equipment: exercise.equipment,
-      muscle_areas: exercise.muscleAreas,
-      muscles: exercise.muscles,
-      instructions: exercise.instructions ?? [],
-      tips: exercise.tips ?? [],
-      position: exercise.position ?? null,
-      stance: exercise.stance ?? null,
-      is_favorite: exercise.isFavorite,
       created_at: exercise.createdAt ?? timestamp,
       updated_at: exercise.updatedAt ?? timestamp,
       exerciseMetrics: exercise.metrics,

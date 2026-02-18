@@ -189,6 +189,25 @@ export class ExerciseModel {
       exerciseMetrics: source.metrics,
     })
   }
+
+  toRawModel(): ExerciseModelType {
+    return {
+      id: this.id!,
+      name: this.name,
+      images: this.images,
+      equipment: this.equipment,
+      muscle_areas: this.muscleAreas,
+      muscles: this.muscles,
+      instructions: this.instructions,
+      tips: this.tips,
+      position: this.position ?? null,
+      stance: this.stance ?? null,
+      is_favorite: this.isFavorite,
+      created_at: this.createdAt,
+      updated_at: this.updatedAt,
+      exerciseMetrics: this.metrics,
+    }
+  }
   
   static from(exercise: ExerciseModelType): ExerciseModel {
     return new ExerciseModel(exercise)
