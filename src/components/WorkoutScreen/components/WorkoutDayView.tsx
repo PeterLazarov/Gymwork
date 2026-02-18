@@ -60,7 +60,9 @@ export const WorkoutEmptyState: React.FC = () => {
   const hasWorkouts = workoutIds && workoutIds.length > 0
   const hasTemplates = templates && templates.length > 0
   function startWorkout() {
-    navigate("ExerciseSelect")
+    navigate("ExerciseSelect", {
+      selectMode: "plain"
+    })
   }
 
   const secondaryActions = useMemo(() => {
