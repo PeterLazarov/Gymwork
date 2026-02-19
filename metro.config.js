@@ -1,6 +1,8 @@
 /* eslint-env node */
 // Learn more https://docs.expo.io/guides/customizing-metro
+const path = require("path")
 const { getDefaultConfig } = require("expo/metro-config")
+const { resolve } = require("metro-resolver")
 
 /** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname)
@@ -23,6 +25,19 @@ config.transformer.getTransformOptions = async () => ({
 // The solution was taken from the following issue:
 // https://github.com/facebook/metro/issues/1272
 config.resolver.unstable_conditionNames = ["require", "default", "browser"]
+
+// Ensure echarts can import tslib in Metro (avoid ESM/CJS interop issues)
+const tslibESM = path.resolve(__dirname, "node_modules/tslib/tslib.es6.js")
+config.resolver.extraNodeModules = {
+  ...(config.resolver.extraNodeModules || {}),
+  tslib: tslibESM,
+}
+config.resolver.resolveRequest = (context, moduleName, platform) => {
+  if (moduleName === "tslib") {
+    return resolve(context, tslibESM, platform)
+  }
+  return resolve(context, moduleName, platform)
+}
 
 // This helps support certain popular third-party libraries
 // such as Firebase that use the extension cjs.

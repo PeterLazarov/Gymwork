@@ -1,6 +1,7 @@
 import { SVGRenderer, SvgChart } from "@wuba/react-native-echarts"
 import { BarChart, LineChart } from "echarts/charts"
 import {
+  AxisPointerComponent,
   GridComponent,
   LegendComponent,
   TitleComponent,
@@ -29,6 +30,7 @@ import { useChartConfig } from "../utils/useChartConfig"
 use([
   TitleComponent,
   TooltipComponent,
+  AxisPointerComponent,
   GridComponent,
   SVGRenderer,
   LegendComponent,
