@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { removeRecord, updateQueryItems } from "../cacheUtils"
-import type { SetModel } from "../models/SetModel"
 import { ExerciseModel } from "../models/ExerciseModel"
-import { Set, WorkoutStep } from "../schema"
+import type { SetModel } from "../models/SetModel"
+import { Set, Workout, WorkoutStep } from "../schema"
 import { useDatabaseService } from "../useDB"
 
 export function useRecords(workoutStepId: number) {
@@ -30,45 +30,40 @@ export function useInsertSet() {
     }) => db.insertSet(set, manualCompletion),
     onSuccess: ([inserted], variables) => {
       if (variables.set.date && variables.set.workoutStepId && variables.set.exercise) {
-        queryClient.setQueryData(
-          ["workouts", "by-date", variables.set.date],
-          (oldData) =>
-            addSetToWorkoutByDateCache(
-              oldData,
-              inserted,
-              variables.set.workoutStepId!,
-              variables.set.exercise as ExerciseModel,
-            ),
+        queryClient.setQueryData(["workouts", "by-date", variables.set.date], (oldData) =>
+          addSetToWorkoutByDateCache(
+            oldData,
+            inserted,
+            variables.set.workoutStepId!,
+            variables.set.exercise as ExerciseModel,
+          ),
         )
       }
       queryClient.invalidateQueries({ queryKey: ["exercises", "most-used"], refetchType: "none" })
 
       if (variables.set.exerciseId) {
+        const workoutByDate = queryClient.getQueryData(["workouts", "by-date", variables.set.date])
+
         updateQueryItems(
           queryClient,
           ["exercises", variables.set.exerciseId, "workouts"],
-          (query) => {
-            const data = query.state.data
-            if (!Array.isArray(data)) return false
-            return data.some((workout) => {
-              if (!workout || typeof workout !== "object") return false
-              return (workout as { date?: number | null }).date === inserted.date
-            })
-          },
-          (query) => 
+          (query) => Array.isArray(query.state.data),
+          (query) =>
             addSetToExerciseHistoryCache(
               query.state.data,
               inserted,
               variables.set.exercise,
+              workoutByDate,
             ),
         )
-      }
 
-      if (variables.set.exerciseId) {
         const lastSetKey = ["exercises", variables.set.exerciseId, "last-set"]
-        const currentLastSet = queryClient.getQueryData<{ date: number }>(lastSetKey)
-        if (currentLastSet && inserted.date >= currentLastSet.date) {
-          queryClient.setQueryData(lastSetKey, { ...currentLastSet, ...inserted })
+        const currentLastSet = queryClient.getQueryData<{ date: number } | null>(lastSetKey)
+        if (currentLastSet === null || (currentLastSet && inserted.date >= currentLastSet.date)) {
+          queryClient.setQueryData(
+            lastSetKey,
+            currentLastSet ? { ...currentLastSet, ...inserted } : inserted,
+          )
         }
       }
     },
@@ -145,11 +140,14 @@ export function useRemoveSet() {
   })
 }
 
+type WorkoutStepWithSets = WorkoutStep & { sets?: Set[] }
+type WorkoutCacheEntry = Workout & { workoutSteps: WorkoutStepWithSets[] }
+
 function removeSetFromWorkout(oldData: unknown, stepId: number, setId: number): unknown {
   if (!oldData || typeof oldData !== "object") return oldData
 
-  const workout = oldData as { workoutSteps?: (WorkoutStep & { sets: Set[] })[] }
-  if (!workout.workoutSteps || !Array.isArray(workout.workoutSteps)) return oldData
+  const workout = oldData as WorkoutCacheEntry
+  if (!Array.isArray(workout.workoutSteps)) return oldData
 
   return {
     ...workout,
@@ -162,35 +160,64 @@ function removeSetFromWorkout(oldData: unknown, stepId: number, setId: number): 
 function addSetToExerciseHistoryCache(
   oldData: unknown,
   inserted: Set,
-  exercise?: ExerciseModel,
-): unknown | undefined {
+  exercise: ExerciseModel | undefined,
+  workoutByDate: unknown,
+): unknown {
   if (!Array.isArray(oldData) || !exercise) return undefined
+
+  const exerciseRaw = { ...exercise.toRawModel(), exerciseMetrics: exercise.metrics }
+  const newSet = { ...inserted, exercise: exerciseRaw }
 
   const workout = oldData.find((item) => {
     if (!item || typeof item !== "object") return false
-    return (item as { date?: number | null }).date === inserted.date
-  })
+    return (item as WorkoutCacheEntry).date === inserted.date
+  }) as WorkoutCacheEntry | undefined
 
-  const step = workout?.workoutSteps?.find((s: WorkoutStep) => s.id === inserted.workout_step_id)
-  const existingSets = step?.sets ?? []
-  const canUpdate =
-    workout && Array.isArray(workout.workoutSteps) && step && !existingSets.some((s: Set) => s.id === inserted.id)
+  if (workout && Array.isArray(workout.workoutSteps)) {
+    const step = workout.workoutSteps.find((s) => s.id === inserted.workout_step_id)
 
-  if (!canUpdate) return undefined
+    if (step) {
+      const existingSets = step.sets ?? []
+      if (existingSets.some((s: Set) => s.id === inserted.id)) return undefined
 
-  const exerciseRaw = { ...exercise.toRawModel(), exerciseMetrics: exercise.metrics }
-  const newSet = exerciseRaw ? { ...inserted, exercise: exerciseRaw } : inserted
-  const nextStep = { ...step!, sets: [...existingSets, newSet] }
-  const nextSteps = workout!.workoutSteps!.map((s: WorkoutStep) =>
-    s.id === inserted.workout_step_id ? nextStep : s,
-  )
+      const nextStep = { ...step, sets: [...existingSets, newSet] }
+      const nextSteps = workout.workoutSteps.map((s) =>
+        s.id === inserted.workout_step_id ? nextStep : s,
+      )
+      return replaceWorkoutInList(oldData, workout.date, { ...workout, workoutSteps: nextSteps })
+    }
+  }
 
-  return oldData.map((w) => {
-    if (!w || typeof w !== "object") return w
-    return (w as { date?: number | null }).date === workout!.date
-      ? { ...workout!, workoutSteps: nextSteps }
-      : w
-  })
+  const byDateStep = findStepInByDateCache(workoutByDate, inserted.workout_step_id)
+  if (!byDateStep) return undefined
+  const newStep = { ...byDateStep, sets: [newSet] }
+
+  if (workout && Array.isArray(workout.workoutSteps)) {
+    return replaceWorkoutInList(oldData, workout.date, {
+      ...workout,
+      workoutSteps: [...workout.workoutSteps, newStep],
+    })
+  }
+
+  const byDateWorkout = workoutByDate as WorkoutCacheEntry
+  return [{ ...byDateWorkout, workoutSteps: [newStep] }, ...oldData]
+}
+
+function replaceWorkoutInList(
+  list: unknown[],
+  date: number | null,
+  replacement: WorkoutCacheEntry,
+): unknown[] {
+  return list.map((w) => ((w as WorkoutCacheEntry)?.date === date ? replacement : w))
+}
+
+function findStepInByDateCache(
+  workoutByDate: unknown,
+  stepId: number,
+): WorkoutStepWithSets | undefined {
+  if (!workoutByDate || typeof workoutByDate !== "object") return undefined
+  const workout = workoutByDate as WorkoutCacheEntry
+  return workout.workoutSteps?.find((s) => s.id === stepId)
 }
 
 function addSetToWorkoutByDateCache(
@@ -200,7 +227,7 @@ function addSetToWorkoutByDateCache(
   exercise: ExerciseModel,
 ): unknown {
   if (!oldData || typeof oldData !== "object") return oldData
-  const workout = oldData as { workoutSteps?: (WorkoutStep & { sets?: Set[] })[] }
+  const workout = oldData as WorkoutCacheEntry
   if (!Array.isArray(workout.workoutSteps)) return oldData
 
   const stepIndex = workout.workoutSteps.findIndex((step) => step.id === workoutStepId)

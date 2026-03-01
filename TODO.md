@@ -25,4 +25,11 @@
 - disabled button style is single for all variant and horrible
 - speed exercise measurement is not used currently
 
+## E2E Test Cases – Cache Invalidation
 
+- [ ] Creating an exercise should immediately show it in the exercise select list
+- [ ] Deleting an exercise should immediately remove it from the exercise select list (including filtered views)
+- [ ] Adding the first set to a new workout step should update the exercise history tab with the new workout/set data
+- [ ] Opening a step for an exercise with no previous sets shows defaults (10); after creating a set, reopening the step should use the actual set values instead of defaults
+- [ ] Deleting an exercise should remove its plain steps and sets from the current workout view immediately
+- [ ] Deleting an exercise used in a superset should remove only its sets from the superset step, keeping the step intact

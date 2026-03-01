@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import Fuse from "fuse.js"
 import { addRecord, removeRecord, updateRecord } from "../cacheUtils"
 import { ExerciseModel } from "../models/ExerciseModel"
+import type { Set, Workout, WorkoutStep, WorkoutStepExercise } from "../schema"
 import { useDatabaseService } from "../useDB"
 
 export function useExercise(exerciseId: number) {
@@ -72,7 +73,7 @@ export function useInsertExercise() {
     },
     onSuccess: (inserted) => {
       queryClient.setQueriesData<ExerciseModel[]>({ queryKey: ["exercises"] }, (oldData) =>
-        addRecord(oldData, inserted),
+        Array.isArray(oldData) ? addRecord(oldData, inserted) : oldData,
       )
     },
   })
@@ -138,12 +139,13 @@ export function useDeleteExercise() {
     },
     onSuccess: (_, variables) => {
       queryClient.setQueryData(["exercises", variables.id], null)
-      queryClient.setQueryData<ExerciseModel[]>(["exercises"], (oldData) =>
-        removeRecord(oldData, variables.id),
+      queryClient.setQueriesData<ExerciseModel[]>({ queryKey: ["exercises"] }, (oldData) =>
+        Array.isArray(oldData) ? removeRecord(oldData, variables.id) : oldData,
       )
 
-      // TODO: How to avoid invalidating all workouts?
-      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
+      queryClient.setQueriesData({ queryKey: ["workouts", "by-date"] }, (oldData) =>
+        removeExerciseFromWorkoutCache(oldData, variables.id),
+      )
     },
   })
 }
@@ -207,4 +209,37 @@ export function useMostUsedExercises(limit: number, filters: ExerciseFilters) {
     },
     meta: { op: "exercises.listMostUsed" },
   })
+}
+
+type WorkoutStepWithRelations = WorkoutStep & {
+  sets?: Set[]
+  workoutStepExercises?: WorkoutStepExercise[]
+}
+
+function removeExerciseFromWorkoutCache(oldData: unknown, exerciseId: number): unknown {
+  if (!oldData || typeof oldData !== "object") return oldData
+
+  const workout = oldData as Workout & { workoutSteps: WorkoutStepWithRelations[] }
+  if (!Array.isArray(workout.workoutSteps)) return oldData
+
+  const nextSteps = workout.workoutSteps
+    .filter((step) => {
+      if (step.step_type === "plain") {
+        return !step.workoutStepExercises?.some((wse) => wse.exercise_id === exerciseId)
+      }
+      return true
+    })
+    .map((step) => {
+      if (step.step_type === "plain") return step
+
+      return {
+        ...step,
+        sets: (step.sets ?? []).filter((set) => set.exercise_id !== exerciseId),
+        workoutStepExercises: (step.workoutStepExercises ?? []).filter(
+          (wse) => wse.exercise_id !== exerciseId,
+        ),
+      }
+    })
+
+  return { ...workout, workoutSteps: nextSteps }
 }
