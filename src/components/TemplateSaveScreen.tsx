@@ -37,7 +37,9 @@ export const TemplateSaveScreen: React.FC = () => {
   const hasChanges = useRef(false)
 
   const [template, setTemplate] = useState<Partial<WorkoutModel>>(
-    edittingTemplate ? { ...edittingTemplate } : { name: "", isTemplate: true },
+    edittingTemplate
+      ? { ...edittingTemplate }
+      : { name: openedWorkout?.name || "", isTemplate: true },
   )
   const [templateSteps, setTemplateSteps] = useState<WorkoutStepModel[]>(
     edittingTemplate?.workoutSteps || openedWorkout?.workoutSteps || [],
