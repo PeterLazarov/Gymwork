@@ -2,6 +2,7 @@ import { FlashList, FlashListRef, ListRenderItemInfo } from "@shopify/flash-list
 import { useCallback, useRef } from "react"
 import { Keyboard, Pressable, View } from "react-native"
 
+import { durationFormats } from "@/constants/enums"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useSetting } from "@/context/SettingContext"
 import { useRecords, useSettings, useUpdateSet } from "@/db/hooks"
@@ -231,7 +232,7 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
         <SetDataLabel
           value={getFormatedDuration(
             set.durationMs ?? 0,
-            // set.duration ?? (set.inferredDuration ? +set.inferredDuration.toFixed(2) : 0), TODO: Why?
+            set.exercise.getMetricByType("duration")!.duration_format,
           )}
         />
       )}
@@ -244,7 +245,7 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
       )} */}
       {measureRest && (
         <SetDataLabel
-          value={getFormatedDuration(set.rest ?? 0, true)}
+          value={getFormatedDuration(set.rest ?? 0, durationFormats.mm_ss)}
           unit={translate("rest")}
         />
       )}

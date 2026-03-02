@@ -2,7 +2,13 @@ import React, { useMemo, useRef, useState } from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import { HelperText, TextInput } from "react-native-paper"
 
-import { measurementDefaults, measurementTypes, MetricType } from "@/constants/enums"
+import {
+  durationFormatOptions,
+  durationFormats,
+  measurementDefaults,
+  measurementTypes,
+  MetricType,
+} from "@/constants/enums"
 import { equipments } from "@/constants/equipments"
 import { muscleAreas, muscles } from "@/constants/muscles"
 import { DistanceUnit, measurementUnits, WeightUnit } from "@/constants/units"
@@ -146,7 +152,9 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
   const [showMuscleMap, setShowMuscleMap] = useState(true)
 
   const measurementOptions = useMemo(() => {
-    return measurementTypes.filter((m) => m !== "rest").map((m) => ({ label: translate(`measurements.${m}`), value: m }))
+    return measurementTypes
+      .filter((m) => m !== "rest")
+      .map((m) => ({ label: translate(`measurements.${m}`), value: m }))
   }, [])
 
   function runValidCheck(data: ExerciseModel) {
@@ -189,6 +197,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           unit: measurementDefaults[m].unit,
           more_is_better: measurementDefaults[m].moreIsBetter,
           step_value: "step" in measurementDefaults[m] ? measurementDefaults[m].step : null,
+          duration_format: m === "duration" ? durationFormats.mm_ss : undefined,
         }) as ExerciseMetric,
     )
     const updated = exercise.update({ metrics })
@@ -383,6 +392,10 @@ const DurationSection: React.FC<DurationSectionProps> = ({ metricConfig, onMetri
     onMetricChange({ ...metricConfig, more_is_better: value })
   }
 
+  function setDurationFormat(duration_format: ExerciseMetric["duration_format"]) {
+    onMetricChange({ ...metricConfig, duration_format })
+  }
+
   return (
     <>
       <Text>{translate("durationMeasurementSettings")}</Text>
@@ -393,6 +406,18 @@ const DurationSection: React.FC<DurationSectionProps> = ({ metricConfig, onMetri
           variant="primary"
           value={metricConfig.more_is_better}
           onValueChange={toggleMoreIsBetter}
+        />
+      </View>
+
+      <View style={styles.formRow}>
+        <Text style={{ flex: 1 }}>{translate("format")}</Text>
+        <Select
+          options={durationFormatOptions}
+          headerText={translate("format")}
+          value={metricConfig.duration_format}
+          onChange={(format) => setDurationFormat(format!)}
+          label={translate("format")}
+          containerStyle={{ flex: 1 }}
         />
       </View>
     </>

@@ -8,7 +8,6 @@ import {
   SQLiteTableWithColumns,
   sqliteView,
   text,
-  uniqueIndex,
 } from "drizzle-orm/sqlite-core"
 
 const timestamp_col_default_time_sql = () =>
@@ -77,6 +76,12 @@ export const exercise_metrics = sqliteTable("exercise_metrics", {
   }).notNull(),
   unit: text().notNull(), // e.g., 'kg', 'lb', 'ms', 'mm', 'kph'
 
+  duration_format: text({
+    enum: ["ss", "mm", "mm:ss", "hh:mm:ss"],
+  })
+    .notNull()
+    .default("mm:ss"),
+
   more_is_better: integer({ mode: "boolean" }).notNull().default(true),
   step_value: real(), // e.g., 2.5 for weight increments
   min_value: real(),
@@ -87,91 +92,109 @@ export const exercise_metrics = sqliteTable("exercise_metrics", {
 })
 
 // Workouts - unified structure with is_template flag
-export const workouts = sqliteTable("workouts", {
-  id: integer().primaryKey({ autoIncrement: true }),
+export const workouts = sqliteTable(
+  "workouts",
+  {
+    id: integer().primaryKey({ autoIncrement: true }),
 
-  name: text(),
-  notes: text(),
-  date: integer(), // date as timestamp
+    name: text(),
+    notes: text(),
+    date: integer(), // date as timestamp
 
-  feeling: text(),
-  pain: text(),
-  rpe: integer(), // 1-10
+    feeling: text(),
+    pain: text(),
+    rpe: integer(), // 1-10
 
-  ended_at: integer(),
-  duration_ms: integer(),
+    ended_at: integer(),
+    duration_ms: integer(),
 
-  is_template: integer({ mode: "boolean" }).notNull().default(false),
+    is_template: integer({ mode: "boolean" }).notNull().default(false),
 
-  created_at: timestamp_col,
-  updated_at: timestamp_col,
-}, (table) => ({
-  dateIdx: index("workouts_date_idx").on(table.date),
-}))
+    created_at: timestamp_col,
+    updated_at: timestamp_col,
+  },
+  (table) => ({
+    dateIdx: index("workouts_date_idx").on(table.date),
+  }),
+)
 
 // Workout Steps (replaces set_groups)
-export const workout_steps = sqliteTable("workout_steps", {
-  id: integer().primaryKey({ autoIncrement: true }),
-  workout_id: integer()
-    .notNull()
-    .references(() => workouts.id, { onDelete: "cascade" }),
+export const workout_steps = sqliteTable(
+  "workout_steps",
+  {
+    id: integer().primaryKey({ autoIncrement: true }),
+    workout_id: integer()
+      .notNull()
+      .references(() => workouts.id, { onDelete: "cascade" }),
 
-  step_type: text({ enum: ["plain", "superset", "circuit", "emom", "amrap", "custom"] }).notNull(),
-  position: integer().notNull(),
+    step_type: text({
+      enum: ["plain", "superset", "circuit", "emom", "amrap", "custom"],
+    }).notNull(),
+    position: integer().notNull(),
 
-  created_at: timestamp_col,
-  updated_at: timestamp_col,
-}, (table) => ({
-  workoutIdIdx: index("workout_steps_workout_id_idx").on(table.workout_id),
-}))
+    created_at: timestamp_col,
+    updated_at: timestamp_col,
+  },
+  (table) => ({
+    workoutIdIdx: index("workout_steps_workout_id_idx").on(table.workout_id),
+  }),
+)
 
 // Join table for exercises in workout steps
-export const workout_step_exercises = sqliteTable("workout_step_exercises", {
-  id: integer().primaryKey({ autoIncrement: true }),
-  workout_step_id: integer()
-    .notNull()
-    .references(() => workout_steps.id, { onDelete: "cascade" }),
-  exercise_id: integer()
-    .notNull()
-    .references(() => exercises.id, { onDelete: "cascade" }),
+export const workout_step_exercises = sqliteTable(
+  "workout_step_exercises",
+  {
+    id: integer().primaryKey({ autoIncrement: true }),
+    workout_step_id: integer()
+      .notNull()
+      .references(() => workout_steps.id, { onDelete: "cascade" }),
+    exercise_id: integer()
+      .notNull()
+      .references(() => exercises.id, { onDelete: "cascade" }),
 
-  created_at: timestamp_col,
-  updated_at: timestamp_col,
-}, (table) => ({
-  workoutStepIdIdx: index("workout_step_exercises_workout_step_id_idx").on(table.workout_step_id),
-}))
+    created_at: timestamp_col,
+    updated_at: timestamp_col,
+  },
+  (table) => ({
+    workoutStepIdIdx: index("workout_step_exercises_workout_step_id_idx").on(table.workout_step_id),
+  }),
+)
 
 // Workout Sets (replaces sets)
-export const sets = sqliteTable("sets", {
-  id: integer().primaryKey({ autoIncrement: true }),
-  workout_step_id: integer()
-    .notNull()
-    .references(() => workout_steps.id, { onDelete: "cascade" }),
-  exercise_id: integer()
-    .notNull()
-    .references(() => exercises.id, { onDelete: "cascade" }),
+export const sets = sqliteTable(
+  "sets",
+  {
+    id: integer().primaryKey({ autoIncrement: true }),
+    workout_step_id: integer()
+      .notNull()
+      .references(() => workout_steps.id, { onDelete: "cascade" }),
+    exercise_id: integer()
+      .notNull()
+      .references(() => exercises.id, { onDelete: "cascade" }),
 
-  is_warmup: integer({ mode: "boolean" }).notNull().default(false),
-  date: integer().notNull(), // denormalized for easier querying
-  is_weak_ass_record: integer({ mode: "boolean" }).notNull().default(false),
+    is_warmup: integer({ mode: "boolean" }).notNull().default(false),
+    date: integer().notNull(), // denormalized for easier querying
+    is_weak_ass_record: integer({ mode: "boolean" }).notNull().default(false),
 
-  // Measurements
-  reps: integer(),
-  weight_mcg: integer(),
-  distance_mm: integer(),
-  duration_ms: integer(),
-  speed_kph: real(),
-  rest_ms: integer(),
+    // Measurements
+    reps: integer(),
+    weight_mcg: integer(),
+    distance_mm: integer(),
+    duration_ms: integer(),
+    speed_kph: real(),
+    rest_ms: integer(),
 
-  completed_at: integer(),
+    completed_at: integer(),
 
-  created_at: timestamp_col,
-  updated_at: timestamp_col,
-}, (table) => ({
-  workoutStepIdIdx: index("sets_workout_step_id_idx").on(table.workout_step_id),
-  exerciseIdIdx: index("sets_exercise_id_idx").on(table.exercise_id),
-  dateIdx: index("sets_date_idx").on(table.date),
-}))
+    created_at: timestamp_col,
+    updated_at: timestamp_col,
+  },
+  (table) => ({
+    workoutStepIdIdx: index("sets_workout_step_id_idx").on(table.workout_step_id),
+    exerciseIdIdx: index("sets_exercise_id_idx").on(table.exercise_id),
+    dateIdx: index("sets_date_idx").on(table.date),
+  }),
+)
 
 // Tags
 export const tags = sqliteTable("tags", {

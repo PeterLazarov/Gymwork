@@ -75,7 +75,7 @@ export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
           }
 
           const toFixed = text
-            .replace(/^0+(?=[0-9])/, "") 
+            .replace(/^0+(?=[0-9])/, "")
             .slice(
               0,
               text.includes(".")

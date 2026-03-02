@@ -264,6 +264,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
           <DurationInput
             value={value.durationMs ? Duration.fromMillis(value.durationMs) : undefined}
             onUpdate={(duration) => onUpdate({ duration_ms: duration.toMillis() })}
+            format={value.exercise.getMetricByType("duration")!.duration_format}
             onSubmitEditing={() => onHandleSubmit(input4)}
             // timer={timer}
             ref={input4}

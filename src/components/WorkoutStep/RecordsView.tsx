@@ -7,7 +7,7 @@ import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
 import { EmptyState, spacing } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
-import { msToIsoDate, translate } from "@/utils"
+import { getFormatedDuration, msToIsoDate, translate } from "@/utils"
 import { SetDataLabel } from "./components/SetDataLabel"
 
 type RecordsViewProps = {
@@ -70,9 +70,11 @@ type ListItemProps = {
 const ListItem: React.FC<ListItemProps> = ({ set, onPress }) => {
   const styles = useMemo(() => makeListItemStyles(set.isWeakAssRecord), [set.isWeakAssRecord])
 
-  const isSingleMeasurement = set.exercise.groupRecordsBy === set.exercise.measuredBy 
+  const isSingleMeasurement = set.exercise.groupRecordsBy === set.exercise.measuredBy
   const groupingMeasurement = set.exercise.groupingMeasurement
   const valueMeasurement = set.exercise.valueMeasurement
+
+  const durationMetric = set.exercise.getMetricByType("duration")
 
   return (
     <Pressable
@@ -82,7 +84,11 @@ const ListItem: React.FC<ListItemProps> = ({ set, onPress }) => {
       <>
         {!isSingleMeasurement && groupingMeasurement && (
           <SetDataLabel
-            value={set.groupingValue!}
+            value={
+              groupingMeasurement.measurement_type === "duration"
+                ? getFormatedDuration(set.durationMs ?? 0, durationMetric!.duration_format)
+                : set.groupingValue!
+            }
             unit={groupingMeasurement.unit}
             fontSize="md"
           />
@@ -90,7 +96,11 @@ const ListItem: React.FC<ListItemProps> = ({ set, onPress }) => {
 
         {valueMeasurement && (
           <SetDataLabel
-            value={set.measuredValue!}
+            value={
+              valueMeasurement.measurement_type === "duration"
+                ? getFormatedDuration(set.durationMs ?? 0, durationMetric!.duration_format)
+                : set.measuredValue!
+            }
             unit={valueMeasurement.unit}
             fontSize="md"
           />

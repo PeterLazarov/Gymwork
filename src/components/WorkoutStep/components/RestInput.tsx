@@ -3,6 +3,8 @@ import { forwardRef, useEffect, useMemo, useState } from "react"
 import { TextInput, View } from "react-native"
 import { AnimatedCircularProgress } from "react-native-circular-progress"
 
+import { durationFormats } from "@/constants/enums"
+import { useTimerContext } from "@/context/TimerContext"
 import {
   Button,
   Divider,
@@ -17,7 +19,6 @@ import {
   useColors,
 } from "@/designSystem"
 import { translate } from "@/utils"
-import { useTimerContext } from "@/context/TimerContext"
 
 export type RestInputProps = {
   value: number
@@ -172,7 +173,7 @@ const TimerEditModal: React.FC<TimerEditModalProps> = ({ open, onClose, label })
           <DurationInput
             value={preferredRestDuration}
             onUpdate={setPreferredRestDuration}
-            hideHours
+            format={durationFormats.mm_ss}
           />
         </View>
         <View style={{ flexDirection: "row" }}>

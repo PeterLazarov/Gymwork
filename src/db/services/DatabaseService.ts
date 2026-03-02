@@ -996,6 +996,7 @@ export class DatabaseService {
         exercise_id: exerciseId,
         measurement_type: metric.measurement_type,
         unit: metric.unit,
+        duration_format: metric.duration_format,
         more_is_better: metric.more_is_better,
         step_value: metric.step_value ?? null,
         created_at: timestamp,

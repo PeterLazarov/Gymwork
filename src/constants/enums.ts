@@ -1,5 +1,5 @@
 import { measurementUnits } from "@/constants/units"
-import { palettes } from "@/designSystem"
+import { palettes } from "@/designSystem/tokens"
 import { ExerciseMetric } from "../db/schema"
 
 export type MetricType = ExerciseMetric["measurement_type"]
@@ -91,3 +91,15 @@ export const discomfortOptions = {
     value: "noPain",
   },
 } as const
+
+export const durationFormats = {
+  ss: "ss",
+  mm: "mm",
+  mm_ss: "mm:ss",
+  hh_mm_ss: "hh:mm:ss",
+} as const
+
+export const durationFormatOptions = Object.values(durationFormats).map((format) => ({
+  label: format,
+  value: format,
+}))

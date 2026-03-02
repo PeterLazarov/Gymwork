@@ -50,6 +50,13 @@
       "when": 1768133661282,
       "tag": "0006_add_skipped_version",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1772409961136,
+      "tag": "0007_add_duration_format",
+      "breakpoints": true
     }
   ]
 }

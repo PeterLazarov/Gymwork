@@ -1,3 +1,4 @@
+import { durationFormats } from "@/constants/enums"
 import { useRecords, useSettings } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
 import { SetModel } from "@/db/models/SetModel"
@@ -109,11 +110,16 @@ const SetItem: React.FC<SetItemProps> = ({
         />
       )}
       {exercise.hasMetricType("duration") && (
-        <SetMetricLabel value={getFormatedDuration(set.durationMs ?? 0)} />
+        <SetMetricLabel
+          value={getFormatedDuration(
+            set.durationMs ?? 0,
+            exercise.getMetricByType("duration")!.duration_format,
+          )}
+        />
       )}
       {settings?.measure_rest && set.rest && (
         <SetMetricLabel
-          value={getFormatedDuration(set.rest, true)}
+          value={getFormatedDuration(set.rest, durationFormats.mm_ss)}
           unit={translate("rest")}
         />
       )}
