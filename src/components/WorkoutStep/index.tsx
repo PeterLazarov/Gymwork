@@ -50,11 +50,11 @@ export const WorkoutStepScreen: React.FC<
 
   function switchExercise(exercise: ExerciseModel) {
     if (focusedExercise) {
-      updateWorkoutStepExercise({ 
-        workoutStepId: focusedStep.id, 
-        oldExerciseId: focusedExercise.id!, 
+      updateWorkoutStepExercise({
+        workoutStepId: focusedStep.id,
+        oldExerciseId: focusedExercise.id!,
         exerciseId: exercise.id!,
-        date: openedDateMs 
+        date: openedDateMs,
       })
       setExerciseSelectOpen(false)
     }
@@ -129,11 +129,11 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
   const getRevertDeleteStep = (step: WorkoutStepModel) => {
     const stepToRestore = {
       workoutId: step.workoutId,
+      stepType: step.stepType,
       exercises: step.exercises,
       sets: step.sets,
       stepData: {
         id: step.id,
-        stepType: step.stepType,
         position: step.position,
         createdAt: step.createdAt,
         updatedAt: step.updatedAt,
@@ -150,10 +150,10 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
   function deleteSelectedExercises() {
     setMenuOpen(false)
 
-    removeWorkoutStep({ 
-      workoutStepId: step.id, 
+    removeWorkoutStep({
+      workoutStepId: step.id,
       date: openedDateMs,
-      exerciseIds: step.exercises.map(e => e.id!).filter(Boolean)
+      exerciseIds: step.exercises.map((e) => e.id!).filter(Boolean),
     })
     navigate("Workout")
     showSnackbar!({

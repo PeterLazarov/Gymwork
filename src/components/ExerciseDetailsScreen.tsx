@@ -1,14 +1,29 @@
 import { FC, useState } from "react"
 import { Image, ScrollView, StyleSheet, useWindowDimensions, View } from "react-native"
 
-import { useDeleteExercise, useExercise, useUpdateExercise, useWorkoutsForExercise } from "@/db/hooks"
+import { useDialogContext } from "@/context/DialogContext"
+import {
+  useDeleteExercise,
+  useExercise,
+  useUpdateExercise,
+  useWorkoutsForExercise,
+} from "@/db/hooks"
 import { Exercise } from "@/db/schema"
-import { Button, fontSize, Header, Icon, IconButton, Menu, spacing, Text, useColors } from "@/designSystem"
+import {
+  Button,
+  fontSize,
+  Header,
+  Icon,
+  IconButton,
+  Menu,
+  spacing,
+  Text,
+  useColors,
+} from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
 import { msToIsoDate, translate } from "@/utils"
 import { exerciseImages } from "@/utils/exerciseImages"
-import { useDialogContext } from "@/context/DialogContext"
 import { TextInput } from "react-native-paper"
 
 export type ExerciseDetailsScreenParams = {
@@ -47,7 +62,9 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({ navigati
   function onDeleteExercisePress() {
     if (exerciseHistoryRaw && exerciseHistoryRaw.length > 0) {
       showConfirm?.({
-        message: translate("exerciseInUse", { dates: exerciseHistoryRaw.map((w) => msToIsoDate(w.date!)).join(", ") }),
+        message: translate("exerciseInUse", {
+          dates: exerciseHistoryRaw.map((w) => msToIsoDate(w.date!)).join(", "),
+        }),
         onConfirm: async () => {
           deleteExercise({ id: exerciseId })
           goBackSkipStepDetails()
@@ -88,6 +105,7 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({ navigati
           position="bottom-right"
           anchor={
             <IconButton
+              testID="exercise-details-menu"
               onPress={() => setMenuOpen(true)}
               underlay="darker"
             >
@@ -110,13 +128,22 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({ navigati
       </Header>
       <Image
         style={{ width, height: imgHeight }}
-        source={imageUri && imageUri in exerciseImages ? exerciseImages[imageUri] : exerciseImages["Image Missing"]}
+        source={
+          imageUri && imageUri in exerciseImages
+            ? exerciseImages[imageUri]
+            : exerciseImages["Image Missing"]
+        }
       />
 
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.label}>{exercise?.name}</Text>
-        {(exercise && !editMode) && <InstructionsPanel exercise={exercise} />}
-        {(exercise && editMode) && <InstructionsEditor exercise={exercise} onSave={onSaveInstructions} />}
+        {exercise && !editMode && <InstructionsPanel exercise={exercise} />}
+        {exercise && editMode && (
+          <InstructionsEditor
+            exercise={exercise}
+            onSave={onSaveInstructions}
+          />
+        )}
       </ScrollView>
     </BaseLayout>
   )
@@ -135,7 +162,11 @@ const InstructionsPanel = ({ exercise }: { exercise: Exercise }) => {
 
           <View style={styles.panel}>
             {exercise.instructions.map((instruction, i) => (
-              <Text style={styles.text} key={i + instruction} text={instruction} />
+              <Text
+                style={styles.text}
+                key={i + instruction}
+                text={instruction}
+              />
             ))}
           </View>
         </View>
@@ -152,7 +183,11 @@ const InstructionsPanel = ({ exercise }: { exercise: Exercise }) => {
 
           <View style={styles.panel}>
             {exercise.tips.map((tip, i) => (
-              <Text style={styles.text} key={i + tip} text={tip} />
+              <Text
+                style={styles.text}
+                key={i + tip}
+                text={tip}
+              />
             ))}
           </View>
         </View>
@@ -161,10 +196,16 @@ const InstructionsPanel = ({ exercise }: { exercise: Exercise }) => {
   )
 }
 
-function InstructionsEditor({ exercise, onSave }: { exercise: Exercise, onSave: (instructions: string[], tips: string[]) => void }) {
+function InstructionsEditor({
+  exercise,
+  onSave,
+}: {
+  exercise: Exercise
+  onSave: (instructions: string[], tips: string[]) => void
+}) {
   const [instructions, setInstructions] = useState(exercise.instructions || [])
   const [tips, setTips] = useState(exercise.tips || [])
-  
+
   return (
     <>
       <View style={styles.formContainer}>
@@ -178,7 +219,7 @@ function InstructionsEditor({ exercise, onSave }: { exercise: Exercise, onSave: 
               setInstructions(text.split("\n"))
             }}
           />
-          </View>
+        </View>
         <View>
           <Text style={styles.label}>{translate("tips")}</Text>
 

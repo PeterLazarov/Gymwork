@@ -4,38 +4,8 @@ onFlowStart:
 ---
 # E2E: Creating an exercise immediately shows it in the exercise select list.
 
-# Get past the Welcome screen
-- tapOn: "Start working out"
-- waitForAnimationToEnd
+- runFlow: ../shared/_CreateCustomExercise.yaml
 
-# Start an empty workout → ExerciseSelect
-- tapOn: "Start Empty Workout"
-- assertVisible: "Select exercise"
-
-# Tap "+" to create a new exercise
-- tapOn:
-    id: "add-exercise-button"
-- assertVisible: "Create exercise"
-
-
-
-# Select a measurement type
-- tapOn:
-    id: "measurements-select"
-- tapOn: "Reps"
-- tapOn: "Done"
-- waitForAnimationToEnd
-# Select a muscle area
-- tapOn:
-    id: "muscle-areas-select"
-    retryTapIfNoChange: true
-- assertVisible: "Abdominals"
-- tapOn: "Arms"
-- tapOn: "Done"
-- waitForAnimationToEnd
-
-# Fill in exercise name then dismiss the keyboard
-- tapOn: "Name"
 - inputText: "Maestro Test Exercise"
 - tapOn: "Create exercise"
 

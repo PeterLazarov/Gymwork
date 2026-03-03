@@ -1,13 +1,13 @@
-import React, { FunctionComponent, useMemo } from "react"
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabNavigationOptions,
 } from "@react-navigation/material-top-tabs"
+import React, { FunctionComponent, useMemo } from "react"
 
-import { NavigationContainer, NavigationIndependentTree } from "@react-navigation/native"
-import { TextStyle, ViewStyle, useColorScheme } from "react-native"
-import { navThemes } from "../tokens/theme"
 import { getActiveRouteName } from "@/navigators/navigationUtilities"
+import { NavigationContainer, NavigationIndependentTree } from "@react-navigation/native"
+import { TextStyle, useColorScheme, ViewStyle } from "react-native"
+import { navThemes } from "../tokens/theme"
 
 type Props = {
   tabsConfig: TabConfig[]
@@ -42,7 +42,7 @@ export const TopNavigation: React.FC<Props> = ({
             // TODO
           ],
         }}
-        independent
+        // independent TODO: why was this needed?
         theme={navTheme}
         onStateChange={(state) => {
           if (state) {
@@ -59,10 +59,6 @@ export const TopNavigation: React.FC<Props> = ({
               minWidth: tabWidth,
               width: "auto",
               height: tabHeight,
-              // backgroundColor: 'red',
-            },
-            tabBarStyle: {
-              // backgroundColor: 'blue',
             },
             swipeEnabled: !swipeDisabled,
           }}

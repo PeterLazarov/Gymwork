@@ -13,7 +13,6 @@ type InsertWorkoutStepParams = {
   sets?: SetModel[]
   stepData?: {
     id: number
-    stepType: "plain" | "superset" | "circuit" | "emom" | "amrap" | "custom"
     position: number
     createdAt: number
     updatedAt: number

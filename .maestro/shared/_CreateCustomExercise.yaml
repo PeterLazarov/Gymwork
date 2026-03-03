@@ -1,0 +1,28 @@
+appId: ${MAESTRO_APP_ID}
+---
+# Shared: starts an empty workout, opens the create-exercise form,
+# fills measurement (Reps) and muscle area (Arms), then taps the Name field.
+# Caller must follow with inputText, "Create exercise", and "Save".
+
+- tapOn: "Start Empty Workout"
+- assertVisible: "Select exercise"
+
+- tapOn:
+    id: "add-exercise-button"
+- assertVisible: "Create exercise"
+
+- tapOn:
+    id: "measurements-select"
+- tapOn: "Reps"
+- tapOn: "Done"
+- waitForAnimationToEnd
+
+- tapOn:
+    id: "muscle-areas-select"
+    retryTapIfNoChange: true
+- assertVisible: "Abdominals"
+- tapOn: "Arms"
+- tapOn: "Done"
+- waitForAnimationToEnd
+
+- tapOn: "Name"

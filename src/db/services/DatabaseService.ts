@@ -34,7 +34,6 @@ type InsertWorkoutStepParams = {
   sets?: SetModel[]
   stepData?: {
     id: number
-    stepType: "plain" | "superset" | "circuit" | "emom" | "amrap" | "custom"
     position: number
     createdAt: number
     updatedAt: number
@@ -687,7 +686,7 @@ export class DatabaseService {
         .values({
           id: stepData.id,
           workout_id: workoutId,
-          step_type: stepData.stepType,
+          step_type: stepType,
           position: stepData.position,
           created_at: stepData.createdAt,
           updated_at: stepData.updatedAt,
