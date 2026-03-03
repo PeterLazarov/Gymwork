@@ -3,7 +3,6 @@ import { Platform, View, ViewStyle } from "react-native"
 import { KeyboardAvoidingView } from "react-native-keyboard-controller"
 
 import { useColors } from "@/designSystem"
-import { useSafeAreaInsetsStyle } from "@/utils/ignite/useSafeAreaInsetsStyle"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 const isIos = Platform.OS === "ios"
