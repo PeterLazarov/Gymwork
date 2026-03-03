@@ -140,7 +140,7 @@ export const DurationInput = forwardRef<TextInputRN, Props>(function DurationInp
             returnKeyType={showSeconds ? "next" : "default"}
             onSubmitEditing={() => onHandleSubmit(showHours ? input2 : input1)}
             maxDecimals={0}
-            label={translate("minutes") + (format === durationFormats.mm ? 4 : 2)}
+            label={translate("minutes")}
           />
           {showSeconds && <Text style={{ fontSize: fontSize.xs }}>:</Text>}
         </>
@@ -166,7 +166,7 @@ export const DurationInput = forwardRef<TextInputRN, Props>(function DurationInp
           ref={showHours ? input3 : showMinutes ? input2 : input1}
           onSubmitEditing={() => onHandleSubmit(showHours ? input3 : showMinutes ? input2 : input1)}
           maxDecimals={0}
-          label={translate("seconds") + (format === durationFormats.ss ? 4 : 2)}
+          label={translate("seconds")}
         />
       )}
     </View>
