@@ -60,10 +60,6 @@ Build a test pyramid for workout flows before major feature expansion.
 - Initial acceptance:
   - Add test harness and CI gates for changed code paths.
   - Add minimum critical E2E smoke suite from `TODO.md` scenarios:
-    - Creating an exercise immediately shows it in exercise select list.
-    - Deleting an exercise immediately removes it from exercise select list (including filtered views).
-    - Adding first set to a new workout step updates exercise history tab.
-    - Opening a step with no previous sets shows defaults, but after creating a set and reopening, actual set values are used.
     - Deleting an exercise removes plain steps and sets from current workout view immediately.
     - Deleting an exercise used in a superset removes only its sets from the superset step while keeping the step.
   - Backfill tests for each `P0`/`P1` fix in this document.
@@ -75,6 +71,7 @@ Build a test pyramid for workout flows before major feature expansion.
 ### P0 (Critical)
 | Item | Source | Difficulty | Notes |
 |---|---|---:|---|
+| Investigate `TopNavigation` `independent` prop removal | Code cleanup (2026-03-04) | D1 | Removed `independent` from `NavigationContainer` since `NavigationIndependentTree` wrapper is already used. Verify this doesn't break nested navigation or tab behavior on both platforms. |
 | Rest timer continues correctly when app is minimized/backgrounded | Bug (Kamen, 2024-10-21) | D4 | Requires app lifecycle handling and robust resume logic |
 | Fix rest timer start button reliability | TODO | D2 | Bugfix and state transition hardening |
 | Fix rest timer typing (`Partial` type issue) | TODO | D1 | Type safety + potential runtime guard |

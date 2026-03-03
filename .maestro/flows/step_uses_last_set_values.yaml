@@ -1,0 +1,38 @@
+appId: ${MAESTRO_APP_ID}
+onFlowStart:
+  - runFlow: ../shared/_OnFlowStart.yaml
+---
+# E2E: After completing a set, the draft uses persisted last-set values (not defaults).
+
+- runFlow: ../shared/_AddWorkoutWithStep.yaml
+
+# Open the step on the Track tab
+- tapOn: "Abdominal Crunches Machine"
+- waitForAnimationToEnd
+
+# Verify fresh state: no sets yet, defaults are loaded
+- assertVisible: "No sets entered"
+- assertVisible: "Complete set"
+
+# Change reps from default (10) to 7 so we can distinguish defaults from persisted
+- longPressOn:
+    text: "10"
+    index: 0
+- inputText: "7"
+
+# Complete the first set (7 reps, 10 kg)
+- tapOn: "Complete set"
+- waitForAnimationToEnd
+
+# Draft should have reset using last-set values (7 reps), not defaults (10)
+- assertNotVisible: "No sets entered"
+- assertVisible: "Complete set"
+
+# Complete a second set immediately — draft picked up the persisted 7 reps
+- tapOn: "Complete set"
+- waitForAnimationToEnd
+
+# Switch to History tab to verify both sets were logged
+- tapOn: "History"
+- waitForAnimationToEnd
+- assertNotVisible: "History Log Empty"

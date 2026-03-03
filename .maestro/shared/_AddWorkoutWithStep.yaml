@@ -1,0 +1,10 @@
+appId: ${MAESTRO_APP_ID}
+---
+# Shared: creates an empty workout and adds Abdominal Crunches Machine as a step.
+# Ends on the Workout screen with the exercise card visible.
+
+- tapOn: "Start Empty Workout"
+- assertVisible: "Select exercise"
+- tapOn: "Abdominal Crunches Machine"
+- waitForAnimationToEnd
+- assertVisible: "Abdominal Crunches Machine"

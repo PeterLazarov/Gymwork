@@ -1,0 +1,24 @@
+appId: ${MAESTRO_APP_ID}
+onFlowStart:
+  - runFlow: ../shared/_OnFlowStart.yaml
+---
+# E2E: Adding a first set to a new workout step shows it in the exercise history tab.
+
+- runFlow: ../shared/_AddWorkoutWithStep.yaml
+
+# Tap the exercise card to open WorkoutStep (Track tab is default)
+- tapOn: "Abdominal Crunches Machine"
+
+# Verify Track tab is active with the complete set button
+- assertVisible: "Complete set"
+
+# Complete a set with default values (10 reps, 10 kg)
+- tapOn: "Complete set"
+- waitForAnimationToEnd
+
+# Switch to History tab
+- tapOn: "History"
+- waitForAnimationToEnd
+
+# Verify history is no longer empty — the set we just logged should appear
+- assertNotVisible: "History Log Empty"
