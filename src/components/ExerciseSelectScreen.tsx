@@ -65,6 +65,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
           title={selectMode === "plain" ? translate("selectExercise") : supersetTitle}
         />
         <IconButton
+          testID="add-exercise-button"
           onPress={onAddExercisePress}
           underlay="darker"
         >

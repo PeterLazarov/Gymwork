@@ -56,7 +56,27 @@ const MyComponent = () => {
 
 ## Running Maestro end-to-end tests
 
-Follow our [Maestro Setup](https://ignitecookbook.com/docs/recipes/MaestroSetup) recipe.
+Requires [Maestro CLI](https://maestro.mobile.dev/) and a Java runtime.
+
+**Terminal 1** — start Metro in E2E mode (skips workout seeds):
+
+```bash
+pnpm start:e2e
+```
+
+**Terminal 2** — run tests:
+
+```bash
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+# Run all flows
+pnpm test:maestro
+
+# Run a single flow (.maestro/flows is inferred)
+pnpm test:maestro smoke_app_launches
+```
+
+Test flows live in `.maestro/flows/`, shared setup flows in `.maestro/shared/`.
 
 ## Next Steps
 

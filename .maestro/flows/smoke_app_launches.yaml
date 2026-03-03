@@ -1,0 +1,10 @@
+appId: ${MAESTRO_APP_ID}
+onFlowStart:
+  - runFlow: ../shared/_OnFlowStart.yaml
+---
+# Smoke test: app launches and navigates from Welcome to Workout screen
+
+- assertVisible: "Start working out"
+- tapOn: "Start working out"
+- waitForAnimationToEnd
+- assertVisible: "Start Empty Workout"

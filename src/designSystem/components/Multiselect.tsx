@@ -2,10 +2,10 @@ import React, { useState } from "react"
 import { View, ViewStyle } from "react-native"
 
 import { spacing } from "../tokens"
-import { Select, SelectOption } from "./Select"
 import { Button } from "./Button"
-import { Tag } from "./Tag"
 import { Icon } from "./Icon"
+import { Select, SelectOption } from "./Select"
+import { Tag } from "./Tag"
 
 type MultiselectProps<T = unknown> = {
   options: readonly SelectOption<T>[]
@@ -15,6 +15,7 @@ type MultiselectProps<T = unknown> = {
   containerStyle?: ViewStyle
   hideSelectedItemsRemove?: boolean
   error?: boolean
+  testID?: string
 }
 
 export function Multiselect<T>({
@@ -24,6 +25,7 @@ export function Multiselect<T>({
   headerText,
   containerStyle = {},
   hideSelectedItemsRemove,
+  testID,
 }: MultiselectProps<T>) {
   const [selectionOpen, setSelectionOpen] = useState(false)
 
@@ -60,6 +62,7 @@ export function Multiselect<T>({
         }}
       >
         <Button
+          testID={testID}
           onPress={openSelection}
           variant="tertiary"
           text={headerText}
@@ -68,7 +71,10 @@ export function Multiselect<T>({
             justifyContent: "flex-start",
           }}
         >
-          <Icon icon="chevron-down" size="small" />
+          <Icon
+            icon="chevron-down"
+            size="small"
+          />
         </Button>
         <View style={{ flexDirection: "row", gap: spacing.xs, flexWrap: "wrap" }}>
           {selectedValues.map((selectedValue, index) => {

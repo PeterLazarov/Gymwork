@@ -267,6 +267,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
           )}
           {settings && !settings.scientific_muscle_names_enabled && (
             <Multiselect
+              testID="muscle-areas-select"
               options={muscleAreas}
               selectedValues={exercise.muscleAreas}
               onSelect={onMuscleAreasChange}
@@ -309,6 +310,7 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
         }}
       />
       <Multiselect
+        testID="measurements-select"
         options={measurementOptions}
         selectedValues={exercise.metricTypes as string[]}
         headerText="Measurements"

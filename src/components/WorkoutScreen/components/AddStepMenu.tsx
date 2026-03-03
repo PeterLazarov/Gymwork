@@ -92,6 +92,7 @@ export const AddStepMenu = () => {
       </BottomDrawer>
 
       <FAB
+        testID="add-step-fab"
         icon="plus"
         onTouchStart={expand}
         // onLongPress={addExercise}

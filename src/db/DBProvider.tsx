@@ -25,6 +25,7 @@ export function getDrizzle(): DrizzleDBType {
 
 const IS_DEV_RUNTIME =
   typeof __DEV__ !== "undefined" ? __DEV__ : process.env.NODE_ENV !== "production"
+const SKIP_WORKOUT_SEEDS = process.env.EXPO_PUBLIC_SKIP_WORKOUT_SEEDS === "true"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -126,7 +127,7 @@ function DBProviderInitialised({
       } else {
         console.log("Database is empty, starting seeding...")
         try {
-          await seedAll(db, { includeWorkouts: IS_DEV_RUNTIME })
+          await seedAll(db, { includeWorkouts: IS_DEV_RUNTIME && !SKIP_WORKOUT_SEEDS })
           console.log("✅ Seeding completed")
           setSeedingComplete(true)
         } catch (err) {
