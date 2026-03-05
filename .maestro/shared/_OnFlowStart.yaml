@@ -45,11 +45,3 @@ appId: ${MAESTRO_APP_ID}
       - swipe:
           direction: DOWN
       - waitForAnimationToEnd
-
-# Get past the Welcome screen
-- runFlow:
-    when:
-      visible: "Start working out"
-    commands:
-      - tapOn: "Start working out"
-      - waitForAnimationToEnd

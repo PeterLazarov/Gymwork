@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo, useState } from "react"
-import { Dimensions, Image, Pressable, View, ViewStyle } from "react-native"
+import { Dimensions, Image, Pressable, View } from "react-native"
 
+import { equipments } from "@/constants/equipments"
+import { muscleAreas, muscles } from "@/constants/muscles"
 import { useSetting } from "@/context/SettingContext"
 import { useExercises, useMostUsedExercises, useSettings, useUpdateExercise } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
@@ -22,8 +24,6 @@ import { translate } from "@/utils"
 import { exerciseImages } from "@/utils/exerciseImages"
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list"
 import { Searchbar } from "react-native-paper"
-import { muscleAreas, muscles } from "@/constants/muscles"
-import { equipments } from "@/constants/equipments"
 
 const noop = () => {}
 
@@ -98,6 +98,7 @@ export const ExerciseSelectLists: React.FC<ExerciseSelectListsProps> = ({
         }}
       >
         <Searchbar
+          testID="exercise-search"
           placeholder={translate("search")}
           value={filterString}
           onChangeText={setFilterString}
@@ -196,7 +197,11 @@ const ExerciseListItem: React.FC<ExerciseListItemProps> = ({
         <Image
           style={{ height: imageSize, width: imageSize, borderRadius: spacing.xs }}
           // TODO: Why are there imageUri's that are not in exerciseImages?
-          source={imageUri && imageUri in exerciseImages ? exerciseImages[imageUri] : exerciseImages['Image Missing']}
+          source={
+            imageUri && imageUri in exerciseImages
+              ? exerciseImages[imageUri]
+              : exerciseImages["Image Missing"]
+          }
         />
 
         <View style={{ flex: 1 }}>
@@ -379,28 +384,20 @@ type ExerciseFilterBarProps = {
   children?: React.ReactNode
 }
 
-const ExerciseFilterBar: React.FC<ExerciseFilterBarProps> = ({
-  filters,
-  children,
-}) => {
-  const {
-    muscleArea,
-    setMuscleArea,
-    muscle,
-    setMuscle,
-    equipment,
-    setEquipment,
-    settings,
-  } = filters
+const ExerciseFilterBar: React.FC<ExerciseFilterBarProps> = ({ filters, children }) => {
+  const { muscleArea, setMuscleArea, muscle, setMuscle, equipment, setEquipment, settings } =
+    filters
 
   const muscleItems = settings?.scientific_muscle_names_enabled ? muscles : muscleAreas
 
   return (
-    <View style={{ 
-      flexDirection: "row", 
-      gap: spacing.xxs,
-      padding: spacing.xs
-    }}>
+    <View
+      style={{
+        flexDirection: "row",
+        gap: spacing.xxs,
+        padding: spacing.xs,
+      }}
+    >
       {children}
       <Select
         label={translate("muscle")}

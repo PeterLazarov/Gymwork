@@ -15,7 +15,10 @@ import { DatabaseServiceContext, DrizzleDBType } from "./useDB"
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ActivityIndicator, Text, View } from "react-native"
-import { createDrizzleLoggerMiddleware, createReactQueryLoggerMiddleware } from "../utils/observability"
+import {
+  createDrizzleLoggerMiddleware,
+  createReactQueryLoggerMiddleware,
+} from "../utils/observability"
 import { seedAll } from "./expo/expoSeeder"
 
 let _drizzle: DrizzleDBType
@@ -25,7 +28,7 @@ export function getDrizzle(): DrizzleDBType {
 
 const IS_DEV_RUNTIME =
   typeof __DEV__ !== "undefined" ? __DEV__ : process.env.NODE_ENV !== "production"
-const SKIP_WORKOUT_SEEDS = process.env.EXPO_PUBLIC_SKIP_WORKOUT_SEEDS === "true"
+const IS_E2E = process.env.EXPO_PUBLIC_SKIP_WORKOUT_SEEDS === "true"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -127,7 +130,9 @@ function DBProviderInitialised({
       } else {
         console.log("Database is empty, starting seeding...")
         try {
-          await seedAll(db, { includeWorkouts: IS_DEV_RUNTIME && !SKIP_WORKOUT_SEEDS })
+          await seedAll(db, {
+            includeWorkouts: IS_DEV_RUNTIME && !IS_E2E,
+          })
           console.log("✅ Seeding completed")
           setSeedingComplete(true)
         } catch (err) {

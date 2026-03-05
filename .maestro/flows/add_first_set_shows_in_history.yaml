@@ -4,7 +4,9 @@ onFlowStart:
 ---
 # E2E: Adding a first set to a new workout step shows it in the exercise history tab.
 
-- runFlow: ../shared/_AddWorkoutWithStep.yaml
+- openLink: "BodyBuilder://test-seed/workout-with-step"
+- waitForAnimationToEnd
+- assertVisible: "Abdominal Crunches Machine"
 
 # Tap the exercise card to open WorkoutStep (Track tab is default)
 - tapOn: "Abdominal Crunches Machine"

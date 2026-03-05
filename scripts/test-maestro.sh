@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+export PATH="$HOME/.maestro/bin:$PATH"
+
 FLOW="${1:-}"
 
 if [ -z "$FLOW" ]; then

@@ -4,7 +4,9 @@ onFlowStart:
 ---
 # E2E: After completing a set, the draft uses persisted last-set values (not defaults).
 
-- runFlow: ../shared/_AddWorkoutWithStep.yaml
+- openLink: "BodyBuilder://test-seed/workout-with-step"
+- waitForAnimationToEnd
+- assertVisible: "Abdominal Crunches Machine"
 
 # Open the step on the Track tab
 - tapOn: "Abdominal Crunches Machine"

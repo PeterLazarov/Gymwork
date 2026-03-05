@@ -5,8 +5,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { ErrorBoundary } from "@sentry/react-native"
 import { View, useWindowDimensions } from "react-native"
 
-import { CalendarScreen } from "@/components/CalendarScreen"
 import { AppUpdateModal } from "@/components/AppUpdateModal"
+import { CalendarScreen } from "@/components/CalendarScreen"
 import { ErrorDetails } from "@/components/ErrorDetails"
 import { ExerciseDetailsScreen } from "@/components/ExerciseDetailsScreen"
 import { ExerciseEditScreen } from "@/components/ExerciseEditScreen"
@@ -22,7 +22,10 @@ import { WorkoutScreen } from "@/components/WorkoutScreen"
 import { offscreenRef } from "@/components/WorkoutScreen/utils/useShareWorkout"
 import { WorkoutStepScreen } from "@/components/WorkoutStep"
 import { DialogContextProvider } from "@/context/DialogContext"
+import { useSetting } from "@/context/SettingContext"
+import { TimerContextProvider } from "@/context/TimerContext"
 import { Icon, useColors } from "@/designSystem"
+import { useTestSeedHandler } from "@/hooks/useTestSeedHandler"
 import Config from "@/ignite/config"
 import { useAppTheme } from "@/ignite/theme/context"
 import type {
@@ -32,8 +35,6 @@ import type {
   WorkoutStepTabParamList,
 } from "./navigationTypes"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
-import { useSetting } from "@/context/SettingContext"
-import { TimerContextProvider } from "@/context/TimerContext"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -124,6 +125,7 @@ const AppStack = () => {
   } = useAppTheme()
 
   const { visitedWelcomeScreen } = useSetting()
+  useTestSeedHandler()
 
   return (
     <Stack.Navigator

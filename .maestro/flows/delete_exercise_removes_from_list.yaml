@@ -4,29 +4,16 @@ onFlowStart:
 ---
 # E2E: Deleting an exercise immediately removes it from the exercise select list.
 
-- runFlow: ../shared/_CreateCustomExercise.yaml
-
-- inputText: "Maestro Delete Exercise"
-- tapOn: "Create exercise"
-
-# Save the exercise
-- tapOn: "Save"
+- openLink: "BodyBuilder://test-seed/exercise-select"
 - waitForAnimationToEnd
-- assertVisible: "Maestro Delete Exercise"
+- assertVisible: "Select exercise"
 
-# Navigate to ExerciseSelect via FAB → "Add exercise"
-- tapOn:
-    id: "add-step-fab"
-- waitForAnimationToEnd
-- tapOn: "Add exercise"
-- waitForAnimationToEnd
-
-# Switch to "All Exercises" tab and verify exercise is in the list
+# Switch to "All Exercises" tab and verify a seeded exercise is in the list
 - tapOn: "All Exercises"
-- assertVisible: "Maestro Delete Exercise"
+- assertVisible: "Abdominal Crunches Machine"
 
 # Long press the exercise to open ExerciseDetails
-- longPressOn: "Maestro Delete Exercise"
+- longPressOn: "Abdominal Crunches Machine"
 - waitForAnimationToEnd
 - assertVisible: "Exercise Details"
 
@@ -38,4 +25,4 @@ onFlowStart:
 
 # Should navigate back to ExerciseSelect — verify exercise is gone
 - assertVisible: "Select exercise"
-- assertNotVisible: "Maestro Delete Exercise"
+- assertNotVisible: "Abdominal Crunches Machine"

@@ -1,15 +1,8 @@
 appId: ${MAESTRO_APP_ID}
 ---
-# Shared: starts an empty workout, opens the create-exercise form,
-# fills measurement (Reps) and muscle area (Arms), then taps the Name field.
-# Caller must follow with inputText, "Create exercise", and "Save".
-
-- tapOn: "Start Empty Workout"
-- assertVisible: "Select exercise"
-
-- tapOn:
-    id: "add-exercise-button"
-- assertVisible: "Create exercise"
+# Shared: fills the create-exercise form (Reps measurement, Arms muscle area,
+# "Maestro Test Exercise" name), taps "Create exercise", then "Save".
+# Caller must navigate to ExerciseEdit before running this flow.
 
 - tapOn:
     id: "measurements-select"
@@ -26,3 +19,8 @@ appId: ${MAESTRO_APP_ID}
 - waitForAnimationToEnd
 
 - tapOn: "Name"
+- inputText: "Maestro Test Exercise"
+- tapOn: "Create exercise"
+- waitForAnimationToEnd
+
+- tapOn: "Save"

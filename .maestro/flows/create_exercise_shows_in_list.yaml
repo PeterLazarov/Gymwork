@@ -3,14 +3,10 @@ onFlowStart:
   - runFlow: ../shared/_OnFlowStart.yaml
 ---
 # E2E: Creating an exercise immediately shows it in the exercise select list.
-
+- openLink: "BodyBuilder://test-seed/create-exercise"
+- waitForAnimationToEnd
 - runFlow: ../shared/_CreateCustomExercise.yaml
-
-- inputText: "Maestro Test Exercise"
-- tapOn: "Create exercise"
-
-# Save the exercise
-- tapOn: "Save"
+- waitForAnimationToEnd
 - assertVisible: "Maestro Test Exercise"
 
 # Navigate to ExerciseSelect via FAB → "Add exercise"
@@ -22,4 +18,10 @@ onFlowStart:
 
 # Switch to "All Exercises" tab and verify exercise is in the list
 - tapOn: "All Exercises"
+
+- tapOn:
+    id: "exercise-search"
+- inputText: "Maestro Test Exercise"
+- waitForAnimationToEnd
+
 - assertVisible: "Maestro Test Exercise"
