@@ -82,11 +82,13 @@ export class WorkoutStepModel {
   }
 
   get setsNumberMap(): Record<Set["id"], number | undefined> {
-    let setNumber = 1
     const map: Record<Set["id"], number | undefined> = {}
-    this.sets.forEach(set => {
-      map[set.id!] = set.isWarmup ? undefined : setNumber++
-    })
+    for (const exercise of this.exercises) {
+      let setNumber = 1
+      for (const set of this.getSetsForExercise(exercise.id!)) {
+        map[set.id!] = set.isWarmup ? undefined : setNumber++
+      }
+    }
     return map
   }
 
