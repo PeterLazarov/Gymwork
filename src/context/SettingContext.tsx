@@ -94,7 +94,7 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   useEffect(() => {
     if (!settings) return
 
-    const appearanceScheme = settings.theme ?? deviceColorScheme ?? null
+    const appearanceScheme = settings.theme ?? deviceColorScheme ?? 'unspecified'
     Appearance.setColorScheme?.(appearanceScheme)
   }, [settings])
 
@@ -134,7 +134,7 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     },
     colorSchemePreference: settings?.theme || defaultSettings.theme!,
     setColorSchemePreference: (scheme: ColorSchemeName) => {
-      const appearanceScheme = scheme ?? deviceColorScheme ?? null
+      const appearanceScheme = scheme ?? deviceColorScheme ?? 'unspecified'
       Appearance.setColorScheme?.(appearanceScheme)
       persistSettings({ theme: scheme ?? null })
     },

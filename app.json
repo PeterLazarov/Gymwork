@@ -58,7 +58,10 @@
     "plugins": [
       "expo-localization",
       "expo-font",
-      "expo-build-properties"
+      "expo-build-properties",
+      "@sentry/react-native",
+      "expo-sharing",
+      "expo-sqlite"
     ],
     "experiments": {
       "tsconfigPaths": true
