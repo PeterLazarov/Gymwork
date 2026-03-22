@@ -121,10 +121,15 @@ export const TrackView: React.FC<TrackViewProps> = ({
       id: selectedSet!.id,
     } // TODO: find another way to keep the selectedSet id
 
-    updateSet({ setId: selectedSet!.id, updates: updatedSet, date: openedDateMs })
+    updateSet({
+      setId: selectedSet!.id,
+      updates: updatedSet,
+      date: openedDateMs,
+      exerciseId: focusedExercise.id,
+    })
 
     setSelectedSet(null)
-  }, [draftSet, selectedSet, updateSet, openedDateMs])
+  }, [draftSet, selectedSet, updateSet, openedDateMs, focusedExercise.id])
 
   const handleRemove = useCallback(() => {
     const isRecord = records?.some((r) => r.id === selectedSet!.id && !r.isWeakAss)
@@ -136,7 +141,7 @@ export const TrackView: React.FC<TrackViewProps> = ({
       isRecord,
     })
     setSelectedSet(null)
-  }, [selectedSet, removeSet, records])
+  }, [selectedSet, removeSet, records, step.id, focusedExercise.id, openedDateMs])
 
   return (
     <View
@@ -214,6 +219,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
       {value.exercise?.hasMetricType("reps") && (
         <SetEditPanelSection text={translate("measurements.reps")}>
           <IncrementNumericEditor
+            testID="set-edit-reps"
             value={value.reps}
             onChange={(reps) => onUpdate({ reps })}
             onSubmitEditing={() => onHandleSubmit(input1)}
@@ -230,6 +236,7 @@ const SetEditControls: React.FC<SetEditControlsProps> = ({ value, onSubmit, onUp
           unit={value.exercise!.getMetricByType("weight")!.unit}
         >
           <IncrementNumericEditor
+            testID="set-edit-weight"
             value={value.weight}
             onChange={(weight) => {
               onUpdate({

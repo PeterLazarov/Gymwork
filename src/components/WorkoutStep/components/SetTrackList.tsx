@@ -21,7 +21,7 @@ import {
 } from "@/designSystem"
 import { getFormatedDuration, translate } from "@/utils"
 import { DateTime } from "luxon"
-import { SetDataLabel } from "./SetDataLabel"
+import { SetMetricLabel } from "../../shared/SetMetricLabel"
 
 type SetTrackListProps = {
   step: WorkoutStepModel
@@ -60,8 +60,10 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
       const isFocused = selectedSet?.id === item.id
       const isDraft = index === sets.length
 
+      const number = step.setsNumberMap[item.id!]
       return (
         <Pressable
+          testID={number != null ? `set-track-${number}` : undefined}
           style={{
             paddingHorizontal: spacing.xs,
             backgroundColor: isFocused
@@ -80,7 +82,7 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
           <SetTrackItem
             set={item}
             isRecord={!!record && !record.isWeakAss}
-            number={step.setsNumberMap[item.id!]}
+            number={number}
             toggleSetWarmup={toggleSetWarmup}
             toggleCompleted={toggleSetCompletion}
             draft={isDraft}
@@ -95,13 +97,19 @@ export const SetTrackList: React.FC<SetTrackListProps> = ({
   const flashListRef = useRef<FlashListRef<SetModel>>(null)
 
   function toggleSetWarmup(set: SetModel) {
-    updateSet({ setId: set.id!, updates: { isWarmup: !set.isWarmup }, date: openedDateMs })
+    updateSet({
+      setId: set.id!,
+      updates: { isWarmup: !set.isWarmup },
+      date: openedDateMs,
+      exerciseId: set.exercise.id,
+    })
   }
   function toggleSetCompletion(set: SetModel) {
     updateSet({
       setId: set.id!,
       updates: { completedAt: set.completedAt ? null : DateTime.now().toMillis() },
       date: openedDateMs,
+      exerciseId: set.exercise.id,
     })
   }
 
@@ -211,25 +219,25 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
       </View>
 
       {set.exercise.hasMetricType("reps") && (
-        <SetDataLabel
+        <SetMetricLabel
           value={set.reps ?? 0}
           unit={set.exercise.getMetricByType("reps")!.unit}
         />
       )}
       {set.exercise.hasMetricType("weight") && (
-        <SetDataLabel
+        <SetMetricLabel
           value={set.weight ?? 0}
           unit={set.exercise.getMetricByType("weight")!.unit}
         />
       )}
       {set.exercise.hasMetricType("distance") && (
-        <SetDataLabel
+        <SetMetricLabel
           value={set.distance ?? 0}
           unit={set.exercise.getMetricByType("distance")!.unit}
         />
       )}
       {set.exercise.hasMetricType("duration") && (
-        <SetDataLabel
+        <SetMetricLabel
           value={getFormatedDuration(
             set.durationMs ?? 0,
             set.exercise.getMetricByType("duration")!.duration_format,
@@ -237,14 +245,14 @@ const SetTrackItem: React.FC<SetTrackItemProps> = ({
         />
       )}
       {/* {set.exercise.hasMetricType("speed") && (
-        <SetDataLabel
+        <SetMetricLabel
           value={set.speed ?? set.inferredSpeed}
           unit={set.exercise.measurements.speed!.unit}
           fixDecimals
         />
       )} */}
       {measureRest && (
-        <SetDataLabel
+        <SetMetricLabel
           value={getFormatedDuration(set.rest ?? 0, durationFormats.mm_ss)}
           unit={translate("rest")}
         />

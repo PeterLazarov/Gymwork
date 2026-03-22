@@ -1,6 +1,6 @@
 import { AppColors, fontSize as fontSizeToken, spacing, Text, useColors } from "@/designSystem"
 import { useMemo } from "react"
-import { StyleSheet, View } from "react-native"
+import { StyleSheet } from "react-native"
 
 type Props = {
   value?: string | number
@@ -8,28 +8,32 @@ type Props = {
   isFocused?: boolean
   fontSize?: keyof typeof fontSizeToken
   fixDecimals?: boolean
+  testID?: string
 }
 
-export const SetDataLabel: React.FC<Props> = ({
+export const SetMetricLabel: React.FC<Props> = ({
   value,
   unit,
   isFocused,
   fontSize,
   fixDecimals,
+  testID,
 }) => {
   const colors = useColors()
   const styles = useMemo(
     () => makeStyles(colors, isFocused, fontSize),
     [colors, isFocused, fontSize],
   )
+  const displayValue = typeof value === "number" && fixDecimals ? value.toFixed(2) : value
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.value}>
-        {typeof value === "number" && fixDecimals ? value.toFixed(2) : value}
-      </Text>
-      {unit && <Text style={styles.unit}>{unit}</Text>}
-    </View>
+    <Text
+      testID={testID}
+      style={styles.container}
+    >
+      <Text style={styles.value}>{displayValue}</Text>
+      {unit && <Text style={styles.unit}>{` ${unit}`}</Text>}
+    </Text>
   )
 }
 
@@ -40,9 +44,6 @@ const makeStyles = (
 ) =>
   StyleSheet.create({
     container: {
-      flexDirection: "row",
-      gap: spacing.xxs,
-      justifyContent: "center",
       minWidth: spacing.xxl,
     },
     value: {

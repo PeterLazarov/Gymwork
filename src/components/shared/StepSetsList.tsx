@@ -8,6 +8,7 @@ import { AppColors, Icon, Text, fontSize, palettes, spacing, useColors } from "@
 import { getFormatedDuration, translate } from "@/utils"
 import React, { useMemo } from "react"
 import { StyleSheet, View } from "react-native"
+import { SetMetricLabel } from "./SetMetricLabel"
 
 export type StepSetsListProps = {
   step: WorkoutStepModel
@@ -93,24 +94,28 @@ const SetItem: React.FC<SetItemProps> = ({
       </View>
       {exercise.hasMetricType("reps") && (
         <SetMetricLabel
+          testID={number != null ? `set-${number}-reps` : undefined}
           value={set.reps ?? 0}
           unit={translate("measurements.reps")}
         />
       )}
       {exercise.hasMetricType("weight") && (
         <SetMetricLabel
+          testID={number != null ? `set-${number}-weight` : undefined}
           value={set.weight ?? 0}
           unit={exercise.getMetricByType("weight")!.unit}
         />
       )}
       {exercise.hasMetricType("distance") && (
         <SetMetricLabel
+          testID={number != null ? `set-${number}-distance` : undefined}
           value={set.distance ?? 0}
           unit={exercise.getMetricByType("distance")!.unit}
         />
       )}
       {exercise.hasMetricType("duration") && (
         <SetMetricLabel
+          testID={number != null ? `set-${number}-duration` : undefined}
           value={getFormatedDuration(
             set.durationMs ?? 0,
             exercise.getMetricByType("duration")!.duration_format,
@@ -119,6 +124,7 @@ const SetItem: React.FC<SetItemProps> = ({
       )}
       {settings?.measure_rest && set.rest && (
         <SetMetricLabel
+          testID={number != null ? `set-${number}-rest` : undefined}
           value={getFormatedDuration(set.rest, durationFormats.mm_ss)}
           unit={translate("rest")}
         />
@@ -160,50 +166,5 @@ const makeSetItemStyles = (colors: AppColors) =>
       fontSize: fontSize.sm,
       color: colors.onSurface,
       fontWeight: "bold",
-    },
-  })
-
-type SetMetricLabelProps = {
-  value?: string | number
-  unit?: string
-  fontSize?: keyof typeof fontSize
-  fixDecimals?: boolean
-}
-
-const SetMetricLabel: React.FC<SetMetricLabelProps> = ({
-  value,
-  unit,
-  fontSize: fontSizeProp,
-  fixDecimals,
-}) => {
-  const colors = useColors()
-  const styles = useMemo(() => makeMetricLabelStyles(colors, fontSizeProp), [colors, fontSizeProp])
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.value}>
-        {typeof value === "number" && fixDecimals ? value.toFixed(2) : value}
-      </Text>
-      {unit && <Text style={styles.unit}>{unit}</Text>}
-    </View>
-  )
-}
-
-const makeMetricLabelStyles = (colors: AppColors, fontSizeProp?: keyof typeof fontSize) =>
-  StyleSheet.create({
-    container: {
-      flexDirection: "row",
-      gap: spacing.xxs,
-      // TODO: render metrics as grid instead of fixed width
-      minWidth: spacing.xxl,
-    },
-    value: {
-      fontWeight: "bold",
-      color: colors.onSurface,
-      fontSize: fontSizeProp ? fontSize[fontSizeProp] : fontSize.xs,
-    },
-    unit: {
-      color: colors.onSurface,
-      fontSize: fontSizeProp ? fontSize[fontSizeProp] : fontSize.xs,
     },
   })

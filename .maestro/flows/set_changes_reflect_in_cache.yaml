@@ -1,0 +1,71 @@
+appId: ${MAESTRO_APP_ID}
+onFlowStart:
+  - runFlow: ../shared/_OnFlowStart.yaml
+---
+# E2E: Adding, editing, and deleting a set updates history and records accordingly.
+
+- openLink: "BodyBuilder://test-seed/workout-with-step"
+- assertVisible: "Abdominal Crunches Machine"
+
+- tapOn: "Abdominal Crunches Machine"
+
+- assertVisible: "Complete set"
+
+- tapOn: "History"
+- assertVisible: "History Log Empty"
+- tapOn: "Records"
+- assertVisible: "Records Log Empty"
+- tapOn: "Track"
+
+- tapOn: "Complete set"
+- waitForAnimationToEnd
+
+- tapOn: "History"
+- assertVisible:
+    id: "set-1-reps"
+    text: "10 Reps"
+- assertVisible:
+    id: "set-1-weight"
+    text: "10 kg"
+- tapOn: "Records"
+- assertVisible:
+    id: "record-1-grouping"
+    text: "10 Reps"
+- assertVisible:
+    id: "record-1-value"
+    text: "10 kg"
+- tapOn: "Track"
+
+- tapOn:
+    id: "set-track-1"
+- longPressOn:
+    id: "set-edit-reps"
+- inputText: "8"
+- tapOn: "Update set"
+- waitForAnimationToEnd
+
+- tapOn: "History"
+- assertVisible:
+    id: "set-1-reps"
+    text: "8 Reps"
+- assertVisible:
+    id: "set-1-weight"
+    text: "10 kg"
+- tapOn: "Records"
+- assertVisible:
+    id: "record-1-grouping"
+    text: "8 Reps"
+- assertVisible:
+    id: "record-1-value"
+    text: "10 kg"
+- tapOn: "Track"
+
+- tapOn:
+    id: "set-track-1"
+- tapOn: "Remove"
+- waitForAnimationToEnd
+
+- tapOn: "History"
+- assertVisible: "History Log Empty"
+- tapOn: "Records"
+- assertVisible: "Records Log Empty"

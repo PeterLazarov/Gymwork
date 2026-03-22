@@ -65,6 +65,10 @@ export function useInsertSet() {
             currentLastSet ? { ...currentLastSet, ...inserted } : inserted,
           )
         }
+
+        queryClient.invalidateQueries({
+          queryKey: ["exercises", variables.set.exerciseId, "records"],
+        })
       }
     },
   })
@@ -82,20 +86,43 @@ export function useUpdateSet() {
     }: {
       setId: number
       updates: Partial<SetModel>
+      exerciseId?: number
       date?: number
     }) => db.updateSet(setId, updates),
-    onSuccess: (_, variables) => {
-      // Mark lists as stale but don't refetch immediately
-      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
-      queryClient.invalidateQueries({ queryKey: ["exercises"], refetchType: "none" })
-
-      // Targeted invalidation - use explicit date param or fall back to updates.date
+    onSuccess: ([updated], variables) => {
       const workoutDate = variables.date ?? variables.updates.date
+
       if (workoutDate) {
-        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", workoutDate] })
+        queryClient.setQueryData<WorkoutCacheEntry>(
+          ["workouts", "by-date", workoutDate],
+          (oldData) =>
+            oldData && {
+              ...oldData,
+              workoutSteps: updateSetInSteps(oldData.workoutSteps, variables.setId, updated),
+            },
+        )
       }
 
-      queryClient.invalidateQueries({ queryKey: ["sets"], refetchType: "none" })
+      if (variables.exerciseId) {
+        updateQueryItems<WorkoutCacheEntry[]>(
+          queryClient,
+          ["exercises", variables.exerciseId, "workouts"],
+          (query) => Array.isArray(query.state.data),
+          (query) =>
+            query.state.data!.map((item) => ({
+              ...item,
+              workoutSteps: updateSetInSteps(item.workoutSteps, variables.setId, updated),
+            })),
+        )
+
+        const lastSetKey = ["exercises", variables.exerciseId, "last-set"]
+        const currentLastSet = queryClient.getQueryData<Set | null>(lastSetKey)
+        if (currentLastSet && currentLastSet.id === variables.setId) {
+          queryClient.setQueryData(lastSetKey, { ...currentLastSet, ...updated })
+        }
+
+        queryClient.invalidateQueries({ queryKey: ["exercises", variables.exerciseId, "records"] })
+      }
     },
   })
 }
@@ -116,23 +143,32 @@ export function useRemoveSet() {
       isRecord?: boolean
     }) => db.removeSet(id),
     onSuccess: (_, variables) => {
-      // Global lists -> Stale
-      queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
-      queryClient.invalidateQueries({ queryKey: ["exercises"], refetchType: "none" })
       queryClient.invalidateQueries({ queryKey: ["exercises", "most-used"], refetchType: "none" })
 
-      // Targeted
       if (variables.date) {
-        queryClient.setQueriesData(
+        queryClient.setQueriesData<WorkoutCacheEntry>(
           { queryKey: ["workouts", "by-date", variables.date] },
-          (oldData) => removeSetFromWorkout(oldData, variables.stepId, variables.id),
+          (oldData) => oldData && removeSetFromWorkout(oldData, variables.stepId, variables.id),
         )
+      }
+
+      if (variables.exerciseId) {
+        updateQueryItems<WorkoutCacheEntry[]>(
+          queryClient,
+          ["exercises", variables.exerciseId, "workouts"],
+          (query) => Array.isArray(query.state.data),
+          (query) =>
+            query.state.data!.map((item) =>
+              removeSetFromWorkout(item, variables.stepId, variables.id),
+            ),
+        )
+
+        queryClient.invalidateQueries({ queryKey: ["exercises", variables.exerciseId, "records"] })
       }
 
       queryClient.setQueriesData<SetModel[]>({ queryKey: ["sets"] }, (oldData) =>
         removeRecord(oldData, variables.id),
       )
-      // Recalculate records only if deleted set was a record
       if (variables.isRecord) {
         queryClient.invalidateQueries({ queryKey: ["sets", "records", variables.stepId] })
       }
@@ -143,15 +179,16 @@ export function useRemoveSet() {
 type WorkoutStepWithSets = WorkoutStep & { sets?: Set[] }
 type WorkoutCacheEntry = Workout & { workoutSteps: WorkoutStepWithSets[] }
 
-function removeSetFromWorkout(oldData: unknown, stepId: number, setId: number): unknown {
-  if (!oldData || typeof oldData !== "object") return oldData
-
-  const workout = oldData as WorkoutCacheEntry
-  if (!Array.isArray(workout.workoutSteps)) return oldData
+function removeSetFromWorkout(
+  oldData: WorkoutCacheEntry,
+  stepId: number,
+  setId: number,
+): WorkoutCacheEntry {
+  if (!Array.isArray(oldData.workoutSteps)) return oldData
 
   return {
-    ...workout,
-    workoutSteps: workout.workoutSteps.map((step) =>
+    ...oldData,
+    workoutSteps: oldData.workoutSteps.map((step) =>
       step.id === stepId ? { ...step, sets: removeRecord(step.sets, setId) } : step,
     ),
   }
@@ -163,7 +200,7 @@ function addSetToExerciseHistoryCache(
   exercise: ExerciseModel | undefined,
   workoutByDate: unknown,
 ): unknown {
-  if (!Array.isArray(oldData) || !exercise) return undefined
+  if (!Array.isArray(oldData) || !exercise) return oldData
 
   const exerciseRaw = { ...exercise.toRawModel(), exerciseMetrics: exercise.metrics }
   const newSet = { ...inserted, exercise: exerciseRaw }
@@ -178,7 +215,7 @@ function addSetToExerciseHistoryCache(
 
     if (step) {
       const existingSets = step.sets ?? []
-      if (existingSets.some((s: Set) => s.id === inserted.id)) return undefined
+      if (existingSets.some((s) => s.id === inserted.id)) return oldData
 
       const nextStep = { ...step, sets: [...existingSets, newSet] }
       const nextSteps = workout.workoutSteps.map((s) =>
@@ -218,6 +255,16 @@ function findStepInByDateCache(
   if (!workoutByDate || typeof workoutByDate !== "object") return undefined
   const workout = workoutByDate as WorkoutCacheEntry
   return workout.workoutSteps?.find((s) => s.id === stepId)
+}
+
+function updateSetInSteps(steps: WorkoutStepWithSets[], setId: number, updated: Set) {
+  return steps.map((step) => {
+    if (!step.sets?.some((s) => s.id === setId)) return step
+    return {
+      ...step,
+      sets: step.sets.map((s) => (s.id === setId ? { ...s, ...updated } : s)),
+    }
+  })
 }
 
 function addSetToWorkoutByDateCache(

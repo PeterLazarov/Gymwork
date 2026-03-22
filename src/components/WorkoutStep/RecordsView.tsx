@@ -8,7 +8,7 @@ import { SetModel } from "@/db/models/SetModel"
 import { EmptyState, spacing } from "@/designSystem"
 import { navigate } from "@/navigators/navigationUtilities"
 import { getFormatedDuration, msToIsoDate, translate } from "@/utils"
-import { SetDataLabel } from "./components/SetDataLabel"
+import { SetMetricLabel } from "../shared/SetMetricLabel"
 
 type RecordsViewProps = {
   exercise: ExerciseModel
@@ -34,11 +34,12 @@ export const RecordsView: React.FC<RecordsViewProps> = ({ exercise }) => {
     <View style={styles.screen}>
       {records.length > 0 ? (
         <ScrollView style={styles.list}>
-          {records.map((set) => {
+          {records.map((set, index) => {
             return (
               <ListItem
                 key={set.id}
                 set={set}
+                number={index + 1}
                 onPress={() => goToDate(set)}
               />
             )
@@ -64,10 +65,11 @@ const styles = StyleSheet.create({
 
 type ListItemProps = {
   set: SetModel
+  number: number
   onPress: () => void
 }
 
-const ListItem: React.FC<ListItemProps> = ({ set, onPress }) => {
+const ListItem: React.FC<ListItemProps> = ({ set, number, onPress }) => {
   const styles = useMemo(() => makeListItemStyles(set.isWeakAssRecord), [set.isWeakAssRecord])
 
   const isSingleMeasurement = set.exercise.groupRecordsBy === set.exercise.measuredBy
@@ -83,7 +85,8 @@ const ListItem: React.FC<ListItemProps> = ({ set, onPress }) => {
     >
       <>
         {!isSingleMeasurement && groupingMeasurement && (
-          <SetDataLabel
+          <SetMetricLabel
+            testID={`record-${number}-grouping`}
             value={
               groupingMeasurement.measurement_type === "duration"
                 ? getFormatedDuration(set.durationMs ?? 0, durationMetric!.duration_format)
@@ -95,7 +98,8 @@ const ListItem: React.FC<ListItemProps> = ({ set, onPress }) => {
         )}
 
         {valueMeasurement && (
-          <SetDataLabel
+          <SetMetricLabel
+            testID={`record-${number}-value`}
             value={
               valueMeasurement.measurement_type === "duration"
                 ? getFormatedDuration(set.durationMs ?? 0, durationMetric!.duration_format)
