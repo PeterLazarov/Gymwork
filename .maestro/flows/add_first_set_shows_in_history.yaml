@@ -5,7 +5,6 @@ onFlowStart:
 # E2E: Adding a first set to a new workout step shows it in the exercise history tab.
 
 - openLink: "BodyBuilder://test-seed/workout-with-step"
-- waitForAnimationToEnd
 - assertVisible: "Abdominal Crunches Machine"
 
 # Tap the exercise card to open WorkoutStep (Track tab is default)
@@ -18,9 +17,6 @@ onFlowStart:
 - tapOn: "Complete set"
 - waitForAnimationToEnd
 
-# Switch to History tab
+# Switch to History tab and verify the set appears
 - tapOn: "History"
-- waitForAnimationToEnd
-
-# Verify history is no longer empty — the set we just logged should appear
 - assertNotVisible: "History Log Empty"

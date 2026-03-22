@@ -5,12 +5,10 @@ onFlowStart:
 # E2E: After completing a set, the draft uses persisted last-set values (not defaults).
 
 - openLink: "BodyBuilder://test-seed/workout-with-step"
-- waitForAnimationToEnd
 - assertVisible: "Abdominal Crunches Machine"
 
 # Open the step on the Track tab
 - tapOn: "Abdominal Crunches Machine"
-- waitForAnimationToEnd
 
 # Verify fresh state: no sets yet, defaults are loaded
 - assertVisible: "No sets entered"
@@ -36,5 +34,4 @@ onFlowStart:
 
 # Switch to History tab to verify both sets were logged
 - tapOn: "History"
-- waitForAnimationToEnd
 - assertNotVisible: "History Log Empty"

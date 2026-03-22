@@ -27,6 +27,8 @@ import { TimerContextProvider } from "@/context/TimerContext"
 import { Icon, useColors } from "@/designSystem"
 import { useTestSeedHandler } from "@/hooks/useTestSeedHandler"
 import Config from "@/ignite/config"
+
+const IS_E2E = process.env.EXPO_PUBLIC_SKIP_WORKOUT_SEEDS === "true"
 import { useAppTheme } from "@/ignite/theme/context"
 import type {
   AppStackParamList,
@@ -135,6 +137,7 @@ const AppStack = () => {
         contentStyle: {
           backgroundColor: colors.background,
         },
+        animation: IS_E2E ? "none" : undefined,
       }}
       initialRouteName={visitedWelcomeScreen ? "Workout" : "Welcome"}
     >

@@ -145,6 +145,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({ exercises, onSelect, select
 
   return (
     <FlashList
+      testID="exercise-list"
       data={exercises}
       renderItem={renderItem}
       keyExtractor={(exercise) => exercise.id!.toString()}

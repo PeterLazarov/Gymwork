@@ -1,6 +1,6 @@
 # Development Leads Backlog
 
-Updated: 2026-02-19
+Updated: 2026-03-04
 Scope: Combined `TODO.md` + reported bugs/feature requests from user notes.
 
 ## Priority and Difficulty Scale
@@ -50,8 +50,8 @@ Build a test pyramid for workout flows before major feature expansion.
   1. Start Metro in E2E mode: `pnpm start:e2e` (skips workout seeds via `EXPO_PUBLIC_SKIP_WORKOUT_SEEDS`)
   2. Run tests: `pnpm test:maestro` (requires `JAVA_HOME` set, iOS simulator or Android emulator with dev build)
 - **Test data strategies** (in order of preference):
-  1. **Reusable Maestro flows** — create data through the UI via shared `.yaml` flows with `env` parameters. Best for simple setups and when the creation flow itself is being tested.
-  2. **Deep link test seeds** — add a dev-only deep link handler (`BodyBuilder://test-seed/<preset>`) that runs DB inserts directly using Drizzle. Triggered from Maestro via `openLink`. Best for complex data setups (e.g., workout with multiple exercises, sets, supersets) where UI-driven creation would be too slow.
+  1. **Deep link test seeds** — dev-only deep link handler (`BodyBuilder://test-seed/<preset>`) that runs DB inserts directly using Drizzle. Triggered from Maestro via `openLink`. Best for complex data setups (e.g., workout with multiple exercises, sets, supersets) where UI-driven creation would be too slow. Presets live in `src/db/expo/testSeeds.ts`, handler in `src/hooks/useTestSeedHandler.ts`.
+  2. **Reusable Maestro flows** — create data through the UI via shared `.yaml` flows with `env` parameters. Best for simple setups and when the creation flow itself is being tested.
 
 - **Known issues**:
   - **Keyboard dismiss causes lost taps (Android)**: After dismissing the keyboard (e.g., tapping a header or non-input element), subsequent `tapOn` commands may silently fail to trigger `onPress` on `Pressable` components. This is caused by the layout reflow from `react-native-keyboard-controller`'s keyboard animation — element positions shift and Maestro taps at stale coordinates. **Workaround**: reorder test steps so text input happens after all tap-based interactions (selects, toggles, etc.), or avoid dismissing the keyboard mid-flow.
@@ -63,6 +63,16 @@ Build a test pyramid for workout flows before major feature expansion.
     - Deleting an exercise removes plain steps and sets from current workout view immediately.
     - Deleting an exercise used in a superset removes only its sets from the superset step while keeping the step.
   - Backfill tests for each `P0`/`P1` fix in this document.
+
+### 3) E2E Test Speed Improvements (P1, D3)
+#### Problem
+Each Maestro flow pays full app restart + Expo dev client handling costs.
+
+#### Approaches (ordered by impact)
+| # | Approach | Estimated savings | Difficulty | Notes |
+|---|---|---|---|---|
+| 1 | **Parallel sharding** | ~50% wall clock | D2 | Use `maestro test --shard-split N --shard-index I` across multiple simulators. Requires multi-simulator management in the test script. |
+| 2 | **Preview build for E2E** | 10-15s per flow | D1 | Run tests against a preview/release build to skip Expo dev client screens entirely. |
 
 ---
 

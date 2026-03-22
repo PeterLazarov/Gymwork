@@ -1,0 +1,41 @@
+appId: ${MAESTRO_APP_ID}
+onFlowStart:
+  - runFlow: ../shared/_OnFlowStart.yaml
+---
+# E2E: Creating an exercise shows it in the list; deleting it removes it.
+
+# --- Create phase ---
+- openLink: "BodyBuilder://test-seed/create-exercise"
+- runFlow: ../shared/_CreateCustomExercise.yaml
+- waitForAnimationToEnd
+- assertVisible: "Maestro Test Exercise"
+
+- tapOn:
+    id: "add-step-fab"
+- waitForAnimationToEnd
+- tapOn: "Add exercise"
+
+- tapOn: "All Exercises"
+
+- tapOn:
+    id: "exercise-search"
+- inputText: "Maestro Test Exerc"
+
+- assertVisible: "Maestro Test Exercise"
+
+# --- Delete phase ---
+# Tap on empty list to dismiss keyboard to deal with react-native-keyboard-controller bug for e2e disabling presses
+- tapOn:
+    id: "exercise-list"
+- waitForAnimationToEnd
+
+- longPressOn: "Maestro Test Exercise"
+- assertVisible: "Exercise Details"
+
+- tapOn:
+    id: "exercise-details-menu"
+- tapOn: "Delete exercise"
+
+# Should navigate back to ExerciseSelect — verify exercise is gone
+- assertVisible: "Select exercise"
+- assertNotVisible: "Maestro Test Exercise"
