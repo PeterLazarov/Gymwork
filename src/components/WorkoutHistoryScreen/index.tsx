@@ -28,6 +28,7 @@ import { formatDateIso, msToIsoDate, translate } from "@/utils"
 import type { FlashListProps, ListRenderItemInfo } from "@shopify/flash-list"
 import { WorkoutModal } from "../CalendarScreen/WorkoutModal"
 import { FilterForm, isFilterEmpty, WorkoutsFilterModal } from "./components/WorkoutsFilterModal"
+import { Duration } from "luxon"
 
 const ITEM_ESTIMATED_HEIGHT = 240
 const SKELETON_PLACEHOLDERS = [0, 1, 2] as const
@@ -317,8 +318,8 @@ const WorkoutListItem: React.FC<WorkoutListItemProps> = ({ workout, onPress }) =
               numberOfLines={1}
               style={styles.surfaceBodyBold}
             >
-              {translate("durationMinutes" as any, {
-                count: Math.ceil(workout.durationMs!),
+              {translate("durationMinutes", {
+                count: Math.floor(Duration.fromMillis(workout.durationMs!).as("minutes")),
               })}
             </Text>
           </View>

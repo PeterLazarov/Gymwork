@@ -10,7 +10,7 @@ const en = {
   startRest: "Start rest",
   endRest: "End rest",
   search: "Search",
-  durationMinutes: "minutes",
+  durationMinutes: "{{count}} minutes",
   updateSet: "Update set",
   remove: "Remove",
   calendar: "Calendar",
