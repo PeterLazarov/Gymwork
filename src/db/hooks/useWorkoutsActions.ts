@@ -117,15 +117,37 @@ export function useUpdateWorkout() {
       overwriteSteps?: boolean
       date?: number | null
     }) => db.updateWorkout(workoutId, workout, overwriteSteps),
-    onSuccess: (_, variables) => {
+    onSuccess: ([updatedWorkout], variables) => {
       queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
-      // Use explicit date param, fall back to workout.date for backwards compatibility
+      
       const workoutDate = variables.date ?? variables.workout.date
-      if (workoutDate) {
-        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", workoutDate] })
+
+      if (variables.overwriteSteps) {
+        if (workoutDate) {
+          queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", workoutDate] })
+        }
+        if (variables.workout.isTemplate) {
+          queryClient.invalidateQueries({ queryKey: ["workouts", "templates"] })
+        }
+        return
       }
-      if (variables.workout.isTemplate) {
-        queryClient.invalidateQueries({ queryKey: ["workouts", "templates"] })
+
+      if (workoutDate && updatedWorkout) {
+        queryClient.setQueryData(
+          ["workouts", "by-date", workoutDate],
+          (oldData: any) => oldData ? { ...oldData, ...updatedWorkout } : oldData
+        )
+      }
+      
+      if (variables.workout.isTemplate && updatedWorkout) {
+        queryClient.setQueryData(
+          ["workouts", "templates"],
+          (oldData: any) => oldData?.map((template: any) =>
+            template.id === variables.workoutId
+              ? { ...template, ...updatedWorkout }
+              : template
+          ) ?? oldData
+        )
       }
     },
   })

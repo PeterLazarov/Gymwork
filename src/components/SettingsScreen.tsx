@@ -27,7 +27,7 @@ import { AppUpdateModal } from "./AppUpdateModal"
 const appearanceOptions: SelectOption<ColorSchemeName>[] = [
   { label: translate("dark"), value: "dark" },
   { label: translate("light"), value: "light" },
-  { label: translate("auto"), value: undefined },
+  { label: translate("auto"), value: 'unspecified' },
 ]
 
 export const SettingsScreen: FC = () => {
@@ -178,7 +178,6 @@ export const SettingsEditForm = () => {
       <SettingsToggleItem
         enabled={settings!.show_workout_timer}
         onToggle={() => setShowWorkoutTimer(!settings!.show_workout_timer)}
-        editable={false}
       >
         {translate("showWorkoutTimer")}
       </SettingsToggleItem>

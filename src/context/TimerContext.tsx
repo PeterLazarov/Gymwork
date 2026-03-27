@@ -2,7 +2,7 @@ import { Timer, translate, useTimer } from "@/utils"
 import { Duration } from "luxon"
 import { ReactNode, useContext, createContext } from "react"
 
-type TimerContextType = Partial<Omit<Timer, "resume">> & {
+type TimerContextType = Partial<Timer> & {
   start?: (duration?: Duration) => void
 }
 

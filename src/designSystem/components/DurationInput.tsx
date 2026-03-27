@@ -40,8 +40,8 @@ export const DurationInput = forwardRef<TextInputRN, Props>(function DurationInp
 
   const shifted = value?.shiftToAll().toObject() ?? {}
 
-  const totalSeconds = value ? Math.round(value.as("seconds")) : undefined
-  const totalMinutes = value ? Math.round(value.as("minutes")) : undefined
+  const totalSeconds = value ? Math.floor(value.as("seconds")) : undefined
+  const totalMinutes = value ? Math.floor(value.as("minutes")) : undefined
 
   const _input1 = useRef<TextInputRN>(null)
   const input1 = (ref ?? _input1) as RefObject<TextInputRN>
