@@ -9,6 +9,14 @@ fi
 pnpm compile
 pnpm test
 
+export PATH="$HOME/.maestro/bin:$PATH"
+
+if ! command -v maestro >/dev/null 2>&1; then
+  echo "Skipping Maestro E2E gate: Maestro CLI not found on PATH."
+  echo "Install it to re-enable E2E gating, or run pnpm test:maestro explicitly."
+  exit 0
+fi
+
 # Start Metro in the background for E2E tests
 EXPO_PUBLIC_SKIP_WORKOUT_SEEDS=true expo start --dev-client >/dev/null 2>&1 &
 METRO_PID=$!

@@ -64,6 +64,8 @@ If any step fails the build is blocked.
 
 **Prerequisites:** a simulator/emulator with a dev build installed. Metro is started and stopped automatically — no manual server needed.
 
+If Maestro CLI is not installed, the pre-build gate skips the E2E step for local builds and continues after unit checks. Run `pnpm test:maestro` directly if you want the command to fail when Maestro is missing.
+
 To skip the gate entirely:
 
 ```bash
