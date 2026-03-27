@@ -12,10 +12,11 @@ import { Appearance, ColorSchemeName } from "react-native"
 import { CHART_VIEW_KEY } from "@/constants/chartViews"
 import { useSettings, useUpdateSettings } from "@/db/hooks"
 import { InsertSettings } from "@/db/schema"
+import { resolveColorScheme, toPersistedColorScheme } from "@/utils/colorScheme"
 
-let deviceColorScheme = Appearance.getColorScheme()
+let deviceColorScheme = resolveColorScheme(Appearance.getColorScheme())
 Appearance.addChangeListener(({ colorScheme }) => {
-  deviceColorScheme = colorScheme
+  deviceColorScheme = resolveColorScheme(colorScheme)
 })
 
 export type SettingContextType = {
@@ -35,8 +36,8 @@ export type SettingContextType = {
   setMeasureRest: (measureRest: boolean) => void
   previewNextSet: boolean
   setPreviewNextSet: (previewNextSet: boolean) => void
-  colorSchemePreference: ColorSchemeName
-  setColorSchemePreference: (preference: ColorSchemeName) => void
+  colorSchemePreference: ColorSchemeName | undefined
+  setColorSchemePreference: (preference: ColorSchemeName | undefined) => void
   visitedWelcomeScreen: boolean
   setVisitedWelcomeScreen: (show: boolean) => void
   highlightedSet: number | null
@@ -70,7 +71,7 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     visited_welcome_screen: false,
     feedback_user: "",
     skipped_version: null,
-    theme: deviceColorScheme ?? "light",
+    theme: deviceColorScheme,
   }
 
   const [exerciseSelectLastTab, setExerciseSelectLastTab] = useState("All Exercises")
@@ -94,7 +95,7 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
   useEffect(() => {
     if (!settings) return
 
-    const appearanceScheme = settings.theme ?? deviceColorScheme ?? 'unspecified'
+    const appearanceScheme = settings.theme ?? deviceColorScheme
     Appearance.setColorScheme?.(appearanceScheme)
   }, [settings])
 
@@ -132,11 +133,12 @@ export const SettingProvider: FC<PropsWithChildren<SettingProviderProps>> = ({ c
     setPreviewNextSet: (enabled: boolean) => {
       persistSettings({ preview_next_set: enabled })
     },
-    colorSchemePreference: settings?.theme || defaultSettings.theme!,
-    setColorSchemePreference: (scheme: ColorSchemeName) => {
-      const appearanceScheme = scheme ?? deviceColorScheme ?? 'unspecified'
+    colorSchemePreference: settings?.theme ?? undefined,
+    setColorSchemePreference: (scheme: ColorSchemeName | undefined) => {
+      const persistedScheme = toPersistedColorScheme(scheme)
+      const appearanceScheme = persistedScheme ?? deviceColorScheme
       Appearance.setColorScheme?.(appearanceScheme)
-      persistSettings({ theme: scheme ?? null })
+      persistSettings({ theme: persistedScheme })
     },
     visitedWelcomeScreen:
       settings?.visited_welcome_screen || defaultSettings.visited_welcome_screen!,

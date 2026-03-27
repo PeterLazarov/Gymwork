@@ -24,10 +24,10 @@ import { goBack } from "@/navigators/navigationUtilities"
 import { translate, useExport } from "@/utils"
 import { AppUpdateModal } from "./AppUpdateModal"
 
-const appearanceOptions: SelectOption<ColorSchemeName>[] = [
+const appearanceOptions: SelectOption<ColorSchemeName | undefined>[] = [
   { label: translate("dark"), value: "dark" },
   { label: translate("light"), value: "light" },
-  { label: translate("auto"), value: 'unspecified' },
+  { label: translate("auto"), value: undefined },
 ]
 
 export const SettingsScreen: FC = () => {

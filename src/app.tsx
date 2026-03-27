@@ -23,6 +23,7 @@ import { paperThemes } from "@/designSystem/tokens"
 import { useColorScheme } from "react-native"
 import { SettingProvider } from "./context/SettingContext"
 import { initCrashReporting } from "./utils/crashReporting"
+import { resolveColorScheme } from "./utils/colorScheme"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -56,7 +57,7 @@ export function App() {
 
   const [areFontsLoaded, fontLoadError] = useFonts(customFontsToLoad)
 
-  const colorScheme = useColorScheme()!
+  const colorScheme = resolveColorScheme(useColorScheme())
   const paperTheme = useMemo(() => {
     return paperThemes[colorScheme]
   }, [colorScheme])
