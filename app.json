@@ -5,7 +5,7 @@
     "name": "BodyBuilder",
     "slug": "bodybuilder",
     "scheme": "BodyBuilder",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/pen-logo.png",
     "splash": {
@@ -18,13 +18,11 @@
       "fallbackToCacheTimeout": 0
     },
     "jsEngine": "hermes",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "icon": "./assets/pen-logo.png",
       "package": "com.gymwork",
-      "versionCode": 10,
+      "versionCode": 11,
       "adaptiveIcon": {
         "foregroundImage": "./assets/pen-logo.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
