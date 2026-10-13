@@ -3,14 +3,18 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { removeRecord } from "../cacheUtils"
 import type { ExerciseModel } from "../models/ExerciseModel"
 import type { SetModel } from "../models/SetModel"
-import { WorkoutStep } from "../schema"
+import { TargetMetric, WorkoutStep, WorkoutStepType } from "../schema"
 import { useDatabaseService } from "../useDB"
 
 type InsertWorkoutStepParams = {
   workoutId: number
-  stepType: WorkoutStep["step_type"]
+  stepType: WorkoutStepType
   exercises: ExerciseModel[]
   sets?: SetModel[]
+  target?: {
+    metric: TargetMetric
+    valueBase: number
+  }
   stepData?: {
     id: number
     position: number
@@ -150,9 +154,14 @@ export function useCreateExercisesStep() {
     mutationFn: async ({
       exercises,
       stepType,
+      target,
     }: {
       exercises: ExerciseModel[]
-      stepType: WorkoutStep["step_type"]
+      stepType: WorkoutStepType
+      target?: {
+        metric: TargetMetric
+        valueBase: number
+      }
     }) => {
       let workoutId = openedWorkout?.id
       if (!workoutId) {
@@ -160,9 +169,9 @@ export function useCreateExercisesStep() {
         workoutId = result[0].id
       }
 
-      await db.insertWorkoutStep({ exercises, workoutId, stepType })
+      const stepId = await db.insertWorkoutStep({ exercises, workoutId, stepType, target })
 
-      return workoutId
+      return { workoutId, stepId }
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["workouts"], refetchType: "none" })
@@ -179,6 +188,30 @@ export function useCreateExercisesStep() {
         }
       })
       queryClient.invalidateQueries({ queryKey: ["exercises", "most-used"], refetchType: "none" })
+    },
+  })
+}
+
+export function useUpdateWorkoutStepTarget() {
+  const db = useDatabaseService()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    meta: { op: "workoutSteps.updateTarget" },
+    mutationFn: ({
+      workoutStepId,
+      targetMetric,
+      targetValueBase,
+    }: {
+      workoutStepId: number
+      targetMetric: TargetMetric
+      targetValueBase: number
+      date?: number
+    }) => db.updateWorkoutStepTarget(workoutStepId, { targetMetric, targetValueBase }),
+    onSuccess: (_, variables) => {
+      if (variables.date) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.date] })
+      }
     },
   })
 }

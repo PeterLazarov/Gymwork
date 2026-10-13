@@ -72,6 +72,8 @@ const IncrementalButtons: React.FC<IncrementalButtonsProps> = ({
     aspectRatio: 1,
   }
 
+  const minusDisabled = isInvalidNumber(value) || value <= 0
+
   return (
     <View
       style={{
@@ -81,7 +83,8 @@ const IncrementalButtons: React.FC<IncrementalButtonsProps> = ({
     >
       <Pressable
         onPress={() => onChange(isInvalidNumber(value) ? 0 : value - (step ?? 1))}
-        style={btnStyle}
+        disabled={minusDisabled}
+        style={[btnStyle, minusDisabled && { opacity: 0.4 }]}
       >
         <Icon
           icon="remove"

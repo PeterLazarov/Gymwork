@@ -1,8 +1,10 @@
 import { Duration } from "luxon"
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
-import { TextInput, View } from "react-native"
+import { TextInput, Vibration, View } from "react-native"
 
 import { DistanceEditor } from "@/components/WorkoutStep/components/DistanceEditor"
+import { TargetProgressText } from "@/components/shared/TargetProgressText"
+import { useTargetProgress } from "@/components/shared/useTargetProgress"
 import { DistanceUnit } from "@/constants/units"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
 import { useTimerContext } from "@/context/TimerContext"
@@ -56,6 +58,25 @@ export const TrackView: React.FC<TrackViewProps> = ({
   const timer = useTimerContext()
 
   const [selectedSet, setSelectedSet] = useState<SetModel | null>(null)
+  const targetProgress = useTargetProgress(step)
+  const prevTarget = useRef<{ stepId: number; remaining: number } | null>(null)
+
+  useEffect(() => {
+    const prev = prevTarget.current
+    if (!targetProgress) {
+      prevTarget.current = null
+      return
+    }
+    prevTarget.current = { stepId: step.id, remaining: targetProgress.remaining }
+    if (
+      prev &&
+      prev.stepId === step.id &&
+      prev.remaining > 0 &&
+      targetProgress.remaining <= 0
+    ) {
+      Vibration.vibrate(50)
+    }
+  }, [step.id, targetProgress?.remaining])
 
   useEffect(() => {
     if (selectedSet && focusedExercise.id !== selectedSet.exercise.id) {
@@ -155,6 +176,18 @@ export const TrackView: React.FC<TrackViewProps> = ({
         },
       ]}
     >
+      {targetProgress && (
+        <View style={{ paddingHorizontal: spacing.xs, marginTop: spacing.sm }}>
+          <TargetProgressText
+            total={targetProgress.total}
+            unit={targetProgress.unit}
+            done={targetProgress.done}
+            left={targetProgress.left}
+            met={targetProgress.met}
+            center
+          />
+        </View>
+      )}
       <SetTrackList
         step={step}
         sets={step?.exerciseSetsMap[focusedExercise.id!] ?? []}

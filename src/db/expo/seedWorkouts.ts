@@ -68,12 +68,14 @@ export async function seedWorkouts(drizzleDB: DrizzleDBType, exerciseList: Exerc
         const stepTypeRoll = Math.random()
         let stepExercises: ExerciseSeedList
         let isSuperSet = false
+        let isTargetStep = false
 
         if (stepTypeRoll < 0.1 && benchPressExercise && squatExercise) {
           stepExercises = [benchPressExercise, squatExercise]
           isSuperSet = true
         } else if (stepTypeRoll < 0.2 && benchPressExercise) {
           stepExercises = [benchPressExercise]
+          isTargetStep = true
         } else if (stepTypeRoll < 0.3 && cardioExercise) {
           stepExercises = [cardioExercise]
         } else {
@@ -84,9 +86,11 @@ export async function seedWorkouts(drizzleDB: DrizzleDBType, exerciseList: Exerc
         const workoutStepResult = await drizzleDB
           .insert(workout_steps)
           .values({
-            step_type: isSuperSet ? "superset" : "plain",
+            step_type: isTargetStep ? "target" : isSuperSet ? "superset" : "plain",
             workout_id: workoutId,
             position: stepIndex,
+            target_metric: isTargetStep ? "reps" : null,
+            target_value_base: isTargetStep ? 50 : null,
           })
           .catch((err) => {
             console.log({ err, stepIndex, workoutId })

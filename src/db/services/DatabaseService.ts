@@ -8,8 +8,10 @@ import {
   ExerciseMetric,
   InsertSettings,
   Set,
+  TargetMetric,
   Workout,
   WorkoutStep,
+  WorkoutStepType,
   exercise_metrics,
   exercises,
   sets,
@@ -29,9 +31,13 @@ type DatabaseWorkoutFilters = Omit<WorkoutFilters, "dateFrom" | "dateTo"> & {
 
 type InsertWorkoutStepParams = {
   workoutId: number
-  stepType: WorkoutStep["step_type"]
+  stepType: WorkoutStepType
   exercises: ExerciseModel[]
   sets?: SetModel[]
+  target?: {
+    metric: TargetMetric
+    valueBase: number
+  }
   stepData?: {
     id: number
     position: number
@@ -44,6 +50,16 @@ type InsertWorkoutStepParams = {
  * Pure database service layer - no React dependencies
  * All methods are pure functions that operate on the Drizzle DB instance
  */
+function toTargetColumns(
+  metric: TargetMetric | null | undefined,
+  valueBase: number | null | undefined,
+) {
+  return {
+    target_metric: metric ?? null,
+    target_value_base: valueBase ?? null,
+  }
+}
+
 export class DatabaseService {
   public getDrizzle() {
     return this.db
@@ -129,6 +145,9 @@ export class DatabaseService {
   async getExercise(exerciseId: number) {
     return this.db.query.exercises.findFirst({
       where: (exercises, { eq }) => eq(exercises.id, exerciseId),
+      with: {
+        exerciseMetrics: true,
+      },
     })
   }
 
@@ -521,7 +540,12 @@ export class DatabaseService {
         workout_step_exercises,
         eq(workout_steps.id, workout_step_exercises.workout_step_id),
       )
-      .where(and(eq(workout_step_exercises.exercise_id, id), eq(workout_steps.step_type, "plain")))
+      .where(
+        and(
+          eq(workout_step_exercises.exercise_id, id),
+          inArray(workout_steps.step_type, ["plain", "target"]),
+        ),
+      )
 
     const stepIds = stepsToDelete.map((s) => s.id)
 
@@ -623,6 +647,7 @@ export class DatabaseService {
           workout_id: newWorkoutId,
           step_type: step.stepType,
           position: step.position,
+          ...toTargetColumns(step.targetMetric, step.targetValueBase),
           created_at: timestamp,
           updated_at: timestamp,
         })
@@ -675,6 +700,7 @@ export class DatabaseService {
     exercises,
     stepType,
     sets: stepSets,
+    target,
     stepData,
   }: InsertWorkoutStepParams) {
     const timestamp = DateTime.now().toMillis()
@@ -688,6 +714,7 @@ export class DatabaseService {
           workout_id: workoutId,
           step_type: stepType,
           position: stepData.position,
+          ...toTargetColumns(target?.metric, target?.valueBase),
           created_at: stepData.createdAt,
           updated_at: stepData.updatedAt,
         })
@@ -708,6 +735,7 @@ export class DatabaseService {
           workout_id: workoutId,
           step_type: stepType,
           position: nextPosition,
+          ...toTargetColumns(target?.metric, target?.valueBase),
           created_at: timestamp,
           updated_at: timestamp,
         })
@@ -769,7 +797,7 @@ export class DatabaseService {
   ) {
     const timestamp = DateTime.now().toMillis()
 
-    Promise.all([
+    await Promise.all([
       this.db
         .delete(workout_step_exercises)
         .where(
@@ -789,6 +817,26 @@ export class DatabaseService {
       created_at: timestamp,
       updated_at: timestamp,
     })
+  }
+
+  async updateWorkoutStepTarget(
+    workoutStepId: number,
+    target: {
+      targetMetric: TargetMetric
+      targetValueBase: number
+    },
+  ) {
+    const timestamp = DateTime.now().toMillis()
+
+    return this.db
+      .update(workout_steps)
+      .set({
+        step_type: "target",
+        target_metric: target.targetMetric,
+        target_value_base: target.targetValueBase,
+        updated_at: timestamp,
+      })
+      .where(eq(workout_steps.id, workoutStepId))
   }
 
   async reorderWorkoutSteps(workoutId: number, from: number, to: number) {
@@ -927,6 +975,7 @@ export class DatabaseService {
           workout_id: workoutId,
           step_type: step.stepType,
           position: step.position,
+          ...toTargetColumns(step.targetMetric, step.targetValueBase),
           created_at: timestamp,
           updated_at: timestamp,
         })
@@ -963,6 +1012,7 @@ export class DatabaseService {
           workout_id: workoutId,
           step_type: step.stepType,
           position: step.position,
+          ...toTargetColumns(step.targetMetric, step.targetValueBase),
           created_at: timestamp,
           updated_at: timestamp,
         })

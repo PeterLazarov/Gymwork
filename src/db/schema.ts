@@ -128,9 +128,12 @@ export const workout_steps = sqliteTable(
       .references(() => workouts.id, { onDelete: "cascade" }),
 
     step_type: text({
-      enum: ["plain", "superset", "circuit", "emom", "amrap", "custom"],
+      enum: ["plain", "superset", "circuit", "emom", "amrap", "custom", "target"],
     }).notNull(),
     position: integer().notNull(),
+
+    target_metric: text({ enum: ["reps", "tonnage", "distance", "duration"] }),
+    target_value_base: real(),
 
     created_at: timestamp_col,
     updated_at: timestamp_col,
@@ -469,6 +472,9 @@ export type InsertWorkout = typeof workouts.$inferInsert
 
 export type WorkoutStep = typeof workout_steps.$inferSelect
 export type InsertWorkoutStep = typeof workout_steps.$inferInsert
+
+export type TargetMetric = NonNullable<WorkoutStep["target_metric"]>
+export type WorkoutStepType = WorkoutStep["step_type"]
 
 export type WorkoutStepExercise = typeof workout_step_exercises.$inferSelect
 export type InsertWorkoutStepExercise = typeof workout_step_exercises.$inferInsert

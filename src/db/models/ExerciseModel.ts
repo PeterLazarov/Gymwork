@@ -1,4 +1,4 @@
-import type { Exercise, ExerciseMetric } from "@/db/schema"
+import type { Exercise, ExerciseMetric, TargetMetric } from "@/db/schema"
 import { MetricType } from "../../constants/enums"
 
 type ExerciseModelType = Exercise & {
@@ -131,6 +131,15 @@ export class ExerciseModel {
 
   get isCardioExercise(): boolean {
     return this.hasMetricType("duration") || this.hasMetricType("distance")
+  }
+
+  getTargetableMetrics(): TargetMetric[] {
+    const targetable: TargetMetric[] = []
+    if (this.hasMetricType("reps")) targetable.push("reps")
+    if (this.hasMetricType("weight")) targetable.push("tonnage")
+    if (this.hasMetricType("distance")) targetable.push("distance")
+    if (this.hasMetricType("duration")) targetable.push("duration")
+    return targetable
   }
 
   get groupRecordsBy(): MetricType | undefined {

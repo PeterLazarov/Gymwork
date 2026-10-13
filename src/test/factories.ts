@@ -1,4 +1,10 @@
-import type { Exercise, Set, WorkoutStep, WorkoutStepExercise } from "@/db/schema"
+import type {
+  Exercise,
+  ExerciseMetric,
+  Set,
+  WorkoutStep,
+  WorkoutStepExercise,
+} from "@/db/schema"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
 
 let _nextId = 1
@@ -13,7 +19,10 @@ function nextId() {
 
 const TIMESTAMP = 1000000000000
 
-export function makeExercise(overrides: Partial<Exercise> = {}): Exercise {
+export function makeExercise(
+  overrides: Partial<Exercise> = {},
+  metrics?: ExerciseMetric[],
+): Exercise & { exerciseMetrics?: ExerciseMetric[] } {
   return {
     id: nextId(),
     name: "Exercise",
@@ -26,6 +35,26 @@ export function makeExercise(overrides: Partial<Exercise> = {}): Exercise {
     position: null,
     stance: null,
     is_favorite: false,
+    created_at: TIMESTAMP,
+    updated_at: TIMESTAMP,
+    ...overrides,
+    ...(metrics ? { exerciseMetrics: metrics } : {}),
+  }
+}
+
+export function makeExerciseMetric(
+  overrides: Partial<ExerciseMetric> = {},
+): ExerciseMetric {
+  return {
+    id: nextId(),
+    exercise_id: 1,
+    measurement_type: "reps",
+    unit: "reps",
+    duration_format: "mm:ss",
+    more_is_better: true,
+    step_value: null,
+    min_value: null,
+    max_value: null,
     created_at: TIMESTAMP,
     updated_at: TIMESTAMP,
     ...overrides,
@@ -62,6 +91,8 @@ export function makeWorkoutStep(overrides: {
   stepType?: WorkoutStep["step_type"]
   exercises: Exercise[]
   sets: (Set & { exercise: Exercise })[]
+  targetMetric?: WorkoutStep["target_metric"]
+  targetValueBase?: number | null
 }): WorkoutStepModel {
   const workoutStepExercises: (WorkoutStepExercise & { exercise: Exercise })[] =
     overrides.exercises.map((exercise) => ({
@@ -78,6 +109,8 @@ export function makeWorkoutStep(overrides: {
     workout_id: 1,
     step_type: overrides.stepType ?? "plain",
     position: 0,
+    target_metric: overrides.targetMetric ?? null,
+    target_value_base: overrides.targetValueBase ?? null,
     created_at: TIMESTAMP,
     updated_at: TIMESTAMP,
     workoutStepExercises,

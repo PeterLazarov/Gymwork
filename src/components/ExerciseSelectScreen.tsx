@@ -9,6 +9,7 @@ import { FAB, Header, Icon, IconButton, Menu, spacing, useColors } from "@/desig
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
 import { translate } from "@/utils"
+import { TargetConfigModal } from "./TargetConfigModal"
 
 export type ExerciseSelectScreenParams = {
   selectMode: WorkoutStep["step_type"]
@@ -19,6 +20,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
   const colors = useColors()
 
   const [selectedExercises, setSelectedExercises] = useState<ExerciseModel[]>([])
+  const [targetExerciseId, setTargetExerciseId] = useState<number | null>(null)
   const { mutateAsync: createStep } = useCreateExercisesStep()
   const { selectMode } = useRouteParams("ExerciseSelect")
   const [menuOpen, setMenuOpen] = useState(false)
@@ -27,6 +29,18 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
     await createStep({ exercises, stepType: selectMode })
 
     navigation.navigate("Workout")
+  }
+
+  function onSingleExerciseSelect(exercises: ExerciseModel[]) {
+    const [exercise] = exercises
+    if (!exercise?.id) return
+
+    if (selectMode === "target") {
+      setTargetExerciseId(exercise.id)
+      return
+    }
+
+    void createExercisesStep(exercises)
   }
 
   function onBackPress() {
@@ -62,7 +76,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
           />
         </IconButton>
         <Header.Title
-          title={selectMode === "plain" ? translate("selectExercise") : supersetTitle}
+          title={selectMode === "superset" ? supersetTitle : translate("selectExercise")}
         />
         <IconButton
           testID="add-exercise-button"
@@ -102,7 +116,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
         <ExerciseSelectLists
           multiselect={selectMode === "superset"}
           selected={selectedExercises}
-          onChange={selectMode === "superset" ? setSelectedExercises : createExercisesStep}
+          onChange={selectMode === "superset" ? setSelectedExercises : onSingleExerciseSelect}
         />
       </View>
 
@@ -129,6 +143,13 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
             }}
           />
         </View>
+      )}
+
+      {targetExerciseId && (
+        <TargetConfigModal
+          exerciseId={targetExerciseId}
+          onClose={() => setTargetExerciseId(null)}
+        />
       )}
     </BaseLayout>
   )

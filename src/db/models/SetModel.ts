@@ -107,6 +107,10 @@ export class SetModel {
     return this.weight * this.reps
   }
 
+  get tonnageMcgReps(): number {
+    return (this.weightMcg ?? 0) * (this.reps ?? 0)
+  }
+
   get groupingValue(): number | null {
     const groupedBy = this.exercise.groupRecordsBy
 

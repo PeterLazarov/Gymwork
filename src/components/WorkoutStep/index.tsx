@@ -31,6 +31,7 @@ import { ChartView } from "./ChartView"
 import { HistoryView } from "./HistoryView"
 import { RecordsView } from "./RecordsView"
 import { TrackView } from "./TrackView"
+import { EditTargetModal } from "./components/EditTargetModal"
 
 export type WorkoutStepScreenParams = {
   focusedStep: WorkoutStepModel
@@ -45,6 +46,8 @@ export const WorkoutStepScreen: React.FC<
 
   const [exerciseSelectOpen, setExerciseSelectOpen] = useState(false)
   const [focusedStepIndex, setFocusedStepIndex] = useState(0)
+  const [targetEditOpen, setTargetEditOpen] = useState(false)
+  const [pendingTargetExercise, setPendingTargetExercise] = useState<ExerciseModel | null>(null)
   const { mutate: updateWorkoutStepExercise } = useUpdateWorkoutStepExercise()
   const focusedExercise = focusedStep.exercises[focusedStepIndex]
 
@@ -57,7 +60,21 @@ export const WorkoutStepScreen: React.FC<
         date: openedDateMs,
       })
       setExerciseSelectOpen(false)
+
+      if (
+        focusedStep.stepType === "target" &&
+        focusedStep.targetMetric &&
+        !exercise.getTargetableMetrics().includes(focusedStep.targetMetric)
+      ) {
+        setPendingTargetExercise(exercise)
+        setTargetEditOpen(true)
+      }
     }
+  }
+
+  function closeTargetEdit() {
+    setTargetEditOpen(false)
+    setPendingTargetExercise(null)
   }
 
   return (
@@ -66,7 +83,16 @@ export const WorkoutStepScreen: React.FC<
         step={focusedStep}
         focusedExercise={focusedExercise}
         onSwitchExercise={() => setExerciseSelectOpen(true)}
+        onEditTarget={() => setTargetEditOpen(true)}
       />
+
+      {targetEditOpen && (
+        <EditTargetModal
+          step={focusedStep}
+          exercise={pendingTargetExercise ?? focusedExercise}
+          onClose={closeTargetEdit}
+        />
+      )}
 
       {exerciseSelectOpen && (
         <ExerciseSelectLists
@@ -114,9 +140,15 @@ export type StepHeaderProps = {
   step: WorkoutStepModel
   focusedExercise: ExerciseModel
   onSwitchExercise: () => void
+  onEditTarget: () => void
 }
 
-const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitchExercise }) => {
+const StepHeader: React.FC<StepHeaderProps> = ({
+  step,
+  focusedExercise,
+  onSwitchExercise,
+  onEditTarget,
+}) => {
   const colors = useColors()
 
   const { openedWorkout, openedDateMs } = useOpenedWorkout()
@@ -132,6 +164,9 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
       stepType: step.stepType,
       exercises: step.exercises,
       sets: step.sets,
+      ...(step.targetMetric && step.targetValueBase != null
+        ? { target: { metric: step.targetMetric, valueBase: step.targetValueBase } }
+        : {}),
       stepData: {
         id: step.id,
         position: step.position,
@@ -176,6 +211,11 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
     onSwitchExercise()
   }
 
+  function onEditTargetPress() {
+    setMenuOpen(false)
+    onEditTarget()
+  }
+
   function onEditExercisePress() {
     setMenuOpen(false)
     navigate("ExerciseEdit", { edittedExercise: focusedExercise })
@@ -193,11 +233,14 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
   }
 
   const focusedStepName = useMemo(() => {
-    const name = step.stepType === "plain" ? step.exercise.name : "Superset"
+    const name =
+      step.stepType === "plain" || step.stepType === "target" ? step.exercise.name : "Superset"
     let similarSteps = openedWorkout?.workoutSteps.filter((s) => s.stepType === step.stepType) || []
 
-    if (step.stepType === "plain") {
-      similarSteps = similarSteps.filter((s) => s.exercises.includes(focusedExercise))
+    if (step.stepType === "plain" || step.stepType === "target") {
+      similarSteps = similarSteps.filter((s) =>
+        s.exercises.some((e) => e.id === focusedExercise?.id),
+      )
     }
 
     const n = similarSteps.indexOf(step) + 1
@@ -241,6 +284,18 @@ const StepHeader: React.FC<StepHeaderProps> = ({ step, focusedExercise, onSwitch
           onPress={onSwitchExercisePress}
           title={translate("switchExercise")}
         />
+        {step.stepType === "target" && (
+          <Menu.Item
+            onPress={onEditTargetPress}
+            title={translate("editTarget")}
+          />
+        )}
+        {step.stepType === "plain" && (
+          <Menu.Item
+            onPress={onEditTargetPress}
+            title={translate("setTarget")}
+          />
+        )}
         <Menu.Item
           onPress={onEditExercisePress}
           title={translate("editExercise")}

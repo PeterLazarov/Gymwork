@@ -34,6 +34,13 @@ export const AddStepMenu = () => {
           selectMode: "superset",
         }),
     },
+    {
+      text: translate("addTargetSets"),
+      action: () =>
+        navigate("ExerciseSelect", {
+          selectMode: "target",
+        }),
+    },
   ]
 
   if (openedWorkout) {

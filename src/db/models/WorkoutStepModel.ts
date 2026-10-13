@@ -1,5 +1,7 @@
-import type { Exercise, Set, WorkoutStep, WorkoutStepExercise } from "@/db/schema"
-import { alphabeticNumbering } from "@/utils"
+import convert, { Unit } from "convert-units"
+
+import type { Exercise, Set, TargetMetric, WorkoutStep, WorkoutStepExercise, WorkoutStepType } from "@/db/schema"
+import { alphabeticNumbering, convertBaseWeightToUnit, getFormatedDuration, translate } from "@/utils"
 import { ExerciseModel } from "./ExerciseModel"
 import { SetModel } from "./SetModel"
 
@@ -15,8 +17,10 @@ type WorkoutStepModelType = WorkoutStep & {
 export class WorkoutStepModel {
   id: number
   workoutId: number
-  stepType: "plain" | "superset" | "circuit" | "emom" | "amrap" | "custom"
+  stepType: WorkoutStepType
   position: number
+  targetMetric: TargetMetric | null
+  targetValueBase: number | null
   createdAt: number
   updatedAt: number
   workoutStepExercises: WorkoutStepModelType["workoutStepExercises"]
@@ -28,6 +32,8 @@ export class WorkoutStepModel {
     this.workoutId = data.workout_id
     this.stepType = data.step_type
     this.position = data.position
+    this.targetMetric = data.target_metric ?? null
+    this.targetValueBase = data.target_value_base ?? null
     this.createdAt = data.created_at
     this.updatedAt = data.updated_at
     this.workoutStepExercises = data.workoutStepExercises
@@ -45,6 +51,95 @@ export class WorkoutStepModel {
 
   get isComplete(): boolean {
     return this.sets.length > 0 && this.incompleteSets.length === 0
+  }
+
+  getTargetCountableSets(manualSetCompletion: boolean): SetModel[] {
+    if (!manualSetCompletion) return this.sets
+    return this.completedSets
+  }
+
+  getTargetDoneBase(manualSetCompletion: boolean): number {
+    if (this.stepType !== "target" || !this.targetMetric) return 0
+    const countable = this.getTargetCountableSets(manualSetCompletion)
+
+    switch (this.targetMetric) {
+      case "reps":
+        return countable.reduce((sum, set) => sum + (set.reps ?? 0), 0)
+      case "tonnage":
+        // Weight-only exercises have no reps; fall back to SUM(weight_mcg).
+        if (!this.exercise?.hasMetricType("reps")) {
+          return countable.reduce((sum, set) => sum + (set.weightMcg ?? 0), 0)
+        }
+        return countable.reduce((sum, set) => sum + set.tonnageMcgReps, 0)
+      case "distance":
+        return countable.reduce((sum, set) => sum + (set.distanceMm ?? 0), 0)
+      case "duration":
+        return countable.reduce((sum, set) => sum + (set.durationMs ?? 0), 0)
+    }
+  }
+
+  getTargetRemainingBase(manualSetCompletion: boolean): number {
+    return (this.targetValueBase ?? 0) - this.getTargetDoneBase(manualSetCompletion)
+  }
+
+  isTargetComplete(manualSetCompletion: boolean): boolean {
+    if (this.stepType !== "target" || this.targetValueBase == null || this.targetValueBase <= 0) {
+      return false
+    }
+    return this.getTargetRemainingBase(manualSetCompletion) <= 0
+  }
+
+  getTargetUnit(): string {
+    switch (this.targetMetric) {
+      case "reps":
+        return translate("measurements.reps")
+      case "tonnage":
+        return this.exercise?.getMetricByType("weight")?.unit ?? ""
+      case "distance":
+        return this.exercise?.getMetricByType("distance")?.unit ?? ""
+      case "duration":
+        return ""
+      default:
+        return ""
+    }
+  }
+
+  getTargetTotalDisplay(): string | number {
+    return this.formatTargetBase(this.targetValueBase ?? 0)
+  }
+
+  getTargetDoneDisplay(manualSetCompletion: boolean): string | number {
+    return this.formatTargetBase(this.getTargetDoneBase(manualSetCompletion))
+  }
+
+  getTargetLeftDisplay(manualSetCompletion: boolean): string | number {
+    return this.formatTargetBase(Math.max(0, this.getTargetRemainingBase(manualSetCompletion)))
+  }
+
+  private formatTargetBase(valueBase: number): string | number {
+    switch (this.targetMetric) {
+      case "reps":
+        return valueBase
+      case "tonnage": {
+        const unit = this.exercise?.getMetricByType("weight")?.unit
+        return unit ? convertBaseWeightToUnit(valueBase, unit) : valueBase
+      }
+      case "distance": {
+        const unit = this.exercise?.getMetricByType("distance")?.unit
+        if (!unit) return valueBase
+        try {
+          return convert(valueBase).from("mm").to(unit as Unit)
+        } catch {
+          return valueBase
+        }
+      }
+      case "duration": {
+        const format = this.exercise?.getMetricByType("duration")?.duration_format
+        return getFormatedDuration(valueBase, format)
+      }
+      default:
+        return valueBase
+    }
   }
 
   get hasWarmupSets(): boolean {

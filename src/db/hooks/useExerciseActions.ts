@@ -224,13 +224,13 @@ function removeExerciseFromWorkoutCache(oldData: unknown, exerciseId: number): u
 
   const nextSteps = workout.workoutSteps
     .filter((step) => {
-      if (step.step_type === "plain") {
+      if (step.step_type === "plain" || step.step_type === "target") {
         return !step.workoutStepExercises?.some((wse) => wse.exercise_id === exerciseId)
       }
       return true
     })
     .map((step) => {
-      if (step.step_type === "plain") return step
+      if (step.step_type === "plain" || step.step_type === "target") return step
 
       return {
         ...step,

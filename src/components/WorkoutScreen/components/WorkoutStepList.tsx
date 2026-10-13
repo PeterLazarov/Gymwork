@@ -2,6 +2,8 @@ import React from "react"
 import { View } from "react-native"
 
 import { StepSetsList } from "@/components/shared/StepSetsList"
+import { TargetProgressText } from "@/components/shared/TargetProgressText"
+import { useTargetProgress } from "@/components/shared/useTargetProgress"
 import { useReorderWorkoutSteps } from "@/db/hooks"
 import { WorkoutModel } from "@/db/models/WorkoutModel"
 import { WorkoutStepModel } from "@/db/models/WorkoutStepModel"
@@ -72,8 +74,9 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({
   ...rest
 }) => {
   const colors = useColors()
+  const targetProgress = useTargetProgress(step)
   const title =
-    step.stepType === "plain"
+    step.stepType === "plain" || step.stepType === "target"
       ? step.exercises[0].name
       : step.exercises.map((e) => `${e.name}`).join("\n")
 
@@ -86,7 +89,16 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({
         </View>
       }
       content={
-        <View style={{ opacity: isActive ? 0 : 1 }}>
+        <View style={{ opacity: isActive ? 0 : 1, gap: spacing.xs }}>
+          {targetProgress && (
+            <TargetProgressText
+              total={targetProgress.total}
+              unit={targetProgress.unit}
+              done={targetProgress.done}
+              left={targetProgress.left}
+              met={targetProgress.met}
+            />
+          )}
           <StepSetsList
             step={step}
             sets={step.sets}

@@ -69,6 +69,7 @@ const en = {
   selectTemplate: "Select template",
   templateWillBeDeleted: "Template will be deleted.",
   exercises: "Exercises",
+  exercise: "Exercise",
   discomfort: "Discomfort",
   addComments: "Add comments ...",
   hideCommentsCard: "Hide comments card",
@@ -144,6 +145,17 @@ const en = {
   },
   version: "Version: {{version}}",
   version_update_available: "Version: {{version}} \n Update available",
+  addTargetSets: "Add target sets",
+  setTarget: "Set target",
+  editTarget: "Edit target",
+  targetMetric: "Target",
+  targetValue: "Target value",
+  targetReps: "Reps",
+  targetTonnage: "Tonnage",
+  targetDistance: "Distance",
+  targetDuration: "Duration",
+  targetLeft: "Target: {{total}} {{unit}}, Left: {{left}} {{unit}}",
+  targetDone: "Target: {{total}} {{unit}}, Done: {{done}} {{unit}}",
 }
 
 export default en
