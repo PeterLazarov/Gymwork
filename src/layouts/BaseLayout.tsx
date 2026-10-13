@@ -11,8 +11,18 @@ type Props = {
   children?: ReactNode
   style?: ViewStyle
   hasFooter?: boolean
+  // Set to true when the screen manages the keyboard itself
+  // (e.g. via KeyboardAwareScrollView). Prevents double handling
+  // where both KeyboardAvoidingView and KeyboardAwareScrollView
+  // shift the layout, causing jumps and hidden inputs.
+  disableKeyboardAvoiding?: boolean
 }
-export const BaseLayout: React.FC<Props> = ({ children, style, hasFooter }) => {
+export const BaseLayout: React.FC<Props> = ({
+  children,
+  style,
+  hasFooter,
+  disableKeyboardAvoiding,
+}) => {
   const colors = useColors()
   const insets = useSafeAreaInsets()
 
@@ -27,12 +37,16 @@ export const BaseLayout: React.FC<Props> = ({ children, style, hasFooter }) => {
         style,
       ]}
     >
-      <KeyboardAvoidingView
-        behavior={isIos ? "padding" : "height"}
-        style={[{ flex: 1 }]}
-      >
-        {children}
-      </KeyboardAvoidingView>
+      {disableKeyboardAvoiding ? (
+        <>{children}</>
+      ) : (
+        <KeyboardAvoidingView
+          behavior={isIos ? "padding" : "height"}
+          style={[{ flex: 1 }]}
+        >
+          {children}
+        </KeyboardAvoidingView>
+      )}
     </View>
   )
 }

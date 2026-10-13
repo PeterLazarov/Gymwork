@@ -79,7 +79,11 @@ export function App() {
 
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <KeyboardProvider>
+      <KeyboardProvider
+        statusBarTranslucent
+        navigationBarTranslucent
+        // preserveEdgeToEdge commented out for testing — re-enable if
+      >
         <DBProvider>
           <ThemeProvider>
             <OpenedWorkoutProvider>

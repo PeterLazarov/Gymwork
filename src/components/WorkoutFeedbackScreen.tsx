@@ -1,7 +1,8 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { View } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
+import { KeyboardAwareScrollView, KeyboardStickyView } from "react-native-keyboard-controller"
 import { TextInput } from "react-native-paper"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { discomfortOptions, feelingOptions } from "@/constants/enums"
 import { useDialogContext } from "@/context/DialogContext"
@@ -25,11 +26,22 @@ import { translate, TxKeyPath } from "@/utils"
 
 export const WorkoutFeedbackScreen: React.FC = () => {
   const colors = useColors()
+  const insets = useSafeAreaInsets()
   const { openedWorkout } = useOpenedWorkout()
   const { mutate: updateWorkout } = useUpdateWorkout()
   const { showConfirm } = useDialogContext()
-  const [comments, setComments] = useState<WorkoutComments>(openedWorkout!.comments)
+  const [comments, setComments] = useState<WorkoutComments>(
+    () => openedWorkout?.comments ?? { name: "", notes: "" },
+  )
   const hasChanges = useRef(false)
+
+  // Should never happen (e.g. nav-state restore without an opened workout):
+  // just leave instead of rendering a fallback UI.
+  useEffect(() => {
+    if (!openedWorkout) goBack()
+  }, [openedWorkout])
+
+  if (!openedWorkout) return null
 
   function onBackPress() {
     if (hasChanges.current) {
@@ -43,12 +55,16 @@ export const WorkoutFeedbackScreen: React.FC = () => {
   }
 
   function onCommentsSave() {
-    updateWorkout({ workoutId: openedWorkout!.id, workout: { ...comments }, date: openedWorkout!.date })
+    updateWorkout({
+      workoutId: openedWorkout!.id,
+      workout: { ...comments },
+      date: openedWorkout!.date,
+    })
     goBack()
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout disableKeyboardAvoiding>
       <Header>
         <IconButton
           onPress={onBackPress}
@@ -80,11 +96,13 @@ export const WorkoutFeedbackScreen: React.FC = () => {
         }}
       />
 
-      <Button
-        variant="primary"
-        onPress={onCommentsSave}
-        text={translate("save")}
-      />
+      <KeyboardStickyView offset={{ opened: insets.bottom }}>
+        <Button
+          variant="primary"
+          onPress={onCommentsSave}
+          text={translate("save")}
+        />
+      </KeyboardStickyView>
     </BaseLayout>
   )
 }
@@ -104,7 +122,16 @@ const CommentsForm: React.FC<CommentsFormProps> = ({ comments, onUpdate }) => {
   }))
 
   return (
-    <KeyboardAwareScrollView extraKeyboardSpace={100}>
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: 64 }}
+      // Keep the focused input just above the sticky Save footer (48px)
+      // with a small gap. A small extraKeyboardSpace avoids the jump
+      // caused by excessive values.
+      bottomOffset={112}
+      extraKeyboardSpace={16}
+      keyboardShouldPersistTaps="handled"
+    >
       <View
         style={{
           padding: spacing.xs,
