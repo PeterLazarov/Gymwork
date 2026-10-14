@@ -37,11 +37,14 @@ export const BaseLayout: React.FC<Props> = ({
         style,
       ]}
     >
-      {disableKeyboardAvoiding ? (
+      {disableKeyboardAvoiding || !isIos ? (
+        // Android relies on native adjustResize. Adding a JS-driven
+        // KeyboardAvoidingView on top double-handles the keyboard and each
+        // open/close cycle leaves residual padding that accumulates.
         <>{children}</>
       ) : (
         <KeyboardAvoidingView
-          behavior={isIos ? "padding" : "height"}
+          behavior="padding"
           style={[{ flex: 1 }]}
         >
           {children}
