@@ -22,6 +22,21 @@ import { useDatabaseService } from "@/db/useDB"
 import { sanitizeMsDate } from "./date"
 import { withOperation } from "./observability"
 
+// SQLite accepts 999 variables by default; leave room for statement overhead.
+const MAX_RESTORE_SQL_VARIABLES = 900
+
+export function insertInBatches<T>(
+  rows: readonly T[],
+  variablesPerRow: number,
+  insert: (batch: T[]) => unknown,
+): void {
+  const batchSize = Math.floor(MAX_RESTORE_SQL_VARIABLES / variablesPerRow)
+
+  for (let start = 0; start < rows.length; start += batchSize) {
+    insert(rows.slice(start, start + batchSize))
+  }
+}
+
 export function useExport() {
   const db = useDatabaseService()
   const drizzle = db.getDrizzle()
@@ -163,78 +178,102 @@ export function useExport() {
     }
   }
 
-  async function performRestore(data: any) {
+  function performRestore(data: any) {
     return withOperation("export.performRestore", async () => {
-      await Promise.all([
-        drizzle.delete(workouts_tags),
-        drizzle.delete(workout_steps_tags),
-        drizzle.delete(sets_tags),
-        drizzle.delete(exercises_tags),
-      ])
+      drizzle.transaction((tx) => {
+        tx.delete(workouts_tags).run()
+        tx.delete(workout_steps_tags).run()
+        tx.delete(sets_tags).run()
+        tx.delete(exercises_tags).run()
+        tx.delete(sets).run()
+        tx.delete(workout_step_exercises).run()
+        tx.delete(workout_steps).run()
+        tx.delete(workouts).run()
+        tx.delete(exercise_metrics).run()
+        tx.delete(exercises).run()
+        tx.delete(tags).run()
+        tx.delete(settings).run()
 
-      await Promise.all([drizzle.delete(sets), drizzle.delete(workout_step_exercises)])
+        if (data.settings?.length) {
+          insertInBatches(data.settings, 13, (batch) => tx.insert(settings).values(batch).run())
+        }
 
-      await drizzle.delete(workout_steps)
-      await drizzle.delete(workouts)
-      await drizzle.delete(exercise_metrics)
+        if (data.exercises?.length) {
+          insertInBatches(data.exercises, 13, (batch) => tx.insert(exercises).values(batch).run())
+        }
 
-      await Promise.all([drizzle.delete(exercises), drizzle.delete(tags), drizzle.delete(settings)])
+        if (data.exercise_metrics?.length) {
+          insertInBatches(data.exercise_metrics, 11, (batch) =>
+            tx.insert(exercise_metrics).values(batch).run(),
+          )
+        }
 
-      if (data.settings?.length) {
-        await drizzle.insert(settings).values(data.settings)
-      }
+        if (data.workouts?.length) {
+          insertInBatches(data.workouts, 12, (batch) =>
+            tx
+              .insert(workouts)
+              .values(
+                batch.map((workout: any) => ({
+                  ...workout,
+                  date: sanitizeMsDate(workout.date),
+                })),
+              )
+              .run(),
+          )
+        }
 
-      if (data.exercises?.length) {
-        await drizzle.insert(exercises).values(data.exercises)
-      }
+        if (data.workout_steps?.length) {
+          insertInBatches(data.workout_steps, 8, (batch) =>
+            tx.insert(workout_steps).values(batch).run(),
+          )
+        }
 
-      if (data.exercise_metrics?.length) {
-        await drizzle.insert(exercise_metrics).values(data.exercise_metrics)
-      }
+        if (data.workout_step_exercises?.length) {
+          insertInBatches(data.workout_step_exercises, 5, (batch) =>
+            tx.insert(workout_step_exercises).values(batch).run(),
+          )
+        }
 
-      if (data.workouts?.length) {
-        const sanitizedWorkouts = data.workouts.map((workout: any) => ({
-          ...workout,
-          date: sanitizeMsDate(workout.date),
-        }))
-        await drizzle.insert(workouts).values(sanitizedWorkouts)
-      }
+        if (data.sets?.length) {
+          insertInBatches(data.sets, 15, (batch) =>
+            tx
+              .insert(sets)
+              .values(
+                batch.map((set: any) => ({
+                  ...set,
+                  date: sanitizeMsDate(set.date),
+                })),
+              )
+              .run(),
+          )
+        }
 
-      if (data.workout_steps?.length) {
-        await drizzle.insert(workout_steps).values(data.workout_steps)
-      }
+        if (data.tags?.length) {
+          insertInBatches(data.tags, 6, (batch) => tx.insert(tags).values(batch).run())
+        }
 
-      if (data.workout_step_exercises?.length) {
-        await drizzle.insert(workout_step_exercises).values(data.workout_step_exercises)
-      }
+        if (data.workouts_tags?.length) {
+          insertInBatches(data.workouts_tags, 4, (batch) =>
+            tx.insert(workouts_tags).values(batch).run(),
+          )
+        }
 
-      if (data.sets?.length) {
-        const sanitizedSets = data.sets.map((set: any) => ({
-          ...set,
-          date: sanitizeMsDate(set.date),
-        }))
-        await drizzle.insert(sets).values(sanitizedSets)
-      }
+        if (data.workout_steps_tags?.length) {
+          insertInBatches(data.workout_steps_tags, 4, (batch) =>
+            tx.insert(workout_steps_tags).values(batch).run(),
+          )
+        }
 
-      if (data.tags?.length) {
-        await drizzle.insert(tags).values(data.tags)
-      }
+        if (data.sets_tags?.length) {
+          insertInBatches(data.sets_tags, 4, (batch) => tx.insert(sets_tags).values(batch).run())
+        }
 
-      if (data.workouts_tags?.length) {
-        await drizzle.insert(workouts_tags).values(data.workouts_tags)
-      }
-
-      if (data.workout_steps_tags?.length) {
-        await drizzle.insert(workout_steps_tags).values(data.workout_steps_tags)
-      }
-
-      if (data.sets_tags?.length) {
-        await drizzle.insert(sets_tags).values(data.sets_tags)
-      }
-
-      if (data.exercises_tags?.length) {
-        await drizzle.insert(exercises_tags).values(data.exercises_tags)
-      }
+        if (data.exercises_tags?.length) {
+          insertInBatches(data.exercises_tags, 4, (batch) =>
+            tx.insert(exercises_tags).values(batch).run(),
+          )
+        }
+      })
     })
   }
 
