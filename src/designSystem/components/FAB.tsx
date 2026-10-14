@@ -13,12 +13,12 @@ export const FAB: React.FC<FABProps> = ({ style, disabled, ...otherProps }) => {
           position: "absolute",
           right: "auto",
           left: "auto",
-          backgroundColor: disabled ? colors.surfaceVariant : colors.primary,
+          backgroundColor: disabled ? colors.surfaceDisabled : colors.primary,
         },
         style,
       ]}
       disabled={disabled}
-      color={colors.onPrimary}
+      color={disabled ? colors.onSurfaceDisabled : colors.onPrimary}
       {...otherProps}
     />
   )

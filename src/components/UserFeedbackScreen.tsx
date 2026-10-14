@@ -84,7 +84,7 @@ export const UserFeedbackScreen: React.FC<UserFeedbackScreenProps> = ({ navigati
           <Icon
             icon="checkmark"
             size="large"
-            color={colors.onPrimary}
+            color={formValid ? colors.onPrimary : colors.onSurfaceDisabled}
           />
         </IconButton>
       </Header>

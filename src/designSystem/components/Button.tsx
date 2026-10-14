@@ -54,7 +54,18 @@ export const Button: React.FC<ButtonProps> = ({
     tertiary: colors.onSurface,
   } as const
 
-  const color = type === "outline" ? "outline" : variant
+  const isOutline = type === "outline"
+  const buttonStyle = isOutline
+    ? {
+        backgroundColor: "transparent",
+        borderColor: disabled ? colors.surfaceDisabled : buttonColors[variant],
+        textColor: disabled ? colors.onSurfaceDisabled : buttonColors[variant],
+      }
+    : {
+        backgroundColor: disabled ? colors.surfaceDisabled : buttonColors[variant],
+        borderColor: "transparent",
+        textColor: disabled ? colors.onSurfaceDisabled : buttonTextColors[variant],
+      }
 
   return (
     <Pressable
@@ -65,10 +76,9 @@ export const Button: React.FC<ButtonProps> = ({
           height: buttonSizes[size],
           gap: 6,
           flexDirection: "row",
-          backgroundColor: buttonColors[color],
+          backgroundColor: buttonStyle.backgroundColor,
           borderWidth: type === "outline" ? 2 : 0,
-          borderColor: type === "outline" ? buttonColors[variant] : "transparent",
-          opacity: disabled ? 0.4 : 1,
+          borderColor: buttonStyle.borderColor,
         },
 
         style,
@@ -80,13 +90,12 @@ export const Button: React.FC<ButtonProps> = ({
         style={[
           {
             textAlign: "center",
-            color: type !== "outline" ? buttonTextColors[variant] : buttonColors[variant],
+            color: buttonStyle.textColor,
           },
           textStyle,
         ]}
         text={text}
-      >
-      </Text>
+      ></Text>
       {children}
     </Pressable>
   )

@@ -118,7 +118,7 @@ export const ExerciseEditScreen: React.FC = () => {
           <Icon
             icon="checkmark"
             size="large"
-            color={colors.onPrimary}
+            color={formValid ? colors.onPrimary : colors.onSurfaceDisabled}
           />
         </IconButton>
       </Header>

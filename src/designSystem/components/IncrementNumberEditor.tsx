@@ -65,7 +65,6 @@ const IncrementalButtons: React.FC<IncrementalButtonsProps> = ({
   const colors = useColors()
 
   const btnStyle: StyleProp<ViewStyle> = {
-    backgroundColor: colors.primary,
     padding: spacing.xs,
     justifyContent: "center",
     alignItems: "center",
@@ -84,17 +83,20 @@ const IncrementalButtons: React.FC<IncrementalButtonsProps> = ({
       <Pressable
         onPress={() => onChange(isInvalidNumber(value) ? 0 : value - (step ?? 1))}
         disabled={minusDisabled}
-        style={[btnStyle, minusDisabled && { opacity: 0.4 }]}
+        style={[
+          btnStyle,
+          { backgroundColor: minusDisabled ? colors.surfaceDisabled : colors.primary },
+        ]}
       >
         <Icon
           icon="remove"
-          color={colors.onPrimary}
+          color={minusDisabled ? colors.onSurfaceDisabled : colors.onPrimary}
         />
       </Pressable>
       <View style={{ flexGrow: 1, paddingHorizontal: 4 }}>{children}</View>
       <Pressable
         onPress={() => onChange(isInvalidNumber(value) ? 0 : value + (step ?? 1))}
-        style={btnStyle}
+        style={[btnStyle, { backgroundColor: colors.primary }]}
       >
         <Icon
           icon="add"

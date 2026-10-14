@@ -291,7 +291,7 @@ const SetTypeButton: React.FC<SetTypeButtonProps> = ({
       style={{
         height: 36,
         width: 36,
-        borderColor: colors.outline,
+        borderColor: disabled ? colors.surfaceDisabled : colors.outline,
         borderWidth: 1,
         borderRadius: spacing.xxs,
         alignItems: "center",
@@ -304,13 +304,13 @@ const SetTypeButton: React.FC<SetTypeButtonProps> = ({
         {icon ? (
           <Icon
             icon={icon}
-            color={color}
+            color={disabled ? colors.onSurfaceDisabled : color}
           />
         ) : (
           <Text
             style={{
               fontSize: fontSize.sm,
-              color,
+              color: disabled ? colors.onSurfaceDisabled : color,
               fontWeight: "bold",
             }}
           >

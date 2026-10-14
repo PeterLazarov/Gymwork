@@ -104,13 +104,15 @@ const MenuItem: React.FC<MenuItemProps> = ({ title, onPress, disabled }) => {
       onPress={onPress}
       disabled={disabled}
       style={{
-        opacity: disabled ? 0.5 : 1,
         paddingVertical: spacing.xs,
         paddingHorizontal: spacing.md,
       }}
     >
       <Text
-        style={{ color: colors.onSurface, fontSize: fontSize.md }}
+        style={{
+          color: disabled ? colors.onSurfaceDisabled : colors.onSurface,
+          fontSize: fontSize.md,
+        }}
         numberOfLines={1}
       >
         {title}
