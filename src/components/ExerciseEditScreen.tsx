@@ -287,21 +287,23 @@ const ExerciseEditForm: React.FC<Props> = ({ exercise, onUpdate }) => {
               error={musclesError !== ""}
             />
           )}
-          <Button
-            variant={showMuscleMap ? "primary" : "secondary"}
-            onPress={() => setShowMuscleMap(!showMuscleMap)}
+          <IconButton
+            accessibilityLabel="Toggle muscle map"
+            accessibilityState={{ selected: showMuscleMap }}
+            onPress={() => setShowMuscleMap((isVisible) => !isVisible)}
             style={{
               marginTop: spacing.md,
               borderRadius: spacing.xs,
               width: spacing.xl,
               height: spacing.xl,
+              backgroundColor: showMuscleMap ? colors.primary : colors.outlineVariant,
             }}
           >
             <Icon
               icon="arm-flex"
-              color={showMuscleMap ? colors.onPrimary : colors.onSurface}
+              color={showMuscleMap ? colors.onPrimary : colors.onSecondaryContainer}
             />
-          </Button>
+          </IconButton>
         </View>
         {musclesError !== "" && (
           <HelperText
