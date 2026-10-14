@@ -1,11 +1,11 @@
 {
-  "name": "BodyBuilder",
-  "displayName": "BodyBuilder",
+  "name": "Gym Nerd",
+  "displayName": "Gym Nerd",
   "expo": {
-    "name": "BodyBuilder",
-    "slug": "bodybuilder",
-    "scheme": "BodyBuilder",
-    "version": "1.0.9",
+    "name": "Gym Nerd",
+    "slug": "gymnerd",
+    "scheme": "GymNerd",
+    "version": "1.0.10",
     "orientation": "portrait",
     "icon": "./assets/pen-logo.png",
     "splash": {
@@ -22,7 +22,7 @@
     "android": {
       "icon": "./assets/pen-logo.png",
       "package": "com.gymwork",
-      "versionCode": 11,
+      "versionCode": 12,
       "adaptiveIcon": {
         "foregroundImage": "./assets/pen-logo.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
