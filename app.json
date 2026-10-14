@@ -5,7 +5,7 @@
     "name": "Gym Nerd",
     "slug": "bodybuilder",
     "scheme": "GymNerd",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "orientation": "portrait",
     "icon": "./assets/pen-logo.png",
     "splash": {
@@ -22,7 +22,7 @@
     "android": {
       "icon": "./assets/pen-logo.png",
       "package": "com.gymwork",
-      "versionCode": 12,
+      "versionCode": 13,
       "adaptiveIcon": {
         "foregroundImage": "./assets/pen-logo.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
