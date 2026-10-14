@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { View } from "react-native"
+import { KeyboardAwareScrollView, KeyboardStickyView } from "react-native-keyboard-controller"
 import { DateTime } from "luxon"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { Button, Header, Icon, IconButton, spacing, useColors } from "@/designSystem"
 import {
@@ -31,6 +33,7 @@ export const UserFeedbackScreen: React.FC<UserFeedbackScreenProps> = ({ navigati
   const { showSnackbar } = useDialogContext()
 
   const colors = useColors()
+  const insets = useSafeAreaInsets()
 
   const [feedback, setFeedback] = useState<AirtableFeedback>({
     date: openedDate,
@@ -61,7 +64,7 @@ export const UserFeedbackScreen: React.FC<UserFeedbackScreenProps> = ({ navigati
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout disableKeyboardAvoiding>
       <Header>
         <IconButton
           onPress={navigation.goBack}
@@ -86,18 +89,26 @@ export const UserFeedbackScreen: React.FC<UserFeedbackScreenProps> = ({ navigati
         </IconButton>
       </Header>
 
-      <View style={[{ flex: 1 }]}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 64 }}
+        bottomOffset={112}
+        extraKeyboardSpace={16}
+        keyboardShouldPersistTaps="handled"
+      >
         <UserFeedbackForm
           feedback={feedback}
           onUpdate={onUpdate}
         />
-      </View>
-      <Button
-        variant="primary"
-        onPress={onFeedbackSave}
-        disabled={!formValid}
-        text={translate("save")}
-      />
+      </KeyboardAwareScrollView>
+      <KeyboardStickyView offset={{ opened: insets.bottom }}>
+        <Button
+          variant="primary"
+          onPress={onFeedbackSave}
+          disabled={!formValid}
+          text={translate("save")}
+        />
+      </KeyboardStickyView>
     </BaseLayout>
   )
 }

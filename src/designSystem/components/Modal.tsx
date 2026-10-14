@@ -1,5 +1,11 @@
 import React from "react"
-import { Modal as RNModal, ModalProps as RNModalProps, Platform, View, ViewStyle } from "react-native"
+import {
+  Modal as RNModal,
+  ModalProps as RNModalProps,
+  Platform,
+  View,
+  ViewStyle,
+} from "react-native"
 import { KeyboardAvoidingView } from "react-native-keyboard-controller"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
@@ -32,7 +38,7 @@ export const Modal: React.FC<ModalProps> & {
       <Backdrop onPress={onClose} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={[{ flex: 1, marginTop: insets.top, marginBottom: insets.bottom }, containerStyle]}
+        style={[{ flex: 1, marginTop: insets.top }, containerStyle]}
         pointerEvents="box-none"
       >
         {children}

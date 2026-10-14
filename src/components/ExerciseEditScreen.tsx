@@ -1,6 +1,8 @@
 import React, { useMemo, useRef, useState } from "react"
-import { ScrollView, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
+import { KeyboardAwareScrollView, KeyboardStickyView } from "react-native-keyboard-controller"
 import { HelperText, TextInput } from "react-native-paper"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import {
   durationFormatOptions,
@@ -47,6 +49,7 @@ export type ExerciseEditScreenParams = {
 }
 export const ExerciseEditScreen: React.FC = () => {
   const colors = useColors()
+  const insets = useSafeAreaInsets()
   const { mutate: updateExercise } = useUpdateExercise()
   const { mutateAsync: insertExercise } = useInsertExercise()
   const { mutateAsync: createStep } = useCreateExercisesStep()
@@ -95,7 +98,7 @@ export const ExerciseEditScreen: React.FC = () => {
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout disableKeyboardAvoiding>
       <Header>
         <IconButton
           onPress={onBackPress}
@@ -119,20 +122,28 @@ export const ExerciseEditScreen: React.FC = () => {
           />
         </IconButton>
       </Header>
-      <ScrollView style={{ flex: 1 }}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 64 }}
+        bottomOffset={112}
+        extraKeyboardSpace={16}
+        keyboardShouldPersistTaps="handled"
+      >
         {exercise && (
           <ExerciseEditForm
             exercise={exercise}
             onUpdate={onUpdate}
           />
         )}
-      </ScrollView>
-      <Button
-        variant="primary"
-        onPress={onComplete}
-        disabled={!formValid}
-        text={translate("save")}
-      />
+      </KeyboardAwareScrollView>
+      <KeyboardStickyView offset={{ opened: insets.bottom }}>
+        <Button
+          variant="primary"
+          onPress={onComplete}
+          disabled={!formValid}
+          text={translate("save")}
+        />
+      </KeyboardStickyView>
     </BaseLayout>
   )
 }

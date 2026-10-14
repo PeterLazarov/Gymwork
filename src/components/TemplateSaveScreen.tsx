@@ -1,5 +1,7 @@
 import React, { useMemo, useRef, useState } from "react"
 import { StyleSheet, View } from "react-native"
+import { KeyboardAwareScrollView, KeyboardStickyView } from "react-native-keyboard-controller"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { useDialogContext } from "@/context/DialogContext"
 import { useOpenedWorkout } from "@/context/OpenedWorkoutContext"
@@ -29,6 +31,7 @@ export type TemplateSaveScreenParams = {
 }
 export const TemplateSaveScreen: React.FC = () => {
   const colors = useColors()
+  const insets = useSafeAreaInsets()
 
   const { openedWorkout } = useOpenedWorkout()
   const { edittingTemplate } = useRouteParams("TemplateSave")
@@ -89,7 +92,7 @@ export const TemplateSaveScreen: React.FC = () => {
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout disableKeyboardAvoiding>
       <Header>
         <IconButton onPress={onBackPress}>
           <Icon
@@ -109,20 +112,28 @@ export const TemplateSaveScreen: React.FC = () => {
           />
         </IconButton>
       </Header>
-      <View style={{ flex: 1 }}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 64 }}
+        bottomOffset={112}
+        extraKeyboardSpace={16}
+        keyboardShouldPersistTaps="handled"
+      >
         <EditTemplateForm
           template={template}
           steps={templateSteps}
           onUpdateSteps={(steps) => setTemplateSteps(steps)}
           onUpdate={onUpdate}
         />
-      </View>
-      <Button
-        variant="primary"
-        onPress={onComplete}
-        disabled={!formValid}
-        text={translate("save")}
-      />
+      </KeyboardAwareScrollView>
+      <KeyboardStickyView offset={{ opened: insets.bottom }}>
+        <Button
+          variant="primary"
+          onPress={onComplete}
+          disabled={!formValid}
+          text={translate("save")}
+        />
+      </KeyboardStickyView>
     </BaseLayout>
   )
 }

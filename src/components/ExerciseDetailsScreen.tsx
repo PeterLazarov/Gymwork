@@ -1,5 +1,7 @@
 import { FC, useState } from "react"
 import { Image, ScrollView, StyleSheet, useWindowDimensions, View } from "react-native"
+import { KeyboardAwareScrollView, KeyboardStickyView } from "react-native-keyboard-controller"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { useDialogContext } from "@/context/DialogContext"
 import {
@@ -87,7 +89,7 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({ navigati
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout disableKeyboardAvoiding>
       <Header>
         <IconButton
           onPress={onBackPress}
@@ -135,16 +137,18 @@ export const ExerciseDetailsScreen: FC<ExerciseDetailsScreenProps> = ({ navigati
         }
       />
 
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.label}>{exercise?.name}</Text>
-        {exercise && !editMode && <InstructionsPanel exercise={exercise} />}
-        {exercise && editMode && (
-          <InstructionsEditor
-            exercise={exercise}
-            onSave={onSaveInstructions}
-          />
-        )}
-      </ScrollView>
+      {exercise && !editMode && (
+        <ScrollView contentContainerStyle={styles.container}>
+          <Text style={styles.label}>{exercise.name}</Text>
+          <InstructionsPanel exercise={exercise} />
+        </ScrollView>
+      )}
+      {exercise && editMode && (
+        <InstructionsEditor
+          exercise={exercise}
+          onSave={onSaveInstructions}
+        />
+      )}
     </BaseLayout>
   )
 }
@@ -205,38 +209,50 @@ function InstructionsEditor({
 }) {
   const [instructions, setInstructions] = useState(exercise.instructions || [])
   const [tips, setTips] = useState(exercise.tips || [])
+  const insets = useSafeAreaInsets()
 
   return (
     <>
-      <View style={styles.formContainer}>
-        <View>
-          <Text style={styles.label}>{translate("instructions")}</Text>
+      <KeyboardAwareScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={[styles.container, { paddingBottom: 64 }]}
+        bottomOffset={112}
+        extraKeyboardSpace={16}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Text style={styles.label}>{exercise?.name}</Text>
+        <View style={styles.formContainer}>
+          <View>
+            <Text style={styles.label}>{translate("instructions")}</Text>
 
-          <TextInput
-            multiline
-            value={instructions.join("\n")}
-            onChangeText={(text) => {
-              setInstructions(text.split("\n"))
-            }}
-          />
-        </View>
-        <View>
-          <Text style={styles.label}>{translate("tips")}</Text>
+            <TextInput
+              multiline
+              value={instructions.join("\n")}
+              onChangeText={(text) => {
+                setInstructions(text.split("\n"))
+              }}
+            />
+          </View>
+          <View>
+            <Text style={styles.label}>{translate("tips")}</Text>
 
-          <TextInput
-            multiline
-            value={tips.join("\n")}
-            onChangeText={(text) => {
-              setTips(text.split("\n"))
-            }}
-          />
+            <TextInput
+              multiline
+              value={tips.join("\n")}
+              onChangeText={(text) => {
+                setTips(text.split("\n"))
+              }}
+            />
+          </View>
         </View>
-      </View>
-      <Button
-        variant="primary"
-        text={translate("save")}
-        onPress={() => onSave(instructions, tips)}
-      />
+      </KeyboardAwareScrollView>
+      <KeyboardStickyView offset={{ opened: insets.bottom }}>
+        <Button
+          variant="primary"
+          text={translate("save")}
+          onPress={() => onSave(instructions, tips)}
+        />
+      </KeyboardStickyView>
     </>
   )
 }
