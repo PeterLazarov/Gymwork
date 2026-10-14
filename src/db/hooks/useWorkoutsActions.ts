@@ -1,7 +1,9 @@
 import { isoDateToMs } from "@/utils"
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { removeRecord } from "../cacheUtils"
-import type { WorkoutModel } from "../models/WorkoutModel"
+import type { InfiniteData } from "@tanstack/react-query"
+import { addRecord, removeRecord } from "../cacheUtils"
+import { WorkoutModel } from "../models/WorkoutModel"
+import type { DatabaseService } from "../services/DatabaseService"
 import { useDatabaseService } from "../useDB"
 
 export type WorkoutFilters = {
@@ -189,8 +191,38 @@ export function useCopyWorkout() {
       targetDate: number
       copySets: boolean
     }) => db.copyWorkout(sourceWorkout, targetDate, copySets),
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.targetDate] })
+    onSuccess: (copiedRecord, variables) => {
+      if (!copiedRecord) {
+        queryClient.invalidateQueries({ queryKey: ["workouts", "by-date", variables.targetDate] })
+        return
+      }
+
+      queryClient.setQueryData(["workouts", "by-date", variables.targetDate], copiedRecord)
+
+      queryClient.setQueriesData<WorkoutIdEntry[]>(
+        { queryKey: ["workouts", "ids"] },
+        (oldData) => {
+          if (!Array.isArray(oldData)) return oldData
+          const entry: WorkoutIdEntry = { id: copiedRecord.id, date: copiedRecord.date }
+          return [...oldData, entry]
+        },
+      )
+
+      queryClient.setQueriesData<InfiniteData<WorkoutsFullPage>>(
+        { queryKey: ["workouts", "full"] },
+        (oldData) => {
+          if (!oldData) return oldData
+          const [firstPage = [], ...rest] = oldData.pages
+          return { ...oldData, pages: [addRecord(firstPage, copiedRecord), ...rest] }
+        },
+      )
+
+      queryClient.setQueriesData<number>({ queryKey: ["workouts", "count"] }, (oldData) =>
+        typeof oldData === "number" ? oldData + 1 : oldData,
+      )
     },
   })
 }
+
+type WorkoutsFullPage = Awaited<ReturnType<DatabaseService["getAllWorkoutsFull"]>>
+type WorkoutIdEntry = Awaited<ReturnType<DatabaseService["getAllWorkoutIds"]>>[number]

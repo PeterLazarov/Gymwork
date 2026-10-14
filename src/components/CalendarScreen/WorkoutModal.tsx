@@ -49,8 +49,9 @@ export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, sh
 
   const onActionPress = () => {
     if (mode === "copy") {
+      if (isLoading) return
       showSnackbar?.({ text: "Workout will be copied" })
-      copyWorkout({ targetDate: openedDateMs, sourceWorkout: workout, copySets: includeSets })
+      copyWorkout({ targetDate: openedDateMs, sourceWorkout: displayWorkout, copySets: includeSets })
     } else if (mode === "view") {
       setOpenedDate(msToIsoDate(workout.date!))
     }
@@ -126,6 +127,7 @@ export const WorkoutModal: React.FC<Props> = ({ open, workout, onClose, mode, sh
           variant="tertiary"
           style={{ flex: 1 }}
           onPress={onActionPress}
+          disabled={mode === "copy" && isLoading}
           text={translate(mode === "copy" ? "copyWorkout" : "goToWorkout")}
         />
       </View>

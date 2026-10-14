@@ -688,7 +688,36 @@ export class DatabaseService {
       }
     }
 
-    return newWorkout
+    // Return the full record (steps + exercises + sets) so callers can
+    // surgically update caches without refetching.
+    return this.db.query.workouts.findFirst({
+      where: (workouts, { eq }) => eq(workouts.id, newWorkoutId),
+      with: {
+        workoutSteps: {
+          orderBy: (workoutSteps, { asc }) => [asc(workoutSteps.position)],
+          with: {
+            workoutStepExercises: {
+              with: {
+                exercise: {
+                  with: {
+                    exerciseMetrics: true,
+                  },
+                },
+              },
+            },
+            sets: {
+              with: {
+                exercise: {
+                  with: {
+                    exerciseMetrics: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    })
   }
 
   // ============================================================================
