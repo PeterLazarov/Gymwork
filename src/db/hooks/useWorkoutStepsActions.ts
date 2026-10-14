@@ -216,6 +216,19 @@ export function useUpdateWorkoutStepTarget() {
   })
 }
 
+export function useMigrateTargetStepTypesToPlain() {
+  const db = useDatabaseService()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    meta: { op: "workoutSteps.migrateTargetTypes" },
+    mutationFn: () => db.migrateTargetStepTypesToPlain(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["workouts"] })
+    },
+  })
+}
+
 function removeStepFromWorkout(oldData: unknown, stepId: number): unknown {
   if (!oldData || typeof oldData !== "object") return oldData
 

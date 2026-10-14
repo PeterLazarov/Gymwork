@@ -133,7 +133,7 @@ describe("WorkoutStepModel", () => {
     it("flags target steps and leaves plain steps alone", () => {
       const exercise = repsExercise()
       const target = makeWorkoutStep({
-        stepType: "target",
+        stepType: "plain",
         exercises: [exercise],
         sets: [],
         targetMetric: "reps",
@@ -145,8 +145,8 @@ describe("WorkoutStepModel", () => {
         sets: [makeSet({ exercise })],
       })
 
-      expect(target.stepType).toBe("target")
-      expect(plain.stepType).toBe("plain")
+      expect(target.hasTarget).toBe(true)
+      expect(plain.hasTarget).toBe(false)
       expect(plain.getTargetDoneBase(false)).toBe(0)
     })
 
@@ -158,7 +158,7 @@ describe("WorkoutStepModel", () => {
         makeSet({ exercise, reps: 24 }),
       ]
       const step = makeWorkoutStep({
-        stepType: "target",
+        stepType: "plain",
         exercises: [exercise],
         sets,
         targetMetric: "reps",
@@ -173,7 +173,7 @@ describe("WorkoutStepModel", () => {
     it("completes on exact hit and stays complete with extra sets", () => {
       const exercise = repsExercise()
       const step = makeWorkoutStep({
-        stepType: "target",
+        stepType: "plain",
         exercises: [exercise],
         sets: [makeSet({ exercise, reps: 60 }), makeSet({ exercise, reps: 40 })],
         targetMetric: "reps",
@@ -183,7 +183,7 @@ describe("WorkoutStepModel", () => {
       expect(step.isTargetComplete(false)).toBe(true)
 
       const over = makeWorkoutStep({
-        stepType: "target",
+        stepType: "plain",
         exercises: [exercise],
         sets: [makeSet({ exercise, reps: 60 }), makeSet({ exercise, reps: 48 })],
         targetMetric: "reps",
@@ -196,7 +196,7 @@ describe("WorkoutStepModel", () => {
     it("is incomplete with no sets", () => {
       const exercise = repsExercise()
       const step = makeWorkoutStep({
-        stepType: "target",
+        stepType: "plain",
         exercises: [exercise],
         sets: [],
         targetMetric: "reps",
@@ -212,7 +212,7 @@ describe("WorkoutStepModel", () => {
         makeSet({ exercise, reps: 50, completed_at: null }),
       ]
       const step = makeWorkoutStep({
-        stepType: "target",
+        stepType: "plain",
         exercises: [exercise],
         sets,
         targetMetric: "reps",
@@ -232,7 +232,7 @@ describe("WorkoutStepModel", () => {
         makeSet({ exercise, reps: 10, weight_mcg: 1_000_000_000 }),
       ]
       const step = makeWorkoutStep({
-        stepType: "target",
+        stepType: "plain",
         exercises: [exercise],
         sets,
         targetMetric: "tonnage",
@@ -256,7 +256,7 @@ describe("WorkoutStepModel", () => {
         makeSet({ exercise, reps: null, weight_mcg: 2_000_000_000 }),
       ]
       const step = makeWorkoutStep({
-        stepType: "target",
+        stepType: "plain",
         exercises: [exercise],
         sets,
         targetMetric: "tonnage",
@@ -271,7 +271,7 @@ describe("WorkoutStepModel", () => {
         makeExerciseMetric({ measurement_type: "distance", unit: "km" }),
       ])
       const step = makeWorkoutStep({
-        stepType: "target",
+        stepType: "plain",
         exercises: [exercise],
         sets: [makeSet({ exercise, reps: null, distance_mm: 2_000_000 })],
         targetMetric: "distance",
@@ -290,7 +290,7 @@ describe("WorkoutStepModel", () => {
         makeExerciseMetric({ measurement_type: "duration", unit: "ms", duration_format: "mm:ss" }),
       ])
       const step = makeWorkoutStep({
-        stepType: "target",
+        stepType: "plain",
         exercises: [exercise],
         sets: [makeSet({ exercise, reps: null, duration_ms: 60_000 })],
         targetMetric: "duration",

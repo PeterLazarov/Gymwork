@@ -76,7 +76,7 @@ const WorkoutStepCard: React.FC<WorkoutStepCardProps> = ({
   const colors = useColors()
   const targetProgress = useTargetProgress(step)
   const title =
-    step.stepType === "plain" || step.stepType === "target"
+    step.stepType === "plain"
       ? step.exercises[0].name
       : step.exercises.map((e) => `${e.name}`).join("\n")
 

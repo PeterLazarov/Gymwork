@@ -4,15 +4,16 @@ import { View } from "react-native"
 import { ExerciseSelectLists } from "@/components/shared/ExerciseSelectLists"
 import { useCreateExercisesStep } from "@/db/hooks"
 import { ExerciseModel } from "@/db/models/ExerciseModel"
-import { WorkoutStep } from "@/db/schema"
 import { FAB, Header, Icon, IconButton, Menu, spacing, useColors } from "@/designSystem"
 import { BaseLayout } from "@/layouts/BaseLayout"
 import { AppStackScreenProps, useRouteParams } from "@/navigators/navigationTypes"
 import { translate } from "@/utils"
 import { TargetConfigModal } from "./TargetConfigModal"
 
+export type ExerciseSelectMode = "plain" | "superset" | "target"
+
 export type ExerciseSelectScreenParams = {
-  selectMode: WorkoutStep["step_type"]
+  selectMode: ExerciseSelectMode
 }
 interface ExerciseSelectScreenProps extends AppStackScreenProps<"ExerciseSelect"> {}
 
@@ -26,7 +27,7 @@ export const ExerciseSelectScreen: React.FC<ExerciseSelectScreenProps> = ({ navi
   const [menuOpen, setMenuOpen] = useState(false)
 
   async function createExercisesStep(exercises: ExerciseModel[]) {
-    await createStep({ exercises, stepType: selectMode })
+    await createStep({ exercises, stepType: selectMode === "superset" ? "superset" : "plain" })
 
     navigation.navigate("Workout")
   }

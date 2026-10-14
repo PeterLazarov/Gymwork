@@ -128,7 +128,7 @@ export const workout_steps = sqliteTable(
       .references(() => workouts.id, { onDelete: "cascade" }),
 
     step_type: text({
-      enum: ["plain", "superset", "circuit", "emom", "amrap", "custom", "target"],
+      enum: ["plain", "superset", "circuit", "emom", "amrap", "custom"],
     }).notNull(),
     position: integer().notNull(),
 

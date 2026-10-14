@@ -86,7 +86,7 @@ export async function seedWorkouts(drizzleDB: DrizzleDBType, exerciseList: Exerc
         const workoutStepResult = await drizzleDB
           .insert(workout_steps)
           .values({
-            step_type: isTargetStep ? "target" : isSuperSet ? "superset" : "plain",
+            step_type: isSuperSet ? "superset" : "plain",
             workout_id: workoutId,
             position: stepIndex,
             target_metric: isTargetStep ? "reps" : null,

@@ -7,7 +7,7 @@ import { useSetting } from "@/context/SettingContext"
 import { Text, Divider, Header, Icon, IconButton, Menu, spacing, useColors, fontSize, DurationInput, Button } from "@/designSystem"
 import { translate } from "@/utils"
 import { useShareWorkout } from "../utils/useShareWorkout"
-import { useRemoveWorkout, useSettings, useUpdateWorkout } from "@/db/hooks"
+import { useRemoveWorkout, useSettings, useUpdateWorkout, useMigrateTargetStepTypesToPlain } from "@/db/hooks"
 import { navigate } from "@/navigators/navigationUtilities"
 import { MiniTimer } from "./MiniTimer"
 import { useTimerContext } from "@/context/TimerContext"
@@ -20,6 +20,7 @@ export const WorkoutHeader: React.FC = () => {
   const { setShowCommentsCard } = useSetting()
   const { mutate: removeWorkout } = useRemoveWorkout()
   const { mutate: updateWorkout } = useUpdateWorkout()
+  const { mutate: migrateTargetStepTypes } = useMigrateTargetStepTypesToPlain()
   const timer = useTimerContext()
   const [menuOpen, setMenuOpen] = useState(false)
   const { openedDateLabel, openedWorkout, openedDate } = useOpenedWorkout()
@@ -70,6 +71,11 @@ export const WorkoutHeader: React.FC = () => {
   function goToFeedback() {
     setMenuOpen(false)
     navigate("UserFeedback", { referrerPage: "Workout" })
+  }
+
+  function fixTargetStepTypes() {
+    setMenuOpen(false)
+    migrateTargetStepTypes()
   }
 
   function stopTimer() {
@@ -181,6 +187,10 @@ export const WorkoutHeader: React.FC = () => {
         <Menu.Item
           onPress={goToSettings}
           title={translate("settings")}
+        />
+        <Menu.Item
+          onPress={fixTargetStepTypes}
+          title="WIP: Fix target step types"
         />
         <Menu.Item
           onPress={goToFeedback}

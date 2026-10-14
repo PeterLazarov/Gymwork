@@ -540,12 +540,7 @@ export class DatabaseService {
         workout_step_exercises,
         eq(workout_steps.id, workout_step_exercises.workout_step_id),
       )
-      .where(
-        and(
-          eq(workout_step_exercises.exercise_id, id),
-          inArray(workout_steps.step_type, ["plain", "target"]),
-        ),
-      )
+      .where(and(eq(workout_step_exercises.exercise_id, id), eq(workout_steps.step_type, "plain")))
 
     const stepIds = stepsToDelete.map((s) => s.id)
 
@@ -860,12 +855,23 @@ export class DatabaseService {
     return this.db
       .update(workout_steps)
       .set({
-        step_type: "target",
         target_metric: target.targetMetric,
         target_value_base: target.targetValueBase,
         updated_at: timestamp,
       })
       .where(eq(workout_steps.id, workoutStepId))
+  }
+
+  async migrateTargetStepTypesToPlain() {
+    const timestamp = DateTime.now().toMillis()
+
+    return this.db
+      .update(workout_steps)
+      .set({
+        step_type: "plain",
+        updated_at: timestamp,
+      })
+      .where(sql`${workout_steps.step_type} = 'target'`)
   }
 
   async reorderWorkoutSteps(workoutId: number, from: number, to: number) {

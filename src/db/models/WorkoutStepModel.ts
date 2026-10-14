@@ -53,13 +53,17 @@ export class WorkoutStepModel {
     return this.sets.length > 0 && this.incompleteSets.length === 0
   }
 
+  get hasTarget(): boolean {
+    return !!this.targetMetric && this.targetValueBase != null
+  }
+
   getTargetCountableSets(manualSetCompletion: boolean): SetModel[] {
     if (!manualSetCompletion) return this.sets
     return this.completedSets
   }
 
   getTargetDoneBase(manualSetCompletion: boolean): number {
-    if (this.stepType !== "target" || !this.targetMetric) return 0
+    if (!this.targetMetric) return 0
     const countable = this.getTargetCountableSets(manualSetCompletion)
 
     switch (this.targetMetric) {
@@ -83,7 +87,7 @@ export class WorkoutStepModel {
   }
 
   isTargetComplete(manualSetCompletion: boolean): boolean {
-    if (this.stepType !== "target" || this.targetValueBase == null || this.targetValueBase <= 0) {
+    if (!this.hasTarget || this.targetValueBase! <= 0) {
       return false
     }
     return this.getTargetRemainingBase(manualSetCompletion) <= 0

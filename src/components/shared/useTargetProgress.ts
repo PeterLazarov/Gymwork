@@ -14,7 +14,7 @@ export function useTargetProgress(step: WorkoutStepModel): TargetProgress | null
   const { data: settings } = useSettings()
   const manualSetCompletion = settings?.manual_set_completion ?? false
 
-  if (step.stepType !== "target" || !step.targetMetric || step.targetValueBase == null) {
+  if (!step.hasTarget) {
     return null
   }
 

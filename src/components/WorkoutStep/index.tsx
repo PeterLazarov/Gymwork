@@ -62,7 +62,7 @@ export const WorkoutStepScreen: React.FC<
       setExerciseSelectOpen(false)
 
       if (
-        focusedStep.stepType === "target" &&
+        focusedStep.hasTarget &&
         focusedStep.targetMetric &&
         !exercise.getTargetableMetrics().includes(focusedStep.targetMetric)
       ) {
@@ -233,11 +233,10 @@ const StepHeader: React.FC<StepHeaderProps> = ({
   }
 
   const focusedStepName = useMemo(() => {
-    const name =
-      step.stepType === "plain" || step.stepType === "target" ? step.exercise.name : "Superset"
+    const name = step.stepType === "plain" ? step.exercise.name : "Superset"
     let similarSteps = openedWorkout?.workoutSteps.filter((s) => s.stepType === step.stepType) || []
 
-    if (step.stepType === "plain" || step.stepType === "target") {
+    if (step.stepType === "plain") {
       similarSteps = similarSteps.filter((s) =>
         s.exercises.some((e) => e.id === focusedExercise?.id),
       )
@@ -284,13 +283,12 @@ const StepHeader: React.FC<StepHeaderProps> = ({
           onPress={onSwitchExercisePress}
           title={translate("switchExercise")}
         />
-        {step.stepType === "target" && (
+        {step.hasTarget ? (
           <Menu.Item
             onPress={onEditTargetPress}
             title={translate("editTarget")}
           />
-        )}
-        {step.stepType === "plain" && (
+        ) : (
           <Menu.Item
             onPress={onEditTargetPress}
             title={translate("setTarget")}

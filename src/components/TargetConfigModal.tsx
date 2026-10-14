@@ -35,7 +35,7 @@ export const TargetConfigModal: React.FC<Props> = ({ exerciseId, onClose }) => {
 
     const { stepId } = await createStep({
       exercises: [exercise],
-      stepType: "target",
+      stepType: "plain",
       target: { metric, valueBase },
     })
 

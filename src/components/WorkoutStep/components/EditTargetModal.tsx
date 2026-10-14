@@ -50,7 +50,7 @@ export const EditTargetModal: React.FC<Props> = ({ step, exercise, onClose }) =>
       }}
     >
       <View style={{ backgroundColor: colors.surface, padding: 0, alignSelf: "stretch" }}>
-        <Modal.Header title={translate(step.stepType === "target" ? "editTarget" : "setTarget")} />
+        <Modal.Header title={translate(step.hasTarget ? "editTarget" : "setTarget")} />
         <View
           style={{
             paddingHorizontal: spacing.md,
