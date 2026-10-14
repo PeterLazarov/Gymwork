@@ -64,6 +64,13 @@
       "when": 1791920750399,
       "tag": "0008_target_sets",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1791920750400,
+      "tag": "0009_fix_exercise_records_tiebreak",
+      "breakpoints": true
     }
   ]
 }

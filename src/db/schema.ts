@@ -343,7 +343,8 @@ const exercise_records = sqliteView("exercise_records", {
             WHEN em.more_is_better THEN ms.measurement_value
             ELSE -ms.measurement_value
           END DESC,
-          ms.date DESC
+          ms.date ASC,
+          ms.id ASC
       ) AS rank
     FROM measurement_sets ms
     LEFT JOIN ${exercise_metrics} em
