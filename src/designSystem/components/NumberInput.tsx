@@ -27,6 +27,7 @@ export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
       value,
       onChange,
       style,
+      selectTextOnFocus = true,
 
       maxDigits = defaultMaxDigits,
       maxDecimals = defaultMaxDecimals,
@@ -57,6 +58,7 @@ export const NumberInput = forwardRef<TextInputRN, NumberInputProps>(
     return (
       <TextInput
         {...rest}
+        selectTextOnFocus={selectTextOnFocus}
         multiline={false}
         keyboardType="decimal-pad"
         ref={ref}

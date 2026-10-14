@@ -43,7 +43,6 @@ export const Button: React.FC<ButtonProps> = ({
     tertiary: colors.surfaceContainer,
     secondary: colors.outlineVariant,
     outline: colors.outline,
-    disabled: colors.surface,
   } as const
 
   const buttonTextColors = {
@@ -53,10 +52,9 @@ export const Button: React.FC<ButtonProps> = ({
     secondary: colors.onSecondaryContainer,
     critical: colors.onError,
     tertiary: colors.onSurface,
-    disabled: colors.shadow,
   } as const
 
-  const color = disabled ? "disabled" : type === "outline" ? "outline" : variant
+  const color = type === "outline" ? "outline" : variant
 
   return (
     <Pressable
@@ -70,6 +68,7 @@ export const Button: React.FC<ButtonProps> = ({
           backgroundColor: buttonColors[color],
           borderWidth: type === "outline" ? 2 : 0,
           borderColor: type === "outline" ? buttonColors[variant] : "transparent",
+          opacity: disabled ? 0.4 : 1,
         },
 
         style,
